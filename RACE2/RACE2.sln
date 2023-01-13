@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RACE2.FrontEnd", "RACE2.FrontEnd\RACE2.FrontEnd.csproj", "{1ACD4460-9A3D-4A0A-AD85-66900414D744}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.WebApi", "RACE2.WebApi\RACE2.WebApi.csproj", "{06A5332C-630E-4F13-B5B8-F71CCE1C8432}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RACE2.WebApi", "RACE2.WebApi\RACE2.WebApi.csproj", "{06A5332C-630E-4F13-B5B8-F71CCE1C8432}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.DataAccess", "RACE2.DataAccess\RACE2.DataAccess.csproj", "{31187B6D-597F-4867-A5CD-8534FC99CBE5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RACE2.DataAccess", "RACE2.DataAccess\RACE2.DataAccess.csproj", "{31187B6D-597F-4867-A5CD-8534FC99CBE5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.Services", "RACE2.Services\RACE2.Services.csproj", "{C1C76F6E-81F4-457F-8156-133CFF73B827}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RACE2.Services", "RACE2.Services\RACE2.Services.csproj", "{C1C76F6E-81F4-457F-8156-133CFF73B827}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RACE2.FrontEnd", "RACE2.FrontEnd\RACE2.FrontEnd.csproj", "{6EEA6355-1D5A-43B0-B5A5-CE62EC2B0BAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Race2.IdentityProvider", "Race2.IdentityProvider\Race2.IdentityProvider.csproj", "{51165B04-A190-403E-8A4C-4A9123F10657}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1ACD4460-9A3D-4A0A-AD85-66900414D744}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1ACD4460-9A3D-4A0A-AD85-66900414D744}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1ACD4460-9A3D-4A0A-AD85-66900414D744}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1ACD4460-9A3D-4A0A-AD85-66900414D744}.Release|Any CPU.Build.0 = Release|Any CPU
 		{06A5332C-630E-4F13-B5B8-F71CCE1C8432}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{06A5332C-630E-4F13-B5B8-F71CCE1C8432}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{06A5332C-630E-4F13-B5B8-F71CCE1C8432}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +31,14 @@ Global
 		{C1C76F6E-81F4-457F-8156-133CFF73B827}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1C76F6E-81F4-457F-8156-133CFF73B827}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1C76F6E-81F4-457F-8156-133CFF73B827}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EEA6355-1D5A-43B0-B5A5-CE62EC2B0BAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EEA6355-1D5A-43B0-B5A5-CE62EC2B0BAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EEA6355-1D5A-43B0-B5A5-CE62EC2B0BAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EEA6355-1D5A-43B0-B5A5-CE62EC2B0BAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51165B04-A190-403E-8A4C-4A9123F10657}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51165B04-A190-403E-8A4C-4A9123F10657}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51165B04-A190-403E-8A4C-4A9123F10657}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51165B04-A190-403E-8A4C-4A9123F10657}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
