@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.Services", "RACE2.Ser
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RACE2.FrontEnd", "RACE2.FrontEnd\RACE2.FrontEnd.csproj", "{6EEA6355-1D5A-43B0-B5A5-CE62EC2B0BAD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Race2.IdentityProvider", "Race2.IdentityProvider\Race2.IdentityProvider.csproj", "{51165B04-A190-403E-8A4C-4A9123F10657}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RACE2.IdentityProvider", "Race2.IdentityProvider\RACE2.IdentityProvider.csproj", "{51165B04-A190-403E-8A4C-4A9123F10657}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

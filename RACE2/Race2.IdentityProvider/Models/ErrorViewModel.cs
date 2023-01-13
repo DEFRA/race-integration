@@ -1,4 +1,4 @@
-namespace Race2.IdentityProvider.Models
+namespace RACE2.IdentityProvider.Models
 {
     public class ErrorViewModel
     {

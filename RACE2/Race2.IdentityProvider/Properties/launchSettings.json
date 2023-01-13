@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "Race2.IdentityProvider": {
+    "RACE2.IdentityProvider": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

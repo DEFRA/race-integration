@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Race2.IdentityProvider.Models;
+using RACE2.IdentityProvider.Models;
 using System.Diagnostics;
 
-namespace Race2.IdentityProvider.Controllers
+namespace RACE2.IdentityProvider.Controllers
 {
     public class HomeController : Controller
     {
