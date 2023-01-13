@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RACE2.FrontEnd", "RACE2.Fro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RACE2.IdentityProvider", "Race2.IdentityProvider\RACE2.IdentityProvider.csproj", "{51165B04-A190-403E-8A4C-4A9123F10657}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RACE2.UnitTest", "RACE2.UnitTest\RACE2.UnitTest.csproj", "{F2BB8D1A-2640-49D9-A409-85AAAEE98216}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{51165B04-A190-403E-8A4C-4A9123F10657}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51165B04-A190-403E-8A4C-4A9123F10657}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51165B04-A190-403E-8A4C-4A9123F10657}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2BB8D1A-2640-49D9-A409-85AAAEE98216}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2BB8D1A-2640-49D9-A409-85AAAEE98216}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2BB8D1A-2640-49D9-A409-85AAAEE98216}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2BB8D1A-2640-49D9-A409-85AAAEE98216}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
