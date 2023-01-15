@@ -1,3 +1,4 @@
+using IdentityServerHost.Quickstart.UI;
 using RACE2.IdentityProvider;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,7 +10,7 @@ builder.Services.AddIdentityServer()
             .AddInMemoryApiResources(ServerConfiguration.ApiResources)
             .AddInMemoryApiScopes(ServerConfiguration.ApiScopes)
             .AddInMemoryClients(ServerConfiguration.Clients)
-            .AddTestUsers(ServerConfiguration.TestUsers)
+            .AddTestUsers(TestUsers.Users)
             .AddDeveloperSigningCredential();
 
 var app = builder.Build();
