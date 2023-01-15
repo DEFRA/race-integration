@@ -1,7 +1,16 @@
+using RACE2.IdentityProvider;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddIdentityServer()
+            .AddInMemoryIdentityResources(ServerConfiguration.IdentityResources)
+            .AddInMemoryApiResources(ServerConfiguration.ApiResources)
+            .AddInMemoryApiScopes(ServerConfiguration.ApiScopes)
+            .AddInMemoryClients(ServerConfiguration.Clients)
+            .AddTestUsers(ServerConfiguration.TestUsers)
+            .AddDeveloperSigningCredential();
 
 var app = builder.Build();
 
@@ -17,6 +26,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseIdentityServer();
 
 app.UseAuthorization();
 
