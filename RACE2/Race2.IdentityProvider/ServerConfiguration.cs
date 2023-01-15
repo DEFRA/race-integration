@@ -1,5 +1,8 @@
-﻿using IdentityServer4.Models;
+﻿using IdentityModel;
+using IdentityServer4;
+using IdentityServer4.Models;
 using IdentityServer4.Test;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace RACE2.IdentityProvider
@@ -72,8 +75,25 @@ namespace RACE2.IdentityProvider
                     }
                 };
 
+                Client client2 = new Client
+                {
+                    ClientId = "blazorWASM",
+                    AllowedGrantTypes = GrantTypes.Code,
+                    RequirePkce = true,
+                    RequireClientSecret = false,
+                    AllowedCorsOrigins = { "https://localhost:5003" },
+                    AllowedScopes =
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile
+                    },
+                    RedirectUris = { "https://localhost:5003/authentication/login-callback" },
+                    PostLogoutRedirectUris = { "https://localhost:5003/authentication/logout-callback" }
+                };
+
                 List<Client> clients = new List<Client>();
                 clients.Add(client1);
+                clients.Add(client2);
 
                 return clients;
             }
@@ -86,32 +106,34 @@ namespace RACE2.IdentityProvider
                 TestUser usr1 = new TestUser()
                 {
                     SubjectId = "2f47f8f0-bea1-4f0e-ade1-88533a0eaf57",
-                    Username = "user1",
-                    Password = "password1",
+                    Username = "krissahoo",
+                    Password = "saudamini",
                     Claims = new List<Claim>
                     {
-                        new Claim("given_name", "firstName1"),
-                        new Claim("family_name", "lastName1"),
-                        new Claim("address", "USA"),
-                        new Claim("email","user1@localhost"),
-                        new Claim("phone", "123"),
-                        new Claim("role", "Admin")
+                        new Claim("given_name", "Kris"),
+                        new Claim("family_name", "Sahoo"),
+                        new Claim("address", "UK"),
+                        new Claim("email","kcsahoo@gmail.com"),
+                        new Claim("phone", "07427623140"),
+                        new Claim("role", "Admin"),
+                        new Claim(JwtClaimTypes.Name,"Kris Sahoo")
                     }
                 };
 
                 TestUser usr2 = new TestUser()
                 {
                     SubjectId = "5747df40-1bff-49ee-aadf-905bacb39a3a",
-                    Username = "user2",
-                    Password = "password2",
+                    Username = "mahalaxmi",
+                    Password = "maha123",
                     Claims = new List<Claim>
                     {
-                        new Claim("given_name", "firstName2"),
+                        new Claim("given_name", "Mahalaxmi"),
                         new Claim("family_name", "lastName2"),
                         new Claim("address", "UK"),
                         new Claim("email","user2@localhost"),
                         new Claim("phone", "456"),
-                        new Claim("role", "Operator")
+                        new Claim("role", "Operator"),
+                        new Claim(JwtClaimTypes.Name,"Mahalaxmi")
                     }
                 };
 
