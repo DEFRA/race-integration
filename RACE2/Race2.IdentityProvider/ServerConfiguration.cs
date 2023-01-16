@@ -72,7 +72,8 @@ namespace RACE2.IdentityProvider
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "race2WebApi"
+                        "race2WebApi",
+                        "roles"
                     },
                     RedirectUris = { "https://localhost:5003/authentication/login-callback" },
                     PostLogoutRedirectUris = { "https://localhost:5003/authentication/logout-callback" }
