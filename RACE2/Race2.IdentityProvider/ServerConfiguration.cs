@@ -19,7 +19,7 @@ namespace RACE2.IdentityProvider
                 idResources.Add(new IdentityResources.Email());
                 idResources.Add(new IdentityResources.Phone());
                 idResources.Add(new IdentityResources.Address());
-                idResources.Add(new IdentityResource("roles","User roles", new List<string> { "role" }));
+                idResources.Add(new IdentityResource("roles", "User roles", new List<string> { "engineer" , "underwriter" }));
                 return idResources;
             }
         }
@@ -29,7 +29,7 @@ namespace RACE2.IdentityProvider
             get
             {
                 List<ApiScope> apiScopes = new List<ApiScope>();
-                apiScopes.Add(new ApiScope("employeesWebApi", "Employees Web API"));
+                apiScopes.Add(new ApiScope("race2WebApi", "Race2 Web API"));
                 return apiScopes;
             }
         }
@@ -38,9 +38,9 @@ namespace RACE2.IdentityProvider
         {
             get
             {
-                ApiResource apiResource1 = new ApiResource("employeesWebApiResource","Employees Web API")             
+                ApiResource apiResource1 = new ApiResource("race2WebApiResource","Race2 Web API")             
                 {
-                    Scopes = { "employeesWebApi" },
+                    Scopes = { "race2WebApi" },
                     UserClaims = {  "role",
                                     "given_name",
                                     "family_name",
@@ -61,21 +61,7 @@ namespace RACE2.IdentityProvider
         {
             get
             {
-                Client client1 = new Client
-                {
-                    ClientId = "client1",
-                    ClientName = "Client 1",
-                    ClientSecrets = new[] {
-                    new Secret("client1_secret_code".Sha512()) },
-                    AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
-                    AllowedScopes = {
-                        "openid",
-                        "roles",
-                        "employeesWebApi"
-                    }
-                };
-
-                Client client2 = new Client
+                Client client = new Client
                 {
                     ClientId = "blazorWASM",
                     AllowedGrantTypes = GrantTypes.Code,
@@ -85,15 +71,15 @@ namespace RACE2.IdentityProvider
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile
+                        IdentityServerConstants.StandardScopes.Profile,
+                        "race2WebApi"
                     },
                     RedirectUris = { "https://localhost:5003/authentication/login-callback" },
                     PostLogoutRedirectUris = { "https://localhost:5003/authentication/logout-callback" }
                 };
 
                 List<Client> clients = new List<Client>();
-                clients.Add(client1);
-                clients.Add(client2);
+                clients.Add(client);
 
                 return clients;
             }
@@ -107,7 +93,7 @@ namespace RACE2.IdentityProvider
                 {
                     SubjectId = "2f47f8f0-bea1-4f0e-ade1-88533a0eaf57",
                     Username = "krissahoo",
-                    Password = "saudamini",
+                    Password = "kris123",
                     Claims = new List<Claim>
                     {
                         new Claim("given_name", "Kris"),
@@ -115,7 +101,7 @@ namespace RACE2.IdentityProvider
                         new Claim("address", "UK"),
                         new Claim("email","kcsahoo@gmail.com"),
                         new Claim("phone", "07427623140"),
-                        new Claim("role", "Admin"),
+                        new Claim("role", "engineer"),
                         new Claim(JwtClaimTypes.Name,"Kris Sahoo")
                     }
                 };
@@ -132,7 +118,7 @@ namespace RACE2.IdentityProvider
                         new Claim("address", "UK"),
                         new Claim("email","user2@localhost"),
                         new Claim("phone", "456"),
-                        new Claim("role", "Operator"),
+                        new Claim("role", "underwriter"),
                         new Claim(JwtClaimTypes.Name,"Mahalaxmi")
                     }
                 };
