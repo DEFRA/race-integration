@@ -12,7 +12,7 @@ builder.Services.AddAuthentication("Bearer")
             .AddJwtBearer(o =>
             {
                 o.Authority = "https://localhost:5011";
-                o.RequireHttpsMetadata = true;
+                o.RequireHttpsMetadata = false;
                 o.Audience = "race2WebApi";
                 o.TokenValidationParameters =
                     new TokenValidationParameters
@@ -36,7 +36,7 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseCors("CorsPolicy");
 

@@ -29,11 +29,11 @@
                                 <label asp-for="Password"></label>
                                 <input type="password" class="form-control" placeholder="Password" asp-for="Password" autocomplete="off">
                             </div>
-                            <div style="float:left">
-                                <a href="">Forgot password?</a>
-                            </div>
                             @if (Model.AllowRememberLogin)
                             {
+                                <p>
+                                    <a href="">Forgot password?</a>
+                                </p>
                                 <div class="form-group">
                                     <div class="form-check">
                                         <input class="form-check-input" asp-for="RememberLogin">

@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace RACE2.WebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    //[Authorize(Roles ="underwriter")]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
@@ -18,7 +20,7 @@ namespace RACE2.WebApi.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
+        [HttpGet]        
         public IEnumerable<WeatherForecast> Get()
         {
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast

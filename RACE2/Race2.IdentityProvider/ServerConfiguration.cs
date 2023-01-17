@@ -19,7 +19,7 @@ namespace RACE2.IdentityProvider
                 idResources.Add(new IdentityResources.Email());
                 idResources.Add(new IdentityResources.Phone());
                 idResources.Add(new IdentityResources.Address());
-                idResources.Add(new IdentityResource("roles", "User roles", new List<string> { "engineer" , "underwriter" }));
+                idResources.Add(new IdentityResource("roles", "User roles", new List<string> { "role" }));
                 return idResources;
             }
         }
