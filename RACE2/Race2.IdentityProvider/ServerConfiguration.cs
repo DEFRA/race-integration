@@ -79,8 +79,23 @@ namespace RACE2.IdentityProvider
                     PostLogoutRedirectUris = { "https://localhost:5003/authentication/logout-callback" }
                 };
 
+                Client client1 = new Client
+                {
+                    ClientId = "client1",
+                    ClientName = "Client 1",
+                    ClientSecrets = new[] {
+                        new Secret("client1_secret_code".Sha512()) },
+                    AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
+                    AllowedScopes = {
+                        "openid",
+                        "roles",
+                        "race2WebApi"
+                    }
+                };
+
                 List<Client> clients = new List<Client>();
                 clients.Add(client);
+                clients.Add(client1);
 
                 return clients;
             }
@@ -119,7 +134,7 @@ namespace RACE2.IdentityProvider
                         new Claim("address", "UK"),
                         new Claim("email","user2@localhost"),
                         new Claim("phone", "456"),
-                        new Claim("role", "underwriter"),
+                        new Claim("role", "undertaker"),
                         new Claim(JwtClaimTypes.Name,"Mahalaxmi")
                     }
                 };

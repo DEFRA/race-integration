@@ -1,6 +1,6 @@
 ﻿{
   "profiles": {
-    "RACE2.IdentityProvider": {
+    "RACE2.SecurityProvider": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
@@ -8,6 +8,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
+    }
     }
   }
 }

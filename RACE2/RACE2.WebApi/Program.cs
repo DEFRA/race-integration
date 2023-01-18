@@ -11,9 +11,9 @@ JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 builder.Services.AddAuthentication("Bearer")
             .AddJwtBearer(o =>
             {
-                o.Authority = "https://localhost:5011";
+                o.Authority = "http://localhost:5010";
                 o.RequireHttpsMetadata = false;
-                o.Audience = "race2WebApi";
+                o.Audience = "race2WebApiResource";
                 o.TokenValidationParameters =
                     new TokenValidationParameters
                     {
@@ -39,6 +39,8 @@ var app = builder.Build();
 //app.UseHttpsRedirection();
 
 app.UseCors("CorsPolicy");
+
+app.UseRouting();
 
 app.UseAuthentication();
 
