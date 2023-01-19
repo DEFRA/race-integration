@@ -18,62 +18,77 @@ namespace RACE2.SecurityProvider.Data
 
             modelBuilder.Entity<Userdetails>()
                 .Property(e => e.defra_id)
+                .HasDefaultValue(" ")
                 .HasMaxLength(64);
 
             modelBuilder.Entity<Userdetails>()
                 .Property(e => e.type)
+                .HasDefaultValue(" ")
                 .HasMaxLength(64)
                 .IsRequired(true);
 
             modelBuilder.Entity<Userdetails>()
                 .Property(e => e.display_name)
+                .HasDefaultValue(" ")
                 .HasMaxLength(128);
 
             modelBuilder.Entity<Userdetails>()
                 .Property(e => e.first_name)
+                .HasDefaultValue(" ")
                 .HasMaxLength(64)
                 .IsRequired(true);
 
             modelBuilder.Entity<Userdetails>()
                 .Property(e => e.last_name)
+                .HasDefaultValue(" ")
                 .HasMaxLength(64)
                 .IsRequired(true);
 
            modelBuilder.Entity<Userdetails>()
                 .Property(e => e.mobile)
+                .HasDefaultValue(" ")
                 .HasMaxLength(64);
 
             
             modelBuilder.Entity<Userdetails>()
                 .Property(e => e.emergency_phone)
+                .HasDefaultValue(" ")
                 .HasMaxLength(64);
 
             modelBuilder.Entity<Userdetails>()
                 .Property(e => e.organisation_id)
+                .HasDefaultValue(" ")
                 .HasMaxLength(64);
 
             modelBuilder.Entity<Userdetails>()
                 .Property(e => e.organisation_name)
+                .HasDefaultValue(" ")
                 .HasMaxLength(64);
 
             modelBuilder.Entity<Userdetails>()
                 .Property(e => e.job_title)
+                .HasDefaultValue(" ")
                 .HasMaxLength(64);
 
             modelBuilder.Entity<Userdetails>()
                 .Property(e => e.current_panel)
+                .HasDefaultValue(" ")
+                .HasDefaultValue(" ")
                 .HasMaxLength(64);
 
             modelBuilder.Entity<Userdetails>()
                 .Property(e => e.paon)
+                .HasDefaultValue(" ")
                 .HasMaxLength(64);
 
             modelBuilder.Entity<Userdetails>()
                 .Property(e => e.saon)
+                .HasDefaultValue(" ")
                 .HasMaxLength(64);
 
             modelBuilder.Entity<Userdetails>()
                .Property(e => e.status)
+               .HasDefaultValue(" ")
                .HasMaxLength(64)
                .IsRequired(true);
 
@@ -81,22 +96,21 @@ namespace RACE2.SecurityProvider.Data
                 .Property(e => e.created_on_date);
 
             modelBuilder.Entity<Userdetails>()
-                .Property(e => e.last_access_date)
-                .HasMaxLength(64);
+                .Property(e => e.last_access_date);
 
             modelBuilder.Entity<Userdetails>()
                 .Property(e => e.password)
+                .HasDefaultValue(" ")
                 .HasMaxLength(24);
 
             modelBuilder.Entity<Userdetails>()
                 .Property(e => e.password_hint)
+                .HasDefaultValue(" ")
                 .HasMaxLength(128);
 
             modelBuilder.Entity<Userdetails>()
                 .Property(e => e.password_retry_count)
-                .HasMaxLength(64);
-
-
+                .HasDefaultValue(0);
 
         }
 

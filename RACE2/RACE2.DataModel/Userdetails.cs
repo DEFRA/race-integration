@@ -21,14 +21,10 @@ namespace RACE2.DataModel
            
             public string first_name { get; set; }
          
-            public string last_name { get; set; }
-           
+            public string last_name { get; set; }        
           
-            
-            public string mobile { get; set; }
-            
-          
-         
+            public string mobile { get; set; }           
+                  
             public string emergency_phone { get; set; }
             
             public string organisation_id { get; set; }
@@ -49,7 +45,7 @@ namespace RACE2.DataModel
 
             public DateTime last_access_date { get; set; }       
         
-            public string password { get; set; }        
+            public string password { get; set; }       
         
             public string password_hint { get; set; }
 
