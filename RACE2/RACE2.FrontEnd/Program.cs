@@ -18,7 +18,7 @@ builder.Services.AddOidcAuthentication(options =>
 });
 builder.Services.AddHttpClient<WeatherForecastService>(
     client =>
-        client.BaseAddress = new Uri("http://localhost:5005"));
+        client.BaseAddress = new Uri("https://localhost:5004"));
 builder.Services.AddSingleton<WeatherForecastService>();
 
 await builder.Build().RunAsync();

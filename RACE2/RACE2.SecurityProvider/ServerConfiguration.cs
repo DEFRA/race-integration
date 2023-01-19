@@ -83,7 +83,7 @@ namespace RACE2.SecurityProvider
                     AllowedGrantTypes = GrantTypes.Code,
                     RequirePkce = true,
                     RequireClientSecret = false,
-                    AllowedCorsOrigins = { "http://localhost:5003" },
+                    AllowedCorsOrigins = { "https://localhost:5002" },
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
@@ -91,8 +91,8 @@ namespace RACE2.SecurityProvider
                         "race2WebApi",
                         "roles"
                     },
-                    RedirectUris = { "http://localhost:5003/authentication/login-callback" },
-                    PostLogoutRedirectUris = { "http://localhost:5003/authentication/logout-callback" }
+                    RedirectUris = { "https://localhost:5002/authentication/login-callback" },
+                    PostLogoutRedirectUris = { "https://localhost:5002/authentication/logout-callback" }
                 };
 
                 List<Client> clients = new List<Client>();
