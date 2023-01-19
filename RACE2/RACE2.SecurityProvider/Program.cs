@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using RACE2.DataModel;
 using RACE2.SecurityProvider;
 using RACE2.SecurityProvider.Data;
 
@@ -11,7 +12,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<Userdetails>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddRazorPages();
 
@@ -21,7 +22,7 @@ builder.Services.AddIdentityServer()
             .AddInMemoryIdentityResources(ServerConfiguration.IdentityResources)
             .AddInMemoryClients(ServerConfiguration.Clients)
             .AddDeveloperSigningCredential()
-            .AddAspNetIdentity<IdentityUser>();
+            .AddAspNetIdentity<Userdetails>();
 
 var app = builder.Build();
 
