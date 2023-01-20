@@ -5,9 +5,9 @@ using System.Security.Claims;
 
 namespace RACE2.SecurityProvider
 {
-    public static class ServerConfiguration
+    public  class ServerConfiguration
     {
-        public static List<IdentityResource> IdentityResources
+        public List<IdentityResource> IdentityResources
         {
             get
             {
@@ -23,7 +23,7 @@ namespace RACE2.SecurityProvider
             }
         }
 
-        public static List<ApiScope> ApiScopes
+        public List<ApiScope> ApiScopes
         {
             get
             {
@@ -34,7 +34,7 @@ namespace RACE2.SecurityProvider
                         }
         }
 
-        public static List<ApiResource> ApiResources
+        public List<ApiResource> ApiResources
         {
             get
             {
@@ -59,48 +59,52 @@ namespace RACE2.SecurityProvider
             }
         }
 
-        public static List<Client> Clients
+        public List<Client> Clients(string blazorClientURL)
         {
-            get
+            List<string> allowedCorsOrigins = new List<string>();
+            allowedCorsOrigins.Add(blazorClientURL);
+            List<string> redirectUris = new List<string>();
+            redirectUris.Add(blazorClientURL+ "/authentication/login-callback");
+            List<string> postLogoutRedirectUris = new List<string>();
+            postLogoutRedirectUris.Add(blazorClientURL + "/authentication/logout-callback");
+            List<Client> clients = new List<Client>();
+            Client client1 = new Client
             {
-                Client client1 = new Client
+                ClientId = "client1",
+                ClientName = "Client 1",
+                ClientSecrets = new[] {
+                    new Secret("client1_secret_code".Sha512()) },
+                AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
+                AllowedScopes = {
+                    "openid",
+                    "roles",
+                    "race2WebApi"
+                }
+            };
+
+            Client client2 = new Client
+            {
+                ClientId = "blazorWASM",
+                AllowedGrantTypes = GrantTypes.Code,
+                RequirePkce = true,
+                RequireClientSecret = false,
+                AllowedCorsOrigins = allowedCorsOrigins,
+                AllowedScopes =
                 {
-                    ClientId = "client1",
-                    ClientName = "Client 1",
-                    ClientSecrets = new[] {
-                        new Secret("client1_secret_code".Sha512()) },
-                    AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
-                    AllowedScopes = {
-                        "openid",
-                        "roles",
-                        "race2WebApi"
-                    }
-                };
+                    IdentityServerConstants.StandardScopes.OpenId,
+                    IdentityServerConstants.StandardScopes.Profile,
+                    "race2WebApi",
+                    "roles"
+                },
+                RedirectUris = redirectUris,
+                PostLogoutRedirectUris = postLogoutRedirectUris
+            };
 
-                Client client2 = new Client
-                {
-                    ClientId = "blazorWASM",
-                    AllowedGrantTypes = GrantTypes.Code,
-                    RequirePkce = true,
-                    RequireClientSecret = false,
-                    AllowedCorsOrigins = { "https://localhost:5002" },
-                    AllowedScopes =
-                    {
-                        IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile,
-                        "race2WebApi",
-                        "roles"
-                    },
-                    RedirectUris = { "https://localhost:5002/authentication/login-callback" },
-                    PostLogoutRedirectUris = { "https://localhost:5002/authentication/logout-callback" }
-                };
+                
+            clients.Add(client1);
+            clients.Add(client2);
 
-                List<Client> clients = new List<Client>();
-                clients.Add(client1);
-                clients.Add(client2);
-
-                return clients;
-            }
+            return clients;
         }        
     }
 }

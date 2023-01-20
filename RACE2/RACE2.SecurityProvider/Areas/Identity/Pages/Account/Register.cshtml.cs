@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using RACE2.DataModel;
+using RACE2.SecurityProvider.UtilityClasses;
 
 namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
 {
@@ -30,6 +31,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<Userdetails> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private IRandomPasswordGeneration _randomPasswordGeneration;
 
         public RegisterModel(
             UserManager<Userdetails> userManager,
@@ -44,6 +46,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _randomPasswordGeneration = new RandomPasswordGeneration();
         }
 
         /// <summary>
@@ -113,6 +116,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
+                var pw = _randomPasswordGeneration.GenerateRandomPassword(null);
                 var user = CreateUser();
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
