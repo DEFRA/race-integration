@@ -116,12 +116,13 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var pw = _randomPasswordGeneration.GenerateRandomPassword(null);
+                var randomPassword = _randomPasswordGeneration.GenerateRandomPassword(null);
                 var user = CreateUser();
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
-                var result = await _userManager.CreateAsync(user, Input.Password);
+                //var result = await _userManager.CreateAsync(user, Input.Password);
+                var result = await _userManager.CreateAsync(user, randomPassword);
 
                 if (result.Succeeded)
                 {
