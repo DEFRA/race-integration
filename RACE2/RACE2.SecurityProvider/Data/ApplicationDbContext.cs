@@ -1,16 +1,22 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using RACE2.DataModel;
 
 namespace RACE2.SecurityProvider.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<Userdetails>
+    public class ApplicationDbContext : IdentityDbContext<Userdetails,
+                                                            Roles,string>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
 
         }
+
+        public DbSet<FeatureFunction> FeatureFunction { get; set; }
+
+        public DbSet<UserPermissions> UserPermissions { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
@@ -112,6 +118,21 @@ namespace RACE2.SecurityProvider.Data
                 .Property(e => e.password_retry_count)
                 .HasDefaultValue(0);
 
+            modelBuilder.Entity<Roles>()
+                .Property(e => e.display_name)
+                .HasMaxLength(64);
+
+            modelBuilder.Entity<Roles>()
+                .Property(e => e.description);
+
+            modelBuilder.Entity<Roles>()
+                .Property(e => e.parent_id);
+
+            modelBuilder.Entity<Roles>()
+                .Property(e => e.start_date);
+
+            modelBuilder.Entity<Roles>()
+                .Property(e => e.end_date);
         }
 
     }
