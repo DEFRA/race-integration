@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using MudBlazor.Services;
 using RACE2.FrontEnd;
 using RACE2.FrontEnd.Services;
 
@@ -20,5 +21,5 @@ builder.Services.AddHttpClient<WeatherForecastService>(
     client =>
         client.BaseAddress = new Uri("https://localhost:5004"));
 builder.Services.AddSingleton<WeatherForecastService>();
-
+builder.Services.AddMudServices();
 await builder.Build().RunAsync();

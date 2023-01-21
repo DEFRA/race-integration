@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.UnitTest", "RACE2.Uni
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.DataModel", "RACE2.DataModel\RACE2.DataModel.csproj", "{FBAAF525-92C8-4E3A-9E3E-A240B8805CC8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RACE2.SecurityProvider", "RACE2.SecurityProvider\RACE2.SecurityProvider.csproj", "{A579A09F-E100-4A41-A427-A7874F512529}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.SecurityProvider", "RACE2.SecurityProvider\RACE2.SecurityProvider.csproj", "{A579A09F-E100-4A41-A427-A7874F512529}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
