@@ -19,7 +19,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\assets\" />
+    <Folder Include="wwwroot\assets\images\" />
+    <Folder Include="wwwroot\assets\javascripts\" />
+    <Folder Include="wwwroot\assets\sass\" />
   </ItemGroup>
 
 </Project>

@@ -1,14 +1,37 @@
-﻿<MudText Align="Align.Center" Typo="Typo.h3" Color="Color.Primary">
-    Welcome to a RACE2 application created with
-    <br /> Blazor UI Material design.
-</MudText>
-
-<MudPaper Elevation="3" Class="my-5 py-5">
-    <MudText Align="Align.Center">
-        Feel free to use the app any time you want.
+﻿<MudPaper Elevation="0" Class="my-1 py-1 mx-auto">
+    <MudText Align="Align.Left" Class= "pb-10" Typo="Typo.h3" Color="Color.Dark">
+        Service name
+    </MudText>
+    <MudText Align="Align.Left" Class="my-1 mx-1 py-1 px-1">
+        <p>
+            Use this service to send a supervising engineer's annual statement to the Environment Agency.
+        </p>
+        <br/>
+        <p>
+            This service is for statutory annual statements. To send a non-statutory statement email the Environment Agency.
+        </p>
+        <br/>
+        <p>
+            Email reservoirs@environment-agency.gov.uk
+        </p>
+        <br/>
+    </MudText>
+    <MudButton Variant="Variant.Filled" EndIcon="@Icons.Material.Filled.ArrowForwardIos" Style="@($"color:{Colors.Shades.White}; background:{Colors.LightGreen.Darken4};")"><MudText Typo="Typo.h5">Start now</MudText></MudButton>
+    <MudText Align="Align.Left" Class="pt-10 pl-1" Typo="Typo.h5">
+        <p>Before you start</p>
+    </MudText>
+    <MudText Align="Align.Left" Class="pt-5 pl-1">
+        <p>You'll need an email address to set up an account.</p>
+        <p>Read about supervising engineers' written statements and site visit reports</p>
+    </MudText>
+    <MudText Align="Align.Left" Class="pt-8 pl-1" Typo="Typo.h5">
+        <p>Get help using this service</p>
+    </MudText>
+    <MudText Align="Align.Left" Class="pt-5 pl-1">
+        <p>You can get help doing things online.</p>
     </MudText>
 </MudPaper>
 
 @code {
-
+    private MudTheme Theme = new MudTheme();
 }
