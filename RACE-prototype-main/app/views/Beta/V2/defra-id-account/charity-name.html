@@ -1,0 +1,41 @@
+{% extends "layout-back-button.html" %}
+
+{% block pageTitle %}
+Start page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% set serviceName %}
+Defra account
+{% endset%}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+        <form class="form" action="/Beta/V2/defra-id-account/charity-address" method="post">
+
+            <div class="govuk-form-group">
+                <h1 class="govuk-label-wrapper">
+                    <label class="govuk-label govuk-label--xl" for="charity-name">
+                        What is the registered charity name?
+                    </label>
+                </h1>
+
+                <input class="govuk-input govuk-input--width-20" id="charity-name" name="charity-name" type="text">
+
+            </div>
+
+
+            <button class="govuk-button" data-module="govuk-button">
+                Continue
+            </button>
+
+
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}

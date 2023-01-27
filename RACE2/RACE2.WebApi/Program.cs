@@ -36,9 +36,9 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddGraphQLServer()
     .AddQueryType(q => q.Name("Query"))
-        .AddType<RoleQueryResolver>()
-    .AddMutationType(m => m.Name("Mutation"))
-        .AddType<RoleMutationResolver>();
+        .AddType<RoleQueryResolver>();
+    //.AddMutationType(m => m.Name("Mutation"))
+    //    .AddType<RoleMutationResolver>();
 
 var app = builder.Build();
 

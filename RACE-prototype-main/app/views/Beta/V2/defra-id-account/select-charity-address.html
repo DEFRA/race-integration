@@ -1,0 +1,124 @@
+{% extends "layout-back-button.html" %}
+
+{% block pageTitle %}
+Start page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% set serviceName %}
+Defra account
+{% endset%}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <form class="form" action="/Beta/V2/defra-id-account/charity-confirm" method="post">
+
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+                        <h1 class="govuk-fieldset__heading">
+                            Select the address
+                        </h1>
+                    </legend>
+
+                    <p class="govuk-body">
+                        Postcode: <span class="govuk-!-font-weight-bold">BS8 1LB</span> <a
+                            href="add-charity-address">Change</a>
+                    </p>
+
+
+
+                    <div class="govuk-form-group">
+
+
+
+                        <select class="govuk-select" id="charityAddress" name="charityAddress">
+
+
+                            <option value="" selected="">8 addresses found</option>
+
+
+
+                            <option value="address1">11 Clifton Road, BRISTOL BS8 1LB</option>
+
+
+
+                            <option value="address2">12 Clifton Road, BRISTOL BS8 1LB</option>
+
+
+
+                            <option value="address3">13 Clifton Road, BRISTOL BS8 1LB</option>
+
+
+
+                            <option value="address4">14 Clifton Road, BRISTOL BS8 1LB</option>
+
+
+
+                            <option value="address5">15 Clifton Road, BRISTOL BS8 1LB</option>
+
+
+
+                            <option value="address6">16 Clifton Road, BRISTOL BS8 1LB</option>
+
+
+
+                            <option value="address7">17 Clifton Road, BRISTOL BS8 1LB</option>
+
+
+
+                            <option value="address8">18 Clifton Road, BRISTOL BS8 1LB</option>
+
+
+                        </select>
+                    </div>
+
+
+                    <!-- <p class="govuk-body">
+              3 addresses found for Clifton House and SW19 5JA. <a href="" class="govuk-link">Change</a>
+            </p>
+  
+            <div class="govuk-radios">
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="found-address" name="found-address" type="radio" value="2A BAILEY HOUSE, BAILEY ROAD, BS2 1PP">
+                <label class="govuk-label govuk-radios__label" for="found-address">
+                  Clifton House, Clifton Road, LONDON SW19 5JA
+                </label>
+              </div>
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="found-address-2" name="found-address" type="radio" value="1A BAILEY HOUSE, BAILEY ROAD, BS2 1PP">
+                <label class="govuk-label govuk-radios__label" for="found-address-2">
+                  2a, Clifton House, Clifton Road, LONDON SW19 5JA
+                </label>
+              </div>
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="found-address-3" name="found-address" type="radio" value="3A BAILEY HOUSE, BAILEY ROAD, BS2 1PP">
+                <label class="govuk-label govuk-radios__label" for="found-address-3">
+                  2b, Clifton House, Clifton Road, LONDON SW19 5JA
+                </label>
+              </div>
+            </div> -->
+
+                </fieldset>
+            </div>
+
+            <p class="govuk-body">
+                <a href="#">
+                    I cannot find the address in the list
+                </a>
+            </p>
+
+            <button class="govuk-button" data-module="govuk-button">
+                Continue
+            </button>
+
+        </form>
+
+
+    </div>
+</div>
+
+{% endblock %}

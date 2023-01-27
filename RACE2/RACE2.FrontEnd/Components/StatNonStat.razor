@@ -1,0 +1,76 @@
+﻿@page "/stat-non-stat"
+@inject NavigationManager NavigationManager
+
+<div class="govuk-width-container ">
+    <a class="govuk-back-link" href="javascript:history.back()">Back</a>
+    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+
+                <form action="/Beta/V3/submit-s12-statement/stat-non-stat-answer" method="post">
+
+                    <div class="govuk-form-group">
+
+                        <fieldset class="govuk-fieldset">
+
+                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+
+                                <h1 class="govuk-fieldset__heading">
+                                    Do you want to submit a statutory or non-statutory annual statement?
+                                </h1>
+
+                            </legend>
+
+
+@*                            <div class="govuk-radios govuk-radios govuk-!-margin-top-2" data-module="govuk-radios">
+
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="stat-non-stat" name="stat-non-stat"
+                                           type="radio" value="Statutory" aria-describedby="stat-non-stat-item-hint">
+                                    <label class="govuk-label govuk-radios__label" for="stat-non-stat">
+                                        Statutory
+                                    </label>
+                                </div>
+
+
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="stat-non-stat-2" name="stat-non-stat"
+                                           type="radio" value="Non-statutory" aria-describedby="stat-non-stat-2-item-hint">
+                                    <label class="govuk-label govuk-radios__label" for="stat-non-stat-2">
+                                        Non-statutory
+                                    </label>
+                                </div>
+                            </div>*@
+                            <MudRadioGroup @bind-SelectedOption="Statutory_NonStatutory">
+                                <MudStack>
+                                    <MudRadio Option="true" Color="Color.Dark" Dense="false" Size="Size.Large"><span>Statutory</span></MudRadio>
+                                    <MudRadio Option="false" Color="Color.Dark" Dense="false" Size="Size.Large"><span>Non-statutory</span></MudRadio>
+                                </MudStack>
+                            </MudRadioGroup>
+                        </fieldset>
+                    </div>
+
+                    <MudButton OnClick="GoToNextPage" Variant="Variant.Filled" class="rounded-0" Style="@($"color:{Colors.Shades.White};background-color: #00703c !important;")"><MudText Typo="Typo.h5">Continue</MudText></MudButton>
+
+                </form>
+
+            </div>
+        </div>
+    </main>
+</div>
+
+@code {
+    public bool Statutory_NonStatutory { get; set; } = true;
+    public void GoToNextPage()
+    {        
+        bool forceLoad = true;
+        if (Statutory_NonStatutory)
+        {
+            NavigationManager.NavigateTo("/choose-a-reservoir/", forceLoad);
+        }
+        else
+        {
+            NavigationManager.NavigateTo("/non-stat", forceLoad);
+        }
+    }
+}

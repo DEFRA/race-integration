@@ -1,0 +1,72 @@
+{% extends "layout-back-button.html" %}
+
+{% block pageTitle %}
+Start page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% set serviceName %}
+Defra account
+{% endset%}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+
+  <div class="govuk-grid-column-two-thirds">
+
+    <form action="/Beta/V1/defra-id-account/org-uk-or-not-answer" method="post">
+
+      <div class="govuk-form-group">
+
+        <fieldset class="govuk-fieldset">
+        
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+        
+          <h1 class="govuk-fieldset__heading">
+            Where is your organisation registered to trade?
+          </h1>
+        
+        </legend>
+        
+      
+        <div class="govuk-radios" data-module="govuk-radios">
+              
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="Where is the organisation registered" name="Where is the organisation registered" type="radio" value="UK">
+                <label class="govuk-label govuk-radios__label" for="Where is the organisation registered">
+              UK
+            </label>
+                
+              </div>
+              
+              
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="Where is the organisation registered-2" name="Where is the organisation registered" type="radio" value="Non-UK (Organisation that is not registered in the UK)">
+                <label class="govuk-label govuk-radios__label" for="Where is the organisation registered-2">
+              Non-UK (Organisation that is not registered in the UK)
+            </label>
+                
+              </div>
+          
+        </div>
+        
+      
+      </fieldset>
+      
+      
+      </div>
+
+
+
+
+      <button class="govuk-button" data-module="govuk-button">
+        Continue
+      </button>
+
+    </form>
+
+  </div>
+</div>
+
+{% endblock %}

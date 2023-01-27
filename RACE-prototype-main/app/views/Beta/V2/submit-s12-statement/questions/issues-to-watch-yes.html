@@ -1,0 +1,40 @@
+{% extends "layout-back-button.html" %}
+
+{% block pageTitle %}
+Start page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% set serviceName %}
+
+{% endset%}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+        <form action="/Beta/V2/submit-s12-statement/questions/operator-specific-action" method="post">
+
+
+            <div class="govuk-form-group">
+                <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--xl" for="more-detail">
+                    What are the issues to be watched?
+                    </label>
+                </h1>
+
+                
+                <textarea class="govuk-textarea" id="more-detail" name="more-detail" rows="5"
+                    aria-describedby="more-detail-hint"></textarea>
+            </div>
+
+            <button class="govuk-button govuk-!-margin-top-2" data-module="govuk-button">Save and continue</button>
+
+    </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

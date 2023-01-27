@@ -1,0 +1,55 @@
+{% extends "layout-back-button.html" %}
+
+{% block pageTitle %}
+Start page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% set serviceName %}
+Defra account
+{% endset%}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+        <form method="post" action="/Beta/V2/defra-id-account/company-check-info">
+
+
+            <div class="govuk-form-group">
+                <h1 class="govuk-label-wrapper">
+                    <label class="govuk-label govuk-label--xl" for="defraIdPersonalPhone">
+                        What is your telephone number?
+                    </label>
+                </h1>
+
+
+
+                <div id="defraIdPersonalPhone-hint" class="govuk-hint">
+                    We ask for this in case we need to call you directly with any queries about your registration.
+                </div>
+
+                <input class="govuk-input govuk-!-width-one-half" id="defraIdPersonalPhone" name="defraIdPersonalPhone"
+                    type="tel" aria-describedby="defraIdPersonalPhone-hint">
+
+            </div>
+
+
+            <div class="govuk-inset-text">
+                We may also contact you by email, using the address registered with your Government Gateway account:
+                <span class="govuk-!-font-weight-bold">samwoods@company.co.uk</span>
+            </div>
+
+
+            <button class="govuk-button" data-module="govuk-button">
+                Continue
+            </button>
+
+
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}

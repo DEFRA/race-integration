@@ -1,0 +1,96 @@
+{% extends "layout-back-button.html" %}
+
+{% block pageTitle %}
+Start page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% set serviceName %}
+
+{% endset%}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+        <h1 class="govuk-heading-xl">Are these the operator's details in the reservoir records?</h1>
+
+
+        <dl class="govuk-summary-list govuk-summary-list--no-border">
+
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Name
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    <p class="govuk-body">Naomi Roberts</p>
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link govuk-link--no-visited-state" href="/Beta/V3/submit-s12-statement/operator-details/change-name">
+                        Change<span class="govuk-visually-hidden">name</span>
+                    </a>
+                </dd>
+            </div>
+
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Address
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    <p class="govuk-body">Rockingham Estate<br>Hampshire<br>PO10 1AB</p>
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link govuk-link--no-visited-state" href="/Beta/V3/submit-s12-statement/operator-details/change-address-2">
+                        Change<span class="govuk-visually-hidden">address</span>
+                    </a>
+                </dd>
+            </div>
+
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Email
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    <p class="govuk-body">{{ data['operator-email-1'] }}</p>
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link govuk-link--no-visited-state" href="/Beta/V3/submit-s12-statement/operator-details/change-email-2">
+                        Change<span class="govuk-visually-hidden">operator's email address</span>
+                    </a>
+                </dd>
+            </div>
+
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Phone
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    <p class="govuk-body">{{ data['operator-phone-1'] }}</p>
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link govuk-link--no-visited-state" href="/Beta/V3/submit-s12-statement/operator-details/change-phone-1">
+                        Change<span class="govuk-visually-hidden">operator's phone number</span>
+                    </a>
+                </dd>
+            </div>
+
+
+        </dl>
+
+
+        <a href="/Beta/V3/submit-s12-statement/inspecting-engineer/confirm" role="button" draggable="false"
+            class="govuk-button govuk-!-margin-top-4 govuk-!-margin-bottom-6" data-module="govuk-button">
+            Confirm
+        </a>
+
+
+        <div class="govuk-!-margin-top-8">
+            <p><a class="govuk-link govuk-link--no-visited-state"
+                    href="/Beta/V3/submit-s12-statement/operator-details/add-operator">Add another operator</a></p>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

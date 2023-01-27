@@ -1,0 +1,135 @@
+{% extends "layout-back-button.html" %}
+
+{% block pageTitle %}
+Start page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% set serviceName %}
+
+{% endset%}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+        <form action="/Beta/V3/submit-s12-statement/questions/operator-list-of-reasons-1-answer" method="post">
+
+
+            <h1 class="govuk-heading-xl govuk-!-margin-bottom-8 govuk-!-padding-bottom-4">Reasons for ordering an early
+                inspection</h1>
+
+
+            <div class="govuk-summary-list govuk-!-margin-top-8 govuk-!-padding-top-8">
+
+                <div class="govuk-summary-list heading-underline">
+                    <h3 class="govuk-heading-m">Reason 1</h3>
+
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link govuk-link--no-visited-state"
+                            href="/Beta/V3/submit-s12-statement/operator-details/change-name">
+                            Change<span class="govuk-visually-hidden">name</span>
+                        </a>
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link govuk-link--no-visited-state"
+                            href="/Beta/V3/submit-s12-statement/operator-details/change-name">
+                            Remove<span class="govuk-visually-hidden">name</span>
+                        </a>
+                    </dd>
+                </div>
+
+                <div class="govuk-grid-row govuk-!-margin-top-3">
+                    <div class="govuk-grid-column-full">
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-one-third">
+                                <p class="govuk-body govuk-!-font-weight-bold">Name</p>
+                            </div>
+                            <div class="govuk-grid-column-one-half">
+                                <p class="govuk-body">{{ data['title-reason-1'] }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="govuk-grid-row govuk-!-margin-top-3">
+                    <div class="govuk-grid-column-full">
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-one-third">
+                                <p class="govuk-body govuk-!-font-weight-bold">Description</p>
+                            </div>
+                            <div class="govuk-grid-column-two-thirds">
+                                <p class="govuk-body">{{ data['description-reason-1'] }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="govuk-summary-list govuk-summary-list--no-border">
+
+                    <p class="govuk-body govuk-!-font-weight-bold govuk-!-width-one-third"></p>
+                </div>
+
+                <div class="govuk-summary-list govuk-summary-list--no-border">
+                    <dt class="govuk-summary-list__key">Status</dt>
+                    <dd class="govuk-summary-list__value">
+                        <p class="govuk-body">{{ data['status'] }}</p>
+                    </dd>
+                </div>
+
+                <div class="govuk-summary-list govuk-summary-list--no-border">
+                    <dt class="govuk-summary-list__key">Compliant</dt>
+                    <dd class="govuk-summary-list__value">
+                        <p class="govuk-body">{{ data['operator-compliant'] }}</p>
+                    </dd>
+                </div>
+
+                <div class="govuk-summary-list govuk-summary-list--no-border heading-underline">
+                    <dt class="govuk-summary-list__key">Comments</dt>
+                    <dd class="govuk-summary-list__value">
+                        <p class="govuk-body govuk-!-padding-bottom-6">{{ data['comments-reason'] }}</p>
+                    </dd>
+                </div>
+
+            </div>
+
+
+            <div class="govuk-form-group govuk-!-margin-top-4 govuk-!-padding-top-6">
+                <fieldset class="govuk-fieldset" aria-describedby="changed-name-hint">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        <h2 class="govuk-fieldset__heading">
+                            Do you want to add another reason?
+                        </h2>
+                    </legend>
+                    <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="another-reason" name="another-reason" type="radio"
+                                value="yes">
+                            <label class="govuk-label govuk-radios__label" for="another-reason">
+                                Yes
+                            </label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="another-reason-2" name="another-reason" type="radio"
+                                value="no">
+                            <label class="govuk-label govuk-radios__label" for="another-reason-2">
+                                No
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <button role="button" draggable="false" class="govuk-button govuk-!-margin-top-4 govuk-!-margin-bottom-6"
+                data-module="govuk-button">
+                Confirm
+            </button>
+
+        </form>
+
+
+    </div>
+</div>
+
+{% endblock %}

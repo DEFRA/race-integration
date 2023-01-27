@@ -1,0 +1,40 @@
+{% extends "layout-back-button.html" %}
+
+{% block pageTitle %}
+Start page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% set serviceName %}
+
+{% endset%}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+        <h1 class="govuk-heading-xl">Change the phone number of the operator in the prescribed form of record</h1>
+
+        <form class="form" action="/Beta/V2/submit-s12-statement/alt-supervising-engineer/confirm-phone-details" method="post">
+
+            <div class="govuk-form-group">
+
+                <label class="govuk-label govuk-label--m" for="alt-super-engineer-phone-2">
+                    Phone number
+                </label>
+                <input class="govuk-input govuk-!-width-one-third" id="alt-super-engineer-phone-2" name="alt-super-engineer-phone-2" type="text" value="{{ data['alt-super-engineer-phone'] }}">
+            </div>
+
+
+            <button class="govuk-button govuk-!-margin-top-6 govuk-!-margin-bottom-6" data-module="govuk-button">Save
+                and continue</button>
+
+
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "layout-back-button.html" %}
+
+{% block pageTitle %}
+Start page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% set serviceName %}
+Defra account
+{% endset%}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+  
+        <form method="post" action="/Beta/V1/defra-id-account/individual-select-address">
+  
+          <h1 class="govuk-heading-xl">What is your address?</h1>
+  
+    
+          <div class="govuk-form-group">
+            <label class="govuk-label" for="width-20">
+              Enter your postcode
+              <span class="govuk-hint">
+                If you cannot find your address or if you need to add a non‑UK address, you can add it manually below.
+               </span>
+            </label>
+            <input class="govuk-input govuk-input--width-10" id="postcode" name="postcode" type="text">
+          </div>
+  
+          <button class="govuk-button" data-module="govuk-button">
+            Find address
+          </button>
+  
+          <p class="govuk-body">
+            <a class="govuk-link" href="#">
+              Enter the address manually
+            </a>
+          </p>
+  
+        </form>
+  
+    </div>
+  </div>
+
+{% endblock %}

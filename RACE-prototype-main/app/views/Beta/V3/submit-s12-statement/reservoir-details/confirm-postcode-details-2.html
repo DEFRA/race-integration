@@ -1,0 +1,81 @@
+{% extends "layout-back-button.html" %}
+
+{% block pageTitle %}
+Start page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% set serviceName %}
+
+{% endset%}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+        <form action="/Beta/V3/submit-s12-statement/operator-details/confirm" method="post">
+
+            <h1 class="govuk-heading-xl">Confirm the reservoir details</h1>
+
+            <dl class="govuk-summary-list govuk-summary-list--no-border">
+
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        Name
+                    </dt>
+                    <dd class="govuk-summary-list__value" for="reservoir-name-old">
+                        <p class="govuk-body">Rockingham reservoir</p>
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link govuk-link--no-visited-state"
+                            href="/Beta/V3/submit-s12-statement/reservoir-details/change-name">
+                            Change<span class="govuk-visually-hidden">postcode</span>
+                        </a>
+                    </dd>
+                </div>
+
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        Postcode
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        {{ data['new-reservoir-postcode'] }}
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link govuk-link--no-visited-state"
+                            href="/Beta/V3/submit-s12-statement/reservoir-details/change-postcode">
+                            Change<span class="govuk-visually-hidden">postcode</span>
+                        </a>
+                    </dd>
+                </div>
+
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        National Grid reference
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        <p class="govuk-body">SU106951</p>
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link govuk-link--no-visited-state"
+                            href="/Beta/V3/submit-s12-statement/reservoir-details/change-grid-ref-2">
+                            Change<span class="govuk-visually-hidden"> grid-reference</span>
+                        </a>
+                    </dd>
+                </div>
+
+            </dl>
+
+
+            <button role="button" draggable="false" class="govuk-button govuk-!-margin-top-4 govuk-!-margin-bottom-6"
+                data-module="govuk-button">
+                Confirm
+            </button>
+
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}

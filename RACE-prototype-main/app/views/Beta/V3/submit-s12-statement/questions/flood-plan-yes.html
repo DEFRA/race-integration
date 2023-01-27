@@ -1,0 +1,74 @@
+{% extends "layout-back-button.html" %}
+
+{% block pageTitle %}
+Start page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% set serviceName %}
+
+{% endset%}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+        <form action="/Beta/V3/submit-s12-statement/questions/flood-plan-tested" method="post">
+
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset" role="group" aria-describedby="passport-issued-hint">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+                        <h1 class="govuk-fieldset__heading">
+                            What is the date of the certificate?
+                        </h1>
+                    </legend>
+                    <div id="passport-issued-hint" class="govuk-hint govuk-!-margin-top-2">
+                        For example, 27 3 2007
+                    </div>
+                    <div class="govuk-date-input" id="certificate-issued">
+                        <div class="govuk-date-input__item">
+                            <div class="govuk-form-group">
+                                <label class="govuk-label govuk-date-input__label" for="certificate-issued-day">
+                                    Day
+                                </label>
+                                <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                    id="certificate-issued-day" name="certificate-issued-day" type="text" inputmode="numeric">
+                            </div>
+                        </div>
+                        <div class="govuk-date-input__item">
+                            <div class="govuk-form-group">
+                                <label class="govuk-label govuk-date-input__label" for="certificate-issued-month">
+                                    Month
+                                </label>
+                                <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                    id="certificate-issued-month" name="certificate-issued-month" type="text"
+                                    inputmode="numeric">
+                            </div>
+                        </div>
+                        <div class="govuk-date-input__item">
+                            <div class="govuk-form-group">
+                                <label class="govuk-label govuk-date-input__label" for="certificate-issued-year">
+                                    Year
+                                </label>
+                                <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                                    id="certificate-issued-year" name="certificate-issued-year" type="text"
+                                    inputmode="numeric">
+                            </div>
+                        </div>
+                    </div>
+
+                </fieldset>
+            </div>
+
+
+            <button class="govuk-button govuk-!-margin-top-6" data-module="govuk-button">
+                Continue
+            </button>
+
+        </form>
+
+</div>
+
+{% endblock %}
