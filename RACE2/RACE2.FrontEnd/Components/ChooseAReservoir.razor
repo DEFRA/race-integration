@@ -1,0 +1,64 @@
+﻿@page "/choose-a-reservoir"
+@inject NavigationManager NavigationManager
+<div class="govuk-width-container ">        
+  
+  <a class="govuk-back-link" href="javascript:history.back()">Back</a>
+
+  <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+
+  <div class="govuk-grid-row">    
+
+    <div class="govuk-grid-column-two-thirds">
+
+        <!--Make sure the form has the autocomplete function switched off:-->
+
+@*        <form autocomplete="off" action="/Beta/V3/submit-s12-statement/reservoir-details/confirm" method="post">*@
+
+            <Label class="govuk-heading-xl" >Which reservoir do you want to submit an annual statement for?
+            </Label>
+
+@*            <div class="autocomplete" style="width:400px;">
+                <input id="choose-reservoir" type="text" name="myCountry" placeholder="">
+            </div>*@
+            <div>
+@*                <button role="button" draggable="false"
+                    class="govuk-button govuk-!-margin-top-6 govuk-!-margin-bottom-6" data-module="govuk-button">
+                    Continue
+                </button>*@
+                <br/>
+
+            </div>
+@*
+        </form>*@
+
+        <div class="govuk-!-margin-top-8">
+            <p>
+                <a class="govuk-link govuk-link--no-visited-state"
+                    href="/Beta/V3/submit-s12-statement/reservoir-details/reservoir-not-listed" target="_blank">
+                    Reservoir not listed?
+                </a>
+            </p>
+        </div>
+
+    </div>
+</div>
+  </main>
+</div>
+
+@code {
+    public void GoToNextPage()
+    {
+        bool forceLoad = true;
+        NavigationManager.NavigateTo("/home/", forceLoad);       
+    }
+
+    [Inject] private HttpClient HttpClient { get; set; }
+    private string _state;
+
+    private async Task<IEnumerable<string>> Search(string value, CancellationToken token)
+    {
+        //the http endpoint does not return immediately. There is an artifical delay built-in
+        var result = await HttpClient.GetFromJsonAsync<IEnumerable<string>>($"webapi/AmericanStates/searchWithDelay/{value ?? string.Empty}", token);
+        return result;
+    }
+}

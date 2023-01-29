@@ -24,16 +24,16 @@
                         <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z"></path>
                     </svg>
                 </a>*@
-                <MudButton OnClick="GoToNextPage" Variant="Variant.Filled" class="rounded-0 button" Style="@($"color:{Colors.Shades.White};background-color: #00703c !important;")">
-                    <MudText Style="font-weight: 700;font-size: 1.5rem;">
-                        Start now
-                        <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19"
-                             viewBox="0 0 33 40" aria-hidden="true" focusable="false">
-                            <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z"></path>
-                            </svg>
-                    </MudText>
-                </MudButton>
-                <br /><br /><br />
+
+                <RadzenButton Click=@(args => GoToNextPage()) class="govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8 rz-border-radius-0"
+                              Style="background-color:#00703c">
+                    <span style="font-weight:bold;font-size:large">Start Now</span>
+                    <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19"
+                        viewBox="0 0 33 40" aria-hidden="true" focusable="false">
+                        <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z"></path>
+                    </svg>
+                 </RadzenButton>
+
                 <h2 class="govuk-heading-m govuk-!-font-size-27 govuk-!-padding-top-2">Before you start</h2>
         
                 <p class="govuk-body">You'll need an email address to set up an account.</p>
