@@ -21,12 +21,10 @@
                 <input id="choose-reservoir" type="text" name="myCountry" placeholder="">
             </div>*@
             <div>
-@*                <button role="button" draggable="false"
-                    class="govuk-button govuk-!-margin-top-6 govuk-!-margin-bottom-6" data-module="govuk-button">
-                    Continue
-                </button>*@
-                <br/>
-
+                <button class="govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8"
+                    data-module="govuk-button" @onclick=@(args => GoToNextPage())>
+                Continue
+                </button>
             </div>
 @*
         </form>*@
@@ -50,15 +48,5 @@
     {
         bool forceLoad = true;
         NavigationManager.NavigateTo("/home/", forceLoad);       
-    }
-
-    [Inject] private HttpClient HttpClient { get; set; }
-    private string _state;
-
-    private async Task<IEnumerable<string>> Search(string value, CancellationToken token)
-    {
-        //the http endpoint does not return immediately. There is an artifical delay built-in
-        var result = await HttpClient.GetFromJsonAsync<IEnumerable<string>>($"webapi/AmericanStates/searchWithDelay/{value ?? string.Empty}", token);
-        return result;
     }
 }
