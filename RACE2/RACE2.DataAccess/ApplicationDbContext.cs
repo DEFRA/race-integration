@@ -9,21 +9,15 @@ using System.IO;
 
 namespace RACE2.DataAccess
 {
-    //public class ApplicationDbContext : IdentityDbContext<Userdetails, Roles,string>
-    public class ApplicationDbContext : IdentityDbContext<Userdetails>
-    {
-        IConfigurationRoot _configuration;
+    public class ApplicationDbContext : IdentityDbContext<Userdetails, Roles,string>
+     {
+        
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {            
-        }
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IConfigurationRoot configuration)
-            : base(options)
-        {
-            _configuration = configuration;
-        }
+        }       
 
-        //public DbSet<FeatureFunction> FeatureFunction { get; set; }
+        public DbSet<FeatureFunction> FeatureFunction { get; set; }
 
         public DbSet<UserPermissions> UserPermissions { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -32,116 +26,116 @@ namespace RACE2.DataAccess
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Userdetails>()
-                .Property(e => e.defra_id)
+                .Property(e => e.c_defra_id)
                 .HasDefaultValue(" ")
                 .HasMaxLength(64);
 
             modelBuilder.Entity<Userdetails>()
-                .Property(e => e.type)
+                .Property(e => e.c_type)
                 .HasDefaultValue(" ")
                 .HasMaxLength(64)
                 .IsRequired(true);
 
             modelBuilder.Entity<Userdetails>()
-                .Property(e => e.display_name)
+                .Property(e => e.c_display_name)
                 .HasDefaultValue(" ")
                 .HasMaxLength(128);
 
             modelBuilder.Entity<Userdetails>()
-                .Property(e => e.first_name)
+                .Property(e => e.c_first_name)
                 .HasDefaultValue(" ")
                 .HasMaxLength(64)
                 .IsRequired(true);
 
             modelBuilder.Entity<Userdetails>()
-                .Property(e => e.last_name)
+                .Property(e => e.c_last_name)
                 .HasDefaultValue(" ")
                 .HasMaxLength(64)
                 .IsRequired(true);
 
            modelBuilder.Entity<Userdetails>()
-                .Property(e => e.mobile)
+                .Property(e => e.c_mobile)
                 .HasDefaultValue(" ")
                 .HasMaxLength(64);
 
             
             modelBuilder.Entity<Userdetails>()
-                .Property(e => e.emergency_phone)
+                .Property(e => e.c_mobile)
                 .HasDefaultValue(" ")
                 .HasMaxLength(64);
 
             modelBuilder.Entity<Userdetails>()
-                .Property(e => e.organisation_id)
+                .Property(e => e.c_emergency_phone)
                 .HasDefaultValue(" ")
                 .HasMaxLength(64);
 
             modelBuilder.Entity<Userdetails>()
-                .Property(e => e.organisation_name)
+                .Property(e => e.c_organisation_name)
                 .HasDefaultValue(" ")
                 .HasMaxLength(64);
 
             modelBuilder.Entity<Userdetails>()
-                .Property(e => e.job_title)
+                .Property(e => e.c_job_title)
                 .HasDefaultValue(" ")
                 .HasMaxLength(64);
 
             modelBuilder.Entity<Userdetails>()
-                .Property(e => e.current_panel)
+                .Property(e => e.c_current_panel)
                 .HasDefaultValue(" ")
                 .HasDefaultValue(" ")
                 .HasMaxLength(64);
 
             modelBuilder.Entity<Userdetails>()
-                .Property(e => e.paon)
+                .Property(e => e.c_paon)
                 .HasDefaultValue(" ")
                 .HasMaxLength(64);
 
             modelBuilder.Entity<Userdetails>()
-                .Property(e => e.saon)
+                .Property(e => e.c_saon)
                 .HasDefaultValue(" ")
                 .HasMaxLength(64);
 
             modelBuilder.Entity<Userdetails>()
-               .Property(e => e.status)
+               .Property(e => e.c_status)
                .HasDefaultValue(" ")
                .HasMaxLength(64)
                .IsRequired(true);
 
             modelBuilder.Entity<Userdetails>()
-                .Property(e => e.created_on_date);
+                .Property(e => e.c_created_on_date);
 
             modelBuilder.Entity<Userdetails>()
-                .Property(e => e.last_access_date);
+                .Property(e => e.c_last_access_date);
 
             modelBuilder.Entity<Userdetails>()
-                .Property(e => e.password)
+                .Property(e => e.c_password)
                 .HasDefaultValue(" ")
                 .HasMaxLength(24);
 
             modelBuilder.Entity<Userdetails>()
-                .Property(e => e.password_hint)
+                .Property(e => e.c_password_hint)
                 .HasDefaultValue(" ")
                 .HasMaxLength(128);
 
             modelBuilder.Entity<Userdetails>()
-                .Property(e => e.password_retry_count)
+                .Property(e => e.c_password_retry_count)
                 .HasDefaultValue(0);
 
-            //modelBuilder.Entity<Roles>()
-            //    .Property(e => e.display_name)
-            //    .HasMaxLength(64);
+            modelBuilder.Entity<Roles>()
+                .Property(e => e.display_name)
+                .HasMaxLength(64);
 
-            //modelBuilder.Entity<Roles>()
-            //    .Property(e => e.description);
+            modelBuilder.Entity<Roles>()
+                .Property(e => e.description);
 
-            //modelBuilder.Entity<Roles>()
-            //    .Property(e => e.parent_id);
+            modelBuilder.Entity<Roles>()
+                .Property(e => e.parent_id);
 
-            //modelBuilder.Entity<Roles>()
-            //    .Property(e => e.start_date);
+            modelBuilder.Entity<Roles>()
+                .Property(e => e.start_date);
 
-            //modelBuilder.Entity<Roles>()
-            //    .Property(e => e.end_date);
+            modelBuilder.Entity<Roles>()
+                .Property(e => e.end_date);
         }
 
     }
@@ -154,7 +148,7 @@ namespace RACE2.DataAccess
             var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
             var connectionString = configuration.GetConnectionString("DefaultConnection");
             builder.UseSqlServer(connectionString);
-            return new ApplicationDbContext(builder.Options, configuration);
+            return new ApplicationDbContext(builder.Options);
         }
     }
 }

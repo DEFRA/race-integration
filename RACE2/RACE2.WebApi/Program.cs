@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using RACE2.DataAccess.Repository;
-using RACE2.SecurityProvider.Data;
+
 using RACE2.WebApi.GraphQL;
 using RACE2.WebApi.MutationResolver;
 using RACE2.WebApi.QueryResolver;
@@ -12,6 +12,9 @@ using System.IdentityModel.Tokens.Jwt;
 
 
 var builder = WebApplication.CreateBuilder(args);
+IConfiguration _configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../appsettings.json").Build();
+var connectionString = _configuration.GetConnectionString("DefaultConnection");
+
 // builder.Configuration;
 
 
@@ -35,15 +38,16 @@ builder.Services.AddAuthentication("Bearer")
             });
 
 builder.Services.AddCors(options =>
-            { options.AddPolicy("CorsPolicy",
-                    builder =>
-                    {
-                        builder
-                        .AllowAnyOrigin()
-                        .AllowAnyMethod()
-                        .AllowAnyHeader();
-                    });
-            });
+{
+    options.AddPolicy("CorsPolicy",
+        builder =>
+        {
+            builder
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+        });
+});
 
 
 //builder.Services.AddGraphQLServer()
@@ -53,18 +57,21 @@ builder.Services.AddCors(options =>
 //        .AddType<RoleMutationResolver>();
 
 builder.Services.AddGraphQLServer()
-    .AddQueryType(q => q.Name("Query"))
-        .AddType<RoleQueryResolver>()
-    .AddMutationType(m => m.Name("Mutation"))
-        .AddType<RoleMutationResolver>();
+        .AddType<UserType>()
+            .AddQueryType<UserResolver>()
+            .AddMutationType<Mutation>()
+            .AddSubscriptionType<Subscription>();
+
+builder.Services.AddDbContext<RACE2.DataAccess.ApplicationDbContext>(options =>
+options.UseSqlServer(connectionString));
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 
-if(app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
 
-app.UseHttpsRedirection();
+    app.UseHttpsRedirection();
 
 app.UseCors("CorsPolicy");
 
