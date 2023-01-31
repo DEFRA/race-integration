@@ -12,10 +12,11 @@ namespace RACE2.DataAccess
     //public class ApplicationDbContext : IdentityDbContext<Userdetails, Roles,string>
     public class ApplicationDbContext : IdentityDbContext<Userdetails>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        IConfigurationRoot _configuration;
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IConfigurationRoot configuration)
             : base(options)
         {
-
+            _configuration = configuration;
         }
 
         //public DbSet<FeatureFunction> FeatureFunction { get; set; }
@@ -149,7 +150,7 @@ namespace RACE2.DataAccess
             var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
             var connectionString = configuration.GetConnectionString("DefaultConnection");
             builder.UseSqlServer(connectionString);
-            return new ApplicationDbContext(builder.Options);
+            return new ApplicationDbContext(builder.Options, configuration);
         }
     }
 }
