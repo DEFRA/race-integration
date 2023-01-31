@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RACE2.Services\RACE2.Services.csproj" />
+    <ProjectReference Include="..\RACE2.DataModel\RACE2.DataModel.csproj" />
   </ItemGroup>
 
 </Project>

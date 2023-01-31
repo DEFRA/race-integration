@@ -6,8 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\RACE2.DataAccess\RACE2.DataAccess.csproj" />
-  </ItemGroup>
-
 </Project>
