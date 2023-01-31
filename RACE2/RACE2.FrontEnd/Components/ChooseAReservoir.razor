@@ -1,0 +1,110 @@
+﻿@page "/choose-a-reservoir"
+@inject NavigationManager NavigationManager
+<div class="govuk-width-container ">
+
+    <a class="govuk-back-link" href="javascript:history.back()">Back</a>
+
+    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+
+        <div class="govuk-grid-row">
+
+            <div class="govuk-grid-column-two-thirds">
+                <div>
+                    <span class="govuk-heading-xl" for="choose a reservoir">
+                        Which reservoir do you want to submit an annual statement for?
+                    </span>
+                </div>
+
+                <div>
+                    <RadzenAutoComplete Placeholder="" Data=@reservoirs TextProperty="ReservoirName"
+                                        @bind-Value=@selectedValue Change=@(args => OnChange(args, "AutoComplete with placeholder"))
+                                        Style="width: 400px;border:2px solid fontsize:16px" Class="autocomplete rz-border-radius-0" />
+                </div>
+
+                <div>
+                    <button class="govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8"
+                            data-module="govuk-button" @onclick=@(args => GoToNextPage())>
+                        Continue
+                    </button>
+                </div>
+
+                <div class="govuk-!-margin-top-8">
+                    <p>
+                        <a class="govuk-link govuk-link--no-visited-state"
+                           href="/Beta/V3/submit-s12-statement/reservoir-details/reservoir-not-listed" target="_blank">
+                            Reservoir not listed?
+                        </a>
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </main>
+</div>
+
+@code {
+    public class Reservoir
+    {
+        public string? ReservoirName { get; set; }
+    }
+
+    List<Reservoir>? reservoirs;
+    List<String>? customReservoirsData;
+    List<string>? reservoirsNames;
+
+    string selectedValue = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        reservoirs = new List<Reservoir>();
+        var newres = new Reservoir();
+        newres.ReservoirName = "Reservoir1";
+        reservoirs.Add(newres);
+        var newres1 = new Reservoir();
+        newres1.ReservoirName = "Reservoir2";
+        reservoirs.Add(newres1);
+        var newres2 = new Reservoir();
+        newres2.ReservoirName = "Reservoir3";
+        reservoirs.Add(newres2);
+        var newres3 = new Reservoir();
+        newres3.ReservoirName = "Reservoir4";
+        reservoirs.Add(newres3);
+        var newres4 = new Reservoir();
+        newres4.ReservoirName = "Reservoir5";
+        reservoirs.Add(newres4);
+        var newres5 = new Reservoir();
+        newres5.ReservoirName = "Reservoir6";
+        reservoirs.Add(newres5);
+        var newres6 = new Reservoir();
+        newres6.ReservoirName = "Reservoir7";
+        reservoirs.Add(newres6);
+        var newres7 = new Reservoir();
+        newres7.ReservoirName = "Reservoir8";
+        reservoirs.Add(newres7);
+
+    }
+
+    void OnChange(object value, string name)
+    {
+        //var selectedOption = value.ToString();
+        //console.Log($"{name} value changed to {value}");
+    }
+
+    void OnLoadData(LoadDataArgs args)
+    {
+        //console.Log($"LoadData with filter: {args.Filter}");
+
+        //customCustomersData = dbContext.Customers.Where(c => c.CustomerID.Contains(args.Filter) || c.ContactName.Contains(args.Filter)).ToList();
+
+        InvokeAsync(StateHasChanged);
+    }
+    public void GoToNextPage()
+    {
+        var reservoirName = selectedValue;
+        bool forceLoad = true;
+        string pagelink = "/reservoir-details/" + reservoirName;
+        NavigationManager.NavigateTo(pagelink, forceLoad);
+    }
+}

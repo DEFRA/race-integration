@@ -1,0 +1,74 @@
+{% extends "layout-back-button.html" %}
+
+{% block pageTitle %}
+Start page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% set serviceName %}
+
+{% endset%}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+        <h1 class="govuk-heading-xl">Who is the new operator?</h1>
+
+        <form class="form" action="/Beta/V2/submit-s12-statement/operator-details/confirm-name-details" method="post">
+
+    
+
+            <div class="govuk-form-group">
+
+                <label class="govuk-label govuk-label--m" for="new-operator-name">
+                    Name
+                </label>
+               <input class="govuk-input" id="new-operator-name" name="new-operator-name" type="text">
+            </div>
+
+            <div class="govuk-form-group">
+
+                <label class="govuk-label govuk-label--m" for="new-operator-address">
+                    Address
+                </label>
+                <input class="govuk-input" id="new-operator-address-1" name="new-operator-address-1" type="text">
+                <input class="govuk-input govuk-!-margin-top-4" id="new-operator-address-2" name="new-operator-address-2" type="text">
+                
+                <label class="govuk-label govuk-label--m govuk-!-margin-top-4" for="new-operator-postcode">
+                    Postcode
+                </label>
+                <input class="govuk-input govuk-!-width-one-quarter" id="new-operator-postcode" name="new-operator-postcode" type="text">
+
+            </div>
+
+            <div class="govuk-form-group">
+
+                <label class="govuk-label govuk-label--m" for="new-operator-email">
+                    Email address
+                </label>
+                <input class="govuk-input govuk-!-width-two-thirds" id="new-operator-email" name="new-operator-email" type="text">
+            </div>
+
+            <div class="govuk-form-group">
+
+                <label class="govuk-label govuk-label--m" for="new-operator-phone">
+                    Phone number
+                </label>
+                <input class="govuk-input govuk-!-width-one-third" id="new-operator-phone" name="new-operator-phone" type="text">
+            </div>
+
+
+            <button class="govuk-button govuk-!-margin-top-6 govuk-!-margin-bottom-6" data-module="govuk-button">Save
+                and continue</button>
+
+
+        </form>
+
+
+
+    </div>
+</div>
+
+{% endblock %}

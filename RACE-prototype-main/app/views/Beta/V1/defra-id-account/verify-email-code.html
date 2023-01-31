@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+Start page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% set serviceName %}
+
+{% endset%}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-xl">Verify your identity</h1>
+
+
+    <form action="/Beta/V1/submit-s12-statement/choose-a-reservoir" method="post">
+
+
+      <div class="govuk-form-group">
+        <label class="govuk-label" for="verify">
+          Enter the code sent to timmy_mallet@wackaday.co.uk
+        </label>
+
+        <input class="govuk-input govuk-!-width-two-thirds" id="verify" name="verify-code" type="text"
+          spellcheck="false" pattern="[0-9]*" inputmode="numeric">
+
+      </div>
+
+
+      <button class="govuk-button" data-module="govuk-button">
+        Verify code
+      </button>
+
+
+
+    </form>
+
+
+    <button class="govuk-button govuk-button govuk-button--secondary" data-module="govuk-button">
+      Send another code
+    </button>
+
+
+    <details class="govuk-details" data-module="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+          Help with this page
+        </span>
+      </summary>
+      <div class="govuk-details__text">
+        If you are having problems you can call the service helpline on 0300 322 9434. Monday to Friday 8am to 10pm, and
+        Saturday to Sunday 8am to 4pm.
+        Alternatively you can email the help desk: <a href="">servicedesk@defra.gov.uk</a>
+      </div>
+    </details>
+
+
+
+  </div>
+</div>
+
+{% endblock %}

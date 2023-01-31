@@ -1,0 +1,53 @@
+{% extends "layout-back-button.html" %}
+
+{% block pageTitle %}
+Start page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% set serviceName %}
+
+{% endset%}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+        <form action="/Beta/V1/submit-s12-statement/reservoir-details/confirm" method="post" class="form">
+
+
+            <h1 class="govuk-heading-xl">Choose a reservoir</h1>
+
+
+            <div class="govuk-form-group">
+
+                <select class="govuk-select-alt" id="sort" name="sort">
+                    <option value="#"></option>
+                    <option value="published">Caldecote Farm</option>
+                    <option value="updated"> Eccup</option>
+                    <option value="views">King's Mill</option>
+                    <option value="comments">Monk Bretton</option>
+                    <option value="comments">Rockingham</option>
+                </select>
+            </div>
+
+
+            <button role="button" draggable="false" class="govuk-button govuk-!-margin-top-4 govuk-!-margin-bottom-6"
+                data-module="govuk-button">
+                Continue
+            </button>
+
+        </form>
+
+
+        <div class="govuk-!-margin-top-8">
+            <p><a class="govuk-link govuk-link--no-visited-state"
+                    href="/Beta/V2/submit-s12-statement/reservoir-details/reservoir-not-listed">Reservoir
+                    not listed?</a></p>
+        </div>
+
+
+    </div>
+
+    {% endblock %}

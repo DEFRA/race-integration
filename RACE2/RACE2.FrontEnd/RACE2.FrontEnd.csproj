@@ -7,19 +7,34 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\assets\javascripts\**" />
+    <Compile Remove="wwwroot\assets\sass\**" />
+    <Content Remove="wwwroot\assets\javascripts\**" />
+    <Content Remove="wwwroot\assets\sass\**" />
+    <EmbeddedResource Remove="wwwroot\assets\javascripts\**" />
+    <EmbeddedResource Remove="wwwroot\assets\sass\**" />
+    <GraphQL Remove="wwwroot\assets\javascripts\**" />
+    <GraphQL Remove="wwwroot\assets\sass\**" />
+    <GraphQLConfig Remove="wwwroot\assets\javascripts\**" />
+    <GraphQLConfig Remove="wwwroot\assets\sass\**" />
+    <None Remove="wwwroot\assets\javascripts\**" />
+    <None Remove="wwwroot\assets\sass\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="6.0.13" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.13" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.13" PrivateAssets="all" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="6.0.13" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.1" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
-    <PackageReference Include="MudBlazor" Version="6.1.7" />
+    <PackageReference Include="Radzen.Blazor" Version="4.6.3" />
     <PackageReference Include="StrawberryShake.CodeGeneration.CSharp.Analyzers" Version="12.16.0" />
     <PackageReference Include="StrawberryShake.Transport.Http" Version="12.16.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\assets\" />
+    <Folder Include="wwwroot\assets\images\" />
   </ItemGroup>
 
 </Project>

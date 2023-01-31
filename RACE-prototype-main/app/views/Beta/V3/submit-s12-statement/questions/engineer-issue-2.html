@@ -1,0 +1,73 @@
+{% extends "layout-back-button.html" %}
+
+{% block pageTitle %}
+Start page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% set serviceName %}
+
+{% endset%}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+        <form action="/Beta/V3/submit-s12-statement/questions/engineer-list-of-issues-2" method="post">
+
+            <div class="govuk-form-group">
+                <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--xl" for="more-detail">
+                    What's the next issue for the engineer to watch?
+                    </label>
+                </h1>
+
+                <div class="govuk-form-group govuk-!-margin-top-6 govuk-!-padding-top-6">
+                    <h2 class="govuk-label-wrapper"><label class="govuk-label govuk-label--m" for="event-name">
+                            Issue to watch
+                        </label>
+                    </h2>
+                    <input class="govuk-input" id="title-reason-2" name="title-reason-2" type="text">
+                </div>
+
+                <div class="govuk-form-group govuk-!-padding-top-6">
+                    <h2 class="govuk-label-wrapper"><label class="govuk-label govuk-label--m" for="more-detail">
+                            Description
+                        </label>
+                    </h2>
+                    <textarea class="govuk-textarea" id="description-reason-2" name="description-reason-2" rows="5"
+                        aria-describedby="more-detail-hint"></textarea>
+                </div>
+
+                <div class="govuk-form-group govuk-!-padding-top-6">
+                    <h2 class="govuk-label-wrapper"><label class="govuk-label govuk-label--m" for="more-detail">
+                            Comments
+                        </label>
+                    </h2>
+                    <textarea class="govuk-textarea" id="comments-reason-2" name="comments-reason-2" rows="5"
+                        aria-describedby="more-detail-hint"></textarea>
+                </div>
+
+            </div>
+
+
+            <button class="govuk-button govuk-!-margin-top-6" data-module="govuk-button">Save and continue</button>
+
+    </div>
+
+    </form>
+
+</div>
+
+<!-- <script>
+   
+document.getElementById("status-reason-1").innerHTML = "Complete";
+document.getElementById("status-reason-2").innerHTML = "In progress";
+document.getElementById("status-reason-3").innerHTML = "Not started";
+document.getElementById("status-reason-4").innerHTML = "Unknown";
+
+
+</script> -->
+
+{% endblock %}happy

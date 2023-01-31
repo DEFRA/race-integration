@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+Start page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block header %}
+<!-- Blank header with no service name for the start page -->
+{{ govukHeader() }}
+{% endblock %}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+        <h1 class="govuk-heading-xl">
+            Service name
+        </h1>
+
+        <p class="govuk-body">Use this service to send a supervising engineer's annual statement to the Environment Agency.</p>
+
+        <a href="/Beta/V2/gov-gateway-account/confirm-gov-gateway.html" role="button" draggable="false"
+            class="govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8"
+            data-module="govuk-button">
+            Start now
+            <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19"
+                viewBox="0 0 33 40" aria-hidden="true" focusable="false">
+                <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z"></path>
+            </svg>
+        </a>
+
+        <h2 class="govuk-heading-m govuk-!-font-size-27 govuk-!-padding-top-2">Before you start</h2>
+        
+        <p class="govuk-body">You'll need:</p>
+
+        <ul class="govuk-list govuk-list--bullet">
+            <li>your Government Gateway login details, if you do not have an account you can <a href="/Beta/V2/gov-gateway-account/enter-email"
+                    class="govuk-link--no-visited-state">create one</a>
+            </li>
+            <li>your Defra account details, if you do not have a Defra account you can set one up in the service, you'll
+                need a company registration number if you're registering as a business
+            </li>
+        </ul>
+
+        <p>Read about<a
+                href="https://www.gov.uk/guidance/reservoir-supervising-engineers-written-statements-and-site-visit-reports"
+                class="govuk-link govuk-link--no-visited-state"> supervising engineers' written statements
+                and site visit reports</a></p>
+
+        <h2 class="govuk-heading-m govuk-!-font-size-27 govuk-!-padding-top-6"> Get help using this service</h2>
+
+        <p class="govuk-body"> You can <a href="#" class="govuk-link govuk-link--no-visited-state"> get help doing things online</a>.
+
+    </div>
+</div>
+{% endblock %}

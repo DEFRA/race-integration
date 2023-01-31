@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Question page
+{% endblock %}
+
+{% block beforeContent %}
+  <a class="govuk-back-link" href="/url/of/previous/page">Back</a>
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <form class="form" action="sec-11" method="post">
+<span class="govuk-caption-l">Statutory information</span>
+      <h1 class="govuk-heading-xl">
+        Maintainace required under section 10(3)
+      </h1>
+
+      <div class="govuk-form-group">
+  <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="more-detail">
+      Can you provide more detail as to what maintainance they have not carried out?
+    </label>
+  </h1>
+  <div id="more-detail-hint" class="govuk-hint">
+    Provide information on what is non-compliant.
+  </div>
+  <textarea class="govuk-textarea" id="more-detail" name="more-detail" rows="5" aria-describedby="more-detail-hint"></textarea>
+</div>
+
+  <div class="govuk-form-group">
+    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="more-detail">
+        Actions required by the owner
+      </label>
+    </h1>
+    <div id="more-detail-hint" class="govuk-hint">
+      Provide details of recommended actions the owner needs to take.
+    </div>
+    <textarea class="govuk-textarea" id="more-detail" name="more-detail" rows="5" aria-describedby="more-detail-hint"></textarea>
+  </div>
+
+<button class="govuk-button" data-module="govuk-button">Continue</button>
+
+
+    </div>
+  </div>
+
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+Start page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% set serviceName %}
+
+{% endset%}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+        <form action="/Beta/V1/defra-id-account/verify-identity-answer" method="post">
+
+            <div class="govuk-form-group">
+
+
+                <fieldset class="govuk-fieldset">
+
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+
+                        <h1 class="govuk-fieldset__heading">
+                            Verify your identity
+                        </h1>
+
+                    </legend>
+
+
+                    <div class="govuk-radios" data-module="govuk-radios">
+
+
+
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="Verify identity" name="Verify identity"
+                                type="radio" value="Send a code to xxxxxxxx478">
+                            <label class="govuk-label govuk-radios__label" for="Verify identity">
+                                Send a code to xxxxxxxx478
+                            </label>
+
+                        </div>
+
+
+
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="Verify identity 2" name="Verify identity"
+                                type="radio" value="Send a code to my email address">
+                            <label class="govuk-label govuk-radios__label" for="Verify identity 2">
+                                Send a code to my email address
+                            </label>
+
+                        </div>
+
+
+                    </div>
+
+
+                </fieldset>
+
+
+            </div>
+
+
+            <button class="govuk-button" data-module="govuk-button">
+                Continue
+            </button>
+
+        </form>
+
+        <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary">
+                <span class="govuk-details__summary-text">
+                    Help with this page
+                </span>
+            </summary>
+            <div class="govuk-details__text">
+                If you are having problems you can call the service helpline on 0300 322 9434. Monday to Friday 8am to
+                10pm, and Saturday to Sunday 8am to 4pm.
+                Alternatively you can email the help desk: <a href="">servicedesk@defra.gov.uk</a>
+            </div>
+        </details>
+
+    </div>
+</div>
+
+{% endblock %}

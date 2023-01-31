@@ -1,0 +1,91 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+Start page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block header %}
+<!-- Blank header with no service name for the start page -->
+{{ govukHeader() }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+        {% set html %}
+        <p>Do not share your Government Gateway user ID and password with anyone else.</p>
+        {% endset %}
+
+        <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
+            data-module="govuk-notification-banner">
+            <div class="govuk-notification-banner__header">
+                <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+                    Keep your information secure
+                </h2>
+            </div>
+            <div class="govuk-notification-banner__content">
+                <p>Do not share your Government Gateway user ID and password with anyone else.</p>
+            </div>
+        </div>
+
+        <h1 class="govuk-heading-xl">
+            Sign in using Government Gateway
+        </h1>
+
+        <form class="form" action="/Beta/V1/defra-id-account/verify-identity" method="post">
+
+            <div class="govuk-form-group">
+                <label class="govuk-label" for="govGateUserId">
+                    Government Gateway user ID
+                </label>
+
+                <div id="govGateUserId-hint" class="govuk-hint">
+                    This could be up to 12 characters.
+                </div>
+
+                <input class="govuk-input govuk-!-width-one-half" id="govGateUserId" name="govGateUserId" type="text"
+                    aria-describedby="govGateUserId-hint">
+            </div>
+
+            <div class="govuk-form-group">
+                <label class="govuk-label" for="govGatePwassword">
+                    Password
+                </label>
+
+                <input class="govuk-input govuk-!-width-three-quarters" id="govGatePwassword" name="govGatePwassword"
+                    type="text">
+
+            </div>
+
+            <button class="govuk-button" data-module="govuk-button">
+                Sign in
+            </button>
+
+
+        </form>
+
+        <p class="govuk-body">
+            <a href="/Beta/V1/gov-gateway-account/enter-email.html" class="govuk-link govuk-link--no-visited-state">
+                Create sign in details
+            </a>
+        </p>
+
+        <h2 class="govuk-heading-m">Problems signing in</h2>
+
+        <ul class="govuk-list">
+            <li><a class="govuk-link--no-visited-state"  href="#">I have forgotten my password</a></li>
+            <li><a class="govuk-link--no-visited-state"  href="#">I have forgotten my Government Gateway user ID</a></li>
+            <li><a class="govuk-link--no-visited-state"  href="#">I have forgotten my Government Gateway user ID and password</a></li>
+            <br>
+        </ul>
+
+
+        {% include "includes/get-help.html" %}
+
+    </div>
+</div>
+
+{% endblock %}

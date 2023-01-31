@@ -1,0 +1,79 @@
+{% extends "layout-back-button.html" %}
+
+{% block pageTitle %}
+Start page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% set serviceName %}
+Defra account
+{% endset%}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form action="/Beta/V1/defra-id-account/company-house-no-answer" method="post">
+
+      <!-- <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+              <h1 class="govuk-fieldset__heading">
+                Is this organisation a sole trader or a charity?
+              </h1>
+            </legend>
+            <div class="govuk-radios">
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="field1" name="defraIdSoleTraderOrCharity" type="radio" value="sole-trader">
+                <label class="govuk-label govuk-radios__label" for="field1">
+                  Sole trader
+                </label>
+              </div>
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="field2" name="defraIdSoleTraderOrCharity" type="radio" value="charity">
+                <label class="govuk-label govuk-radios__label" for="field2">
+                  Charity
+                </label>
+              </div>
+            </div>
+          </fieldset>
+        </div> -->
+
+      {% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+      {{ govukRadios({
+      idPrefix: "are-you-a-sole-trader-or-charity",
+      name: "are-you-a-sole-trader-or-charity",
+      fieldset: {
+      legend: {
+      text: "Is this organisation a sole trader or a charity?",
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--xl"
+      }
+      },
+      items: [
+      {
+      value: "Sole trader",
+      text: "Sole trader"
+      },
+      {
+      value: "Charity",
+      text: "Charity"
+      }
+      ]
+      }) }}
+
+
+
+      <button class="govuk-button" data-module="govuk-button">
+        Continue
+      </button>
+
+
+    </form>
+
+  </div>
+</div>
+
+{% endblock %}

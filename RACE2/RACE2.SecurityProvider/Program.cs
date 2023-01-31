@@ -1,12 +1,12 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using RACE2.DataAccess;
 using RACE2.DataModel;
 using RACE2.SecurityProvider;
-using RACE2.SecurityProvider.Data;
 using RACE2.SecurityProvider.UtilityClasses;
 
 var builder = WebApplication.CreateBuilder(args);
-IConfiguration _configuration = builder.Configuration;
+IConfiguration _configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../appsettings.json").Build();
 string blazorClientURL = _configuration["BlazorClientURL"];
 
 // Add services to the container.

@@ -53,13 +53,10 @@ builder.Services.AddCors(options =>
 //        .AddType<RoleMutationResolver>();
 
 builder.Services.AddGraphQLServer()
-        .AddType<UserType>()
-            .AddQueryType<UserResolver>()
-            .AddMutationType<Mutation>()
-            .AddSubscriptionType<Subscription>();
-
-builder.Services.AddDbContext<RACE2.DataAccess.ApplicationDbContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    .AddQueryType(q => q.Name("Query"))
+        .AddType<RoleQueryResolver>()
+    .AddMutationType(m => m.Name("Mutation"))
+        .AddType<RoleMutationResolver>();
 
 var app = builder.Build();
 

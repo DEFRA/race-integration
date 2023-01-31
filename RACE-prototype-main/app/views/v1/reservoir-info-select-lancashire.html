@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Question page
+{% endblock %}
+
+{% block beforeContent %}
+  <a class="govuk-back-link" href="/url/of/previous/page">Back</a>
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <span class="govuk-caption-l">Reservoir details</span>
+
+      <form class="form" action="/v1/contact-details" method="post">
+
+
+        <div class="govuk-form-group">
+          <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="example">
+              Select the name of reservoir
+            </label>
+          </h1>
+  <select class="govuk-select" id="Reservoir" name="Reservoir">
+  <option value="birkacre">Birkacre</option>
+  <option value="birtle upper">Birtle Upper</option>
+  <option value="buckton">Buckton Vale</option>
+  </select>
+</div>
+
+        <button class="govuk-button" data-module="govuk-button">Continue</button>
+
+      </form>
+
+    </div>
+  </div>
+
+{% endblock %}

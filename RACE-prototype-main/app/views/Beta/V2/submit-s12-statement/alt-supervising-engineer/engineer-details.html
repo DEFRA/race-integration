@@ -1,0 +1,69 @@
+{% extends "layout-back-button.html" %}
+
+{% block pageTitle %}
+Start page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% set serviceName %}
+Defra account
+{% endset%}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+        <form action="/Beta/V2/submit-s12-statement/alt-supervising-engineer/confirm-details" method="post">
+
+
+            <div class="govuk-form-group">
+                <h1 class="govuk-label-wrapper">
+                    <label class="govuk-label govuk-label--xl" for="altsuperengineercontactdetails">
+                        What are the alternative supervising engineer's details?
+                    </label>
+                </h1>
+            </div>
+
+
+            <div class="govuk-form-group">
+                <label class="govuk-label" for="alt-super-engineer-Name">
+                    Name
+                </label>
+
+                <input class="govuk-input govuk-!-width-three-quarters" id="alt-super-engineer-Name" name="alt-super-engineer-name"
+                    type="text"  aria-describedby="alt-super-engineer-Name-hint">
+            </div>
+
+
+            <div class="govuk-form-group">
+                <label class="govuk-label" for="alt-super-engineer-Email">
+                    Email
+                </label>
+
+                <input class="govuk-input govuk-!-width-three-quarters" id="alt-super-engineer-Email" name="alt-super-engineer-email"
+                    type="text"  aria-describedby="alt-super-engineer-Email-hint">
+            </div>
+
+            
+            <div class="govuk-form-group">
+                <label class="govuk-label" for="alt-super-engineer-Phone">
+                    Phone
+                </label>
+
+                <input class="govuk-input govuk-!-width-one-half" id="alt-super-engineer-Phone" name="alt-super-engineer-phone"
+                    type="tel" aria-describedby="alt-super-engineer-Phone-hint">
+            </div>
+
+
+            <button class="govuk-button govuk-!-margin-top-6" data-module="govuk-button">
+                Save and continue
+            </button>
+
+        </form>
+
+
+    </div>
+</div>
+
+{% endblock %}
