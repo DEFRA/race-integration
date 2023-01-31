@@ -12,14 +12,15 @@
 
                 <h1 class="govuk-heading-xl">What is the name and location of the reservoir you're looking for?</h1>
 
-                <form class="form" action="/Beta/V3/submit-s12-statement/reservoir-details/new-reservoir" method="post">
+                <EditForm Model="@formModel" OnSubmit="GoToNextPage">
 
                     <div class="govuk-form-group">
 
                         <label class="govuk-label govuk-label--m" for="new-name">
                             Reservoir name
                         </label>
-                        <input class="govuk-input" id="new-name" name="new-name" type="text">
+                        <InputText id="ReservoirName" class="govuk-input" @bind-Value="formModel.ReservoirName" />
+
                     </div>
 
                     <div class="govuk-form-group">
@@ -27,7 +28,7 @@
                         <label class="govuk-label govuk-label--m" for="new-postcode">
                             Nearest postcode
                         </label>
-                        <input class="govuk-input govuk-!-width-one-quarter" id="new-postcode" name="new-postcode" type="text">
+                        <InputText id="NearestPostcode" class="govuk-input govuk-!-width-one-quarter" @bind-Value="formModel.NearestPostcode" />
                     </div>
 
                     <div class="govuk-form-group">
@@ -35,12 +36,12 @@
                         <label class="govuk-label govuk-label--m" for="new-grid-ref">
                             National Grid reference
                         </label>
-                        <input class="govuk-input govuk-!-width-one-third" id="new-grid-ref" name="new-grid-ref" type="text">
+                        <InputText id="NationalGridRef" class="govuk-input govuk-!-width-one-third" @bind-Value="formModel.NationalGridRef" />
                     </div>
 
-                    <button class="govuk-button govuk-!-margin-top-6 govuk-!-margin-bottom-6" data-module="govuk-button" @onclick=@(args => GoToNextPage())>Send</button>
+                    <button class="govuk-button govuk-!-margin-top-6 govuk-!-margin-bottom-6" data-module="govuk-button" type="submit">Send</button>
 
-                </form>
+                </EditForm>
 
             </div>
         </div>
@@ -49,9 +50,17 @@
 </div>
 
 @code {
+    public class FormModel    {
+        public string ReservoirName { get; set; }
+        public string NearestPostcode { get; set; }
+        public string NationalGridRef{ get; set; }
+    }
+    public FormModel formModel = new FormModel();
+
     bool forceLoad = true;
     public void GoToNextPage()
     {
-        NavigationManager.NavigateTo("/choose-a-reservoir/", forceLoad);
+        var nextPageUrl = "/new-reservoir/" + formModel.ReservoirName + "/" + formModel.NearestPostcode + "/" + formModel.NationalGridRef;
+        NavigationManager.NavigateTo(nextPageUrl, forceLoad);
     }
 }
