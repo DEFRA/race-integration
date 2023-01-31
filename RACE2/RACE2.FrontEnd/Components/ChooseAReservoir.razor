@@ -18,7 +18,7 @@
                 <div>
                     <RadzenAutoComplete Placeholder="" Data=@reservoirs TextProperty="ReservoirName"
                                         @bind-Value=@selectedValue Change=@(args => OnChange(args, "AutoComplete with placeholder"))
-                                        Style="width: 400px;border:2px solid fontsize:16px" Class="autocomplete rz-border-radius-0" />
+                                        Style="width: 400px; height:inherit; border-style: solid;border-color: black;border-width:2px; font-size:16px;" Class="autocomplete rz-border-radius-0" />
                 </div>
 
                 <div>
@@ -30,8 +30,7 @@
 
                 <div class="govuk-!-margin-top-8">
                     <p>
-                        <a class="govuk-link govuk-link--no-visited-state"
-                           href="/Beta/V3/submit-s12-statement/reservoir-details/reservoir-not-listed" target="_blank">
+                        <a class="govuk-link govuk-link--no-visited-state" href="/reservoir-not-listed">
                             Reservoir not listed?
                         </a>
                     </p>

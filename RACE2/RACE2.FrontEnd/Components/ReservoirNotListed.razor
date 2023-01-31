@@ -1,0 +1,57 @@
+﻿@page "/reservoir-not-listed"
+@inject NavigationManager NavigationManager
+
+<div class="govuk-width-container ">
+
+    <a class="govuk-back-link" href="javascript:history.back()">Back</a>
+
+    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+
+                <h1 class="govuk-heading-xl">What is the name and location of the reservoir you're looking for?</h1>
+
+                <form class="form" action="/Beta/V3/submit-s12-statement/reservoir-details/new-reservoir" method="post">
+
+                    <div class="govuk-form-group">
+
+                        <label class="govuk-label govuk-label--m" for="new-name">
+                            Reservoir name
+                        </label>
+                        <input class="govuk-input" id="new-name" name="new-name" type="text">
+                    </div>
+
+                    <div class="govuk-form-group">
+
+                        <label class="govuk-label govuk-label--m" for="new-postcode">
+                            Nearest postcode
+                        </label>
+                        <input class="govuk-input govuk-!-width-one-quarter" id="new-postcode" name="new-postcode" type="text">
+                    </div>
+
+                    <div class="govuk-form-group">
+
+                        <label class="govuk-label govuk-label--m" for="new-grid-ref">
+                            National Grid reference
+                        </label>
+                        <input class="govuk-input govuk-!-width-one-third" id="new-grid-ref" name="new-grid-ref" type="text">
+                    </div>
+
+                    <button class="govuk-button govuk-!-margin-top-6 govuk-!-margin-bottom-6" data-module="govuk-button" @onclick=@(args => GoToNextPage())>Send</button>
+
+                </form>
+
+            </div>
+        </div>
+
+    </main>
+</div>
+
+@code {
+    bool forceLoad = true;
+    public void GoToNextPage()
+    {
+        NavigationManager.NavigateTo("/choose-a-reservoir/", forceLoad);
+    }
+}
