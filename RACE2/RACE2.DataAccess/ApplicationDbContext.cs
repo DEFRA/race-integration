@@ -9,19 +9,13 @@ using System.IO;
 
 namespace RACE2.DataAccess
 {
-    //public class ApplicationDbContext : IdentityDbContext<Userdetails, Roles,string>
-    public class ApplicationDbContext : IdentityDbContext<Userdetails>
-    {
-        IConfigurationRoot _configuration;
+    public class ApplicationDbContext : IdentityDbContext<Userdetails, Roles,string>
+     {
+        
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {            
-        }
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IConfigurationRoot configuration)
-            : base(options)
-        {
-            _configuration = configuration;
-        }
+        }       
 
         public DbSet<FeatureFunction> FeatureFunction { get; set; }
 
