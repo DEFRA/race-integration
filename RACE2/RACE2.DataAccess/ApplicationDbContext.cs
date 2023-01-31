@@ -13,6 +13,10 @@ namespace RACE2.DataAccess
     public class ApplicationDbContext : IdentityDbContext<Userdetails>
     {
         IConfigurationRoot _configuration;
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+            : base(options)
+        {            
+        }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IConfigurationRoot configuration)
             : base(options)
         {

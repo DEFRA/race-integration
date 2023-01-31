@@ -6,7 +6,7 @@ using RACE2.SecurityProvider;
 using RACE2.SecurityProvider.UtilityClasses;
 
 var builder = WebApplication.CreateBuilder(args);
-IConfigurationRoot _configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../appsettings.json").Build();
+IConfiguration _configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../appsettings.json").Build();
 string blazorClientURL = _configuration["BlazorClientURL"];
 
 // Add services to the container.
