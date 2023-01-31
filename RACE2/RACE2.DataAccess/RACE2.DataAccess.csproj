@@ -8,5 +8,15 @@
 	
     <ItemGroup>
 	    <PackageReference Include="Dapper" Version="2.0.123" />
+	    <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.13" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.13" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.13" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
+    </ItemGroup>
+	
+    <ItemGroup>
+      <ProjectReference Include="..\RACE2.DataModel\RACE2.DataModel.csproj" />
     </ItemGroup>
 </Project>
