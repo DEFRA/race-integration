@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using RACE2.DataAccess.Repository;
-
+using RACE2.Services;
 using RACE2.WebApi.GraphQL;
 using RACE2.WebApi.MutationResolver;
 using RACE2.WebApi.QueryResolver;
@@ -21,7 +21,8 @@ var connectionString = _configuration.GetConnectionString("DefaultConnection");
 // Add services to the container.
 
 builder.Services.AddControllers();
-builder.Services.AddTransient<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 builder.Services.AddAuthentication("Bearer")

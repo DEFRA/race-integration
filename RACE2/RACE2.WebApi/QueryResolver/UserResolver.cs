@@ -1,32 +1,35 @@
 ﻿using HotChocolate.Resolvers;
 using HotChocolate.Subscriptions;
 using RACE2.DataAccess;
+using RACE2.DataAccess.Repository;
 using RACE2.DataModel;
+using RACE2.Services;
 
 namespace RACE2.WebApi.QueryResolver
 {
     public class UserResolver
     {
-       // public async Task<List<Userdetails>>
-       //GetAllAuthors([Service]
-       // IUserRepository userRepository,
-       //[Service] ITopicEventSender eventSender)
-       // {
-       //     List<Userdetails> authors =
-       //     userRepository.GetUser();
-       //     await eventSender.SendAsync("ReturnedAuthors",
-       //     authors);
-       //     return authors;
-       // }
-        //public async Task<Author> GetAuthorById([Service]
-        //IAuthorRepository authorRepository,
-        //[Service] ITopicEventSender eventSender, int id)
+        public IUserService _userService;
+        public IUserRepository _userRepository;
+        public UserResolver(IUserService userService, IUserRepository userRepository)
+        {
+            _userService = userService;
+            _userRepository = userRepository;
+        }
+        public async Task<IEnumerable<Userdetails>> GetUserdetails()
+        {
+            return await _userService.GetUserdetails();
+        }
+
+        //public async Task<Cake> GetCakeById(int id)
         //{
-        //    Author author =
-        //    authorRepository.GetAuthorById(id);
-        //    await eventSender.SendAsync("ReturnedAuthor",
-        //    author);
-        //    return author;
+        //    return await _cakeService.GetById(id);
         //}
+
+        //public async Task<List<Cake>> GetCakeByName(string name)
+        //{
+        //    return await _cakeService.FilterByName(name);
+        //}
+
     }
 }

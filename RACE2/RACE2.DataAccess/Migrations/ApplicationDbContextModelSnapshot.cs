@@ -316,10 +316,7 @@ namespace RACE2.DataAccess.Migrations
                         .HasDefaultValue(" ");
 
                     b.Property<string>("c_organisation_id")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)")
-                        .HasDefaultValue(" ");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("c_organisation_name")
                         .ValueGeneratedOnAdd()

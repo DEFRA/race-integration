@@ -15,7 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RACE2.DataAccess\RACE2.DataAccess.csproj" />
     <ProjectReference Include="..\RACE2.SecurityProvider\RACE2.SecurityProvider.csproj" />
   </ItemGroup>
 

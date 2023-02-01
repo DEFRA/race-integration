@@ -12,6 +12,6 @@ namespace RACE2.DataAccess.Repository
     {
         public Task<IEnumerable<Userdetails>> GetUserdetails();
      //   public Task<Userdetails> GetUser(int id);
-        public Task CreateUser(Userdetails newuser);
+        public Task<Userdetails> CreateUser(Userdetails newuser);
     }
 }
