@@ -18,7 +18,7 @@
                 <div>
                     <RadzenAutoComplete Placeholder="" Data=@reservoirs TextProperty="ReservoirName"
                                         @bind-Value=@selectedValue Change=@(args => OnChange(args, "AutoComplete with placeholder"))
-                                        Style="width: 400px;border:2px solid fontsize:16px" Class="autocomplete rz-border-radius-0" />
+                                        Style="width: 400px; height:inherit; border-style: solid;border-color: black;border-width:2px; font-size:16px;" Class="autocomplete rz-border-radius-0" />
                 </div>
 
                 <div>
@@ -30,8 +30,7 @@
 
                 <div class="govuk-!-margin-top-8">
                     <p>
-                        <a class="govuk-link govuk-link--no-visited-state"
-                           href="/Beta/V3/submit-s12-statement/reservoir-details/reservoir-not-listed" target="_blank">
+                        <a class="govuk-link govuk-link--no-visited-state" href="/reservoir-not-listed">
                             Reservoir not listed?
                         </a>
                     </p>
@@ -60,30 +59,23 @@
 
         reservoirs = new List<Reservoir>();
         var newres = new Reservoir();
-        newres.ReservoirName = "Reservoir1";
+        newres.ReservoirName = "River Foss Flood Storage Reservoir";
         reservoirs.Add(newres);
         var newres1 = new Reservoir();
-        newres1.ReservoirName = "Reservoir2";
+        newres1.ReservoirName = "River Nar Flood Storage Area";
         reservoirs.Add(newres1);
         var newres2 = new Reservoir();
-        newres2.ReservoirName = "Reservoir3";
+        newres2.ReservoirName = "River Park Pond";
         reservoirs.Add(newres2);
         var newres3 = new Reservoir();
-        newres3.ReservoirName = "Reservoir4";
+        newres3.ReservoirName = "River Rase North Branch";
         reservoirs.Add(newres3);
         var newres4 = new Reservoir();
-        newres4.ReservoirName = "Reservoir5";
+        newres4.ReservoirName = "River Rase South Branch";
         reservoirs.Add(newres4);
         var newres5 = new Reservoir();
-        newres5.ReservoirName = "Reservoir6";
+        newres5.ReservoirName = "Rockingham Reservoir";
         reservoirs.Add(newres5);
-        var newres6 = new Reservoir();
-        newres6.ReservoirName = "Reservoir7";
-        reservoirs.Add(newres6);
-        var newres7 = new Reservoir();
-        newres7.ReservoirName = "Reservoir8";
-        reservoirs.Add(newres7);
-
     }
 
     void OnChange(object value, string name)
