@@ -58,7 +58,7 @@ builder.Services.AddCors(options =>
 //        .AddType<RoleMutationResolver>();
 
 builder.Services.AddGraphQLServer()
-        .AddType<UserType>()
+        
             .AddQueryType<UserResolver>()
             .AddMutationType<Mutation>()
             .AddSubscriptionType<Subscription>();
