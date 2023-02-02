@@ -29,6 +29,7 @@ namespace RACE2.DataAccess
                 .Property(e => e.c_defra_id)
                 .HasDefaultValue(" ")
                 .HasMaxLength(64);
+                
 
             modelBuilder.Entity<Userdetails>()
                 .Property(e => e.c_type)

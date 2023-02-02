@@ -4,14 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
-namespace RACE2.DataAccess.Repository
+namespace RACE2.Services
 {
-    public interface IUserRepository
+    public interface IUserService
     {
         public Task<IEnumerable<Userdetails>> GetUserdetails();
-     //   public Task<Userdetails> GetUser(int id);
+        //   public Task<Userdetails> GetUser(int id);
         public Task<Userdetails> CreateUser(Userdetails newuser);
     }
 }
