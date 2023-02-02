@@ -15,7 +15,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RACE2.SecurityProvider\RACE2.SecurityProvider.csproj" />
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RACE2.Services\RACE2.Services.csproj" />
   </ItemGroup>
 
 </Project>
