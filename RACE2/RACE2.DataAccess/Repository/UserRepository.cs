@@ -44,10 +44,10 @@ namespace RACE2.DataAccess.Repository
 
         public async Task<Userdetails> CreateUser(Userdetails newuser)
         {
-            var query = "INSERT INTO AspNetUsers (Id,c_defra_id,c_type,c_display_name,c_first_name,c_last_name,c_status,c_created_on_date,c_last_access_date,c_password_retry_count,EmailConfirmed,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnabled,AccessFailedCount) VALUES (@Id,@c_defra_id,@c_type,@c_display_name,@c_first_name,@c_last_name,@c_status,@c_created_on_date,@c_last_access_date,@c_password_retry_count,@EmailConfirmed,@PhoneNumberConfirmed,@TwoFactorEnabled,@LockoutEnabled,@AccessFailedCount)"
+            var query = "INSERT INTO AspNetUsers (c_defra_id,c_type,c_display_name,c_first_name,c_last_name,c_status,c_created_on_date,c_last_access_date,c_password_retry_count,EmailConfirmed,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnabled,AccessFailedCount) VALUES (@c_defra_id,@c_type,@c_display_name,@c_first_name,@c_last_name,@c_status,@c_created_on_date,@c_last_access_date,@c_password_retry_count,@EmailConfirmed,@PhoneNumberConfirmed,@TwoFactorEnabled,@LockoutEnabled,@AccessFailedCount)"
                 + "SELECT CAST(SCOPE_IDENTITY() as int)";
             var parameters = new DynamicParameters();
-            parameters.Add("Id", newuser.Id, DbType.String);
+            //parameters.Add("Id", newuser.Id, DbType.String);
             parameters.Add("c_defra_id", newuser.c_defra_id, DbType.String);
             parameters.Add("c_type", newuser.c_type, DbType.String);
             parameters.Add("c_display_name", newuser.c_display_name, DbType.String);
@@ -65,7 +65,7 @@ namespace RACE2.DataAccess.Repository
 
             using (var conn = Connection)
             {
-                //await conn.ExecuteAsync(query, parameters);
+                
 
                 var id = await conn.QuerySingleAsync<int>(query, parameters);
                 var createdCompany = new Userdetails

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RACE2.DataModel
 {
-    public class UserRole : IdentityUserRole<string>
+    public class UserRole : IdentityUserRole<int>
     {
         public string status { get; set; }
         public DateTime start_date { get; set; }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RACE2.DataModel
 {
-    public class Roles : IdentityRole
+    public class Roles : IdentityRole<int>
     {
         public string? display_name { get; set; }
         public string? description { get; set; }         

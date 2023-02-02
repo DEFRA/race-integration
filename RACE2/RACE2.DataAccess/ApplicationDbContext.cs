@@ -9,7 +9,7 @@ using System.IO;
 
 namespace RACE2.DataAccess
 {
-    public class ApplicationDbContext : IdentityDbContext<Userdetails, Roles,string>
+    public class ApplicationDbContext : IdentityDbContext<Userdetails, Roles,int>
      {
         
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -24,6 +24,14 @@ namespace RACE2.DataAccess
         {
 
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Userdetails>(e =>
+            {
+                e.HasKey(e => e.Id);
+               // e.Property(e => e.Id).HasColumnType("integer");
+                e.Property(e => e.Id).ValueGeneratedOnAdd();
+
+            });              
+                
 
             modelBuilder.Entity<Userdetails>()
                 .Property(e => e.c_defra_id)
@@ -103,7 +111,8 @@ namespace RACE2.DataAccess
                .IsRequired(true);
 
             modelBuilder.Entity<Userdetails>()
-                .Property(e => e.c_created_on_date);
+                .Property(e => e.c_created_on_date)
+                .HasDefaultValueSql("getdate()");
 
             modelBuilder.Entity<Userdetails>()
                 .Property(e => e.c_last_access_date);
