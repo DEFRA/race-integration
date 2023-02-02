@@ -16,9 +16,8 @@
                 </div>
 
                 <div>
-                    <RadzenAutoComplete Placeholder="" Data=@reservoirs TextProperty="ReservoirName"
-                                        @bind-Value=@selectedValue Change=@(args => OnChange(args, "AutoComplete with placeholder"))
-                                        Style="width: 400px; height:inherit; border-style: solid;border-color: black;border-width:2px; font-size:16px;" Class="autocomplete rz-border-radius-0" />
+                    <MudAutocomplete T="string" @bind-Value="selectedValue" SearchFunc="@SearchValues" Variant="Variant.Outlined"
+                         OpenIcon="" CloseIcon="" Style="width:400px;" Class="rounded-0 border border-solid" />
                 </div>
 
                 <div>
@@ -42,56 +41,29 @@
 </div>
 
 @code {
-    public class Reservoir
+    private string selectedValue;
+
+    private string[] reservoirNames =
     {
-        public string? ReservoirName { get; set; }
+        "River Foss Flood Storage Reservoir",
+        "River Nar Flood Storage Area", 
+        "River Park Pond",
+        "River Rase North Branch",
+        "River Rase South Branch",
+        "Rockingham Reservoir"
+    };
+
+    private async Task<IEnumerable<string>> SearchValues(string value)
+    {
+        // In real life use an asynchronous function for fetching data from an api.
+        await Task.Delay(5);
+
+        // if text is null or empty, show complete list
+        if (string.IsNullOrEmpty(value))
+            return reservoirNames;
+        return reservoirNames.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
     }
 
-    List<Reservoir>? reservoirs;
-    List<String>? customReservoirsData;
-    List<string>? reservoirsNames;
-
-    string selectedValue = "";
-
-    protected override async Task OnInitializedAsync()
-    {
-        await base.OnInitializedAsync();
-
-        reservoirs = new List<Reservoir>();
-        var newres = new Reservoir();
-        newres.ReservoirName = "River Foss Flood Storage Reservoir";
-        reservoirs.Add(newres);
-        var newres1 = new Reservoir();
-        newres1.ReservoirName = "River Nar Flood Storage Area";
-        reservoirs.Add(newres1);
-        var newres2 = new Reservoir();
-        newres2.ReservoirName = "River Park Pond";
-        reservoirs.Add(newres2);
-        var newres3 = new Reservoir();
-        newres3.ReservoirName = "River Rase North Branch";
-        reservoirs.Add(newres3);
-        var newres4 = new Reservoir();
-        newres4.ReservoirName = "River Rase South Branch";
-        reservoirs.Add(newres4);
-        var newres5 = new Reservoir();
-        newres5.ReservoirName = "Rockingham Reservoir";
-        reservoirs.Add(newres5);
-    }
-
-    void OnChange(object value, string name)
-    {
-        //var selectedOption = value.ToString();
-        //console.Log($"{name} value changed to {value}");
-    }
-
-    void OnLoadData(LoadDataArgs args)
-    {
-        //console.Log($"LoadData with filter: {args.Filter}");
-
-        //customCustomersData = dbContext.Customers.Where(c => c.CustomerID.Contains(args.Filter) || c.ContactName.Contains(args.Filter)).ToList();
-
-        InvokeAsync(StateHasChanged);
-    }
     public void GoToNextPage()
     {
         var reservoirName = selectedValue;
