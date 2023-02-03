@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using MudBlazor.Services;
 using RACE2.FrontEnd;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
@@ -16,5 +15,5 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 //    builder.Configuration.Bind("oidc", options.ProviderOptions);
 //    options.UserOptions.RoleClaim = "role";
 //});
-builder.Services.AddMudServices();
+
 await builder.Build().RunAsync();
