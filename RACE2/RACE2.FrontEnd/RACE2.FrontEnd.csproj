@@ -22,6 +22,24 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\css\bootstrap\bootstrap - Copy.min.css.map" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <GraphQL Remove="GetAllUsers.graphql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="GetAllUsers.graphql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="Race2GraphQlSchema\GetAllUsers.graphql">
+      <GraphQL>true</GraphQL>
+    </AdditionalFiles>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="6.0.13" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.13" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.13" PrivateAssets="all" />
@@ -37,6 +55,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\css\bootstrap\bootstrap.css.map" />
     <None Include="wwwroot\css\bootstrap\bootstrap.min.css.map" />
     <None Include="wwwroot\css\open-iconic\FONT-LICENSE" />
     <None Include="wwwroot\css\open-iconic\font\fonts\open-iconic.svg" />
