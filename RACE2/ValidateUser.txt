@@ -1,0 +1,56 @@
+mutation($newUserInput:UserdetailsInput!){
+  validateUser(loginuser:$newUserInput){
+   
+      c_defra_id,
+           ,c_type
+           ,c_display_name
+           ,c_first_name
+           ,c_last_name           
+           ,c_status
+           ,c_created_on_date
+           ,c_last_access_date         
+           ,c_password_retry_count         
+           ,emailConfirmed          
+           ,phoneNumberConfirmed
+           ,twoFactorEnabled          
+           ,lockoutEnabled
+           ,accessFailedCount
+  }
+}
+
+Variables:
+-------------
+{
+"newUserInput":
+{
+ "id":0, 
+"c_defra_id":"Defra5  ",
+"c_type":"ctype",
+"c_display_name":"latha",
+"c_first_name":"Mahalakshmi",
+"c_last_name" :"Alagarsamy",  
+"c_mobile":null,
+"c_emergency_phone":null,
+"c_organisation_id":"1",
+"c_organisation_name":"Cap",
+"c_job_title":"dev",
+"c_current_panel":null,
+"c_paon":null,
+"c_saon":null,
+"c_status":"Active",
+"c_created_on_date":"31/10/2023",
+"c_last_access_date":"31/10/2023",       
+"c_password_retry_count":3    , 
+"userName":"Latha",
+"normalizedUserName":"L Alagarsamy",
+"email":"maha.lakshmi5@gmail.com"  ,
+"normalizedEmail":"maha.lakshmi5@gmail.com" ,
+"emailConfirmed":true        ,
+"phoneNumber":"123456789",
+"phoneNumberConfirmed":true,
+"twoFactorEnabled":false,
+"lockoutEnabled":false,
+"accessFailedCount":0
+  
+}
+}
