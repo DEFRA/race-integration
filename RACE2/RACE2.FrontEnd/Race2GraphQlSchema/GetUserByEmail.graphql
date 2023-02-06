@@ -1,0 +1,6 @@
+﻿query GetUserdetailByEmail($email: String!){
+  userdetailByEmail(email: $email){
+	  id
+	  c_display_name 
+  }
+}
