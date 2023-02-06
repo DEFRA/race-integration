@@ -28,24 +28,22 @@
 
   <ItemGroup>
     <GraphQL Remove="GetAllUsers.graphql" />
-    <GraphQL Remove="Race2GraphQlSchema\CreateUser.graphql" />
-    <GraphQL Remove="Race2GraphQlSchema\GetUserByEmail.graphql" />
+    <GraphQL Remove="RACE2GraphQLSchema\QuerriesMutations\User\GetUserByEmailID.graphql" />
+    <GraphQL Remove="RACE2GraphQLSchema\QuerriesMutations\User\GetUserById.graphql" />
+    <GraphQL Remove="RACE2GraphQLSchema\UsersQueryMutation\GetAllUsers.graphql" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="GetAllUsers.graphql" />
-    <None Remove="Race2GraphQlSchema\CreateUser.graphql" />
-    <None Remove="Race2GraphQlSchema\GetUserByEmail.graphql" />
+    <None Remove="RACE2GraphQLSchema\QuerriesMutations\User\GetUserByEmailID.graphql" />
+    <None Remove="RACE2GraphQLSchema\QuerriesMutations\User\GetUserById.graphql" />
   </ItemGroup>
 
   <ItemGroup>
-    <AdditionalFiles Include="Race2GraphQlSchema\CreateUser.graphql">
+    <AdditionalFiles Include="RACE2GraphQLSchema\QuerriesMutations\User\GetUserById.graphql">
       <GraphQL>true</GraphQL>
     </AdditionalFiles>
-    <AdditionalFiles Include="Race2GraphQlSchema\GetUserByEmail.graphql">
-      <GraphQL>true</GraphQL>
-    </AdditionalFiles>
-    <AdditionalFiles Include="Race2GraphQlSchema\GetAllUsers.graphql">
+    <AdditionalFiles Include="RACE2GraphQLSchema\QuerriesMutations\User\GetUserByEmailID.graphql">
       <GraphQL>true</GraphQL>
     </AdditionalFiles>
   </ItemGroup>
