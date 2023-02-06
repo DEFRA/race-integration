@@ -168,7 +168,38 @@ namespace RACE2.DataAccess.Repository
                                     Email=@Email,NormalizedEmail=@NormalizedEmail,EmailConfirmed=@EmailConfirmed,PhoneNumber=@PhoneNumber,PhoneNumberConfirmed=@PhoneNumberConfirmed,TwoFactorEnabled=@TwoFactorEnabled,LockoutEnabled=@LockoutEnabled,AccessFailedCount=@AccessFailedCount
                                 WHERE Id=@Id";
 
-                    var saved = await conn.ExecuteAsync(query, loginuser);
+
+                    var parameters = new DynamicParameters();
+                    parameters.Add("Id", res.Id, DbType.String);
+                    parameters.Add("c_defra_id", loginuser.c_defra_id, DbType.String);
+                    parameters.Add("c_type", loginuser.c_type, DbType.String);
+                    parameters.Add("c_display_name", loginuser.c_display_name, DbType.String);
+                    parameters.Add("c_first_name", loginuser.c_first_name, DbType.String);
+                    parameters.Add("c_last_name", loginuser.c_last_name, DbType.String);
+                    parameters.Add("c_mobile", loginuser.c_mobile, DbType.String);
+                    parameters.Add("c_emergency_phone", loginuser.c_emergency_phone, DbType.String);
+                    parameters.Add("c_organisation_id", loginuser.c_organisation_id, DbType.String);
+                    parameters.Add("c_organisation_name", loginuser.c_organisation_name, DbType.String);
+                    parameters.Add("c_job_title", loginuser.c_job_title, DbType.String);
+                    parameters.Add("c_current_panel", loginuser.c_current_panel, DbType.String);
+                    parameters.Add("c_paon", loginuser.c_paon, DbType.String);
+                    parameters.Add("c_saon", loginuser.c_saon, DbType.String);
+                    parameters.Add("c_status", loginuser.c_status, DbType.String);
+                    parameters.Add("c_created_on_date", loginuser.c_created_on_date, DbType.DateTime);
+                    parameters.Add("c_last_access_date", loginuser.c_last_access_date, DbType.DateTime);
+                    parameters.Add("c_password_retry_count", loginuser.c_password_retry_count, DbType.Int32);
+                    parameters.Add("UserName", loginuser.UserName, DbType.String);
+                    parameters.Add("NormalizedUserName", loginuser.NormalizedUserName, DbType.String);
+                    parameters.Add("Email", loginuser.Email, DbType.String);
+                    parameters.Add("NormalizedEmail", loginuser.NormalizedEmail, DbType.String);
+                    parameters.Add("EmailConfirmed", loginuser.EmailConfirmed, DbType.Byte);
+                    parameters.Add("PhoneNumber", loginuser.PhoneNumber, DbType.String);
+                    parameters.Add("PhoneNumberConfirmed", loginuser.PhoneNumberConfirmed, DbType.Byte);
+                    parameters.Add("TwoFactorEnabled", loginuser.TwoFactorEnabled, DbType.Byte);
+                    parameters.Add("LockoutEnabled", loginuser.LockoutEnabled, DbType.Byte);
+                    parameters.Add("AccessFailedCount", loginuser.AccessFailedCount, DbType.Int32);
+
+                    await conn.ExecuteAsync(query, parameters);
                     return await GetUserById(loginuser.Id);
                 }
             }
