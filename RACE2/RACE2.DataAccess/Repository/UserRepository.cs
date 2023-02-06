@@ -43,7 +43,7 @@ namespace RACE2.DataAccess.Repository
             }
         }
 
-        public async Task<Userdetails> GetById(int id)
+        public async Task<Userdetails> GetUserById(int id)
         {
             using (var conn = Connection)
             {
@@ -54,13 +54,13 @@ namespace RACE2.DataAccess.Repository
         }
 
 
-        public async Task<List<Userdetails>> GetUserByEmailID(string email)
+        public async Task<Userdetails> GetUserByEmailID(string email)
         {
             using (var conn = Connection)
             {
                 var query = "Select * FROM AspNetUsers where Email = @email";
-                var users = await conn.QueryAsync<Userdetails>(query, new { email });
-                return users.ToList();
+                var users = await conn.QuerySingleAsync<Userdetails>(query, new { email });
+                return users;
             }
         }
 
@@ -118,7 +118,7 @@ namespace RACE2.DataAccess.Repository
             using (var conn = Connection)
             {
                 var res = await GetUserByEmailID(loginuser.Email);
-                if (res.Count == 0)
+                if (res == null)
                 {
                     var query = "INSERT INTO AspNetUsers (c_defra_id,c_type,c_display_name,c_first_name,c_last_name,c_mobile,c_emergency_phone,c_organisation_id,c_organisation_name,c_job_title,c_current_panel,c_paon,c_saon,c_status,c_created_on_date,c_last_access_date,c_password_retry_count,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnabled,AccessFailedCount) VALUES (@c_defra_id,@c_type,@c_display_name,@c_first_name,@c_last_name,@c_mobile,@c_emergency_phone,@c_organisation_id,@c_organisation_name,@c_job_title,@c_current_panel,@c_paon,@c_saon,@c_status,@c_created_on_date,@c_last_access_date,@c_password_retry_count,@UserName,@NormalizedUserName,@Email,@NormalizedEmail,@EmailConfirmed,@PhoneNumber,@PhoneNumberConfirmed,@TwoFactorEnabled,@LockoutEnabled,@AccessFailedCount)"
                 + "SELECT CAST(SCOPE_IDENTITY() as int)";
@@ -153,7 +153,7 @@ namespace RACE2.DataAccess.Repository
                     parameters.Add("AccessFailedCount", loginuser.AccessFailedCount, DbType.Int32);
 
                     int id = await conn.ExecuteScalarAsync<int>(query, loginuser);
-                    return await GetById(id);
+                    return await GetUserById(id);
                    
                 }
                 else
@@ -169,7 +169,7 @@ namespace RACE2.DataAccess.Repository
                                 WHERE Id=@Id";
 
                     var saved = await conn.ExecuteAsync(query, loginuser);
-                    return await GetById(loginuser.Id);
+                    return await GetUserById(loginuser.Id);
                 }
             }
         }

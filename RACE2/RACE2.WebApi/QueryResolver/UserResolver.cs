@@ -23,10 +23,10 @@ namespace RACE2.WebApi.QueryResolver
 
         public async Task<Userdetails> GetById(int id)
         {
-            return await _userService.GetById(id);
+            return await _userService.GetUserById(id);
         }
 
-        public async Task<List<Userdetails>> GetUserByEmailID(string email)
+        public async Task<Userdetails> GetUserByEmailID(string email)
         {
             return await _userService.GetUserByEmailID(email);
         }

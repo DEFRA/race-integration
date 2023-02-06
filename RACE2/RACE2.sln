@@ -28,8 +28,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedFiles", "SharedFiles"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GraphQLCommands", "GraphQLCommands", "{D628ECA6-9B57-4882-A17F-43F61BE0B468}"
 	ProjectSection(SolutionItems) = preProject
-		CreateUser.txt = CreateUser.txt
 		GetUser.txt = GetUser.txt
+		ValidateUser.txt = ValidateUser.txt
 	EndProjectSection
 EndProject
 Global

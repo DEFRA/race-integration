@@ -8,7 +8,7 @@ query
   }
 }
 
-GetById
+GetUserById
 -----------
 query($newid:Int!)
 {
@@ -23,7 +23,7 @@ query($newid:Int!)
   "newid":1
 }
 
-GetByEmailId
+GetUserByEmailId
 --------------
 query($newid:String!)
 {
