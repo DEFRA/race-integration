@@ -9,10 +9,10 @@ namespace RACE2.DataModel
 {
     public class Roles : IdentityRole<int>
     {
-        public string? display_name { get; set; }
-        public string? description { get; set; }         
-        public int parent_id { get;set; }
-        public DateTime start_date { get; set; }
-        public DateTime end_date { get; set; }
+        public string? c_display_name { get; set; }
+        public string? c_description { get; set; }         
+        public int c_parent_id { get;set; }
+        public DateTime c_start_date { get; set; }
+        public DateTime c_end_date { get; set; }
     }
 }

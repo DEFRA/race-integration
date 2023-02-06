@@ -13,24 +13,17 @@ namespace RACE2.WebApi.MutationResolver
             _userService = userService;
         }
 
-        
+
         public async Task<Userdetails> CreateUser(Userdetails newuser)
         {
             var result = await _userService.CreateUser(newuser);
-           // int noOfRecs = await _cakeService.SaveCake(newCake);
-            //var result = await _cakeService.GetAll();
             return result;
         }
 
-        //public async Task<Cake> UpdateCakeAsync(Cake updatedCake)
-        //{
-        //    return await _cakeService.UpdateCake(updatedCake);
-        //}
-
-        //public async Task<List<Cake>> DeleteCakeAsync(int id)
-        //{
-        //    int result = await _cakeService.DeleteCake(id);
-        //    return await _cakeService.GetAll();
-        //}
+        public async Task<Userdetails> ValidateUser(Userdetails loginuser)
+        {
+            var result = await _userService.ValidateUser(loginuser);
+            return result;
+        }
     }
 }

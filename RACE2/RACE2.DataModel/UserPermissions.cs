@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 
 namespace RACE2.DataModel
 {
-    [Table("permissions")]
+    [Table("C_Permissions")]
     public class UserPermissions
     {
         [Key, Required]
         public int id { get; set; }
         [StringLength(64)]
         [Required]
-        public string access_level { get; set; }
-        public DateTime? start_date { get; set; }
-        public DateTime? end_date { get; set; }
+        public string? c_access_level { get; set; }
+        public DateTime? c_start_date { get; set; }
+        public DateTime? c_end_date { get; set; }
     }
 }

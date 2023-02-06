@@ -21,15 +21,16 @@ namespace RACE2.WebApi.QueryResolver
             return await _userService.GetUserdetails();
         }
 
-        //public async Task<Cake> GetCakeById(int id)
-        //{
-        //    return await _cakeService.GetById(id);
-        //}
+        public async Task<Userdetails> GetById(int id)
+        {
+            return await _userService.GetById(id);
+        }
 
-        //public async Task<List<Cake>> GetCakeByName(string name)
-        //{
-        //    return await _cakeService.FilterByName(name);
-        //}
+        public async Task<List<Userdetails>> GetUserByEmailID(string email)
+        {
+            return await _userService.GetUserByEmailID(email);
+        }
 
+      
     }
 }

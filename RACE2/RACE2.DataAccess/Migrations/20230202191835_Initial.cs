@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RACE2.DataAccess.Migrations
 {
-    public partial class AddedPK : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,11 +15,11 @@ namespace RACE2.DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    display_name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
-                    description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    parent_id = table.Column<int>(type: "int", nullable: false),
-                    start_date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    end_date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    c_display_name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
+                    c_description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    c_parent_id = table.Column<int>(type: "int", nullable: false),
+                    c_start_date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    c_end_date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -75,36 +75,36 @@ namespace RACE2.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "FeatureFunction",
+                name: "C_FeatureFunction",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
+                    c_Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
-                    display_name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
-                    description = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
-                    default_value = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
-                    start_date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    end_date = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    c_name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    c_display_name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
+                    c_description = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
+                    c_default_value = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
+                    c_start_date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    c_end_date = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FeatureFunction", x => x.id);
+                    table.PrimaryKey("PK_C_FeatureFunction", x => x.c_Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "permissions",
+                name: "C_Permissions",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    access_level = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
-                    start_date = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    end_date = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    c_access_level = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    c_start_date = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    c_end_date = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_permissions", x => x.id);
+                    table.PrimaryKey("PK_C_Permissions", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -173,12 +173,17 @@ namespace RACE2.DataAccess.Migrations
                 name: "AspNetUserRoles",
                 columns: table => new
                 {
+                    c_Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    c_status = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    c_start_date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    c_end_date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     RoleId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
+                    table.PrimaryKey("PK_AspNetUserRoles", x => x.c_Id);
                     table.ForeignKey(
                         name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
                         column: x => x.RoleId,
@@ -241,6 +246,11 @@ namespace RACE2.DataAccess.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserRoles_UserId",
+                table: "AspNetUserRoles",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "EmailIndex",
                 table: "AspNetUsers",
                 column: "NormalizedEmail");
@@ -271,10 +281,10 @@ namespace RACE2.DataAccess.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "FeatureFunction");
+                name: "C_FeatureFunction");
 
             migrationBuilder.DropTable(
-                name: "permissions");
+                name: "C_Permissions");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
