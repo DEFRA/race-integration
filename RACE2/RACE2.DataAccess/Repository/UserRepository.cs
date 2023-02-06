@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Dapper;
 using Microsoft.Data.SqlClient;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using static Humanizer.In;
 
 namespace RACE2.DataAccess.Repository
 {
@@ -39,6 +40,27 @@ namespace RACE2.DataAccess.Repository
             {
                 var companies = await conn.QueryAsync<Userdetails>(query);
                 return companies.ToList();
+            }
+        }
+
+        public async Task<Userdetails> GetById(int id)
+        {
+            using (var conn = Connection)
+            {
+                var query = "Select * from AspNetUsers where Id=@id";
+                var user = await conn.QuerySingleAsync<Userdetails>(query, new { Id = id });
+                return user;
+            }
+        }
+
+
+        public async Task<List<Userdetails>> GetUserByEmailID(string email)
+        {
+            using (var conn = Connection)
+            {
+                var query = "Select * FROM AspNetUsers where Email = @email";
+                var users = await conn.QueryAsync<Userdetails>(query, new { email });
+                return users.ToList();
             }
         }
 
@@ -90,6 +112,69 @@ namespace RACE2.DataAccess.Repository
                 return createdCompany;
             }
         }
+
+        public async Task<Userdetails> ValidateUser(Userdetails loginuser)
+        {
+            using (var conn = Connection)
+            {
+                var res = await GetUserByEmailID(loginuser.Email);
+                if (res.Count == 0)
+                {
+                    var query = "INSERT INTO AspNetUsers (c_defra_id,c_type,c_display_name,c_first_name,c_last_name,c_mobile,c_emergency_phone,c_organisation_id,c_organisation_name,c_job_title,c_current_panel,c_paon,c_saon,c_status,c_created_on_date,c_last_access_date,c_password_retry_count,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnabled,AccessFailedCount) VALUES (@c_defra_id,@c_type,@c_display_name,@c_first_name,@c_last_name,@c_mobile,@c_emergency_phone,@c_organisation_id,@c_organisation_name,@c_job_title,@c_current_panel,@c_paon,@c_saon,@c_status,@c_created_on_date,@c_last_access_date,@c_password_retry_count,@UserName,@NormalizedUserName,@Email,@NormalizedEmail,@EmailConfirmed,@PhoneNumber,@PhoneNumberConfirmed,@TwoFactorEnabled,@LockoutEnabled,@AccessFailedCount)"
+                + "SELECT CAST(SCOPE_IDENTITY() as int)";
+                    var parameters = new DynamicParameters();
+                    //parameters.Add("Id", newuser.Id, DbType.String);
+                    parameters.Add("c_defra_id", loginuser.c_defra_id, DbType.String);
+                    parameters.Add("c_type", loginuser.c_type, DbType.String);
+                    parameters.Add("c_display_name", loginuser.c_display_name, DbType.String);
+                    parameters.Add("c_first_name", loginuser.c_first_name, DbType.String);
+                    parameters.Add("c_last_name", loginuser.c_last_name, DbType.String);
+                    parameters.Add("c_mobile", loginuser.c_mobile, DbType.String);
+                    parameters.Add("c_emergency_phone", loginuser.c_emergency_phone, DbType.String);
+                    parameters.Add("c_organisation_id",loginuser.c_organisation_id, DbType.String);
+                    parameters.Add("c_organisation_name",loginuser.c_organisation_name, DbType.String);
+                    parameters.Add("c_job_title",loginuser.c_job_title, DbType.String);
+                    parameters.Add("c_current_panel",loginuser.c_current_panel, DbType.String);
+                    parameters.Add("c_paon",loginuser.c_paon,DbType.String);
+                    parameters.Add("c_saon",loginuser.c_saon,DbType.String);
+                    parameters.Add("c_status", loginuser.c_status, DbType.String);
+                    parameters.Add("c_created_on_date", loginuser.c_created_on_date, DbType.DateTime);
+                    parameters.Add("c_last_access_date", loginuser.c_last_access_date, DbType.DateTime);
+                    parameters.Add("c_password_retry_count", loginuser.c_password_retry_count, DbType.Int32);
+                    parameters.Add("UserName",loginuser.UserName,DbType.String);
+                    parameters.Add("NormalizedUserName",loginuser.NormalizedUserName, DbType.String);
+                    parameters.Add("Email",loginuser.Email, DbType.String);
+                    parameters.Add("NormalizedEmail",loginuser.NormalizedEmail, DbType.String);
+                    parameters.Add("EmailConfirmed", loginuser.EmailConfirmed, DbType.Byte);
+                    parameters.Add("PhoneNumber",loginuser.PhoneNumber, DbType.String);
+                    parameters.Add("PhoneNumberConfirmed", loginuser.PhoneNumberConfirmed, DbType.Byte);
+                    parameters.Add("TwoFactorEnabled", loginuser.TwoFactorEnabled, DbType.Byte);
+                    parameters.Add("LockoutEnabled", loginuser.LockoutEnabled, DbType.Byte);
+                    parameters.Add("AccessFailedCount", loginuser.AccessFailedCount, DbType.Int32);
+
+                    int id = await conn.ExecuteScalarAsync<int>(query, loginuser);
+                    return await GetById(id);
+                   
+                }
+                else
+                {
+                    var query = @"UPDATE AspNetUsers
+                                SET c_defra_id=@c_defra_id,c_type=@c_type,c_display_name=@c_display_name,
+                                    c_first_name=@c_first_name,c_last_name=@c_last_name,c_mobile=@c_mobile,c_emergency_phone=@c_emergency_phone,
+                                    c_organisation_id=@c_organisation_id,c_organisation_name=@c_organisation_name,c_job_title=@c_job_title,
+                                    c_current_panel=@c_current_panel,c_paon=@c_paon,c_saon=@c_saon,c_status=@c_status,
+                                    c_created_on_date=@c_created_on_date,c_last_access_date=@c_last_access_date,
+                                    c_password_retry_count=@c_password_retry_count,UserName=@UserName,NormalizedUserName=@NormalizedUserName,
+                                    Email=@Email,NormalizedEmail=@NormalizedEmail,EmailConfirmed=@EmailConfirmed,PhoneNumber=@PhoneNumber,PhoneNumberConfirmed=@PhoneNumberConfirmed,TwoFactorEnabled=@TwoFactorEnabled,LockoutEnabled=@LockoutEnabled,AccessFailedCount=@AccessFailedCount
+                                WHERE Id=@Id";
+
+                    var saved = await conn.ExecuteAsync(query, loginuser);
+                    return await GetById(loginuser.Id);
+                }
+            }
+        }
+
+
 
     }
 }

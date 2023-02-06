@@ -91,21 +91,6 @@ namespace RACE2.DataAccess.Migrations
                     b.ToTable("AspNetUserLogins", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
-                {
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
-
-                    b.HasKey("UserId", "RoleId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetUserRoles", (string)null);
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
                     b.Property<int>("UserId")
@@ -127,38 +112,38 @@ namespace RACE2.DataAccess.Migrations
 
             modelBuilder.Entity("RACE2.DataModel.FeatureFunction", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("c_Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("c_Id"), 1L, 1);
 
-                    b.Property<string>("default_value")
+                    b.Property<string>("c_default_value")
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
-                    b.Property<string>("description")
+                    b.Property<string>("c_description")
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
-                    b.Property<string>("display_name")
+                    b.Property<string>("c_display_name")
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
-                    b.Property<DateTime>("end_date")
+                    b.Property<DateTime>("c_end_date")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("name")
+                    b.Property<string>("c_name")
                         .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
-                    b.Property<DateTime>("start_date")
+                    b.Property<DateTime>("c_start_date")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("id");
+                    b.HasKey("c_Id");
 
-                    b.ToTable("FeatureFunction");
+                    b.ToTable("C_FeatureFunction");
                 });
 
             modelBuilder.Entity("RACE2.DataModel.Roles", b =>
@@ -181,20 +166,20 @@ namespace RACE2.DataAccess.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<string>("description")
+                    b.Property<string>("c_description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("display_name")
+                    b.Property<string>("c_display_name")
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
-                    b.Property<DateTime>("end_date")
+                    b.Property<DateTime>("c_end_date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("parent_id")
+                    b.Property<int>("c_parent_id")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("start_date")
+                    b.Property<DateTime>("c_start_date")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -393,20 +378,52 @@ namespace RACE2.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
-                    b.Property<string>("access_level")
+                    b.Property<string>("c_access_level")
                         .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
-                    b.Property<DateTime?>("end_date")
+                    b.Property<DateTime?>("c_end_date")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("start_date")
+                    b.Property<DateTime?>("c_start_date")
                         .HasColumnType("datetime2");
 
                     b.HasKey("id");
 
-                    b.ToTable("permissions");
+                    b.ToTable("C_Permissions");
+                });
+
+            modelBuilder.Entity("RACE2.DataModel.UserRole", b =>
+                {
+                    b.Property<int>("c_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("c_Id"), 1L, 1);
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("c_end_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("c_start_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("c_status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("c_Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -436,14 +453,8 @@ namespace RACE2.DataAccess.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
-                    b.HasOne("RACE2.DataModel.Roles", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("RACE2.DataModel.Userdetails", null)
                         .WithMany()
                         .HasForeignKey("UserId")
@@ -451,8 +462,14 @@ namespace RACE2.DataAccess.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
+            modelBuilder.Entity("RACE2.DataModel.UserRole", b =>
                 {
+                    b.HasOne("RACE2.DataModel.Roles", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("RACE2.DataModel.Userdetails", null)
                         .WithMany()
                         .HasForeignKey("UserId")

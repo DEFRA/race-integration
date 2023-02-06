@@ -9,7 +9,8 @@ using System.IO;
 
 namespace RACE2.DataAccess
 {
-    public class ApplicationDbContext : IdentityDbContext<Userdetails, Roles,int>
+    public class ApplicationDbContext : IdentityDbContext<Userdetails, Roles,int,IdentityUserClaim<int>,UserRole,IdentityUserLogin<int>,
+        IdentityRoleClaim<int>,IdentityUserToken<int>>
      {
         
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -22,7 +23,6 @@ namespace RACE2.DataAccess
         public DbSet<UserPermissions> UserPermissions { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Userdetails>(e =>
             {
@@ -132,20 +132,35 @@ namespace RACE2.DataAccess
                 .HasDefaultValue(0);
 
             modelBuilder.Entity<Roles>()
-                .Property(e => e.display_name)
+                .Property(e => e.c_display_name)
                 .HasMaxLength(64);
 
             modelBuilder.Entity<Roles>()
-                .Property(e => e.description);
+                .Property(e => e.c_description);
 
             modelBuilder.Entity<Roles>()
-                .Property(e => e.parent_id);
+                .Property(e => e.c_parent_id);
 
             modelBuilder.Entity<Roles>()
-                .Property(e => e.start_date);
+                .Property(e => e.c_start_date);
 
             modelBuilder.Entity<Roles>()
-                .Property(e => e.end_date);
+                .Property(e => e.c_end_date);
+
+            modelBuilder.Entity<UserRole>(e =>
+                {
+                    e.HasKey( e => e.c_Id);
+                    e.Property(e => e.c_Id).ValueGeneratedOnAdd();                   
+                });
+
+            modelBuilder.Entity<UserRole>()
+                .Property(e => e.c_start_date);
+
+            modelBuilder.Entity<UserRole>()
+                .Property(e => e.c_end_date);
+
+            modelBuilder.Entity<UserRole>()
+                .Property(e => e.c_status);
         }
 
     }
