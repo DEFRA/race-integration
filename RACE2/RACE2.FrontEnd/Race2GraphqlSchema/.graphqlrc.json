@@ -3,9 +3,9 @@
   "documents": "**/*.graphql",
   "extensions": {
     "strawberryShake": {
-      "name": "Race2GraphqlClient",
+      "name": "RACE2GraphQLClient",
+      "namespace": "RACE2.FrontEnd.RACE2GraphQLSchema",
       "url": "https://localhost:5004/graphql/",
-      "namespace": "RACE2.FrontEnd.Race2GraphQlSchema",
       "dependencyInjection": true,
       "strictSchemaValidation": true,
       "hashAlgorithm": "md5",

@@ -6,12 +6,13 @@
 
 type UserResolver {
   userdetails: [Userdetails!]!
-  userdetailById(id: Int!): Userdetails!
-  userdetailByEmail(email: String!): Userdetails!
+  byId(id: Int!): Userdetails!
+  userByEmailID(email: String!): Userdetails!
 }
 
 type Mutation {
   createUser(newuser: UserdetailsInput!): Userdetails!
+  validateUser(loginuser: UserdetailsInput!): Userdetails!
 }
 
 type Subscription {

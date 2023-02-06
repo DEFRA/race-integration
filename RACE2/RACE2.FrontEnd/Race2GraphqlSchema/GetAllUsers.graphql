@@ -1,6 +1,0 @@
-﻿query GetAllUserdetails{
-  userdetails{
-  id
-  c_display_name 
-  }
-  }

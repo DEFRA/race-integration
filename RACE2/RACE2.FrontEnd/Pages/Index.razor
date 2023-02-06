@@ -1,5 +1,5 @@
 ﻿@using RACE2.FrontEnd.Components
-@inject Race2GraphqlClient client;
+@inject RACE2GraphQLClient client;
 
 @inject ApplicationSettings appSettings;
 @page "/"
@@ -9,9 +9,9 @@
 @code {
     protected override async Task OnInitializedAsync()
     {
-        var result = await client.GetAllUserdetails.ExecuteAsync();
+        var result = await client.GetUserByEmailID.ExecuteAsync("kcsahoo@gmail.com");
         //var sr = await client.GetUserdetailByEmail.ExecuteAsync("kcsahoo@gmail.com");
-        var res = result!.Data!;
-        var s = appSettings.BlazorWebApiURL;
+        var res = result!.Data!.UserByEmailID.Email;
+        //var s = appSettings.BlazorWebApiURL;
     }
 }
