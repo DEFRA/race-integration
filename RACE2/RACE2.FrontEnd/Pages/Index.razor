@@ -1,4 +1,17 @@
 ﻿@using RACE2.FrontEnd.Components
+@inject Race2GraphqlClient client;
+
+@inject ApplicationSettings appSettings;
 @page "/"
 
 <Home />
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await client.GetAllUserdetails.ExecuteAsync();
+        //var sr = await client.GetUserdetailByEmail.ExecuteAsync("kcsahoo@gmail.com");
+        var res = result!.Data!;
+        var s = appSettings.BlazorWebApiURL;
+    }
+}

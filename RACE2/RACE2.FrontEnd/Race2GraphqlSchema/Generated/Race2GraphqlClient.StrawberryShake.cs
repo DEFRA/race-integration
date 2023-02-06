@@ -15,6 +15,8 @@ namespace Microsoft.Extensions.DependencyInjection
                 return new ClientServiceProvider(global::Microsoft.Extensions.DependencyInjection.ServiceCollectionContainerBuilderExtensions.BuildServiceProvider(serviceCollection));
             });
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton(services, sp => new global::RACE2.FrontEnd.Race2GraphQlSchema.State.Race2GraphqlClientStoreAccessor(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationStore>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)), global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IEntityStore>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)), global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IEntityIdSerializer>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)), global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::System.Collections.Generic.IEnumerable<global::StrawberryShake.IOperationRequestFactory>>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)), global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::System.Collections.Generic.IEnumerable<global::StrawberryShake.IOperationResultDataFactory>>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp))));
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::RACE2.FrontEnd.Race2GraphQlSchema.CreateUserMutation>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)));
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::RACE2.FrontEnd.Race2GraphQlSchema.GetUserdetailByEmailQuery>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)));
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::RACE2.FrontEnd.Race2GraphQlSchema.GetAllUserdetailsQuery>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)));
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::RACE2.FrontEnd.Race2GraphQlSchema.Race2GraphqlClient>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)));
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::RACE2.FrontEnd.Race2GraphQlSchema.IRace2GraphqlClient>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)));
@@ -30,6 +32,8 @@ namespace Microsoft.Extensions.DependencyInjection
                 var clientFactory = global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::System.Net.Http.IHttpClientFactory>(parentServices);
                 return new global::StrawberryShake.Transport.Http.HttpConnection(() => clientFactory.CreateClient("Race2GraphqlClient"));
             });
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IEntityMapper<global::RACE2.FrontEnd.Race2GraphQlSchema.State.UserdetailsEntity, global::RACE2.FrontEnd.Race2GraphQlSchema.CreateUser_CreateUser_Userdetails>, global::RACE2.FrontEnd.Race2GraphQlSchema.State.CreateUser_CreateUser_UserdetailsFromUserdetailsEntityMapper>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IEntityMapper<global::RACE2.FrontEnd.Race2GraphQlSchema.State.UserdetailsEntity, global::RACE2.FrontEnd.Race2GraphQlSchema.GetUserdetailByEmail_UserdetailByEmail_Userdetails>, global::RACE2.FrontEnd.Race2GraphQlSchema.State.GetUserdetailByEmail_UserdetailByEmail_UserdetailsFromUserdetailsEntityMapper>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IEntityMapper<global::RACE2.FrontEnd.Race2GraphQlSchema.State.UserdetailsEntity, global::RACE2.FrontEnd.Race2GraphQlSchema.GetAllUserdetails_Userdetails_Userdetails>, global::RACE2.FrontEnd.Race2GraphQlSchema.State.GetAllUserdetails_Userdetails_UserdetailsFromUserdetailsEntityMapper>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Serialization.ISerializer, global::StrawberryShake.Serialization.StringSerializer>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Serialization.ISerializer, global::StrawberryShake.Serialization.BooleanSerializer>(services);
@@ -47,7 +51,22 @@ namespace Microsoft.Extensions.DependencyInjection
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Serialization.ISerializer, global::StrawberryShake.Serialization.ByteArraySerializer>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Serialization.ISerializer, global::StrawberryShake.Serialization.TimeSpanSerializer>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Serialization.ISerializer, global::StrawberryShake.Serialization.JsonSerializer>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Serialization.ISerializer, global::RACE2.FrontEnd.Race2GraphQlSchema.UserdetailsInputInputValueFormatter>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Serialization.ISerializerResolver>(services, sp => new global::StrawberryShake.Serialization.SerializerResolver(global::System.Linq.Enumerable.Concat(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::System.Collections.Generic.IEnumerable<global::StrawberryShake.Serialization.ISerializer>>(parentServices), global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::System.Collections.Generic.IEnumerable<global::StrawberryShake.Serialization.ISerializer>>(sp))));
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationResultDataFactory<global::RACE2.FrontEnd.Race2GraphQlSchema.ICreateUserResult>, global::RACE2.FrontEnd.Race2GraphQlSchema.State.CreateUserResultFactory>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationResultDataFactory>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationResultDataFactory<global::RACE2.FrontEnd.Race2GraphQlSchema.ICreateUserResult>>(sp));
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationRequestFactory>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::RACE2.FrontEnd.Race2GraphQlSchema.ICreateUserMutation>(sp));
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationResultBuilder<global::System.Text.Json.JsonDocument, global::RACE2.FrontEnd.Race2GraphQlSchema.ICreateUserResult>, global::RACE2.FrontEnd.Race2GraphQlSchema.State.CreateUserBuilder>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationExecutor<global::RACE2.FrontEnd.Race2GraphQlSchema.ICreateUserResult>>(services, sp => new global::StrawberryShake.OperationExecutor<global::System.Text.Json.JsonDocument, global::RACE2.FrontEnd.Race2GraphQlSchema.ICreateUserResult>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.Transport.Http.IHttpConnection>(sp), () => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationResultBuilder<global::System.Text.Json.JsonDocument, global::RACE2.FrontEnd.Race2GraphQlSchema.ICreateUserResult>>(sp), global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationStore>(sp), strategy));
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::RACE2.FrontEnd.Race2GraphQlSchema.CreateUserMutation>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::RACE2.FrontEnd.Race2GraphQlSchema.ICreateUserMutation>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::RACE2.FrontEnd.Race2GraphQlSchema.CreateUserMutation>(sp));
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationResultDataFactory<global::RACE2.FrontEnd.Race2GraphQlSchema.IGetUserdetailByEmailResult>, global::RACE2.FrontEnd.Race2GraphQlSchema.State.GetUserdetailByEmailResultFactory>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationResultDataFactory>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationResultDataFactory<global::RACE2.FrontEnd.Race2GraphQlSchema.IGetUserdetailByEmailResult>>(sp));
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationRequestFactory>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::RACE2.FrontEnd.Race2GraphQlSchema.IGetUserdetailByEmailQuery>(sp));
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationResultBuilder<global::System.Text.Json.JsonDocument, global::RACE2.FrontEnd.Race2GraphQlSchema.IGetUserdetailByEmailResult>, global::RACE2.FrontEnd.Race2GraphQlSchema.State.GetUserdetailByEmailBuilder>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationExecutor<global::RACE2.FrontEnd.Race2GraphQlSchema.IGetUserdetailByEmailResult>>(services, sp => new global::StrawberryShake.OperationExecutor<global::System.Text.Json.JsonDocument, global::RACE2.FrontEnd.Race2GraphQlSchema.IGetUserdetailByEmailResult>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.Transport.Http.IHttpConnection>(sp), () => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationResultBuilder<global::System.Text.Json.JsonDocument, global::RACE2.FrontEnd.Race2GraphQlSchema.IGetUserdetailByEmailResult>>(sp), global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationStore>(sp), strategy));
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::RACE2.FrontEnd.Race2GraphQlSchema.GetUserdetailByEmailQuery>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::RACE2.FrontEnd.Race2GraphQlSchema.IGetUserdetailByEmailQuery>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::RACE2.FrontEnd.Race2GraphQlSchema.GetUserdetailByEmailQuery>(sp));
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationResultDataFactory<global::RACE2.FrontEnd.Race2GraphQlSchema.IGetAllUserdetailsResult>, global::RACE2.FrontEnd.Race2GraphQlSchema.State.GetAllUserdetailsResultFactory>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationResultDataFactory>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationResultDataFactory<global::RACE2.FrontEnd.Race2GraphQlSchema.IGetAllUserdetailsResult>>(sp));
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationRequestFactory>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::RACE2.FrontEnd.Race2GraphQlSchema.IGetAllUserdetailsQuery>(sp));
@@ -87,6 +106,396 @@ namespace Microsoft.Extensions.DependencyInjection
 
 namespace RACE2.FrontEnd.Race2GraphQlSchema
 {
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    public partial class CreateUserResult : global::System.IEquatable<CreateUserResult>, ICreateUserResult
+    {
+        public CreateUserResult(global::RACE2.FrontEnd.Race2GraphQlSchema.ICreateUser_CreateUser createUser)
+        {
+            CreateUser = createUser;
+        }
+
+        public global::RACE2.FrontEnd.Race2GraphQlSchema.ICreateUser_CreateUser CreateUser { get; }
+
+        public virtual global::System.Boolean Equals(CreateUserResult? other)
+        {
+            if (ReferenceEquals(null, other))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            if (other.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return (CreateUser.Equals(other.CreateUser));
+        }
+
+        public override global::System.Boolean Equals(global::System.Object? obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return Equals((CreateUserResult)obj);
+        }
+
+        public override global::System.Int32 GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 5;
+                hash ^= 397 * CreateUser.GetHashCode();
+                return hash;
+            }
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    public partial class CreateUser_CreateUser_Userdetails : global::System.IEquatable<CreateUser_CreateUser_Userdetails>, ICreateUser_CreateUser_Userdetails
+    {
+        public CreateUser_CreateUser_Userdetails(global::System.String? c_Defra_Id, global::System.String? c_Type, global::System.String? c_Display_Name, global::System.String? c_First_Name, global::System.String? c_Last_Name, global::System.String? c_Status, global::System.DateTimeOffset c_Created_On_Date, global::System.DateTimeOffset c_Last_Access_Date, global::System.Int32 c_Password_Retry_Count, global::System.Boolean emailConfirmed, global::System.Boolean phoneNumberConfirmed, global::System.Boolean twoFactorEnabled, global::System.Boolean lockoutEnabled, global::System.Int32 accessFailedCount)
+        {
+            C_defra_id = c_Defra_Id;
+            C_type = c_Type;
+            C_display_name = c_Display_Name;
+            C_first_name = c_First_Name;
+            C_last_name = c_Last_Name;
+            C_status = c_Status;
+            C_created_on_date = c_Created_On_Date;
+            C_last_access_date = c_Last_Access_Date;
+            C_password_retry_count = c_Password_Retry_Count;
+            EmailConfirmed = emailConfirmed;
+            PhoneNumberConfirmed = phoneNumberConfirmed;
+            TwoFactorEnabled = twoFactorEnabled;
+            LockoutEnabled = lockoutEnabled;
+            AccessFailedCount = accessFailedCount;
+        }
+
+        public global::System.String? C_defra_id { get; }
+
+        public global::System.String? C_type { get; }
+
+        public global::System.String? C_display_name { get; }
+
+        public global::System.String? C_first_name { get; }
+
+        public global::System.String? C_last_name { get; }
+
+        public global::System.String? C_status { get; }
+
+        public global::System.DateTimeOffset C_created_on_date { get; }
+
+        public global::System.DateTimeOffset C_last_access_date { get; }
+
+        public global::System.Int32 C_password_retry_count { get; }
+
+        public global::System.Boolean EmailConfirmed { get; }
+
+        public global::System.Boolean PhoneNumberConfirmed { get; }
+
+        public global::System.Boolean TwoFactorEnabled { get; }
+
+        public global::System.Boolean LockoutEnabled { get; }
+
+        public global::System.Int32 AccessFailedCount { get; }
+
+        public virtual global::System.Boolean Equals(CreateUser_CreateUser_Userdetails? other)
+        {
+            if (ReferenceEquals(null, other))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            if (other.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return (((C_defra_id is null && other.C_defra_id is null) || C_defra_id != null && C_defra_id.Equals(other.C_defra_id))) && ((C_type is null && other.C_type is null) || C_type != null && C_type.Equals(other.C_type)) && ((C_display_name is null && other.C_display_name is null) || C_display_name != null && C_display_name.Equals(other.C_display_name)) && ((C_first_name is null && other.C_first_name is null) || C_first_name != null && C_first_name.Equals(other.C_first_name)) && ((C_last_name is null && other.C_last_name is null) || C_last_name != null && C_last_name.Equals(other.C_last_name)) && ((C_status is null && other.C_status is null) || C_status != null && C_status.Equals(other.C_status)) && C_created_on_date.Equals(other.C_created_on_date) && C_last_access_date.Equals(other.C_last_access_date) && C_password_retry_count == other.C_password_retry_count && EmailConfirmed == other.EmailConfirmed && PhoneNumberConfirmed == other.PhoneNumberConfirmed && TwoFactorEnabled == other.TwoFactorEnabled && LockoutEnabled == other.LockoutEnabled && AccessFailedCount == other.AccessFailedCount;
+        }
+
+        public override global::System.Boolean Equals(global::System.Object? obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return Equals((CreateUser_CreateUser_Userdetails)obj);
+        }
+
+        public override global::System.Int32 GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 5;
+                if (C_defra_id != null)
+                {
+                    hash ^= 397 * C_defra_id.GetHashCode();
+                }
+
+                if (C_type != null)
+                {
+                    hash ^= 397 * C_type.GetHashCode();
+                }
+
+                if (C_display_name != null)
+                {
+                    hash ^= 397 * C_display_name.GetHashCode();
+                }
+
+                if (C_first_name != null)
+                {
+                    hash ^= 397 * C_first_name.GetHashCode();
+                }
+
+                if (C_last_name != null)
+                {
+                    hash ^= 397 * C_last_name.GetHashCode();
+                }
+
+                if (C_status != null)
+                {
+                    hash ^= 397 * C_status.GetHashCode();
+                }
+
+                hash ^= 397 * C_created_on_date.GetHashCode();
+                hash ^= 397 * C_last_access_date.GetHashCode();
+                hash ^= 397 * C_password_retry_count.GetHashCode();
+                hash ^= 397 * EmailConfirmed.GetHashCode();
+                hash ^= 397 * PhoneNumberConfirmed.GetHashCode();
+                hash ^= 397 * TwoFactorEnabled.GetHashCode();
+                hash ^= 397 * LockoutEnabled.GetHashCode();
+                hash ^= 397 * AccessFailedCount.GetHashCode();
+                return hash;
+            }
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    public partial interface ICreateUserResult
+    {
+        public global::RACE2.FrontEnd.Race2GraphQlSchema.ICreateUser_CreateUser CreateUser { get; }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    public partial interface ICreateUser_CreateUser
+    {
+        public global::System.String? C_defra_id { get; }
+
+        public global::System.String? C_type { get; }
+
+        public global::System.String? C_display_name { get; }
+
+        public global::System.String? C_first_name { get; }
+
+        public global::System.String? C_last_name { get; }
+
+        public global::System.String? C_status { get; }
+
+        public global::System.DateTimeOffset C_created_on_date { get; }
+
+        public global::System.DateTimeOffset C_last_access_date { get; }
+
+        public global::System.Int32 C_password_retry_count { get; }
+
+        public global::System.Boolean EmailConfirmed { get; }
+
+        public global::System.Boolean PhoneNumberConfirmed { get; }
+
+        public global::System.Boolean TwoFactorEnabled { get; }
+
+        public global::System.Boolean LockoutEnabled { get; }
+
+        public global::System.Int32 AccessFailedCount { get; }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    public partial interface ICreateUser_CreateUser_Userdetails : ICreateUser_CreateUser
+    {
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    public partial class GetUserdetailByEmailResult : global::System.IEquatable<GetUserdetailByEmailResult>, IGetUserdetailByEmailResult
+    {
+        public GetUserdetailByEmailResult(global::RACE2.FrontEnd.Race2GraphQlSchema.IGetUserdetailByEmail_UserdetailByEmail userdetailByEmail)
+        {
+            UserdetailByEmail = userdetailByEmail;
+        }
+
+        public global::RACE2.FrontEnd.Race2GraphQlSchema.IGetUserdetailByEmail_UserdetailByEmail UserdetailByEmail { get; }
+
+        public virtual global::System.Boolean Equals(GetUserdetailByEmailResult? other)
+        {
+            if (ReferenceEquals(null, other))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            if (other.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return (UserdetailByEmail.Equals(other.UserdetailByEmail));
+        }
+
+        public override global::System.Boolean Equals(global::System.Object? obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return Equals((GetUserdetailByEmailResult)obj);
+        }
+
+        public override global::System.Int32 GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 5;
+                hash ^= 397 * UserdetailByEmail.GetHashCode();
+                return hash;
+            }
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    public partial class GetUserdetailByEmail_UserdetailByEmail_Userdetails : global::System.IEquatable<GetUserdetailByEmail_UserdetailByEmail_Userdetails>, IGetUserdetailByEmail_UserdetailByEmail_Userdetails
+    {
+        public GetUserdetailByEmail_UserdetailByEmail_Userdetails(global::System.Int32 id, global::System.String? c_Display_Name)
+        {
+            Id = id;
+            C_display_name = c_Display_Name;
+        }
+
+        public global::System.Int32 Id { get; }
+
+        public global::System.String? C_display_name { get; }
+
+        public virtual global::System.Boolean Equals(GetUserdetailByEmail_UserdetailByEmail_Userdetails? other)
+        {
+            if (ReferenceEquals(null, other))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            if (other.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return (Id == other.Id) && ((C_display_name is null && other.C_display_name is null) || C_display_name != null && C_display_name.Equals(other.C_display_name));
+        }
+
+        public override global::System.Boolean Equals(global::System.Object? obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return Equals((GetUserdetailByEmail_UserdetailByEmail_Userdetails)obj);
+        }
+
+        public override global::System.Int32 GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 5;
+                hash ^= 397 * Id.GetHashCode();
+                if (C_display_name != null)
+                {
+                    hash ^= 397 * C_display_name.GetHashCode();
+                }
+
+                return hash;
+            }
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    public partial interface IGetUserdetailByEmailResult
+    {
+        public global::RACE2.FrontEnd.Race2GraphQlSchema.IGetUserdetailByEmail_UserdetailByEmail UserdetailByEmail { get; }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    public partial interface IGetUserdetailByEmail_UserdetailByEmail
+    {
+        public global::System.Int32 Id { get; }
+
+        public global::System.String? C_display_name { get; }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    public partial interface IGetUserdetailByEmail_UserdetailByEmail_Userdetails : IGetUserdetailByEmail_UserdetailByEmail
+    {
+    }
+
     [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
     public partial class GetAllUserdetailsResult : global::System.IEquatable<GetAllUserdetailsResult>, IGetAllUserdetailsResult
     {
@@ -240,6 +649,1472 @@ namespace RACE2.FrontEnd.Race2GraphQlSchema
     {
     }
 
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    public partial class UserdetailsInputInputValueFormatter : global::StrawberryShake.Serialization.IInputObjectFormatter
+    {
+        private global::StrawberryShake.Serialization.IInputValueFormatter _stringFormatter = default !;
+        private global::StrawberryShake.Serialization.IInputValueFormatter _dateTimeFormatter = default !;
+        private global::StrawberryShake.Serialization.IInputValueFormatter _intFormatter = default !;
+        private global::StrawberryShake.Serialization.IInputValueFormatter _booleanFormatter = default !;
+        public global::System.String TypeName => "UserdetailsInput";
+        public void Initialize(global::StrawberryShake.Serialization.ISerializerResolver serializerResolver)
+        {
+            _stringFormatter = serializerResolver.GetInputValueFormatter("String");
+            _dateTimeFormatter = serializerResolver.GetInputValueFormatter("DateTime");
+            _intFormatter = serializerResolver.GetInputValueFormatter("Int");
+            _booleanFormatter = serializerResolver.GetInputValueFormatter("Boolean");
+        }
+
+        public global::System.Object? Format(global::System.Object? runtimeValue)
+        {
+            if (runtimeValue is null)
+            {
+                return null;
+            }
+
+            var input = runtimeValue as global::RACE2.FrontEnd.Race2GraphQlSchema.UserdetailsInput;
+            var inputInfo = runtimeValue as global::RACE2.FrontEnd.Race2GraphQlSchema.State.IUserdetailsInputInfo;
+            if (input is null || inputInfo is null)
+            {
+                throw new global::System.ArgumentException(nameof(runtimeValue));
+            }
+
+            var fields = new global::System.Collections.Generic.List<global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>>();
+            if (inputInfo.IsC_defra_idSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("c_defra_id", FormatC_defra_id(input.C_defra_id)));
+            }
+
+            if (inputInfo.IsC_typeSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("c_type", FormatC_type(input.C_type)));
+            }
+
+            if (inputInfo.IsC_display_nameSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("c_display_name", FormatC_display_name(input.C_display_name)));
+            }
+
+            if (inputInfo.IsC_first_nameSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("c_first_name", FormatC_first_name(input.C_first_name)));
+            }
+
+            if (inputInfo.IsC_last_nameSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("c_last_name", FormatC_last_name(input.C_last_name)));
+            }
+
+            if (inputInfo.IsC_mobileSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("c_mobile", FormatC_mobile(input.C_mobile)));
+            }
+
+            if (inputInfo.IsC_emergency_phoneSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("c_emergency_phone", FormatC_emergency_phone(input.C_emergency_phone)));
+            }
+
+            if (inputInfo.IsC_organisation_idSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("c_organisation_id", FormatC_organisation_id(input.C_organisation_id)));
+            }
+
+            if (inputInfo.IsC_organisation_nameSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("c_organisation_name", FormatC_organisation_name(input.C_organisation_name)));
+            }
+
+            if (inputInfo.IsC_job_titleSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("c_job_title", FormatC_job_title(input.C_job_title)));
+            }
+
+            if (inputInfo.IsC_current_panelSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("c_current_panel", FormatC_current_panel(input.C_current_panel)));
+            }
+
+            if (inputInfo.IsC_paonSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("c_paon", FormatC_paon(input.C_paon)));
+            }
+
+            if (inputInfo.IsC_saonSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("c_saon", FormatC_saon(input.C_saon)));
+            }
+
+            if (inputInfo.IsC_statusSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("c_status", FormatC_status(input.C_status)));
+            }
+
+            if (inputInfo.IsC_created_on_dateSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("c_created_on_date", FormatC_created_on_date(input.C_created_on_date)));
+            }
+
+            if (inputInfo.IsC_last_access_dateSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("c_last_access_date", FormatC_last_access_date(input.C_last_access_date)));
+            }
+
+            if (inputInfo.IsC_passwordSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("c_password", FormatC_password(input.C_password)));
+            }
+
+            if (inputInfo.IsC_password_hintSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("c_password_hint", FormatC_password_hint(input.C_password_hint)));
+            }
+
+            if (inputInfo.IsC_password_retry_countSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("c_password_retry_count", FormatC_password_retry_count(input.C_password_retry_count)));
+            }
+
+            if (inputInfo.IsIdSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("id", FormatId(input.Id)));
+            }
+
+            if (inputInfo.IsUserNameSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("userName", FormatUserName(input.UserName)));
+            }
+
+            if (inputInfo.IsNormalizedUserNameSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("normalizedUserName", FormatNormalizedUserName(input.NormalizedUserName)));
+            }
+
+            if (inputInfo.IsEmailSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("email", FormatEmail(input.Email)));
+            }
+
+            if (inputInfo.IsNormalizedEmailSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("normalizedEmail", FormatNormalizedEmail(input.NormalizedEmail)));
+            }
+
+            if (inputInfo.IsEmailConfirmedSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("emailConfirmed", FormatEmailConfirmed(input.EmailConfirmed)));
+            }
+
+            if (inputInfo.IsPasswordHashSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("passwordHash", FormatPasswordHash(input.PasswordHash)));
+            }
+
+            if (inputInfo.IsSecurityStampSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("securityStamp", FormatSecurityStamp(input.SecurityStamp)));
+            }
+
+            if (inputInfo.IsConcurrencyStampSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("concurrencyStamp", FormatConcurrencyStamp(input.ConcurrencyStamp)));
+            }
+
+            if (inputInfo.IsPhoneNumberSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("phoneNumber", FormatPhoneNumber(input.PhoneNumber)));
+            }
+
+            if (inputInfo.IsPhoneNumberConfirmedSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("phoneNumberConfirmed", FormatPhoneNumberConfirmed(input.PhoneNumberConfirmed)));
+            }
+
+            if (inputInfo.IsTwoFactorEnabledSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("twoFactorEnabled", FormatTwoFactorEnabled(input.TwoFactorEnabled)));
+            }
+
+            if (inputInfo.IsLockoutEndSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("lockoutEnd", FormatLockoutEnd(input.LockoutEnd)));
+            }
+
+            if (inputInfo.IsLockoutEnabledSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("lockoutEnabled", FormatLockoutEnabled(input.LockoutEnabled)));
+            }
+
+            if (inputInfo.IsAccessFailedCountSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("accessFailedCount", FormatAccessFailedCount(input.AccessFailedCount)));
+            }
+
+            return fields;
+        }
+
+        private global::System.Object? FormatC_defra_id(global::System.String? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _stringFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatC_type(global::System.String? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _stringFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatC_display_name(global::System.String? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _stringFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatC_first_name(global::System.String? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _stringFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatC_last_name(global::System.String? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _stringFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatC_mobile(global::System.String? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _stringFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatC_emergency_phone(global::System.String? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _stringFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatC_organisation_id(global::System.String? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _stringFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatC_organisation_name(global::System.String? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _stringFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatC_job_title(global::System.String? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _stringFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatC_current_panel(global::System.String? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _stringFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatC_paon(global::System.String? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _stringFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatC_saon(global::System.String? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _stringFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatC_status(global::System.String? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _stringFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatC_created_on_date(global::System.DateTimeOffset input)
+        {
+            return _dateTimeFormatter.Format(input);
+        }
+
+        private global::System.Object? FormatC_last_access_date(global::System.DateTimeOffset input)
+        {
+            return _dateTimeFormatter.Format(input);
+        }
+
+        private global::System.Object? FormatC_password(global::System.String? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _stringFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatC_password_hint(global::System.String? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _stringFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatC_password_retry_count(global::System.Int32 input)
+        {
+            return _intFormatter.Format(input);
+        }
+
+        private global::System.Object? FormatId(global::System.Int32 input)
+        {
+            return _intFormatter.Format(input);
+        }
+
+        private global::System.Object? FormatUserName(global::System.String? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _stringFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatNormalizedUserName(global::System.String? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _stringFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatEmail(global::System.String? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _stringFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatNormalizedEmail(global::System.String? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _stringFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatEmailConfirmed(global::System.Boolean input)
+        {
+            return _booleanFormatter.Format(input);
+        }
+
+        private global::System.Object? FormatPasswordHash(global::System.String? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _stringFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatSecurityStamp(global::System.String? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _stringFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatConcurrencyStamp(global::System.String? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _stringFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatPhoneNumber(global::System.String? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _stringFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatPhoneNumberConfirmed(global::System.Boolean input)
+        {
+            return _booleanFormatter.Format(input);
+        }
+
+        private global::System.Object? FormatTwoFactorEnabled(global::System.Boolean input)
+        {
+            return _booleanFormatter.Format(input);
+        }
+
+        private global::System.Object? FormatLockoutEnd(global::System.DateTimeOffset? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _dateTimeFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatLockoutEnabled(global::System.Boolean input)
+        {
+            return _booleanFormatter.Format(input);
+        }
+
+        private global::System.Object? FormatAccessFailedCount(global::System.Int32 input)
+        {
+            return _intFormatter.Format(input);
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    public partial class UserdetailsInput : global::RACE2.FrontEnd.Race2GraphQlSchema.State.IUserdetailsInputInfo, global::System.IEquatable<UserdetailsInput>
+    {
+        public override global::System.Boolean Equals(global::System.Object? obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return Equals((UserdetailsInput)obj);
+        }
+
+        public virtual global::System.Boolean Equals(UserdetailsInput? other)
+        {
+            if (ReferenceEquals(null, other))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            if (other.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return (((C_defra_id is null && other.C_defra_id is null) || C_defra_id != null && C_defra_id.Equals(other.C_defra_id))) && ((C_type is null && other.C_type is null) || C_type != null && C_type.Equals(other.C_type)) && ((C_display_name is null && other.C_display_name is null) || C_display_name != null && C_display_name.Equals(other.C_display_name)) && ((C_first_name is null && other.C_first_name is null) || C_first_name != null && C_first_name.Equals(other.C_first_name)) && ((C_last_name is null && other.C_last_name is null) || C_last_name != null && C_last_name.Equals(other.C_last_name)) && ((C_mobile is null && other.C_mobile is null) || C_mobile != null && C_mobile.Equals(other.C_mobile)) && ((C_emergency_phone is null && other.C_emergency_phone is null) || C_emergency_phone != null && C_emergency_phone.Equals(other.C_emergency_phone)) && ((C_organisation_id is null && other.C_organisation_id is null) || C_organisation_id != null && C_organisation_id.Equals(other.C_organisation_id)) && ((C_organisation_name is null && other.C_organisation_name is null) || C_organisation_name != null && C_organisation_name.Equals(other.C_organisation_name)) && ((C_job_title is null && other.C_job_title is null) || C_job_title != null && C_job_title.Equals(other.C_job_title)) && ((C_current_panel is null && other.C_current_panel is null) || C_current_panel != null && C_current_panel.Equals(other.C_current_panel)) && ((C_paon is null && other.C_paon is null) || C_paon != null && C_paon.Equals(other.C_paon)) && ((C_saon is null && other.C_saon is null) || C_saon != null && C_saon.Equals(other.C_saon)) && ((C_status is null && other.C_status is null) || C_status != null && C_status.Equals(other.C_status)) && C_created_on_date.Equals(other.C_created_on_date) && C_last_access_date.Equals(other.C_last_access_date) && ((C_password is null && other.C_password is null) || C_password != null && C_password.Equals(other.C_password)) && ((C_password_hint is null && other.C_password_hint is null) || C_password_hint != null && C_password_hint.Equals(other.C_password_hint)) && C_password_retry_count == other.C_password_retry_count && Id == other.Id && ((UserName is null && other.UserName is null) || UserName != null && UserName.Equals(other.UserName)) && ((NormalizedUserName is null && other.NormalizedUserName is null) || NormalizedUserName != null && NormalizedUserName.Equals(other.NormalizedUserName)) && ((Email is null && other.Email is null) || Email != null && Email.Equals(other.Email)) && ((NormalizedEmail is null && other.NormalizedEmail is null) || NormalizedEmail != null && NormalizedEmail.Equals(other.NormalizedEmail)) && EmailConfirmed == other.EmailConfirmed && ((PasswordHash is null && other.PasswordHash is null) || PasswordHash != null && PasswordHash.Equals(other.PasswordHash)) && ((SecurityStamp is null && other.SecurityStamp is null) || SecurityStamp != null && SecurityStamp.Equals(other.SecurityStamp)) && ((ConcurrencyStamp is null && other.ConcurrencyStamp is null) || ConcurrencyStamp != null && ConcurrencyStamp.Equals(other.ConcurrencyStamp)) && ((PhoneNumber is null && other.PhoneNumber is null) || PhoneNumber != null && PhoneNumber.Equals(other.PhoneNumber)) && PhoneNumberConfirmed == other.PhoneNumberConfirmed && TwoFactorEnabled == other.TwoFactorEnabled && ((LockoutEnd is null && other.LockoutEnd is null) || LockoutEnd != null && LockoutEnd.Equals(other.LockoutEnd)) && LockoutEnabled == other.LockoutEnabled && AccessFailedCount == other.AccessFailedCount;
+        }
+
+        public override global::System.Int32 GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 5;
+                if (C_defra_id != null)
+                {
+                    hash ^= 397 * C_defra_id.GetHashCode();
+                }
+
+                if (C_type != null)
+                {
+                    hash ^= 397 * C_type.GetHashCode();
+                }
+
+                if (C_display_name != null)
+                {
+                    hash ^= 397 * C_display_name.GetHashCode();
+                }
+
+                if (C_first_name != null)
+                {
+                    hash ^= 397 * C_first_name.GetHashCode();
+                }
+
+                if (C_last_name != null)
+                {
+                    hash ^= 397 * C_last_name.GetHashCode();
+                }
+
+                if (C_mobile != null)
+                {
+                    hash ^= 397 * C_mobile.GetHashCode();
+                }
+
+                if (C_emergency_phone != null)
+                {
+                    hash ^= 397 * C_emergency_phone.GetHashCode();
+                }
+
+                if (C_organisation_id != null)
+                {
+                    hash ^= 397 * C_organisation_id.GetHashCode();
+                }
+
+                if (C_organisation_name != null)
+                {
+                    hash ^= 397 * C_organisation_name.GetHashCode();
+                }
+
+                if (C_job_title != null)
+                {
+                    hash ^= 397 * C_job_title.GetHashCode();
+                }
+
+                if (C_current_panel != null)
+                {
+                    hash ^= 397 * C_current_panel.GetHashCode();
+                }
+
+                if (C_paon != null)
+                {
+                    hash ^= 397 * C_paon.GetHashCode();
+                }
+
+                if (C_saon != null)
+                {
+                    hash ^= 397 * C_saon.GetHashCode();
+                }
+
+                if (C_status != null)
+                {
+                    hash ^= 397 * C_status.GetHashCode();
+                }
+
+                hash ^= 397 * C_created_on_date.GetHashCode();
+                hash ^= 397 * C_last_access_date.GetHashCode();
+                if (C_password != null)
+                {
+                    hash ^= 397 * C_password.GetHashCode();
+                }
+
+                if (C_password_hint != null)
+                {
+                    hash ^= 397 * C_password_hint.GetHashCode();
+                }
+
+                hash ^= 397 * C_password_retry_count.GetHashCode();
+                hash ^= 397 * Id.GetHashCode();
+                if (UserName != null)
+                {
+                    hash ^= 397 * UserName.GetHashCode();
+                }
+
+                if (NormalizedUserName != null)
+                {
+                    hash ^= 397 * NormalizedUserName.GetHashCode();
+                }
+
+                if (Email != null)
+                {
+                    hash ^= 397 * Email.GetHashCode();
+                }
+
+                if (NormalizedEmail != null)
+                {
+                    hash ^= 397 * NormalizedEmail.GetHashCode();
+                }
+
+                hash ^= 397 * EmailConfirmed.GetHashCode();
+                if (PasswordHash != null)
+                {
+                    hash ^= 397 * PasswordHash.GetHashCode();
+                }
+
+                if (SecurityStamp != null)
+                {
+                    hash ^= 397 * SecurityStamp.GetHashCode();
+                }
+
+                if (ConcurrencyStamp != null)
+                {
+                    hash ^= 397 * ConcurrencyStamp.GetHashCode();
+                }
+
+                if (PhoneNumber != null)
+                {
+                    hash ^= 397 * PhoneNumber.GetHashCode();
+                }
+
+                hash ^= 397 * PhoneNumberConfirmed.GetHashCode();
+                hash ^= 397 * TwoFactorEnabled.GetHashCode();
+                if (LockoutEnd != null)
+                {
+                    hash ^= 397 * LockoutEnd.GetHashCode();
+                }
+
+                hash ^= 397 * LockoutEnabled.GetHashCode();
+                hash ^= 397 * AccessFailedCount.GetHashCode();
+                return hash;
+            }
+        }
+
+        private global::System.String? _value_c_Defra_Id;
+        private global::System.Boolean _set_c_Defra_Id;
+        private global::System.String? _value_c_Type;
+        private global::System.Boolean _set_c_Type;
+        private global::System.String? _value_c_Display_Name;
+        private global::System.Boolean _set_c_Display_Name;
+        private global::System.String? _value_c_First_Name;
+        private global::System.Boolean _set_c_First_Name;
+        private global::System.String? _value_c_Last_Name;
+        private global::System.Boolean _set_c_Last_Name;
+        private global::System.String? _value_c_Mobile;
+        private global::System.Boolean _set_c_Mobile;
+        private global::System.String? _value_c_Emergency_Phone;
+        private global::System.Boolean _set_c_Emergency_Phone;
+        private global::System.String? _value_c_Organisation_Id;
+        private global::System.Boolean _set_c_Organisation_Id;
+        private global::System.String? _value_c_Organisation_Name;
+        private global::System.Boolean _set_c_Organisation_Name;
+        private global::System.String? _value_c_Job_Title;
+        private global::System.Boolean _set_c_Job_Title;
+        private global::System.String? _value_c_Current_Panel;
+        private global::System.Boolean _set_c_Current_Panel;
+        private global::System.String? _value_c_Paon;
+        private global::System.Boolean _set_c_Paon;
+        private global::System.String? _value_c_Saon;
+        private global::System.Boolean _set_c_Saon;
+        private global::System.String? _value_c_Status;
+        private global::System.Boolean _set_c_Status;
+        private global::System.DateTimeOffset _value_c_Created_On_Date;
+        private global::System.Boolean _set_c_Created_On_Date;
+        private global::System.DateTimeOffset _value_c_Last_Access_Date;
+        private global::System.Boolean _set_c_Last_Access_Date;
+        private global::System.String? _value_c_Password;
+        private global::System.Boolean _set_c_Password;
+        private global::System.String? _value_c_Password_Hint;
+        private global::System.Boolean _set_c_Password_Hint;
+        private global::System.Int32 _value_c_Password_Retry_Count;
+        private global::System.Boolean _set_c_Password_Retry_Count;
+        private global::System.Int32 _value_id;
+        private global::System.Boolean _set_id;
+        private global::System.String? _value_userName;
+        private global::System.Boolean _set_userName;
+        private global::System.String? _value_normalizedUserName;
+        private global::System.Boolean _set_normalizedUserName;
+        private global::System.String? _value_email;
+        private global::System.Boolean _set_email;
+        private global::System.String? _value_normalizedEmail;
+        private global::System.Boolean _set_normalizedEmail;
+        private global::System.Boolean _value_emailConfirmed;
+        private global::System.Boolean _set_emailConfirmed;
+        private global::System.String? _value_passwordHash;
+        private global::System.Boolean _set_passwordHash;
+        private global::System.String? _value_securityStamp;
+        private global::System.Boolean _set_securityStamp;
+        private global::System.String? _value_concurrencyStamp;
+        private global::System.Boolean _set_concurrencyStamp;
+        private global::System.String? _value_phoneNumber;
+        private global::System.Boolean _set_phoneNumber;
+        private global::System.Boolean _value_phoneNumberConfirmed;
+        private global::System.Boolean _set_phoneNumberConfirmed;
+        private global::System.Boolean _value_twoFactorEnabled;
+        private global::System.Boolean _set_twoFactorEnabled;
+        private global::System.DateTimeOffset? _value_lockoutEnd;
+        private global::System.Boolean _set_lockoutEnd;
+        private global::System.Boolean _value_lockoutEnabled;
+        private global::System.Boolean _set_lockoutEnabled;
+        private global::System.Int32 _value_accessFailedCount;
+        private global::System.Boolean _set_accessFailedCount;
+        public global::System.String? C_defra_id
+        {
+            get => _value_c_Defra_Id;
+            set
+            {
+                _set_c_Defra_Id = true;
+                _value_c_Defra_Id = value;
+            }
+        }
+
+        global::System.Boolean global::RACE2.FrontEnd.Race2GraphQlSchema.State.IUserdetailsInputInfo.IsC_defra_idSet => _set_c_Defra_Id;
+        public global::System.String? C_type
+        {
+            get => _value_c_Type;
+            set
+            {
+                _set_c_Type = true;
+                _value_c_Type = value;
+            }
+        }
+
+        global::System.Boolean global::RACE2.FrontEnd.Race2GraphQlSchema.State.IUserdetailsInputInfo.IsC_typeSet => _set_c_Type;
+        public global::System.String? C_display_name
+        {
+            get => _value_c_Display_Name;
+            set
+            {
+                _set_c_Display_Name = true;
+                _value_c_Display_Name = value;
+            }
+        }
+
+        global::System.Boolean global::RACE2.FrontEnd.Race2GraphQlSchema.State.IUserdetailsInputInfo.IsC_display_nameSet => _set_c_Display_Name;
+        public global::System.String? C_first_name
+        {
+            get => _value_c_First_Name;
+            set
+            {
+                _set_c_First_Name = true;
+                _value_c_First_Name = value;
+            }
+        }
+
+        global::System.Boolean global::RACE2.FrontEnd.Race2GraphQlSchema.State.IUserdetailsInputInfo.IsC_first_nameSet => _set_c_First_Name;
+        public global::System.String? C_last_name
+        {
+            get => _value_c_Last_Name;
+            set
+            {
+                _set_c_Last_Name = true;
+                _value_c_Last_Name = value;
+            }
+        }
+
+        global::System.Boolean global::RACE2.FrontEnd.Race2GraphQlSchema.State.IUserdetailsInputInfo.IsC_last_nameSet => _set_c_Last_Name;
+        public global::System.String? C_mobile
+        {
+            get => _value_c_Mobile;
+            set
+            {
+                _set_c_Mobile = true;
+                _value_c_Mobile = value;
+            }
+        }
+
+        global::System.Boolean global::RACE2.FrontEnd.Race2GraphQlSchema.State.IUserdetailsInputInfo.IsC_mobileSet => _set_c_Mobile;
+        public global::System.String? C_emergency_phone
+        {
+            get => _value_c_Emergency_Phone;
+            set
+            {
+                _set_c_Emergency_Phone = true;
+                _value_c_Emergency_Phone = value;
+            }
+        }
+
+        global::System.Boolean global::RACE2.FrontEnd.Race2GraphQlSchema.State.IUserdetailsInputInfo.IsC_emergency_phoneSet => _set_c_Emergency_Phone;
+        public global::System.String? C_organisation_id
+        {
+            get => _value_c_Organisation_Id;
+            set
+            {
+                _set_c_Organisation_Id = true;
+                _value_c_Organisation_Id = value;
+            }
+        }
+
+        global::System.Boolean global::RACE2.FrontEnd.Race2GraphQlSchema.State.IUserdetailsInputInfo.IsC_organisation_idSet => _set_c_Organisation_Id;
+        public global::System.String? C_organisation_name
+        {
+            get => _value_c_Organisation_Name;
+            set
+            {
+                _set_c_Organisation_Name = true;
+                _value_c_Organisation_Name = value;
+            }
+        }
+
+        global::System.Boolean global::RACE2.FrontEnd.Race2GraphQlSchema.State.IUserdetailsInputInfo.IsC_organisation_nameSet => _set_c_Organisation_Name;
+        public global::System.String? C_job_title
+        {
+            get => _value_c_Job_Title;
+            set
+            {
+                _set_c_Job_Title = true;
+                _value_c_Job_Title = value;
+            }
+        }
+
+        global::System.Boolean global::RACE2.FrontEnd.Race2GraphQlSchema.State.IUserdetailsInputInfo.IsC_job_titleSet => _set_c_Job_Title;
+        public global::System.String? C_current_panel
+        {
+            get => _value_c_Current_Panel;
+            set
+            {
+                _set_c_Current_Panel = true;
+                _value_c_Current_Panel = value;
+            }
+        }
+
+        global::System.Boolean global::RACE2.FrontEnd.Race2GraphQlSchema.State.IUserdetailsInputInfo.IsC_current_panelSet => _set_c_Current_Panel;
+        public global::System.String? C_paon
+        {
+            get => _value_c_Paon;
+            set
+            {
+                _set_c_Paon = true;
+                _value_c_Paon = value;
+            }
+        }
+
+        global::System.Boolean global::RACE2.FrontEnd.Race2GraphQlSchema.State.IUserdetailsInputInfo.IsC_paonSet => _set_c_Paon;
+        public global::System.String? C_saon
+        {
+            get => _value_c_Saon;
+            set
+            {
+                _set_c_Saon = true;
+                _value_c_Saon = value;
+            }
+        }
+
+        global::System.Boolean global::RACE2.FrontEnd.Race2GraphQlSchema.State.IUserdetailsInputInfo.IsC_saonSet => _set_c_Saon;
+        public global::System.String? C_status
+        {
+            get => _value_c_Status;
+            set
+            {
+                _set_c_Status = true;
+                _value_c_Status = value;
+            }
+        }
+
+        global::System.Boolean global::RACE2.FrontEnd.Race2GraphQlSchema.State.IUserdetailsInputInfo.IsC_statusSet => _set_c_Status;
+        public global::System.DateTimeOffset C_created_on_date
+        {
+            get => _value_c_Created_On_Date;
+            set
+            {
+                _set_c_Created_On_Date = true;
+                _value_c_Created_On_Date = value;
+            }
+        }
+
+        global::System.Boolean global::RACE2.FrontEnd.Race2GraphQlSchema.State.IUserdetailsInputInfo.IsC_created_on_dateSet => _set_c_Created_On_Date;
+        public global::System.DateTimeOffset C_last_access_date
+        {
+            get => _value_c_Last_Access_Date;
+            set
+            {
+                _set_c_Last_Access_Date = true;
+                _value_c_Last_Access_Date = value;
+            }
+        }
+
+        global::System.Boolean global::RACE2.FrontEnd.Race2GraphQlSchema.State.IUserdetailsInputInfo.IsC_last_access_dateSet => _set_c_Last_Access_Date;
+        public global::System.String? C_password
+        {
+            get => _value_c_Password;
+            set
+            {
+                _set_c_Password = true;
+                _value_c_Password = value;
+            }
+        }
+
+        global::System.Boolean global::RACE2.FrontEnd.Race2GraphQlSchema.State.IUserdetailsInputInfo.IsC_passwordSet => _set_c_Password;
+        public global::System.String? C_password_hint
+        {
+            get => _value_c_Password_Hint;
+            set
+            {
+                _set_c_Password_Hint = true;
+                _value_c_Password_Hint = value;
+            }
+        }
+
+        global::System.Boolean global::RACE2.FrontEnd.Race2GraphQlSchema.State.IUserdetailsInputInfo.IsC_password_hintSet => _set_c_Password_Hint;
+        public global::System.Int32 C_password_retry_count
+        {
+            get => _value_c_Password_Retry_Count;
+            set
+            {
+                _set_c_Password_Retry_Count = true;
+                _value_c_Password_Retry_Count = value;
+            }
+        }
+
+        global::System.Boolean global::RACE2.FrontEnd.Race2GraphQlSchema.State.IUserdetailsInputInfo.IsC_password_retry_countSet => _set_c_Password_Retry_Count;
+        public global::System.Int32 Id
+        {
+            get => _value_id;
+            set
+            {
+                _set_id = true;
+                _value_id = value;
+            }
+        }
+
+        global::System.Boolean global::RACE2.FrontEnd.Race2GraphQlSchema.State.IUserdetailsInputInfo.IsIdSet => _set_id;
+        public global::System.String? UserName
+        {
+            get => _value_userName;
+            set
+            {
+                _set_userName = true;
+                _value_userName = value;
+            }
+        }
+
+        global::System.Boolean global::RACE2.FrontEnd.Race2GraphQlSchema.State.IUserdetailsInputInfo.IsUserNameSet => _set_userName;
+        public global::System.String? NormalizedUserName
+        {
+            get => _value_normalizedUserName;
+            set
+            {
+                _set_normalizedUserName = true;
+                _value_normalizedUserName = value;
+            }
+        }
+
+        global::System.Boolean global::RACE2.FrontEnd.Race2GraphQlSchema.State.IUserdetailsInputInfo.IsNormalizedUserNameSet => _set_normalizedUserName;
+        public global::System.String? Email
+        {
+            get => _value_email;
+            set
+            {
+                _set_email = true;
+                _value_email = value;
+            }
+        }
+
+        global::System.Boolean global::RACE2.FrontEnd.Race2GraphQlSchema.State.IUserdetailsInputInfo.IsEmailSet => _set_email;
+        public global::System.String? NormalizedEmail
+        {
+            get => _value_normalizedEmail;
+            set
+            {
+                _set_normalizedEmail = true;
+                _value_normalizedEmail = value;
+            }
+        }
+
+        global::System.Boolean global::RACE2.FrontEnd.Race2GraphQlSchema.State.IUserdetailsInputInfo.IsNormalizedEmailSet => _set_normalizedEmail;
+        public global::System.Boolean EmailConfirmed
+        {
+            get => _value_emailConfirmed;
+            set
+            {
+                _set_emailConfirmed = true;
+                _value_emailConfirmed = value;
+            }
+        }
+
+        global::System.Boolean global::RACE2.FrontEnd.Race2GraphQlSchema.State.IUserdetailsInputInfo.IsEmailConfirmedSet => _set_emailConfirmed;
+        public global::System.String? PasswordHash
+        {
+            get => _value_passwordHash;
+            set
+            {
+                _set_passwordHash = true;
+                _value_passwordHash = value;
+            }
+        }
+
+        global::System.Boolean global::RACE2.FrontEnd.Race2GraphQlSchema.State.IUserdetailsInputInfo.IsPasswordHashSet => _set_passwordHash;
+        public global::System.String? SecurityStamp
+        {
+            get => _value_securityStamp;
+            set
+            {
+                _set_securityStamp = true;
+                _value_securityStamp = value;
+            }
+        }
+
+        global::System.Boolean global::RACE2.FrontEnd.Race2GraphQlSchema.State.IUserdetailsInputInfo.IsSecurityStampSet => _set_securityStamp;
+        public global::System.String? ConcurrencyStamp
+        {
+            get => _value_concurrencyStamp;
+            set
+            {
+                _set_concurrencyStamp = true;
+                _value_concurrencyStamp = value;
+            }
+        }
+
+        global::System.Boolean global::RACE2.FrontEnd.Race2GraphQlSchema.State.IUserdetailsInputInfo.IsConcurrencyStampSet => _set_concurrencyStamp;
+        public global::System.String? PhoneNumber
+        {
+            get => _value_phoneNumber;
+            set
+            {
+                _set_phoneNumber = true;
+                _value_phoneNumber = value;
+            }
+        }
+
+        global::System.Boolean global::RACE2.FrontEnd.Race2GraphQlSchema.State.IUserdetailsInputInfo.IsPhoneNumberSet => _set_phoneNumber;
+        public global::System.Boolean PhoneNumberConfirmed
+        {
+            get => _value_phoneNumberConfirmed;
+            set
+            {
+                _set_phoneNumberConfirmed = true;
+                _value_phoneNumberConfirmed = value;
+            }
+        }
+
+        global::System.Boolean global::RACE2.FrontEnd.Race2GraphQlSchema.State.IUserdetailsInputInfo.IsPhoneNumberConfirmedSet => _set_phoneNumberConfirmed;
+        public global::System.Boolean TwoFactorEnabled
+        {
+            get => _value_twoFactorEnabled;
+            set
+            {
+                _set_twoFactorEnabled = true;
+                _value_twoFactorEnabled = value;
+            }
+        }
+
+        global::System.Boolean global::RACE2.FrontEnd.Race2GraphQlSchema.State.IUserdetailsInputInfo.IsTwoFactorEnabledSet => _set_twoFactorEnabled;
+        public global::System.DateTimeOffset? LockoutEnd
+        {
+            get => _value_lockoutEnd;
+            set
+            {
+                _set_lockoutEnd = true;
+                _value_lockoutEnd = value;
+            }
+        }
+
+        global::System.Boolean global::RACE2.FrontEnd.Race2GraphQlSchema.State.IUserdetailsInputInfo.IsLockoutEndSet => _set_lockoutEnd;
+        public global::System.Boolean LockoutEnabled
+        {
+            get => _value_lockoutEnabled;
+            set
+            {
+                _set_lockoutEnabled = true;
+                _value_lockoutEnabled = value;
+            }
+        }
+
+        global::System.Boolean global::RACE2.FrontEnd.Race2GraphQlSchema.State.IUserdetailsInputInfo.IsLockoutEnabledSet => _set_lockoutEnabled;
+        public global::System.Int32 AccessFailedCount
+        {
+            get => _value_accessFailedCount;
+            set
+            {
+                _set_accessFailedCount = true;
+                _value_accessFailedCount = value;
+            }
+        }
+
+        global::System.Boolean global::RACE2.FrontEnd.Race2GraphQlSchema.State.IUserdetailsInputInfo.IsAccessFailedCountSet => _set_accessFailedCount;
+    }
+
+    /// <summary>
+    /// Represents the operation service of the CreateUser GraphQL operation
+    /// <code>
+    /// mutation CreateUser($newUserInput: UserdetailsInput!) {
+    ///   createUser(newuser: $newUserInput) {
+    ///     __typename
+    ///     c_defra_id
+    ///     c_type
+    ///     c_display_name
+    ///     c_first_name
+    ///     c_last_name
+    ///     c_status
+    ///     c_created_on_date
+    ///     c_last_access_date
+    ///     c_password_retry_count
+    ///     emailConfirmed
+    ///     phoneNumberConfirmed
+    ///     twoFactorEnabled
+    ///     lockoutEnabled
+    ///     accessFailedCount
+    ///     ... on Userdetails {
+    ///       id
+    ///     }
+    ///   }
+    /// }
+    /// </code>
+    /// </summary>
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    public partial class CreateUserMutationDocument : global::StrawberryShake.IDocument
+    {
+        private CreateUserMutationDocument()
+        {
+        }
+
+        public static CreateUserMutationDocument Instance { get; } = new CreateUserMutationDocument();
+        public global::StrawberryShake.OperationKind Kind => global::StrawberryShake.OperationKind.Mutation;
+        public global::System.ReadOnlySpan<global::System.Byte> Body => new global::System.Byte[]{0x6d, 0x75, 0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x20, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x55, 0x73, 0x65, 0x72, 0x28, 0x24, 0x6e, 0x65, 0x77, 0x55, 0x73, 0x65, 0x72, 0x49, 0x6e, 0x70, 0x75, 0x74, 0x3a, 0x20, 0x55, 0x73, 0x65, 0x72, 0x64, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x49, 0x6e, 0x70, 0x75, 0x74, 0x21, 0x29, 0x20, 0x7b, 0x20, 0x63, 0x72, 0x65, 0x61, 0x74, 0x65, 0x55, 0x73, 0x65, 0x72, 0x28, 0x6e, 0x65, 0x77, 0x75, 0x73, 0x65, 0x72, 0x3a, 0x20, 0x24, 0x6e, 0x65, 0x77, 0x55, 0x73, 0x65, 0x72, 0x49, 0x6e, 0x70, 0x75, 0x74, 0x29, 0x20, 0x7b, 0x20, 0x5f, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x6e, 0x61, 0x6d, 0x65, 0x20, 0x63, 0x5f, 0x64, 0x65, 0x66, 0x72, 0x61, 0x5f, 0x69, 0x64, 0x20, 0x63, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x20, 0x63, 0x5f, 0x64, 0x69, 0x73, 0x70, 0x6c, 0x61, 0x79, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x20, 0x63, 0x5f, 0x66, 0x69, 0x72, 0x73, 0x74, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x20, 0x63, 0x5f, 0x6c, 0x61, 0x73, 0x74, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x20, 0x63, 0x5f, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x20, 0x63, 0x5f, 0x63, 0x72, 0x65, 0x61, 0x74, 0x65, 0x64, 0x5f, 0x6f, 0x6e, 0x5f, 0x64, 0x61, 0x74, 0x65, 0x20, 0x63, 0x5f, 0x6c, 0x61, 0x73, 0x74, 0x5f, 0x61, 0x63, 0x63, 0x65, 0x73, 0x73, 0x5f, 0x64, 0x61, 0x74, 0x65, 0x20, 0x63, 0x5f, 0x70, 0x61, 0x73, 0x73, 0x77, 0x6f, 0x72, 0x64, 0x5f, 0x72, 0x65, 0x74, 0x72, 0x79, 0x5f, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x20, 0x65, 0x6d, 0x61, 0x69, 0x6c, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x72, 0x6d, 0x65, 0x64, 0x20, 0x70, 0x68, 0x6f, 0x6e, 0x65, 0x4e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x72, 0x6d, 0x65, 0x64, 0x20, 0x74, 0x77, 0x6f, 0x46, 0x61, 0x63, 0x74, 0x6f, 0x72, 0x45, 0x6e, 0x61, 0x62, 0x6c, 0x65, 0x64, 0x20, 0x6c, 0x6f, 0x63, 0x6b, 0x6f, 0x75, 0x74, 0x45, 0x6e, 0x61, 0x62, 0x6c, 0x65, 0x64, 0x20, 0x61, 0x63, 0x63, 0x65, 0x73, 0x73, 0x46, 0x61, 0x69, 0x6c, 0x65, 0x64, 0x43, 0x6f, 0x75, 0x6e, 0x74, 0x20, 0x2e, 0x2e, 0x2e, 0x20, 0x6f, 0x6e, 0x20, 0x55, 0x73, 0x65, 0x72, 0x64, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x20, 0x7b, 0x20, 0x69, 0x64, 0x20, 0x7d, 0x20, 0x7d, 0x20, 0x7d};
+        public global::StrawberryShake.DocumentHash Hash { get; } = new global::StrawberryShake.DocumentHash("md5Hash", "846d4b5816dee2973e3133824e99279b");
+        public override global::System.String ToString()
+        {
+#if NETSTANDARD2_0
+        return global::System.Text.Encoding.UTF8.GetString(Body.ToArray());
+#else
+            return global::System.Text.Encoding.UTF8.GetString(Body);
+#endif
+        }
+    }
+
+    /// <summary>
+    /// Represents the operation service of the CreateUser GraphQL operation
+    /// <code>
+    /// mutation CreateUser($newUserInput: UserdetailsInput!) {
+    ///   createUser(newuser: $newUserInput) {
+    ///     __typename
+    ///     c_defra_id
+    ///     c_type
+    ///     c_display_name
+    ///     c_first_name
+    ///     c_last_name
+    ///     c_status
+    ///     c_created_on_date
+    ///     c_last_access_date
+    ///     c_password_retry_count
+    ///     emailConfirmed
+    ///     phoneNumberConfirmed
+    ///     twoFactorEnabled
+    ///     lockoutEnabled
+    ///     accessFailedCount
+    ///     ... on Userdetails {
+    ///       id
+    ///     }
+    ///   }
+    /// }
+    /// </code>
+    /// </summary>
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    public partial class CreateUserMutation : global::RACE2.FrontEnd.Race2GraphQlSchema.ICreateUserMutation
+    {
+        private readonly global::StrawberryShake.IOperationExecutor<ICreateUserResult> _operationExecutor;
+        private readonly global::StrawberryShake.Serialization.IInputValueFormatter _userdetailsInputFormatter;
+        public CreateUserMutation(global::StrawberryShake.IOperationExecutor<ICreateUserResult> operationExecutor, global::StrawberryShake.Serialization.ISerializerResolver serializerResolver)
+        {
+            _operationExecutor = operationExecutor ?? throw new global::System.ArgumentNullException(nameof(operationExecutor));
+            _userdetailsInputFormatter = serializerResolver.GetInputValueFormatter("UserdetailsInput");
+        }
+
+        global::System.Type global::StrawberryShake.IOperationRequestFactory.ResultType => typeof(ICreateUserResult);
+        public async global::System.Threading.Tasks.Task<global::StrawberryShake.IOperationResult<ICreateUserResult>> ExecuteAsync(global::RACE2.FrontEnd.Race2GraphQlSchema.UserdetailsInput newUserInput, global::System.Threading.CancellationToken cancellationToken = default)
+        {
+            var request = CreateRequest(newUserInput);
+            return await _operationExecutor.ExecuteAsync(request, cancellationToken).ConfigureAwait(false);
+        }
+
+        public global::System.IObservable<global::StrawberryShake.IOperationResult<ICreateUserResult>> Watch(global::RACE2.FrontEnd.Race2GraphQlSchema.UserdetailsInput newUserInput, global::StrawberryShake.ExecutionStrategy? strategy = null)
+        {
+            var request = CreateRequest(newUserInput);
+            return _operationExecutor.Watch(request, strategy);
+        }
+
+        private global::StrawberryShake.OperationRequest CreateRequest(global::RACE2.FrontEnd.Race2GraphQlSchema.UserdetailsInput newUserInput)
+        {
+            var variables = new global::System.Collections.Generic.Dictionary<global::System.String, global::System.Object?>();
+            variables.Add("newUserInput", FormatNewUserInput(newUserInput));
+            return CreateRequest(variables);
+        }
+
+        private global::StrawberryShake.OperationRequest CreateRequest(global::System.Collections.Generic.IReadOnlyDictionary<global::System.String, global::System.Object?>? variables)
+        {
+            return new global::StrawberryShake.OperationRequest(id: CreateUserMutationDocument.Instance.Hash.Value, name: "CreateUser", document: CreateUserMutationDocument.Instance, strategy: global::StrawberryShake.RequestStrategy.Default, variables: variables);
+        }
+
+        private global::System.Object? FormatNewUserInput(global::RACE2.FrontEnd.Race2GraphQlSchema.UserdetailsInput value)
+        {
+            if (value is null)
+            {
+                throw new global::System.ArgumentNullException(nameof(value));
+            }
+
+            return _userdetailsInputFormatter.Format(value);
+        }
+
+        global::StrawberryShake.OperationRequest global::StrawberryShake.IOperationRequestFactory.Create(global::System.Collections.Generic.IReadOnlyDictionary<global::System.String, global::System.Object?>? variables)
+        {
+            return CreateRequest(variables!);
+        }
+    }
+
+    /// <summary>
+    /// Represents the operation service of the CreateUser GraphQL operation
+    /// <code>
+    /// mutation CreateUser($newUserInput: UserdetailsInput!) {
+    ///   createUser(newuser: $newUserInput) {
+    ///     __typename
+    ///     c_defra_id
+    ///     c_type
+    ///     c_display_name
+    ///     c_first_name
+    ///     c_last_name
+    ///     c_status
+    ///     c_created_on_date
+    ///     c_last_access_date
+    ///     c_password_retry_count
+    ///     emailConfirmed
+    ///     phoneNumberConfirmed
+    ///     twoFactorEnabled
+    ///     lockoutEnabled
+    ///     accessFailedCount
+    ///     ... on Userdetails {
+    ///       id
+    ///     }
+    ///   }
+    /// }
+    /// </code>
+    /// </summary>
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    public partial interface ICreateUserMutation : global::StrawberryShake.IOperationRequestFactory
+    {
+        global::System.Threading.Tasks.Task<global::StrawberryShake.IOperationResult<ICreateUserResult>> ExecuteAsync(global::RACE2.FrontEnd.Race2GraphQlSchema.UserdetailsInput newUserInput, global::System.Threading.CancellationToken cancellationToken = default);
+        global::System.IObservable<global::StrawberryShake.IOperationResult<ICreateUserResult>> Watch(global::RACE2.FrontEnd.Race2GraphQlSchema.UserdetailsInput newUserInput, global::StrawberryShake.ExecutionStrategy? strategy = null);
+    }
+
+    /// <summary>
+    /// Represents the operation service of the GetUserdetailByEmail GraphQL operation
+    /// <code>
+    /// query GetUserdetailByEmail($email: String!) {
+    ///   userdetailByEmail(email: $email) {
+    ///     __typename
+    ///     id
+    ///     c_display_name
+    ///     ... on Userdetails {
+    ///       id
+    ///     }
+    ///   }
+    /// }
+    /// </code>
+    /// </summary>
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    public partial class GetUserdetailByEmailQueryDocument : global::StrawberryShake.IDocument
+    {
+        private GetUserdetailByEmailQueryDocument()
+        {
+        }
+
+        public static GetUserdetailByEmailQueryDocument Instance { get; } = new GetUserdetailByEmailQueryDocument();
+        public global::StrawberryShake.OperationKind Kind => global::StrawberryShake.OperationKind.Query;
+        public global::System.ReadOnlySpan<global::System.Byte> Body => new global::System.Byte[]{0x71, 0x75, 0x65, 0x72, 0x79, 0x20, 0x47, 0x65, 0x74, 0x55, 0x73, 0x65, 0x72, 0x64, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x42, 0x79, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x28, 0x24, 0x65, 0x6d, 0x61, 0x69, 0x6c, 0x3a, 0x20, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x21, 0x29, 0x20, 0x7b, 0x20, 0x75, 0x73, 0x65, 0x72, 0x64, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x42, 0x79, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x28, 0x65, 0x6d, 0x61, 0x69, 0x6c, 0x3a, 0x20, 0x24, 0x65, 0x6d, 0x61, 0x69, 0x6c, 0x29, 0x20, 0x7b, 0x20, 0x5f, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x6e, 0x61, 0x6d, 0x65, 0x20, 0x69, 0x64, 0x20, 0x63, 0x5f, 0x64, 0x69, 0x73, 0x70, 0x6c, 0x61, 0x79, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x20, 0x2e, 0x2e, 0x2e, 0x20, 0x6f, 0x6e, 0x20, 0x55, 0x73, 0x65, 0x72, 0x64, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x20, 0x7b, 0x20, 0x69, 0x64, 0x20, 0x7d, 0x20, 0x7d, 0x20, 0x7d};
+        public global::StrawberryShake.DocumentHash Hash { get; } = new global::StrawberryShake.DocumentHash("md5Hash", "ea050058602c673153bfc3d2f09e4bba");
+        public override global::System.String ToString()
+        {
+#if NETSTANDARD2_0
+        return global::System.Text.Encoding.UTF8.GetString(Body.ToArray());
+#else
+            return global::System.Text.Encoding.UTF8.GetString(Body);
+#endif
+        }
+    }
+
+    /// <summary>
+    /// Represents the operation service of the GetUserdetailByEmail GraphQL operation
+    /// <code>
+    /// query GetUserdetailByEmail($email: String!) {
+    ///   userdetailByEmail(email: $email) {
+    ///     __typename
+    ///     id
+    ///     c_display_name
+    ///     ... on Userdetails {
+    ///       id
+    ///     }
+    ///   }
+    /// }
+    /// </code>
+    /// </summary>
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    public partial class GetUserdetailByEmailQuery : global::RACE2.FrontEnd.Race2GraphQlSchema.IGetUserdetailByEmailQuery
+    {
+        private readonly global::StrawberryShake.IOperationExecutor<IGetUserdetailByEmailResult> _operationExecutor;
+        private readonly global::StrawberryShake.Serialization.IInputValueFormatter _stringFormatter;
+        public GetUserdetailByEmailQuery(global::StrawberryShake.IOperationExecutor<IGetUserdetailByEmailResult> operationExecutor, global::StrawberryShake.Serialization.ISerializerResolver serializerResolver)
+        {
+            _operationExecutor = operationExecutor ?? throw new global::System.ArgumentNullException(nameof(operationExecutor));
+            _stringFormatter = serializerResolver.GetInputValueFormatter("String");
+        }
+
+        global::System.Type global::StrawberryShake.IOperationRequestFactory.ResultType => typeof(IGetUserdetailByEmailResult);
+        public async global::System.Threading.Tasks.Task<global::StrawberryShake.IOperationResult<IGetUserdetailByEmailResult>> ExecuteAsync(global::System.String email, global::System.Threading.CancellationToken cancellationToken = default)
+        {
+            var request = CreateRequest(email);
+            return await _operationExecutor.ExecuteAsync(request, cancellationToken).ConfigureAwait(false);
+        }
+
+        public global::System.IObservable<global::StrawberryShake.IOperationResult<IGetUserdetailByEmailResult>> Watch(global::System.String email, global::StrawberryShake.ExecutionStrategy? strategy = null)
+        {
+            var request = CreateRequest(email);
+            return _operationExecutor.Watch(request, strategy);
+        }
+
+        private global::StrawberryShake.OperationRequest CreateRequest(global::System.String email)
+        {
+            var variables = new global::System.Collections.Generic.Dictionary<global::System.String, global::System.Object?>();
+            variables.Add("email", FormatEmail(email));
+            return CreateRequest(variables);
+        }
+
+        private global::StrawberryShake.OperationRequest CreateRequest(global::System.Collections.Generic.IReadOnlyDictionary<global::System.String, global::System.Object?>? variables)
+        {
+            return new global::StrawberryShake.OperationRequest(id: GetUserdetailByEmailQueryDocument.Instance.Hash.Value, name: "GetUserdetailByEmail", document: GetUserdetailByEmailQueryDocument.Instance, strategy: global::StrawberryShake.RequestStrategy.Default, variables: variables);
+        }
+
+        private global::System.Object? FormatEmail(global::System.String value)
+        {
+            if (value is null)
+            {
+                throw new global::System.ArgumentNullException(nameof(value));
+            }
+
+            return _stringFormatter.Format(value);
+        }
+
+        global::StrawberryShake.OperationRequest global::StrawberryShake.IOperationRequestFactory.Create(global::System.Collections.Generic.IReadOnlyDictionary<global::System.String, global::System.Object?>? variables)
+        {
+            return CreateRequest(variables!);
+        }
+    }
+
+    /// <summary>
+    /// Represents the operation service of the GetUserdetailByEmail GraphQL operation
+    /// <code>
+    /// query GetUserdetailByEmail($email: String!) {
+    ///   userdetailByEmail(email: $email) {
+    ///     __typename
+    ///     id
+    ///     c_display_name
+    ///     ... on Userdetails {
+    ///       id
+    ///     }
+    ///   }
+    /// }
+    /// </code>
+    /// </summary>
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    public partial interface IGetUserdetailByEmailQuery : global::StrawberryShake.IOperationRequestFactory
+    {
+        global::System.Threading.Tasks.Task<global::StrawberryShake.IOperationResult<IGetUserdetailByEmailResult>> ExecuteAsync(global::System.String email, global::System.Threading.CancellationToken cancellationToken = default);
+        global::System.IObservable<global::StrawberryShake.IOperationResult<IGetUserdetailByEmailResult>> Watch(global::System.String email, global::StrawberryShake.ExecutionStrategy? strategy = null);
+    }
+
     /// <summary>
     /// Represents the operation service of the GetAllUserdetails GraphQL operation
     /// <code>
@@ -357,13 +2232,19 @@ namespace RACE2.FrontEnd.Race2GraphQlSchema
     [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
     public partial class Race2GraphqlClient : global::RACE2.FrontEnd.Race2GraphQlSchema.IRace2GraphqlClient
     {
+        private readonly global::RACE2.FrontEnd.Race2GraphQlSchema.ICreateUserMutation _createUser;
+        private readonly global::RACE2.FrontEnd.Race2GraphQlSchema.IGetUserdetailByEmailQuery _getUserdetailByEmail;
         private readonly global::RACE2.FrontEnd.Race2GraphQlSchema.IGetAllUserdetailsQuery _getAllUserdetails;
-        public Race2GraphqlClient(global::RACE2.FrontEnd.Race2GraphQlSchema.IGetAllUserdetailsQuery getAllUserdetails)
+        public Race2GraphqlClient(global::RACE2.FrontEnd.Race2GraphQlSchema.ICreateUserMutation createUser, global::RACE2.FrontEnd.Race2GraphQlSchema.IGetUserdetailByEmailQuery getUserdetailByEmail, global::RACE2.FrontEnd.Race2GraphQlSchema.IGetAllUserdetailsQuery getAllUserdetails)
         {
+            _createUser = createUser ?? throw new global::System.ArgumentNullException(nameof(createUser));
+            _getUserdetailByEmail = getUserdetailByEmail ?? throw new global::System.ArgumentNullException(nameof(getUserdetailByEmail));
             _getAllUserdetails = getAllUserdetails ?? throw new global::System.ArgumentNullException(nameof(getAllUserdetails));
         }
 
         public static global::System.String ClientName => "Race2GraphqlClient";
+        public global::RACE2.FrontEnd.Race2GraphQlSchema.ICreateUserMutation CreateUser => _createUser;
+        public global::RACE2.FrontEnd.Race2GraphQlSchema.IGetUserdetailByEmailQuery GetUserdetailByEmail => _getUserdetailByEmail;
         public global::RACE2.FrontEnd.Race2GraphQlSchema.IGetAllUserdetailsQuery GetAllUserdetails => _getAllUserdetails;
     }
 
@@ -373,6 +2254,10 @@ namespace RACE2.FrontEnd.Race2GraphQlSchema
     [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
     public partial interface IRace2GraphqlClient
     {
+        global::RACE2.FrontEnd.Race2GraphQlSchema.ICreateUserMutation CreateUser { get; }
+
+        global::RACE2.FrontEnd.Race2GraphQlSchema.IGetUserdetailByEmailQuery GetUserdetailByEmail { get; }
+
         global::RACE2.FrontEnd.Race2GraphQlSchema.IGetAllUserdetailsQuery GetAllUserdetails { get; }
     }
 }
@@ -382,15 +2267,224 @@ namespace RACE2.FrontEnd.Race2GraphQlSchema.State
     [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
     public partial class UserdetailsEntity
     {
-        public UserdetailsEntity(global::System.Int32 id = default !, global::System.String? c_Display_Name = default !)
+        public UserdetailsEntity(global::System.String? c_Defra_Id = default !, global::System.String? c_Type = default !, global::System.String? c_Display_Name = default !, global::System.String? c_First_Name = default !, global::System.String? c_Last_Name = default !, global::System.String? c_Status = default !, global::System.DateTimeOffset c_Created_On_Date = default !, global::System.DateTimeOffset c_Last_Access_Date = default !, global::System.Int32 c_Password_Retry_Count = default !, global::System.Boolean emailConfirmed = default !, global::System.Boolean phoneNumberConfirmed = default !, global::System.Boolean twoFactorEnabled = default !, global::System.Boolean lockoutEnabled = default !, global::System.Int32 accessFailedCount = default !, global::System.Int32 id = default !)
         {
-            Id = id;
+            C_defra_id = c_Defra_Id;
+            C_type = c_Type;
             C_display_name = c_Display_Name;
+            C_first_name = c_First_Name;
+            C_last_name = c_Last_Name;
+            C_status = c_Status;
+            C_created_on_date = c_Created_On_Date;
+            C_last_access_date = c_Last_Access_Date;
+            C_password_retry_count = c_Password_Retry_Count;
+            EmailConfirmed = emailConfirmed;
+            PhoneNumberConfirmed = phoneNumberConfirmed;
+            TwoFactorEnabled = twoFactorEnabled;
+            LockoutEnabled = lockoutEnabled;
+            AccessFailedCount = accessFailedCount;
+            Id = id;
         }
 
-        public global::System.Int32 Id { get; }
+        public global::System.String? C_defra_id { get; }
+
+        public global::System.String? C_type { get; }
 
         public global::System.String? C_display_name { get; }
+
+        public global::System.String? C_first_name { get; }
+
+        public global::System.String? C_last_name { get; }
+
+        public global::System.String? C_status { get; }
+
+        public global::System.DateTimeOffset C_created_on_date { get; }
+
+        public global::System.DateTimeOffset C_last_access_date { get; }
+
+        public global::System.Int32 C_password_retry_count { get; }
+
+        public global::System.Boolean EmailConfirmed { get; }
+
+        public global::System.Boolean PhoneNumberConfirmed { get; }
+
+        public global::System.Boolean TwoFactorEnabled { get; }
+
+        public global::System.Boolean LockoutEnabled { get; }
+
+        public global::System.Int32 AccessFailedCount { get; }
+
+        public global::System.Int32 Id { get; }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    public partial class CreateUserResultFactory : global::StrawberryShake.IOperationResultDataFactory<global::RACE2.FrontEnd.Race2GraphQlSchema.CreateUserResult>
+    {
+        private readonly global::StrawberryShake.IEntityStore _entityStore;
+        private readonly global::StrawberryShake.IEntityMapper<global::RACE2.FrontEnd.Race2GraphQlSchema.State.UserdetailsEntity, CreateUser_CreateUser_Userdetails> _createUser_CreateUser_UserdetailsFromUserdetailsEntityMapper;
+        public CreateUserResultFactory(global::StrawberryShake.IEntityStore entityStore, global::StrawberryShake.IEntityMapper<global::RACE2.FrontEnd.Race2GraphQlSchema.State.UserdetailsEntity, CreateUser_CreateUser_Userdetails> createUser_CreateUser_UserdetailsFromUserdetailsEntityMapper)
+        {
+            _entityStore = entityStore ?? throw new global::System.ArgumentNullException(nameof(entityStore));
+            _createUser_CreateUser_UserdetailsFromUserdetailsEntityMapper = createUser_CreateUser_UserdetailsFromUserdetailsEntityMapper ?? throw new global::System.ArgumentNullException(nameof(createUser_CreateUser_UserdetailsFromUserdetailsEntityMapper));
+        }
+
+        global::System.Type global::StrawberryShake.IOperationResultDataFactory.ResultType => typeof(global::RACE2.FrontEnd.Race2GraphQlSchema.ICreateUserResult);
+        public CreateUserResult Create(global::StrawberryShake.IOperationResultDataInfo dataInfo, global::StrawberryShake.IEntityStoreSnapshot? snapshot = null)
+        {
+            if (snapshot is null)
+            {
+                snapshot = _entityStore.CurrentSnapshot;
+            }
+
+            if (dataInfo is CreateUserResultInfo info)
+            {
+                return new CreateUserResult(MapNonNullableICreateUser_CreateUser(info.CreateUser, snapshot));
+            }
+
+            throw new global::System.ArgumentException("CreateUserResultInfo expected.");
+        }
+
+        private global::RACE2.FrontEnd.Race2GraphQlSchema.ICreateUser_CreateUser MapNonNullableICreateUser_CreateUser(global::StrawberryShake.EntityId entityId, global::StrawberryShake.IEntityStoreSnapshot snapshot)
+        {
+            if (entityId.Name.Equals("Userdetails", global::System.StringComparison.Ordinal))
+            {
+                return _createUser_CreateUser_UserdetailsFromUserdetailsEntityMapper.Map(snapshot.GetEntity<global::RACE2.FrontEnd.Race2GraphQlSchema.State.UserdetailsEntity>(entityId) ?? throw new global::StrawberryShake.GraphQLClientException());
+            }
+
+            throw new global::System.NotSupportedException();
+        }
+
+        global::System.Object global::StrawberryShake.IOperationResultDataFactory.Create(global::StrawberryShake.IOperationResultDataInfo dataInfo, global::StrawberryShake.IEntityStoreSnapshot? snapshot)
+        {
+            return Create(dataInfo, snapshot);
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    public partial class CreateUserResultInfo : global::StrawberryShake.IOperationResultDataInfo
+    {
+        private readonly global::System.Collections.Generic.IReadOnlyCollection<global::StrawberryShake.EntityId> _entityIds;
+        private readonly global::System.UInt64 _version;
+        public CreateUserResultInfo(global::StrawberryShake.EntityId createUser, global::System.Collections.Generic.IReadOnlyCollection<global::StrawberryShake.EntityId> entityIds, global::System.UInt64 version)
+        {
+            CreateUser = createUser;
+            _entityIds = entityIds ?? throw new global::System.ArgumentNullException(nameof(entityIds));
+            _version = version;
+        }
+
+        public global::StrawberryShake.EntityId CreateUser { get; }
+
+        public global::System.Collections.Generic.IReadOnlyCollection<global::StrawberryShake.EntityId> EntityIds => _entityIds;
+        public global::System.UInt64 Version => _version;
+        public global::StrawberryShake.IOperationResultDataInfo WithVersion(global::System.UInt64 version)
+        {
+            return new CreateUserResultInfo(CreateUser, _entityIds, version);
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    public partial class CreateUser_CreateUser_UserdetailsFromUserdetailsEntityMapper : global::StrawberryShake.IEntityMapper<global::RACE2.FrontEnd.Race2GraphQlSchema.State.UserdetailsEntity, CreateUser_CreateUser_Userdetails>
+    {
+        private readonly global::StrawberryShake.IEntityStore _entityStore;
+        public CreateUser_CreateUser_UserdetailsFromUserdetailsEntityMapper(global::StrawberryShake.IEntityStore entityStore)
+        {
+            _entityStore = entityStore ?? throw new global::System.ArgumentNullException(nameof(entityStore));
+        }
+
+        public CreateUser_CreateUser_Userdetails Map(global::RACE2.FrontEnd.Race2GraphQlSchema.State.UserdetailsEntity entity, global::StrawberryShake.IEntityStoreSnapshot? snapshot = null)
+        {
+            if (snapshot is null)
+            {
+                snapshot = _entityStore.CurrentSnapshot;
+            }
+
+            return new CreateUser_CreateUser_Userdetails(entity.C_defra_id, entity.C_type, entity.C_display_name, entity.C_first_name, entity.C_last_name, entity.C_status, entity.C_created_on_date, entity.C_last_access_date, entity.C_password_retry_count, entity.EmailConfirmed, entity.PhoneNumberConfirmed, entity.TwoFactorEnabled, entity.LockoutEnabled, entity.AccessFailedCount);
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    public partial class GetUserdetailByEmailResultFactory : global::StrawberryShake.IOperationResultDataFactory<global::RACE2.FrontEnd.Race2GraphQlSchema.GetUserdetailByEmailResult>
+    {
+        private readonly global::StrawberryShake.IEntityStore _entityStore;
+        private readonly global::StrawberryShake.IEntityMapper<global::RACE2.FrontEnd.Race2GraphQlSchema.State.UserdetailsEntity, GetUserdetailByEmail_UserdetailByEmail_Userdetails> _getUserdetailByEmail_UserdetailByEmail_UserdetailsFromUserdetailsEntityMapper;
+        public GetUserdetailByEmailResultFactory(global::StrawberryShake.IEntityStore entityStore, global::StrawberryShake.IEntityMapper<global::RACE2.FrontEnd.Race2GraphQlSchema.State.UserdetailsEntity, GetUserdetailByEmail_UserdetailByEmail_Userdetails> getUserdetailByEmail_UserdetailByEmail_UserdetailsFromUserdetailsEntityMapper)
+        {
+            _entityStore = entityStore ?? throw new global::System.ArgumentNullException(nameof(entityStore));
+            _getUserdetailByEmail_UserdetailByEmail_UserdetailsFromUserdetailsEntityMapper = getUserdetailByEmail_UserdetailByEmail_UserdetailsFromUserdetailsEntityMapper ?? throw new global::System.ArgumentNullException(nameof(getUserdetailByEmail_UserdetailByEmail_UserdetailsFromUserdetailsEntityMapper));
+        }
+
+        global::System.Type global::StrawberryShake.IOperationResultDataFactory.ResultType => typeof(global::RACE2.FrontEnd.Race2GraphQlSchema.IGetUserdetailByEmailResult);
+        public GetUserdetailByEmailResult Create(global::StrawberryShake.IOperationResultDataInfo dataInfo, global::StrawberryShake.IEntityStoreSnapshot? snapshot = null)
+        {
+            if (snapshot is null)
+            {
+                snapshot = _entityStore.CurrentSnapshot;
+            }
+
+            if (dataInfo is GetUserdetailByEmailResultInfo info)
+            {
+                return new GetUserdetailByEmailResult(MapNonNullableIGetUserdetailByEmail_UserdetailByEmail(info.UserdetailByEmail, snapshot));
+            }
+
+            throw new global::System.ArgumentException("GetUserdetailByEmailResultInfo expected.");
+        }
+
+        private global::RACE2.FrontEnd.Race2GraphQlSchema.IGetUserdetailByEmail_UserdetailByEmail MapNonNullableIGetUserdetailByEmail_UserdetailByEmail(global::StrawberryShake.EntityId entityId, global::StrawberryShake.IEntityStoreSnapshot snapshot)
+        {
+            if (entityId.Name.Equals("Userdetails", global::System.StringComparison.Ordinal))
+            {
+                return _getUserdetailByEmail_UserdetailByEmail_UserdetailsFromUserdetailsEntityMapper.Map(snapshot.GetEntity<global::RACE2.FrontEnd.Race2GraphQlSchema.State.UserdetailsEntity>(entityId) ?? throw new global::StrawberryShake.GraphQLClientException());
+            }
+
+            throw new global::System.NotSupportedException();
+        }
+
+        global::System.Object global::StrawberryShake.IOperationResultDataFactory.Create(global::StrawberryShake.IOperationResultDataInfo dataInfo, global::StrawberryShake.IEntityStoreSnapshot? snapshot)
+        {
+            return Create(dataInfo, snapshot);
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    public partial class GetUserdetailByEmailResultInfo : global::StrawberryShake.IOperationResultDataInfo
+    {
+        private readonly global::System.Collections.Generic.IReadOnlyCollection<global::StrawberryShake.EntityId> _entityIds;
+        private readonly global::System.UInt64 _version;
+        public GetUserdetailByEmailResultInfo(global::StrawberryShake.EntityId userdetailByEmail, global::System.Collections.Generic.IReadOnlyCollection<global::StrawberryShake.EntityId> entityIds, global::System.UInt64 version)
+        {
+            UserdetailByEmail = userdetailByEmail;
+            _entityIds = entityIds ?? throw new global::System.ArgumentNullException(nameof(entityIds));
+            _version = version;
+        }
+
+        public global::StrawberryShake.EntityId UserdetailByEmail { get; }
+
+        public global::System.Collections.Generic.IReadOnlyCollection<global::StrawberryShake.EntityId> EntityIds => _entityIds;
+        public global::System.UInt64 Version => _version;
+        public global::StrawberryShake.IOperationResultDataInfo WithVersion(global::System.UInt64 version)
+        {
+            return new GetUserdetailByEmailResultInfo(UserdetailByEmail, _entityIds, version);
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    public partial class GetUserdetailByEmail_UserdetailByEmail_UserdetailsFromUserdetailsEntityMapper : global::StrawberryShake.IEntityMapper<global::RACE2.FrontEnd.Race2GraphQlSchema.State.UserdetailsEntity, GetUserdetailByEmail_UserdetailByEmail_Userdetails>
+    {
+        private readonly global::StrawberryShake.IEntityStore _entityStore;
+        public GetUserdetailByEmail_UserdetailByEmail_UserdetailsFromUserdetailsEntityMapper(global::StrawberryShake.IEntityStore entityStore)
+        {
+            _entityStore = entityStore ?? throw new global::System.ArgumentNullException(nameof(entityStore));
+        }
+
+        public GetUserdetailByEmail_UserdetailByEmail_Userdetails Map(global::RACE2.FrontEnd.Race2GraphQlSchema.State.UserdetailsEntity entity, global::StrawberryShake.IEntityStoreSnapshot? snapshot = null)
+        {
+            if (snapshot is null)
+            {
+                snapshot = _entityStore.CurrentSnapshot;
+            }
+
+            return new GetUserdetailByEmail_UserdetailByEmail_Userdetails(entity.Id, entity.C_display_name);
+        }
     }
 
     [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
@@ -495,6 +2589,340 @@ namespace RACE2.FrontEnd.Race2GraphQlSchema.State
     }
 
     [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    internal interface IUserdetailsInputInfo
+    {
+        global::System.Boolean IsC_defra_idSet { get; }
+
+        global::System.Boolean IsC_typeSet { get; }
+
+        global::System.Boolean IsC_display_nameSet { get; }
+
+        global::System.Boolean IsC_first_nameSet { get; }
+
+        global::System.Boolean IsC_last_nameSet { get; }
+
+        global::System.Boolean IsC_mobileSet { get; }
+
+        global::System.Boolean IsC_emergency_phoneSet { get; }
+
+        global::System.Boolean IsC_organisation_idSet { get; }
+
+        global::System.Boolean IsC_organisation_nameSet { get; }
+
+        global::System.Boolean IsC_job_titleSet { get; }
+
+        global::System.Boolean IsC_current_panelSet { get; }
+
+        global::System.Boolean IsC_paonSet { get; }
+
+        global::System.Boolean IsC_saonSet { get; }
+
+        global::System.Boolean IsC_statusSet { get; }
+
+        global::System.Boolean IsC_created_on_dateSet { get; }
+
+        global::System.Boolean IsC_last_access_dateSet { get; }
+
+        global::System.Boolean IsC_passwordSet { get; }
+
+        global::System.Boolean IsC_password_hintSet { get; }
+
+        global::System.Boolean IsC_password_retry_countSet { get; }
+
+        global::System.Boolean IsIdSet { get; }
+
+        global::System.Boolean IsUserNameSet { get; }
+
+        global::System.Boolean IsNormalizedUserNameSet { get; }
+
+        global::System.Boolean IsEmailSet { get; }
+
+        global::System.Boolean IsNormalizedEmailSet { get; }
+
+        global::System.Boolean IsEmailConfirmedSet { get; }
+
+        global::System.Boolean IsPasswordHashSet { get; }
+
+        global::System.Boolean IsSecurityStampSet { get; }
+
+        global::System.Boolean IsConcurrencyStampSet { get; }
+
+        global::System.Boolean IsPhoneNumberSet { get; }
+
+        global::System.Boolean IsPhoneNumberConfirmedSet { get; }
+
+        global::System.Boolean IsTwoFactorEnabledSet { get; }
+
+        global::System.Boolean IsLockoutEndSet { get; }
+
+        global::System.Boolean IsLockoutEnabledSet { get; }
+
+        global::System.Boolean IsAccessFailedCountSet { get; }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    public partial class CreateUserBuilder : global::StrawberryShake.IOperationResultBuilder<global::System.Text.Json.JsonDocument, global::RACE2.FrontEnd.Race2GraphQlSchema.ICreateUserResult>
+    {
+        private readonly global::StrawberryShake.IEntityStore _entityStore;
+        private readonly global::StrawberryShake.IEntityIdSerializer _idSerializer;
+        private readonly global::StrawberryShake.IOperationResultDataFactory<global::RACE2.FrontEnd.Race2GraphQlSchema.ICreateUserResult> _resultDataFactory;
+        private readonly global::StrawberryShake.Serialization.ILeafValueParser<global::System.String, global::System.String> _stringParser;
+        private readonly global::StrawberryShake.Serialization.ILeafValueParser<global::System.String, global::System.DateTimeOffset> _dateTimeParser;
+        private readonly global::StrawberryShake.Serialization.ILeafValueParser<global::System.Int32, global::System.Int32> _intParser;
+        private readonly global::StrawberryShake.Serialization.ILeafValueParser<global::System.Boolean, global::System.Boolean> _booleanParser;
+        public CreateUserBuilder(global::StrawberryShake.IEntityStore entityStore, global::StrawberryShake.IEntityIdSerializer idSerializer, global::StrawberryShake.IOperationResultDataFactory<global::RACE2.FrontEnd.Race2GraphQlSchema.ICreateUserResult> resultDataFactory, global::StrawberryShake.Serialization.ISerializerResolver serializerResolver)
+        {
+            _entityStore = entityStore ?? throw new global::System.ArgumentNullException(nameof(entityStore));
+            _idSerializer = idSerializer ?? throw new global::System.ArgumentNullException(nameof(idSerializer));
+            _resultDataFactory = resultDataFactory ?? throw new global::System.ArgumentNullException(nameof(resultDataFactory));
+            _stringParser = serializerResolver.GetLeafValueParser<global::System.String, global::System.String>("String") ?? throw new global::System.ArgumentException("No serializer for type `String` found.");
+            _dateTimeParser = serializerResolver.GetLeafValueParser<global::System.String, global::System.DateTimeOffset>("DateTime") ?? throw new global::System.ArgumentException("No serializer for type `DateTime` found.");
+            _intParser = serializerResolver.GetLeafValueParser<global::System.Int32, global::System.Int32>("Int") ?? throw new global::System.ArgumentException("No serializer for type `Int` found.");
+            _booleanParser = serializerResolver.GetLeafValueParser<global::System.Boolean, global::System.Boolean>("Boolean") ?? throw new global::System.ArgumentException("No serializer for type `Boolean` found.");
+        }
+
+        public global::StrawberryShake.IOperationResult<ICreateUserResult> Build(global::StrawberryShake.Response<global::System.Text.Json.JsonDocument> response)
+        {
+            (ICreateUserResult Result, CreateUserResultInfo Info)? data = null;
+            global::System.Collections.Generic.IReadOnlyList<global::StrawberryShake.IClientError>? errors = null;
+            if (response.Exception is null)
+            {
+                try
+                {
+                    if (response.Body != null)
+                    {
+                        if (response.Body.RootElement.TryGetProperty("data", out global::System.Text.Json.JsonElement dataElement) && dataElement.ValueKind == global::System.Text.Json.JsonValueKind.Object)
+                        {
+                            data = BuildData(dataElement);
+                        }
+
+                        if (response.Body.RootElement.TryGetProperty("errors", out global::System.Text.Json.JsonElement errorsElement))
+                        {
+                            errors = global::StrawberryShake.Json.JsonErrorParser.ParseErrors(errorsElement);
+                        }
+                    }
+                }
+                catch (global::System.Exception ex)
+                {
+                    errors = new global::StrawberryShake.IClientError[]{new global::StrawberryShake.ClientError(ex.Message, exception: ex, extensions: new global::System.Collections.Generic.Dictionary<global::System.String, global::System.Object?>{{"body", response.Body?.RootElement.ToString()}})};
+                }
+            }
+            else
+            {
+                if (response.Body != null && response.Body.RootElement.TryGetProperty("errors", out global::System.Text.Json.JsonElement errorsElement))
+                {
+                    errors = global::StrawberryShake.Json.JsonErrorParser.ParseErrors(errorsElement);
+                }
+                else
+                {
+                    errors = new global::StrawberryShake.IClientError[]{new global::StrawberryShake.ClientError(response.Exception.Message, exception: response.Exception, extensions: new global::System.Collections.Generic.Dictionary<global::System.String, global::System.Object?>{{"body", response.Body?.RootElement.ToString()}})};
+                }
+            }
+
+            return new global::StrawberryShake.OperationResult<ICreateUserResult>(data?.Result, data?.Info, _resultDataFactory, errors);
+        }
+
+        private (ICreateUserResult, CreateUserResultInfo) BuildData(global::System.Text.Json.JsonElement obj)
+        {
+            var entityIds = new global::System.Collections.Generic.HashSet<global::StrawberryShake.EntityId>();
+            global::StrawberryShake.IEntityStoreSnapshot snapshot = default !;
+            global::StrawberryShake.EntityId createUserId = default !;
+            _entityStore.Update(session =>
+            {
+                createUserId = UpdateNonNullableICreateUser_CreateUserEntity(session, global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "createUser"), entityIds);
+                snapshot = session.CurrentSnapshot;
+            });
+            var resultInfo = new CreateUserResultInfo(createUserId, entityIds, snapshot.Version);
+            return (_resultDataFactory.Create(resultInfo), resultInfo);
+        }
+
+        private global::StrawberryShake.EntityId UpdateNonNullableICreateUser_CreateUserEntity(global::StrawberryShake.IEntityStoreUpdateSession session, global::System.Text.Json.JsonElement? obj, global::System.Collections.Generic.ISet<global::StrawberryShake.EntityId> entityIds)
+        {
+            if (!obj.HasValue)
+            {
+                throw new global::System.ArgumentNullException();
+            }
+
+            global::StrawberryShake.EntityId entityId = _idSerializer.Parse(obj.Value);
+            entityIds.Add(entityId);
+            if (entityId.Name.Equals("Userdetails", global::System.StringComparison.Ordinal))
+            {
+                if (session.CurrentSnapshot.TryGetEntity(entityId, out global::RACE2.FrontEnd.Race2GraphQlSchema.State.UserdetailsEntity? entity))
+                {
+                    session.SetEntity(entityId, new global::RACE2.FrontEnd.Race2GraphQlSchema.State.UserdetailsEntity(DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "c_defra_id")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "c_type")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "c_display_name")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "c_first_name")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "c_last_name")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "c_status")), DeserializeNonNullableDateTimeOffset(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "c_created_on_date")), DeserializeNonNullableDateTimeOffset(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "c_last_access_date")), DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "c_password_retry_count")), DeserializeNonNullableBoolean(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "emailConfirmed")), DeserializeNonNullableBoolean(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "phoneNumberConfirmed")), DeserializeNonNullableBoolean(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "twoFactorEnabled")), DeserializeNonNullableBoolean(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "lockoutEnabled")), DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "accessFailedCount")), entity.Id));
+                }
+                else
+                {
+                    session.SetEntity(entityId, new global::RACE2.FrontEnd.Race2GraphQlSchema.State.UserdetailsEntity(DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "c_defra_id")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "c_type")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "c_display_name")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "c_first_name")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "c_last_name")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "c_status")), DeserializeNonNullableDateTimeOffset(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "c_created_on_date")), DeserializeNonNullableDateTimeOffset(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "c_last_access_date")), DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "c_password_retry_count")), DeserializeNonNullableBoolean(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "emailConfirmed")), DeserializeNonNullableBoolean(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "phoneNumberConfirmed")), DeserializeNonNullableBoolean(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "twoFactorEnabled")), DeserializeNonNullableBoolean(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "lockoutEnabled")), DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "accessFailedCount")), default !));
+                }
+
+                return entityId;
+            }
+
+            throw new global::System.NotSupportedException();
+        }
+
+        private global::System.String? DeserializeString(global::System.Text.Json.JsonElement? obj)
+        {
+            if (!obj.HasValue)
+            {
+                return null;
+            }
+
+            return _stringParser.Parse(obj.Value.GetString()!);
+        }
+
+        private global::System.DateTimeOffset DeserializeNonNullableDateTimeOffset(global::System.Text.Json.JsonElement? obj)
+        {
+            if (!obj.HasValue)
+            {
+                throw new global::System.ArgumentNullException();
+            }
+
+            return _dateTimeParser.Parse(obj.Value.GetString()!);
+        }
+
+        private global::System.Int32 DeserializeNonNullableInt32(global::System.Text.Json.JsonElement? obj)
+        {
+            if (!obj.HasValue)
+            {
+                throw new global::System.ArgumentNullException();
+            }
+
+            return _intParser.Parse(obj.Value.GetInt32()!);
+        }
+
+        private global::System.Boolean DeserializeNonNullableBoolean(global::System.Text.Json.JsonElement? obj)
+        {
+            if (!obj.HasValue)
+            {
+                throw new global::System.ArgumentNullException();
+            }
+
+            return _booleanParser.Parse(obj.Value.GetBoolean()!);
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    public partial class GetUserdetailByEmailBuilder : global::StrawberryShake.IOperationResultBuilder<global::System.Text.Json.JsonDocument, global::RACE2.FrontEnd.Race2GraphQlSchema.IGetUserdetailByEmailResult>
+    {
+        private readonly global::StrawberryShake.IEntityStore _entityStore;
+        private readonly global::StrawberryShake.IEntityIdSerializer _idSerializer;
+        private readonly global::StrawberryShake.IOperationResultDataFactory<global::RACE2.FrontEnd.Race2GraphQlSchema.IGetUserdetailByEmailResult> _resultDataFactory;
+        private readonly global::StrawberryShake.Serialization.ILeafValueParser<global::System.String, global::System.String> _stringParser;
+        private readonly global::StrawberryShake.Serialization.ILeafValueParser<global::System.Int32, global::System.Int32> _intParser;
+        public GetUserdetailByEmailBuilder(global::StrawberryShake.IEntityStore entityStore, global::StrawberryShake.IEntityIdSerializer idSerializer, global::StrawberryShake.IOperationResultDataFactory<global::RACE2.FrontEnd.Race2GraphQlSchema.IGetUserdetailByEmailResult> resultDataFactory, global::StrawberryShake.Serialization.ISerializerResolver serializerResolver)
+        {
+            _entityStore = entityStore ?? throw new global::System.ArgumentNullException(nameof(entityStore));
+            _idSerializer = idSerializer ?? throw new global::System.ArgumentNullException(nameof(idSerializer));
+            _resultDataFactory = resultDataFactory ?? throw new global::System.ArgumentNullException(nameof(resultDataFactory));
+            _stringParser = serializerResolver.GetLeafValueParser<global::System.String, global::System.String>("String") ?? throw new global::System.ArgumentException("No serializer for type `String` found.");
+            _intParser = serializerResolver.GetLeafValueParser<global::System.Int32, global::System.Int32>("Int") ?? throw new global::System.ArgumentException("No serializer for type `Int` found.");
+        }
+
+        public global::StrawberryShake.IOperationResult<IGetUserdetailByEmailResult> Build(global::StrawberryShake.Response<global::System.Text.Json.JsonDocument> response)
+        {
+            (IGetUserdetailByEmailResult Result, GetUserdetailByEmailResultInfo Info)? data = null;
+            global::System.Collections.Generic.IReadOnlyList<global::StrawberryShake.IClientError>? errors = null;
+            if (response.Exception is null)
+            {
+                try
+                {
+                    if (response.Body != null)
+                    {
+                        if (response.Body.RootElement.TryGetProperty("data", out global::System.Text.Json.JsonElement dataElement) && dataElement.ValueKind == global::System.Text.Json.JsonValueKind.Object)
+                        {
+                            data = BuildData(dataElement);
+                        }
+
+                        if (response.Body.RootElement.TryGetProperty("errors", out global::System.Text.Json.JsonElement errorsElement))
+                        {
+                            errors = global::StrawberryShake.Json.JsonErrorParser.ParseErrors(errorsElement);
+                        }
+                    }
+                }
+                catch (global::System.Exception ex)
+                {
+                    errors = new global::StrawberryShake.IClientError[]{new global::StrawberryShake.ClientError(ex.Message, exception: ex, extensions: new global::System.Collections.Generic.Dictionary<global::System.String, global::System.Object?>{{"body", response.Body?.RootElement.ToString()}})};
+                }
+            }
+            else
+            {
+                if (response.Body != null && response.Body.RootElement.TryGetProperty("errors", out global::System.Text.Json.JsonElement errorsElement))
+                {
+                    errors = global::StrawberryShake.Json.JsonErrorParser.ParseErrors(errorsElement);
+                }
+                else
+                {
+                    errors = new global::StrawberryShake.IClientError[]{new global::StrawberryShake.ClientError(response.Exception.Message, exception: response.Exception, extensions: new global::System.Collections.Generic.Dictionary<global::System.String, global::System.Object?>{{"body", response.Body?.RootElement.ToString()}})};
+                }
+            }
+
+            return new global::StrawberryShake.OperationResult<IGetUserdetailByEmailResult>(data?.Result, data?.Info, _resultDataFactory, errors);
+        }
+
+        private (IGetUserdetailByEmailResult, GetUserdetailByEmailResultInfo) BuildData(global::System.Text.Json.JsonElement obj)
+        {
+            var entityIds = new global::System.Collections.Generic.HashSet<global::StrawberryShake.EntityId>();
+            global::StrawberryShake.IEntityStoreSnapshot snapshot = default !;
+            global::StrawberryShake.EntityId userdetailByEmailId = default !;
+            _entityStore.Update(session =>
+            {
+                userdetailByEmailId = UpdateNonNullableIGetUserdetailByEmail_UserdetailByEmailEntity(session, global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "userdetailByEmail"), entityIds);
+                snapshot = session.CurrentSnapshot;
+            });
+            var resultInfo = new GetUserdetailByEmailResultInfo(userdetailByEmailId, entityIds, snapshot.Version);
+            return (_resultDataFactory.Create(resultInfo), resultInfo);
+        }
+
+        private global::StrawberryShake.EntityId UpdateNonNullableIGetUserdetailByEmail_UserdetailByEmailEntity(global::StrawberryShake.IEntityStoreUpdateSession session, global::System.Text.Json.JsonElement? obj, global::System.Collections.Generic.ISet<global::StrawberryShake.EntityId> entityIds)
+        {
+            if (!obj.HasValue)
+            {
+                throw new global::System.ArgumentNullException();
+            }
+
+            global::StrawberryShake.EntityId entityId = _idSerializer.Parse(obj.Value);
+            entityIds.Add(entityId);
+            if (entityId.Name.Equals("Userdetails", global::System.StringComparison.Ordinal))
+            {
+                if (session.CurrentSnapshot.TryGetEntity(entityId, out global::RACE2.FrontEnd.Race2GraphQlSchema.State.UserdetailsEntity? entity))
+                {
+                    session.SetEntity(entityId, new global::RACE2.FrontEnd.Race2GraphQlSchema.State.UserdetailsEntity(entity.C_defra_id, entity.C_type, DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "c_display_name")), entity.C_first_name, entity.C_last_name, entity.C_status, entity.C_created_on_date, entity.C_last_access_date, entity.C_password_retry_count, entity.EmailConfirmed, entity.PhoneNumberConfirmed, entity.TwoFactorEnabled, entity.LockoutEnabled, entity.AccessFailedCount, DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "id"))));
+                }
+                else
+                {
+                    session.SetEntity(entityId, new global::RACE2.FrontEnd.Race2GraphQlSchema.State.UserdetailsEntity(default !, default !, DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "c_display_name")), default !, default !, default !, default !, default !, default !, default !, default !, default !, default !, default !, DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "id"))));
+                }
+
+                return entityId;
+            }
+
+            throw new global::System.NotSupportedException();
+        }
+
+        private global::System.Int32 DeserializeNonNullableInt32(global::System.Text.Json.JsonElement? obj)
+        {
+            if (!obj.HasValue)
+            {
+                throw new global::System.ArgumentNullException();
+            }
+
+            return _intParser.Parse(obj.Value.GetInt32()!);
+        }
+
+        private global::System.String? DeserializeString(global::System.Text.Json.JsonElement? obj)
+        {
+            if (!obj.HasValue)
+            {
+                return null;
+            }
+
+            return _stringParser.Parse(obj.Value.GetString()!);
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
     public partial class GetAllUserdetailsBuilder : global::StrawberryShake.IOperationResultBuilder<global::System.Text.Json.JsonDocument, global::RACE2.FrontEnd.Race2GraphQlSchema.IGetAllUserdetailsResult>
     {
         private readonly global::StrawberryShake.IEntityStore _entityStore;
@@ -595,11 +3023,11 @@ namespace RACE2.FrontEnd.Race2GraphQlSchema.State
             {
                 if (session.CurrentSnapshot.TryGetEntity(entityId, out global::RACE2.FrontEnd.Race2GraphQlSchema.State.UserdetailsEntity? entity))
                 {
-                    session.SetEntity(entityId, new global::RACE2.FrontEnd.Race2GraphQlSchema.State.UserdetailsEntity(DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "id")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "c_display_name"))));
+                    session.SetEntity(entityId, new global::RACE2.FrontEnd.Race2GraphQlSchema.State.UserdetailsEntity(entity.C_defra_id, entity.C_type, DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "c_display_name")), entity.C_first_name, entity.C_last_name, entity.C_status, entity.C_created_on_date, entity.C_last_access_date, entity.C_password_retry_count, entity.EmailConfirmed, entity.PhoneNumberConfirmed, entity.TwoFactorEnabled, entity.LockoutEnabled, entity.AccessFailedCount, DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "id"))));
                 }
                 else
                 {
-                    session.SetEntity(entityId, new global::RACE2.FrontEnd.Race2GraphQlSchema.State.UserdetailsEntity(DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "id")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "c_display_name"))));
+                    session.SetEntity(entityId, new global::RACE2.FrontEnd.Race2GraphQlSchema.State.UserdetailsEntity(default !, default !, DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "c_display_name")), default !, default !, default !, default !, default !, default !, default !, default !, default !, default !, default !, DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "id"))));
                 }
 
                 return entityId;

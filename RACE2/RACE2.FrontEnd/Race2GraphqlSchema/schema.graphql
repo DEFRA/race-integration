@@ -6,6 +6,8 @@
 
 type UserResolver {
   userdetails: [Userdetails!]!
+  userdetailById(id: Int!): Userdetails!
+  userdetailByEmail(email: String!): Userdetails!
 }
 
 type Mutation {

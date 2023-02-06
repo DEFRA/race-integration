@@ -1,10 +1,24 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using RACE2.FrontEnd;
+using System.Reflection;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
+
+string fileName = "RACE2.FrontEnd.appsettings.json";
+var stream = Assembly.GetExecutingAssembly()
+                     .GetManifestResourceStream(fileName);
+
+var config = new ConfigurationBuilder()
+                    .AddJsonStream(stream)
+                    .Build();
+builder.Services.AddTransient(_ =>
+{
+    return config.GetSection("ApplicationSettings")
+                 .Get<ApplicationSettings>();
+});
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
