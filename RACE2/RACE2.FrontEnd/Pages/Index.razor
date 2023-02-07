@@ -1,8 +1,8 @@
-﻿@using RACE2.FrontEnd.Components
-@inject RACE2GraphQLClient client;
+﻿@page "/"
 
-@inject ApplicationSettings appSettings;
-@page "/"
+@using RACE2.FrontEnd.Components
+@inject RACE2GraphQLClient client;
+@inject IConfiguration Configuration
 
 <Home />
 
@@ -10,8 +10,7 @@
     protected override async Task OnInitializedAsync()
     {
         var result = await client.GetUserByEmailID.ExecuteAsync("kcsahoo@gmail.com");
-        //var sr = await client.GetUserdetailByEmail.ExecuteAsync("kcsahoo@gmail.com");
-        var res = result!.Data!.UserByEmailID.Email;
+        var email = result!.Data!.UserByEmailID.Email;
         //var s = appSettings.BlazorWebApiURL;
     }
 }

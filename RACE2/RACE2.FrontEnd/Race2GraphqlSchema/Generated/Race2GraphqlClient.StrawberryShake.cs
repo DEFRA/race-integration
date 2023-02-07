@@ -15,9 +15,9 @@ namespace Microsoft.Extensions.DependencyInjection
                 return new ClientServiceProvider(global::Microsoft.Extensions.DependencyInjection.ServiceCollectionContainerBuilderExtensions.BuildServiceProvider(serviceCollection));
             });
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton(services, sp => new global::RACE2.FrontEnd.RACE2GraphQLSchema.State.RACE2GraphQLClientStoreAccessor(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationStore>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)), global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IEntityStore>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)), global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IEntityIdSerializer>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)), global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::System.Collections.Generic.IEnumerable<global::StrawberryShake.IOperationRequestFactory>>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)), global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::System.Collections.Generic.IEnumerable<global::StrawberryShake.IOperationResultDataFactory>>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp))));
-            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::RACE2.FrontEnd.RACE2GraphQLSchema.GetUserByEmailIDQuery>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)));
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::RACE2.FrontEnd.RACE2GraphQLSchema.GetUserByIdQuery>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)));
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::RACE2.FrontEnd.RACE2GraphQLSchema.GetAllUsersQuery>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)));
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::RACE2.FrontEnd.RACE2GraphQLSchema.GetUserByEmailIDQuery>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)));
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::RACE2.FrontEnd.RACE2GraphQLSchema.RACE2GraphQLClient>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)));
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::RACE2.FrontEnd.RACE2GraphQLSchema.IRACE2GraphQLClient>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)));
             return new global::StrawberryShake.ClientBuilder<global::RACE2.FrontEnd.RACE2GraphQLSchema.State.RACE2GraphQLClientStoreAccessor>("RACE2GraphQLClient", services, serviceCollection);
@@ -32,9 +32,9 @@ namespace Microsoft.Extensions.DependencyInjection
                 var clientFactory = global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::System.Net.Http.IHttpClientFactory>(parentServices);
                 return new global::StrawberryShake.Transport.Http.HttpConnection(() => clientFactory.CreateClient("RACE2GraphQLClient"));
             });
-            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IEntityMapper<global::RACE2.FrontEnd.RACE2GraphQLSchema.State.UserdetailsEntity, global::RACE2.FrontEnd.RACE2GraphQLSchema.GetUserByEmailID_UserByEmailID_Userdetails>, global::RACE2.FrontEnd.RACE2GraphQLSchema.State.GetUserByEmailID_UserByEmailID_UserdetailsFromUserdetailsEntityMapper>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IEntityMapper<global::RACE2.FrontEnd.RACE2GraphQLSchema.State.UserdetailsEntity, global::RACE2.FrontEnd.RACE2GraphQLSchema.GetUserById_ById_Userdetails>, global::RACE2.FrontEnd.RACE2GraphQLSchema.State.GetUserById_ById_UserdetailsFromUserdetailsEntityMapper>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IEntityMapper<global::RACE2.FrontEnd.RACE2GraphQLSchema.State.UserdetailsEntity, global::RACE2.FrontEnd.RACE2GraphQLSchema.GetAllUsers_Userdetails_Userdetails>, global::RACE2.FrontEnd.RACE2GraphQLSchema.State.GetAllUsers_Userdetails_UserdetailsFromUserdetailsEntityMapper>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IEntityMapper<global::RACE2.FrontEnd.RACE2GraphQLSchema.State.UserdetailsEntity, global::RACE2.FrontEnd.RACE2GraphQLSchema.GetUserByEmailID_UserByEmailID_Userdetails>, global::RACE2.FrontEnd.RACE2GraphQLSchema.State.GetUserByEmailID_UserByEmailID_UserdetailsFromUserdetailsEntityMapper>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Serialization.ISerializer, global::StrawberryShake.Serialization.StringSerializer>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Serialization.ISerializer, global::StrawberryShake.Serialization.BooleanSerializer>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Serialization.ISerializer, global::StrawberryShake.Serialization.ByteSerializer>(services);
@@ -52,13 +52,6 @@ namespace Microsoft.Extensions.DependencyInjection
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Serialization.ISerializer, global::StrawberryShake.Serialization.TimeSpanSerializer>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Serialization.ISerializer, global::StrawberryShake.Serialization.JsonSerializer>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Serialization.ISerializerResolver>(services, sp => new global::StrawberryShake.Serialization.SerializerResolver(global::System.Linq.Enumerable.Concat(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::System.Collections.Generic.IEnumerable<global::StrawberryShake.Serialization.ISerializer>>(parentServices), global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::System.Collections.Generic.IEnumerable<global::StrawberryShake.Serialization.ISerializer>>(sp))));
-            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationResultDataFactory<global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailIDResult>, global::RACE2.FrontEnd.RACE2GraphQLSchema.State.GetUserByEmailIDResultFactory>(services);
-            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationResultDataFactory>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationResultDataFactory<global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailIDResult>>(sp));
-            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationRequestFactory>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailIDQuery>(sp));
-            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationResultBuilder<global::System.Text.Json.JsonDocument, global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailIDResult>, global::RACE2.FrontEnd.RACE2GraphQLSchema.State.GetUserByEmailIDBuilder>(services);
-            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationExecutor<global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailIDResult>>(services, sp => new global::StrawberryShake.OperationExecutor<global::System.Text.Json.JsonDocument, global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailIDResult>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.Transport.Http.IHttpConnection>(sp), () => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationResultBuilder<global::System.Text.Json.JsonDocument, global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailIDResult>>(sp), global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationStore>(sp), strategy));
-            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::RACE2.FrontEnd.RACE2GraphQLSchema.GetUserByEmailIDQuery>(services);
-            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailIDQuery>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::RACE2.FrontEnd.RACE2GraphQLSchema.GetUserByEmailIDQuery>(sp));
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationResultDataFactory<global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByIdResult>, global::RACE2.FrontEnd.RACE2GraphQLSchema.State.GetUserByIdResultFactory>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationResultDataFactory>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationResultDataFactory<global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByIdResult>>(sp));
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationRequestFactory>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByIdQuery>(sp));
@@ -73,6 +66,13 @@ namespace Microsoft.Extensions.DependencyInjection
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationExecutor<global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetAllUsersResult>>(services, sp => new global::StrawberryShake.OperationExecutor<global::System.Text.Json.JsonDocument, global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetAllUsersResult>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.Transport.Http.IHttpConnection>(sp), () => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationResultBuilder<global::System.Text.Json.JsonDocument, global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetAllUsersResult>>(sp), global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationStore>(sp), strategy));
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::RACE2.FrontEnd.RACE2GraphQLSchema.GetAllUsersQuery>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetAllUsersQuery>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::RACE2.FrontEnd.RACE2GraphQLSchema.GetAllUsersQuery>(sp));
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationResultDataFactory<global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailIDResult>, global::RACE2.FrontEnd.RACE2GraphQLSchema.State.GetUserByEmailIDResultFactory>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationResultDataFactory>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationResultDataFactory<global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailIDResult>>(sp));
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationRequestFactory>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailIDQuery>(sp));
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationResultBuilder<global::System.Text.Json.JsonDocument, global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailIDResult>, global::RACE2.FrontEnd.RACE2GraphQLSchema.State.GetUserByEmailIDBuilder>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationExecutor<global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailIDResult>>(services, sp => new global::StrawberryShake.OperationExecutor<global::System.Text.Json.JsonDocument, global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailIDResult>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.Transport.Http.IHttpConnection>(sp), () => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationResultBuilder<global::System.Text.Json.JsonDocument, global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailIDResult>>(sp), global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationStore>(sp), strategy));
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::RACE2.FrontEnd.RACE2GraphQLSchema.GetUserByEmailIDQuery>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailIDQuery>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::RACE2.FrontEnd.RACE2GraphQLSchema.GetUserByEmailIDQuery>(sp));
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IEntityIdSerializer, global::RACE2.FrontEnd.RACE2GraphQLSchema.State.RACE2GraphQLClientEntityIdFactory>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::RACE2.FrontEnd.RACE2GraphQLSchema.RACE2GraphQLClient>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::RACE2.FrontEnd.RACE2GraphQLSchema.IRACE2GraphQLClient>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::RACE2.FrontEnd.RACE2GraphQLSchema.RACE2GraphQLClient>(sp));
@@ -105,165 +105,6 @@ namespace Microsoft.Extensions.DependencyInjection
 
 namespace RACE2.FrontEnd.RACE2GraphQLSchema
 {
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
-    public partial class GetUserByEmailIDResult : global::System.IEquatable<GetUserByEmailIDResult>, IGetUserByEmailIDResult
-    {
-        public GetUserByEmailIDResult(global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailID_UserByEmailID userByEmailID)
-        {
-            UserByEmailID = userByEmailID;
-        }
-
-        public global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailID_UserByEmailID UserByEmailID { get; }
-
-        public virtual global::System.Boolean Equals(GetUserByEmailIDResult? other)
-        {
-            if (ReferenceEquals(null, other))
-            {
-                return false;
-            }
-
-            if (ReferenceEquals(this, other))
-            {
-                return true;
-            }
-
-            if (other.GetType() != GetType())
-            {
-                return false;
-            }
-
-            return (UserByEmailID.Equals(other.UserByEmailID));
-        }
-
-        public override global::System.Boolean Equals(global::System.Object? obj)
-        {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
-
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
-
-            if (obj.GetType() != GetType())
-            {
-                return false;
-            }
-
-            return Equals((GetUserByEmailIDResult)obj);
-        }
-
-        public override global::System.Int32 GetHashCode()
-        {
-            unchecked
-            {
-                int hash = 5;
-                hash ^= 397 * UserByEmailID.GetHashCode();
-                return hash;
-            }
-        }
-    }
-
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
-    public partial class GetUserByEmailID_UserByEmailID_Userdetails : global::System.IEquatable<GetUserByEmailID_UserByEmailID_Userdetails>, IGetUserByEmailID_UserByEmailID_Userdetails
-    {
-        public GetUserByEmailID_UserByEmailID_Userdetails(global::System.Int32 id, global::System.String? c_Last_Name, global::System.String? email)
-        {
-            Id = id;
-            C_last_name = c_Last_Name;
-            Email = email;
-        }
-
-        public global::System.Int32 Id { get; }
-
-        public global::System.String? C_last_name { get; }
-
-        public global::System.String? Email { get; }
-
-        public virtual global::System.Boolean Equals(GetUserByEmailID_UserByEmailID_Userdetails? other)
-        {
-            if (ReferenceEquals(null, other))
-            {
-                return false;
-            }
-
-            if (ReferenceEquals(this, other))
-            {
-                return true;
-            }
-
-            if (other.GetType() != GetType())
-            {
-                return false;
-            }
-
-            return (Id == other.Id) && ((C_last_name is null && other.C_last_name is null) || C_last_name != null && C_last_name.Equals(other.C_last_name)) && ((Email is null && other.Email is null) || Email != null && Email.Equals(other.Email));
-        }
-
-        public override global::System.Boolean Equals(global::System.Object? obj)
-        {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
-
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
-
-            if (obj.GetType() != GetType())
-            {
-                return false;
-            }
-
-            return Equals((GetUserByEmailID_UserByEmailID_Userdetails)obj);
-        }
-
-        public override global::System.Int32 GetHashCode()
-        {
-            unchecked
-            {
-                int hash = 5;
-                hash ^= 397 * Id.GetHashCode();
-                if (C_last_name != null)
-                {
-                    hash ^= 397 * C_last_name.GetHashCode();
-                }
-
-                if (Email != null)
-                {
-                    hash ^= 397 * Email.GetHashCode();
-                }
-
-                return hash;
-            }
-        }
-    }
-
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
-    public partial interface IGetUserByEmailIDResult
-    {
-        public global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailID_UserByEmailID UserByEmailID { get; }
-    }
-
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
-    public partial interface IGetUserByEmailID_UserByEmailID
-    {
-        public global::System.Int32 Id { get; }
-
-        public global::System.String? C_last_name { get; }
-
-        public global::System.String? Email { get; }
-    }
-
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
-    public partial interface IGetUserByEmailID_UserByEmailID_Userdetails : IGetUserByEmailID_UserByEmailID
-    {
-    }
-
     [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
     public partial class GetUserByIdResult : global::System.IEquatable<GetUserByIdResult>, IGetUserByIdResult
     {
@@ -600,132 +441,163 @@ namespace RACE2.FrontEnd.RACE2GraphQLSchema
     {
     }
 
-    /// <summary>
-    /// Represents the operation service of the GetUserByEmailID GraphQL operation
-    /// <code>
-    /// query GetUserByEmailID($newemail: String!) {
-    ///   userByEmailID(email: $newemail) {
-    ///     __typename
-    ///     id
-    ///     c_last_name
-    ///     email
-    ///     ... on Userdetails {
-    ///       id
-    ///     }
-    ///   }
-    /// }
-    /// </code>
-    /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
-    public partial class GetUserByEmailIDQueryDocument : global::StrawberryShake.IDocument
+    public partial class GetUserByEmailIDResult : global::System.IEquatable<GetUserByEmailIDResult>, IGetUserByEmailIDResult
     {
-        private GetUserByEmailIDQueryDocument()
+        public GetUserByEmailIDResult(global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailID_UserByEmailID userByEmailID)
         {
+            UserByEmailID = userByEmailID;
         }
 
-        public static GetUserByEmailIDQueryDocument Instance { get; } = new GetUserByEmailIDQueryDocument();
-        public global::StrawberryShake.OperationKind Kind => global::StrawberryShake.OperationKind.Query;
-        public global::System.ReadOnlySpan<global::System.Byte> Body => new global::System.Byte[]{0x71, 0x75, 0x65, 0x72, 0x79, 0x20, 0x47, 0x65, 0x74, 0x55, 0x73, 0x65, 0x72, 0x42, 0x79, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x49, 0x44, 0x28, 0x24, 0x6e, 0x65, 0x77, 0x65, 0x6d, 0x61, 0x69, 0x6c, 0x3a, 0x20, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x21, 0x29, 0x20, 0x7b, 0x20, 0x75, 0x73, 0x65, 0x72, 0x42, 0x79, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x49, 0x44, 0x28, 0x65, 0x6d, 0x61, 0x69, 0x6c, 0x3a, 0x20, 0x24, 0x6e, 0x65, 0x77, 0x65, 0x6d, 0x61, 0x69, 0x6c, 0x29, 0x20, 0x7b, 0x20, 0x5f, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x6e, 0x61, 0x6d, 0x65, 0x20, 0x69, 0x64, 0x20, 0x63, 0x5f, 0x6c, 0x61, 0x73, 0x74, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x20, 0x65, 0x6d, 0x61, 0x69, 0x6c, 0x20, 0x2e, 0x2e, 0x2e, 0x20, 0x6f, 0x6e, 0x20, 0x55, 0x73, 0x65, 0x72, 0x64, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x20, 0x7b, 0x20, 0x69, 0x64, 0x20, 0x7d, 0x20, 0x7d, 0x20, 0x7d};
-        public global::StrawberryShake.DocumentHash Hash { get; } = new global::StrawberryShake.DocumentHash("md5Hash", "d0bcdfec3fa2567b233431be5577d51f");
-        public override global::System.String ToString()
-        {
-#if NETSTANDARD2_0
-        return global::System.Text.Encoding.UTF8.GetString(Body.ToArray());
-#else
-            return global::System.Text.Encoding.UTF8.GetString(Body);
-#endif
-        }
-    }
+        public global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailID_UserByEmailID UserByEmailID { get; }
 
-    /// <summary>
-    /// Represents the operation service of the GetUserByEmailID GraphQL operation
-    /// <code>
-    /// query GetUserByEmailID($newemail: String!) {
-    ///   userByEmailID(email: $newemail) {
-    ///     __typename
-    ///     id
-    ///     c_last_name
-    ///     email
-    ///     ... on Userdetails {
-    ///       id
-    ///     }
-    ///   }
-    /// }
-    /// </code>
-    /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
-    public partial class GetUserByEmailIDQuery : global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailIDQuery
-    {
-        private readonly global::StrawberryShake.IOperationExecutor<IGetUserByEmailIDResult> _operationExecutor;
-        private readonly global::StrawberryShake.Serialization.IInputValueFormatter _stringFormatter;
-        public GetUserByEmailIDQuery(global::StrawberryShake.IOperationExecutor<IGetUserByEmailIDResult> operationExecutor, global::StrawberryShake.Serialization.ISerializerResolver serializerResolver)
+        public virtual global::System.Boolean Equals(GetUserByEmailIDResult? other)
         {
-            _operationExecutor = operationExecutor ?? throw new global::System.ArgumentNullException(nameof(operationExecutor));
-            _stringFormatter = serializerResolver.GetInputValueFormatter("String");
-        }
-
-        global::System.Type global::StrawberryShake.IOperationRequestFactory.ResultType => typeof(IGetUserByEmailIDResult);
-        public async global::System.Threading.Tasks.Task<global::StrawberryShake.IOperationResult<IGetUserByEmailIDResult>> ExecuteAsync(global::System.String newemail, global::System.Threading.CancellationToken cancellationToken = default)
-        {
-            var request = CreateRequest(newemail);
-            return await _operationExecutor.ExecuteAsync(request, cancellationToken).ConfigureAwait(false);
-        }
-
-        public global::System.IObservable<global::StrawberryShake.IOperationResult<IGetUserByEmailIDResult>> Watch(global::System.String newemail, global::StrawberryShake.ExecutionStrategy? strategy = null)
-        {
-            var request = CreateRequest(newemail);
-            return _operationExecutor.Watch(request, strategy);
-        }
-
-        private global::StrawberryShake.OperationRequest CreateRequest(global::System.String newemail)
-        {
-            var variables = new global::System.Collections.Generic.Dictionary<global::System.String, global::System.Object?>();
-            variables.Add("newemail", FormatNewemail(newemail));
-            return CreateRequest(variables);
-        }
-
-        private global::StrawberryShake.OperationRequest CreateRequest(global::System.Collections.Generic.IReadOnlyDictionary<global::System.String, global::System.Object?>? variables)
-        {
-            return new global::StrawberryShake.OperationRequest(id: GetUserByEmailIDQueryDocument.Instance.Hash.Value, name: "GetUserByEmailID", document: GetUserByEmailIDQueryDocument.Instance, strategy: global::StrawberryShake.RequestStrategy.Default, variables: variables);
-        }
-
-        private global::System.Object? FormatNewemail(global::System.String value)
-        {
-            if (value is null)
+            if (ReferenceEquals(null, other))
             {
-                throw new global::System.ArgumentNullException(nameof(value));
+                return false;
             }
 
-            return _stringFormatter.Format(value);
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            if (other.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return (UserByEmailID.Equals(other.UserByEmailID));
         }
 
-        global::StrawberryShake.OperationRequest global::StrawberryShake.IOperationRequestFactory.Create(global::System.Collections.Generic.IReadOnlyDictionary<global::System.String, global::System.Object?>? variables)
+        public override global::System.Boolean Equals(global::System.Object? obj)
         {
-            return CreateRequest(variables!);
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return Equals((GetUserByEmailIDResult)obj);
+        }
+
+        public override global::System.Int32 GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 5;
+                hash ^= 397 * UserByEmailID.GetHashCode();
+                return hash;
+            }
         }
     }
 
-    /// <summary>
-    /// Represents the operation service of the GetUserByEmailID GraphQL operation
-    /// <code>
-    /// query GetUserByEmailID($newemail: String!) {
-    ///   userByEmailID(email: $newemail) {
-    ///     __typename
-    ///     id
-    ///     c_last_name
-    ///     email
-    ///     ... on Userdetails {
-    ///       id
-    ///     }
-    ///   }
-    /// }
-    /// </code>
-    /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
-    public partial interface IGetUserByEmailIDQuery : global::StrawberryShake.IOperationRequestFactory
+    public partial class GetUserByEmailID_UserByEmailID_Userdetails : global::System.IEquatable<GetUserByEmailID_UserByEmailID_Userdetails>, IGetUserByEmailID_UserByEmailID_Userdetails
     {
-        global::System.Threading.Tasks.Task<global::StrawberryShake.IOperationResult<IGetUserByEmailIDResult>> ExecuteAsync(global::System.String newemail, global::System.Threading.CancellationToken cancellationToken = default);
-        global::System.IObservable<global::StrawberryShake.IOperationResult<IGetUserByEmailIDResult>> Watch(global::System.String newemail, global::StrawberryShake.ExecutionStrategy? strategy = null);
+        public GetUserByEmailID_UserByEmailID_Userdetails(global::System.Int32 id, global::System.String? c_Last_Name, global::System.String? email)
+        {
+            Id = id;
+            C_last_name = c_Last_Name;
+            Email = email;
+        }
+
+        public global::System.Int32 Id { get; }
+
+        public global::System.String? C_last_name { get; }
+
+        public global::System.String? Email { get; }
+
+        public virtual global::System.Boolean Equals(GetUserByEmailID_UserByEmailID_Userdetails? other)
+        {
+            if (ReferenceEquals(null, other))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            if (other.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return (Id == other.Id) && ((C_last_name is null && other.C_last_name is null) || C_last_name != null && C_last_name.Equals(other.C_last_name)) && ((Email is null && other.Email is null) || Email != null && Email.Equals(other.Email));
+        }
+
+        public override global::System.Boolean Equals(global::System.Object? obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return Equals((GetUserByEmailID_UserByEmailID_Userdetails)obj);
+        }
+
+        public override global::System.Int32 GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 5;
+                hash ^= 397 * Id.GetHashCode();
+                if (C_last_name != null)
+                {
+                    hash ^= 397 * C_last_name.GetHashCode();
+                }
+
+                if (Email != null)
+                {
+                    hash ^= 397 * Email.GetHashCode();
+                }
+
+                return hash;
+            }
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    public partial interface IGetUserByEmailIDResult
+    {
+        public global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailID_UserByEmailID UserByEmailID { get; }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    public partial interface IGetUserByEmailID_UserByEmailID
+    {
+        public global::System.Int32 Id { get; }
+
+        public global::System.String? C_last_name { get; }
+
+        public global::System.String? Email { get; }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    public partial interface IGetUserByEmailID_UserByEmailID_Userdetails : IGetUserByEmailID_UserByEmailID
+    {
     }
 
     /// <summary>
@@ -969,25 +841,153 @@ namespace RACE2.FrontEnd.RACE2GraphQLSchema
     }
 
     /// <summary>
+    /// Represents the operation service of the GetUserByEmailID GraphQL operation
+    /// <code>
+    /// query GetUserByEmailID($newemail: String!) {
+    ///   userByEmailID(email: $newemail) {
+    ///     __typename
+    ///     id
+    ///     c_last_name
+    ///     email
+    ///     ... on Userdetails {
+    ///       id
+    ///     }
+    ///   }
+    /// }
+    /// </code>
+    /// </summary>
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    public partial class GetUserByEmailIDQueryDocument : global::StrawberryShake.IDocument
+    {
+        private GetUserByEmailIDQueryDocument()
+        {
+        }
+
+        public static GetUserByEmailIDQueryDocument Instance { get; } = new GetUserByEmailIDQueryDocument();
+        public global::StrawberryShake.OperationKind Kind => global::StrawberryShake.OperationKind.Query;
+        public global::System.ReadOnlySpan<global::System.Byte> Body => new global::System.Byte[]{0x71, 0x75, 0x65, 0x72, 0x79, 0x20, 0x47, 0x65, 0x74, 0x55, 0x73, 0x65, 0x72, 0x42, 0x79, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x49, 0x44, 0x28, 0x24, 0x6e, 0x65, 0x77, 0x65, 0x6d, 0x61, 0x69, 0x6c, 0x3a, 0x20, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x21, 0x29, 0x20, 0x7b, 0x20, 0x75, 0x73, 0x65, 0x72, 0x42, 0x79, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x49, 0x44, 0x28, 0x65, 0x6d, 0x61, 0x69, 0x6c, 0x3a, 0x20, 0x24, 0x6e, 0x65, 0x77, 0x65, 0x6d, 0x61, 0x69, 0x6c, 0x29, 0x20, 0x7b, 0x20, 0x5f, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x6e, 0x61, 0x6d, 0x65, 0x20, 0x69, 0x64, 0x20, 0x63, 0x5f, 0x6c, 0x61, 0x73, 0x74, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x20, 0x65, 0x6d, 0x61, 0x69, 0x6c, 0x20, 0x2e, 0x2e, 0x2e, 0x20, 0x6f, 0x6e, 0x20, 0x55, 0x73, 0x65, 0x72, 0x64, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x20, 0x7b, 0x20, 0x69, 0x64, 0x20, 0x7d, 0x20, 0x7d, 0x20, 0x7d};
+        public global::StrawberryShake.DocumentHash Hash { get; } = new global::StrawberryShake.DocumentHash("md5Hash", "d0bcdfec3fa2567b233431be5577d51f");
+        public override global::System.String ToString()
+        {
+#if NETSTANDARD2_0
+        return global::System.Text.Encoding.UTF8.GetString(Body.ToArray());
+#else
+            return global::System.Text.Encoding.UTF8.GetString(Body);
+#endif
+        }
+    }
+
+    /// <summary>
+    /// Represents the operation service of the GetUserByEmailID GraphQL operation
+    /// <code>
+    /// query GetUserByEmailID($newemail: String!) {
+    ///   userByEmailID(email: $newemail) {
+    ///     __typename
+    ///     id
+    ///     c_last_name
+    ///     email
+    ///     ... on Userdetails {
+    ///       id
+    ///     }
+    ///   }
+    /// }
+    /// </code>
+    /// </summary>
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    public partial class GetUserByEmailIDQuery : global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailIDQuery
+    {
+        private readonly global::StrawberryShake.IOperationExecutor<IGetUserByEmailIDResult> _operationExecutor;
+        private readonly global::StrawberryShake.Serialization.IInputValueFormatter _stringFormatter;
+        public GetUserByEmailIDQuery(global::StrawberryShake.IOperationExecutor<IGetUserByEmailIDResult> operationExecutor, global::StrawberryShake.Serialization.ISerializerResolver serializerResolver)
+        {
+            _operationExecutor = operationExecutor ?? throw new global::System.ArgumentNullException(nameof(operationExecutor));
+            _stringFormatter = serializerResolver.GetInputValueFormatter("String");
+        }
+
+        global::System.Type global::StrawberryShake.IOperationRequestFactory.ResultType => typeof(IGetUserByEmailIDResult);
+        public async global::System.Threading.Tasks.Task<global::StrawberryShake.IOperationResult<IGetUserByEmailIDResult>> ExecuteAsync(global::System.String newemail, global::System.Threading.CancellationToken cancellationToken = default)
+        {
+            var request = CreateRequest(newemail);
+            return await _operationExecutor.ExecuteAsync(request, cancellationToken).ConfigureAwait(false);
+        }
+
+        public global::System.IObservable<global::StrawberryShake.IOperationResult<IGetUserByEmailIDResult>> Watch(global::System.String newemail, global::StrawberryShake.ExecutionStrategy? strategy = null)
+        {
+            var request = CreateRequest(newemail);
+            return _operationExecutor.Watch(request, strategy);
+        }
+
+        private global::StrawberryShake.OperationRequest CreateRequest(global::System.String newemail)
+        {
+            var variables = new global::System.Collections.Generic.Dictionary<global::System.String, global::System.Object?>();
+            variables.Add("newemail", FormatNewemail(newemail));
+            return CreateRequest(variables);
+        }
+
+        private global::StrawberryShake.OperationRequest CreateRequest(global::System.Collections.Generic.IReadOnlyDictionary<global::System.String, global::System.Object?>? variables)
+        {
+            return new global::StrawberryShake.OperationRequest(id: GetUserByEmailIDQueryDocument.Instance.Hash.Value, name: "GetUserByEmailID", document: GetUserByEmailIDQueryDocument.Instance, strategy: global::StrawberryShake.RequestStrategy.Default, variables: variables);
+        }
+
+        private global::System.Object? FormatNewemail(global::System.String value)
+        {
+            if (value is null)
+            {
+                throw new global::System.ArgumentNullException(nameof(value));
+            }
+
+            return _stringFormatter.Format(value);
+        }
+
+        global::StrawberryShake.OperationRequest global::StrawberryShake.IOperationRequestFactory.Create(global::System.Collections.Generic.IReadOnlyDictionary<global::System.String, global::System.Object?>? variables)
+        {
+            return CreateRequest(variables!);
+        }
+    }
+
+    /// <summary>
+    /// Represents the operation service of the GetUserByEmailID GraphQL operation
+    /// <code>
+    /// query GetUserByEmailID($newemail: String!) {
+    ///   userByEmailID(email: $newemail) {
+    ///     __typename
+    ///     id
+    ///     c_last_name
+    ///     email
+    ///     ... on Userdetails {
+    ///       id
+    ///     }
+    ///   }
+    /// }
+    /// </code>
+    /// </summary>
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    public partial interface IGetUserByEmailIDQuery : global::StrawberryShake.IOperationRequestFactory
+    {
+        global::System.Threading.Tasks.Task<global::StrawberryShake.IOperationResult<IGetUserByEmailIDResult>> ExecuteAsync(global::System.String newemail, global::System.Threading.CancellationToken cancellationToken = default);
+        global::System.IObservable<global::StrawberryShake.IOperationResult<IGetUserByEmailIDResult>> Watch(global::System.String newemail, global::StrawberryShake.ExecutionStrategy? strategy = null);
+    }
+
+    /// <summary>
     /// Represents the RACE2GraphQLClient GraphQL client
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
     public partial class RACE2GraphQLClient : global::RACE2.FrontEnd.RACE2GraphQLSchema.IRACE2GraphQLClient
     {
-        private readonly global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailIDQuery _getUserByEmailID;
         private readonly global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByIdQuery _getUserById;
         private readonly global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetAllUsersQuery _getAllUsers;
-        public RACE2GraphQLClient(global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailIDQuery getUserByEmailID, global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByIdQuery getUserById, global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetAllUsersQuery getAllUsers)
+        private readonly global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailIDQuery _getUserByEmailID;
+        public RACE2GraphQLClient(global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByIdQuery getUserById, global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetAllUsersQuery getAllUsers, global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailIDQuery getUserByEmailID)
         {
-            _getUserByEmailID = getUserByEmailID ?? throw new global::System.ArgumentNullException(nameof(getUserByEmailID));
             _getUserById = getUserById ?? throw new global::System.ArgumentNullException(nameof(getUserById));
             _getAllUsers = getAllUsers ?? throw new global::System.ArgumentNullException(nameof(getAllUsers));
+            _getUserByEmailID = getUserByEmailID ?? throw new global::System.ArgumentNullException(nameof(getUserByEmailID));
         }
 
         public static global::System.String ClientName => "RACE2GraphQLClient";
-        public global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailIDQuery GetUserByEmailID => _getUserByEmailID;
         public global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByIdQuery GetUserById => _getUserById;
         public global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetAllUsersQuery GetAllUsers => _getAllUsers;
+        public global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailIDQuery GetUserByEmailID => _getUserByEmailID;
     }
 
     /// <summary>
@@ -996,11 +996,11 @@ namespace RACE2.FrontEnd.RACE2GraphQLSchema
     [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
     public partial interface IRACE2GraphQLClient
     {
-        global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailIDQuery GetUserByEmailID { get; }
-
         global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByIdQuery GetUserById { get; }
 
         global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetAllUsersQuery GetAllUsers { get; }
+
+        global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailIDQuery GetUserByEmailID { get; }
     }
 }
 
@@ -1009,112 +1009,27 @@ namespace RACE2.FrontEnd.RACE2GraphQLSchema.State
     [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
     public partial class UserdetailsEntity
     {
-        public UserdetailsEntity(global::System.Int32 id = default !, global::System.String? c_Last_Name = default !, global::System.String? email = default !, global::System.String? userName = default !, global::System.String? c_Password = default !, global::System.String? passwordHash = default !)
+        public UserdetailsEntity(global::System.String? c_Last_Name = default !, global::System.String? email = default !, global::System.Int32 id = default !, global::System.String? userName = default !, global::System.String? c_Password = default !, global::System.String? passwordHash = default !)
         {
-            Id = id;
             C_last_name = c_Last_Name;
             Email = email;
+            Id = id;
             UserName = userName;
             C_password = c_Password;
             PasswordHash = passwordHash;
         }
 
-        public global::System.Int32 Id { get; }
-
         public global::System.String? C_last_name { get; }
 
         public global::System.String? Email { get; }
+
+        public global::System.Int32 Id { get; }
 
         public global::System.String? UserName { get; }
 
         public global::System.String? C_password { get; }
 
         public global::System.String? PasswordHash { get; }
-    }
-
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
-    public partial class GetUserByEmailIDResultFactory : global::StrawberryShake.IOperationResultDataFactory<global::RACE2.FrontEnd.RACE2GraphQLSchema.GetUserByEmailIDResult>
-    {
-        private readonly global::StrawberryShake.IEntityStore _entityStore;
-        private readonly global::StrawberryShake.IEntityMapper<global::RACE2.FrontEnd.RACE2GraphQLSchema.State.UserdetailsEntity, GetUserByEmailID_UserByEmailID_Userdetails> _getUserByEmailID_UserByEmailID_UserdetailsFromUserdetailsEntityMapper;
-        public GetUserByEmailIDResultFactory(global::StrawberryShake.IEntityStore entityStore, global::StrawberryShake.IEntityMapper<global::RACE2.FrontEnd.RACE2GraphQLSchema.State.UserdetailsEntity, GetUserByEmailID_UserByEmailID_Userdetails> getUserByEmailID_UserByEmailID_UserdetailsFromUserdetailsEntityMapper)
-        {
-            _entityStore = entityStore ?? throw new global::System.ArgumentNullException(nameof(entityStore));
-            _getUserByEmailID_UserByEmailID_UserdetailsFromUserdetailsEntityMapper = getUserByEmailID_UserByEmailID_UserdetailsFromUserdetailsEntityMapper ?? throw new global::System.ArgumentNullException(nameof(getUserByEmailID_UserByEmailID_UserdetailsFromUserdetailsEntityMapper));
-        }
-
-        global::System.Type global::StrawberryShake.IOperationResultDataFactory.ResultType => typeof(global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailIDResult);
-        public GetUserByEmailIDResult Create(global::StrawberryShake.IOperationResultDataInfo dataInfo, global::StrawberryShake.IEntityStoreSnapshot? snapshot = null)
-        {
-            if (snapshot is null)
-            {
-                snapshot = _entityStore.CurrentSnapshot;
-            }
-
-            if (dataInfo is GetUserByEmailIDResultInfo info)
-            {
-                return new GetUserByEmailIDResult(MapNonNullableIGetUserByEmailID_UserByEmailID(info.UserByEmailID, snapshot));
-            }
-
-            throw new global::System.ArgumentException("GetUserByEmailIDResultInfo expected.");
-        }
-
-        private global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailID_UserByEmailID MapNonNullableIGetUserByEmailID_UserByEmailID(global::StrawberryShake.EntityId entityId, global::StrawberryShake.IEntityStoreSnapshot snapshot)
-        {
-            if (entityId.Name.Equals("Userdetails", global::System.StringComparison.Ordinal))
-            {
-                return _getUserByEmailID_UserByEmailID_UserdetailsFromUserdetailsEntityMapper.Map(snapshot.GetEntity<global::RACE2.FrontEnd.RACE2GraphQLSchema.State.UserdetailsEntity>(entityId) ?? throw new global::StrawberryShake.GraphQLClientException());
-            }
-
-            throw new global::System.NotSupportedException();
-        }
-
-        global::System.Object global::StrawberryShake.IOperationResultDataFactory.Create(global::StrawberryShake.IOperationResultDataInfo dataInfo, global::StrawberryShake.IEntityStoreSnapshot? snapshot)
-        {
-            return Create(dataInfo, snapshot);
-        }
-    }
-
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
-    public partial class GetUserByEmailIDResultInfo : global::StrawberryShake.IOperationResultDataInfo
-    {
-        private readonly global::System.Collections.Generic.IReadOnlyCollection<global::StrawberryShake.EntityId> _entityIds;
-        private readonly global::System.UInt64 _version;
-        public GetUserByEmailIDResultInfo(global::StrawberryShake.EntityId userByEmailID, global::System.Collections.Generic.IReadOnlyCollection<global::StrawberryShake.EntityId> entityIds, global::System.UInt64 version)
-        {
-            UserByEmailID = userByEmailID;
-            _entityIds = entityIds ?? throw new global::System.ArgumentNullException(nameof(entityIds));
-            _version = version;
-        }
-
-        public global::StrawberryShake.EntityId UserByEmailID { get; }
-
-        public global::System.Collections.Generic.IReadOnlyCollection<global::StrawberryShake.EntityId> EntityIds => _entityIds;
-        public global::System.UInt64 Version => _version;
-        public global::StrawberryShake.IOperationResultDataInfo WithVersion(global::System.UInt64 version)
-        {
-            return new GetUserByEmailIDResultInfo(UserByEmailID, _entityIds, version);
-        }
-    }
-
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
-    public partial class GetUserByEmailID_UserByEmailID_UserdetailsFromUserdetailsEntityMapper : global::StrawberryShake.IEntityMapper<global::RACE2.FrontEnd.RACE2GraphQLSchema.State.UserdetailsEntity, GetUserByEmailID_UserByEmailID_Userdetails>
-    {
-        private readonly global::StrawberryShake.IEntityStore _entityStore;
-        public GetUserByEmailID_UserByEmailID_UserdetailsFromUserdetailsEntityMapper(global::StrawberryShake.IEntityStore entityStore)
-        {
-            _entityStore = entityStore ?? throw new global::System.ArgumentNullException(nameof(entityStore));
-        }
-
-        public GetUserByEmailID_UserByEmailID_Userdetails Map(global::RACE2.FrontEnd.RACE2GraphQLSchema.State.UserdetailsEntity entity, global::StrawberryShake.IEntityStoreSnapshot? snapshot = null)
-        {
-            if (snapshot is null)
-            {
-                snapshot = _entityStore.CurrentSnapshot;
-            }
-
-            return new GetUserByEmailID_UserByEmailID_Userdetails(entity.Id, entity.C_last_name, entity.Email);
-        }
     }
 
     [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
@@ -1304,121 +1219,87 @@ namespace RACE2.FrontEnd.RACE2GraphQLSchema.State
     }
 
     [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
-    public partial class GetUserByEmailIDBuilder : global::StrawberryShake.IOperationResultBuilder<global::System.Text.Json.JsonDocument, global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailIDResult>
+    public partial class GetUserByEmailIDResultFactory : global::StrawberryShake.IOperationResultDataFactory<global::RACE2.FrontEnd.RACE2GraphQLSchema.GetUserByEmailIDResult>
     {
         private readonly global::StrawberryShake.IEntityStore _entityStore;
-        private readonly global::StrawberryShake.IEntityIdSerializer _idSerializer;
-        private readonly global::StrawberryShake.IOperationResultDataFactory<global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailIDResult> _resultDataFactory;
-        private readonly global::StrawberryShake.Serialization.ILeafValueParser<global::System.String, global::System.String> _stringParser;
-        private readonly global::StrawberryShake.Serialization.ILeafValueParser<global::System.Int32, global::System.Int32> _intParser;
-        public GetUserByEmailIDBuilder(global::StrawberryShake.IEntityStore entityStore, global::StrawberryShake.IEntityIdSerializer idSerializer, global::StrawberryShake.IOperationResultDataFactory<global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailIDResult> resultDataFactory, global::StrawberryShake.Serialization.ISerializerResolver serializerResolver)
+        private readonly global::StrawberryShake.IEntityMapper<global::RACE2.FrontEnd.RACE2GraphQLSchema.State.UserdetailsEntity, GetUserByEmailID_UserByEmailID_Userdetails> _getUserByEmailID_UserByEmailID_UserdetailsFromUserdetailsEntityMapper;
+        public GetUserByEmailIDResultFactory(global::StrawberryShake.IEntityStore entityStore, global::StrawberryShake.IEntityMapper<global::RACE2.FrontEnd.RACE2GraphQLSchema.State.UserdetailsEntity, GetUserByEmailID_UserByEmailID_Userdetails> getUserByEmailID_UserByEmailID_UserdetailsFromUserdetailsEntityMapper)
         {
             _entityStore = entityStore ?? throw new global::System.ArgumentNullException(nameof(entityStore));
-            _idSerializer = idSerializer ?? throw new global::System.ArgumentNullException(nameof(idSerializer));
-            _resultDataFactory = resultDataFactory ?? throw new global::System.ArgumentNullException(nameof(resultDataFactory));
-            _stringParser = serializerResolver.GetLeafValueParser<global::System.String, global::System.String>("String") ?? throw new global::System.ArgumentException("No serializer for type `String` found.");
-            _intParser = serializerResolver.GetLeafValueParser<global::System.Int32, global::System.Int32>("Int") ?? throw new global::System.ArgumentException("No serializer for type `Int` found.");
+            _getUserByEmailID_UserByEmailID_UserdetailsFromUserdetailsEntityMapper = getUserByEmailID_UserByEmailID_UserdetailsFromUserdetailsEntityMapper ?? throw new global::System.ArgumentNullException(nameof(getUserByEmailID_UserByEmailID_UserdetailsFromUserdetailsEntityMapper));
         }
 
-        public global::StrawberryShake.IOperationResult<IGetUserByEmailIDResult> Build(global::StrawberryShake.Response<global::System.Text.Json.JsonDocument> response)
+        global::System.Type global::StrawberryShake.IOperationResultDataFactory.ResultType => typeof(global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailIDResult);
+        public GetUserByEmailIDResult Create(global::StrawberryShake.IOperationResultDataInfo dataInfo, global::StrawberryShake.IEntityStoreSnapshot? snapshot = null)
         {
-            (IGetUserByEmailIDResult Result, GetUserByEmailIDResultInfo Info)? data = null;
-            global::System.Collections.Generic.IReadOnlyList<global::StrawberryShake.IClientError>? errors = null;
-            if (response.Exception is null)
+            if (snapshot is null)
             {
-                try
-                {
-                    if (response.Body != null)
-                    {
-                        if (response.Body.RootElement.TryGetProperty("data", out global::System.Text.Json.JsonElement dataElement) && dataElement.ValueKind == global::System.Text.Json.JsonValueKind.Object)
-                        {
-                            data = BuildData(dataElement);
-                        }
-
-                        if (response.Body.RootElement.TryGetProperty("errors", out global::System.Text.Json.JsonElement errorsElement))
-                        {
-                            errors = global::StrawberryShake.Json.JsonErrorParser.ParseErrors(errorsElement);
-                        }
-                    }
-                }
-                catch (global::System.Exception ex)
-                {
-                    errors = new global::StrawberryShake.IClientError[]{new global::StrawberryShake.ClientError(ex.Message, exception: ex, extensions: new global::System.Collections.Generic.Dictionary<global::System.String, global::System.Object?>{{"body", response.Body?.RootElement.ToString()}})};
-                }
-            }
-            else
-            {
-                if (response.Body != null && response.Body.RootElement.TryGetProperty("errors", out global::System.Text.Json.JsonElement errorsElement))
-                {
-                    errors = global::StrawberryShake.Json.JsonErrorParser.ParseErrors(errorsElement);
-                }
-                else
-                {
-                    errors = new global::StrawberryShake.IClientError[]{new global::StrawberryShake.ClientError(response.Exception.Message, exception: response.Exception, extensions: new global::System.Collections.Generic.Dictionary<global::System.String, global::System.Object?>{{"body", response.Body?.RootElement.ToString()}})};
-                }
+                snapshot = _entityStore.CurrentSnapshot;
             }
 
-            return new global::StrawberryShake.OperationResult<IGetUserByEmailIDResult>(data?.Result, data?.Info, _resultDataFactory, errors);
+            if (dataInfo is GetUserByEmailIDResultInfo info)
+            {
+                return new GetUserByEmailIDResult(MapNonNullableIGetUserByEmailID_UserByEmailID(info.UserByEmailID, snapshot));
+            }
+
+            throw new global::System.ArgumentException("GetUserByEmailIDResultInfo expected.");
         }
 
-        private (IGetUserByEmailIDResult, GetUserByEmailIDResultInfo) BuildData(global::System.Text.Json.JsonElement obj)
+        private global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailID_UserByEmailID MapNonNullableIGetUserByEmailID_UserByEmailID(global::StrawberryShake.EntityId entityId, global::StrawberryShake.IEntityStoreSnapshot snapshot)
         {
-            var entityIds = new global::System.Collections.Generic.HashSet<global::StrawberryShake.EntityId>();
-            global::StrawberryShake.IEntityStoreSnapshot snapshot = default !;
-            global::StrawberryShake.EntityId userByEmailIDId = default !;
-            _entityStore.Update(session =>
-            {
-                userByEmailIDId = UpdateNonNullableIGetUserByEmailID_UserByEmailIDEntity(session, global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "userByEmailID"), entityIds);
-                snapshot = session.CurrentSnapshot;
-            });
-            var resultInfo = new GetUserByEmailIDResultInfo(userByEmailIDId, entityIds, snapshot.Version);
-            return (_resultDataFactory.Create(resultInfo), resultInfo);
-        }
-
-        private global::StrawberryShake.EntityId UpdateNonNullableIGetUserByEmailID_UserByEmailIDEntity(global::StrawberryShake.IEntityStoreUpdateSession session, global::System.Text.Json.JsonElement? obj, global::System.Collections.Generic.ISet<global::StrawberryShake.EntityId> entityIds)
-        {
-            if (!obj.HasValue)
-            {
-                throw new global::System.ArgumentNullException();
-            }
-
-            global::StrawberryShake.EntityId entityId = _idSerializer.Parse(obj.Value);
-            entityIds.Add(entityId);
             if (entityId.Name.Equals("Userdetails", global::System.StringComparison.Ordinal))
             {
-                if (session.CurrentSnapshot.TryGetEntity(entityId, out global::RACE2.FrontEnd.RACE2GraphQLSchema.State.UserdetailsEntity? entity))
-                {
-                    session.SetEntity(entityId, new global::RACE2.FrontEnd.RACE2GraphQLSchema.State.UserdetailsEntity(DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "id")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "c_last_name")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "email")), entity.UserName, entity.C_password, entity.PasswordHash));
-                }
-                else
-                {
-                    session.SetEntity(entityId, new global::RACE2.FrontEnd.RACE2GraphQLSchema.State.UserdetailsEntity(DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "id")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "c_last_name")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "email")), default !, default !, default !));
-                }
-
-                return entityId;
+                return _getUserByEmailID_UserByEmailID_UserdetailsFromUserdetailsEntityMapper.Map(snapshot.GetEntity<global::RACE2.FrontEnd.RACE2GraphQLSchema.State.UserdetailsEntity>(entityId) ?? throw new global::StrawberryShake.GraphQLClientException());
             }
 
             throw new global::System.NotSupportedException();
         }
 
-        private global::System.Int32 DeserializeNonNullableInt32(global::System.Text.Json.JsonElement? obj)
+        global::System.Object global::StrawberryShake.IOperationResultDataFactory.Create(global::StrawberryShake.IOperationResultDataInfo dataInfo, global::StrawberryShake.IEntityStoreSnapshot? snapshot)
         {
-            if (!obj.HasValue)
-            {
-                throw new global::System.ArgumentNullException();
-            }
+            return Create(dataInfo, snapshot);
+        }
+    }
 
-            return _intParser.Parse(obj.Value.GetInt32()!);
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    public partial class GetUserByEmailIDResultInfo : global::StrawberryShake.IOperationResultDataInfo
+    {
+        private readonly global::System.Collections.Generic.IReadOnlyCollection<global::StrawberryShake.EntityId> _entityIds;
+        private readonly global::System.UInt64 _version;
+        public GetUserByEmailIDResultInfo(global::StrawberryShake.EntityId userByEmailID, global::System.Collections.Generic.IReadOnlyCollection<global::StrawberryShake.EntityId> entityIds, global::System.UInt64 version)
+        {
+            UserByEmailID = userByEmailID;
+            _entityIds = entityIds ?? throw new global::System.ArgumentNullException(nameof(entityIds));
+            _version = version;
         }
 
-        private global::System.String? DeserializeString(global::System.Text.Json.JsonElement? obj)
+        public global::StrawberryShake.EntityId UserByEmailID { get; }
+
+        public global::System.Collections.Generic.IReadOnlyCollection<global::StrawberryShake.EntityId> EntityIds => _entityIds;
+        public global::System.UInt64 Version => _version;
+        public global::StrawberryShake.IOperationResultDataInfo WithVersion(global::System.UInt64 version)
         {
-            if (!obj.HasValue)
+            return new GetUserByEmailIDResultInfo(UserByEmailID, _entityIds, version);
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    public partial class GetUserByEmailID_UserByEmailID_UserdetailsFromUserdetailsEntityMapper : global::StrawberryShake.IEntityMapper<global::RACE2.FrontEnd.RACE2GraphQLSchema.State.UserdetailsEntity, GetUserByEmailID_UserByEmailID_Userdetails>
+    {
+        private readonly global::StrawberryShake.IEntityStore _entityStore;
+        public GetUserByEmailID_UserByEmailID_UserdetailsFromUserdetailsEntityMapper(global::StrawberryShake.IEntityStore entityStore)
+        {
+            _entityStore = entityStore ?? throw new global::System.ArgumentNullException(nameof(entityStore));
+        }
+
+        public GetUserByEmailID_UserByEmailID_Userdetails Map(global::RACE2.FrontEnd.RACE2GraphQLSchema.State.UserdetailsEntity entity, global::StrawberryShake.IEntityStoreSnapshot? snapshot = null)
+        {
+            if (snapshot is null)
             {
-                return null;
+                snapshot = _entityStore.CurrentSnapshot;
             }
 
-            return _stringParser.Parse(obj.Value.GetString()!);
+            return new GetUserByEmailID_UserByEmailID_Userdetails(entity.Id, entity.C_last_name, entity.Email);
         }
     }
 
@@ -1507,11 +1388,11 @@ namespace RACE2.FrontEnd.RACE2GraphQLSchema.State
             {
                 if (session.CurrentSnapshot.TryGetEntity(entityId, out global::RACE2.FrontEnd.RACE2GraphQLSchema.State.UserdetailsEntity? entity))
                 {
-                    session.SetEntity(entityId, new global::RACE2.FrontEnd.RACE2GraphQLSchema.State.UserdetailsEntity(entity.Id, DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "c_last_name")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "email")), entity.UserName, entity.C_password, entity.PasswordHash));
+                    session.SetEntity(entityId, new global::RACE2.FrontEnd.RACE2GraphQLSchema.State.UserdetailsEntity(DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "c_last_name")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "email")), entity.Id, entity.UserName, entity.C_password, entity.PasswordHash));
                 }
                 else
                 {
-                    session.SetEntity(entityId, new global::RACE2.FrontEnd.RACE2GraphQLSchema.State.UserdetailsEntity(default !, DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "c_last_name")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "email")), default !, default !, default !));
+                    session.SetEntity(entityId, new global::RACE2.FrontEnd.RACE2GraphQLSchema.State.UserdetailsEntity(DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "c_last_name")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "email")), default !, default !, default !, default !));
                 }
 
                 return entityId;
@@ -1632,11 +1513,130 @@ namespace RACE2.FrontEnd.RACE2GraphQLSchema.State
             {
                 if (session.CurrentSnapshot.TryGetEntity(entityId, out global::RACE2.FrontEnd.RACE2GraphQLSchema.State.UserdetailsEntity? entity))
                 {
-                    session.SetEntity(entityId, new global::RACE2.FrontEnd.RACE2GraphQLSchema.State.UserdetailsEntity(DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "id")), entity.C_last_name, DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "email")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "userName")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "c_password")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "passwordHash"))));
+                    session.SetEntity(entityId, new global::RACE2.FrontEnd.RACE2GraphQLSchema.State.UserdetailsEntity(entity.C_last_name, DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "email")), DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "id")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "userName")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "c_password")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "passwordHash"))));
                 }
                 else
                 {
-                    session.SetEntity(entityId, new global::RACE2.FrontEnd.RACE2GraphQLSchema.State.UserdetailsEntity(DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "id")), default !, DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "email")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "userName")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "c_password")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "passwordHash"))));
+                    session.SetEntity(entityId, new global::RACE2.FrontEnd.RACE2GraphQLSchema.State.UserdetailsEntity(default !, DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "email")), DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "id")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "userName")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "c_password")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "passwordHash"))));
+                }
+
+                return entityId;
+            }
+
+            throw new global::System.NotSupportedException();
+        }
+
+        private global::System.Int32 DeserializeNonNullableInt32(global::System.Text.Json.JsonElement? obj)
+        {
+            if (!obj.HasValue)
+            {
+                throw new global::System.ArgumentNullException();
+            }
+
+            return _intParser.Parse(obj.Value.GetInt32()!);
+        }
+
+        private global::System.String? DeserializeString(global::System.Text.Json.JsonElement? obj)
+        {
+            if (!obj.HasValue)
+            {
+                return null;
+            }
+
+            return _stringParser.Parse(obj.Value.GetString()!);
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    public partial class GetUserByEmailIDBuilder : global::StrawberryShake.IOperationResultBuilder<global::System.Text.Json.JsonDocument, global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailIDResult>
+    {
+        private readonly global::StrawberryShake.IEntityStore _entityStore;
+        private readonly global::StrawberryShake.IEntityIdSerializer _idSerializer;
+        private readonly global::StrawberryShake.IOperationResultDataFactory<global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailIDResult> _resultDataFactory;
+        private readonly global::StrawberryShake.Serialization.ILeafValueParser<global::System.String, global::System.String> _stringParser;
+        private readonly global::StrawberryShake.Serialization.ILeafValueParser<global::System.Int32, global::System.Int32> _intParser;
+        public GetUserByEmailIDBuilder(global::StrawberryShake.IEntityStore entityStore, global::StrawberryShake.IEntityIdSerializer idSerializer, global::StrawberryShake.IOperationResultDataFactory<global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailIDResult> resultDataFactory, global::StrawberryShake.Serialization.ISerializerResolver serializerResolver)
+        {
+            _entityStore = entityStore ?? throw new global::System.ArgumentNullException(nameof(entityStore));
+            _idSerializer = idSerializer ?? throw new global::System.ArgumentNullException(nameof(idSerializer));
+            _resultDataFactory = resultDataFactory ?? throw new global::System.ArgumentNullException(nameof(resultDataFactory));
+            _stringParser = serializerResolver.GetLeafValueParser<global::System.String, global::System.String>("String") ?? throw new global::System.ArgumentException("No serializer for type `String` found.");
+            _intParser = serializerResolver.GetLeafValueParser<global::System.Int32, global::System.Int32>("Int") ?? throw new global::System.ArgumentException("No serializer for type `Int` found.");
+        }
+
+        public global::StrawberryShake.IOperationResult<IGetUserByEmailIDResult> Build(global::StrawberryShake.Response<global::System.Text.Json.JsonDocument> response)
+        {
+            (IGetUserByEmailIDResult Result, GetUserByEmailIDResultInfo Info)? data = null;
+            global::System.Collections.Generic.IReadOnlyList<global::StrawberryShake.IClientError>? errors = null;
+            if (response.Exception is null)
+            {
+                try
+                {
+                    if (response.Body != null)
+                    {
+                        if (response.Body.RootElement.TryGetProperty("data", out global::System.Text.Json.JsonElement dataElement) && dataElement.ValueKind == global::System.Text.Json.JsonValueKind.Object)
+                        {
+                            data = BuildData(dataElement);
+                        }
+
+                        if (response.Body.RootElement.TryGetProperty("errors", out global::System.Text.Json.JsonElement errorsElement))
+                        {
+                            errors = global::StrawberryShake.Json.JsonErrorParser.ParseErrors(errorsElement);
+                        }
+                    }
+                }
+                catch (global::System.Exception ex)
+                {
+                    errors = new global::StrawberryShake.IClientError[]{new global::StrawberryShake.ClientError(ex.Message, exception: ex, extensions: new global::System.Collections.Generic.Dictionary<global::System.String, global::System.Object?>{{"body", response.Body?.RootElement.ToString()}})};
+                }
+            }
+            else
+            {
+                if (response.Body != null && response.Body.RootElement.TryGetProperty("errors", out global::System.Text.Json.JsonElement errorsElement))
+                {
+                    errors = global::StrawberryShake.Json.JsonErrorParser.ParseErrors(errorsElement);
+                }
+                else
+                {
+                    errors = new global::StrawberryShake.IClientError[]{new global::StrawberryShake.ClientError(response.Exception.Message, exception: response.Exception, extensions: new global::System.Collections.Generic.Dictionary<global::System.String, global::System.Object?>{{"body", response.Body?.RootElement.ToString()}})};
+                }
+            }
+
+            return new global::StrawberryShake.OperationResult<IGetUserByEmailIDResult>(data?.Result, data?.Info, _resultDataFactory, errors);
+        }
+
+        private (IGetUserByEmailIDResult, GetUserByEmailIDResultInfo) BuildData(global::System.Text.Json.JsonElement obj)
+        {
+            var entityIds = new global::System.Collections.Generic.HashSet<global::StrawberryShake.EntityId>();
+            global::StrawberryShake.IEntityStoreSnapshot snapshot = default !;
+            global::StrawberryShake.EntityId userByEmailIDId = default !;
+            _entityStore.Update(session =>
+            {
+                userByEmailIDId = UpdateNonNullableIGetUserByEmailID_UserByEmailIDEntity(session, global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "userByEmailID"), entityIds);
+                snapshot = session.CurrentSnapshot;
+            });
+            var resultInfo = new GetUserByEmailIDResultInfo(userByEmailIDId, entityIds, snapshot.Version);
+            return (_resultDataFactory.Create(resultInfo), resultInfo);
+        }
+
+        private global::StrawberryShake.EntityId UpdateNonNullableIGetUserByEmailID_UserByEmailIDEntity(global::StrawberryShake.IEntityStoreUpdateSession session, global::System.Text.Json.JsonElement? obj, global::System.Collections.Generic.ISet<global::StrawberryShake.EntityId> entityIds)
+        {
+            if (!obj.HasValue)
+            {
+                throw new global::System.ArgumentNullException();
+            }
+
+            global::StrawberryShake.EntityId entityId = _idSerializer.Parse(obj.Value);
+            entityIds.Add(entityId);
+            if (entityId.Name.Equals("Userdetails", global::System.StringComparison.Ordinal))
+            {
+                if (session.CurrentSnapshot.TryGetEntity(entityId, out global::RACE2.FrontEnd.RACE2GraphQLSchema.State.UserdetailsEntity? entity))
+                {
+                    session.SetEntity(entityId, new global::RACE2.FrontEnd.RACE2GraphQLSchema.State.UserdetailsEntity(DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "c_last_name")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "email")), DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "id")), entity.UserName, entity.C_password, entity.PasswordHash));
+                }
+                else
+                {
+                    session.SetEntity(entityId, new global::RACE2.FrontEnd.RACE2GraphQLSchema.State.UserdetailsEntity(DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "c_last_name")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "email")), DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "id")), default !, default !, default !));
                 }
 
                 return entityId;

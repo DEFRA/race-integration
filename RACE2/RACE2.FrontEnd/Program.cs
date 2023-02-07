@@ -1,29 +1,26 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using RACE2.FrontEnd;
-using System.Reflection;
+using Microsoft.Extensions.Configuration;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-string fileName = "RACE2.FrontEnd.appsettings.json";
-var stream = Assembly.GetExecutingAssembly()
-                     .GetManifestResourceStream(fileName);
-
-var config = new ConfigurationBuilder()
-                    .AddJsonStream(stream)
-                    .Build();
-builder.Services.AddTransient(_ =>
+var http = new HttpClient()
 {
-    return config.GetSection("ApplicationSettings")
-                 .Get<ApplicationSettings>();
-});
+    BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)
+};
+builder.Services.AddScoped(sp => http);
 
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+using var configSettings = await http.GetAsync("settings.json");
+using var stream = await configSettings.Content.ReadAsStreamAsync();
+
+builder.Configuration.AddJsonStream(stream);
+string blazorWebApiURL = builder.Configuration["BlazorWebApiURL"];
 
 builder.Services.AddRACE2GraphQLClient()
-    .ConfigureHttpClient(client => client.BaseAddress = new Uri("https://localhost:5004/graphql/"));
+    .ConfigureHttpClient(client => client.BaseAddress = new Uri(blazorWebApiURL));
 
 //builder.Services.AddOidcAuthentication(options =>
 //{
