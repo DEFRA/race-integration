@@ -5,40 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="wwwroot\assets\javascripts\**" />
-    <Compile Remove="wwwroot\assets\sass\**" />
-    <Content Remove="wwwroot\assets\javascripts\**" />
-    <Content Remove="wwwroot\assets\sass\**" />
-    <EmbeddedResource Remove="wwwroot\assets\javascripts\**" />
-    <EmbeddedResource Remove="wwwroot\assets\sass\**" />
-    <GraphQL Remove="wwwroot\assets\javascripts\**" />
-    <GraphQL Remove="wwwroot\assets\sass\**" />
-    <GraphQLConfig Remove="wwwroot\assets\javascripts\**" />
-    <GraphQLConfig Remove="wwwroot\assets\sass\**" />
-    <None Remove="wwwroot\assets\javascripts\**" />
-    <None Remove="wwwroot\assets\sass\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="appsettings.json" />
-    <Content Remove="wwwroot\css\bootstrap\bootstrap - Copy.min.css.map" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <GraphQL Remove="GetAllUsers.graphql" />
-    <GraphQL Remove="RACE2GraphQLSchema\QuerriesMutations\User\GetUserByEmailID.graphql" />
-    <GraphQL Remove="RACE2GraphQLSchema\QuerriesMutations\User\GetUserById.graphql" />
-    <GraphQL Remove="RACE2GraphQLSchema\UsersQueryMutation\GetAllUsers.graphql" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="GetAllUsers.graphql" />
-    <None Remove="RACE2GraphQLSchema\QuerriesMutations\User\GetUserByEmailID.graphql" />
-    <None Remove="RACE2GraphQLSchema\QuerriesMutations\User\GetUserById.graphql" />
-  </ItemGroup>
-
+	
   <ItemGroup>
     <AdditionalFiles Include="RACE2GraphQLSchema\QuerriesMutations\User\GetUserById.graphql">
       <GraphQL>true</GraphQL>
@@ -65,6 +32,7 @@
     <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
     <PackageReference Include="StrawberryShake.CodeGeneration.CSharp.Analyzers" Version="12.16.0" />
     <PackageReference Include="StrawberryShake.Transport.Http" Version="12.16.0" />
+    <PackageReference Include="System.Reactive" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
