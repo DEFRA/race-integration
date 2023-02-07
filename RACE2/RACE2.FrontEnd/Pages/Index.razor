@@ -2,40 +2,8 @@
 
 @using RACE2.FrontEnd.Components
 @inject RACE2GraphQLClient client;
-@inject IConfiguration Configuration
-@implements IDisposable
 
 <Home />
 
 @code {
-    private IDisposable storeUser;
-    private string email;
-
-    protected override async Task OnInitializedAsync()
-    {
-        var result = await client.GetUserByEmailID.ExecuteAsync("kcsahoo@gmail.com");
-        var email = result!.Data!.UserByEmailID.Email;
-        var ad = Configuration["BlazorSecurityProviderURL"];
-        //var s = appSettings.BlazorWebApiURL;
-    }
-
-    //protected override async Task OnInitializedAsync()
-    //{
-    //    storeUser =
-    //        await client
-    //            .GetUserByEmailID
-    //            .Watch(StrawberryShake.ExecutionStrategy.CacheFirst)
-    //            .Where(t => !t.Errors.Any())
-    //            .Select(t => t.Data.Select(d => d.UserByEmailID.Email).ToString())
-    //            .Subscribe(result =>
-    //            {
-    //                email = result;
-    //                StateHasChanged();
-    //            });
-    //}
-
-    public void Dispose()
-    {
-        storeUser?.Dispose();
-    }
 }

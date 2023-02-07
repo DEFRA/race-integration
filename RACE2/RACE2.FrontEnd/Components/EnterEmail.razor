@@ -83,7 +83,10 @@
             string emailInDatabase = await GetEmailFromDatabase(email);
             if (emailInDatabase != null && emailInDatabase.Trim().Length != 0)
             {
-                NavigationManager.NavigateTo("/choose-a-reservoir/", forceLoad);
+                //string pagelink = "/create-password/" + emailInDatabase;
+                string[] emailSplit = emailInDatabase.Split('.');
+                string pagelink = "/create-password/" + emailSplit[0] + "/" + emailSplit[1];
+                NavigationManager.NavigateTo(pagelink, forceLoad);
             }
             else
             {
