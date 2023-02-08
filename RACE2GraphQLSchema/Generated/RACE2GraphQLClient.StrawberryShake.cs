@@ -3,7 +3,7 @@
 
 namespace Microsoft.Extensions.DependencyInjection
 {
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.17.0.0")]
     public static partial class RACE2GraphQLClientServiceCollectionExtensions
     {
         public static global::StrawberryShake.IClientBuilder<global::RACE2.FrontEnd.RACE2GraphQLSchema.State.RACE2GraphQLClientStoreAccessor> AddRACE2GraphQLClient(this global::Microsoft.Extensions.DependencyInjection.IServiceCollection services, global::StrawberryShake.ExecutionStrategy strategy = global::StrawberryShake.ExecutionStrategy.NetworkOnly)
@@ -105,7 +105,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
 namespace RACE2.FrontEnd.RACE2GraphQLSchema
 {
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.17.0.0")]
     public partial class GetUserByEmailIDResult : global::System.IEquatable<GetUserByEmailIDResult>, IGetUserByEmailIDResult
     {
         public GetUserByEmailIDResult(global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailID_UserByEmailID userByEmailID)
@@ -166,7 +166,7 @@ namespace RACE2.FrontEnd.RACE2GraphQLSchema
         }
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.17.0.0")]
     public partial class GetUserByEmailID_UserByEmailID_Userdetails : global::System.IEquatable<GetUserByEmailID_UserByEmailID_Userdetails>, IGetUserByEmailID_UserByEmailID_Userdetails
     {
         public GetUserByEmailID_UserByEmailID_Userdetails(global::System.Int32 id, global::System.String? c_Last_Name, global::System.String? email)
@@ -243,13 +243,13 @@ namespace RACE2.FrontEnd.RACE2GraphQLSchema
         }
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.17.0.0")]
     public partial interface IGetUserByEmailIDResult
     {
         public global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailID_UserByEmailID UserByEmailID { get; }
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.17.0.0")]
     public partial interface IGetUserByEmailID_UserByEmailID
     {
         public global::System.Int32 Id { get; }
@@ -259,12 +259,12 @@ namespace RACE2.FrontEnd.RACE2GraphQLSchema
         public global::System.String? Email { get; }
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.17.0.0")]
     public partial interface IGetUserByEmailID_UserByEmailID_Userdetails : IGetUserByEmailID_UserByEmailID
     {
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.17.0.0")]
     public partial class GetUserByIdResult : global::System.IEquatable<GetUserByIdResult>, IGetUserByIdResult
     {
         public GetUserByIdResult(global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserById_ById byId)
@@ -325,7 +325,7 @@ namespace RACE2.FrontEnd.RACE2GraphQLSchema
         }
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.17.0.0")]
     public partial class GetUserById_ById_Userdetails : global::System.IEquatable<GetUserById_ById_Userdetails>, IGetUserById_ById_Userdetails
     {
         public GetUserById_ById_Userdetails(global::System.String? c_Last_Name, global::System.String? email)
@@ -398,13 +398,13 @@ namespace RACE2.FrontEnd.RACE2GraphQLSchema
         }
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.17.0.0")]
     public partial interface IGetUserByIdResult
     {
         public global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserById_ById ById { get; }
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.17.0.0")]
     public partial interface IGetUserById_ById
     {
         public global::System.String? C_last_name { get; }
@@ -412,12 +412,12 @@ namespace RACE2.FrontEnd.RACE2GraphQLSchema
         public global::System.String? Email { get; }
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.17.0.0")]
     public partial interface IGetUserById_ById_Userdetails : IGetUserById_ById
     {
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.17.0.0")]
     public partial class GetAllUsersResult : global::System.IEquatable<GetAllUsersResult>, IGetAllUsersResult
     {
         public GetAllUsersResult(global::System.Collections.Generic.IReadOnlyList<global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetAllUsers_Userdetails> userdetails)
@@ -482,7 +482,7 @@ namespace RACE2.FrontEnd.RACE2GraphQLSchema
         }
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.17.0.0")]
     public partial class GetAllUsers_Userdetails_Userdetails : global::System.IEquatable<GetAllUsers_Userdetails_Userdetails>, IGetAllUsers_Userdetails_Userdetails
     {
         public GetAllUsers_Userdetails_Userdetails(global::System.Int32 id, global::System.String? userName, global::System.String? c_Password, global::System.String? passwordHash, global::System.String? email)
@@ -575,13 +575,13 @@ namespace RACE2.FrontEnd.RACE2GraphQLSchema
         }
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.17.0.0")]
     public partial interface IGetAllUsersResult
     {
         public global::System.Collections.Generic.IReadOnlyList<global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetAllUsers_Userdetails> Userdetails { get; }
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.17.0.0")]
     public partial interface IGetAllUsers_Userdetails
     {
         public global::System.Int32 Id { get; }
@@ -595,7 +595,7 @@ namespace RACE2.FrontEnd.RACE2GraphQLSchema
         public global::System.String? Email { get; }
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.17.0.0")]
     public partial interface IGetAllUsers_Userdetails_Userdetails : IGetAllUsers_Userdetails
     {
     }
@@ -616,7 +616,7 @@ namespace RACE2.FrontEnd.RACE2GraphQLSchema
     /// }
     /// </code>
     /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.17.0.0")]
     public partial class GetUserByEmailIDQueryDocument : global::StrawberryShake.IDocument
     {
         private GetUserByEmailIDQueryDocument()
@@ -653,7 +653,7 @@ namespace RACE2.FrontEnd.RACE2GraphQLSchema
     /// }
     /// </code>
     /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.17.0.0")]
     public partial class GetUserByEmailIDQuery : global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailIDQuery
     {
         private readonly global::StrawberryShake.IOperationExecutor<IGetUserByEmailIDResult> _operationExecutor;
@@ -721,7 +721,7 @@ namespace RACE2.FrontEnd.RACE2GraphQLSchema
     /// }
     /// </code>
     /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.17.0.0")]
     public partial interface IGetUserByEmailIDQuery : global::StrawberryShake.IOperationRequestFactory
     {
         global::System.Threading.Tasks.Task<global::StrawberryShake.IOperationResult<IGetUserByEmailIDResult>> ExecuteAsync(global::System.String newemail, global::System.Threading.CancellationToken cancellationToken = default);
@@ -743,7 +743,7 @@ namespace RACE2.FrontEnd.RACE2GraphQLSchema
     /// }
     /// </code>
     /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.17.0.0")]
     public partial class GetUserByIdQueryDocument : global::StrawberryShake.IDocument
     {
         private GetUserByIdQueryDocument()
@@ -779,7 +779,7 @@ namespace RACE2.FrontEnd.RACE2GraphQLSchema
     /// }
     /// </code>
     /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.17.0.0")]
     public partial class GetUserByIdQuery : global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByIdQuery
     {
         private readonly global::StrawberryShake.IOperationExecutor<IGetUserByIdResult> _operationExecutor;
@@ -841,7 +841,7 @@ namespace RACE2.FrontEnd.RACE2GraphQLSchema
     /// }
     /// </code>
     /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.17.0.0")]
     public partial interface IGetUserByIdQuery : global::StrawberryShake.IOperationRequestFactory
     {
         global::System.Threading.Tasks.Task<global::StrawberryShake.IOperationResult<IGetUserByIdResult>> ExecuteAsync(global::System.Int32 newid, global::System.Threading.CancellationToken cancellationToken = default);
@@ -866,7 +866,7 @@ namespace RACE2.FrontEnd.RACE2GraphQLSchema
     /// }
     /// </code>
     /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.17.0.0")]
     public partial class GetAllUsersQueryDocument : global::StrawberryShake.IDocument
     {
         private GetAllUsersQueryDocument()
@@ -905,7 +905,7 @@ namespace RACE2.FrontEnd.RACE2GraphQLSchema
     /// }
     /// </code>
     /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.17.0.0")]
     public partial class GetAllUsersQuery : global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetAllUsersQuery
     {
         private readonly global::StrawberryShake.IOperationExecutor<IGetAllUsersResult> _operationExecutor;
@@ -961,7 +961,7 @@ namespace RACE2.FrontEnd.RACE2GraphQLSchema
     /// }
     /// </code>
     /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.17.0.0")]
     public partial interface IGetAllUsersQuery : global::StrawberryShake.IOperationRequestFactory
     {
         global::System.Threading.Tasks.Task<global::StrawberryShake.IOperationResult<IGetAllUsersResult>> ExecuteAsync(global::System.Threading.CancellationToken cancellationToken = default);
@@ -971,7 +971,7 @@ namespace RACE2.FrontEnd.RACE2GraphQLSchema
     /// <summary>
     /// Represents the RACE2GraphQLClient GraphQL client
     /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.17.0.0")]
     public partial class RACE2GraphQLClient : global::RACE2.FrontEnd.RACE2GraphQLSchema.IRACE2GraphQLClient
     {
         private readonly global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailIDQuery _getUserByEmailID;
@@ -993,7 +993,7 @@ namespace RACE2.FrontEnd.RACE2GraphQLSchema
     /// <summary>
     /// Represents the RACE2GraphQLClient GraphQL client
     /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.17.0.0")]
     public partial interface IRACE2GraphQLClient
     {
         global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailIDQuery GetUserByEmailID { get; }
@@ -1006,7 +1006,7 @@ namespace RACE2.FrontEnd.RACE2GraphQLSchema
 
 namespace RACE2.FrontEnd.RACE2GraphQLSchema.State
 {
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.17.0.0")]
     public partial class UserdetailsEntity
     {
         public UserdetailsEntity(global::System.Int32 id = default !, global::System.String? c_Last_Name = default !, global::System.String? email = default !, global::System.String? userName = default !, global::System.String? c_Password = default !, global::System.String? passwordHash = default !)
@@ -1032,7 +1032,7 @@ namespace RACE2.FrontEnd.RACE2GraphQLSchema.State
         public global::System.String? PasswordHash { get; }
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.17.0.0")]
     public partial class GetUserByEmailIDResultFactory : global::StrawberryShake.IOperationResultDataFactory<global::RACE2.FrontEnd.RACE2GraphQLSchema.GetUserByEmailIDResult>
     {
         private readonly global::StrawberryShake.IEntityStore _entityStore;
@@ -1075,7 +1075,7 @@ namespace RACE2.FrontEnd.RACE2GraphQLSchema.State
         }
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.17.0.0")]
     public partial class GetUserByEmailIDResultInfo : global::StrawberryShake.IOperationResultDataInfo
     {
         private readonly global::System.Collections.Generic.IReadOnlyCollection<global::StrawberryShake.EntityId> _entityIds;
@@ -1097,7 +1097,7 @@ namespace RACE2.FrontEnd.RACE2GraphQLSchema.State
         }
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.17.0.0")]
     public partial class GetUserByEmailID_UserByEmailID_UserdetailsFromUserdetailsEntityMapper : global::StrawberryShake.IEntityMapper<global::RACE2.FrontEnd.RACE2GraphQLSchema.State.UserdetailsEntity, GetUserByEmailID_UserByEmailID_Userdetails>
     {
         private readonly global::StrawberryShake.IEntityStore _entityStore;
@@ -1117,7 +1117,7 @@ namespace RACE2.FrontEnd.RACE2GraphQLSchema.State
         }
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.17.0.0")]
     public partial class GetUserByIdResultFactory : global::StrawberryShake.IOperationResultDataFactory<global::RACE2.FrontEnd.RACE2GraphQLSchema.GetUserByIdResult>
     {
         private readonly global::StrawberryShake.IEntityStore _entityStore;
@@ -1160,7 +1160,7 @@ namespace RACE2.FrontEnd.RACE2GraphQLSchema.State
         }
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.17.0.0")]
     public partial class GetUserByIdResultInfo : global::StrawberryShake.IOperationResultDataInfo
     {
         private readonly global::System.Collections.Generic.IReadOnlyCollection<global::StrawberryShake.EntityId> _entityIds;
@@ -1182,7 +1182,7 @@ namespace RACE2.FrontEnd.RACE2GraphQLSchema.State
         }
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.17.0.0")]
     public partial class GetUserById_ById_UserdetailsFromUserdetailsEntityMapper : global::StrawberryShake.IEntityMapper<global::RACE2.FrontEnd.RACE2GraphQLSchema.State.UserdetailsEntity, GetUserById_ById_Userdetails>
     {
         private readonly global::StrawberryShake.IEntityStore _entityStore;
@@ -1202,7 +1202,7 @@ namespace RACE2.FrontEnd.RACE2GraphQLSchema.State
         }
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.17.0.0")]
     public partial class GetAllUsersResultFactory : global::StrawberryShake.IOperationResultDataFactory<global::RACE2.FrontEnd.RACE2GraphQLSchema.GetAllUsersResult>
     {
         private readonly global::StrawberryShake.IEntityStore _entityStore;
@@ -1261,7 +1261,7 @@ namespace RACE2.FrontEnd.RACE2GraphQLSchema.State
         }
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.17.0.0")]
     public partial class GetAllUsersResultInfo : global::StrawberryShake.IOperationResultDataInfo
     {
         private readonly global::System.Collections.Generic.IReadOnlyCollection<global::StrawberryShake.EntityId> _entityIds;
@@ -1283,7 +1283,7 @@ namespace RACE2.FrontEnd.RACE2GraphQLSchema.State
         }
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.17.0.0")]
     public partial class GetAllUsers_Userdetails_UserdetailsFromUserdetailsEntityMapper : global::StrawberryShake.IEntityMapper<global::RACE2.FrontEnd.RACE2GraphQLSchema.State.UserdetailsEntity, GetAllUsers_Userdetails_Userdetails>
     {
         private readonly global::StrawberryShake.IEntityStore _entityStore;
@@ -1303,7 +1303,7 @@ namespace RACE2.FrontEnd.RACE2GraphQLSchema.State
         }
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.17.0.0")]
     public partial class GetUserByEmailIDBuilder : global::StrawberryShake.IOperationResultBuilder<global::System.Text.Json.JsonDocument, global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByEmailIDResult>
     {
         private readonly global::StrawberryShake.IEntityStore _entityStore;
@@ -1422,7 +1422,7 @@ namespace RACE2.FrontEnd.RACE2GraphQLSchema.State
         }
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.17.0.0")]
     public partial class GetUserByIdBuilder : global::StrawberryShake.IOperationResultBuilder<global::System.Text.Json.JsonDocument, global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetUserByIdResult>
     {
         private readonly global::StrawberryShake.IEntityStore _entityStore;
@@ -1531,7 +1531,7 @@ namespace RACE2.FrontEnd.RACE2GraphQLSchema.State
         }
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.17.0.0")]
     public partial class GetAllUsersBuilder : global::StrawberryShake.IOperationResultBuilder<global::System.Text.Json.JsonDocument, global::RACE2.FrontEnd.RACE2GraphQLSchema.IGetAllUsersResult>
     {
         private readonly global::StrawberryShake.IEntityStore _entityStore;
@@ -1666,7 +1666,7 @@ namespace RACE2.FrontEnd.RACE2GraphQLSchema.State
         }
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.17.0.0")]
     public partial class RACE2GraphQLClientEntityIdFactory : global::StrawberryShake.IEntityIdSerializer
     {
         private static readonly global::System.Text.Json.JsonWriterOptions _options = new global::System.Text.Json.JsonWriterOptions()
@@ -1706,7 +1706,7 @@ namespace RACE2.FrontEnd.RACE2GraphQLSchema.State
         }
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.16.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.17.0.0")]
     public partial class RACE2GraphQLClientStoreAccessor : global::StrawberryShake.StoreAccessor
     {
         public RACE2GraphQLClientStoreAccessor(global::StrawberryShake.IOperationStore operationStore, global::StrawberryShake.IEntityStore entityStore, global::StrawberryShake.IEntityIdSerializer entityIdSerializer, global::System.Collections.Generic.IEnumerable<global::StrawberryShake.IOperationRequestFactory> requestFactories, global::System.Collections.Generic.IEnumerable<global::StrawberryShake.IOperationResultDataFactory> resultDataFactories) : base(operationStore, entityStore, entityIdSerializer, requestFactories, resultDataFactories)

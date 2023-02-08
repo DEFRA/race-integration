@@ -13,7 +13,7 @@ namespace RACE2.WebApi.GraphQL
             CancellationToken cancellationToken)
         {
             return await eventReceiver.SubscribeAsync
-            <string, Userdetails>("AuthorCreated",
+            < Userdetails>("AuthorCreated",
             cancellationToken);
         }
         //[SubscribeAndResolve]
