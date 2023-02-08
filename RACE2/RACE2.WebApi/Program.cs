@@ -27,7 +27,7 @@ JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 builder.Services.AddAuthentication("Bearer")
             .AddJwtBearer(o =>
             {
-                o.Authority = _configuration["ApplicationSettings:BlazorSecurityProviderURL"];
+                o.Authority = _configuration["ApplicationSettings:RACE2SecurityProviderURL"];
                 o.RequireHttpsMetadata = false;
                 o.Audience = "race2WebApiResource";
                 o.TokenValidationParameters =

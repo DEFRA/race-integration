@@ -7,7 +7,7 @@ using RACE2.SecurityProvider.UtilityClasses;
 
 var builder = WebApplication.CreateBuilder(args);
 IConfiguration _configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../appsettings.json").Build();
-string blazorClientURL = _configuration["BlazorClientURL"];
+string RACE2FrontEndURL = _configuration["ApplicationSettings:RACE2FrontEndURL"];
 
 // Add services to the container.
 var connectionString = _configuration.GetConnectionString("DefaultConnection");
@@ -23,7 +23,7 @@ builder.Services.AddIdentityServer()
             .AddInMemoryApiResources(serverConfiguration.ApiResources)
             .AddInMemoryApiScopes(serverConfiguration.ApiScopes)
             .AddInMemoryIdentityResources(serverConfiguration.IdentityResources)
-            .AddInMemoryClients(serverConfiguration.Clients(blazorClientURL))
+            .AddInMemoryClients(serverConfiguration.Clients(RACE2FrontEndURL))
             .AddDeveloperSigningCredential()
             .AddAspNetIdentity<Userdetails>();
 builder.Services.AddScoped<IRandomPasswordGeneration, RandomPasswordGeneration>();

@@ -17,10 +17,10 @@ using var configSettings = await http.GetAsync("settings.json");
 using var stream = await configSettings.Content.ReadAsStreamAsync();
 
 builder.Configuration.AddJsonStream(stream);
-string blazorWebApiURL = builder.Configuration["BlazorWebApiURL"];
+string RACE2WebApiURL = builder.Configuration["RACE2WebApiURL"];
 
 builder.Services.AddRACE2GraphQLClient()
-    .ConfigureHttpClient(client => client.BaseAddress = new Uri(blazorWebApiURL));
+    .ConfigureHttpClient(client => client.BaseAddress = new Uri(RACE2WebApiURL));
 
 //builder.Services.AddOidcAuthentication(options =>
 //{

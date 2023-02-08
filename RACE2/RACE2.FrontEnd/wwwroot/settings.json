@@ -1,6 +1,6 @@
 {
-    "AllowedHosts": "*",
-    "BlazorClientURL": "https://localhost:5002",
-    "BlazorWebApiURL": "https://localhost:5004/graphql/",
-    "BlazorSecurityProviderURL": "https://localhost:5011"
+  "AllowedHosts": "*",
+  "RACE2FrontEndURL": "https://localhost:5002",
+  "RACE2WebApiURL": "https://localhost:5004/graphql/",
+  "RACE2SecurityProviderURL": "https://localhost:5011"
 }
