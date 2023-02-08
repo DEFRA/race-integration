@@ -63,8 +63,8 @@ builder.Services.AddGraphQLServer()
             .AddMutationType<Mutation>()
             .AddSubscriptionType<Subscription>();
 
-builder.Services.AddDbContext<RACE2.DataAccess.ApplicationDbContext>(options =>
-options.UseSqlServer(connectionString));
+//builder.Services.AddDbContext<RACE2.DataAccess.ApplicationDbContext>(options =>
+//options.UseSqlServer(connectionString));
 
 var app = builder.Build();
 

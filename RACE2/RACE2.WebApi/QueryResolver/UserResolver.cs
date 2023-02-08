@@ -10,11 +10,9 @@ namespace RACE2.WebApi.QueryResolver
     public class UserResolver
     {
         public IUserService _userService;
-        public IUserRepository _userRepository;
-        public UserResolver(IUserService userService, IUserRepository userRepository)
+        public UserResolver(IUserService userService)
         {
             _userService = userService;
-            _userRepository = userRepository;
         }
         public async Task<IEnumerable<Userdetails>> GetUserdetails()
         {
