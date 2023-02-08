@@ -17,7 +17,6 @@ var connectionString = _configuration.GetConnectionString("DefaultConnection");
 
 // builder.Configuration;
 
-
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -28,7 +27,7 @@ JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 builder.Services.AddAuthentication("Bearer")
             .AddJwtBearer(o =>
             {
-                o.Authority = "https://localhost:5010";
+                o.Authority = _configuration["ApplicationSettings:BlazorSecurityProviderURL"];
                 o.RequireHttpsMetadata = false;
                 o.Audience = "race2WebApiResource";
                 o.TokenValidationParameters =
