@@ -15,10 +15,6 @@ type Mutation {
   validateUser(loginuser: UserdetailsInput!): Userdetails!
 }
 
-type Subscription {
-  onUserCreated: Userdetails!
-}
-
 input UserdetailsInput {
   c_defra_id: String
   c_type: String

@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using RACE2.DataAccess.Repository;
 using RACE2.Services;
-using RACE2.WebApi.GraphQL;
 using RACE2.WebApi.MutationResolver;
 using RACE2.WebApi.QueryResolver;
 using System.Configuration;
@@ -57,10 +56,9 @@ builder.Services.AddCors(options =>
 //        .AddType<RoleMutationResolver>();
 
 builder.Services.AddGraphQLServer()
-        
+
             .AddQueryType<UserResolver>()
-            .AddMutationType<Mutation>()
-            .AddSubscriptionType<Subscription>();
+            .AddMutationType<Mutation>();
 
 //builder.Services.AddDbContext<RACE2.DataAccess.ApplicationDbContext>(options =>
 //options.UseSqlServer(connectionString));
