@@ -1,0 +1,116 @@
+﻿@page "/choose-a-reservoir"
+@inject NavigationManager NavigationManager
+
+<div class="govuk-width-container ">
+
+    <a class="govuk-back-link" href="javascript:history.back()">Back</a>
+
+    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+
+        <div class="govuk-grid-row">
+
+            <div class="govuk-grid-column-two-thirds">
+                <div>
+                    <span class="govuk-heading-xl" for="choose a reservoir">
+                        Which reservoir do you want to submit an annual statement for?
+                    </span>
+                </div>
+
+                <div class="autocomplete">
+                    <input @bind=selectedReservoirName @oninput=HandleInput class="form-control filter" 
+                           style="width:400px;border: 2px solid #000000;border-radius:unset;font-size: 18px;" />
+                    @if (filteredReservoirNames is not null)
+                    {
+                        <ul class="options">
+                            @if (filteredReservoirNames.Any())
+                            {
+                                @foreach (string reservoir in filteredReservoirNames)
+                                {
+                                    <li class="option" @onclick=@(_ => SelectReservoir(reservoir))>
+                                        <span class="option-text">@reservoir</span>
+                                    </li>
+                                }
+                            }
+                            else
+                            {
+                                <li class="disabled option">No results</li>
+                            }
+                        </ul>
+                    }
+                </div>
+
+                <div style="padding-top:10px;">
+                    <button class="govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8"
+                            data-module="govuk-button" @onclick=@(args => GoToNextPage())>
+                        Continue
+                    </button>
+                </div>
+
+                <div class="govuk-!-margin-top-8">
+                    <a class="govuk-link govuk-link--no-visited-state" href="/reservoir-not-listed">
+                        <span style="font-size: 1.1875rem;font-weight: 400;">Reservoir not listed?</span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </main>
+</div>
+
+@code {
+
+    string? selectedReservoirName;
+    string? filter;
+    private string[] filteredReservoirNames;
+
+    private string[] reservoirNames =
+    {
+        "River Foss Flood Storage Reservoir",
+        "River Nar Flood Storage Area", 
+        "River Park Pond",
+        "River Rase North Branch",
+        "River Rase South Branch",
+        "Rockingham Reservoir"
+    };
+
+    private async Task<IEnumerable<string>> SearchValues(string value)
+    {
+        // In real life use an asynchronous function for fetching data from an api.
+        await Task.Delay(1);
+
+        // if text is null or empty, show complete list
+        if (string.IsNullOrEmpty(value))
+            return reservoirNames;
+        return reservoirNames.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+    }
+
+    public void GoToNextPage()
+    {
+        var reservoirName = selectedReservoirName;
+        bool forceLoad = true;
+        string pagelink = "/reservoir-details/" + reservoirName;
+        NavigationManager.NavigateTo(pagelink, forceLoad);
+    }
+
+    async Task HandleInput(ChangeEventArgs e)
+    {
+        filter = e.Value?.ToString();
+        if (filter?.Length > 0)
+        {
+            filteredReservoirNames = reservoirNames.Where(r => r.Contains(filter)).ToArray();
+            //customers = await http.GetFromJsonAsync<List<Customer>>("https://localhost:5002/api/companyfilter/" + filter.ToString());
+        }
+        else
+        {
+            filteredReservoirNames = null;
+            selectedReservoirName = null;
+        }
+    }
+
+    void SelectReservoir(string reservoir)
+    {
+        selectedReservoirName = reservoir;
+        selectedReservoirName = reservoirNames!.First(c => c.Equals(reservoir));
+        filteredReservoirNames = null;
+    }
+}

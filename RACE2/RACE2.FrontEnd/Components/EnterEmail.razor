@@ -1,6 +1,5 @@
 ﻿@page "/enter-email"
 @inject RACE2GraphQLClient client
-@inject IConfiguration Configuration
 @inject NavigationManager NavigationManager
 @implements IDisposable
 
@@ -37,7 +36,6 @@
     }
 
     private EnterEmailClass _enterEmailClass = new EnterEmailClass();
-    private IDisposable storeUser;
     private string email="";
     private string errorMsg = "Email entered does not exist!!! Please try again.";
 
@@ -102,6 +100,5 @@
 
     public void Dispose()
     {
-        storeUser?.Dispose();
     }
  }

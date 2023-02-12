@@ -1,0 +1,8 @@
+﻿@page "/reservoir-details/{reservoirName}"
+<h3>reservoir_details</h3>
+<h3>Search results for "@reservoirName"</h3>
+
+@code {
+    [Parameter]
+    public string reservoirName { get; set; } = default!; 
+}

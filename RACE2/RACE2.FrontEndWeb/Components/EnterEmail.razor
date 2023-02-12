@@ -1,0 +1,109 @@
+﻿@page "/enter-email"
+@inject RACE2GraphQLClient client
+@inject IConfiguration Configuration
+@inject NavigationManager NavigationManager
+@implements IDisposable
+
+<div class="govuk-width-container ">
+
+    <a class="govuk-back-link" href="javascript:history.back()">Back</a>
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds" style="margin-top:40px;">
+            <EditForm Model="@_enterEmailClass" OnSubmit="GoToNextPage">
+               <div class="govuk-form-group">
+                    <h1 class="govuk-label-wrapper">
+                        <label class="govuk-label govuk-label--l" for="event-name">
+                            Enter your email address
+                        </label>
+                    </h1>
+                    <InputText class="govuk-input" id="event-name" name="event-name" type="text"
+                                @bind-Value="_enterEmailClass.EmailInput">
+                    </InputText>
+                </div>
+                <button class="govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8" type="submit"
+                        data-module="govuk-button">
+                    Continue
+                </button>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+@code {
+    public class EnterEmailClass
+    {
+        public string EmailInput="";
+    }
+
+    private EnterEmailClass _enterEmailClass = new EnterEmailClass();
+    private string email="";
+    private string errorMsg = "Email entered does not exist!!! Please try again.";
+
+    protected override void OnInitialized()
+    {
+    }
+
+    //protected override async Task OnInitializedAsync()
+    //{
+    //    var result = await client.GetUserByEmailID.ExecuteAsync("kcsahoo@gmail.com");
+    //    email = result!.Data!.UserByEmailID.Email;
+    //    var ad = Configuration["BlazorSecurityProviderURL"];
+    //    //var s = appSettings.BlazorWebApiURL;
+    //}
+
+    //protected override async Task OnInitializedAsync()
+    //{
+    //    storeUser =
+    //        await client
+    //            .GetUserByEmailID
+    //            .Watch(StrawberryShake.ExecutionStrategy.CacheFirst)
+    //            .Where(t => !t.Errors.Any())
+    //            .Select(t => t.Data.Select(d => d.UserByEmailID.Email).ToString())
+    //            .Subscribe(result =>
+    //            {
+    //                email = result;
+    //                StateHasChanged();
+    //            });
+    //}
+
+    protected async Task<string> GetEmailFromDatabase(string email)
+    {
+        var result = await client.GetUserByEmailID.ExecuteAsync(email);
+        if (result != null && result.Data != null && result.Data.UserByEmailID != null && result.Data.UserByEmailID.Email != null)
+            return result!.Data!.UserByEmailID!.Email;
+        else
+            return "";
+    }
+
+    public async Task GoToNextPage()
+    {        
+        email = _enterEmailClass.EmailInput;
+        if (email != null && email.Trim().Length != 0 && RegexUtilities.IsValidEmail(email))
+        {
+            bool forceLoad = true;
+
+            string emailInDatabase = await GetEmailFromDatabase(email);
+            if (emailInDatabase != null && emailInDatabase.Trim().Length != 0)
+            {
+                //string pagelink = "/create-password/" + emailInDatabase;
+                string[] emailSplit = emailInDatabase.Split('.');
+                string pagelink = "/create-password/" + emailSplit[0] + "/" + emailSplit[1];
+                NavigationManager.NavigateTo("/create-password", forceLoad);
+            }
+            else
+            {
+                _enterEmailClass.EmailInput = errorMsg;
+            }
+        }
+        else
+        {
+            errorMsg = "Input is not a valid email address!!! Please try again.";
+            _enterEmailClass.EmailInput = errorMsg;
+        }        
+    }
+
+    public void Dispose()
+    {
+    }
+ }

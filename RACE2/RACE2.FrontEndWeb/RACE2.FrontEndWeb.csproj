@@ -1,0 +1,61 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="RACE2GraphQLSchema\.graphqlrc.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <GraphQL Remove="RACE2GraphQLSchema\QuerriesMutations\User\GetUserByEmailID.graphql" />
+    <GraphQL Remove="RACE2GraphQLSchema\QuerriesMutations\User\GetUserById.graphql" />
+    <GraphQL Remove="RACE2GraphQLSchema\schema.extensions.graphql" />
+    <GraphQL Remove="RACE2GraphQLSchema\schema.graphql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <GraphQLConfig Remove="RACE2GraphQLSchema\.graphqlrc.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="RACE2GraphQLSchema\schema.extensions.graphql" />
+    <None Remove="RACE2GraphQLSchema\schema.graphql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="RACE2GraphQLSchema\.graphqlrc.json">
+      <GraphQLConfig>true</GraphQLConfig>
+    </AdditionalFiles>
+    <AdditionalFiles Include="RACE2GraphQLSchema\QuerriesMutations\User\GetAllUsers.graphql">
+      <GraphQL>true</GraphQL>
+    </AdditionalFiles>
+    <AdditionalFiles Include="RACE2GraphQLSchema\QuerriesMutations\User\GetUserByEmailID.graphql">
+      <GraphQL>true</GraphQL>
+    </AdditionalFiles>
+    <AdditionalFiles Include="RACE2GraphQLSchema\QuerriesMutations\User\GetUserById.graphql">
+      <GraphQL>true</GraphQL>
+    </AdditionalFiles>
+    <AdditionalFiles Include="RACE2GraphQLSchema\schema.extensions.graphql">
+      <GraphQL>true</GraphQL>
+    </AdditionalFiles>
+    <AdditionalFiles Include="RACE2GraphQLSchema\schema.graphql">
+      <GraphQL>true</GraphQL>
+    </AdditionalFiles>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
+    <PackageReference Include="StrawberryShake.Blazor" Version="13.0.2" />
+	<PackageReference Include="System.Reactive" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\" />
+  </ItemGroup>
+
+</Project>

@@ -5,12 +5,27 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
-	
+
   <ItemGroup>
-    <AdditionalFiles Include="RACE2GraphQLSchema\QuerriesMutations\User\GetUserById.graphql">
+    <GraphQL Remove="RACE2GraphQLSchema\QuerriesMutations\User\GetAllUsers.graphql" />
+    <GraphQL Remove="RACE2GraphQLSchema\QuerriesMutations\User\GetUserByEmailID.graphql" />
+    <GraphQL Remove="RACE2GraphQLSchema\QuerriesMutations\User\GetUserById.graphql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="RACE2GraphQLSchema\QuerriesMutations\User\GetAllUsers.graphql" />
+    <None Remove="RACE2GraphQLSchema\QuerriesMutations\User\GetUserByEmailID.graphql" />
+    <None Remove="RACE2GraphQLSchema\QuerriesMutations\User\GetUserById.graphql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="RACE2GraphQLSchema\QuerriesMutations\User\GetAllUsers.graphql">
       <GraphQL>true</GraphQL>
     </AdditionalFiles>
     <AdditionalFiles Include="RACE2GraphQLSchema\QuerriesMutations\User\GetUserByEmailID.graphql">
+      <GraphQL>true</GraphQL>
+    </AdditionalFiles>
+    <AdditionalFiles Include="RACE2GraphQLSchema\QuerriesMutations\User\GetUserById.graphql">
       <GraphQL>true</GraphQL>
     </AdditionalFiles>
   </ItemGroup>
@@ -28,10 +43,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="6.0.13" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
-    <PackageReference Include="StrawberryShake.CodeGeneration.CSharp.Analyzers" Version="12.16.0" />
-    <PackageReference Include="StrawberryShake.Transport.Http" Version="12.16.0" />
+	<PackageReference Include="StrawberryShake.Blazor" Version="13.0.2" />
     <PackageReference Include="System.Reactive" Version="5.0.0" />
   </ItemGroup>
 
@@ -40,6 +52,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="..\.dockerignore" Link=".dockerignore">
+      <DependentUpon>$(DockerDefaultDockerfile)</DependentUpon>
+    </None>
     <None Include="wwwroot\css\bootstrap\bootstrap.css.map" />
     <None Include="wwwroot\css\bootstrap\bootstrap.min.css.map" />
     <None Include="wwwroot\css\open-iconic\FONT-LICENSE" />

@@ -3,18 +3,9 @@
   "documents": "**/*.graphql",
   "extensions": {
     "strawberryShake": {
-      "namespace": "RACE2.FrontEnd.RACE2GraphQLSchema",
       "name": "RACE2GraphQLClient",
-      "url": "https://localhost:5004/graphql/",
-      "dependencyInjection": true,
-      "strictSchemaValidation": true,
-      "hashAlgorithm": "md5",
-      "useSingleFile": true,
-      "requestStrategy": "Default",
-      "outputDirectoryName": "Generated",
-      "noStore": false,
-      "emitGeneratedCode": false,
-      "razorComponents": false,
+      "namespace": "RACE2.FrontEnd.RACE2GraphQLSchema",
+      "url": "http://localhost:5003/graphql/",
       "records": {
         "inputs": false,
         "entities": false
