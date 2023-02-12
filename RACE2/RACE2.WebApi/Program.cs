@@ -11,8 +11,8 @@ using System.IdentityModel.Tokens.Jwt;
 
 
 var builder = WebApplication.CreateBuilder(args);
-IConfiguration _configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../appsettings.json").Build();
-var connectionString = _configuration.GetConnectionString("DefaultConnection");
+//IConfiguration _configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../appsettings.json").Build();
+//var connectionString = _configuration.GetConnectionString("DefaultConnection");
 
 // builder.Configuration;
 
@@ -26,7 +26,7 @@ JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 builder.Services.AddAuthentication("Bearer")
             .AddJwtBearer(o =>
             {
-                o.Authority = _configuration["ApplicationSettings:RACE2SecurityProviderURL"];
+                o.Authority = "https://localhost:5011";//_configuration["ApplicationSettings:RACE2SecurityProviderURL"];
                 o.RequireHttpsMetadata = false;
                 o.Audience = "race2WebApiResource";
                 o.TokenValidationParameters =
@@ -56,9 +56,8 @@ builder.Services.AddCors(options =>
 //        .AddType<RoleMutationResolver>();
 
 builder.Services.AddGraphQLServer()
-
-            .AddQueryType<UserResolver>()
-            .AddMutationType<Mutation>();
+    .AddQueryType<UserResolver>()
+    .AddMutationType<Mutation>();
 
 //builder.Services.AddDbContext<RACE2.DataAccess.ApplicationDbContext>(options =>
 //options.UseSqlServer(connectionString));
@@ -76,7 +75,5 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapGraphQL("/graphql");
-
-app.MapControllers();
 
 app.Run();
