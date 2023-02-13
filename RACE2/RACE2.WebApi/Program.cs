@@ -74,6 +74,6 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
-app.MapGraphQL("/graphql");
+app.MapGraphQL();
 
 app.Run();
