@@ -10,4 +10,6 @@ spec:
   http:
   - route:
     - destination:
+        port:
+          number: 80
         host: race2frontend-service
