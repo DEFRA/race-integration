@@ -1,7 +1,7 @@
 ﻿@page "/enter-email"
 @inject RACE2GraphQLClient client
 @inject NavigationManager NavigationManager
-@implements IDisposable
+@inject AppState appState
 
 <div class="govuk-width-container ">
 
@@ -9,18 +9,18 @@
 
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds" style="margin-top:40px;">
-            <EditForm Model="@_enterEmailClass" OnSubmit="GoToNextPage">
+            <EditForm Model="appState">
                <div class="govuk-form-group">
                     <h1 class="govuk-label-wrapper">
                         <label class="govuk-label govuk-label--l" for="event-name">
                             Enter your email address
                         </label>
                     </h1>
-                    <InputText class="govuk-input" id="event-name" name="event-name" type="text"
-                                @bind-Value="_enterEmailClass.EmailInput">
+                    <InputText class="govuk-input" @bind-Value="@Email"
+                               style="width:400px;border: 2px solid #000000;border-radius:unset;font-size: 18px;">
                     </InputText>
                 </div>
-                <button class="govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8" type="submit"
+                <button class="govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8" @onclick=@(args => GoToNextPage())
                         data-module="govuk-button">
                     Continue
                 </button>
@@ -30,38 +30,14 @@
 </div>
 
 @code {
-    public class EnterEmailClass
-    {
-        public string EmailInput="";
-    }
-
-    private EnterEmailClass _enterEmailClass = new EnterEmailClass();
-    private string email="";
+    string? Email;
     private string errorMsg = "Email entered does not exist!!! Please try again.";
 
-    //protected override async Task OnInitializedAsync()
-    //{
-    //    var result = await client.GetUserByEmailID.ExecuteAsync("kcsahoo@gmail.com");
-    //    email = result!.Data!.UserByEmailID.Email;
-    //    var ad = Configuration["BlazorSecurityProviderURL"];
-    //    //var s = appSettings.BlazorWebApiURL;
-    //}
-
-    //protected override async Task OnInitializedAsync()
-    //{
-    //    storeUser =
-    //        await client
-    //            .GetUserByEmailID
-    //            .Watch(StrawberryShake.ExecutionStrategy.CacheFirst)
-    //            .Where(t => !t.Errors.Any())
-    //            .Select(t => t.Data.Select(d => d.UserByEmailID.Email).ToString())
-    //            .Subscribe(result =>
-    //            {
-    //                email = result;
-    //                StateHasChanged();
-    //            });
-    //}
-
+    protected override void OnInitialized()
+    {
+        Email = appState.GetEmail();
+    }
+    
     protected async Task<string> GetEmailFromDatabase(string email)
     {
         var result = await client.GetUserByEmailID.ExecuteAsync(email);
@@ -72,33 +48,29 @@
     }
 
     public async Task GoToNextPage()
-    {        
-        email = _enterEmailClass.EmailInput;
-        if (email != null && email.Trim().Length != 0 && RegexUtilities.IsValidEmail(email))
+    {
+        appState.SetEmail(Email);
+        if (Email != null && Email.Trim().Length != 0 && RegexUtilities.IsValidEmail(Email))
         {
-            bool forceLoad = true;
+            bool forceLoad = false;
 
-            string emailInDatabase = await GetEmailFromDatabase(email);
+            string emailInDatabase = await GetEmailFromDatabase(Email);
             if (emailInDatabase != null && emailInDatabase.Trim().Length != 0)
             {
+                appState.SetEmail(Email);
                 //string pagelink = "/create-password/" + emailInDatabase;
-                string[] emailSplit = emailInDatabase.Split('.');
-                string pagelink = "/create-password/" + emailSplit[0] + "/" + emailSplit[1];
+                string pagelink = "/create-password/";
                 NavigationManager.NavigateTo(pagelink, forceLoad);
             }
             else
             {
-                _enterEmailClass.EmailInput = errorMsg;
+                Email = errorMsg;
             }
         }
         else
         {
             errorMsg = "Input is not a valid email address!!! Please try again.";
-            _enterEmailClass.EmailInput = errorMsg;
+            Email = errorMsg;
         }        
-    }
-
-    public void Dispose()
-    {
     }
  }
