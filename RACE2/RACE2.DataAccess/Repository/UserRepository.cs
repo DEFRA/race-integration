@@ -64,7 +64,7 @@ namespace RACE2.DataAccess.Repository
             }
         }
 
-        public async Task<Userdetails> GetUsersWithRoles(string email)
+        public async Task<Userdetails> GetUserWithRoles(string email)
         {
             using (var conn = Connection)
             {
@@ -88,7 +88,7 @@ namespace RACE2.DataAccess.Repository
                     groupedUser.Roles = g.Select(u => u.Roles.Single()).ToList();
                     return groupedUser;
                 });
-                return users.FirstOrDefault();
+                return result.FirstOrDefault();
             }
         }
         public async Task<Userdetails> CreateUser(Userdetails newuser)
