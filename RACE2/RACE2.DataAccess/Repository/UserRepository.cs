@@ -64,6 +64,30 @@ namespace RACE2.DataAccess.Repository
             }
         }
 
+        public async Task<List<Userdetails>> GetUsersWithRoles()
+        {
+            using (var conn = Connection)
+            {
+                var query = @"Select A.Id, A.Email,A.UserName,A.c_display_name,B.RoleId,c.Name
+                              from AspNetUsers A inner join AspNetUserRoles B
+                              ON  A.Id =b.UserId inner join AspNetRoles c
+                              On c.Id = b.RoleId";
+                var users = await conn.QueryAsync<Userdetails, Roles, Userdetails>(query, (user, role) => {
+                    user.Roles.Add(role);
+                    return user;
+                }, splitOn: "RoleId");
+
+                //var result = users.GroupBy(u => u.Id).Select(g =>
+                //{
+                //    var groupedUser = g.First();
+                //    groupedUser.Roles = g.Select(u => u.Roles.Single()).ToList();
+                //    return groupedUser;
+                //});
+                return users.ToList();
+            }
+
+            return null;
+        }
         public async Task<Userdetails> CreateUser(Userdetails newuser)
         {
             var query = "INSERT INTO AspNetUsers (c_defra_id,c_type,c_display_name,c_first_name,c_last_name,c_status,c_created_on_date,c_last_access_date,c_password_retry_count,EmailConfirmed,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnabled,AccessFailedCount) VALUES (@c_defra_id,@c_type,@c_display_name,@c_first_name,@c_last_name,@c_status,@c_created_on_date,@c_last_access_date,@c_password_retry_count,@EmailConfirmed,@PhoneNumberConfirmed,@TwoFactorEnabled,@LockoutEnabled,@AccessFailedCount)"

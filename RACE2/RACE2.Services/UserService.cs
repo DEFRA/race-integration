@@ -31,6 +31,11 @@ namespace RACE2.Services
             return await _userRepository.GetUserByEmailID(email);
         }
 
+        public async Task<List<Userdetails>> GetUsersWithRoles()
+        {
+            return await _userRepository.GetUsersWithRoles();
+        }
+
         public async Task<Userdetails> CreateUser(Userdetails newuser)
         {
            return await _userRepository.CreateUser(newuser);

@@ -50,6 +50,8 @@ namespace RACE2.DataModel
             public string? c_password_hint { get; set; }
 
             public int c_password_retry_count { get; set; }
+
+            public List<Roles> Roles { get; set; } =new List<Roles>();
         
     }
 }

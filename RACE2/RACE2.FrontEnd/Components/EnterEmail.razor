@@ -31,7 +31,8 @@
 
 @code {
     string? Email;
-    private string errorMsg = "Email entered does not exist!!! Please try again.";
+    private string errorMsg1 = "Email entered does not exist!!! Please try again.";
+    private string errorMsg2 = "Input is not a valid email address!!! Please try again.";
 
     protected override void OnInitialized()
     {
@@ -49,7 +50,6 @@
 
     public async Task GoToNextPage()
     {
-        appState.SetEmail(Email);
         if (Email != null && Email.Trim().Length != 0 && RegexUtilities.IsValidEmail(Email))
         {
             bool forceLoad = false;
@@ -57,20 +57,21 @@
             string emailInDatabase = await GetEmailFromDatabase(Email);
             if (emailInDatabase != null && emailInDatabase.Trim().Length != 0)
             {
-                appState.SetEmail(Email);
+                appState.SetEmail(emailInDatabase);
                 //string pagelink = "/create-password/" + emailInDatabase;
                 string pagelink = "/create-password/";
                 NavigationManager.NavigateTo(pagelink, forceLoad);
             }
             else
             {
-                Email = errorMsg;
+                Email = errorMsg1;
+                appState.SetEmail(Email);
             }
         }
         else
-        {
-            errorMsg = "Input is not a valid email address!!! Please try again.";
-            Email = errorMsg;
+        {            
+            Email = errorMsg2;
+            appState.SetEmail(Email);
         }        
     }
  }
