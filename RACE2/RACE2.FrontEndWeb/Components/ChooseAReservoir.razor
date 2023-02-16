@@ -1,5 +1,6 @@
 ﻿@page "/choose-a-reservoir"
 @inject NavigationManager NavigationManager
+@inject AppState appState
 
 <div class="govuk-width-container ">
 
@@ -17,33 +18,35 @@
                 </div>
 
                 <div class="autocomplete">
-                    <input @bind=selectedReservoirName @oninput=HandleInput class="form-control filter" 
-                           style="width:400px;border: 2px solid #000000;border-radius:unset;font-size: 18px;" />
-                    @if (filteredReservoirNames is not null)
-                    {
-                        <ul class="options">
-                            @if (filteredReservoirNames.Any())
-                            {
-                                @foreach (string reservoir in filteredReservoirNames)
+                    <EditForm Model="appState">
+                        <InputText @bind-Value="@SelectedReservoirName" @oninput=HandleInput class="form-control filter" 
+                               style="width:400px;border: 2px solid #000000;border-radius:unset;font-size: 18px;" />
+                        @if (filteredReservoirNames is not null)
+                        {
+                            <ul class="options">
+                                @if (filteredReservoirNames.Any())
                                 {
-                                    <li class="option" @onclick=@(_ => SelectReservoir(reservoir))>
-                                        <span class="option-text">@reservoir</span>
-                                    </li>
+                                    @foreach (string reservoir in filteredReservoirNames)
+                                    {
+                                        <li class="option" @onclick=@(_ => SelectReservoir(reservoir))>
+                                            <span class="option-text">@reservoir</span>
+                                        </li>
+                                    }
                                 }
-                            }
-                            else
-                            {
-                                <li class="disabled option">No results</li>
-                            }
-                        </ul>
-                    }
-                </div>
+                                else
+                                {
+                                    <li class="disabled option">No results</li>
+                                }
+                            </ul>
+                        }
 
-                <div style="padding-top:10px;">
-                    <button class="govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8"
-                            data-module="govuk-button" @onclick=@(args => GoToNextPage())>
-                        Continue
-                    </button>
+                        <div style="padding-top:10px;">
+                            <button class="govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8"
+                                    data-module="govuk-button" @onclick=@(args => GoToNextPage())>
+                                Continue
+                            </button>
+                        </div>
+                    </EditForm>
                 </div>
 
                 <div class="govuk-!-margin-top-8">
@@ -59,7 +62,7 @@
 
 @code {
 
-    string? selectedReservoirName;
+    string? SelectedReservoirName;
     string? filter;
     private string[] filteredReservoirNames;
 
@@ -72,6 +75,11 @@
         "River Rase South Branch",
         "Rockingham Reservoir"
     };
+
+    protected override void OnInitialized()
+    {
+        SelectedReservoirName = appState.GetReservoirName();
+    }
 
     private async Task<IEnumerable<string>> SearchValues(string value)
     {
@@ -86,9 +94,9 @@
 
     public void GoToNextPage()
     {
-        var reservoirName = selectedReservoirName;
-        bool forceLoad = true;
-        string pagelink = "/reservoir-details/" + reservoirName;
+        appState.SetReservoirName(SelectedReservoirName);
+        bool forceLoad = false;
+        string pagelink = "/reservoir-details";
         NavigationManager.NavigateTo(pagelink, forceLoad);
     }
 
@@ -103,14 +111,15 @@
         else
         {
             filteredReservoirNames = null;
-            selectedReservoirName = null;
+            SelectedReservoirName = null;
         }
     }
 
     void SelectReservoir(string reservoir)
     {
-        selectedReservoirName = reservoir;
-        selectedReservoirName = reservoirNames!.First(c => c.Equals(reservoir));
+        SelectedReservoirName = reservoir;
+        //SelectedReservoirName = reservoirNames!.First(c => c.Equals(reservoir));
+        //appState.SetReservoirName(SelectedReservoirName);
         filteredReservoirNames = null;
     }
 }

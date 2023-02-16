@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using RACE2.FrontEndWeb.StateObjects;
 using static System.Net.WebRequestMethods;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-
+builder.Services.AddScoped<AppState>();
 builder.Services.AddRACE2GraphQLClient()
     //.ConfigureHttpClient(client => client.BaseAddress = new Uri(RACE2WebApiURL));
     .ConfigureHttpClient(client => client.BaseAddress = new Uri("http://localhost:5003/graphql/"));
