@@ -16,6 +16,6 @@ namespace RACE2.DataAccess.Repository
         public Task<Userdetails> CreateUser(Userdetails newuser);
         public Task<Userdetails> ValidateUser(Userdetails loginuser);
 
-        public Task<List<Userdetails>> GetUsersWithRoles(string email);
+        public Task<Userdetails> GetUserWithRoles(string email);
     }
 }
