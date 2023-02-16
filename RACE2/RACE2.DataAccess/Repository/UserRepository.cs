@@ -64,18 +64,23 @@ namespace RACE2.DataAccess.Repository
             }
         }
 
-        public async Task<List<Userdetails>> GetUsersWithRoles()
+        public async Task<List<Userdetails>> GetUsersWithRoles(string email)
         {
             using (var conn = Connection)
             {
                 var query = @"Select A.Id, A.Email,A.UserName,A.c_display_name,B.RoleId,c.Name
                               from AspNetUsers A inner join AspNetUserRoles B
                               ON  A.Id =b.UserId inner join AspNetRoles c
-                              On c.Id = b.RoleId";
+                              On c.Id = b.RoleId Where A.Email=@email";
+
+                var parameters = new DynamicParameters();
+
+                parameters.Add("Email", email, DbType.String);
+
                 var users = await conn.QueryAsync<Userdetails, Roles, Userdetails>(query, (user, role) => {
                     user.Roles.Add(role);
                     return user;
-                }, splitOn: "RoleId");
+                },parameters, splitOn: "RoleId");
 
                 //var result = users.GroupBy(u => u.Id).Select(g =>
                 //{
