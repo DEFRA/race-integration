@@ -1,15 +1,16 @@
 ﻿schema {
   query: UserResolver
-  mutation: Mutation
+  mutation: MutationResolver
 }
 
 type UserResolver {
   userdetails: [Userdetails!]!
   byId(id: Int!): Userdetails!
   userByEmailID(email: String!): Userdetails!
+  userWithRoles(email: String!): Userdetails!
 }
 
-type Mutation {
+type MutationResolver {
   createUser(newuser: UserdetailsInput!): Userdetails!
   validateUser(loginuser: UserdetailsInput!): Userdetails!
 }
@@ -34,6 +35,7 @@ type Userdetails {
   c_password: String
   c_password_hint: String
   c_password_retry_count: Int!
+  roles: [Roles!]!
   id: Int!
   userName: String
   normalizedUserName: String
@@ -71,6 +73,7 @@ input UserdetailsInput {
   c_password: String
   c_password_hint: String
   c_password_retry_count: Int!
+  roles: [RolesInput!]!
   id: Int!
   userName: String
   normalizedUserName: String
@@ -88,5 +91,31 @@ input UserdetailsInput {
   accessFailedCount: Int!
 }
 
+type Roles {
+  c_display_name: String
+  c_description: String
+  c_parent_id: Int!
+  c_start_date: DateTime!
+  c_end_date: DateTime!
+  userdetails: [Userdetails!]!
+  id: Int!
+  name: String
+  normalizedName: String
+  concurrencyStamp: String
+}
+
 "The `DateTime` scalar represents an ISO-8601 compliant date time type."
 scalar DateTime
+
+input RolesInput {
+  c_display_name: String
+  c_description: String
+  c_parent_id: Int!
+  c_start_date: DateTime!
+  c_end_date: DateTime!
+  userdetails: [UserdetailsInput!]!
+  id: Int!
+  name: String
+  normalizedName: String
+  concurrencyStamp: String
+}

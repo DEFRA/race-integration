@@ -22,7 +22,7 @@ builder.Configuration.AddJsonStream(stream);
 string RACE2WebApiURL = builder.Configuration["RACE2WebApiURL"];
 
 builder.Services.AddRACE2GraphQLClient()
-    .ConfigureHttpClient(client => client.BaseAddress = new Uri("http://localhost:5003/graphql/"));
+    .ConfigureHttpClient(client => client.BaseAddress = new Uri(RACE2WebApiURL));
 
 //builder.Services.AddOidcAuthentication(options =>
 //{

@@ -7,12 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <GraphQL Remove="RACE2GraphQLSchema\GetUserWithRoles.graphql" />
     <GraphQL Remove="RACE2GraphQLSchema\QuerriesMutations\User\GetAllUsers.graphql" />
     <GraphQL Remove="RACE2GraphQLSchema\QuerriesMutations\User\GetUserByEmailID.graphql" />
-    <GraphQL Remove="RACE2GraphQLSchema\QuerriesMutations\User\GetUserById.graphql" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="RACE2GraphQLSchema\GetUserWithRoles.graphql" />
     <None Remove="RACE2GraphQLSchema\QuerriesMutations\User\GetAllUsers.graphql" />
     <None Remove="RACE2GraphQLSchema\QuerriesMutations\User\GetUserByEmailID.graphql" />
     <None Remove="RACE2GraphQLSchema\QuerriesMutations\User\GetUserById.graphql" />
@@ -23,9 +24,6 @@
       <GraphQL>true</GraphQL>
     </AdditionalFiles>
     <AdditionalFiles Include="RACE2GraphQLSchema\QuerriesMutations\User\GetUserByEmailID.graphql">
-      <GraphQL>true</GraphQL>
-    </AdditionalFiles>
-    <AdditionalFiles Include="RACE2GraphQLSchema\QuerriesMutations\User\GetUserById.graphql">
       <GraphQL>true</GraphQL>
     </AdditionalFiles>
   </ItemGroup>
@@ -61,6 +59,15 @@
     <None Include="wwwroot\css\open-iconic\font\fonts\open-iconic.svg" />
     <None Include="wwwroot\css\open-iconic\ICON-LICENSE" />
     <None Include="wwwroot\css\open-iconic\README.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <GraphQL Update="RACE2GraphQLSchema\QuerriesMutations\User\GetUserById.graphql">
+      <GraphQL>true</GraphQL>
+    </GraphQL>
+    <GraphQL Update="RACE2GraphQLSchema\QuerriesMutations\User\GetUserWithRoles.graphql">
+      <GraphQL>true</GraphQL>
+    </GraphQL>
   </ItemGroup>
 
 </Project>

@@ -1,9 +1,7 @@
-﻿query GetUserByEmailID($newemail:String!)
+﻿query GetUserById($newid:Int!)
 {
-  userByEmailID(email:$newemail) {
-    id
+  byId(id:$newid) {
     c_last_name
     email
-  } 
-  
+  }  
 }
