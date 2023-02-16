@@ -1,6 +1,6 @@
 {
   "AllowedHosts": "*",
-  "RACE2FrontEndURL": "https://localhost:5002",
+  "RACE2FrontEndURL": "http://localhost:5001",
   "RACE2WebApiURL": "http://localhost:5003/graphql/",
-  "RACE2SecurityProviderURL": "https://localhost:5011"
+  "RACE2SecurityProviderURL": "http://localhost:5010"
 }
