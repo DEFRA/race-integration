@@ -85,8 +85,6 @@ namespace RACE2.DataAccess.Repository
                 //});
                 return users.ToList();
             }
-
-            return null;
         }
         public async Task<Userdetails> CreateUser(Userdetails newuser)
         {
