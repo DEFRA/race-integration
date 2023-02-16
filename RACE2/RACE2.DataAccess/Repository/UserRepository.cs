@@ -64,7 +64,7 @@ namespace RACE2.DataAccess.Repository
             }
         }
 
-        public async Task<List<Userdetails>> GetUsersWithRoles(string email)
+        public async Task<Userdetails> GetUsersWithRoles(string email)
         {
             using (var conn = Connection)
             {
@@ -82,13 +82,13 @@ namespace RACE2.DataAccess.Repository
                     return user;
                 },parameters, splitOn: "RoleId");
 
-                //var result = users.GroupBy(u => u.Id).Select(g =>
-                //{
-                //    var groupedUser = g.First();
-                //    groupedUser.Roles = g.Select(u => u.Roles.Single()).ToList();
-                //    return groupedUser;
-                //});
-                return users.ToList();
+                var result = users.GroupBy(u => u.Id).Select(g =>
+                {
+                    var groupedUser = g.First();
+                    groupedUser.Roles = g.Select(u => u.Roles.Single()).ToList();
+                    return groupedUser;
+                });
+                return users.FirstOrDefault();
             }
         }
         public async Task<Userdetails> CreateUser(Userdetails newuser)

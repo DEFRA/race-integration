@@ -24,7 +24,7 @@ namespace RACE2.WebApi.QueryResolver
             return await _userService.GetUserByEmailID(email);
         }
 
-        public async Task<List<Userdetails>> GetUsersWithRoles(IUserService _userService,string email)
+        public async Task<Userdetails> GetUsersWithRoles(IUserService _userService,string email)
         {
             var result=  await _userService.GetUsersWithRoles(email);
             return result;
