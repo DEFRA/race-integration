@@ -41,9 +41,9 @@
     
     protected async Task<string> GetEmailFromDatabase(string email)
     {
-        var result = await client.GetUserByEmailID.ExecuteAsync(email);
-        if (result != null && result.Data != null && result.Data.UserByEmailID != null && result.Data.UserByEmailID.Email != null)
-            return result!.Data!.UserByEmailID!.Email;
+        var result = await client.GetUserWithRoles.ExecuteAsync(email);
+        if (result != null && result.Data != null && result.Data.UserWithRoles.Email != null && result.Data.UserWithRoles.Email != null)
+            return result!.Data!.UserWithRoles.Email;
         else
             return "";
     }
