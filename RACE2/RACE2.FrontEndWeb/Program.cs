@@ -10,9 +10,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<AppState>();
+
 builder.Services.AddRACE2GraphQLClient()
     //.ConfigureHttpClient(client => client.BaseAddress = new Uri(RACE2WebApiURL));
     .ConfigureHttpClient(client => client.BaseAddress = new Uri("http://localhost:5003/graphql/"));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

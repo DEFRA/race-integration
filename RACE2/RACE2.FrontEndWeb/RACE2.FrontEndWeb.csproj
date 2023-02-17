@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -8,44 +8,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="RACE2GraphQLSchema\.graphqlrc.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <GraphQL Remove="RACE2GraphQLSchema\QuerriesMutations\User\GetUserByEmailID.graphql" />
-    <GraphQL Remove="RACE2GraphQLSchema\QuerriesMutations\User\GetUserById.graphql" />
-    <GraphQL Remove="RACE2GraphQLSchema\schema.extensions.graphql" />
-    <GraphQL Remove="RACE2GraphQLSchema\schema.graphql" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <GraphQLConfig Remove="RACE2GraphQLSchema\.graphqlrc.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="RACE2GraphQLSchema\schema.extensions.graphql" />
-    <None Remove="RACE2GraphQLSchema\schema.graphql" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <AdditionalFiles Include="RACE2GraphQLSchema\.graphqlrc.json">
-      <GraphQLConfig>true</GraphQLConfig>
-    </AdditionalFiles>
-    <AdditionalFiles Include="RACE2GraphQLSchema\QuerriesMutations\User\GetAllUsers.graphql">
+    <AdditionalFiles Include="RACE2GraphQLSchema\GetAllUsers.graphql">
       <GraphQL>true</GraphQL>
     </AdditionalFiles>
-    <AdditionalFiles Include="RACE2GraphQLSchema\QuerriesMutations\User\GetUserByEmailID.graphql">
+    <AdditionalFiles Include="RACE2GraphQLSchema\GetUserByEmailID.graphql">
       <GraphQL>true</GraphQL>
     </AdditionalFiles>
-    <AdditionalFiles Include="RACE2GraphQLSchema\QuerriesMutations\User\GetUserById.graphql">
-      <GraphQL>true</GraphQL>
-    </AdditionalFiles>
-    <AdditionalFiles Include="RACE2GraphQLSchema\schema.extensions.graphql">
-      <GraphQL>true</GraphQL>
-    </AdditionalFiles>
-    <AdditionalFiles Include="RACE2GraphQLSchema\schema.graphql">
-      <GraphQL>true</GraphQL>
-    </AdditionalFiles>
+	  <AdditionalFiles Include="RACE2GraphQLSchema\GetUserWithRoles.graphql">
+		  <GraphQL>true</GraphQL>
+	  </AdditionalFiles>
   </ItemGroup>
 
   <ItemGroup>
@@ -55,37 +26,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Update="Components\ChooseAReservoir.razor">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </Content>
-    <Content Update="Components\CreatePassword.razor">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </Content>
-    <Content Update="Components\EnterEmail.razor">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </Content>
-    <Content Update="Components\Home.razor">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </Content>
-    <Content Update="Components\NewReservoir.razor">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </Content>
-    <Content Update="Components\NonStat.razor">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </Content>
-    <Content Update="Components\ReservoirDetails.razor">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </Content>
-    <Content Update="Components\ReservoirNotListed.razor">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </Content>
-    <Content Update="Components\StatNonStat.razor">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </Content>
+    <GraphQL Update="RACE2GraphQLSchema\GetUserById.graphql">
+      <GraphQL>true</GraphQL>
+    </GraphQL>
+    <GraphQL Update="RACE2GraphQLSchema\GetUserWithRoles.graphql">
+      <GraphQL>true</GraphQL>
+    </GraphQL>
   </ItemGroup>
 
 </Project>

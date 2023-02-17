@@ -3,9 +3,9 @@
   "documents": "**/*.graphql",
   "extensions": {
     "strawberryShake": {
-      "name": "RACE2GraphQLClient",
-      "namespace": "RACE2.FrontEndWeb.RACE2GraphQLSchema",
-      "url": "http://localhost:5003/graphql",
+      "name": "GraphQLClient",
+      "namespace": "RACE2.FrontEndWeb.GraphQL",
+      "url": "http://localhost:5003/graphql/",
       "records": {
         "inputs": false,
         "entities": false
