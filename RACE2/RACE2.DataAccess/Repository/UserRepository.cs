@@ -68,7 +68,7 @@ namespace RACE2.DataAccess.Repository
         {
             using (var conn = Connection)
             {
-                var query = @"Select A.Id, A.Email,A.UserName,A.c_display_name,B.RoleId,c.Name
+                var query = @"Select A.Id, A.Email,A.UserName,B.UserId,B.RoleId,c.Id,c.Name
                               from AspNetUsers A inner join AspNetUserRoles B
                               ON  A.Id =b.UserId inner join AspNetRoles c
                               On c.Id = b.RoleId Where A.Email=@email";

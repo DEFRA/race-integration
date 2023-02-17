@@ -1,9 +1,9 @@
 ﻿query GetUserWithRoles($newemail:String!){
   userWithRoles(email:$newemail){
     id
-    c_display_name 
     email
     roles{
+        id
         name
     }
   }

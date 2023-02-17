@@ -58,7 +58,6 @@
             if (emailInDatabase != null && emailInDatabase.Trim().Length != 0)
             {
                 appState.SetEmail(emailInDatabase);
-                //string pagelink = "/create-password/" + emailInDatabase;
                 string pagelink = "/create-password/";
                 NavigationManager.NavigateTo(pagelink, forceLoad);
             }
