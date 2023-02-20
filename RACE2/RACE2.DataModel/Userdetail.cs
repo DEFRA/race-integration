@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Identity;
 namespace RACE2.DataModel
 {
     [Table("user_details")]
-    public  class Userdetails: IdentityUser<int>    {   
+    public  class Userdetail: IdentityUser<int>    {   
         
            
             public string? c_defra_id { get; set; }
@@ -51,7 +51,7 @@ namespace RACE2.DataModel
 
             public int c_password_retry_count { get; set; }
 
-            public List<Roles> Roles { get; set; } =new List<Roles>();
+            public List<Role> Roles { get; set; } =new List<Role>();
         
     }
 }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace RACE2.DataModel
 {
     [Table("C_Permissions")]
-    public class UserPermissions
+    public class UserPermission
     {
         [Key, Required]
         public int id { get; set; }

@@ -33,22 +33,22 @@ namespace RACE2.DataAccess.Repository
             }
         }
 
-        public async Task<IEnumerable<Userdetails>> GetUserdetails()
+        public async Task<IEnumerable<Userdetail>> GetUserdetails()
         {
             var query = "SELECT * FROM AspNetUsers";
             using (var conn = Connection)
             {
-                var companies = await conn.QueryAsync<Userdetails>(query);
+                var companies = await conn.QueryAsync<Userdetail>(query);
                 return companies.ToList();
             }
         }
 
-        public async Task<Userdetails> GetUserById(int id)
+        public async Task<Userdetail> GetUserById(int id)
         {
             using (var conn = Connection)
             {
                 var query = "Select * from AspNetUsers where Id=@id";
-                var user = await conn.QuerySingleAsync<Userdetails>(query, new { Id = id });
+                var user = await conn.QuerySingleAsync<Userdetail>(query, new { Id = id });
                 return user;
             }
         }
