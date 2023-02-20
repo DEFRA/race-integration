@@ -16,7 +16,7 @@ namespace RACE2.DataModel
         public DateTime c_start_date { get; set; }
         public DateTime c_end_date { get; set; }
         public virtual Userdetails? User { get; set; }
-        public virtual Roles? Role { get; set; }
+        public virtual Role? Role { get; set; }
 
 
 

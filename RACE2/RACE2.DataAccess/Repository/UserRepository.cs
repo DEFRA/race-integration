@@ -54,17 +54,17 @@ namespace RACE2.DataAccess.Repository
         }
 
 
-        public async Task<Userdetails> GetUserByEmailID(string email)
+        public async Task<Userdetail> GetUserByEmailID(string email)
         {
             using (var conn = Connection)
             {
                 var query = "Select * FROM AspNetUsers where Email = @email";
-                var users = await conn.QuerySingleAsync<Userdetails>(query, new { email });
+                var users = await conn.QuerySingleAsync<Userdetail>(query, new { email });
                 return users;
             }
         }
 
-        public async Task<Userdetails> GetUserWithRoles(string email)
+        public async Task<Userdetail> GetUserWithRoles(string email)
         {
             using (var conn = Connection)
             {
@@ -77,7 +77,7 @@ namespace RACE2.DataAccess.Repository
 
                 parameters.Add("Email", email, DbType.String);
 
-                var users = await conn.QueryAsync<Userdetails, Roles, Userdetails>(query, (user, role) => {
+                var users = await conn.QueryAsync<Userdetail, Role, Userdetail>(query, (user, role) => {
                     user.Roles.Add(role);
                     return user;
                 },parameters, splitOn: "RoleId");
@@ -91,7 +91,7 @@ namespace RACE2.DataAccess.Repository
                 return result.FirstOrDefault();
             }
         }
-        public async Task<Userdetails> CreateUser(Userdetails newuser)
+        public async Task<Userdetail> CreateUser(Userdetail newuser)
         {
             var query = "INSERT INTO AspNetUsers (c_defra_id,c_type,c_display_name,c_first_name,c_last_name,c_status,c_created_on_date,c_last_access_date,c_password_retry_count,EmailConfirmed,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnabled,AccessFailedCount) VALUES (@c_defra_id,@c_type,@c_display_name,@c_first_name,@c_last_name,@c_status,@c_created_on_date,@c_last_access_date,@c_password_retry_count,@EmailConfirmed,@PhoneNumberConfirmed,@TwoFactorEnabled,@LockoutEnabled,@AccessFailedCount)"
                 + "SELECT CAST(SCOPE_IDENTITY() as int)";
@@ -117,7 +117,7 @@ namespace RACE2.DataAccess.Repository
 
 
                 var id = await conn.QuerySingleAsync<int>(query, parameters);
-                var createdCompany = new Userdetails
+                var createdCompany = new Userdetail
                 {
                     Id = newuser.Id,
                     c_defra_id = newuser.c_defra_id,
@@ -140,7 +140,7 @@ namespace RACE2.DataAccess.Repository
             }
         }
 
-        public async Task<Userdetails> ValidateUser(Userdetails loginuser)
+        public async Task<Userdetail> ValidateUser(Userdetail loginuser)
         {
             using (var conn = Connection)
             {

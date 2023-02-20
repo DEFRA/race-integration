@@ -9,7 +9,7 @@ using System.IO;
 
 namespace RACE2.DataAccess
 {
-    public class ApplicationDbContext : IdentityDbContext<Userdetails, Roles,int,IdentityUserClaim<int>,UserRole,IdentityUserLogin<int>,
+    public class ApplicationDbContext : IdentityDbContext<Userdetails, Role,int,IdentityUserClaim<int>,UserRole,IdentityUserLogin<int>,
         IdentityRoleClaim<int>,IdentityUserToken<int>>
      {
         
@@ -131,20 +131,20 @@ namespace RACE2.DataAccess
                 .Property(e => e.c_password_retry_count)
                 .HasDefaultValue(0);
 
-            modelBuilder.Entity<Roles>()
+            modelBuilder.Entity<Role>()
                 .Property(e => e.c_display_name)
                 .HasMaxLength(64);
 
-            modelBuilder.Entity<Roles>()
+            modelBuilder.Entity<Role>()
                 .Property(e => e.c_description);
 
-            modelBuilder.Entity<Roles>()
+            modelBuilder.Entity<Role>()
                 .Property(e => e.c_parent_id);
 
-            modelBuilder.Entity<Roles>()
+            modelBuilder.Entity<Role>()
                 .Property(e => e.c_start_date);
 
-            modelBuilder.Entity<Roles>()
+            modelBuilder.Entity<Role>()
                 .Property(e => e.c_end_date);
 
             modelBuilder.Entity<UserRole>(e =>
