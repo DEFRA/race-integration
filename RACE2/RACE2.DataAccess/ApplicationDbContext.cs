@@ -161,6 +161,10 @@ namespace RACE2.DataAccess
 
             modelBuilder.Entity<UserRole>()
                 .Property(e => e.c_status);
+
+            modelBuilder.Entity<Role>()
+                .HasMany(e => e.)
+                
         }
 
     }

@@ -24,17 +24,17 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class ExternalLoginModel : PageModel
     {
-        private readonly SignInManager<Userdetails> _signInManager;
-        private readonly UserManager<Userdetails> _userManager;
-        private readonly IUserStore<Userdetails> _userStore;
-        private readonly IUserEmailStore<Userdetails> _emailStore;
+        private readonly SignInManager<Userdetail> _signInManager;
+        private readonly UserManager<Userdetail> _userManager;
+        private readonly IUserStore<Userdetail> _userStore;
+        private readonly IUserEmailStore<Userdetail> _emailStore;
         private readonly IEmailSender _emailSender;
         private readonly ILogger<ExternalLoginModel> _logger;
 
         public ExternalLoginModel(
-            SignInManager<Userdetails> signInManager,
-            UserManager<Userdetails> userManager,
-            IUserStore<Userdetails> userStore,
+            SignInManager<Userdetail> signInManager,
+            UserManager<Userdetail> userManager,
+            IUserStore<Userdetail> userStore,
             ILogger<ExternalLoginModel> logger,
             IEmailSender emailSender)
         {

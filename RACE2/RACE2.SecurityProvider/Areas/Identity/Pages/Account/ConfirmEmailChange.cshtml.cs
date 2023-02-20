@@ -16,10 +16,10 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
 {
     public class ConfirmEmailChangeModel : PageModel
     {
-        private readonly UserManager<Userdetails> _userManager;
-        private readonly SignInManager<Userdetails> _signInManager;
+        private readonly UserManager<Userdetail> _userManager;
+        private readonly SignInManager<Userdetail> _signInManager;
 
-        public ConfirmEmailChangeModel(UserManager<Userdetails> userManager, SignInManager<Userdetails> signInManager)
+        public ConfirmEmailChangeModel(UserManager<Userdetail> userManager, SignInManager<Userdetail> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
