@@ -21,9 +21,9 @@ namespace RACE2.DataModel
         public DateTime? c_start_date { get; set; }
         public DateTime? c_end_date { get; set; }
 
-        public List<Role> Roles { get; set; } = new List<Role>();
+        //public List<Role> Roles { get; set; } = new List<Role>();
 
-        public List<FeatureFunction> FeatureFunctions { get; set; } = new List<FeatureFunction> { };
+        //public List<FeatureFunction> FeatureFunctions { get; set; } = new List<FeatureFunction> { };
 
     }
 }

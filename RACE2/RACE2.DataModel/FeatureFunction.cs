@@ -25,5 +25,7 @@ namespace RACE2.DataModel
         public string? c_default_value { get; set; }
         public DateTime c_start_date { get; set; }
         public DateTime c_end_date { get; set; }
+
+        public List<UserPermission> Permission { get; set;} = new List<UserPermission>();
     }
 }

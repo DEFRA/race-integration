@@ -52,6 +52,7 @@ namespace RACE2.DataModel
             public int c_password_retry_count { get; set; }
 
             public List<Role> Roles { get; set; } =new List<Role>();
-        
+
+            public List<Reservoir> Reservoirs { get; set; } =new List<Reservoir>();
     }
 }
