@@ -18,7 +18,7 @@ namespace RACE2.DataAccess
         {            
         }       
 
-        public DbSet<FeatureFunction> FeatureFunction { get; set; }
+        public DbSet<FeatureFunction> FeatureFunctions { get; set; }
 
         public DbSet<UserPermission> UserPermissions { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -160,13 +160,8 @@ namespace RACE2.DataAccess
                 .Property(e => e.c_end_date);
 
             modelBuilder.Entity<UserRole>()
-                .Property(e => e.c_status);
-
-            modelBuilder.Entity<Role>()
-                .HasMany(e => e.)
-                
+                .Property(e => e.c_status);               
         }
-
     }
 
     public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>

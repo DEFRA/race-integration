@@ -2,7 +2,7 @@ GetAllUser:
 -----------
 query
 {
-  userdetails{
+  Userdetail{
     id
     c_display_name
   }

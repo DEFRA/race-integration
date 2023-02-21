@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RACE2.DataModel
 {
-    [Table("C_Address")]
+    [Table("Addresses")]
     public class Address
     {
         [Key, Required]

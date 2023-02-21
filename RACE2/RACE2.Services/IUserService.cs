@@ -9,7 +9,7 @@ namespace RACE2.Services
 {
     public interface IUserService
     {
-        public Task<IEnumerable<Userdetail>> GetUserdetails();
+        public Task<IEnumerable<Userdetail>> GetUserdetail();
         public Task<Userdetail> GetUserById(int id);
         public Task<Userdetail> GetUserByEmailID(string email);
         public Task<Userdetail> CreateUser(Userdetail newuser);

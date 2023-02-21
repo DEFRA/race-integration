@@ -1,4 +1,4 @@
-mutation($newUserInput:UserdetailsInput!){
+mutation($newUserInput:UserdetailInput!){
   validateUser(loginuser:$newUserInput){
    
       c_defra_id,

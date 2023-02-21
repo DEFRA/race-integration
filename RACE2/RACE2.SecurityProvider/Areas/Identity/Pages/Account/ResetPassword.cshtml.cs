@@ -17,9 +17,9 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
 {
     public class ResetPasswordModel : PageModel
     {
-        private readonly UserManager<Userdetails> _userManager;
+        private readonly UserManager<Userdetail> _userManager;
 
-        public ResetPasswordModel(UserManager<Userdetails> userManager)
+        public ResetPasswordModel(UserManager<Userdetail> userManager)
         {
             _userManager = userManager;
         }

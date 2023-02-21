@@ -15,13 +15,13 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account.Manage
 {
     public class DeletePersonalDataModel : PageModel
     {
-        private readonly UserManager<Userdetails> _userManager;
-        private readonly SignInManager<Userdetails> _signInManager;
+        private readonly UserManager<Userdetail> _userManager;
+        private readonly SignInManager<Userdetail> _signInManager;
         private readonly ILogger<DeletePersonalDataModel> _logger;
 
         public DeletePersonalDataModel(
-            UserManager<Userdetails> userManager,
-            SignInManager<Userdetails> signInManager,
+            UserManager<Userdetail> userManager,
+            SignInManager<Userdetail> signInManager,
             ILogger<DeletePersonalDataModel> logger)
         {
             _userManager = userManager;

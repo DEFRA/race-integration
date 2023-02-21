@@ -18,11 +18,11 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account.Manage
 {
     public class DownloadPersonalDataModel : PageModel
     {
-        private readonly UserManager<Userdetails> _userManager;
+        private readonly UserManager<Userdetail> _userManager;
         private readonly ILogger<DownloadPersonalDataModel> _logger;
 
         public DownloadPersonalDataModel(
-            UserManager<Userdetails> userManager,
+            UserManager<Userdetail> userManager,
             ILogger<DownloadPersonalDataModel> logger)
         {
             _userManager = userManager;
@@ -46,7 +46,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account.Manage
 
             // Only include personal data for download
             var personalData = new Dictionary<string, string>();
-            var personalDataProps = typeof(Userdetails).GetProperties().Where(
+            var personalDataProps = typeof(Userdetail).GetProperties().Where(
                             prop => Attribute.IsDefined(prop, typeof(PersonalDataAttribute)));
             foreach (var p in personalDataProps)
             {

@@ -1,5 +1,5 @@
 ﻿query GetAllUsers{
-  userdetails{
+  Userdetail{
   id
   userName
   c_password

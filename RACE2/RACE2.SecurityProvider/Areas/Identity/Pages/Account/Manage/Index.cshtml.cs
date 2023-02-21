@@ -15,12 +15,12 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account.Manage
 {
     public class IndexModel : PageModel
     {
-        private readonly UserManager<Userdetails> _userManager;
-        private readonly SignInManager<Userdetails> _signInManager;
+        private readonly UserManager<Userdetail> _userManager;
+        private readonly SignInManager<Userdetail> _signInManager;
 
         public IndexModel(
-            UserManager<Userdetails> userManager,
-            SignInManager<Userdetails> signInManager)
+            UserManager<Userdetail> userManager,
+            SignInManager<Userdetail> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -61,7 +61,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account.Manage
             public string PhoneNumber { get; set; }
         }
 
-        private async Task LoadAsync(Userdetails user)
+        private async Task LoadAsync(Userdetail user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);

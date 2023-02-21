@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RACE2.DataModel
 {
-    [Table("C_FeatureFunctions")]
+    [Table("FeatureFunctions")]
     public class FeatureFunction
     {
         [Key, Required]

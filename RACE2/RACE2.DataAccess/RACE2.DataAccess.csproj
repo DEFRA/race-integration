@@ -19,5 +19,9 @@
     <ItemGroup>
       <ProjectReference Include="..\RACE2.DataModel\RACE2.DataModel.csproj" />
     </ItemGroup>
+	
+    <ItemGroup>
+      <Folder Include="Migrations\" />
+    </ItemGroup>
 </Project>
 

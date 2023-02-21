@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RACE2.DataModel
 {
-    [Table("C_Permissions")]
+    [Table("UserPermissions")]
     public class UserPermission
     {
         [Key, Required]

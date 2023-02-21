@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace RACE2.DataModel
 {
 
-    [Table("C_Reservoirs")]
+    [Table("Reservoirs")]
     public class Reservoir
     {
         [Key, Required]

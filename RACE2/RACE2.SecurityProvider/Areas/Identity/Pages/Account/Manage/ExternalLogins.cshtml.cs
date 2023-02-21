@@ -17,14 +17,14 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account.Manage
 {
     public class ExternalLoginsModel : PageModel
     {
-        private readonly UserManager<Userdetails> _userManager;
-        private readonly SignInManager<Userdetails> _signInManager;
-        private readonly IUserStore<Userdetails> _userStore;
+        private readonly UserManager<Userdetail> _userManager;
+        private readonly SignInManager<Userdetail> _signInManager;
+        private readonly IUserStore<Userdetail> _userStore;
 
         public ExternalLoginsModel(
-            UserManager<Userdetails> userManager,
-            SignInManager<Userdetails> signInManager,
-            IUserStore<Userdetails> userStore)
+            UserManager<Userdetail> userManager,
+            SignInManager<Userdetail> signInManager,
+            IUserStore<Userdetail> userStore)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -70,7 +70,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account.Manage
                 .ToList();
 
             string passwordHash = null;
-            if (_userStore is IUserPasswordStore<Userdetails> userPasswordStore)
+            if (_userStore is IUserPasswordStore<Userdetail> userPasswordStore)
             {
                 passwordHash = await userPasswordStore.GetPasswordHashAsync(user, HttpContext.RequestAborted);
             }

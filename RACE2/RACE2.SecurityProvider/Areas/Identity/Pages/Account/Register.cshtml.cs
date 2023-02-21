@@ -25,18 +25,18 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
     {
-        private readonly SignInManager<Userdetails> _signInManager;
-        private readonly UserManager<Userdetails> _userManager;
-        private readonly IUserStore<Userdetails> _userStore;
-        private readonly IUserEmailStore<Userdetails> _emailStore;
+        private readonly SignInManager<Userdetail> _signInManager;
+        private readonly UserManager<Userdetail> _userManager;
+        private readonly IUserStore<Userdetail> _userStore;
+        private readonly IUserEmailStore<Userdetail> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private IRandomPasswordGeneration _randomPasswordGeneration;
 
         public RegisterModel(
-            UserManager<Userdetails> userManager,
-            IUserStore<Userdetails> userStore,
-            SignInManager<Userdetails> signInManager,
+            UserManager<Userdetail> userManager,
+            IUserStore<Userdetail> userStore,
+            SignInManager<Userdetail> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
@@ -160,27 +160,27 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private Userdetails CreateUser()
+        private Userdetail CreateUser()
         {
             try
             {
-                return Activator.CreateInstance<Userdetails>();
+                return Activator.CreateInstance<Userdetail>();
             }
             catch
             {
-                throw new InvalidOperationException($"Can't create an instance of '{nameof(Userdetails)}'. " +
-                    $"Ensure that '{nameof(Userdetails)}' is not an abstract class and has a parameterless constructor, or alternatively " +
+                throw new InvalidOperationException($"Can't create an instance of '{nameof(Userdetail)}'. " +
+                    $"Ensure that '{nameof(Userdetail)}' is not an abstract class and has a parameterless constructor, or alternatively " +
                     $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
             }
         }
 
-        private IUserEmailStore<Userdetails> GetEmailStore()
+        private IUserEmailStore<Userdetail> GetEmailStore()
         {
             if (!_userManager.SupportsUserEmail)
             {
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
-            return (IUserEmailStore<Userdetails>)_userStore;
+            return (IUserEmailStore<Userdetail>)_userStore;
         }
     }
 }

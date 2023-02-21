@@ -198,27 +198,27 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private Userdetails CreateUser()
+        private Userdetail CreateUser()
         {
             try
             {
-                return Activator.CreateInstance<Userdetails>();
+                return Activator.CreateInstance<Userdetail>();
             }
             catch
             {
-                throw new InvalidOperationException($"Can't create an instance of '{nameof(Userdetails)}'. " +
-                    $"Ensure that '{nameof(Userdetails)}' is not an abstract class and has a parameterless constructor, or alternatively " +
+                throw new InvalidOperationException($"Can't create an instance of '{nameof(Userdetail)}'. " +
+                    $"Ensure that '{nameof(Userdetail)}' is not an abstract class and has a parameterless constructor, or alternatively " +
                     $"override the external login page in /Areas/Identity/Pages/Account/ExternalLogin.cshtml");
             }
         }
 
-        private IUserEmailStore<Userdetails> GetEmailStore()
+        private IUserEmailStore<Userdetail> GetEmailStore()
         {
             if (!_userManager.SupportsUserEmail)
             {
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
-            return (IUserEmailStore<Userdetails>)_userStore;
+            return (IUserEmailStore<Userdetail>)_userStore;
         }
     }
 }

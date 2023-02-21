@@ -14,13 +14,13 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account.Manage
 {
     public class ResetAuthenticatorModel : PageModel
     {
-        private readonly UserManager<Userdetails> _userManager;
-        private readonly SignInManager<Userdetails> _signInManager;
+        private readonly UserManager<Userdetail> _userManager;
+        private readonly SignInManager<Userdetail> _signInManager;
         private readonly ILogger<ResetAuthenticatorModel> _logger;
 
         public ResetAuthenticatorModel(
-            UserManager<Userdetails> userManager,
-            SignInManager<Userdetails> signInManager,
+            UserManager<Userdetail> userManager,
+            SignInManager<Userdetail> signInManager,
             ILogger<ResetAuthenticatorModel> logger)
         {
             _userManager = userManager;

@@ -17,13 +17,13 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
 {
     public class LoginWith2faModel : PageModel
     {
-        private readonly SignInManager<Userdetails> _signInManager;
-        private readonly UserManager<Userdetails> _userManager;
+        private readonly SignInManager<Userdetail> _signInManager;
+        private readonly UserManager<Userdetail> _userManager;
         private readonly ILogger<LoginWith2faModel> _logger;
 
         public LoginWith2faModel(
-            SignInManager<Userdetails> signInManager,
-            UserManager<Userdetails> userManager,
+            SignInManager<Userdetail> signInManager,
+            UserManager<Userdetail> userManager,
             ILogger<LoginWith2faModel> logger)
         {
             _signInManager = signInManager;

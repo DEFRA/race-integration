@@ -4,9 +4,9 @@ using System.IO;
 
 namespace RACE2.UnitTest
 {
-    public class GetUserdetails
+    public class GetUserdetail
     {
-        public GetUserdetails()
+        public GetUserdetail()
         {
         }
         [Fact]
@@ -16,7 +16,7 @@ namespace RACE2.UnitTest
             var connectionString = config.GetConnectionString("DefaultConnection");
             UserRepository repo = new UserRepository(config);
             //var details = repo.GetFeatureFunctions(config);
-            var details = repo.GetUserdetails();
+            var details = repo.GetUserdetail();
             Assert.NotNull(details);
         }
 

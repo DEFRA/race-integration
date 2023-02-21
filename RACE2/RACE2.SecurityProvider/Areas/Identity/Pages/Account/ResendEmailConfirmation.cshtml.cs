@@ -20,10 +20,10 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class ResendEmailConfirmationModel : PageModel
     {
-        private readonly UserManager<Userdetails> _userManager;
+        private readonly UserManager<Userdetail> _userManager;
         private readonly IEmailSender _emailSender;
 
-        public ResendEmailConfirmationModel(UserManager<Userdetails> userManager, IEmailSender emailSender)
+        public ResendEmailConfirmationModel(UserManager<Userdetail> userManager, IEmailSender emailSender)
         {
             _userManager = userManager;
             _emailSender = emailSender;

@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace RACE2.DataModel
 {
-    [Table("user_details")]
+    [Table("Userdetails")]
     public  class Userdetail: IdentityUser<int>    {   
         
            

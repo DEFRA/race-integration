@@ -4,18 +4,18 @@
 }
 
 type UserResolver {
-  userdetails: [Userdetails!]!
-  byId(id: Int!): Userdetails!
-  userByEmailID(email: String!): Userdetails!
-  userWithRoles(email: String!): Userdetails!
+  Userdetail: [Userdetail!]!
+  byId(id: Int!): Userdetail!
+  userByEmailID(email: String!): Userdetail!
+  userWithRoles(email: String!): Userdetail!
 }
 
 type MutationResolver {
-  createUser(newuser: UserdetailsInput!): Userdetails!
-  validateUser(loginuser: UserdetailsInput!): Userdetails!
+  createUser(newuser: UserdetailInput!): Userdetail!
+  validateUser(loginuser: UserdetailInput!): Userdetail!
 }
 
-type Userdetails {
+type Userdetail {
   c_defra_id: String
   c_type: String
   c_display_name: String
@@ -53,7 +53,7 @@ type Userdetails {
   accessFailedCount: Int!
 }
 
-input UserdetailsInput {
+input UserdetailInput {
   c_defra_id: String
   c_type: String
   c_display_name: String
@@ -97,7 +97,7 @@ type Roles {
   c_parent_id: Int!
   c_start_date: DateTime!
   c_end_date: DateTime!
-  userdetails: [Userdetails!]!
+  Userdetail: [Userdetail!]!
   id: Int!
   name: String
   normalizedName: String
@@ -113,7 +113,7 @@ input RolesInput {
   c_parent_id: Int!
   c_start_date: DateTime!
   c_end_date: DateTime!
-  userdetails: [UserdetailsInput!]!
+  Userdetail: [UserdetailInput!]!
   id: Int!
   name: String
   normalizedName: String

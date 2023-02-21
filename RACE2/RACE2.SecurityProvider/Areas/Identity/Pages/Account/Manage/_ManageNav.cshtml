@@ -1,5 +1,5 @@
 ﻿@using RACE2.DataModel;
-@inject SignInManager<Userdetails> SignInManager
+@inject SignInManager<Userdetail> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }
