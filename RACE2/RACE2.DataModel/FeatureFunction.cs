@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RACE2.DataModel
 {
-    [Table("C_FeatureFunction")]
+    [Table("C_FeatureFunctions")]
     public class FeatureFunction
     {
         [Key, Required]
@@ -25,5 +25,7 @@ namespace RACE2.DataModel
         public string? c_default_value { get; set; }
         public DateTime c_start_date { get; set; }
         public DateTime c_end_date { get; set; }
+
+        public List<UserPermission> Permission { get; set;} = new List<UserPermission>();
     }
 }
