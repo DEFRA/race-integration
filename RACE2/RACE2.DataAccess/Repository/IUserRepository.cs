@@ -10,7 +10,7 @@ namespace RACE2.DataAccess.Repository
 {
     public interface IUserRepository
     {
-        public Task<IEnumerable<UserDetail>> GetUserDetail();
+        public Task<IEnumerable<UserDetail>> GetUserDetails();
         public Task<UserDetail> GetUserById(int id);
         public Task<UserDetail> GetUserByEmailID(string email);
         public Task<UserDetail> CreateUser(UserDetail newuser);

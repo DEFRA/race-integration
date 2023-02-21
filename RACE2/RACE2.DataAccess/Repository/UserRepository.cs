@@ -33,7 +33,7 @@ namespace RACE2.DataAccess.Repository
             }
         }
 
-        public async Task<IEnumerable<UserDetail>> GetUserDetail()
+        public async Task<IEnumerable<UserDetail>> GetUserDetails()
         {
             var query = "SELECT * FROM AspNetUsers";
             using (var conn = Connection)

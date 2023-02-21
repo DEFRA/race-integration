@@ -9,9 +9,9 @@ namespace RACE2.WebApi.QueryResolver
 {
     public class UserResolver
     {
-        public async Task<IEnumerable<UserDetail>> GetUserDetail(IUserService _userService)
+        public async Task<IEnumerable<UserDetail>> GetUserDetails(IUserService _userService)
         {
-            return await _userService.GetUserDetail();
+            return await _userService.GetUserDetails();
         }
 
         public async Task<UserDetail> GetById(IUserService _userService, int id)

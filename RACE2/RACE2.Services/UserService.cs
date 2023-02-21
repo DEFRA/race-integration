@@ -16,9 +16,9 @@ namespace RACE2.Services
         {
             _userRepository = userRepository;
         }
-        public async Task<IEnumerable<UserDetail>> GetUserDetail()
+        public async Task<IEnumerable<UserDetail>> GetUserDetails()
         {
-            return await _userRepository.GetUserDetail();
+            return await _userRepository.GetUserDetails();
         }
 
         public async Task<UserDetail> GetUserById(int id)
