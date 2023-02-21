@@ -5,6 +5,7 @@ using RACE2.DataAccess;
 using RACE2.DataModel;
 using RACE2.SecurityProvider;
 using RACE2.SecurityProvider.UtilityClasses;
+using RACE2.SecurityProvider.UtilityClasses.CompanyEmployees.OAuth.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 IConfiguration _configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../appsettings.json").Build();
@@ -45,7 +46,7 @@ else
 {
     app.UseExceptionHandler("/Error");
 }
-
+HostingExtensions.InitializeDatabase(app);
 app.UseStaticFiles();
 
 app.UseRouting();

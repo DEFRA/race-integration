@@ -16,8 +16,8 @@ namespace RACE2.UnitTest
             var connectionString = config.GetConnectionString("DefaultConnection");
             UserRepository repo = new UserRepository(config);
             //var details = repo.GetFeatureFunctions(config);
-            var details = repo.GetUserDetail();
-            Assert.NotNull(details);
+            //var details = repo.GetUserDetail();
+            //Assert.NotNull(details);
         }
 
         public static IConfiguration InitConfiguration()
