@@ -17,9 +17,9 @@ namespace RACE2.DataModel
         public int feature_function_id { get; set; }
         [StringLength(64)]
         [Required]
-        public string? c_access_level { get; set; }
-        public DateTime? c_start_date { get; set; }
-        public DateTime? c_end_date { get; set; }
+        public string? access_level { get; set; }
+        public DateTime? start_date { get; set; }
+        public DateTime? end_date { get; set; }
 
         //public List<Role> Roles { get; set; } = new List<Role>();
 

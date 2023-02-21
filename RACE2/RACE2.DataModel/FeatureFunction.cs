@@ -12,19 +12,19 @@ namespace RACE2.DataModel
     public class FeatureFunction
     {
         [Key, Required]
-        public int c_Id { get; set; }
+        public int Id { get; set; }
         [StringLength(64)]
         [Required]
-        public string? c_name { get; set; }
+        public string? name { get; set; }
         [StringLength(64)]
-        public string? c_display_name { get; set; }
+        public string? display_name { get; set; }
         [StringLength(64)]
-        public string? c_description { get; set; }
+        public string? description { get; set; }
 
         [StringLength(64)]
-        public string? c_default_value { get; set; }
-        public DateTime c_start_date { get; set; }
-        public DateTime c_end_date { get; set; }
+        public string? default_value { get; set; }
+        public DateTime start_date { get; set; }
+        public DateTime end_date { get; set; }
 
         public List<UserPermission> Permission { get; set;} = new List<UserPermission>();
     }
