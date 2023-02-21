@@ -24,17 +24,17 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class ExternalLoginModel : PageModel
     {
-        private readonly SignInManager<Userdetail> _signInManager;
-        private readonly UserManager<Userdetail> _userManager;
-        private readonly IUserStore<Userdetail> _userStore;
-        private readonly IUserEmailStore<Userdetail> _emailStore;
+        private readonly SignInManager<UserDetail> _signInManager;
+        private readonly UserManager<UserDetail> _userManager;
+        private readonly IUserStore<UserDetail> _userStore;
+        private readonly IUserEmailStore<UserDetail> _emailStore;
         private readonly IEmailSender _emailSender;
         private readonly ILogger<ExternalLoginModel> _logger;
 
         public ExternalLoginModel(
-            SignInManager<Userdetail> signInManager,
-            UserManager<Userdetail> userManager,
-            IUserStore<Userdetail> userStore,
+            SignInManager<UserDetail> signInManager,
+            UserManager<UserDetail> userManager,
+            IUserStore<UserDetail> userStore,
             ILogger<ExternalLoginModel> logger,
             IEmailSender emailSender)
         {
@@ -198,27 +198,27 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private Userdetail CreateUser()
+        private UserDetail CreateUser()
         {
             try
             {
-                return Activator.CreateInstance<Userdetail>();
+                return Activator.CreateInstance<UserDetail>();
             }
             catch
             {
-                throw new InvalidOperationException($"Can't create an instance of '{nameof(Userdetail)}'. " +
-                    $"Ensure that '{nameof(Userdetail)}' is not an abstract class and has a parameterless constructor, or alternatively " +
+                throw new InvalidOperationException($"Can't create an instance of '{nameof(UserDetail)}'. " +
+                    $"Ensure that '{nameof(UserDetail)}' is not an abstract class and has a parameterless constructor, or alternatively " +
                     $"override the external login page in /Areas/Identity/Pages/Account/ExternalLogin.cshtml");
             }
         }
 
-        private IUserEmailStore<Userdetail> GetEmailStore()
+        private IUserEmailStore<UserDetail> GetEmailStore()
         {
             if (!_userManager.SupportsUserEmail)
             {
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
-            return (IUserEmailStore<Userdetail>)_userStore;
+            return (IUserEmailStore<UserDetail>)_userStore;
         }
     }
 }

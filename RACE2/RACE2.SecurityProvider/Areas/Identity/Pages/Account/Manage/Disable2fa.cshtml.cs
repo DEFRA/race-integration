@@ -14,11 +14,11 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account.Manage
 {
     public class Disable2faModel : PageModel
     {
-        private readonly UserManager<Userdetail> _userManager;
+        private readonly UserManager<UserDetail> _userManager;
         private readonly ILogger<Disable2faModel> _logger;
 
         public Disable2faModel(
-            UserManager<Userdetail> userManager,
+            UserManager<UserDetail> userManager,
             ILogger<Disable2faModel> logger)
         {
             _userManager = userManager;

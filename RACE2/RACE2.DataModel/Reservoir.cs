@@ -46,7 +46,7 @@ namespace RACE2.DataModel
 
         public DateTime next_inspection_date { get; set; }
 
-        public List<Userdetail> users { get; set; } = new List<Userdetail>();
+        public List<UserDetail> users { get; set; } = new List<UserDetail>();
 
         public Address? address { get; set; }
 

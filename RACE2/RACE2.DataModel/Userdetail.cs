@@ -9,8 +9,8 @@ using Microsoft.AspNetCore.Identity;
 
 namespace RACE2.DataModel
 {
-    [Table("Userdetails")]
-    public  class Userdetail: IdentityUser<int>    {   
+    [Table("UserDetails")]
+    public  class UserDetail: IdentityUser<int>    {   
         
            
             public string? c_defra_id { get; set; }

@@ -16,13 +16,13 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
 {
     public class LoginWithRecoveryCodeModel : PageModel
     {
-        private readonly SignInManager<Userdetail> _signInManager;
-        private readonly UserManager<Userdetail> _userManager;
+        private readonly SignInManager<UserDetail> _signInManager;
+        private readonly UserManager<UserDetail> _userManager;
         private readonly ILogger<LoginWithRecoveryCodeModel> _logger;
 
         public LoginWithRecoveryCodeModel(
-            SignInManager<Userdetail> signInManager,
-            UserManager<Userdetail> userManager,
+            SignInManager<UserDetail> signInManager,
+            UserManager<UserDetail> userManager,
             ILogger<LoginWithRecoveryCodeModel> logger)
         {
             _signInManager = signInManager;

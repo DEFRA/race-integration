@@ -17,9 +17,9 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
 {
     public class ConfirmEmailModel : PageModel
     {
-        private readonly UserManager<Userdetail> _userManager;
+        private readonly UserManager<UserDetail> _userManager;
 
-        public ConfirmEmailModel(UserManager<Userdetail> userManager)
+        public ConfirmEmailModel(UserManager<UserDetail> userManager)
         {
             _userManager = userManager;
         }

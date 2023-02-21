@@ -14,12 +14,12 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account.Manage
 {
     public class TwoFactorAuthenticationModel : PageModel
     {
-        private readonly UserManager<Userdetail> _userManager;
-        private readonly SignInManager<Userdetail> _signInManager;
+        private readonly UserManager<UserDetail> _userManager;
+        private readonly SignInManager<UserDetail> _signInManager;
         private readonly ILogger<TwoFactorAuthenticationModel> _logger;
 
         public TwoFactorAuthenticationModel(
-            UserManager<Userdetail> userManager, SignInManager<Userdetail> signInManager, ILogger<TwoFactorAuthenticationModel> logger)
+            UserManager<UserDetail> userManager, SignInManager<UserDetail> signInManager, ILogger<TwoFactorAuthenticationModel> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;

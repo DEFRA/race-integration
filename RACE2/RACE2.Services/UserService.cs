@@ -16,32 +16,32 @@ namespace RACE2.Services
         {
             _userRepository = userRepository;
         }
-        public async Task<IEnumerable<Userdetail>> GetUserdetail()
+        public async Task<IEnumerable<UserDetail>> GetUserDetail()
         {
-            return await _userRepository.GetUserdetail();
+            return await _userRepository.GetUserDetail();
         }
 
-        public async Task<Userdetail> GetUserById(int id)
+        public async Task<UserDetail> GetUserById(int id)
         {
             return await _userRepository.GetUserById(id);
         }
 
-        public async Task<Userdetail> GetUserByEmailID(string email)
+        public async Task<UserDetail> GetUserByEmailID(string email)
         {
             return await _userRepository.GetUserByEmailID(email);
         }
 
-        public async Task<Userdetail> GetUserWithRoles(string email)
+        public async Task<UserDetail> GetUserWithRoles(string email)
         {
             return await _userRepository.GetUserWithRoles(email);
         }
 
-        public async Task<Userdetail> CreateUser(Userdetail newuser)
+        public async Task<UserDetail> CreateUser(UserDetail newuser)
         {
            return await _userRepository.CreateUser(newuser);
         }
 
-        public async Task<Userdetail> ValidateUser(Userdetail loginuser)
+        public async Task<UserDetail> ValidateUser(UserDetail loginuser)
         {
             return await _userRepository.ValidateUser(loginuser);
         }

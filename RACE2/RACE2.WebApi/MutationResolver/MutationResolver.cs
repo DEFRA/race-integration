@@ -7,13 +7,13 @@ namespace RACE2.WebApi.MutationResolver
 {
     public class MutationResolver
     {
-        public async Task<Userdetail> CreateUser(IUserService _userService, Userdetail newuser)
+        public async Task<UserDetail> CreateUser(IUserService _userService, UserDetail newuser)
         {
             var result = await _userService.CreateUser(newuser);
             return result;
         }
 
-        public async Task<Userdetail> ValidateUser(IUserService _userService, Userdetail loginuser)
+        public async Task<UserDetail> ValidateUser(IUserService _userService, UserDetail loginuser)
         {
             var result = await _userService.ValidateUser(loginuser);
             return result;

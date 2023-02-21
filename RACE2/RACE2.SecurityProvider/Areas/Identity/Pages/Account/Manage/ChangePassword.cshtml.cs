@@ -15,13 +15,13 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account.Manage
 {
     public class ChangePasswordModel : PageModel
     {
-        private readonly UserManager<Userdetail> _userManager;
-        private readonly SignInManager<Userdetail> _signInManager;
+        private readonly UserManager<UserDetail> _userManager;
+        private readonly SignInManager<UserDetail> _signInManager;
         private readonly ILogger<ChangePasswordModel> _logger;
 
         public ChangePasswordModel(
-            UserManager<Userdetail> userManager,
-            SignInManager<Userdetail> signInManager,
+            UserManager<UserDetail> userManager,
+            SignInManager<UserDetail> signInManager,
             ILogger<ChangePasswordModel> logger)
         {
             _userManager = userManager;

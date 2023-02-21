@@ -15,7 +15,7 @@ namespace RACE2.DataModel
         public DateTime c_start_date { get; set; }
         public DateTime c_end_date { get; set; }
 
-        public List<Userdetail> Userdetail { get; set; }=new List<Userdetail>();
+        public List<UserDetail> UserDetail { get; set; }=new List<UserDetail>();
 
         public List<UserPermission> Permission { get; set; } =new List<UserPermission>();
 

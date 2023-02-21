@@ -9,22 +9,22 @@ namespace RACE2.WebApi.QueryResolver
 {
     public class UserResolver
     {
-        public async Task<IEnumerable<Userdetail>> GetUserdetail(IUserService _userService)
+        public async Task<IEnumerable<UserDetail>> GetUserDetail(IUserService _userService)
         {
-            return await _userService.GetUserdetail();
+            return await _userService.GetUserDetail();
         }
 
-        public async Task<Userdetail> GetById(IUserService _userService, int id)
+        public async Task<UserDetail> GetById(IUserService _userService, int id)
         {
             return await _userService.GetUserById(id);
         }
 
-        public async Task<Userdetail> GetUserByEmailID(IUserService _userService, string email)
+        public async Task<UserDetail> GetUserByEmailID(IUserService _userService, string email)
         {
             return await _userService.GetUserByEmailID(email);
         }
 
-        public async Task<Userdetail> GetUserWithRoles(IUserService _userService,string email)
+        public async Task<UserDetail> GetUserWithRoles(IUserService _userService,string email)
         {
             var result=  await _userService.GetUserWithRoles(email);
             return result;

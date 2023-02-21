@@ -14,12 +14,12 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account.Manage
 {
     public class SetPasswordModel : PageModel
     {
-        private readonly UserManager<Userdetail> _userManager;
-        private readonly SignInManager<Userdetail> _signInManager;
+        private readonly UserManager<UserDetail> _userManager;
+        private readonly SignInManager<UserDetail> _signInManager;
 
         public SetPasswordModel(
-            UserManager<Userdetail> userManager,
-            SignInManager<Userdetail> signInManager)
+            UserManager<UserDetail> userManager,
+            SignInManager<UserDetail> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;

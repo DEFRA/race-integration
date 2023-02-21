@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using RACE2.DataModel;
-@inject SignInManager<Userdetail> SignInManager
-@inject UserManager<Userdetail> UserManager
+@inject SignInManager<UserDetail> SignInManager
+@inject UserManager<UserDetail> UserManager
 
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))

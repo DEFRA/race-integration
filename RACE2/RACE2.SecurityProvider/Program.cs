@@ -15,7 +15,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<Userdetail>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<UserDetail>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddRazorPages();
 var serverConfiguration = new ServerConfiguration();
@@ -25,7 +25,7 @@ builder.Services.AddIdentityServer()
             .AddInMemoryIdentityResources(serverConfiguration.IdentityResources)
             .AddInMemoryClients(serverConfiguration.Clients(RACE2FrontEndURL))
             .AddDeveloperSigningCredential()
-            .AddAspNetIdentity<Userdetail>();
+            .AddAspNetIdentity<UserDetail>();
 builder.Services.AddScoped<IRandomPasswordGeneration, RandomPasswordGeneration>();
 var app = builder.Build();
 

@@ -18,13 +18,13 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account.Manage
 {
     public class EmailModel : PageModel
     {
-        private readonly UserManager<Userdetail> _userManager;
-        private readonly SignInManager<Userdetail> _signInManager;
+        private readonly UserManager<UserDetail> _userManager;
+        private readonly SignInManager<UserDetail> _signInManager;
         private readonly IEmailSender _emailSender;
 
         public EmailModel(
-            UserManager<Userdetail> userManager,
-            SignInManager<Userdetail> signInManager,
+            UserManager<UserDetail> userManager,
+            SignInManager<UserDetail> signInManager,
             IEmailSender emailSender)
         {
             _userManager = userManager;
@@ -74,7 +74,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account.Manage
             public string NewEmail { get; set; }
         }
 
-        private async Task LoadAsync(Userdetail user)
+        private async Task LoadAsync(UserDetail user)
         {
             var email = await _userManager.GetEmailAsync(user);
             Email = email;

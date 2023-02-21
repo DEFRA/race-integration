@@ -18,10 +18,10 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class RegisterConfirmationModel : PageModel
     {
-        private readonly UserManager<Userdetail> _userManager;
+        private readonly UserManager<UserDetail> _userManager;
         private readonly IEmailSender _sender;
 
-        public RegisterConfirmationModel(UserManager<Userdetail> userManager, IEmailSender sender)
+        public RegisterConfirmationModel(UserManager<UserDetail> userManager, IEmailSender sender)
         {
             _userManager = userManager;
             _sender = sender;

@@ -12,11 +12,11 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account.Manage
 {
     public class PersonalDataModel : PageModel
     {
-        private readonly UserManager<Userdetail> _userManager;
+        private readonly UserManager<UserDetail> _userManager;
         private readonly ILogger<PersonalDataModel> _logger;
 
         public PersonalDataModel(
-            UserManager<Userdetail> userManager,
+            UserManager<UserDetail> userManager,
             ILogger<PersonalDataModel> logger)
         {
             _userManager = userManager;

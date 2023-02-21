@@ -15,10 +15,10 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
 {
     public class LogoutModel : PageModel
     {
-        private readonly SignInManager<Userdetail> _signInManager;
+        private readonly SignInManager<UserDetail> _signInManager;
         private readonly ILogger<LogoutModel> _logger;
 
-        public LogoutModel(SignInManager<Userdetail> signInManager, ILogger<LogoutModel> logger)
+        public LogoutModel(SignInManager<UserDetail> signInManager, ILogger<LogoutModel> logger)
         {
             _signInManager = signInManager;
             _logger = logger;
