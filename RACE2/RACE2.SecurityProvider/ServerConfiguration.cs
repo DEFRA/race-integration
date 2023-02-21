@@ -100,10 +100,29 @@ namespace RACE2.SecurityProvider
                 PostLogoutRedirectUris = postLogoutRedirectUris
             };
 
-                
+            Client client3 = 
+                new Client
+                {
+                    ClientId = "webapi",
+                    ClientSecrets = new List<Secret> { new("secret".Sha512()) },
+                    ClientName = "Banana Cake Pop",
+                    AllowedGrantTypes = GrantTypes.Code,
+                    AllowedScopes = new List<string>
+                    {
+                        "openid",
+                        "profile",
+                        "email",
+                        "role",
+                        "race2WebApi"
+                    },
+                    AllowedCorsOrigins = new List<string> { "http://localhost:5003" },
+                    RedirectUris = new List<string> { "http://localhost:5003/graphql" }
+                };
+
+
             clients.Add(client1);
             clients.Add(client2);
-
+            clients.Add(client3);
             return clients;
         }        
     }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using RACE2.FrontEnd;
 using Microsoft.Extensions.Configuration;
 using RACE2.FrontEnd.StateObjects;
+using System.Net.Http.Headers;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -22,7 +23,12 @@ builder.Configuration.AddJsonStream(stream);
 string RACE2WebApiURL = builder.Configuration["RACE2WebApiURL"];
 
 builder.Services.AddRACE2GraphQLClient()
-    .ConfigureHttpClient(client => client.BaseAddress = new Uri(RACE2WebApiURL));
+    .ConfigureHttpClient(client =>
+    {
+        client.BaseAddress = new Uri(RACE2WebApiURL);
+        client.DefaultRequestHeaders.Authorization =
+            new AuthenticationHeaderValue("Bearer", "Your Oauth token");
+    }); 
 
 //builder.Services.AddOidcAuthentication(options =>
 //{

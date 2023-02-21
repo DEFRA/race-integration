@@ -9,7 +9,7 @@ using RACE2.WebApi.MutationResolver;
 using RACE2.WebApi.QueryResolver;
 using System.Configuration;
 using System.IdentityModel.Tokens.Jwt;
-
+using HotChocolate.AspNetCore.Voyager;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,7 +26,7 @@ builder.Services.AddAuthentication("Bearer")
             {
                 o.Authority = _configuration.RACE2SecurityProviderURL;
                 o.RequireHttpsMetadata = false;
-                o.Audience = "race2WebApiResource";
+                o.Audience = "race2WebApi";
                 o.TokenValidationParameters =
                     new TokenValidationParameters
                     {
@@ -56,7 +56,8 @@ builder.Services.AddCors(options =>
 builder.Services.AddGraphQLServer()
     .RegisterService<IUserService>()
     .AddQueryType<UserResolver>()
-    .AddMutationType<MutationResolver>();
+    .AddMutationType<MutationResolver>()
+    .AddAuthorization();
 
 //builder.Services.AddDbContext<RACE2.DataAccess.ApplicationDbContext>(options =>
 //options.UseSqlServer(connectionString));
@@ -71,8 +72,9 @@ app.UseRouting();
 
 app.UseAuthentication();
 
-app.UseAuthorization();
+//app.UseAuthorization();
 
 app.MapGraphQL();
+app.UseVoyager("/graphql","/graphql-voyager");
 
 app.Run();
