@@ -160,7 +160,12 @@ namespace RACE2.DataAccess
                 .Property(e => e.c_end_date);
 
             modelBuilder.Entity<UserRole>()
-                .Property(e => e.c_status);               
+                .Property(e => e.c_status);
+
+            modelBuilder.Entity<UserDetail>()
+                .HasMany(left => left.Reservoirs)
+                .WithMany(right => right.users)
+                .UsingEntity(join => join.ToTable("ReservoirUserDetails"));
         }
     }
 
