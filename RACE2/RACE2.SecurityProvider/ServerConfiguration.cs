@@ -5,9 +5,9 @@ using System.Security.Claims;
 
 namespace RACE2.SecurityProvider
 {
-    public  class ServerConfiguration
+    public  static class ServerConfiguration
     {
-        public List<IdentityResource> IdentityResources
+        public static List<IdentityResource> IdentityResources
         {
             get
             {
@@ -23,7 +23,7 @@ namespace RACE2.SecurityProvider
             }
         }
 
-        public List<ApiScope> ApiScopes
+        public static List<ApiScope> ApiScopes
         {
             get
             {
@@ -34,7 +34,7 @@ namespace RACE2.SecurityProvider
                         }
         }
 
-        public List<ApiResource> ApiResources
+        public static List<ApiResource> ApiResources
         {
             get
             {
@@ -59,7 +59,7 @@ namespace RACE2.SecurityProvider
             }
         }
 
-        public List<Client> Clients(string blazorClientURL)
+        public static List<Client> Clients(string blazorClientURL)
         {
             List<string> allowedCorsOrigins = new List<string>();
             allowedCorsOrigins.Add(blazorClientURL);
