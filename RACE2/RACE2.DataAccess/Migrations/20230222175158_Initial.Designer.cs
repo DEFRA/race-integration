@@ -12,7 +12,7 @@ using RACE2.DataAccess;
 namespace RACE2.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230221134349_Initial")]
+    [Migration("20230222175158_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,6 +23,21 @@ namespace RACE2.DataAccess.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("AddressUserDetail", b =>
+                {
+                    b.Property<int>("Addressesid")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserDetailId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Addressesid", "UserDetailId");
+
+                    b.HasIndex("UserDetailId");
+
+                    b.ToTable("AddressUserDetail");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
@@ -120,22 +135,28 @@ namespace RACE2.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
-                    b.Property<string>("BuildingNo")
+                    b.Property<string>("AddressLine1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AddressLine2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AddressLine3")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AddressLine4")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AddressType")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Country")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("County")
+                    b.Property<string>("NearestPostcode")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Postcode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Street")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Town")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");
@@ -179,7 +200,7 @@ namespace RACE2.DataAccess.Migrations
                     b.ToTable("FeatureFunctions");
                 });
 
-            modelBuilder.Entity("RACE2.DataModel.Reservoir", b =>
+            modelBuilder.Entity("RACE2.DataModel.Organisation", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -187,78 +208,17 @@ namespace RACE2.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
-                    b.Property<int?>("addressid")
+                    b.Property<int?>("Addressid")
                         .HasColumnType("int");
 
-                    b.Property<int>("capacity")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("construction_start_date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("grid_reference")
-                        .HasMaxLength(12)
-                        .HasColumnType("nvarchar(12)");
-
-                    b.Property<bool>("has_multiple_dams")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("key_facts")
-                        .HasMaxLength(512)
-                        .HasColumnType("nvarchar(512)");
-
-                    b.Property<DateTime>("last_inspection_date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("nearest_postcode")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<string>("nearest_town")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<DateTime>("next_inspection_date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("public_category")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<string>("public_name")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("race_reservoir_id")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<string>("reference_number")
-                        .HasMaxLength(8)
-                        .HasColumnType("nvarchar(8)");
-
-                    b.Property<string>("registered_category")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<string>("registered_name")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<int>("surface_area")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("top_water_level")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("verified_details_date")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("OrgName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");
 
-                    b.HasIndex("addressid");
+                    b.HasIndex("Addressid");
 
-                    b.ToTable("Reservoirs");
+                    b.ToTable("Organisations");
                 });
 
             modelBuilder.Entity("RACE2.DataModel.Role", b =>
@@ -557,21 +517,6 @@ namespace RACE2.DataAccess.Migrations
                     b.ToTable("AspNetUserRoles", (string)null);
                 });
 
-            modelBuilder.Entity("ReservoirUserDetail", b =>
-                {
-                    b.Property<int>("Reservoirsid")
-                        .HasColumnType("int");
-
-                    b.Property<int>("usersId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Reservoirsid", "usersId");
-
-                    b.HasIndex("usersId");
-
-                    b.ToTable("ReservoirUserDetails", (string)null);
-                });
-
             modelBuilder.Entity("RoleUserDetail", b =>
                 {
                     b.Property<int>("RolesId")
@@ -585,6 +530,21 @@ namespace RACE2.DataAccess.Migrations
                     b.HasIndex("UserDetailId");
 
                     b.ToTable("RoleUserDetail");
+                });
+
+            modelBuilder.Entity("AddressUserDetail", b =>
+                {
+                    b.HasOne("RACE2.DataModel.Address", null)
+                        .WithMany()
+                        .HasForeignKey("Addressesid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RACE2.DataModel.UserDetail", null)
+                        .WithMany()
+                        .HasForeignKey("UserDetailId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -623,13 +583,11 @@ namespace RACE2.DataAccess.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("RACE2.DataModel.Reservoir", b =>
+            modelBuilder.Entity("RACE2.DataModel.Organisation", b =>
                 {
-                    b.HasOne("RACE2.DataModel.Address", "address")
-                        .WithMany()
-                        .HasForeignKey("addressid");
-
-                    b.Navigation("address");
+                    b.HasOne("RACE2.DataModel.Address", null)
+                        .WithMany("Organisation")
+                        .HasForeignKey("Addressid");
                 });
 
             modelBuilder.Entity("RACE2.DataModel.UserPermission", b =>
@@ -658,21 +616,6 @@ namespace RACE2.DataAccess.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ReservoirUserDetail", b =>
-                {
-                    b.HasOne("RACE2.DataModel.Reservoir", null)
-                        .WithMany()
-                        .HasForeignKey("Reservoirsid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("RACE2.DataModel.UserDetail", null)
-                        .WithMany()
-                        .HasForeignKey("usersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("RoleUserDetail", b =>
                 {
                     b.HasOne("RACE2.DataModel.Role", null)
@@ -686,6 +629,11 @@ namespace RACE2.DataAccess.Migrations
                         .HasForeignKey("UserDetailId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("RACE2.DataModel.Address", b =>
+                {
+                    b.Navigation("Organisation");
                 });
 
             modelBuilder.Entity("RACE2.DataModel.FeatureFunction", b =>

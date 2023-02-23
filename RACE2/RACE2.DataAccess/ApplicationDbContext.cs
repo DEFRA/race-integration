@@ -162,10 +162,16 @@ namespace RACE2.DataAccess
             modelBuilder.Entity<UserRole>()
                 .Property(e => e.c_status);
 
-            modelBuilder.Entity<UserDetail>()
-                .HasMany(left => left.Reservoirs)
-                .WithMany(right => right.users)
-                .UsingEntity(join => join.ToTable("ReservoirUserDetails"));
+            //modelBuilder.Entity<UserDetail>()
+            //    .HasMany(left => left.Reservoirs)
+            //    .WithMany(right => right.users)
+            //    .UsingEntity(join => join.ToTable("UserReservoirs"));
+
+
+            //modelBuilder.Entity<UserDetail>()
+            //    .HasMany(left => left.Reservoirs)
+            //    .WithMany(right => right.users)
+            //    .UsingEntity(join => join.ToTable("UserReservoirs"));
         }
     }
 

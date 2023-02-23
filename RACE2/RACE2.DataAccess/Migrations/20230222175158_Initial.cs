@@ -15,12 +15,14 @@ namespace RACE2.DataAccess.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    BuildingNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Street = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Town = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    County = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AddressType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AddressLine1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AddressLine2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AddressLine3 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AddressLine4 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Country = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Postcode = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Postcode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NearestPostcode = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -111,37 +113,20 @@ namespace RACE2.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Reservoirs",
+                name: "Organisations",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    race_reservoir_id = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
-                    public_name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
-                    registered_name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
-                    reference_number = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: true),
-                    public_category = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
-                    registered_category = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
-                    grid_reference = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: true),
-                    nearest_postcode = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
-                    nearest_town = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
-                    capacity = table.Column<int>(type: "int", nullable: false),
-                    surface_area = table.Column<int>(type: "int", nullable: false),
-                    top_water_level = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    has_multiple_dams = table.Column<bool>(type: "bit", nullable: false),
-                    key_facts = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true),
-                    construction_start_date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    verified_details_date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    last_inspection_date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    next_inspection_date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    addressid = table.Column<int>(type: "int", nullable: true)
+                    OrgName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Addressid = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Reservoirs", x => x.id);
+                    table.PrimaryKey("PK_Organisations", x => x.id);
                     table.ForeignKey(
-                        name: "FK_Reservoirs_Addresses_addressid",
-                        column: x => x.addressid,
+                        name: "FK_Organisations_Addresses_Addressid",
+                        column: x => x.Addressid,
                         principalTable: "Addresses",
                         principalColumn: "id");
                 });
@@ -163,6 +148,30 @@ namespace RACE2.DataAccess.Migrations
                         name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AddressUserDetail",
+                columns: table => new
+                {
+                    Addressesid = table.Column<int>(type: "int", nullable: false),
+                    UserDetailId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AddressUserDetail", x => new { x.Addressesid, x.UserDetailId });
+                    table.ForeignKey(
+                        name: "FK_AddressUserDetail_Addresses_Addressesid",
+                        column: x => x.Addressesid,
+                        principalTable: "Addresses",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AddressUserDetail_AspNetUsers_UserDetailId",
+                        column: x => x.UserDetailId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -310,29 +319,10 @@ namespace RACE2.DataAccess.Migrations
                         principalColumn: "Id");
                 });
 
-            migrationBuilder.CreateTable(
-                name: "ReservoirUserDetails",
-                columns: table => new
-                {
-                    Reservoirsid = table.Column<int>(type: "int", nullable: false),
-                    usersId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ReservoirUserDetails", x => new { x.Reservoirsid, x.usersId });
-                    table.ForeignKey(
-                        name: "FK_ReservoirUserDetails_AspNetUsers_usersId",
-                        column: x => x.usersId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ReservoirUserDetails_Reservoirs_Reservoirsid",
-                        column: x => x.Reservoirsid,
-                        principalTable: "Reservoirs",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+            migrationBuilder.CreateIndex(
+                name: "IX_AddressUserDetail_UserDetailId",
+                table: "AddressUserDetail",
+                column: "UserDetailId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -379,14 +369,9 @@ namespace RACE2.DataAccess.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reservoirs_addressid",
-                table: "Reservoirs",
-                column: "addressid");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ReservoirUserDetails_usersId",
-                table: "ReservoirUserDetails",
-                column: "usersId");
+                name: "IX_Organisations_Addressid",
+                table: "Organisations",
+                column: "Addressid");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RoleUserDetail_UserDetailId",
@@ -407,6 +392,9 @@ namespace RACE2.DataAccess.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "AddressUserDetail");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
             migrationBuilder.DropTable(
@@ -422,7 +410,7 @@ namespace RACE2.DataAccess.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "ReservoirUserDetails");
+                name: "Organisations");
 
             migrationBuilder.DropTable(
                 name: "RoleUserDetail");
@@ -431,7 +419,7 @@ namespace RACE2.DataAccess.Migrations
                 name: "UserPermissions");
 
             migrationBuilder.DropTable(
-                name: "Reservoirs");
+                name: "Addresses");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
@@ -441,9 +429,6 @@ namespace RACE2.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "FeatureFunctions");
-
-            migrationBuilder.DropTable(
-                name: "Addresses");
         }
     }
 }

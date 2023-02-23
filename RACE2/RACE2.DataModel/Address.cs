@@ -13,14 +13,20 @@ namespace RACE2.DataModel
     {
         [Key, Required]
         public int id { get; set; }
-
-        public string?  BuildingNo { get; set; }
-        public string? Street { get; set; }
-        public string? Town { get; set; }
-        public string? County { get; set; }
+        public string?  AddressType { get; set; }
+        public string? AddressLine1 { get; set; }
+        public string? AddressLine2 { get; set; }
+        public string? AddressLine3 { get; set; }
+        public string? AddressLine4 { get; set; }
         public string? Country { get; set; }
+
         public string? Postcode { get; set; }
 
+        public string? NearestPostcode { get; set; }
+
+        public List<UserDetail> UserDetail { get; set; }    = new List<UserDetail>();
+
+        public List<Organisation> Organisation { get; set; } = new List<Organisation>();
 
     }
 }
