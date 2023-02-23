@@ -29,10 +29,7 @@ namespace RACE2.DataModel
         public string? registered_category { get;set; }
         [StringLength(12)]
         public string? grid_reference { get; set; }
-        [StringLength(64)]
-        public string? nearest_postcode { get; set; }
-        [StringLength(64)]
-        public string? nearest_town { get; set; }
+       
         public int capacity { get; set; }
         public int surface_area { get; set; }
         public decimal top_water_level { get; set; }
@@ -46,7 +43,7 @@ namespace RACE2.DataModel
 
         public DateTime next_inspection_date { get; set; }
 
-        public List<UserDetail> users { get; set; } = new List<UserDetail>();
+       // public List<UserDetail> users { get; set; } = new List<UserDetail>();
 
         public Address? address { get; set; }
 

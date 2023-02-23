@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RACE2.DataAccess;
 
@@ -11,9 +12,10 @@ using RACE2.DataAccess;
 namespace RACE2.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230223103326_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -148,16 +150,25 @@ namespace RACE2.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
+                    b.Property<string>("AddressLine1")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("AddressLine2")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("AddressLine3")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("AddressLine4")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("AddressType")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Country")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NearestPostcode")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Postcode")
@@ -250,14 +261,6 @@ namespace RACE2.DataAccess.Migrations
 
                     b.Property<DateTime>("last_inspection_date")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("nearest_postcode")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<string>("nearest_town")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
 
                     b.Property<DateTime>("next_inspection_date")
                         .HasColumnType("datetime2");
@@ -637,21 +640,6 @@ namespace RACE2.DataAccess.Migrations
                     b.ToTable("AspNetUserRoles", (string)null);
                 });
 
-            modelBuilder.Entity("ReservoirUserDetail", b =>
-                {
-                    b.Property<int>("Reservoirsid")
-                        .HasColumnType("int");
-
-                    b.Property<int>("usersId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Reservoirsid", "usersId");
-
-                    b.HasIndex("usersId");
-
-                    b.ToTable("ReservoirUserDetail");
-                });
-
             modelBuilder.Entity("RoleUserDetail", b =>
                 {
                     b.Property<int>("RolesId")
@@ -753,12 +741,17 @@ namespace RACE2.DataAccess.Migrations
                         .HasForeignKey("RoleId");
                 });
 
+            modelBuilder.Entity("RACE2.DataModel.UserReservoir", b =>
                 {
+                    b.HasOne("RACE2.DataModel.Reservoir", "Reservoir")
                         .WithMany()
+                        .HasForeignKey("Reservoirid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("RACE2.DataModel.UserDetail", "UserDetail")
                         .WithMany()
+                        .HasForeignKey("UserDetailId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -767,13 +760,17 @@ namespace RACE2.DataAccess.Migrations
                     b.Navigation("UserDetail");
                 });
 
+            modelBuilder.Entity("RACE2.DataModel.UserRole", b =>
                 {
+                    b.HasOne("RACE2.DataModel.Role", null)
                         .WithMany()
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("RACE2.DataModel.UserDetail", null)
                         .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -53,6 +53,8 @@ namespace RACE2.DataModel
 
             public List<Role> Roles { get; set; } =new List<Role>();
 
-            public List<Reservoir> Reservoirs { get; set; } =new List<Reservoir>();
+           // public List<Reservoir> Reservoirs { get; set; } =new List<Reservoir>();
+
+        public List<Address> Addresses { get; set; }  = new List<Address>();
     }
 }

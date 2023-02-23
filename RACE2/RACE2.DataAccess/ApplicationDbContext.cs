@@ -21,6 +21,11 @@ namespace RACE2.DataAccess
         public DbSet<FeatureFunction> FeatureFunctions { get; set; }
 
         public DbSet<UserPermission> UserPermissions { get; set; }
+        public DbSet<Reservoir> Reservoirs { get; set; }
+
+        public DbSet<Organisation> Organisations { get; set; }
+
+        public DbSet<UserReservoir> UserReservoirs { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -160,7 +165,23 @@ namespace RACE2.DataAccess
                 .Property(e => e.c_end_date);
 
             modelBuilder.Entity<UserRole>()
-                .Property(e => e.c_status);               
+                .Property(e => e.c_status);
+
+            //modelBuilder.Entity<UserDetail>()
+            //    .HasMany(left => left.Reservoirs)
+            //    .WithMany(right => right.users)
+            //    .UsingEntity(join => join.ToTable("UserReservoirs"));
+
+
+            modelBuilder.Entity<Address>()
+                .HasMany(left => left.UserDetail)
+                .WithMany(right => right.Addresses)
+                .UsingEntity(join => join.ToTable("UserAddresses"));
+
+            modelBuilder.Entity<Address>()
+                .HasMany(left => left.Organisation)
+                .WithMany(right => right.Addresses)
+                .UsingEntity(join => join.ToTable("OrganisationAddresses"));
         }
     }
 
