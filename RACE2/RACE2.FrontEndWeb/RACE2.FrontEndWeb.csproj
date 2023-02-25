@@ -8,18 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <AdditionalFiles Include="RACE2GraphQLSchema\GetAllUsers.graphql">
-      <GraphQL>true</GraphQL>
-    </AdditionalFiles>
-    <AdditionalFiles Include="RACE2GraphQLSchema\GetUserByEmailID.graphql">
-      <GraphQL>true</GraphQL>
-    </AdditionalFiles>
-	  <AdditionalFiles Include="RACE2GraphQLSchema\GetUserWithRoles.graphql">
-		  <GraphQL>true</GraphQL>
-	  </AdditionalFiles>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
     <PackageReference Include="StrawberryShake.Blazor" Version="13.0.5" />
 	<PackageReference Include="System.Reactive" Version="5.0.0" />
@@ -27,45 +15,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RACE2.DataModel\RACE2.DataModel.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Update="Components\ChooseAReservoir.razor">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </Content>
-    <Content Update="Components\CreatePassword.razor">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </Content>
-    <Content Update="Components\EnterEmail.razor">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </Content>
-    <Content Update="Components\Home.razor">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </Content>
-    <Content Update="Components\NewReservoir.razor">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </Content>
-    <Content Update="Components\NonStat.razor">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </Content>
-    <Content Update="Components\ReservoirDetails.razor">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </Content>
-    <Content Update="Components\ReservoirNotListed.razor">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </Content>
-    <Content Update="Components\StatNonStat.razor">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <GraphQL Update="RACE2GraphQLSchema\GetUserById.graphql">
-      <GraphQL>true</GraphQL>
-    </GraphQL>
-    <GraphQL Update="RACE2GraphQLSchema\GetUserWithRoles.graphql">
-      <GraphQL>true</GraphQL>
-    </GraphQL>
-  </ItemGroup>
+  </ItemGroup> 
 
 </Project>
