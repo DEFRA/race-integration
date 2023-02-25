@@ -4,6 +4,11 @@ using RACE2.FrontEnd;
 using Microsoft.Extensions.Configuration;
 using RACE2.FrontEnd.StateObjects;
 using System.Net.Http.Headers;
+using RACE2.DataModel;
+using RACE2.FrontEnd.State;
+using RACE2.DataAccess;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -20,8 +25,10 @@ using var configSettings = await httpClient.GetAsync("settings.json");
 using var stream = await configSettings.Content.ReadAsStreamAsync();
 
 builder.Configuration.AddJsonStream(stream);
+builder.Services.AddIdentity<UserDetail,Role>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<ApplicationDbContext>();
 string RACE2WebApiURL = builder.Configuration["RACE2WebApiURL"];
-
+builder.Services.AddScoped<IPasswordHasher<UserDetail>, PasswordHasher<UserDetail>>();
 builder.Services.AddRACE2GraphQLClient()
     .ConfigureHttpClient(client =>
     {

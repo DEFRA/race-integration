@@ -2,7 +2,8 @@
 {
   userByEmailID(email:$newemail) {
     id
-    c_last_name
+    userName
     email
+    passwordHash
   }   
 }

@@ -48,5 +48,12 @@ namespace RACE2.FrontEnd.Utilities
                 return false;
             }
         }
+
+        public static bool IsValidPasswordl(string password)
+        {
+            string regex = @"^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&amp;])[A-Za-z\d$@$!%*#?&amp;]{8,}$";
+            var match = Regex.Match(password, regex, RegexOptions.IgnoreCase);
+            return match.Success;
+        }
     }
 }
