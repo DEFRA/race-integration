@@ -17,6 +17,6 @@ namespace RACE2.DataModel
 
         public List<Address> Addresses { get; set; } = new List<Address>();
 
-        public UserDetail UserDetail { get; set; }
+        
     }
 }

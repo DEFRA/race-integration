@@ -49,6 +49,8 @@ namespace RACE2.DataModel
 
            // public List<Reservoir> Reservoirs { get; set; } =new List<Reservoir>();
 
-        public List<Address> Addresses { get; set; }  = new List<Address>();
+      //  public List<Address> Addresses { get; set; }  = new List<Address>();
+
+        public Organisation? OrganisationId { get; set; }
     }
 }

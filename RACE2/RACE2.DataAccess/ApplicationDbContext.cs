@@ -26,6 +26,8 @@ namespace RACE2.DataAccess
         public DbSet<Organisation> Organisations { get; set; }
 
         public DbSet<UserReservoir> UserReservoirs { get; set; }
+
+        public DbSet<UserAddress> UserAddresses { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -50,10 +52,10 @@ namespace RACE2.DataAccess
                 .HasMaxLength(64)
                 .IsRequired(true);
 
-            modelBuilder.Entity<UserDetail>()
-                .Property(e => e.c_display_name)
-                .HasDefaultValue(" ")
-                .HasMaxLength(128);
+            //modelBuilder.Entity<UserDetail>()
+            //    .Property(e => e.c_display_name)
+            //    .HasDefaultValue(" ")
+            //    .HasMaxLength(128);
 
             modelBuilder.Entity<UserDetail>()
                 .Property(e => e.c_first_name)
@@ -83,10 +85,10 @@ namespace RACE2.DataAccess
                 .HasDefaultValue(" ")
                 .HasMaxLength(64);
 
-            modelBuilder.Entity<UserDetail>()
-                .Property(e => e.c_organisation_name)
-                .HasDefaultValue(" ")
-                .HasMaxLength(64);
+            //modelBuilder.Entity<UserDetail>()
+            //    .Property(e => e.c_organisation_name)
+            //    .HasDefaultValue(" ")
+            //    .HasMaxLength(64);
 
             modelBuilder.Entity<UserDetail>()
                 .Property(e => e.c_job_title)
@@ -122,19 +124,19 @@ namespace RACE2.DataAccess
             modelBuilder.Entity<UserDetail>()
                 .Property(e => e.c_last_access_date);
 
-            modelBuilder.Entity<UserDetail>()
-                .Property(e => e.c_password)
-                .HasDefaultValue(" ")
-                .HasMaxLength(24);
+            //modelBuilder.Entity<UserDetail>()
+            //    .Property(e => e.c_password)
+            //    .HasDefaultValue(" ")
+            //    .HasMaxLength(24);
 
-            modelBuilder.Entity<UserDetail>()
-                .Property(e => e.c_password_hint)
-                .HasDefaultValue(" ")
-                .HasMaxLength(128);
+            //modelBuilder.Entity<UserDetail>()
+            //    .Property(e => e.c_password_hint)
+            //    .HasDefaultValue(" ")
+            //    .HasMaxLength(128);
 
-            modelBuilder.Entity<UserDetail>()
-                .Property(e => e.c_password_retry_count)
-                .HasDefaultValue(0);
+            //modelBuilder.Entity<UserDetail>()
+            //    .Property(e => e.c_password_retry_count)
+            //    .HasDefaultValue(0);
 
             modelBuilder.Entity<Role>()
                 .Property(e => e.c_display_name)
@@ -173,10 +175,10 @@ namespace RACE2.DataAccess
             //    .UsingEntity(join => join.ToTable("UserReservoirs"));
 
 
-            modelBuilder.Entity<Address>()
-                .HasMany(left => left.UserDetail)
-                .WithMany(right => right.Addresses)
-                .UsingEntity(join => join.ToTable("UserAddresses"));
+            //modelBuilder.Entity<Address>()
+            //    .HasMany(left => left.UserDetail)
+            //    .WithMany(right => right.Addresses)
+            //    .UsingEntity(join => join.ToTable("UserAddresses"));
 
             modelBuilder.Entity<Address>()
                 .HasMany(left => left.Organisation)

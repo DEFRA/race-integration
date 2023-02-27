@@ -105,13 +105,13 @@ namespace RACE2.DataAccess.Repository
             //parameters.Add("Id", newuser.Id, DbType.String);
             parameters.Add("c_defra_id", newuser.c_defra_id, DbType.String);
             parameters.Add("c_type", newuser.c_type, DbType.String);
-            parameters.Add("c_display_name", newuser.c_display_name, DbType.String);
+          //  parameters.Add("c_display_name", newuser.c_display_name, DbType.String);
             parameters.Add("c_first_name", newuser.c_first_name, DbType.String);
             parameters.Add("c_last_name", newuser.c_last_name, DbType.String);
             parameters.Add("c_status", newuser.c_status, DbType.String);
             parameters.Add("c_created_on_date", newuser.c_created_on_date, DbType.DateTime);
             parameters.Add("c_last_access_date", newuser.c_last_access_date, DbType.DateTime);
-            parameters.Add("c_password_retry_count", newuser.c_password_retry_count, DbType.Int32);
+           // parameters.Add("c_password_retry_count", newuser.c_password_retry_count, DbType.Int32);
             parameters.Add("EmailConfirmed", newuser.EmailConfirmed, DbType.Byte);
             parameters.Add("PhoneNumberConfirmed", newuser.PhoneNumberConfirmed, DbType.Byte);
             parameters.Add("TwoFactorEnabled", newuser.TwoFactorEnabled, DbType.Byte);
@@ -128,13 +128,13 @@ namespace RACE2.DataAccess.Repository
                     Id = newuser.Id,
                     c_defra_id = newuser.c_defra_id,
                     c_type = newuser.c_type,
-                    c_display_name = newuser.c_display_name,
+                  //  c_display_name = newuser.c_display_name,
                     c_first_name = newuser.c_first_name,
                     c_last_name = newuser.c_last_name,
                     c_status = newuser.c_status,
                     c_created_on_date = newuser.c_created_on_date,
                     c_last_access_date = newuser.c_last_access_date,
-                    c_password_retry_count = newuser.c_password_retry_count,
+                  //  c_password_retry_count = newuser.c_password_retry_count,
                     EmailConfirmed = newuser.EmailConfirmed,
                     PhoneNumberConfirmed = newuser.PhoneNumberConfirmed,
                     TwoFactorEnabled = newuser.TwoFactorEnabled,
@@ -159,13 +159,13 @@ namespace RACE2.DataAccess.Repository
                     //parameters.Add("Id", newuser.Id, DbType.String);
                     parameters.Add("c_defra_id", loginuser.c_defra_id, DbType.String);
                     parameters.Add("c_type", loginuser.c_type, DbType.String);
-                    parameters.Add("c_display_name", loginuser.c_display_name, DbType.String);
+                  //  parameters.Add("c_display_name", loginuser.c_display_name, DbType.String);
                     parameters.Add("c_first_name", loginuser.c_first_name, DbType.String);
                     parameters.Add("c_last_name", loginuser.c_last_name, DbType.String);
                     parameters.Add("c_mobile", loginuser.c_mobile, DbType.String);
                     parameters.Add("c_emergency_phone", loginuser.c_emergency_phone, DbType.String);
-                    parameters.Add("c_organisation_id", loginuser.c_organisation_id, DbType.String);
-                    parameters.Add("c_organisation_name", loginuser.c_organisation_name, DbType.String);
+                   // parameters.Add("c_organisation_id", loginuser.c_organisation_id, DbType.String);
+                   // parameters.Add("c_organisation_name", loginuser.c_organisation_name, DbType.String);
                     parameters.Add("c_job_title", loginuser.c_job_title, DbType.String);
                     parameters.Add("c_current_panel", loginuser.c_current_panel, DbType.String);
                     parameters.Add("c_paon", loginuser.c_paon, DbType.String);
@@ -173,7 +173,7 @@ namespace RACE2.DataAccess.Repository
                     parameters.Add("c_status", loginuser.c_status, DbType.String);
                     parameters.Add("c_created_on_date", loginuser.c_created_on_date, DbType.DateTime);
                     parameters.Add("c_last_access_date", loginuser.c_last_access_date, DbType.DateTime);
-                    parameters.Add("c_password_retry_count", loginuser.c_password_retry_count, DbType.Int32);
+                   // parameters.Add("c_password_retry_count", loginuser.c_password_retry_count, DbType.Int32);
                     parameters.Add("UserName", loginuser.UserName, DbType.String);
                     parameters.Add("NormalizedUserName", loginuser.NormalizedUserName, DbType.String);
                     parameters.Add("Email", loginuser.Email, DbType.String);
@@ -206,13 +206,13 @@ namespace RACE2.DataAccess.Repository
                     parameters.Add("Id", res.Id, DbType.String);
                     parameters.Add("c_defra_id", loginuser.c_defra_id, DbType.String);
                     parameters.Add("c_type", loginuser.c_type, DbType.String);
-                    parameters.Add("c_display_name", loginuser.c_display_name, DbType.String);
+                   // parameters.Add("c_display_name", loginuser.c_display_name, DbType.String);
                     parameters.Add("c_first_name", loginuser.c_first_name, DbType.String);
                     parameters.Add("c_last_name", loginuser.c_last_name, DbType.String);
                     parameters.Add("c_mobile", loginuser.c_mobile, DbType.String);
                     parameters.Add("c_emergency_phone", loginuser.c_emergency_phone, DbType.String);
-                    parameters.Add("c_organisation_id", loginuser.c_organisation_id, DbType.String);
-                    parameters.Add("c_organisation_name", loginuser.c_organisation_name, DbType.String);
+                   // parameters.Add("c_organisation_id", loginuser.c_organisation_id, DbType.String);
+                   // parameters.Add("c_organisation_name", loginuser.c_organisation_name, DbType.String);
                     parameters.Add("c_job_title", loginuser.c_job_title, DbType.String);
                     parameters.Add("c_current_panel", loginuser.c_current_panel, DbType.String);
                     parameters.Add("c_paon", loginuser.c_paon, DbType.String);
@@ -220,7 +220,7 @@ namespace RACE2.DataAccess.Repository
                     parameters.Add("c_status", loginuser.c_status, DbType.String);
                     parameters.Add("c_created_on_date", loginuser.c_created_on_date, DbType.DateTime);
                     parameters.Add("c_last_access_date", loginuser.c_last_access_date, DbType.DateTime);
-                    parameters.Add("c_password_retry_count", loginuser.c_password_retry_count, DbType.Int32);
+                   // parameters.Add("c_password_retry_count", loginuser.c_password_retry_count, DbType.Int32);
                     parameters.Add("UserName", loginuser.UserName, DbType.String);
                     parameters.Add("NormalizedUserName", loginuser.NormalizedUserName, DbType.String);
                     parameters.Add("Email", loginuser.Email, DbType.String);
