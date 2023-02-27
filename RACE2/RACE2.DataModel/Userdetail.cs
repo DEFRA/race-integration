@@ -10,15 +10,12 @@ using Microsoft.AspNetCore.Identity;
 namespace RACE2.DataModel
 {
     [Table("UserDetails")]
-    public  class UserDetail: IdentityUser<int>    {   
-        
-           
+    public  class UserDetail: IdentityUser<int>    
+    {    
             public string? c_defra_id { get; set; }
            
-            public string? c_type { get; set; }
-            
-                     
-           
+            public string? c_type { get; set; }         
+         
             public string? c_first_name { get; set; }
          
             public string? c_last_name { get; set; }        
@@ -42,15 +39,14 @@ namespace RACE2.DataModel
          
             public DateTime c_created_on_date { get; set; }
 
-            public DateTime c_last_access_date { get; set; }       
-        
+            public DateTime c_last_access_date { get; set; }     
            
             public List<Role> Roles { get; set; } =new List<Role>();
 
-           // public List<Reservoir> Reservoirs { get; set; } =new List<Reservoir>();
+            // public List<Reservoir> Reservoirs { get; set; } =new List<Reservoir>();
 
-      //  public List<Address> Addresses { get; set; }  = new List<Address>();
+            //  public List<Address> Addresses { get; set; }  = new List<Address>();
 
-        public Organisation? OrganisationId { get; set; }
+             public Organisation? OrganisationId { get; set; }
     }
 }

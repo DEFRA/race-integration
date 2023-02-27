@@ -13,7 +13,6 @@ namespace RACE2.DataModel
     {
         [Key, Required]
         public int id { get; set; }
-       // public string?  AddressType { get; set; }
         public string? AddressLine1 { get; set; }
         public string? AddressLine2 { get; set; }
         public string? AddressLine3 { get; set; }

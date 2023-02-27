@@ -1,5 +1,4 @@
 ﻿@page "/stat-non-stat"
-@inject NavigationManager NavigationManager
 
 <div class="govuk-width-container ">
     <a class="govuk-back-link" href="javascript:history.back()">Back</a>
@@ -38,27 +37,3 @@
     </main>
 </div>
 
-@code {
-    public class StatNonStatClass{
-        public enum StatNonStatEnum { Statutory=1,NonStatutory=2 };
-        public StatNonStatEnum StatNonStatOptions = 0;
-    }
-
-    private StatNonStatClass _statnonstat = new StatNonStatClass();
-
-    public void GoToNextPage()
-    {
-        var value = _statnonstat.StatNonStatOptions.ToString();
-
-        bool forceLoad = true;
-
-        if (value =="Statutory")
-        {
-            NavigationManager.NavigateTo("/choose-a-reservoir/", forceLoad);
-        }
-        else
-        {
-            NavigationManager.NavigateTo("/non-stat", forceLoad);
-        }
-    }
-}
