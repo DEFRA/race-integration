@@ -16,5 +16,7 @@ namespace RACE2.DataModel
         public string? OrgName { get; set; }
 
         public List<Address> Addresses { get; set; } = new List<Address>();
+
+        
     }
 }

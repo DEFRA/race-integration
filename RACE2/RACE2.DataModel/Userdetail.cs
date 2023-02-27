@@ -17,7 +17,7 @@ namespace RACE2.DataModel
            
             public string? c_type { get; set; }
             
-            public string? c_display_name { get; set; }            
+                     
            
             public string? c_first_name { get; set; }
          
@@ -27,10 +27,9 @@ namespace RACE2.DataModel
                   
             public string? c_emergency_phone { get; set; }
             
-            public string? c_organisation_id { get; set; }
+           // public string? c_organisation_id { get; set; }
            
-            public string? c_organisation_name { get; set; }
-           
+                      
             public string? c_job_title { get; set; }
           
             public string? c_current_panel { get; set; }
@@ -45,16 +44,13 @@ namespace RACE2.DataModel
 
             public DateTime c_last_access_date { get; set; }       
         
-            public string? c_password { get; set; }       
-        
-            public string? c_password_hint { get; set; }
-
-            public int c_password_retry_count { get; set; }
-
+           
             public List<Role> Roles { get; set; } =new List<Role>();
 
            // public List<Reservoir> Reservoirs { get; set; } =new List<Reservoir>();
 
-        public List<Address> Addresses { get; set; }  = new List<Address>();
+      //  public List<Address> Addresses { get; set; }  = new List<Address>();
+
+        public Organisation? OrganisationId { get; set; }
     }
 }
