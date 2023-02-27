@@ -89,6 +89,12 @@ namespace RACE2.DataAccess.Repository
                     return groupedUser;
                 });
                 return result.FirstOrDefault();
+
+                //getfeaturefuntion(userid)
+                //getreservoirs(userid)
+                //getaddress(userid)
+                
+
             }
         }
         public async Task<UserDetail> CreateUser(UserDetail newuser)
