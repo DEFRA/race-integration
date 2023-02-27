@@ -1,24 +1,9 @@
 ﻿@page "/reservoir-details"
-@inject AppState appState
-@implements IDisposable
+
 <div class="govuk-width-container ">
 
     <a class="govuk-back-link" href="javascript:history.back()">Back</a>
     <h3>reservoir_details</h3>
-    <h3>Search results for "@appState.GetReservoirName()</h3>
+    <h3>Search results for @CurrentReservoir.public_name</h3>
 </div>
 
-@code {
-    public string ReservoirName { get; set; } = default!; 
-
-    void OnReservoirNameStateChange(object sender, EventArgs e) => StateHasChanged();
-    protected override void OnInitialized()
-    {
-        appState.StateChangeHandler += OnReservoirNameStateChange;
-    }
-
-    void IDisposable.Dispose()
-    {
-        appState.StateChangeHandler -= OnReservoirNameStateChange;
-    }
-}

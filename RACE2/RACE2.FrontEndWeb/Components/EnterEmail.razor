@@ -1,7 +1,4 @@
 ﻿@page "/enter-email"
-@inject RACE2GraphQLClient client
-@inject NavigationManager NavigationManager
-@inject AppState appState
 
 <div class="govuk-width-container ">
 
@@ -9,7 +6,7 @@
 
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds" style="margin-top:40px;">
-            <EditForm Model="appState">
+            <EditForm Model=AppStore.CurrentUserDetail>
                <div class="govuk-form-group">
                     <h1 class="govuk-label-wrapper">
                         <label class="govuk-label govuk-label--l" for="event-name">
@@ -29,7 +26,7 @@
     </div>
 </div>
 
-@code {
+@*@code {
     string? Email;
     UserDetail CurrentUser;
     private string errorMsg1 = "Email entered does not exist!!! Please try again.";
@@ -88,4 +85,4 @@
             appState.SetEmail(Email);
         }        
     }
- }
+ }*@

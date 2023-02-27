@@ -1,8 +1,8 @@
+using Fluxor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Identity;
 using RACE2.DataModel;
-using RACE2.FrontEndWeb.StateObjects;
 using static System.Net.WebRequestMethods;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,12 +11,17 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddScoped<AppState>();
 builder.Services.AddScoped<IPasswordHasher<UserDetail>, PasswordHasher<UserDetail>>();
 
 builder.Services.AddRACE2GraphQLClient()
     //.ConfigureHttpClient(client => client.BaseAddress = new Uri(RACE2WebApiURL));
     .ConfigureHttpClient(client => client.BaseAddress = new Uri("http://localhost:5003/graphql/"));
+
+builder.Services.AddFluxor(o => 
+{ 
+    o.ScanAssemblies(typeof(Program).Assembly); 
+    o.UseReduxDevTools(rdt => { rdt.Name = "RACE2 application"; });
+});
 
 var app = builder.Build();
 
