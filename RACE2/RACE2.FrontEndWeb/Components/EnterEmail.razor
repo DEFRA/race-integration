@@ -31,6 +31,7 @@
 
 @code {
     string? Email;
+    UserDetail CurrentUser;
     private string errorMsg1 = "Email entered does not exist!!! Please try again.";
     private string errorMsg2 = "Input is not a valid email address!!! Please try again.";
 
@@ -49,6 +50,12 @@
         if (result != null && result.Data != null && result.Data.UserByEmailID.Email != null)
         {
             string pwh = result!.Data!.UserByEmailID.PasswordHash;
+            CurrentUser = new UserDetail(){
+                    Id = result!.Data!.UserByEmailID.Id,
+                    Email = result!.Data!.UserByEmailID.Email,
+                    UserName = result!.Data!.UserByEmailID.UserName,
+                    PasswordHash = result!.Data!.UserByEmailID.PasswordHash
+            };
             return result!.Data!.UserByEmailID.Email;
         }
         else
@@ -65,6 +72,7 @@
             if (emailInDatabase != null && emailInDatabase.Trim().Length != 0)
             {
                 appState.SetEmail(emailInDatabase);
+                appState.SetUser(CurrentUser);
                 string pagelink = "/create-password/";
                 NavigationManager.NavigateTo(pagelink, forceLoad);
             }
