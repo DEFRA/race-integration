@@ -18,6 +18,7 @@ namespace RACE2.DataAccess.Repository
         public Task<UserDetail> GetUserWithRoles(string email);
         public Task<UserDetail> MatchUserWithEmailAndPasswordHash(string email, string passwordhash);
         public Task<UserDetail> UpdatePasswordHashForUser(int id, string passwordhash);
+        public Task<UserDetail> GetReservoirsByUserId(int id);
 
     }
 }

@@ -34,6 +34,12 @@ namespace RACE2.WebApi.QueryResolver
         {
             var result = await _userService.MatchUserWithEmailAndPasswordHash(email,passwordhash);
             return result;
-        }       
+        }
+
+        public async Task<UserDetail> GetReservoirsByUserId(IUserService _userService, int id)
+        {
+            var result = await _userService.GetReservoirsByUserId(id);
+            return result;
+        }
     }
 }

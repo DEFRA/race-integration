@@ -287,5 +287,34 @@ namespace RACE2.DataAccess.Repository
                 }                
             }            
         }
+
+        public async Task<UserDetail> GetReservoirsByUserId(int id)
+        {
+            using (var conn = Connection)
+            {
+                var query = @"Select A.Id, A.Email,A.UserName,B.UserId,B.ReservoirId,c.Id,c.public_name
+                              from AspNetUsers A inner join UserReservoirs B
+                              ON  A.Id =b.UserId inner join Reservoirs c
+                              On c.Id = b.ReservoirId Where A.Id=@Id";
+
+                var parameters = new DynamicParameters();
+
+                parameters.Add("Id", id, DbType.Int32);
+
+                var users = await conn.QueryAsync<UserDetail, Reservoir, UserDetail>(query, (user, reservoir) =>
+                {
+                    user.Reservoirs.Add(reservoir);
+                    return user;
+                }, parameters, splitOn: "ReservoirId");
+
+                var result = users.GroupBy(u => u.Id).Select(g =>
+                {
+                    var groupedUser = g.First();
+                    groupedUser.Reservoirs = g.Select(u => u.Reservoirs.Single()).ToList();
+                    return groupedUser;
+                });
+                return result.FirstOrDefault();
+            }
+        }
     }
 }

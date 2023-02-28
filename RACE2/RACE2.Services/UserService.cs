@@ -1,4 +1,5 @@
-﻿using RACE2.DataAccess.Repository;
+﻿using Microsoft.AspNetCore.Identity;
+using RACE2.DataAccess.Repository;
 using RACE2.DataModel;
 using System;
 using System.Collections.Generic;
@@ -54,6 +55,11 @@ namespace RACE2.Services
         public async Task<UserDetail> UpdatePasswordHashForUser(int id, string passwordhash)
         {
             return await _userRepository.UpdatePasswordHashForUser(id, passwordhash);
+        }
+
+        public async Task<UserDetail> GetReservoirsByUserId(int id)
+        {
+            return await _userRepository.GetReservoirsByUserId(id);
         }
     }
 
