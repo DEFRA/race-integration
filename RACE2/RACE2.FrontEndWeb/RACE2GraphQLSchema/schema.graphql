@@ -15,6 +15,7 @@ type UserResolver {
   userByEmailID(email: String!): UserDetail!
   userWithRoles(email: String!): UserDetail!
   matchUserWithEmailAndPasswordHash(email: String! passwordhash: String!): UserDetail!
+  reservoirsByUserId(id: Int!): UserDetail!
 }
 
 type MutationResolver {
@@ -38,6 +39,8 @@ type UserDetail {
   c_created_on_date: DateTime!
   c_last_access_date: DateTime!
   roles: [Role!]!
+  reservoirs: [Reservoir!]!
+  addresses: [Address!]!
   organisationId: Organisation
   id: Int!
   userName: String
@@ -71,6 +74,8 @@ input UserDetailInput {
   c_created_on_date: DateTime!
   c_last_access_date: DateTime!
   roles: [RoleInput!]!
+  reservoirs: [ReservoirInput!]!
+  addresses: [AddressInput!]!
   organisationId: OrganisationInput
   id: Int!
   userName: String
@@ -89,10 +94,25 @@ input UserDetailInput {
   accessFailedCount: Int!
 }
 
-type Organisation {
+type Reservoir {
   id: Int!
-  orgName: String
-  addresses: [Address!]!
+  race_reservoir_id: String
+  public_name: String
+  registered_name: String
+  reference_number: String
+  public_category: String
+  registered_category: String
+  grid_reference: String
+  capacity: Int!
+  surface_area: Int!
+  top_water_level: Decimal!
+  has_multiple_dams: Boolean!
+  key_facts: String
+  construction_start_date: DateTime!
+  verified_details_date: DateTime!
+  last_inspection_date: DateTime!
+  next_inspection_date: DateTime!
+  address: Address
 }
 
 type Role {
@@ -112,6 +132,24 @@ type Role {
 "The `DateTime` scalar represents an ISO-8601 compliant date time type."
 scalar DateTime
 
+type Address {
+  id: Int!
+  addressLine1: String
+  addressLine2: String
+  addressLine3: String
+  addressLine4: String
+  country: String
+  postcode: String
+  nearestPostcode: String
+  organisation: [Organisation!]!
+}
+
+type Organisation {
+  id: Int!
+  orgName: String
+  addresses: [Address!]!
+}
+
 input RoleInput {
   c_display_name: String
   c_description: String
@@ -126,10 +164,25 @@ input RoleInput {
   concurrencyStamp: String
 }
 
-input OrganisationInput {
+input ReservoirInput {
   id: Int!
-  orgName: String
-  addresses: [AddressInput!]!
+  race_reservoir_id: String
+  public_name: String
+  registered_name: String
+  reference_number: String
+  public_category: String
+  registered_category: String
+  grid_reference: String
+  capacity: Int!
+  surface_area: Int!
+  top_water_level: Decimal!
+  has_multiple_dams: Boolean!
+  key_facts: String
+  construction_start_date: DateTime!
+  verified_details_date: DateTime!
+  last_inspection_date: DateTime!
+  next_inspection_date: DateTime!
+  address: AddressInput
 }
 
 input AddressInput {
@@ -144,6 +197,15 @@ input AddressInput {
   organisation: [OrganisationInput!]!
 }
 
+input OrganisationInput {
+  id: Int!
+  orgName: String
+  addresses: [AddressInput!]!
+}
+
+"The built-in `Decimal` scalar type."
+scalar Decimal
+
 input UserPermissionInput {
   id: Int!
   access_level: String!
@@ -156,16 +218,4 @@ type UserPermission {
   access_level: String!
   start_date: DateTime
   end_date: DateTime
-}
-
-type Address {
-  id: Int!
-  addressLine1: String
-  addressLine2: String
-  addressLine3: String
-  addressLine4: String
-  country: String
-  postcode: String
-  nearestPostcode: String
-  organisation: [Organisation!]!
 }
