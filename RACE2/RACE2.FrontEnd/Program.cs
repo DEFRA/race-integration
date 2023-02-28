@@ -5,7 +5,6 @@ using Microsoft.Extensions.Configuration;
 using RACE2.FrontEnd.StateObjects;
 using System.Net.Http.Headers;
 using RACE2.DataModel;
-using RACE2.FrontEnd.State;
 using RACE2.DataAccess;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

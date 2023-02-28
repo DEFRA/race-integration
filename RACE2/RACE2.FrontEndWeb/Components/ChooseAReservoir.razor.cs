@@ -27,6 +27,7 @@ namespace RACE2.FrontEndWeb.Components
         public AppStore AppStore => State.Value;
         public Reservoir CurrentReservoir { get; set; } = new Reservoir();
         string? SelectedReservoirName;
+        bool? IsLoggedIn;
         string? filter;
         private string[] filteredReservoirNames;
 
@@ -43,6 +44,7 @@ namespace RACE2.FrontEndWeb.Components
         protected override void OnInitialized()
         {
             SelectedReservoirName = AppStore.CurrentReservoir.public_name;
+            IsLoggedIn = AppStore.IsLoggedIn;
         }
 
         private async Task<IEnumerable<string>> SearchValues(string value)

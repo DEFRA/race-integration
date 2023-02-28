@@ -49,6 +49,10 @@ namespace RACE2.FrontEndWeb.Components
                     Dispatcher.Dispatch(action);
                     var action1 = new StoreLastPasswordEnteredAction(_enterPasswordClass.Password);
                     Dispatcher.Dispatch(action1);
+                    var result = await client.UpdatePasswordHashForUser.ExecuteAsync(CurrentUser.Id, CurrentUser.PasswordHash);
+                    var result1 = await client.MatchUserWithEmailAndPasswordHash.ExecuteAsync(CurrentUser.Email, CurrentUser.PasswordHash);
+                    var action2 = new StoreIsLoggedInAction(true);
+                    Dispatcher.Dispatch(action2);
                     bool forceLoad = true;
                     NavigationManager.NavigateTo("/choose-a-reservoir/", forceLoad);
                 }
