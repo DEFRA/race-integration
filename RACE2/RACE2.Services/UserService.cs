@@ -46,6 +46,15 @@ namespace RACE2.Services
             return await _userRepository.ValidateUser(loginuser);
         }
 
+        public async Task<UserDetail> MatchUserWithEmailAndPasswordHash(string email, string passwordhash)
+        {
+            return await _userRepository.MatchUserWithEmailAndPasswordHash(email, passwordhash);
+        }
+
+        public async Task<UserDetail> UpdatePasswordHashForUser(int id, string passwordhash)
+        {
+            return await _userRepository.UpdatePasswordHashForUser(id, passwordhash);
+        }
     }
 
 }

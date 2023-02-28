@@ -13,6 +13,7 @@ using Dapper;
 using Microsoft.Data.SqlClient;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using static Humanizer.In;
+using Microsoft.AspNetCore.Identity;
 
 namespace RACE2.DataAccess.Repository
 {
@@ -25,6 +26,7 @@ namespace RACE2.DataAccess.Repository
             _configuration = configuration;
             _configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../appsettings.json").Build();
         }
+
         private IDbConnection Connection
         {
             get
@@ -52,7 +54,6 @@ namespace RACE2.DataAccess.Repository
                 return user;
             }
         }
-
 
         public async Task<UserDetail> GetUserByEmailID(string email)
         {
@@ -120,8 +121,6 @@ namespace RACE2.DataAccess.Repository
 
             using (var conn = Connection)
             {
-
-
                 var id = await conn.QuerySingleAsync<int>(query, parameters);
                 var createdCompany = new UserDetail
                 {
@@ -238,7 +237,55 @@ namespace RACE2.DataAccess.Repository
             }
         }
 
+        public async Task<UserDetail> MatchUserWithEmailAndPasswordHash(string email, string passwordhash)
+        {
+            var query = @"SELECT * from AspNetUsers                                
+                            WHERE Email=@Email and PasswordHash=@PasswordHash";
+            using (var conn = Connection)
+            {
+                var parameters = new DynamicParameters();
+                parameters.Add("Email", email, DbType.String);
+                parameters.Add("PasswordHash", passwordhash, DbType.String);
+                var result=await conn.ExecuteAsync(query, parameters);
+                if (result == 0)
+                {
+                    return null;
+                }
+                else
+                {
+                    return await GetUserByEmailID(email);                    
+                }
+            }
+        }
 
-
+        public async Task<UserDetail> UpdatePasswordHashForUser(int id, string passwordhash)
+        {
+            var user = await GetUserById(id);
+            if (user == null)
+            {
+                return null;
+            }
+            else
+            {
+                var query = @"UPDATE AspNetUsers
+                                SET PasswordHash=@PasswordHash
+                                WHERE Id=@Id";
+                using (var conn = Connection)
+                {
+                    var parameters = new DynamicParameters();
+                    parameters.Add("Id", id, DbType.Int32);
+                    parameters.Add("PasswordHash", passwordhash, DbType.String);
+                    var result = await conn.ExecuteAsync(query, parameters);
+                    if (result == 0)
+                    {
+                        return null;
+                    }
+                    else
+                    {
+                        return await GetUserById(id);                       
+                    }
+                }                
+            }            
+        }
     }
 }

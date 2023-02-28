@@ -29,5 +29,11 @@ namespace RACE2.WebApi.QueryResolver
             var result=  await _userService.GetUserWithRoles(email);
             return result;
         }
+
+        public async Task<UserDetail> MatchUserWithEmailAndPasswordHash(IUserService _userService, string email, string passwordhash)
+        {
+            var result = await _userService.MatchUserWithEmailAndPasswordHash(email,passwordhash);
+            return result;
+        }       
     }
 }

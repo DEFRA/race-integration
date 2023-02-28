@@ -18,5 +18,11 @@ namespace RACE2.WebApi.MutationResolver
             var result = await _userService.ValidateUser(loginuser);
             return result;
         }
+
+        public async Task<UserDetail> UpdatePasswordHashForUser(IUserService _userService, int id, string passwordhash)
+        {
+            var result = await _userService.UpdatePasswordHashForUser(id, passwordhash);
+            return result;
+        }
     }
 }
