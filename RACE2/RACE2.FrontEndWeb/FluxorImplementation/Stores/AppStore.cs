@@ -5,6 +5,8 @@ namespace RACE2.FrontEndWeb.FluxorImplementation.Stores
 {
     public record AppStore(
         bool IsLoading,
+        bool IsLoggedIn,
+        string LastPasswordEntered,
         UserDetail CurrentUserDetail,
         Reservoir CurrentReservoir,
         NewReservoirDetails NewReservoirDetails

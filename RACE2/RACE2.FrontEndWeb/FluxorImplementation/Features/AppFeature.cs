@@ -13,6 +13,8 @@ namespace RACE2.FrontEndWeb.FluxorImplementation.Features
         protected override AppStore GetInitialState()
           => new AppStore(
                IsLoading: false,
+               IsLoggedIn: false,
+               LastPasswordEntered:"",
                CurrentReservoir: new Reservoir(),
                NewReservoirDetails: new NewReservoirDetails(),
                CurrentUserDetail: new UserDetail()

@@ -1,6 +1,5 @@
 ﻿@page "/"
 
-@inject NavigationManager NavigationManager
 <div class="govuk-width-container ">
     <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
         <div class="govuk-grid-row">
@@ -46,10 +45,3 @@
     </main>
 </div>
 
-@code {
-    public void GoToNextPage()
-    {
-        bool forceLoad = true;
-        NavigationManager.NavigateTo("/enter-email/", forceLoad);
-    }
-}

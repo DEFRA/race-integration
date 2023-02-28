@@ -17,5 +17,13 @@ namespace RACE2.FrontEndWeb.FluxorImplementation.Reducers
         [ReducerMethod]
         public static AppStore ReduceStoreNewReservoirAction(AppStore state, StoreNewReservoirAction action)
          => state with { IsLoading = false, NewReservoirDetails = action.NewReservoirDetails };
+
+        [ReducerMethod]
+        public static AppStore ReduceStoreIsLoggedInAction(AppStore state, StoreIsLoggedInAction action)
+         => state with { IsLoggedIn = action.IsLoggedIn };
+
+        [ReducerMethod]
+        public static AppStore ReduceStoreLastPasswordEnteredAction(AppStore state, StoreLastPasswordEnteredAction action)
+        => state with { LastPasswordEntered = action.LastPasswordEntered };
     }
 }

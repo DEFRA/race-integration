@@ -33,6 +33,7 @@ namespace RACE2.FrontEndWeb.Components
         protected override void OnInitialized()
         {
             CurrentUser = AppStore.CurrentUserDetail;
+            _enterPasswordClass.Password = _enterPasswordClass.ConfirmPassword=AppStore.LastPasswordEntered;
         }
 
         public async Task GoToNextPage()
@@ -46,6 +47,8 @@ namespace RACE2.FrontEndWeb.Components
                     CurrentUser.PasswordHash = passwordHasher.HashPassword(CurrentUser, _enterPasswordClass.Password);
                     var action = new StoreUserDetailAction(CurrentUser);
                     Dispatcher.Dispatch(action);
+                    var action1 = new StoreLastPasswordEnteredAction(_enterPasswordClass.Password);
+                    Dispatcher.Dispatch(action1);
                     bool forceLoad = true;
                     NavigationManager.NavigateTo("/choose-a-reservoir/", forceLoad);
                 }
