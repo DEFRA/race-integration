@@ -292,10 +292,12 @@ namespace RACE2.DataAccess.Repository
         {
             using (var conn = Connection)
             {
-                var query = @"Select A.Id, A.Email,A.UserName,B.Id, B.UserId,B.ReservoirId,B.UserReservoirId,c.Id,c.public_name
-                              from AspNetUsers A inner join UserReservoirs B
-                              ON  A.Id =b.UserId inner join Reservoirs c
-                              On c.Id = b.UserReservoirId Where A.Id=@Id";
+                var query = @"Select A.Id, A.Email,A.UserName,B.UserDetailId,B.ReservoirId,c.Id,c.public_name,d.*
+                              from AspNetUsers A 
+                              inner join UserReservoirs B ON  A.Id =b.UserDetailId 
+                              inner join Reservoirs c On c.Id = b.ReservoirId 
+                              inner join Addresses d On c.AddressId=d.Id
+                              Where A.Id=@Id";
 
                 var parameters = new DynamicParameters();
 
@@ -305,12 +307,12 @@ namespace RACE2.DataAccess.Repository
                 {
                     user.Reservoirs.Add(reservoir);
                     return user;
-                }, parameters, splitOn: "UserReservoirId");
+                }, parameters, splitOn: "ReservoirId");
 
                 var result = users.GroupBy(u => u.Id).Select(g =>
                 {
                     var groupedUser = g.First();
-                    groupedUser.Reservoirs = g.Select(u => u.Reservoirs.Single()).ToList();
+                    groupedUser.Reservoirs = g.Select(u => u.Reservoirs.FirstOrDefault()).ToList();
                     return groupedUser;
                 });
                 return result.FirstOrDefault();

@@ -32,29 +32,29 @@ namespace RACE2.FrontEndWeb.Components
         string? filter;
         private string[] filteredReservoirNames;
 
-        private string[] reservoirNames =
-        {
-        "River Foss Flood Storage Reservoir",
-        "River Nar Flood Storage Area",
-        "River Park Pond",
-        "River Rase North Branch",
-        "River Rase South Branch",
-        "Rockingham Reservoir"
-    };
+        private string[] reservoirNames=Array.Empty<String>();
+    //    {
+    //    "River Foss Flood Storage Reservoir",
+    //    "River Nar Flood Storage Area",
+    //    "River Park Pond",
+    //    "River Rase North Branch",
+    //    "River Rase South Branch",
+    //    "Rockingham Reservoir"
+    //};
 
         protected override async void OnInitialized()
         {
             base.OnInitialized();
             SelectedReservoirName = AppStore.CurrentReservoir.public_name;
             IsLoggedIn = AppStore.IsLoggedIn;
-            //CurrentUserId = 1;// AppStore.CurrentUserDetail.Id;
-            //var results =  await client.GetReservoirsByUserId.ExecuteAsync(CurrentUserId);
-            //List<string> reservoirNamesList = new List<string>();
-            //foreach (var rn in results!.Data!.ReservoirsByUserId.Reservoirs)
-            //{
-            //    reservoirNamesList.Add(rn.Public_name);
-            //}
-            //reservoirNames= reservoirNamesList.ToArray<string>();
+            CurrentUserId = 1;// AppStore.CurrentUserDetail.Id;
+            var results = await client.GetReservoirsByUserId.ExecuteAsync(CurrentUserId);
+            List<string> reservoirNamesList = new List<string>();
+            foreach (var rn in results!.Data!.ReservoirsByUserId.Reservoirs)
+            {
+                reservoirNamesList.Add(rn.Public_name);
+            }
+            reservoirNames = reservoirNamesList.ToArray<string>();
         }
 
         private async Task<IEnumerable<string>> SearchValues(string value)
