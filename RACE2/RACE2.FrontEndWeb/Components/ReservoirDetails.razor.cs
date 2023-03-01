@@ -23,6 +23,7 @@ namespace RACE2.FrontEndWeb.Components
 
         protected override void OnInitialized()
         {
+            base.OnInitialized();
             CurrentReservoir = AppStore.CurrentReservoir;
         }
     }

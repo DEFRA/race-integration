@@ -32,6 +32,7 @@ namespace RACE2.FrontEndWeb.Components
         private EnterPasswordClass _enterPasswordClass = new EnterPasswordClass();
         protected override void OnInitialized()
         {
+            base.OnInitialized();
             CurrentUser = AppStore.CurrentUserDetail;
             _enterPasswordClass.Password = _enterPasswordClass.ConfirmPassword=AppStore.LastPasswordEntered;
         }

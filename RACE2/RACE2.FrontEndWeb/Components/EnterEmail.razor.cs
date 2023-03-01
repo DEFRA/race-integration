@@ -32,6 +32,7 @@ namespace RACE2.FrontEndWeb.Components
 
         protected override void OnInitialized()
         {
+            base.OnInitialized();
             CurrentUser = AppStore.CurrentUserDetail;
             Email = CurrentUser.Email;
         }

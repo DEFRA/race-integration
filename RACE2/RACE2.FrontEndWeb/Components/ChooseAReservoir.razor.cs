@@ -27,6 +27,7 @@ namespace RACE2.FrontEndWeb.Components
         public AppStore AppStore => State.Value;
         public Reservoir CurrentReservoir { get; set; } = new Reservoir();
         string? SelectedReservoirName;
+        int CurrentUserId;
         bool? IsLoggedIn;
         string? filter;
         private string[] filteredReservoirNames;
@@ -41,10 +42,19 @@ namespace RACE2.FrontEndWeb.Components
         "Rockingham Reservoir"
     };
 
-        protected override void OnInitialized()
+        protected override async void OnInitialized()
         {
+            base.OnInitialized();
             SelectedReservoirName = AppStore.CurrentReservoir.public_name;
             IsLoggedIn = AppStore.IsLoggedIn;
+            //CurrentUserId = 1;// AppStore.CurrentUserDetail.Id;
+            //var results =  await client.GetReservoirsByUserId.ExecuteAsync(CurrentUserId);
+            //List<string> reservoirNamesList = new List<string>();
+            //foreach (var rn in results!.Data!.ReservoirsByUserId.Reservoirs)
+            //{
+            //    reservoirNamesList.Add(rn.Public_name);
+            //}
+            //reservoirNames= reservoirNamesList.ToArray<string>();
         }
 
         private async Task<IEnumerable<string>> SearchValues(string value)
@@ -89,6 +99,13 @@ namespace RACE2.FrontEndWeb.Components
             var action = new StoreReservoirAction(CurrentReservoir);
             Dispatcher.Dispatch(action);
             filteredReservoirNames = null;
+        }
+
+        private void goback()
+        {
+            bool forceLoad = false;
+            string pagelink = "/create-password";
+            NavigationManager.NavigateTo(pagelink, forceLoad);
         }
     }
 }
