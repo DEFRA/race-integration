@@ -306,8 +306,7 @@ namespace RACE2.DataAccess.Repository
 
         //        var reservoirs = await conn.QueryAsync<Reservoir,Address, Reservoir >(query, (reservoir, address) =>
         //        {
-        //            reservoir.address = address;
-        //           // userdetail.Reservoirs.Add(reservoir);
+        //            userdetail.Reservoirs.Add(reservoir);
 
         //            return reservoir;
 
@@ -329,7 +328,7 @@ namespace RACE2.DataAccess.Repository
         {
             using (var conn = Connection)
             {
-                var query = @"Select A.Id, A.Email,A.UserName,B.UserDetailId,B.ReservoirId,c.Id, c.public_name,c.registered_name,c.public_category,d.id,d.AddressLine1
+                var query = @"Select A.Id, A.Email,A.UserName,B.UserDetailId,B.ReservoirId,c.Id, c.public_name,c.registered_name,c.public_category,d.*
                               from AspNetUsers A 
                               inner join UserReservoirs B ON  A.Id =b.UserDetailId 
                               inner join Reservoirs c On c.Id = b.ReservoirId 
@@ -340,6 +339,7 @@ namespace RACE2.DataAccess.Repository
                 parameters.Add("Id", id, DbType.Int32);
                 var users = await conn.QueryAsync<UserDetail,Reservoir,Address,UserDetail>(query, (user, reservoir,address) =>
                 {
+                    reservoir.address = address;
                     user.Reservoirs.Add(reservoir);
                     return user;
                 }, parameters, splitOn: "ReservoirId,id");
