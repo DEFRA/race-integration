@@ -1,5 +1,7 @@
 using Fluxor;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components.Server;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Identity;
 using RACE2.DataModel;
@@ -11,6 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
+
 builder.Services.AddScoped<IPasswordHasher<UserDetail>, PasswordHasher<UserDetail>>();
 
 builder.Services.AddRACE2GraphQLClient()

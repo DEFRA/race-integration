@@ -26,5 +26,12 @@ namespace RACE2.FrontEndWeb.Components
             base.OnInitialized();
             CurrentReservoir = AppStore.CurrentReservoir;
         }
+
+        private void goback()
+        {
+            bool forceLoad = false;
+            string pagelink = "/choose-a-reservoir";
+            NavigationManager.NavigateTo(pagelink, forceLoad);
+        }
     }
 }

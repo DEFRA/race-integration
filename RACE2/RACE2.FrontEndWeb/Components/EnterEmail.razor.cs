@@ -25,16 +25,22 @@ namespace RACE2.FrontEndWeb.Components
         public AppStore AppStore => State.Value;
 
         string? Email;
-        UserDetail CurrentUser;
+        private UserDetail CurrentUser;
 
         private string errorMsg1 = "Email entered does not exist!!! Please try again.";
         private string errorMsg2 = "Input is not a valid email address!!! Please try again.";
 
         protected override void OnInitialized()
         {
+            if (AppStore.CurrentUserDetail != null)
+            {
+                if (AppStore.CurrentUserDetail is not null)
+                {
+                    CurrentUser = AppStore.CurrentUserDetail;
+                    Email = CurrentUser.Email;
+                }
+            }
             base.OnInitialized();
-            CurrentUser = AppStore.CurrentUserDetail;
-            Email = CurrentUser.Email;
         }
 
         protected async Task<string> GetEmailFromDatabase(string email)
@@ -67,8 +73,16 @@ namespace RACE2.FrontEndWeb.Components
                 {
                     var action = new StoreUserDetailAction(CurrentUser);                   
                     Dispatcher.Dispatch(action);
-                    string pagelink = "/create-password/";
-                    NavigationManager.NavigateTo(pagelink, forceLoad);
+                    if (CurrentUser.PasswordHash is null)
+                    {
+                        string pagelink = "/enter-password";
+                        NavigationManager.NavigateTo(pagelink, forceLoad);
+                    }
+                    else
+                    {
+                        string pagelink = "/change-password";
+                        NavigationManager.NavigateTo(pagelink, forceLoad);
+                    }
                 }
                 else
                 {
@@ -79,6 +93,13 @@ namespace RACE2.FrontEndWeb.Components
             {
                 Email = errorMsg2;                
             }
+        }
+
+        private void goback()
+        {
+            bool forceLoad = false;
+            string pagelink = "/";
+            NavigationManager.NavigateTo(pagelink, forceLoad);
         }
     }
 }

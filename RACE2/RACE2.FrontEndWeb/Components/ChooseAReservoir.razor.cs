@@ -47,7 +47,7 @@ namespace RACE2.FrontEndWeb.Components
             base.OnInitialized();
             SelectedReservoirName = AppStore.CurrentReservoir.public_name;
             IsLoggedIn = AppStore.IsLoggedIn;
-            CurrentUserId = 1;// AppStore.CurrentUserDetail.Id;
+            CurrentUserId = AppStore.CurrentUserDetail.Id;
             var results = await client.GetReservoirsByUserId.ExecuteAsync(CurrentUserId);
             List<string> reservoirNamesList = new List<string>();
             foreach (var rn in results!.Data!.ReservoirsByUserId.Reservoirs)
@@ -104,7 +104,7 @@ namespace RACE2.FrontEndWeb.Components
         private void goback()
         {
             bool forceLoad = false;
-            string pagelink = "/create-password";
+            string pagelink = "/enter-email";
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }
     }

@@ -292,11 +292,11 @@ namespace RACE2.DataAccess.Repository
         {
             using (var conn = Connection)
             {
-                var query = @"Select A.Id, A.Email,A.UserName,B.UserDetailId,B.ReservoirId,c.Id,c.public_name,d.*
+                var query = @"Select A.Id, A.Email,A.UserName,B.UserDetailId,B.ReservoirId,c.Id, c.public_name,c.registered_name,c.public_category
                               from AspNetUsers A 
                               inner join UserReservoirs B ON  A.Id =b.UserDetailId 
                               inner join Reservoirs c On c.Id = b.ReservoirId 
-                              inner join Addresses d On c.AddressId=d.Id
+                              
                               Where A.Id=@Id";
 
                 var parameters = new DynamicParameters();
@@ -305,7 +305,9 @@ namespace RACE2.DataAccess.Repository
 
                 var users = await conn.QueryAsync<UserDetail, Reservoir, UserDetail>(query, (user, reservoir) =>
                 {
+                    
                     user.Reservoirs.Add(reservoir);
+
                     return user;
                 }, parameters, splitOn: "ReservoirId");
 

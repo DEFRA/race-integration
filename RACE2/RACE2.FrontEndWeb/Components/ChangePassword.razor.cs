@@ -5,10 +5,11 @@ using RACE2.DataModel;
 using RACE2.FrontEndWeb.FluxorImplementation.Actions;
 using RACE2.FrontEndWeb.FluxorImplementation.Stores;
 using RACE2.FrontEndWeb.RACE2GraphQLSchema;
+using RACE2.FrontEndWeb.Utilities;
 
 namespace RACE2.FrontEndWeb.Components
 {
-    public partial class CreatePassword
+    public partial class ChangePassword
     {
         [Inject]
         public RACE2GraphQLClient client { get; set; } = default!;
@@ -27,14 +28,20 @@ namespace RACE2.FrontEndWeb.Components
         public AppStore AppStore => State.Value;
 
         string passwordRegEx = @"^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!*@#$%^&+=]).*$";
-        public UserDetail CurrentUser { get; set; } = new UserDetail();
+        private UserDetail CurrentUser;
 
         private EnterPasswordClass _enterPasswordClass = new EnterPasswordClass();
         protected override void OnInitialized()
         {
+            if (AppStore.CurrentUserDetail is not null)
+            {
+                CurrentUser = AppStore.CurrentUserDetail;
+            }
+            if (AppStore.LastPasswordEntered is not null)
+            {
+                _enterPasswordClass.Password = _enterPasswordClass.ConfirmPassword = AppStore.LastPasswordEntered;
+            }
             base.OnInitialized();
-            CurrentUser = AppStore.CurrentUserDetail;
-            _enterPasswordClass.Password = _enterPasswordClass.ConfirmPassword=AppStore.LastPasswordEntered;
         }
 
         public async Task GoToNextPage()
@@ -48,6 +55,7 @@ namespace RACE2.FrontEndWeb.Components
                     CurrentUser.PasswordHash = passwordHasher.HashPassword(CurrentUser, _enterPasswordClass.Password);
                     var action = new StoreUserDetailAction(CurrentUser);
                     Dispatcher.Dispatch(action);
+                    var u=AppStore.CurrentUserDetail;
                     var action1 = new StoreLastPasswordEnteredAction(_enterPasswordClass.Password);
                     Dispatcher.Dispatch(action1);
                     var result = await client.UpdatePasswordHashForUser.ExecuteAsync(CurrentUser.Id, CurrentUser.PasswordHash);
@@ -55,7 +63,7 @@ namespace RACE2.FrontEndWeb.Components
                     var action2 = new StoreIsLoggedInAction(true);
                     Dispatcher.Dispatch(action2);
                     bool forceLoad = true;
-                    NavigationManager.NavigateTo("/choose-a-reservoir/", forceLoad);
+                    NavigationManager.NavigateTo("/account-confirmation", forceLoad);
                 }
                 else
                 {
@@ -67,10 +75,17 @@ namespace RACE2.FrontEndWeb.Components
                 _enterPasswordClass.ConfirmPassword = "Passwords do not match!!!";
             }
         }
+        private void goback()
+        {
+            bool forceLoad = false;
+            string pagelink = "/enter-email";
+            NavigationManager.NavigateTo(pagelink, forceLoad);
+        }
     }
 
     public class EnterPasswordClass
     {
+        public string ExistingPassword = "";
         public string Password = "";
         public string ConfirmPassword = "";
     }
