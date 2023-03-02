@@ -12,12 +12,12 @@ namespace RACE2.DataModel
     public class UserPermission
     {
         [Key, Required]
-        public int id { get; set; }     
+        public int Id { get; set; }     
         [StringLength(64)]
         [Required]
-        public string? access_level { get; set; }
-        public DateTime? start_date { get; set; }
-        public DateTime? end_date { get; set; }
+        public string? Access_level { get; set; }
+        public DateTime? Start_date { get; set; }
+        public DateTime? End_date { get; set; }
 
 
     }

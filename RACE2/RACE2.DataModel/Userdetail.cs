@@ -39,8 +39,10 @@ namespace RACE2.DataModel
          
             public DateTime c_created_on_date { get; set; }
 
-            public DateTime c_last_access_date { get; set; }     
-           
+            public DateTime c_last_access_date { get; set; }
+
+            public bool c_IsFirstTimeUser { get; set; }
+
             public List<Role> Roles { get; set; } =new List<Role>();
 
             public List<Reservoir> Reservoirs { get; set; } =new List<Reservoir>();
