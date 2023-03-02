@@ -16,6 +16,7 @@ type UserResolver {
   userWithRoles(email: String!): UserDetail!
   matchUserWithEmailAndPasswordHash(email: String! passwordhash: String!): UserDetail!
   reservoirsByUserId(id: Int!): UserDetail!
+  featurePermissionForRole(roleid: Int!): [FeatureFunction!]!
 }
 
 type MutationResolver {
@@ -38,6 +39,7 @@ type UserDetail {
   c_status: String
   c_created_on_date: DateTime!
   c_last_access_date: DateTime!
+  c_IsFirstTimeUser: Boolean!
   roles: [Role!]!
   reservoirs: [Reservoir!]!
   addresses: [Address!]!
@@ -59,6 +61,16 @@ type UserDetail {
   accessFailedCount: Int!
 }
 
+type FeatureFunction {
+  id: Int!
+  name: String!
+  displayName: String
+  description: String
+  start_date: DateTime!
+  end_date: DateTime!
+  permission: [UserPermission!]!
+}
+
 input UserDetailInput {
   c_defra_id: String
   c_type: String
@@ -73,6 +85,7 @@ input UserDetailInput {
   c_status: String
   c_created_on_date: DateTime!
   c_last_access_date: DateTime!
+  c_IsFirstTimeUser: Boolean!
   roles: [RoleInput!]!
   reservoirs: [ReservoirInput!]!
   addresses: [AddressInput!]!
@@ -92,6 +105,18 @@ input UserDetailInput {
   lockoutEnd: DateTime
   lockoutEnabled: Boolean!
   accessFailedCount: Int!
+}
+
+type Address {
+  id: Int!
+  addressLine1: String
+  addressLine2: String
+  addressLine3: String
+  addressLine4: String
+  country: String
+  postcode: String
+  nearestPostcode: String
+  organisation: [Organisation!]!
 }
 
 type Reservoir {
@@ -132,22 +157,17 @@ type Role {
 "The `DateTime` scalar represents an ISO-8601 compliant date time type."
 scalar DateTime
 
-type Address {
-  id: Int!
-  addressLine1: String
-  addressLine2: String
-  addressLine3: String
-  addressLine4: String
-  country: String
-  postcode: String
-  nearestPostcode: String
-  organisation: [Organisation!]!
-}
-
 type Organisation {
   id: Int!
   orgName: String
   addresses: [Address!]!
+}
+
+type UserPermission {
+  id: Int!
+  access_level: String!
+  start_date: DateTime
+  end_date: DateTime
 }
 
 input RoleInput {
@@ -207,13 +227,6 @@ input OrganisationInput {
 scalar Decimal
 
 input UserPermissionInput {
-  id: Int!
-  access_level: String!
-  start_date: DateTime
-  end_date: DateTime
-}
-
-type UserPermission {
   id: Int!
   access_level: String!
   start_date: DateTime

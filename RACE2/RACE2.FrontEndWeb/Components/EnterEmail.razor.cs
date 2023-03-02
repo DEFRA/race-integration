@@ -46,6 +46,7 @@ namespace RACE2.FrontEndWeb.Components
         protected async Task<string> GetEmailFromDatabase(string email)
         {
             var result = await client.GetUserByEmailID.ExecuteAsync(email);
+            var result1 = await client.GetReservoirsByUserId.ExecuteAsync(result.Data.UserByEmailID.Id);
             if (result != null && result.Data != null && result.Data.UserByEmailID.Email != null)
             {
                 string pwh = result!.Data!.UserByEmailID.PasswordHash;

@@ -287,52 +287,17 @@ namespace RACE2.DataAccess.Repository
                     }
                 }
             }
-        }
-
-        //public async Task<List<Reservoir>> GetReservoirsByUserId(int id)
-        //{
-        //    using (var conn = Connection)
-        //    {
-        //        var query = @"Select A.Reservoirid,A.UserDetailId, A.appointment_type,A.appointment_start_date,A.appointment_end_date, B.public_name,B.id,
-        //                        C.id,C.AddressLine1,C.AddressLine2,c.AddressLine3,C.AddressLine4,C.Country,c.NearestPostcode,C.Postcode
-        //                        from UserReservoirs A inner join Reservoirs B
-        //                        on A.Reservoirid = B.id inner join Addresses  C
-        //                        on B.addressid = C.id
-        //                        Where A.UserDetailId = @Id";
-
-        //        var parameters = new DynamicParameters();
-
-        //        parameters.Add("Id", id, DbType.Int32);
-
-        //        var reservoirs = await conn.QueryAsync<Reservoir,Address, Reservoir >(query, (reservoir, address) =>
-        //        {
-        //            userdetail.Reservoirs.Add(reservoir);
-
-        //            return reservoir;
-
-        //        }, parameters, splitOn: "Reservoirid");
-
-
-        //        //var result = reservoirs.GroupBy(u => u.id).Select(g =>
-        //        //{
-        //        //    var groupedReservoir = g.First();
-        //        //    groupedReservoir. = g.Select(u => u.Reservoirs.Single()).ToList();
-        //        //    return groupedReservoir;
-        //        //});
-
-        //        return reservoirs.ToList();
-        //    }
-        //}
+        }       
 
         public async Task<UserDetail> GetReservoirsByUserId(int id)
         {
             using (var conn = Connection)
             {
-                var query = @"Select A.Id, A.Email,A.UserName,B.UserDetailId,B.ReservoirId,c.Id, c.public_name,c.registered_name,c.public_category,d.*
+                var query = @"Select A.*,B.*,C.*,D.*
                               from AspNetUsers A 
                               inner join UserReservoirs B ON  A.Id =b.UserDetailId 
-                              inner join Reservoirs c On c.Id = b.ReservoirId 
-                              inner join Addresses d On d.id = c.addressid
+                              inner join Reservoirs C On C.Id = B.ReservoirId 
+                              inner join Addresses D On D.id = C.addressid
                               Where A.Id=@Id";
 
                 var parameters = new DynamicParameters();
@@ -353,8 +318,7 @@ namespace RACE2.DataAccess.Repository
             }
         }
 
-
-            public async Task<IEnumerable<FeatureFunction>> GetFeaturePermissionForRole(int roleid)
+        public async Task<IEnumerable<FeatureFunction>> GetFeaturePermissionForRole(int roleid)
         {
             using (var conn = Connection)
             {
