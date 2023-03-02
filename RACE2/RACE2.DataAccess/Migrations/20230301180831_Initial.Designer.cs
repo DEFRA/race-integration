@@ -12,7 +12,7 @@ using RACE2.DataAccess;
 namespace RACE2.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230227115732_Initial")]
+    [Migration("20230301180831_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -156,7 +156,12 @@ namespace RACE2.DataAccess.Migrations
                     b.Property<string>("Postcode")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("UserDetailId")
+                        .HasColumnType("int");
+
                     b.HasKey("id");
+
+                    b.HasIndex("UserDetailId");
 
                     b.ToTable("Addresses");
                 });
@@ -221,6 +226,9 @@ namespace RACE2.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
+                    b.Property<int?>("UserDetailId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("addressid")
                         .HasColumnType("int");
 
@@ -281,6 +289,8 @@ namespace RACE2.DataAccess.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("id");
+
+                    b.HasIndex("UserDetailId");
 
                     b.HasIndex("addressid");
 
@@ -417,6 +427,9 @@ namespace RACE2.DataAccess.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<bool>("c_IsFirstTimeUser")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("c_created_on_date")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
@@ -552,20 +565,20 @@ namespace RACE2.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<DateTime>("Appointment_end_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Appointment_start_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Appointment_type")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Reservoirid")
                         .HasColumnType("int");
 
                     b.Property<int>("UserDetailId")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("appointment_end_date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("appointment_start_date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("appointment_type")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -674,8 +687,19 @@ namespace RACE2.DataAccess.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("RACE2.DataModel.Address", b =>
+                {
+                    b.HasOne("RACE2.DataModel.UserDetail", null)
+                        .WithMany("Addresses")
+                        .HasForeignKey("UserDetailId");
+                });
+
             modelBuilder.Entity("RACE2.DataModel.Reservoir", b =>
                 {
+                    b.HasOne("RACE2.DataModel.UserDetail", null)
+                        .WithMany("Reservoirs")
+                        .HasForeignKey("UserDetailId");
+
                     b.HasOne("RACE2.DataModel.Address", "address")
                         .WithMany()
                         .HasForeignKey("addressid");
@@ -775,6 +799,13 @@ namespace RACE2.DataAccess.Migrations
             modelBuilder.Entity("RACE2.DataModel.Role", b =>
                 {
                     b.Navigation("Permission");
+                });
+
+            modelBuilder.Entity("RACE2.DataModel.UserDetail", b =>
+                {
+                    b.Navigation("Addresses");
+
+                    b.Navigation("Reservoirs");
                 });
 #pragma warning restore 612, 618
         }

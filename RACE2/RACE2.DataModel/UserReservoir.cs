@@ -15,12 +15,13 @@ namespace RACE2.DataModel
         public UserDetail UserDetail { get; set; }
 
         public Reservoir Reservoir { get; set; }
+       
 
-        public string? appointment_type { get; set; }
+        public string? Appointment_type { get; set; }
 
-        public DateTime appointment_start_date { get; set; }
+        public DateTime Appointment_start_date { get; set; }
 
-        public DateTime appointment_end_date { get; set; }
+        public DateTime Appointment_end_date { get; set; }
 
       }
 }

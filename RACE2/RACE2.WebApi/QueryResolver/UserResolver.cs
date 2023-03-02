@@ -41,5 +41,11 @@ namespace RACE2.WebApi.QueryResolver
             var result = await _userService.GetReservoirsByUserId(id);
             return result;
         }
+
+        public async Task<IEnumerable<FeatureFunction>> GetFeaturePermissionForRole(IUserService _userService,int roleid)
+        {
+            var result = await _userService.GetFeaturePermissionForRole(roleid);
+            return result;
+        }
     }
 }

@@ -15,16 +15,15 @@ namespace RACE2.DataModel
         public int Id { get; set; }
         [StringLength(64)]
         [Required]
-        public string? name { get; set; }
+        public string? Name { get; set; }
         [StringLength(64)]
-        public string? display_name { get; set; }
+        public string? DisplayName { get; set; }
         [StringLength(64)]
-        public string? description { get; set; }
+        public string? Description { get; set; }
 
-        [StringLength(64)]
-        public string? default_value { get; set; }
-        public DateTime start_date { get; set; }
-        public DateTime end_date { get; set; }
+       
+        public DateTime Start_date { get; set; }
+        public DateTime End_date { get; set; }
 
         public List<UserPermission> Permission { get; set;} = new List<UserPermission>();
     }
