@@ -322,7 +322,7 @@ namespace RACE2.DataAccess.Repository
         {
             using (var conn = Connection)
             {
-                var query = @"Select FF.Id,FF.display_name,UP.id,UP.access_level, UP.start_date,UP.end_date,UP.FeatureFunctionId, UP.RoleId
+                var query = @"Select FF.Id,FF.Name,FF.DisplayName,UP.id,UP.Access_level, UP.Start_date,UP.End_date,UP.FeatureFunctionId, UP.RoleId
                                 from FeatureFunctions FF inner join UserPermissions UP
                                 On  FF.Id = UP.FeatureFunctionId 
                                 Where UP.RoleId = @roleid";
@@ -336,13 +336,13 @@ namespace RACE2.DataAccess.Repository
                     feature.Permission.Add(permission);
                     return feature;
                 }, parameters, splitOn: "FeatureFunctionId");
-                var result = features.GroupBy(u => u.Id).Select(g =>
-                {
-                    var groupedFeatures = g.First();
-                    groupedFeatures.Permission = g.Select(u => u.Permission.Single()).ToList();
-                    return groupedFeatures;
-                });
-                return result;
+                //var result = features.GroupBy(u => u.Id).Select(g =>
+                //{
+                //    var groupedFeatures = g.First();
+                //    groupedFeatures.Permission = g.Select(u => u.Permission.Single()).ToList();
+                //    return groupedFeatures;
+                //});
+                return features;
             }
         }
     }

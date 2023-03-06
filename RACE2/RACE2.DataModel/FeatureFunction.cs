@@ -20,7 +20,6 @@ namespace RACE2.DataModel
         public string? DisplayName { get; set; }
         [StringLength(64)]
         public string? Description { get; set; }
-
        
         public DateTime Start_date { get; set; }
         public DateTime End_date { get; set; }

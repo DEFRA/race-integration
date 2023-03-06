@@ -43,6 +43,8 @@ namespace RACE2.DataModel
 
             public bool c_IsFirstTimeUser { get; set; }
 
+            public string? RefreshToken { get; set; }
+            public DateTime RefreshTokenExpiryTime { get; set; }
             public List<Role> Roles { get; set; } =new List<Role>();
 
             public List<Reservoir> Reservoirs { get; set; } =new List<Reservoir>();

@@ -14,9 +14,9 @@ namespace RACE2.DataModel
 
         public string? AddressType { get; set; }
 
-        public UserDetail? UserDetail { get; set; }
+        public UserDetail? UserDetail { get; set; } = new UserDetail();
 
-        public Address? Address { get; set; }
+        public Address? Address { get; set; } = new Address();
 
       
     }
