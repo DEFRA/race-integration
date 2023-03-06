@@ -47,6 +47,7 @@ namespace RACE2.DataModel
 
         public Address? address { get; set; } = new Address();
 
+        public string? Nearesttown { get; set; }
     }
 
 }
