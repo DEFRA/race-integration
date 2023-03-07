@@ -44,7 +44,9 @@ namespace RACE2.DataAccess
                 .Property(e => e.c_defra_id)
                 .HasDefaultValue(" ")
                 .HasMaxLength(64);
-                
+
+            modelBuilder.Entity<UserDetail>()
+                .Property(e => e.c_parent_userid);
 
             modelBuilder.Entity<UserDetail>()
                 .Property(e => e.c_type)
@@ -146,13 +148,7 @@ namespace RACE2.DataAccess
                 .Property(e => e.c_description);
 
             modelBuilder.Entity<Role>()
-                .Property(e => e.c_parent_id);
-
-            modelBuilder.Entity<Role>()
-                .Property(e => e.c_start_date);
-
-            modelBuilder.Entity<Role>()
-                .Property(e => e.c_end_date);
+                .Property(e => e.c_parent_roleid);
 
             modelBuilder.Entity<UserRole>(e =>
                 {
