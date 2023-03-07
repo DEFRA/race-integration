@@ -1,5 +1,4 @@
 ﻿@page "/reservoir-not-listed"
-@inject NavigationManager NavigationManager
 
 <div class="govuk-width-container ">
 
@@ -12,23 +11,22 @@
 
                 <h1 class="govuk-heading-xl">What is the name and location of the reservoir you're looking for?</h1>
 
-                <EditForm Model="@formModel" OnSubmit="GoToNextPage">
+                <EditForm Model="@newReservoir" OnSubmit="GoToNextPage">
 
                     <div class="govuk-form-group">
-
-                        <label class="govuk-label govuk-label--m" for="new-name">
+                        <label class="govuk-label govuk-label--m" for="ReservoirName">
                             Reservoir name
                         </label>
-                        <InputText id="ReservoirName" class="govuk-input" @bind-Value="formModel.ReservoirName" />
+                        <InputText id="ReservoirName" class="govuk-input" @bind-Value="newReservoir.ReservoirName" />
 
                     </div>
 
                     <div class="govuk-form-group">
 
-                        <label class="govuk-label govuk-label--m" for="new-postcode">
+                        <label class="govuk-label govuk-label--m" for="NearestPostcode">
                             Nearest postcode
                         </label>
-                        <InputText id="NearestPostcode" class="govuk-input govuk-!-width-one-quarter" @bind-Value="formModel.NearestPostcode" />
+                        <InputText id="NearestPostcode" class="govuk-input govuk-!-width-one-quarter" @bind-Value="newReservoir.NearestPostcode" />
                     </div>
 
                     <div class="govuk-form-group">
@@ -36,7 +34,7 @@
                         <label class="govuk-label govuk-label--m" for="new-grid-ref">
                             National Grid reference
                         </label>
-                        <InputText id="NationalGridRef" class="govuk-input govuk-!-width-one-third" @bind-Value="formModel.NationalGridRef" />
+                        <InputText id="NationalGridRef" class="govuk-input govuk-!-width-one-third" @bind-Value="newReservoir.NationalGridRef" />
                     </div>
 
                     <button class="govuk-button govuk-!-margin-top-6 govuk-!-margin-bottom-6" data-module="govuk-button" type="submit">Send</button>
@@ -49,18 +47,3 @@
     </main>
 </div>
 
-@code {
-    public class FormModel    {
-        public string? ReservoirName { get; set; }
-        public string? NearestPostcode { get; set; }
-        public string? NationalGridRef{ get; set; }
-    }
-    public FormModel formModel = new FormModel();
-
-    bool forceLoad = true;
-    public void GoToNextPage()
-    {
-        var nextPageUrl = "/new-reservoir/" + formModel.ReservoirName + "/" + formModel.NearestPostcode + "/" + formModel.NationalGridRef;
-        NavigationManager.NavigateTo(nextPageUrl, forceLoad);
-    }
-}

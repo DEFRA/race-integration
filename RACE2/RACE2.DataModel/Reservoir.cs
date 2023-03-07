@@ -46,6 +46,7 @@ namespace RACE2.DataModel
        // public List<UserDetail> users { get; set; } = new List<UserDetail>();
 
         public Address? address { get; set; } = new Address();
+        public string? NearestTown { get; set; }
 
     }
 

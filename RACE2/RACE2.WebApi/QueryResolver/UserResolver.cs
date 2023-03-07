@@ -42,6 +42,12 @@ namespace RACE2.WebApi.QueryResolver
             return result;
         }
 
+        public async Task<UserDetail> GetReservoirsByUserEmailId(IUserService _userService, string email)
+        {
+            var result = await _userService.GetReservoirsByUserEmailId(email);
+            return result;
+        }
+
         public async Task<IEnumerable<FeatureFunction>> GetFeaturePermissionForRole(IUserService _userService,int roleid)
         {
             var result = await _userService.GetFeaturePermissionForRole(roleid);

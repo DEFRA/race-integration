@@ -287,22 +287,52 @@ namespace RACE2.DataAccess.Repository
                     }
                 }
             }
-        }       
+        }
 
         public async Task<UserDetail> GetReservoirsByUserId(int id)
         {
             using (var conn = Connection)
             {
-                var query = @"Select A.*,B.*,C.*,D.*
+                var query = @"Select A.Id, A.*,B.UserDetailId,B.ReservoirId,c.Id, c.*,d.id,d.AddressLine1,d.AddressLine2,d.town,d.postcode,d.county
                               from AspNetUsers A 
                               inner join UserReservoirs B ON  A.Id =b.UserDetailId 
-                              inner join Reservoirs C On C.Id = B.ReservoirId 
-                              inner join Addresses D On D.id = C.addressid
+                              inner join Reservoirs c On c.Id = b.ReservoirId 
+                              inner join Addresses d On d.id = c.addressid
                               Where A.Id=@Id";
 
                 var parameters = new DynamicParameters();
                 parameters.Add("Id", id, DbType.Int32);
-                var users = await conn.QueryAsync<UserDetail,Reservoir,Address,UserDetail>(query, (user, reservoir,address) =>
+                var users = await conn.QueryAsync<UserDetail, Reservoir, Address, UserDetail>(query, (user, reservoir, address) =>
+                {
+                    reservoir.address = address;
+                    user.Reservoirs.Add(reservoir);
+
+                    return user;
+                }, parameters, splitOn: "ReservoirId,id");
+                var result = users.GroupBy(u => u.Id).Select(g =>
+                {
+                    var groupedUser = g.First();
+                    groupedUser.Reservoirs = g.Select(u => u.Reservoirs.FirstOrDefault()).ToList();
+                    return groupedUser;
+                });
+                return result.FirstOrDefault();
+            }
+        }
+
+        public async Task<UserDetail> GetReservoirsByUserEmailId(string email)
+        {
+            using (var conn = Connection)
+            {
+                var query = @"Select A.Id, A.*,B.UserDetailId,B.ReservoirId,c.Id, c.*,d.id,d.AddressLine1,d.AddressLine2,d.town,d.postcode,d.county
+                              from AspNetUsers A 
+                              inner join UserReservoirs B ON  A.Id =b.UserDetailId 
+                              inner join Reservoirs C On C.Id = B.ReservoirId 
+                              inner join Addresses D On D.id = C.addressid
+                              Where A.Email=@Email";
+
+                var parameters = new DynamicParameters();
+                parameters.Add("Email", email, DbType.String);
+                var users = await conn.QueryAsync<UserDetail, Reservoir, Address, UserDetail>(query, (user, reservoir, address) =>
                 {
                     reservoir.address = address;
                     user.Reservoirs.Add(reservoir);
@@ -345,5 +375,6 @@ namespace RACE2.DataAccess.Repository
                 return result;
             }
         }
+
     }
 }

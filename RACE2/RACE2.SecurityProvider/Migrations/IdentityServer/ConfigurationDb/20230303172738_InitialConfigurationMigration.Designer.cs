@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace RACE2.SecurityProvider.Migrations.IdentityServer.ConfigurationDb
 {
     [DbContext(typeof(ConfigurationDbContext))]
-    [Migration("20230222082158_InitialConfigurationMigration")]
+    [Migration("20230303172738_InitialConfigurationMigration")]
     partial class InitialConfigurationMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

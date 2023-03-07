@@ -7,12 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="wwwroot\settings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="6.0.14" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.14" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.14" PrivateAssets="all" />
@@ -23,10 +17,8 @@
     <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="6.0.14" />
 	<PackageReference Include="StrawberryShake.Blazor" Version="13.0.5" />
     <PackageReference Include="System.Reactive" Version="5.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\assets\images\" />
+	<PackageReference Include="Fluxor.Blazor.Web" Version="5.7.0" />
+	<PackageReference Include="Fluxor.Blazor.Web.ReduxDevTools" Version="5.7.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -44,6 +36,7 @@
   <ItemGroup>
     <ProjectReference Include="..\RACE2.DataAccess\RACE2.DataAccess.csproj" />
     <ProjectReference Include="..\RACE2.DataModel\RACE2.DataModel.csproj" />
+    <ProjectReference Include="..\RACE2.Dto\RACE2.Dto.csproj" />
   </ItemGroup>
 
 </Project>

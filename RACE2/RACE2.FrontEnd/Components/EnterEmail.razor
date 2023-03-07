@@ -1,23 +1,24 @@
 ﻿@page "/enter-email"
-@inject RACE2GraphQLClient client
-@inject NavigationManager NavigationManager
-@inject AppState appState
+@inherits FluxorComponent
+@using RACE2.FrontEnd.Features.CurrentUserDetail.Store
+@inject IState<CurrentUserDetailState> CurrentUserDetailState
+@inject IDispatcher Dispatcher
 
 <div class="govuk-width-container ">
 
-    <a class="govuk-back-link" href="javascript:history.back()">Back</a>
+    <a class="govuk-back-link"@onclick="goback">Back</a>
 
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds" style="margin-top:40px;">
-            <EditForm Model="appState">
+            <EditForm Model="currentUserEmail">
                <div class="govuk-form-group">
                     <h1 class="govuk-label-wrapper">
                         <label class="govuk-label govuk-label--l" for="event-name">
                             Enter your email address
                         </label>
                     </h1>
-                    <InputText class="govuk-input" @bind-Value="@Email"
-                               style="width:400px;border: 2px solid #000000;border-radius:unset;font-size: 18px;">
+                    <InputText class="govuk-input" @bind-Value="@currentUserEmail.Email"
+                               style="border: 2px solid #000000;border-radius:unset;font-size: 18px;">
                     </InputText>
                 </div>
                 <button class="govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8" @onclick=@(args => GoToNextPage())
@@ -25,59 +26,80 @@
                     Continue
                 </button>
             </EditForm>
+            @CurrentUserDetailState.Value.CurrentUserDetail
         </div>
     </div>
 </div>
 
+
 @code {
-    string? Email;
+    public NavigationManager NavigationManager;
+    public CurrentUserEmail currentUserEmail = new CurrentUserEmail();
+    public string Email = "";
+    private RACE2GraphQLClient client; 
     private string errorMsg1 = "Email entered does not exist!!! Please try again.";
     private string errorMsg2 = "Input is not a valid email address!!! Please try again.";
 
-    protected override void OnInitialized()
+    private UserDetail counterValue => CurrentUserDetailState.Value.CurrentUserDetail;
+
+    protected override async void OnInitialized()
     {
-        Email = appState.GetEmail();
+        base.OnInitialized();
     }
 
-    protected async Task<string> GetEmailFromDatabase(string email)
+    public async void GoToNextPage()
     {
-        //var result = await client.GetUserWithRoles.ExecuteAsync(email);
-        var result = await client.GetUserByEmailID.ExecuteAsync(email);
-        //if (result != null && result.Data != null && result.Data.UserWithRoles.Email != null && result.Data.UserWithRoles.Email != null)
-        //{
-        //    return result!.Data!.UserWithRoles.Email;
-        if (result != null && result.Data != null && result.Data.UserByEmailID.Email != null)
+        string email = currentUserEmail.Email;
+        if (email != null && email.Trim().Length != 0 && RegexUtilities.IsValidEmail(email))
         {
-            string pwh = result!.Data!.UserByEmailID.PasswordHash;
-            return result!.Data!.UserByEmailID.Email;
-        }
-        else
-            return "";
-    }
-
-    public async Task GoToNextPage()
-    {
-        if (Email != null && Email.Trim().Length != 0 && RegexUtilities.IsValidEmail(Email))
-        {
-            bool forceLoad = false;
-
-            string emailInDatabase = await GetEmailFromDatabase(Email);
+            var result = await client.GetUserByEmailID.ExecuteAsync(email);
+            var result1 = await client.GetReservoirsByUserEmailId.ExecuteAsync(email);
+            string emailInDatabase = result!.Data!.UserByEmailID.Email;
             if (emailInDatabase != null && emailInDatabase.Trim().Length != 0)
             {
-                appState.SetEmail(emailInDatabase);
-                string pagelink = "/create-password/";
-                NavigationManager.NavigateTo(pagelink, forceLoad);
+                var CurrentUser = new UserDetail()
+                    {
+                        Id = result!.Data!.UserByEmailID.Id,
+                        Email = result!.Data!.UserByEmailID.Email,
+                        UserName = result!.Data!.UserByEmailID.UserName,
+                        PasswordHash = result!.Data!.UserByEmailID.PasswordHash,
+                        //CurrentUser.Reservoirs = List < Reservoir > )result!.Data!.ReservoirsByUserEmailId.Reservoirs;
+                    };
+                Dispatcher.Dispatch(new CurrentUserDetailSaveAction(CurrentUser));
+                
+                //if (CurrentUser.PasswordHash is null)
+                //{
+                //    string pagelink = "/enter-password";
+                //    NavigationManager.NavigateTo(pagelink, forceLoad);
+                //}
+                //else
+                //{
+                //    string pagelink = "/change-password";
+                //    NavigationManager.NavigateTo(pagelink, forceLoad);
+                //}
+                string pagelink = "/choose-a-reservoir";
+                NavigationManager.NavigateTo(pagelink, true);
             }
             else
             {
-                Email = errorMsg1;
-                appState.SetEmail(Email);
+                currentUserEmail.Email = errorMsg1;
             }
         }
         else
-        {            
-            Email = errorMsg2;
-            appState.SetEmail(Email);
-        }        
+        {
+            currentUserEmail.Email = errorMsg2;
+        }
     }
- }
+
+    private void goback()
+    {
+        bool forceLoad = false;
+        string pagelink = "/";
+        NavigationManager.NavigateTo(pagelink, forceLoad);
+    }
+
+    public class CurrentUserEmail
+    {
+        public string Email { get; set; }
+    }
+}

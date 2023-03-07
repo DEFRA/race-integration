@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RACE2.DataAccess.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -35,12 +35,11 @@ namespace RACE2.DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
-                    display_name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
-                    description = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
-                    default_value = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
-                    start_date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    end_date = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    DisplayName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
+                    Start_date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    End_date = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -85,17 +84,17 @@ namespace RACE2.DataAccess.Migrations
                 name: "UserPermissions",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    access_level = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
-                    start_date = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    end_date = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Access_level = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    Start_date = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    End_date = table.Column<DateTime>(type: "datetime2", nullable: true),
                     FeatureFunctionId = table.Column<int>(type: "int", nullable: true),
                     RoleId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserPermissions", x => x.id);
+                    table.PrimaryKey("PK_UserPermissions", x => x.Id);
                     table.ForeignKey(
                         name: "FK_UserPermissions_AspNetRoles_RoleId",
                         column: x => x.RoleId,
@@ -163,9 +162,10 @@ namespace RACE2.DataAccess.Migrations
                     AddressLine1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AddressLine2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AddressLine3 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AddressLine4 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Country = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Town = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    County = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Postcode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NearestTown = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NearestPostcode = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserDetailId = table.Column<int>(type: "int", nullable: true)
                 },

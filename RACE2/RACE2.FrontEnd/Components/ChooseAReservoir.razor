@@ -1,10 +1,9 @@
 ﻿@page "/choose-a-reservoir"
-@inject NavigationManager NavigationManager
-@inject AppState appState
+@inherits FluxorComponent
 
 <div class="govuk-width-container ">
 
-    <a class="govuk-back-link" href="javascript:history.back()">Back</a>
+    <a class="govuk-back-link" @onclick="goback">Back</a>
 
     <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
 
@@ -18,7 +17,7 @@
                 </div>
 
                 <div class="autocomplete">
-                    <EditForm Model="appState">
+                    <EditForm Model="CurrentUserDetailState.CurrentUserDetail.Reservoirs">
                         <InputText @bind-Value="@SelectedReservoirName" @oninput=HandleInput class="form-control filter" 
                                style="width:400px;border: 2px solid #000000;border-radius:unset;font-size: 18px;" />
                         @if (filteredReservoirNames is not null)
@@ -60,66 +59,3 @@
     </main>
 </div>
 
-@code {
-
-    string? SelectedReservoirName;
-    string? filter;
-    private string[] filteredReservoirNames;
-
-    private string[] reservoirNames =
-    {
-        "River Foss Flood Storage Reservoir",
-        "River Nar Flood Storage Area", 
-        "River Park Pond",
-        "River Rase North Branch",
-        "River Rase South Branch",
-        "Rockingham Reservoir"
-    };
-
-    protected override void OnInitialized()
-    {
-        SelectedReservoirName = appState.GetReservoirName();
-    }
-
-    private async Task<IEnumerable<string>> SearchValues(string value)
-    {
-        // In real life use an asynchronous function for fetching data from an api.
-        await Task.Delay(1);
-
-        // if text is null or empty, show complete list
-        if (string.IsNullOrEmpty(value))
-            return reservoirNames;
-        return reservoirNames.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
-    }
-
-    public void GoToNextPage()
-    {
-        appState.SetReservoirName(SelectedReservoirName);
-        bool forceLoad = false;
-        string pagelink = "/reservoir-details";
-        NavigationManager.NavigateTo(pagelink, forceLoad);
-    }
-
-    async Task HandleInput(ChangeEventArgs e)
-    {
-        filter = e.Value?.ToString();
-        if (filter?.Length > 0)
-        {
-            filteredReservoirNames = reservoirNames.Where(r => r.Contains(filter)).ToArray();
-            //customers = await http.GetFromJsonAsync<List<Customer>>("https://localhost:5002/api/companyfilter/" + filter.ToString());
-        }
-        else
-        {
-            filteredReservoirNames = null;
-            SelectedReservoirName = null;
-        }
-    }
-
-    void SelectReservoir(string reservoir)
-    {
-        SelectedReservoirName = reservoir;
-        //SelectedReservoirName = reservoirNames!.First(c => c.Equals(reservoir));
-        //appState.SetReservoirName(SelectedReservoirName);
-        filteredReservoirNames = null;
-    }
-}

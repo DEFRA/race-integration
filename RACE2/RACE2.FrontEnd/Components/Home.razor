@@ -1,5 +1,4 @@
-﻿@inject NavigationManager NavigationManager
-<div class="govuk-width-container ">        
+﻿<div class="govuk-width-container ">        
     <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">        
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-two-thirds">
@@ -41,10 +40,3 @@
     </main>
 </div>
 
-@code{
-    public void GoToNextPage()
-    {
-        bool forceLoad = true;
-        NavigationManager.NavigateTo("/enter-email/", forceLoad);
-    }
-}

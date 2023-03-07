@@ -142,16 +142,19 @@ namespace RACE2.DataAccess.Migrations
                     b.Property<string>("AddressLine3")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("AddressLine4")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Country")
+                    b.Property<string>("County")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NearestPostcode")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("NearestTown")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Postcode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Town")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("UserDetailId")
@@ -172,27 +175,23 @@ namespace RACE2.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("default_value")
+                    b.Property<string>("Description")
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
-                    b.Property<string>("description")
+                    b.Property<string>("DisplayName")
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
-                    b.Property<string>("display_name")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<DateTime>("end_date")
+                    b.Property<DateTime>("End_date")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("name")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
-                    b.Property<DateTime>("start_date")
+                    b.Property<DateTime>("Start_date")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -523,11 +522,19 @@ namespace RACE2.DataAccess.Migrations
 
             modelBuilder.Entity("RACE2.DataModel.UserPermission", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Access_level")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<DateTime?>("End_date")
+                        .HasColumnType("datetime2");
 
                     b.Property<int?>("FeatureFunctionId")
                         .HasColumnType("int");
@@ -535,18 +542,10 @@ namespace RACE2.DataAccess.Migrations
                     b.Property<int?>("RoleId")
                         .HasColumnType("int");
 
-                    b.Property<string>("access_level")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<DateTime?>("end_date")
+                    b.Property<DateTime?>("Start_date")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("start_date")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
                     b.HasIndex("FeatureFunctionId");
 

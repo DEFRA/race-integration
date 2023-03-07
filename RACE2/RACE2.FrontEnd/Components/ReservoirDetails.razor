@@ -1,24 +1,10 @@
 ﻿@page "/reservoir-details"
-@inject AppState appState
-@implements IDisposable
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
 <div class="govuk-width-container ">
 
-    <a class="govuk-back-link" href="javascript:history.back()">Back</a>
+    <a class="govuk-back-link" @onclick="goback">Back</a>
     <h3>reservoir_details</h3>
-    <h3>Search results for "@appState.GetReservoirName()</h3>
+    <h3>Search results for @CurrentReservoir.public_name  : @CurrentUserDetailState.CurrentUserDetail</h3>
 </div>
 
-@code {
-    public string ReservoirName { get; set; } = default!; 
-
-    void OnReservoirNameStateChange(object sender, EventArgs e) => StateHasChanged();
-    protected override void OnInitialized()
-    {
-        appState.StateChangeHandler += OnReservoirNameStateChange;
-    }
-
-    void IDisposable.Dispose()
-    {
-        appState.StateChangeHandler -= OnReservoirNameStateChange;
-    }
-}

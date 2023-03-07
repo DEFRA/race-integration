@@ -1,9 +1,0 @@
-﻿query GetAllUsers{
-  UserDetail{
-  id
-  userName
-  c_password
-  passwordHash
-  email
-  }
-  }

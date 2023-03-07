@@ -62,6 +62,11 @@ namespace RACE2.Services
             return await _userRepository.GetReservoirsByUserId(id);
         }
 
+        public async Task<UserDetail> GetReservoirsByUserEmailId(string email)
+        {
+            return await _userRepository.GetReservoirsByUserEmailId(email);
+        }
+
         public async Task<IEnumerable<FeatureFunction>> GetFeaturePermissionForRole(int roleid)
         {
             return await _userRepository.GetFeaturePermissionForRole(roleid);
