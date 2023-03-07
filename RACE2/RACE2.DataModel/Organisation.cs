@@ -12,7 +12,7 @@ namespace RACE2.DataModel
     public class Organisation
     {
         [Key, Required]
-        public int id { get; set; }
+        public int Id { get; set; }
         public string? OrgName { get; set; }
 
         public List<Address> Addresses { get; set; } = new List<Address>();

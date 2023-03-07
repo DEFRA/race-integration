@@ -13,7 +13,8 @@ namespace RACE2.DataModel
     public  class UserDetail: IdentityUser<int>    
     {    
             public string? c_defra_id { get; set; }
-           
+            public int c_parent_userid { get; set; }
+
             public string? c_type { get; set; }         
          
             public string? c_first_name { get; set; }
@@ -49,6 +50,6 @@ namespace RACE2.DataModel
 
             public List<Address> Addresses { get; set; }  = new List<Address>();
 
-            public Organisation? OrganisationId { get; set; }
+            public Organisation? Organisation { get; set; }
     }
 }
