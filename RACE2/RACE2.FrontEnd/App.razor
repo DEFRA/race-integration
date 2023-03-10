@@ -1,9 +1,10 @@
-﻿<Fluxor.Blazor.Web.StoreInitializer />
-
-@*<CascadingAuthenticationState>
+﻿<CascadingAuthenticationState>
     <Router AppAssembly="@typeof(App).Assembly">
         <Found Context="routeData">
             <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+                <Authorizing>
+                    &nbsp;
+                </Authorizing>
                 <NotAuthorized>
                     @if (context.User.Identity?.IsAuthenticated != true)
                     {
@@ -24,9 +25,9 @@
             </LayoutView>
         </NotFound>
     </Router>
-</CascadingAuthenticationState>*@
+</CascadingAuthenticationState>
 
-<Router AppAssembly="@typeof(App).Assembly">
+@*<Router AppAssembly="@typeof(App).Assembly">
     <Found Context="routeData">
         <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
     </Found>
@@ -40,4 +41,4 @@
             </div>
         </LayoutView>
     </NotFound>
-</Router>
+</Router>*@

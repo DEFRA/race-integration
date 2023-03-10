@@ -1,14 +1,12 @@
-﻿{
+{
   "profiles": {
-    "RACE2.SecurityProvider": {
+    "RACE2.Dto": {
       "commandName": "Project",
-      "dotnetRunMessages": true,
       "launchBrowser": true,
-      "applicationUrl": "http://localhost:5010",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    }
+      },
+      "applicationUrl": "https://localhost:65097;http://localhost:65098"
     }
   }
-
+}
