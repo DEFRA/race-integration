@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: race2webapi-deployment
+  namespace: race2webapi
+spec:
+  selector:
+    matchLabels:
+      app: race2webapi-pod
+  template:
+    metadata:
+      labels:
+        app: race2webapi-pod
+    spec:
+      containers:
+      - name: race2webapi-container
+        image: race2acr.azurecr.io/race2webapi:v1
+        ports:
+        - containerPort: 80

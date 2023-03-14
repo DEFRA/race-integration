@@ -8,19 +8,24 @@ using RACE2.SecurityProvider.UtilityClasses;
 using RACE2.SecurityProvider.UtilityClasses.CompanyEmployees.OAuth.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
-IConfiguration _configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../appsettings.json").Build();
-string RACE2FrontEndURL = _configuration["ApplicationSettings:RACE2FrontEndURL"];
+//IConfiguration _configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../appsettings.json").Build();
+string RACE2FrontEndURL = builder.Configuration["ApplicationSettings:RACE2FrontEndURL"];
 var migrationsAssembly = typeof(Program).Assembly.GetName().Name;
 
 // Add services to the container.
-var connectionString = _configuration.GetConnectionString("DefaultConnection");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<UserDetail>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<Role>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
 builder.Services.AddRazorPages();
+
 builder.Services.AddIdentityServer()
             .AddConfigurationStore(options =>
             {
@@ -34,17 +39,20 @@ builder.Services.AddIdentityServer()
             })
             .AddDeveloperSigningCredential()
             .AddAspNetIdentity<UserDetail>();
+
 builder.Services.Configure<IdentityOptions>(options =>
         {
             // Default Password settings.
+            options.Password.RequiredLength = 8;
             options.Password.RequireDigit = true;
             options.Password.RequireLowercase = true;
             options.Password.RequireNonAlphanumeric = true;
             options.Password.RequireUppercase = true;
-            options.Password.RequiredLength = 8;
             options.Password.RequiredUniqueChars = 1;
         });
+
 builder.Services.AddScoped<IRandomPasswordGeneration, RandomPasswordGeneration>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
