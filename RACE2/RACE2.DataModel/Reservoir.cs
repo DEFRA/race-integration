@@ -28,8 +28,7 @@ namespace RACE2.DataModel
         [StringLength(64)]
         public string? registered_category { get;set; }
         [StringLength(12)]
-        public string? grid_reference { get; set; }
-       
+        public string? grid_reference { get; set; }       
         public int capacity { get; set; }
         public int surface_area { get; set; }
         public decimal top_water_level { get; set; }

@@ -10,6 +10,9 @@ using RACE2.WebApi.QueryResolver;
 using System.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using HotChocolate.AspNetCore.Voyager;
+using RACE2.Logging.Service;
+using Serilog;
+using RACE2.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,8 +20,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton(builder.Configuration.Get<ApiConfiguration>().AppConfiguration);
 var _configuration = builder.Configuration.Get<ApiConfiguration>().AppConfiguration;
 builder.Services.AddControllers();
+//builder.Host.InjectSerilog();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<ILogService, LogService>();
+
 
 JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 builder.Services.AddAuthentication("Bearer")
@@ -65,7 +71,7 @@ builder.Services.AddGraphQLServer()
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-
+//app.UseSerilogRequestLogging();
 app.UseCors("CorsPolicy");
 
 app.UseRouting();

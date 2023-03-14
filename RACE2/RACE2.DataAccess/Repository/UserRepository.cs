@@ -14,17 +14,20 @@ using Microsoft.Data.SqlClient;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using static Humanizer.In;
 using Microsoft.AspNetCore.Identity;
+using RACE2.Logging.Service;
 
 namespace RACE2.DataAccess.Repository
 {
     public class UserRepository : IUserRepository
     {
+        private readonly ILogService _logService;
 
         IConfiguration _configuration;
-        public UserRepository(IConfiguration configuration)
+        public UserRepository(IConfiguration configuration,ILogService logService)
         {
             _configuration = configuration;
             _configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../appsettings.json").Build();
+            _logService = logService;   
         }
 
         private IDbConnection Connection
@@ -57,47 +60,65 @@ namespace RACE2.DataAccess.Repository
 
         public async Task<UserDetail> GetUserByEmailID(string email)
         {
-            using (var conn = Connection)
+            _logService.Write("Repository");
+
+            try
             {
-                var query = "Select * FROM AspNetUsers where Email = @email";
-                var users = await conn.QuerySingleAsync<UserDetail>(query, new { email });
-                return users;
+                using (var conn = Connection)
+                {
+
+                    DynamicParameters parameters = new DynamicParameters();
+                    parameters.Add("Email", email, DbType.String);
+
+                    var user = await conn.QuerySingleAsync<UserDetail>("sp_GetUserByEmailID", parameters, commandType: CommandType.StoredProcedure);
+                    return user;
+                    
+                }
             }
+            catch (Exception ex)
+            {
+                _logService.Error(ex, "Exception in GetUserByEmailID");
+                return null;
+            }
+
         }
 
         public async Task<UserDetail> GetUserWithRoles(string email)
         {
-            using (var conn = Connection)
+            try
             {
-                var query = @"Select A.Id, A.Email,A.UserName,B.UserId,B.RoleId,c.Id,c.Name
-                              from AspNetUsers A inner join AspNetUserRoles B
-                              ON  A.Id =b.UserId inner join AspNetRoles c
-                              On c.Id = b.RoleId Where A.Email=@email";
-
-                var parameters = new DynamicParameters();
-
-                parameters.Add("Email", email, DbType.String);
-
-                var users = await conn.QueryAsync<UserDetail, Role, UserDetail>(query, (user, role) =>
+                using (var conn = Connection)
                 {
-                    user.Roles.Add(role);
-                    return user;
-                }, parameters, splitOn: "RoleId");
+                    var parameters = new DynamicParameters();
 
-                var result = users.GroupBy(u => u.Id).Select(g =>
-                {
-                    var groupedUser = g.First();
-                    groupedUser.Roles = g.Select(u => u.Roles.Single()).ToList();
-                    return groupedUser;
-                });
-                return result.FirstOrDefault();
+                    parameters.Add("Email", email, DbType.String);
 
-                //getfeaturefuntion(userid)
-                //getreservoirs(userid)
-                //getaddress(userid)
+                    var users = await conn.QueryAsync<UserDetail, Role, UserDetail>("sp_GetUserWithRoles", (user, role) =>
+                    {
+                        user.Roles.Add(role);
+                        return user;
+                    }, parameters, null, true, splitOn: "RoleId", null, CommandType.StoredProcedure);
 
+                    var result = users.GroupBy(u => u.Id).Select(g =>
+                    {
+                        var groupedUser = g.First();
+                        groupedUser.Roles = g.Select(u => u.Roles.Single()).ToList();
+                        return groupedUser;
+                    });
+                    return result.FirstOrDefault();
 
+                    //getfeaturefuntion(userid)
+                    //getreservoirs(userid)
+                    //getaddress(userid)
+                }
             }
+            catch (Exception ex)
+            {
+                _logService.Error(ex, "Exception in GetUserWithRoles");
+                return null;
+            }
+
+        
         }
         public async Task<UserDetail> CreateUser(UserDetail newuser)
         {
