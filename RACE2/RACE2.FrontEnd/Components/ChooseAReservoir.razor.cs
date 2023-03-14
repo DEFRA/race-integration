@@ -1,9 +1,10 @@
 ﻿using Fluxor;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using RACE2.DataModel;
-using RACE2.FrontEnd.Features.CurrentUserDetail.Store;
 using RACE2.FrontEnd.RACE2GraphQLSchema;
+using System.Security.Claims;
 
 namespace RACE2.FrontEnd.Components
 {
@@ -14,20 +15,14 @@ namespace RACE2.FrontEnd.Components
         [Inject]
         public NavigationManager NavigationManager { get; set; } = default!;
 
-        [Inject]
-        public IState<CurrentUserDetailState> State { get; set; } = default!;
-
-        [Inject]
-        public IDispatcher Dispatcher { get; set; } = default!;
-
-        public CurrentUserDetailState CurrentUserDetailState => State.Value;
-
         public Reservoir CurrentReservoir { get; set; } = new Reservoir();
         string? SelectedReservoirName;
         string CurrentUserEmail;
         bool? IsLoggedIn;
         string? filter;
         private string[] filteredReservoirNames;
+        private IEnumerable<Claim> UserClaims { get; set; }
+        private string UserName { get; set; } = "Unknown";
 
         private string[] reservoirNames = Array.Empty<String>();
         //    {
@@ -41,8 +36,14 @@ namespace RACE2.FrontEnd.Components
 
         protected override async void OnInitialized()
         {
+            AuthenticationState authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+
+            if (authState.User.Identity.Name is not null)
+            {
+                UserName = authState.User.Identity.Name;
+                UserClaims = authState.User.Claims;
+            }
             //SelectedReservoirName = CurrentUserDetailState.CurrentReservoir.public_name;
-            CurrentUserEmail = CurrentUserDetailState.CurrentUserDetail.Email;
             var results = await client.GetReservoirsByUserEmailId.ExecuteAsync("kcsahoo@gmail.com");
             List<string> reservoirNamesList = new List<string>();
             foreach (var rn in results!.Data!.ReservoirsByUserEmailId.Reservoirs)
@@ -50,7 +51,6 @@ namespace RACE2.FrontEnd.Components
                 reservoirNamesList.Add(rn.Public_name);
             }
             reservoirNames = reservoirNamesList.ToArray<string>();
-            base.OnInitialized();
         }
 
         private async Task<IEnumerable<string>> SearchValues(string value)
@@ -64,7 +64,7 @@ namespace RACE2.FrontEnd.Components
             return reservoirNames.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
         }
 
-        public void GoToNextPage()
+        public async void GoToNextPage()
         {
             bool forceLoad = false;
             string pagelink = "/reservoir-details";
@@ -81,7 +81,7 @@ namespace RACE2.FrontEnd.Components
             }
             else
             {
-                filteredReservoirNames = null;
+                filteredReservoirNames = Array.Empty<string>();
                 SelectedReservoirName = null;
             }
         }
@@ -96,7 +96,7 @@ namespace RACE2.FrontEnd.Components
         private void goback()
         {
             bool forceLoad = false;
-            string pagelink = "/enter-email";
+            string pagelink = "/";
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }
     }

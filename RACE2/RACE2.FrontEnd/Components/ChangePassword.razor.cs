@@ -3,15 +3,15 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Identity;
 using RACE2.DataModel;
 using RACE2.FrontEnd.Features.CurrentUserDetail.Store;
-using RACE2.FrontEnd.RACE2GraphQLSchema;
+//using RACE2.FrontEnd.RACE2GraphQLSchema;
 using RACE2.FrontEnd.Utilities;
 
 namespace RACE2.FrontEnd.Components
 {
     public partial class ChangePassword
     {
-        [Inject]
-        public RACE2GraphQLClient client { get; set; } = default!;
+        //[Inject]
+        //public RACE2GraphQLClient client { get; set; } = default!;
         [Inject]
         public NavigationManager NavigationManager { get; set; } = default!;
 

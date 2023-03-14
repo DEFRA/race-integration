@@ -1,8 +1,4 @@
 ﻿@page "/enter-email"
-@inherits FluxorComponent
-@using RACE2.FrontEnd.Features.CurrentUserDetail.Store
-@inject IState<CurrentUserDetailState> CurrentUserDetailState
-@inject IDispatcher Dispatcher
 
 <div class="govuk-width-container ">
 
@@ -10,96 +6,32 @@
 
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds" style="margin-top:40px;">
-            <EditForm Model="currentUserEmail">
+            <EditForm Model="@userModel" OnSubmit="@GoToNextPage">
                <div class="govuk-form-group">
                     <h1 class="govuk-label-wrapper">
                         <label class="govuk-label govuk-label--l" for="event-name">
                             Enter your email address
                         </label>
                     </h1>
-                    <InputText class="govuk-input" @bind-Value="@currentUserEmail.Email"
+                    <InputText class="govuk-input" @bind-Value="userModel.Email"
+                               style="border: 2px solid #000000;border-radius:unset;font-size: 18px;">
+                    </InputText>
+                    <br/>
+                    <h1 class="govuk-label-wrapper">
+                        <label class="govuk-label govuk-label--l" for="event-name">
+                            Enter your password
+                        </label>
+                    </h1>
+                    <InputText class="govuk-input" @bind-Value="userModel.Password"
                                style="border: 2px solid #000000;border-radius:unset;font-size: 18px;">
                     </InputText>
                 </div>
-                <button class="govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8" @onclick=@(args => GoToNextPage())
-                        data-module="govuk-button">
+                <button class="govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8" type="submit">
                     Continue
                 </button>
             </EditForm>
-            @CurrentUserDetailState.Value.CurrentUserDetail
         </div>
     </div>
 </div>
 
 
-@code {
-    public NavigationManager NavigationManager;
-    public CurrentUserEmail currentUserEmail = new CurrentUserEmail();
-    public string Email = "";
-    private RACE2GraphQLClient client; 
-    private string errorMsg1 = "Email entered does not exist!!! Please try again.";
-    private string errorMsg2 = "Input is not a valid email address!!! Please try again.";
-
-    private UserDetail counterValue => CurrentUserDetailState.Value.CurrentUserDetail;
-
-    protected override async void OnInitialized()
-    {
-        base.OnInitialized();
-    }
-
-    public async void GoToNextPage()
-    {
-        string email = currentUserEmail.Email;
-        if (email != null && email.Trim().Length != 0 && RegexUtilities.IsValidEmail(email))
-        {
-            var result = await client.GetUserByEmailID.ExecuteAsync(email);
-            var result1 = await client.GetReservoirsByUserEmailId.ExecuteAsync(email);
-            string emailInDatabase = result!.Data!.UserByEmailID.Email;
-            if (emailInDatabase != null && emailInDatabase.Trim().Length != 0)
-            {
-                var CurrentUser = new UserDetail()
-                    {
-                        Id = result!.Data!.UserByEmailID.Id,
-                        Email = result!.Data!.UserByEmailID.Email,
-                        UserName = result!.Data!.UserByEmailID.UserName,
-                        PasswordHash = result!.Data!.UserByEmailID.PasswordHash,
-                        //CurrentUser.Reservoirs = List < Reservoir > )result!.Data!.ReservoirsByUserEmailId.Reservoirs;
-                    };
-                Dispatcher.Dispatch(new CurrentUserDetailSaveAction(CurrentUser));
-                
-                //if (CurrentUser.PasswordHash is null)
-                //{
-                //    string pagelink = "/enter-password";
-                //    NavigationManager.NavigateTo(pagelink, forceLoad);
-                //}
-                //else
-                //{
-                //    string pagelink = "/change-password";
-                //    NavigationManager.NavigateTo(pagelink, forceLoad);
-                //}
-                string pagelink = "/choose-a-reservoir";
-                NavigationManager.NavigateTo(pagelink, true);
-            }
-            else
-            {
-                currentUserEmail.Email = errorMsg1;
-            }
-        }
-        else
-        {
-            currentUserEmail.Email = errorMsg2;
-        }
-    }
-
-    private void goback()
-    {
-        bool forceLoad = false;
-        string pagelink = "/";
-        NavigationManager.NavigateTo(pagelink, forceLoad);
-    }
-
-    public class CurrentUserEmail
-    {
-        public string Email { get; set; }
-    }
-}

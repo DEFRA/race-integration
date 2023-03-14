@@ -17,6 +17,7 @@
     <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="6.0.14" />
 	<PackageReference Include="StrawberryShake.Blazor" Version="13.0.5" />
     <PackageReference Include="System.Reactive" Version="5.0.0" />
+	<PackageReference Include="Fluxor" Version="5.7.0" />
 	<PackageReference Include="Fluxor.Blazor.Web" Version="5.7.0" />
 	<PackageReference Include="Fluxor.Blazor.Web.ReduxDevTools" Version="5.7.0" />
   </ItemGroup>

@@ -4,6 +4,5 @@
     id
     passwordHash
     email
-  } 
-  
+  }
 }

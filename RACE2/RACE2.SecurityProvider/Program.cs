@@ -57,6 +57,10 @@ else
     app.UseExceptionHandler("/Error");
 }
 HostingExtensions.InitializeDatabase(app);
+app.UseCookiePolicy(new CookiePolicyOptions
+{
+    MinimumSameSitePolicy = SameSiteMode.Lax
+});
 app.UseStaticFiles();
 
 app.UseRouting();

@@ -1,7 +1,7 @@
 ﻿using Fluxor;
 using Microsoft.AspNetCore.Components;
 using RACE2.DataModel;
-using RACE2.FrontEnd.RACE2GraphQLSchema;
+//using RACE2.FrontEnd.RACE2GraphQLSchema;
 using System.Net.Http.Json;
 using System.Text.Json;
 

@@ -22,8 +22,4 @@
     <ProjectReference Include="..\RACE2.Dto\RACE2.Dto.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="FluxorImplementation\Effects\" />
-  </ItemGroup> 
-
 </Project>

@@ -11,16 +11,15 @@
       id 
       public_name
       registered_name
-      public_category   
+      public_category 
+      nearestTown  
       address{
         id
         addressLine1
         addressLine2
-        addressLine3
-        addressLine4
-        country
+        town
+        county
         postcode
-        nearestPostcode
       }   
       }  
     }

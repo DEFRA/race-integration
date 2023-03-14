@@ -78,7 +78,7 @@ app.UseRouting();
 
 app.UseAuthentication();
 
-//app.UseAuthorization();
+app.UseAuthorization();
 
 app.MapGraphQL();
 app.UseVoyager("/graphql","/graphql-voyager");

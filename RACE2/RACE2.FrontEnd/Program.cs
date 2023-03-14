@@ -27,20 +27,17 @@ builder.Services.AddIdentity<UserDetail,Role>(options => options.SignIn.RequireC
     .AddEntityFrameworkStores<ApplicationDbContext>();
 string RACE2WebApiURL = builder.Configuration["RACE2WebApiURL"];
 builder.Services.AddScoped<IPasswordHasher<UserDetail>, PasswordHasher<UserDetail>>();
-
-builder.Services.AddFluxor(o =>
+builder.Services.AddOidcAuthentication(options =>
 {
-    o.ScanAssemblies(typeof(Program).Assembly);
-    o.UseReduxDevTools(rdt => { rdt.Name = "RACE2 application"; });
+    builder.Configuration.Bind("oidc", options.ProviderOptions);
 });
-
 builder.Services.AddRACE2GraphQLClient()
     .ConfigureHttpClient(client =>
     {
         client.BaseAddress = new Uri(RACE2WebApiURL);
-        client.DefaultRequestHeaders.Authorization =
-            new AuthenticationHeaderValue("Bearer", "Your Oauth token");
-    }); 
+        //client.DefaultRequestHeaders.Authorization =
+        //    new AuthenticationHeaderValue("Bearer", "Your Oauth token");
+    });
 
 //builder.Services.AddOidcAuthentication(options =>
 //{

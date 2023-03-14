@@ -16,6 +16,7 @@ type UserResolver {
   userWithRoles(email: String!): UserDetail!
   matchUserWithEmailAndPasswordHash(email: String! passwordhash: String!): UserDetail!
   reservoirsByUserId(id: Int!): UserDetail!
+  reservoirsByUserEmailId(email: String!): UserDetail!
   featurePermissionForRole(roleid: Int!): [FeatureFunction!]!
 }
 
@@ -27,6 +28,7 @@ type MutationResolver {
 
 type UserDetail {
   c_defra_id: String
+  c_parent_userid: Int!
   c_type: String
   c_first_name: String
   c_last_name: String
@@ -43,7 +45,7 @@ type UserDetail {
   roles: [Role!]!
   reservoirs: [Reservoir!]!
   addresses: [Address!]!
-  organisationId: Organisation
+  organisation: Organisation
   id: Int!
   userName: String
   normalizedUserName: String
@@ -73,6 +75,7 @@ type FeatureFunction {
 
 input UserDetailInput {
   c_defra_id: String
+  c_parent_userid: Int!
   c_type: String
   c_first_name: String
   c_last_name: String
@@ -89,7 +92,7 @@ input UserDetailInput {
   roles: [RoleInput!]!
   reservoirs: [ReservoirInput!]!
   addresses: [AddressInput!]!
-  organisationId: OrganisationInput
+  organisation: OrganisationInput
   id: Int!
   userName: String
   normalizedUserName: String
@@ -105,18 +108,6 @@ input UserDetailInput {
   lockoutEnd: DateTime
   lockoutEnabled: Boolean!
   accessFailedCount: Int!
-}
-
-type Address {
-  id: Int!
-  addressLine1: String
-  addressLine2: String
-  addressLine3: String
-  addressLine4: String
-  country: String
-  postcode: String
-  nearestPostcode: String
-  organisation: [Organisation!]!
 }
 
 type Reservoir {
@@ -138,14 +129,13 @@ type Reservoir {
   last_inspection_date: DateTime!
   next_inspection_date: DateTime!
   address: Address
+  nearestTown: String
 }
 
 type Role {
   c_display_name: String
   c_description: String
-  c_parent_id: Int!
-  c_start_date: DateTime!
-  c_end_date: DateTime!
+  c_parent_roleid: Int!
   userDetail: [UserDetail!]!
   permission: [UserPermission!]!
   id: Int!
@@ -156,6 +146,16 @@ type Role {
 
 "The `DateTime` scalar represents an ISO-8601 compliant date time type."
 scalar DateTime
+
+type Address {
+  id: Int!
+  addressLine1: String
+  addressLine2: String
+  town: String
+  county: String
+  postcode: String
+  organisation: [Organisation!]!
+}
 
 type Organisation {
   id: Int!
@@ -173,9 +173,7 @@ type UserPermission {
 input RoleInput {
   c_display_name: String
   c_description: String
-  c_parent_id: Int!
-  c_start_date: DateTime!
-  c_end_date: DateTime!
+  c_parent_roleid: Int!
   userDetail: [UserDetailInput!]!
   permission: [UserPermissionInput!]!
   id: Int!
@@ -203,17 +201,16 @@ input ReservoirInput {
   last_inspection_date: DateTime!
   next_inspection_date: DateTime!
   address: AddressInput
+  nearestTown: String
 }
 
 input AddressInput {
   id: Int!
   addressLine1: String
   addressLine2: String
-  addressLine3: String
-  addressLine4: String
-  country: String
+  town: String
+  county: String
   postcode: String
-  nearestPostcode: String
   organisation: [OrganisationInput!]!
 }
 
