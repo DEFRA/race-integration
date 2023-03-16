@@ -17,19 +17,3 @@ spec:
         image: race2acr.azurecr.io/securityprovider:v1
         ports:
         - containerPort: 80
-        env:
-        - name: ASPNETCORE_ENVIRONMENT
-          value: Production
-        - name: AZURE_APP_CONFIGURATION_ENDPOINT
-          value: https://race2appconfig.azconfig.io
-        - name: AZURE_USER_ASSIGNED_IDENTITY_CLIENT_ID
-          value: f324da0d-19e1-49df-8901-faab72ed2649
-        - name: SqlConnection
-          value: Server=tcp:race2sqlserver.database.windows.net,1433;Initial Catalog=RACE2Database;Persist Security Info=False;User ID=race2admin;Password=Race2Password123!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
-        - name: RACE2FrontEndURL
-          value: http://localhost:5001
-        - name: RACE2WebApiURL
-          value: http://localhost:5003/graphql/
-        - name: RACE2SecurityProviderURL
-          value: http://localhost:5010
-

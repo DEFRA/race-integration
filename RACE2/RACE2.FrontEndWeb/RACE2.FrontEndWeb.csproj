@@ -22,10 +22,4 @@
     <ProjectReference Include="..\RACE2.Dto\RACE2.Dto.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Content Update="appsettings.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
 </Project>
