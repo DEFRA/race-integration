@@ -1,19 +1,69 @@
+using Azure.Core;
+using Azure.Identity;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations.Internal;
+using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using RACE2.DataAccess;
 using RACE2.DataModel;
 using RACE2.SecurityProvider;
 using RACE2.SecurityProvider.UtilityClasses;
 using RACE2.SecurityProvider.UtilityClasses.CompanyEmployees.OAuth.Extensions;
+using System.IO.Packaging;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
-//IConfiguration _configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../appsettings.json").Build();
-string RACE2FrontEndURL = builder.Configuration["ApplicationSettings:RACE2FrontEndURL"];
+
+var appConfigEndpoint = builder.Configuration["AZURE_APP_CONFIGURATION_ENDPOINT"];
+var userAssignedIdentityClientId = builder.Configuration["AZURE_USER_ASSIGNED_IDENTITY_CLIENT_ID"];
+
+builder.Configuration
+    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+    .AddJsonFile("appsettings.development.json", optional: true, reloadOnChange: true)
+    //.AddEnvironmentVariables()
+    //.AddAzureAppConfiguration(options =>
+    //{
+    //    //var appConfigEndpoint = System.Environment.GetEnvironmentVariable("AZURE_APP_CONFIGURATION_ENDPOINT");
+    //    //var userAssignedIdentityClientId = System.Environment.GetEnvironmentVariable("AZURE_USER_ASSIGNED_IDENTITY_CLIENT_ID");
+    //    var endpoint = new Uri(appConfigEndpoint);
+    //    // Create the token credential instance with the client id of the Managed Identity
+    //    TokenCredential credentials;
+    //    if (builder.Environment.IsDevelopment())
+    //    {
+    //        credentials = new DefaultAzureCredential(new DefaultAzureCredentialOptions
+    //        {
+    //            ManagedIdentityClientId = userAssignedIdentityClientId
+    //        });
+    //    }
+    //    else
+    //    {
+    //        credentials = new ManagedIdentityCredential(userAssignedIdentityClientId);
+    //    }
+    //    options
+    //        // Use managed identity to access app configuration
+    //        .Connect(endpoint, credentials)
+    //        // Setup dynamic refresh
+    //        //.ConfigureRefresh(refreshOpt =>
+    //        //{
+    //        //    refreshOpt.SetCacheExpiration(TimeSpan.FromDays(1));
+    //        //})
+    //        // Configure Azure Key Vault with Managed Identity
+    //        .ConfigureKeyVault(vaultOpt =>
+    //        {
+    //            vaultOpt.SetCredential(credentials);
+    //            vaultOpt.SetSecretRefreshInterval(TimeSpan.FromHours(12));
+    //        });
+    //})
+    ;
+
+string RACE2FrontEndURL = builder.Configuration["RACE2FrontEndURL"];
+
 var migrationsAssembly = typeof(Program).Assembly.GetName().Name;
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+//var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var connectionString = builder.Configuration["SqlConnection"];
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));

@@ -6,7 +6,19 @@
       "launchBrowser": true,
       "applicationUrl": "http://localhost:5010",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "AZURE_APP_CONFIGURATION_ENDPOINT": "https://race2appconfig.azconfig.io",
+        "AZURE_USER_ASSIGNED_IDENTITY_CLIENT_ID": "f324da0d-19e1-49df-8901-faab72ed2649",
+        "AZURE_CLIENT_ID": "39ef2527-ca88-4bbc-b474-2d9aecf67f46", //ADO-DefraGovUK-AZD-RAC-POC1
+        "AZURE_CLIENT_SECRET": "P8J8Q~bvpvv9brjyqqCxriIlloll_WvyAiQQfc.-",
+        "AZURE_TENANT_ID": "770a2450-0227-4c62-90c7-4e38537f1102",
+        "SqlConnection": "Server=tcp:race2sqlserver.database.windows.net,1433;Initial Catalog=RACE2Database;Persist Security Info=False;User ID=race2admin;Password=Race2Password123!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;",
+        "RACE2FrontEndURL": "http://localhost:5001",
+        "RACE2WebApiURL": "http://localhost:5003/graphql/",
+        "RACE2SecurityProviderURL": "http://localhost:5010"
+      },
+      "ApplicationSettings": {
+        "AllowedHosts": "*"       
       }
     }
   }
