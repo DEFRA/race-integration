@@ -35,6 +35,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GraphQLCommands", "GraphQLC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.FrontEndWeb", "RACE2.FrontEndWeb\RACE2.FrontEndWeb.csproj", "{29F0C04F-73C0-4340-8017-2E227AC2EE0E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StoredProcedures", "StoredProcedures", "{F40D405C-8DD0-44A8-81BF-9072721B1300}"
+	ProjectSection(SolutionItems) = preProject
+		sp_GetUserByEmailID.sql = sp_GetUserByEmailID.sql
+		sp_GetUserWithRoles.sql = sp_GetUserWithRoles.sql
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RACE2.Logging", "RACE2.Logging\RACE2.Logging.csproj", "{FCDA91E9-996A-43AD-8864-5E66B0BECF84}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +85,10 @@ Global
 		{29F0C04F-73C0-4340-8017-2E227AC2EE0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29F0C04F-73C0-4340-8017-2E227AC2EE0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29F0C04F-73C0-4340-8017-2E227AC2EE0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCDA91E9-996A-43AD-8864-5E66B0BECF84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCDA91E9-996A-43AD-8864-5E66B0BECF84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCDA91E9-996A-43AD-8864-5E66B0BECF84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCDA91E9-996A-43AD-8864-5E66B0BECF84}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

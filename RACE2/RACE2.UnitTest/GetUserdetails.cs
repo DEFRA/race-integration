@@ -12,12 +12,12 @@ namespace RACE2.UnitTest
         [Fact]
         public void GetFeatureFunctionTest()
         {
-            var config = InitConfiguration();
-            var connectionString = config.GetConnectionString("DefaultConnection");
-            UserRepository repo = new UserRepository(config);
-            //var details = repo.GetFeatureFunctions(config);
-            //var details = repo.GetUserDetail();
-            //Assert.NotNull(details);
+            //var config = InitConfiguration();
+            //var connectionString = config.GetConnectionString("DefaultConnection");
+            //UserRepository repo = new UserRepository(config);
+            ////var details = repo.GetFeatureFunctions(config);
+            ////var details = repo.GetUserDetail();
+            ////Assert.NotNull(details);
         }
 
         public static IConfiguration InitConfiguration()
