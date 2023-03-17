@@ -16,13 +16,13 @@ using RACE2.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var defaultCredentials = new DefaultAzureCredential();
-builder.Configuration.AddAzureKeyVault(new Uri("https://race2appconfig.azconfig.io"), defaultCredentials,
-                           new AzureKeyVaultConfigurationOptions
-                           {
-                               // Manager = new PrefixKeyVaultSecretManager(secretPrefix),
-                               ReloadInterval = TimeSpan.FromMinutes(5)
-                           });
+//var defaultCredentials = new DefaultAzureCredential();
+//builder.Configuration.AddAzureKeyVault(new Uri("https://race2appconfig.azconfig.io"), defaultCredentials,
+//                           new AzureKeyVaultConfigurationOptions
+//                           {
+//                               // Manager = new PrefixKeyVaultSecretManager(secretPrefix),
+//                               ReloadInterval = TimeSpan.FromMinutes(5)
+//                           });
 // Add services to the container.
 builder.Services.AddSingleton(builder.Configuration.Get<ApiConfiguration>().AppConfiguration);
 var _configuration = builder.Configuration.Get<ApiConfiguration>().AppConfiguration;
