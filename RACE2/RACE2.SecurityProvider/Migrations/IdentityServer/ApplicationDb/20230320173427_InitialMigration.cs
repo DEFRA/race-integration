@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace RACE2.DataAccess.Migrations
+namespace RACE2.SecurityProvider.Migrations.IdentityServer.ApplicationDb
 {
-    public partial class initial : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -17,9 +17,7 @@ namespace RACE2.DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     c_display_name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
                     c_description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    c_parent_id = table.Column<int>(type: "int", nullable: false),
-                    c_start_date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    c_end_date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    c_parent_roleid = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -50,13 +48,13 @@ namespace RACE2.DataAccess.Migrations
                 name: "Organisations",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OrgName = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Organisations", x => x.id);
+                    table.PrimaryKey("PK_Organisations", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -114,6 +112,7 @@ namespace RACE2.DataAccess.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     c_defra_id = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true, defaultValue: " "),
+                    c_parent_userid = table.Column<int>(type: "int", nullable: false),
                     c_type = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false, defaultValue: " "),
                     c_first_name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false, defaultValue: " "),
                     c_last_name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false, defaultValue: " "),
@@ -127,7 +126,7 @@ namespace RACE2.DataAccess.Migrations
                     c_created_on_date = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
                     c_last_access_date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     c_IsFirstTimeUser = table.Column<bool>(type: "bit", nullable: false),
-                    OrganisationIdid = table.Column<int>(type: "int", nullable: true),
+                    OrganisationId = table.Column<int>(type: "int", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -147,10 +146,10 @@ namespace RACE2.DataAccess.Migrations
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetUsers_Organisations_OrganisationIdid",
-                        column: x => x.OrganisationIdid,
+                        name: "FK_AspNetUsers_Organisations_OrganisationId",
+                        column: x => x.OrganisationId,
                         principalTable: "Organisations",
-                        principalColumn: "id");
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -161,12 +160,9 @@ namespace RACE2.DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     AddressLine1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AddressLine2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AddressLine3 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Town = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     County = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Postcode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NearestTown = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NearestPostcode = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserDetailId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -204,8 +200,8 @@ namespace RACE2.DataAccess.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -254,8 +250,8 @@ namespace RACE2.DataAccess.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -298,11 +294,11 @@ namespace RACE2.DataAccess.Migrations
                 columns: table => new
                 {
                     Addressesid = table.Column<int>(type: "int", nullable: false),
-                    Organisationid = table.Column<int>(type: "int", nullable: false)
+                    OrganisationId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrganisationAddresses", x => new { x.Addressesid, x.Organisationid });
+                    table.PrimaryKey("PK_OrganisationAddresses", x => new { x.Addressesid, x.OrganisationId });
                     table.ForeignKey(
                         name: "FK_OrganisationAddresses_Addresses_Addressesid",
                         column: x => x.Addressesid,
@@ -310,10 +306,10 @@ namespace RACE2.DataAccess.Migrations
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OrganisationAddresses_Organisations_Organisationid",
-                        column: x => x.Organisationid,
+                        name: "FK_OrganisationAddresses_Organisations_OrganisationId",
+                        column: x => x.OrganisationId,
                         principalTable: "Organisations",
-                        principalColumn: "id",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -340,6 +336,7 @@ namespace RACE2.DataAccess.Migrations
                     last_inspection_date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     next_inspection_date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     addressid = table.Column<int>(type: "int", nullable: true),
+                    NearestTown = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserDetailId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -454,9 +451,9 @@ namespace RACE2.DataAccess.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_OrganisationIdid",
+                name: "IX_AspNetUsers_OrganisationId",
                 table: "AspNetUsers",
-                column: "OrganisationIdid");
+                column: "OrganisationId");
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
@@ -466,9 +463,9 @@ namespace RACE2.DataAccess.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrganisationAddresses_Organisationid",
+                name: "IX_OrganisationAddresses_OrganisationId",
                 table: "OrganisationAddresses",
-                column: "Organisationid");
+                column: "OrganisationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reservoirs_addressid",

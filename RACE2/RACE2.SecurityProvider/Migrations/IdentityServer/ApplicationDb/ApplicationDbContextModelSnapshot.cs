@@ -3,23 +3,21 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using RACE2.DataAccess;
+using RACE2.SecurityProvider;
 
 #nullable disable
 
-namespace RACE2.DataAccess.Migrations
+namespace RACE2.SecurityProvider.Migrations.IdentityServer.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230303172523_initial")]
-    partial class initial
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.14")
+                .HasAnnotation("ProductVersion", "6.0.15")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -29,12 +27,12 @@ namespace RACE2.DataAccess.Migrations
                     b.Property<int>("Addressesid")
                         .HasColumnType("int");
 
-                    b.Property<int>("Organisationid")
+                    b.Property<int>("OrganisationId")
                         .HasColumnType("int");
 
-                    b.HasKey("Addressesid", "Organisationid");
+                    b.HasKey("Addressesid", "OrganisationId");
 
-                    b.HasIndex("Organisationid");
+                    b.HasIndex("OrganisationId");
 
                     b.ToTable("OrganisationAddresses", (string)null);
                 });
@@ -90,10 +88,12 @@ namespace RACE2.DataAccess.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -114,10 +114,12 @@ namespace RACE2.DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -141,16 +143,7 @@ namespace RACE2.DataAccess.Migrations
                     b.Property<string>("AddressLine2")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("AddressLine3")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("County")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NearestPostcode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NearestTown")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Postcode")
@@ -203,16 +196,16 @@ namespace RACE2.DataAccess.Migrations
 
             modelBuilder.Entity("RACE2.DataModel.Organisation", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("OrgName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
                     b.ToTable("Organisations");
                 });
@@ -224,6 +217,9 @@ namespace RACE2.DataAccess.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
+
+                    b.Property<string>("NearestTown")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("UserDetailId")
                         .HasColumnType("int");
@@ -323,14 +319,8 @@ namespace RACE2.DataAccess.Migrations
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
-                    b.Property<DateTime>("c_end_date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("c_parent_id")
+                    b.Property<int>("c_parent_roleid")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("c_start_date")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -404,7 +394,7 @@ namespace RACE2.DataAccess.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<int?>("OrganisationIdid")
+                    b.Property<int?>("OrganisationId")
                         .HasColumnType("int");
 
                     b.Property<string>("PasswordHash")
@@ -487,6 +477,9 @@ namespace RACE2.DataAccess.Migrations
                         .HasColumnType("nvarchar(64)")
                         .HasDefaultValue(" ");
 
+                    b.Property<int>("c_parent_userid")
+                        .HasColumnType("int");
+
                     b.Property<string>("c_saon")
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(64)
@@ -517,7 +510,7 @@ namespace RACE2.DataAccess.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.HasIndex("OrganisationIdid");
+                    b.HasIndex("OrganisationId");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -645,7 +638,7 @@ namespace RACE2.DataAccess.Migrations
 
                     b.HasOne("RACE2.DataModel.Organisation", null)
                         .WithMany()
-                        .HasForeignKey("Organisationid")
+                        .HasForeignKey("OrganisationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -723,11 +716,11 @@ namespace RACE2.DataAccess.Migrations
 
             modelBuilder.Entity("RACE2.DataModel.UserDetail", b =>
                 {
-                    b.HasOne("RACE2.DataModel.Organisation", "OrganisationId")
+                    b.HasOne("RACE2.DataModel.Organisation", "Organisation")
                         .WithMany()
-                        .HasForeignKey("OrganisationIdid");
+                        .HasForeignKey("OrganisationId");
 
-                    b.Navigation("OrganisationId");
+                    b.Navigation("Organisation");
                 });
 
             modelBuilder.Entity("RACE2.DataModel.UserPermission", b =>

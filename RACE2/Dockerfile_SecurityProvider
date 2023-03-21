@@ -1,4 +1,5 @@
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
+
 WORKDIR /app
 EXPOSE 80
 
@@ -8,6 +9,7 @@ COPY ["RACE2.SecurityProvider/RACE2.SecurityProvider.csproj", "RACE2.SecurityPro
 COPY ["RACE2.Services/RACE2.Services.csproj", "RACE2.Services/"]
 COPY ["RACE2.DataAccess/RACE2.DataAccess.csproj", "RACE2.DataAccess/"]
 COPY ["RACE2.DataModel/RACE2.DataModel.csproj", "RACE2.DataModel/"]
+
 RUN dotnet restore "RACE2.SecurityProvider/RACE2.SecurityProvider.csproj"
 COPY . .
 RUN dotnet build "RACE2.SecurityProvider/RACE2.SecurityProvider.csproj" -c Release -o /app/build

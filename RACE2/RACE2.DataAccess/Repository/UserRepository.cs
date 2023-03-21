@@ -26,7 +26,7 @@ namespace RACE2.DataAccess.Repository
         public UserRepository(IConfiguration configuration,ILogService logService)
         {
             _configuration = configuration;
-            _configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../appsettings.json").Build();
+            //_configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../appsettings.json").Build();
             _logService = logService;   
         }
 
@@ -34,7 +34,7 @@ namespace RACE2.DataAccess.Repository
         {
             get
             {
-                return new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+                return new SqlConnection(_configuration["SqlConnection"]);
             }
         }
 

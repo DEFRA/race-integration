@@ -17,3 +17,15 @@ spec:
         image: race2acr.azurecr.io/securityprovider:v1
         ports:
         - containerPort: 80
+        env:
+        - name: "ASPNETCORE_ENVIRONMENT"
+          value: Production
+        - name: "SqlConnection"
+          value: "Server=tcp:race2sqlserver.database.windows.net,1433;Initial Catalog=RACE2Database;Persist Security Info=False;User ID=race2admin;Password=Race2Password123!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+        - name: "RACE2FrontEndURL"
+          value: "http://localhost:5001"
+        - name: "RACE2WebApiURL"
+          value: "http://localhost:5003/graphql/"
+        - name: "RACE2WebApiURL"
+          value: "http://localhost:5010"
+          

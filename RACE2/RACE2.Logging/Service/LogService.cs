@@ -27,7 +27,7 @@ namespace RACE2.Logging.Service
         public LogService(IConfiguration configuration)
         {
             _configuration = configuration;
-            _configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../appsettings.json").Build();
+            //_configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../appsettings.json").Build();
            Log.Logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(_configuration)
                 //.WriteTo.File(path: Path.Combine(Environment.CurrentDirectory, "RaceLogs", "log.txt"),

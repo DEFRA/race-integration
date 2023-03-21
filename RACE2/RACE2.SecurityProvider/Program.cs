@@ -6,14 +6,30 @@ using RACE2.DataModel;
 using RACE2.SecurityProvider;
 using RACE2.SecurityProvider.UtilityClasses;
 using RACE2.SecurityProvider.UtilityClasses.CompanyEmployees.OAuth.Extensions;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
-//IConfiguration _configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../appsettings.json").Build();
-string RACE2FrontEndURL = builder.Configuration["ApplicationSettings:RACE2FrontEndURL"];
+
+((IConfigurationBuilder)builder.Configuration).Sources.Clear();
+((IConfigurationBuilder)builder.Configuration)
+    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
+    .AddEnvironmentVariables();
+
+if (builder.Environment.EnvironmentName == "Development")
+{
+    builder.WebHost.ConfigureKestrel(serverOptions =>
+    {
+        serverOptions.ListenAnyIP(5010, listenOptions => { });
+    });
+}
+
+string RACE2FrontEndURL = builder.Configuration["RACE2FrontEndURL"];
 var migrationsAssembly = typeof(Program).Assembly.GetName().Name;
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+var connectionString = builder.Configuration["SqlConnection"];
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
