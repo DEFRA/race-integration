@@ -105,7 +105,7 @@ namespace RACE2.DataAccess.Repository
                     var result = users.GroupBy(u => u.Id).Select(g =>
                     {
                         var groupedUser = g.First();
-                     //   groupedUser.Roles = g.Select(u => u.Roles.Single()).ToList();
+                       groupedUser.roles = g.Select(u => u.roles.Single()).ToList();
                         return groupedUser;
                     });
                     return result.FirstOrDefault();
