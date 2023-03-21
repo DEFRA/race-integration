@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: race2frontend-service
-  namespace: race2frontend
+  name: race2securityprovider-service
+  namespace: securityprovider
 spec:
   selector:
-    app: race2frontend-pod
+    app: race2securityprovider-pod
   ports:
   - port: 80
     targetPort: 80

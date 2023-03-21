@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: race2frontend-deployment
+  namespace: race2frontend
 spec:
   selector:
     matchLabels:
@@ -13,6 +14,6 @@ spec:
     spec:
       containers:
       - name: race2frontend-container
-        image: kcsahoo/race2frontend:v1
+        image: race2acr.azurecr.io/race2frontend:v1
         ports:
         - containerPort: 80

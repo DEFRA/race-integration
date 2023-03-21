@@ -1,14 +1,14 @@
 apiVersion: networking.istio.io/v1beta1
 kind: Gateway
 metadata:
-  name: race2frontend-gateway
-  namespace: race2frontend
+  name: race2webapi-gateway
+  namespace: race2webapi
 spec:
   selector:
     istio: ingressgateway # use istio default controller
   servers:
   - hosts:
-        - "race2app.gov.uk"
+        - "race2api.gov.uk"
     port:
       number: 80
       name: http

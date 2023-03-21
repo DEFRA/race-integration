@@ -44,7 +44,7 @@ namespace RACE2.FrontEnd.Components
                 UserClaims = authState.User.Claims;
             }
             //SelectedReservoirName = CurrentUserDetailState.CurrentReservoir.public_name;
-            var results = await client.GetReservoirsByUserEmailId.ExecuteAsync("kcsahoo@gmail.com");
+            var results = await client.GetReservoirsByUserEmailId.ExecuteAsync(UserName);
             List<string> reservoirNamesList = new List<string>();
             foreach (var rn in results!.Data!.ReservoirsByUserEmailId.Reservoirs)
             {

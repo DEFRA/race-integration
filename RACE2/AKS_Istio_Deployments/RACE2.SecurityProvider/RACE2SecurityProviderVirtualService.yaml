@@ -1,16 +1,16 @@
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
-  name: race2frontend-virtualservice
-  namespace: race2frontend
+  name: race2securityprovider-virtualservice
+  namespace: securityprovider
 spec:
   hosts:
   - "race2app.gov.uk"
   gateways:
-  - race2frontend-gateway
+  - race2securityprovider-gateway
   http:
   - route:
     - destination:
         port:
           number: 80
-        host: race2frontend-service
+        host: race2securityprovider-service
