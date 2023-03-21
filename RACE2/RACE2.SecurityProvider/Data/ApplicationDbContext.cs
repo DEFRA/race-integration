@@ -17,6 +17,17 @@ namespace RACE2.SecurityProvider
             : base(options)
         {            
         }       
+        public DbSet<DataModel.Action> Actions { get; set; }
+        public DbSet<EarlyInspection> EarlyInspections { get; set; }
+        public DbSet<FloodPlan> FloodPlans { get; set; }
+
+        public DbSet<SafetyMeasure> SafetyMeasures { get; set; }
+
+        public DbSet<SupportingDocument> SupportingDocuments { get; set; }
+
+        public DbSet<Comment> Comments { get; set; }
+
+
 
         public DbSet<FeatureFunction> FeatureFunctions { get; set; }
 

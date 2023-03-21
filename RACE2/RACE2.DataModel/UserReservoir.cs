@@ -12,10 +12,9 @@ namespace RACE2.DataModel
     {
         public int Id { get; set; }
 
-        public UserDetail UserDetail { get; set; }
+        public UserDetail UserDetail { get; set; } = new UserDetail();
 
-        public Reservoir Reservoir { get; set; }
-       
+        public Reservoir Reservoir { get; set; } = new Reservoir();       
 
         public string? Appointment_type { get; set; }
 
@@ -23,5 +22,6 @@ namespace RACE2.DataModel
 
         public DateTime Appointment_end_date { get; set; }
 
-      }
+     
+    }
 }

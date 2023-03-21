@@ -13,7 +13,7 @@ namespace RACE2.DataModel
         public string? c_description { get; set; }         
         public int c_parent_roleid { get;set; }
 
-        public List<UserDetail> UserDetail { get; set; }=new List<UserDetail>();
+       // public List<UserDetail> UserDetail { get; set; }=new List<UserDetail>();
 
         public List<UserPermission> Permission { get; set; } =new List<UserPermission>();
 

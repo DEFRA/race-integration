@@ -3,6 +3,7 @@ using HotChocolate.Subscriptions;
 using RACE2.DataAccess;
 using RACE2.DataAccess.Repository;
 using RACE2.DataModel;
+using RACE2.Dto;
 using RACE2.Services;
 
 namespace RACE2.WebApi.QueryResolver
@@ -24,7 +25,7 @@ namespace RACE2.WebApi.QueryResolver
             return await _userService.GetUserByEmailID(email);
         }
 
-        public async Task<UserDetail> GetUserWithRoles(IUserService _userService,string email)
+        public async Task<UserSpecificDto> GetUserWithRoles(IUserService _userService,string email)
         {
             var result=  await _userService.GetUserWithRoles(email);
             return result;

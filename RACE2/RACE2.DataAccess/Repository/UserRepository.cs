@@ -15,6 +15,7 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using static Humanizer.In;
 using Microsoft.AspNetCore.Identity;
 using RACE2.Logging.Service;
+using RACE2.Dto;
 
 namespace RACE2.DataAccess.Repository
 {
@@ -82,8 +83,9 @@ namespace RACE2.DataAccess.Repository
             }
 
         }
+        
 
-        public async Task<UserDetail> GetUserWithRoles(string email)
+        public async Task<UserSpecificDto> GetUserWithRoles(string email)
         {
             try
             {
@@ -93,16 +95,17 @@ namespace RACE2.DataAccess.Repository
 
                     parameters.Add("Email", email, DbType.String);
 
-                    var users = await conn.QueryAsync<UserDetail, Role, UserDetail>("sp_GetUserWithRoles", (user, role) =>
+                    var users = await conn.QueryAsync<UserSpecificDto, Role, UserSpecificDto>("sp_GetUserWithRoles", (user, role) =>
                     {
-                        user.Roles.Add(role);
+                       user.roles.Add(role);
+                        //user.
                         return user;
                     }, parameters, null, true, splitOn: "RoleId", null, CommandType.StoredProcedure);
 
                     var result = users.GroupBy(u => u.Id).Select(g =>
                     {
                         var groupedUser = g.First();
-                        groupedUser.Roles = g.Select(u => u.Roles.Single()).ToList();
+                     //   groupedUser.Roles = g.Select(u => u.Roles.Single()).ToList();
                         return groupedUser;
                     });
                     return result.FirstOrDefault();
@@ -323,9 +326,9 @@ namespace RACE2.DataAccess.Repository
 
                 var parameters = new DynamicParameters();
                 parameters.Add("Id", id, DbType.Int32);
-                var users = await conn.QueryAsync<UserDetail, Reservoir, Address, UserDetail>(query, (user, reservoir, address) =>
+                var users = await conn.QueryAsync<UserDetail, UserReservoir, Address, UserDetail>(query, (user, reservoir, address) =>
                 {
-                    reservoir.address = address;
+                    reservoir.Reservoir.address = address;
                     user.Reservoirs.Add(reservoir);
 
                     return user;
@@ -353,9 +356,9 @@ namespace RACE2.DataAccess.Repository
 
                 var parameters = new DynamicParameters();
                 parameters.Add("Email", email, DbType.String);
-                var users = await conn.QueryAsync<UserDetail, Reservoir, Address, UserDetail>(query, (user, reservoir, address) =>
+                var users = await conn.QueryAsync<UserDetail, UserReservoir, Address, UserDetail>(query, (user, reservoir, address) =>
                 {
-                    reservoir.address = address;
+                    reservoir.Reservoir.address = address;
                     user.Reservoirs.Add(reservoir);
                     return user;
                 }, parameters, splitOn: "ReservoirId,id");

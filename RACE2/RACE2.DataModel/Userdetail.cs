@@ -44,12 +44,15 @@ namespace RACE2.DataModel
 
             public bool c_IsFirstTimeUser { get; set; }
 
-            public List<Role> Roles { get; set; } =new List<Role>();
+          // public List<UserRole> Roles { get; set; } =new List<UserRole>();
 
-            public List<Reservoir> Reservoirs { get; set; } =new List<Reservoir>();
+            public List<UserReservoir> Reservoirs { get; set; } =new List<UserReservoir>();
 
-            public List<Address> Addresses { get; set; }  = new List<Address>();
+            public List<UserAddress> Addresses { get; set; }  = new List<UserAddress>();
 
             public Organisation? Organisation { get; set; }
+
+         // public Action OwnedBy { get; set; } = new Action();
+
     }
 }
