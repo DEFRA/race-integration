@@ -14,7 +14,7 @@ namespace RACE2.DataModel
     public class Reservoir
     {
         [Key, Required]
-        public int id { get; set; }
+        public int Id { get; set; }
         [StringLength(64)]
         public string? race_reservoir_id { get; set; }
         [StringLength(200)]
@@ -46,6 +46,14 @@ namespace RACE2.DataModel
 
         public Address? address { get; set; } = new Address();
         public string? NearestTown { get; set; }
+       
+       // public EarlyInspection EarlyInspection { get; set; } = new EarlyInspection();
+        
+        //public Action Action { get; set; } =   new Action();
+
+     //   public FloodPlan FloodPlan { get; set; } = new FloodPlan();
+
+        public List<UserReservoir> Reservoirs { get; set; } = new List<UserReservoir>();
 
     }
 
