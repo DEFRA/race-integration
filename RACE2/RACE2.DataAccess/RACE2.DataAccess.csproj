@@ -17,7 +17,7 @@
     </ItemGroup>
 	
     <ItemGroup>
-      <ProjectReference Include="..\RACE2.DataModel\RACE2.DataModel.csproj" />
+      <ProjectReference Include="..\RACE2.Dto\RACE2.Dto.csproj" />
       <ProjectReference Include="..\RACE2.Logging\RACE2.Logging.csproj" />
     </ItemGroup>
 </Project>

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using RACE2.DataAccess.Repository;
 using RACE2.DataModel;
+using RACE2.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +33,7 @@ namespace RACE2.Services
             return await _userRepository.GetUserByEmailID(email);
         }
 
-        public async Task<UserDetail> GetUserWithRoles(string email)
+        public async Task<UserSpecificDto> GetUserWithRoles(string email)
         {
             return await _userRepository.GetUserWithRoles(email);
         }
