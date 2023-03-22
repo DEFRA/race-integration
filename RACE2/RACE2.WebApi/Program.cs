@@ -87,7 +87,7 @@ JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 builder.Services.AddAuthentication("Bearer")
             .AddJwtBearer(o =>
             {
-                o.Authority = builder.Configuration["RACE2SecurityProviderURL"];
+                o.Authority = builder.Configuration["ApplicationSettings:RACE2SecurityProviderURL"];
                 o.RequireHttpsMetadata = false;
                 o.Audience = "race2WebApi";
                 o.TokenValidationParameters =

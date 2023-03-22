@@ -26,6 +26,6 @@ spec:
           value: "http://localhost:5001"
         - name: "RACE2WebApiURL"
           value: "http://localhost:5003/graphql/"
-        - name: "RACE2WebApiURL"
+        - name: "RACE2WebAppURL"
           value: "http://localhost:5010"
           

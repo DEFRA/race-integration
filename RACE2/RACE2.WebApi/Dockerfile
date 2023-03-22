@@ -9,6 +9,7 @@ WORKDIR /src
 COPY ["RACE2.WebApi/RACE2.WebApi.csproj", "RACE2.WebApi/"]
 COPY ["RACE2.Services/RACE2.Services.csproj", "RACE2.Services/"]
 COPY ["RACE2.DataAccess/RACE2.DataAccess.csproj", "RACE2.DataAccess/"]
+COPY ["RACE2.Dto/RACE2.Dto.csproj", "RACE2.Dto/"]
 COPY ["RACE2.DataModel/RACE2.DataModel.csproj", "RACE2.DataModel/"]
 COPY ["RACE2.Logging/RACE2.Logging.csproj", "RACE2.Logging/"]
 RUN dotnet restore "RACE2.WebApi/RACE2.WebApi.csproj"

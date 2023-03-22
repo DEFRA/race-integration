@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace RACE2.SecurityProvider.Migrations.IdentityServer.PersistedGrantDb
 {
     [DbContext(typeof(PersistedGrantDbContext))]
-    [Migration("20230320173535_InitialPersistedGranMigration")]
+    [Migration("20230321165146_InitialPersistedGranMigration")]
     partial class InitialPersistedGranMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

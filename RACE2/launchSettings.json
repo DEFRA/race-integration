@@ -4,7 +4,9 @@
       "commandName": "DockerCompose",
       "commandVersion": "1.0",
       "serviceActions": {
-        "race2.webapi": "StartDebugging"
+        "race2.webapi": "StartDebugging",
+        "race2.securityprovider": "StartDebugging",
+        "race2.frontendweb": "StartDebugging"
       }
     }
   }

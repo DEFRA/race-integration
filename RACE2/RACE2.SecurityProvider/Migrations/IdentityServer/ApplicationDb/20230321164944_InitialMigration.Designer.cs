@@ -5,23 +5,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using RACE2.SecurityProvider;
+using RACE2.DataAccess;
 
 #nullable disable
 
-<<<<<<<< HEAD:RACE2/RACE2.SecurityProvider/Migrations/IdentityServer/ApplicationDb/20230320173427_InitialMigration.Designer.cs
 namespace RACE2.SecurityProvider.Migrations.IdentityServer.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230320173427_InitialMigration")]
+    [Migration("20230321164944_InitialMigration")]
     partial class InitialMigration
-========
-namespace RACE2.DataAccess.Migrations
-{
-    [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230320141123_Initial")]
-    partial class Initial
->>>>>>>> 0b31a41a74d9cddca7073075df04f3b3012f2299:RACE2/RACE2.SecurityProvider/Migrations/IdentityServer/ApplicationDb/20230320141123_Initial.Designer.cs
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
