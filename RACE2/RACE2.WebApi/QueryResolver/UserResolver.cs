@@ -5,11 +5,15 @@ using RACE2.DataAccess.Repository;
 using RACE2.DataModel;
 using RACE2.Dto;
 using RACE2.Services;
+using Serilog;
+using Serilog.Events;
 
 namespace RACE2.WebApi.QueryResolver
 {
     public class UserResolver
     {
+        
+       
         public async Task<IEnumerable<UserDetail>> GetUserDetails(IUserService _userService)
         {
             return await _userService.GetUserDetails();
@@ -22,7 +26,9 @@ namespace RACE2.WebApi.QueryResolver
 
         public async Task<UserDetail> GetUserByEmailID(IUserService _userService, string email)
         {
-            return await _userService.GetUserByEmailID(email);
+
+            return await _userService.GetUserByEmailID(email);     
+            
         }
 
         public async Task<UserSpecificDto> GetUserWithRoles(IUserService _userService,string email)

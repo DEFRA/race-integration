@@ -11,8 +11,9 @@ using System.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using HotChocolate.AspNetCore.Voyager;
 using RACE2.Logging.Service;
-using Serilog;
+//using Serilog;
 using RACE2.Logging;
+//using Serilog.Events;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,14 +24,19 @@ var builder = WebApplication.CreateBuilder(args);
 //                               // Manager = new PrefixKeyVaultSecretManager(secretPrefix),
 //                               ReloadInterval = TimeSpan.FromMinutes(5)
 //                           });
+
+
 // Add services to the container.
 builder.Services.AddSingleton(builder.Configuration.Get<ApiConfiguration>().AppConfiguration);
 var _configuration = builder.Configuration.Get<ApiConfiguration>().AppConfiguration;
 builder.Services.AddControllers();
-//builder.Host.InjectSerilog();
+//builder.Host.UseSerilog();
+builder.Host.InjectSerilog();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<ILogService, LogService>();
+//builder.Services.AddSingleton<Serilog.ILogger>(Log.Logger);
+
 
 
 JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
@@ -86,6 +92,7 @@ app.UseRouting();
 app.UseAuthentication();
 
 app.UseAuthorization();
+//app.UseSerilogRequestLogging();
 
 app.MapGraphQL();
 app.UseVoyager("/graphql","/graphql-voyager");

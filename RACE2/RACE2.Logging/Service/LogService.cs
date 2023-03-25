@@ -11,32 +11,40 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using Serilog;
 using Serilog.Core;
+using Serilog.Events;
 
 namespace RACE2.Logging.Service
 {
 
     public class LogService :ILogService
     {
-       // private readonly ILoggerFactory _loggerFactory;
+        // private readonly ILoggerFactory _loggerFactory;
         //private ILogger _logger;
+        private readonly Serilog.ILogger _logger;
 
 
 
-
-        IConfiguration _configuration;
-        public LogService(IConfiguration configuration)
+        //IConfiguration _configuration;
+        public LogService(Serilog.ILogger logger)
         {
-            _configuration = configuration;
-            _configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../appsettings.json").Build();
-           Log.Logger = new LoggerConfiguration()
-                .ReadFrom.Configuration(_configuration)
-                //.WriteTo.File(path: Path.Combine(Environment.CurrentDirectory, "RaceLogs", "log.txt"),
-                //            rollOnFileSizeLimit: true,
-                //            retainedFileCountLimit: 20,
-                //            rollingInterval: RollingInterval.Day,
-                //            fileSizeLimitBytes: 10000
-                //            )
-                .CreateLogger();
+           // //var connectionString = " DefaultEndpointsProtocol = https; AccountName = race2storageaccount; AccountKey = +voxyaI7i37XXY89mgL3FAg / 1JhvSezh1ENdokcV5GMwCOycBYNfYY15aUak3iD + DMvG0Z4kOc6u + ASt0Rq3ZA ==; EndpointSuffix = core.windows.net";
+           // _configuration = configuration;
+           // _configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../appsettings.json").Build();
+           //// Log.Logger = new LoggerConfiguration()
+           //  //    .ReadFrom.Configuration(_configuration);
+           //     //.WriteTo.AzureBlobStorage(connectionString: connectionString,
+           //     // restrictedToMinimumLevel: LogEventLevel.Warning,
+           //     // storageFileName: "{yyyy}/{MM}-{dd}/WebLog.txt",
+           //     // outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}",
+           //     // storageContainerName: "race2appauditlog").CreateLogger();
+           //     //.WriteTo.File(path: Path.Combine(Environment.CurrentDirectory, "RaceLogs", "log.txt"),
+           //     //            rollOnFileSizeLimit: true,
+           //     //            retainedFileCountLimit: 20,
+           //     //            rollingInterval: RollingInterval.Day,
+           //     //            fileSizeLimitBytes: 10000
+           //     //            )
+           //    // .CreateLogger();
+               _logger = logger;
             
         }
         //void Log(string category, LogMessage message, Action<ILogger, string> func)
@@ -107,12 +115,12 @@ namespace RACE2.Logging.Service
 
         public void Write(string message)
         {
-            Log.Information(message);
+            _logger.Information(message);
         }
 
         public void Error(Exception exception, string message)
         {
-            Log.Error(exception, message);
+            _logger.Error(exception, message);
         }
     }
 }
