@@ -14,10 +14,10 @@ using RACE2.Logging.Service;
 //using Serilog;
 using RACE2.Logging;
 using Azure.Identity;
-using Azure.Extensions.AspNetCore.Configuration.Secrets;
+//using Azure.Extensions.AspNetCore.Configuration.Secrets;
 using Microsoft.Extensions.Configuration;
 using Azure.Core;
-using Microsoft.Extensions.Configuration.AzureAppConfiguration;
+//using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 
 var builder = WebApplication.CreateBuilder(args);
 
