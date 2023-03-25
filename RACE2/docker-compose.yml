@@ -1,0 +1,22 @@
+version: '3.4'
+
+services:
+  race2.webapi:
+    image: ${DOCKER_REGISTRY-}race2webapi
+    build:
+      context: .
+      dockerfile: RACE2.WebApi/Dockerfile
+
+  race2.securityprovider:
+    image: ${DOCKER_REGISTRY-}race2securityprovider
+    build:
+      context: .
+      dockerfile: RACE2.SecurityProvider/Dockerfile
+
+
+  race2.frontendweb:
+    image: ${DOCKER_REGISTRY-}race2frontendweb
+    build:
+      context: .
+      dockerfile: RACE2.FrontEndWeb/Dockerfile
+

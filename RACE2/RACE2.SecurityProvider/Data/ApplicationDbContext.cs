@@ -9,14 +9,14 @@ using System.IO;
 
 namespace RACE2.DataAccess
 {
-    public class ApplicationDbContext : IdentityDbContext<UserDetail, Role,int,IdentityUserClaim<int>,UserRole,IdentityUserLogin<int>,
-        IdentityRoleClaim<int>,IdentityUserToken<int>>
-     {
-        
+    public class ApplicationDbContext : IdentityDbContext<UserDetail, Role, int, IdentityUserClaim<int>, UserRole, IdentityUserLogin<int>,
+        IdentityRoleClaim<int>, IdentityUserToken<int>>
+    {
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
-        {            
-        }       
+        {
+        }
         public DbSet<DataModel.Action> Actions { get; set; }
         public DbSet<EarlyInspection> EarlyInspections { get; set; }
         public DbSet<FloodPlan> FloodPlans { get; set; }
@@ -45,11 +45,11 @@ namespace RACE2.DataAccess
             modelBuilder.Entity<UserDetail>(e =>
             {
                 e.HasKey(e => e.Id);
-               // e.Property(e => e.Id).HasColumnType("integer");
+                // e.Property(e => e.Id).HasColumnType("integer");
                 e.Property(e => e.Id).ValueGeneratedOnAdd();
 
-            });              
-                
+            });
+
 
             modelBuilder.Entity<UserDetail>()
                 .Property(e => e.c_defra_id)
@@ -82,12 +82,12 @@ namespace RACE2.DataAccess
                 .HasMaxLength(64)
                 .IsRequired(true);
 
-           modelBuilder.Entity<UserDetail>()
-                .Property(e => e.c_mobile)
-                .HasDefaultValue(" ")
-                .HasMaxLength(64);
+            modelBuilder.Entity<UserDetail>()
+                 .Property(e => e.c_mobile)
+                 .HasDefaultValue(" ")
+                 .HasMaxLength(64);
 
-            
+
             modelBuilder.Entity<UserDetail>()
                 .Property(e => e.c_mobile)
                 .HasDefaultValue(" ")
@@ -162,10 +162,10 @@ namespace RACE2.DataAccess
                 .Property(e => e.c_parent_roleid);
 
             modelBuilder.Entity<UserRole>(e =>
-                {
-                    e.HasKey( e => e.c_Id);
-                    e.Property(e => e.c_Id).ValueGeneratedOnAdd();                   
-                });
+            {
+                e.HasKey(e => e.c_Id);
+                e.Property(e => e.c_Id).ValueGeneratedOnAdd();
+            });
 
             modelBuilder.Entity<UserRole>()
                 .Property(e => e.c_start_date);
@@ -194,15 +194,15 @@ namespace RACE2.DataAccess
         }
     }
 
-    public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
-    {
-        public ApplicationDbContext CreateDbContext(string[] args)
-        {
-            IConfigurationRoot configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../appsettings.json").Build();
-            var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
-            var connectionString = configuration.GetConnectionString("DefaultConnection");
-            builder.UseSqlServer(connectionString);
-            return new ApplicationDbContext(builder.Options);
-        }
-    }
+    //public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
+    //{
+    //    public ApplicationDbContext CreateDbContext(string[] args)
+    //    {
+    //        IConfigurationRoot configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../appsettings.json").Build();
+    //        var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
+    //        var connectionString = configuration.GetConnectionString("DefaultConnection");
+    //        builder.UseSqlServer(connectionString);
+    //        return new ApplicationDbContext(builder.Options);
+    //    }
+    //}
 }

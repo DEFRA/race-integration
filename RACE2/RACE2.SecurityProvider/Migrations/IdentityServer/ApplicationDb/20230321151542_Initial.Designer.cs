@@ -9,11 +9,16 @@ using RACE2.DataAccess;
 
 #nullable disable
 
-namespace RACE2.DataAccess.Migrations
+namespace RACE2.SecurityProvider.Migrations.IdentityServer.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
+<<<<<<<< HEAD:RACE2/RACE2.SecurityProvider/Migrations/IdentityServer/ApplicationDb/20230321151542_Initial.Designer.cs
     [Migration("20230321151542_Initial")]
     partial class Initial
+========
+    [Migration("20230321164944_InitialMigration")]
+    partial class InitialMigration
+>>>>>>>> d549fbc2649bed5ae8b64d1afd65fc424c289ea9:RACE2/RACE2.SecurityProvider/Migrations/IdentityServer/ApplicationDb/20230321164944_InitialMigration.Designer.cs
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -90,10 +95,12 @@ namespace RACE2.DataAccess.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -114,10 +121,12 @@ namespace RACE2.DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");

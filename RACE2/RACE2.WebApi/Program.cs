@@ -13,22 +13,69 @@ using HotChocolate.AspNetCore.Voyager;
 using RACE2.Logging.Service;
 //using Serilog;
 using RACE2.Logging;
-//using Serilog.Events;
+using Azure.Identity;
+using Azure.Extensions.AspNetCore.Configuration.Secrets;
+using Microsoft.Extensions.Configuration;
+using Azure.Core;
+using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//((IConfigurationBuilder)builder.Configuration).Sources.Clear();
+//((IConfigurationBuilder)builder.Configuration)
+//    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+//    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
+//    .AddEnvironmentVariables();
+
 //var defaultCredentials = new DefaultAzureCredential();
-//builder.Configuration.AddAzureKeyVault(new Uri("https://race2appconfig.azconfig.io"), defaultCredentials,
+//// Create the token credential instance with the client id of the Managed Identity
+//var userAssignedIdentityClientId = Environment.GetEnvironmentVariable("AZURE_USER_ASSIGNED_IDENTITY_CLIENT_ID");
+
+//TokenCredential credentials = new ManagedIdentityCredential(userAssignedIdentityClientId);
+//#if DEBUG
+//credentials = new DefaultAzureCredential(new DefaultAzureCredentialOptions
+//{
+//    ManagedIdentityClientId = userAssignedIdentityClientId
+//});
+//#endif
+//builder.Configuration.AddAzureKeyVault(new Uri("https://race2keyvault.vault.azure.net/"), credentials,
 //                           new AzureKeyVaultConfigurationOptions
 //                           {
 //                               // Manager = new PrefixKeyVaultSecretManager(secretPrefix),
 //                               ReloadInterval = TimeSpan.FromMinutes(5)
 //                           });
 
+//var appConfigEndpoint = Environment.GetEnvironmentVariable("AZURE_APP_CONFIGURATION_ENDPOINT");
+//var userAssignedIdentityClientId = Environment.GetEnvironmentVariable("AZURE_USER_ASSIGNED_IDENTITY_CLIENT_ID");
+//var endpoint = new Uri(appConfigEndpoint);
+//// Create the token credential instance with the client id of the Managed Identity
+//TokenCredential credentials = new ManagedIdentityCredential(userAssignedIdentityClientId);
+//#if DEBUG
+//credentials = new DefaultAzureCredential(new DefaultAzureCredentialOptions
+//{
+//    ManagedIdentityClientId = userAssignedIdentityClientId
+//});
+//#endif
+//builder.Configuration.AddAzureAppConfiguration(options =>
+//    options
+//        .Connect(endpoint, credentials)
+//        .ConfigureKeyVault(kv =>
+//        {
+//            kv.SetCredential(credentials);
+//            kv.SetSecretRefreshInterval(TimeSpan.FromHours(12));
+//        })
+//        .Select("*", LabelFilter.Null)
+//);
 
+//var config = builder.Configuration;
+//if (builder.Environment.EnvironmentName == "Development")
+//{
+//    builder.WebHost.ConfigureKestrel(serverOptions =>
+//    {
+//        serverOptions.ListenAnyIP(5003, listenOptions => { });
+//    });
+//}
 // Add services to the container.
-builder.Services.AddSingleton(builder.Configuration.Get<ApiConfiguration>().AppConfiguration);
-var _configuration = builder.Configuration.Get<ApiConfiguration>().AppConfiguration;
 builder.Services.AddControllers();
 //builder.Host.UseSerilog();
 builder.Host.InjectSerilog();
@@ -43,7 +90,7 @@ JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 builder.Services.AddAuthentication("Bearer")
             .AddJwtBearer(o =>
             {
-                o.Authority = _configuration.RACE2SecurityProviderURL;
+                o.Authority = builder.Configuration["ApplicationSettings:RACE2SecurityProviderURL"];
                 o.RequireHttpsMetadata = false;
                 o.Audience = "race2WebApi";
                 o.TokenValidationParameters =

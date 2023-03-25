@@ -24,18 +24,18 @@ namespace RACE2.DataAccess.Repository
         private readonly ILogService _logService;
 
         IConfiguration _configuration;
-        public UserRepository(IConfiguration configuration,ILogService logService)
+        public UserRepository(IConfiguration configuration, ILogService logService)
         {
             _configuration = configuration;
-            _configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../appsettings.json").Build();
-            _logService = logService;   
+            //_configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../appsettings.json").Build();
+            _logService = logService;
         }
 
         private IDbConnection Connection
         {
             get
             {
-                return new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+                return new SqlConnection(_configuration["SqlConnection"]);
             }
         }
 
@@ -73,7 +73,7 @@ namespace RACE2.DataAccess.Repository
 
                     var user = await conn.QuerySingleAsync<UserDetail>("sp_GetUserByEmailID", parameters, commandType: CommandType.StoredProcedure);
                     return user;
-                    
+
                 }
             }
             catch (Exception ex)
@@ -83,7 +83,7 @@ namespace RACE2.DataAccess.Repository
             }
 
         }
-        
+
 
         public async Task<UserSpecificDto> GetUserWithRoles(string email)
         {
@@ -97,7 +97,7 @@ namespace RACE2.DataAccess.Repository
 
                     var users = await conn.QueryAsync<UserSpecificDto, Role, UserSpecificDto>("sp_GetUserWithRoles", (user, role) =>
                     {
-                       user.roles.Add(role);
+                        user.roles.Add(role);
                         //user.
                         return user;
                     }, parameters, null, true, splitOn: "RoleId", null, CommandType.StoredProcedure);
@@ -121,7 +121,7 @@ namespace RACE2.DataAccess.Repository
                 return null;
             }
 
-        
+
         }
         public async Task<UserDetail> CreateUser(UserDetail newuser)
         {
