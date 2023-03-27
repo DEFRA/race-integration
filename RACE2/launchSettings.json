@@ -6,7 +6,8 @@
       "serviceActions": {
         "race2.webapi": "StartDebugging",
         "race2.securityprovider": "StartDebugging",
-        "race2.frontendweb": "StartDebugging"
+        "race2.frontendweb": "StartDebugging",
+        "race2.frontend": "StartDebugging"
       }
     }
   }

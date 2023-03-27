@@ -21,3 +21,10 @@ services:
     ports:
       - "80"
 
+
+  race2.frontend:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "80"
+
