@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations.Internal;
 using RACE2.DataAccess;
 using RACE2.DataModel;
+using RACE2.Logging;
+using RACE2.Logging.Service;
 using RACE2.SecurityProvider;
 using RACE2.SecurityProvider.UtilityClasses;
 using RACE2.SecurityProvider.UtilityClasses.CompanyEmployees.OAuth.Extensions;
@@ -29,6 +31,10 @@ var migrationsAssembly = typeof(Program).Assembly.GetName().Name;
 // Add services to the container.
 
 var connectionString = builder.Configuration["SqlConnection"];
+
+builder.Host.InjectSerilog();
+builder.Services.AddTransient<ILogService, LogService>();
+
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
