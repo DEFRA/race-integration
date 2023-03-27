@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using RACE2.FrontEnd;
 using Microsoft.Extensions.Configuration;
 using System.Net.Http.Headers;
+using RACE2.Dto;
 using RACE2.DataModel;
-using RACE2.DataAccess;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Fluxor;
@@ -23,7 +23,7 @@ using var configSettings = await httpClient.GetAsync("appSettings.json");
 using var stream = await configSettings.Content.ReadAsStreamAsync();
 
 builder.Configuration.AddJsonStream(stream);
-builder.Services.AddIdentity<UserDetail,Role>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddIdentity<UserDetail, Role>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 string RACE2WebApiURL = builder.Configuration["RACE2WebApiURL"];
 builder.Services.AddScoped<IPasswordHasher<UserDetail>, PasswordHasher<UserDetail>>();

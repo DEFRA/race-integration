@@ -10,17 +10,15 @@
         "AZURE_CLIENT_ID": "39ef2527-ca88-4bbc-b474-2d9aecf67f46",
         "AZURE_CLIENT_SECRET": "P8J8Q~bvpvv9brjyqqCxriIlloll_WvyAiQQfc.-",
         "AZURE_TENANT_ID": "770a2450-0227-4c62-90c7-4e38537f1102",
-        "SqlConnection": "Server=tcp:race2sqlserver.database.windows.net,1433;Initial Catalog=RACE2Database;Persist Security Info=False;User ID=race2admin;Password=Race2Password123!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+        "SqlConnection": "Server=tcp:race2sqlserver.database.windows.net,1433;Initial Catalog=RACE2Database;Persist Security Info=False;User ID=race2admin;Password=Race2Password123!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;",
         //"SqlConnection": "Server=.;Database=RACE2DB;MultipleActiveResultSets=True;Trusted_Connection=True;",
+        "ApplicationSettings__RACE2FrontEndURL": "http://localhost:5001",
+        "ApplicationSettings__RACE2WebApiURL": "http://localhost:5003/graphql/",
+        "ApplicationSettings__RACE2SecurityProviderURL": "http://localhost:5010"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:5010",
-      "ApplicationSettings": {
-        "AllowedHosts": "*",
-        "RACE2FrontEndURL": "https://race2frontendweb-app.bluebeach-53e10607.westeurope.azurecontainerapps.io",
-        "RACE2WebApiURL": "https://race2webapi-app.bluegrass-85d7254b.westeurope.azurecontainerapps.io/graphql/",
-        "RACE2SecurityProviderURL": "https://race2securityprovider-app.delightfulground-da18fbab.westeurope.azurecontainerapps.io"
-      }
+      "AllowedHosts": "*"
     },
     "Docker": {
       "commandName": "Docker",

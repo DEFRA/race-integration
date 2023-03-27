@@ -7,7 +7,7 @@ using RACE2.DataModel;
 using System.Data;
 using System.IO;
 
-namespace RACE2.DataAccess
+namespace RACE2.Dto
 {
     public class ApplicationDbContext : IdentityDbContext<UserDetail, Role, int, IdentityUserClaim<int>, UserRole, IdentityUserLogin<int>,
         IdentityRoleClaim<int>, IdentityUserToken<int>>

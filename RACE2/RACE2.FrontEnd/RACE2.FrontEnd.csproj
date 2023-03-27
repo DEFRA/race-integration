@@ -36,7 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RACE2.DataAccess\RACE2.DataAccess.csproj" />
+    <ProjectReference Include="..\RACE2.Dto\RACE2.Dto.csproj" />
   </ItemGroup>
 
 </Project>

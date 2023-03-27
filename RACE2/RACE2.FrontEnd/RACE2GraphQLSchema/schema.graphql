@@ -1,0 +1,231 @@
+﻿schema {
+  query: UserResolver
+  mutation: MutationResolver
+}
+
+enum ApplyPolicy {
+  BEFORE_RESOLVER
+  AFTER_RESOLVER
+  VALIDATION
+}
+
+type UserResolver {
+  userDetails: [UserDetail!]!
+  byId(id: Int!): UserDetail!
+  userByEmailID(email: String!): UserDetail!
+  userWithRoles(email: String!): UserDetail!
+  matchUserWithEmailAndPasswordHash(email: String! passwordhash: String!): UserDetail!
+  reservoirsByUserId(id: Int!): UserDetail!
+  reservoirsByUserEmailId(email: String!): UserDetail!
+  featurePermissionForRole(roleid: Int!): [FeatureFunction!]!
+}
+
+type MutationResolver {
+  createUser(newuser: UserDetailInput!): UserDetail!
+  validateUser(loginuser: UserDetailInput!): UserDetail!
+  updatePasswordHashForUser(id: Int! passwordhash: String!): UserDetail!
+}
+
+type UserDetail {
+  c_defra_id: String
+  c_parent_userid: Int!
+  c_type: String
+  c_first_name: String
+  c_last_name: String
+  c_mobile: String
+  c_emergency_phone: String
+  c_job_title: String
+  c_current_panel: String
+  c_paon: String
+  c_saon: String
+  c_status: String
+  c_created_on_date: DateTime!
+  c_last_access_date: DateTime!
+  c_IsFirstTimeUser: Boolean!
+  roles: [Role!]!
+  reservoirs: [Reservoir!]!
+  addresses: [Address!]!
+  organisation: Organisation
+  id: Int!
+  userName: String
+  normalizedUserName: String
+  email: String
+  normalizedEmail: String
+  emailConfirmed: Boolean!
+  passwordHash: String
+  securityStamp: String
+  concurrencyStamp: String
+  phoneNumber: String
+  phoneNumberConfirmed: Boolean!
+  twoFactorEnabled: Boolean!
+  lockoutEnd: DateTime
+  lockoutEnabled: Boolean!
+  accessFailedCount: Int!
+}
+
+type FeatureFunction {
+  id: Int!
+  name: String!
+  displayName: String
+  description: String
+  start_date: DateTime!
+  end_date: DateTime!
+  permission: [UserPermission!]!
+}
+
+input UserDetailInput {
+  c_defra_id: String
+  c_parent_userid: Int!
+  c_type: String
+  c_first_name: String
+  c_last_name: String
+  c_mobile: String
+  c_emergency_phone: String
+  c_job_title: String
+  c_current_panel: String
+  c_paon: String
+  c_saon: String
+  c_status: String
+  c_created_on_date: DateTime!
+  c_last_access_date: DateTime!
+  c_IsFirstTimeUser: Boolean!
+  roles: [RoleInput!]!
+  reservoirs: [ReservoirInput!]!
+  addresses: [AddressInput!]!
+  organisation: OrganisationInput
+  id: Int!
+  userName: String
+  normalizedUserName: String
+  email: String
+  normalizedEmail: String
+  emailConfirmed: Boolean!
+  passwordHash: String
+  securityStamp: String
+  concurrencyStamp: String
+  phoneNumber: String
+  phoneNumberConfirmed: Boolean!
+  twoFactorEnabled: Boolean!
+  lockoutEnd: DateTime
+  lockoutEnabled: Boolean!
+  accessFailedCount: Int!
+}
+
+type Reservoir {
+  id: Int!
+  race_reservoir_id: String
+  public_name: String
+  registered_name: String
+  reference_number: String
+  public_category: String
+  registered_category: String
+  grid_reference: String
+  capacity: Int!
+  surface_area: Int!
+  top_water_level: Decimal!
+  has_multiple_dams: Boolean!
+  key_facts: String
+  construction_start_date: DateTime!
+  verified_details_date: DateTime!
+  last_inspection_date: DateTime!
+  next_inspection_date: DateTime!
+  address: Address
+  nearestTown: String
+}
+
+type Role {
+  c_display_name: String
+  c_description: String
+  c_parent_roleid: Int!
+  userDetail: [UserDetail!]!
+  permission: [UserPermission!]!
+  id: Int!
+  name: String
+  normalizedName: String
+  concurrencyStamp: String
+}
+
+"The `DateTime` scalar represents an ISO-8601 compliant date time type."
+scalar DateTime
+
+type Address {
+  id: Int!
+  addressLine1: String
+  addressLine2: String
+  town: String
+  county: String
+  postcode: String
+  organisation: [Organisation!]!
+}
+
+type Organisation {
+  id: Int!
+  orgName: String
+  addresses: [Address!]!
+}
+
+type UserPermission {
+  id: Int!
+  access_level: String!
+  start_date: DateTime
+  end_date: DateTime
+}
+
+input RoleInput {
+  c_display_name: String
+  c_description: String
+  c_parent_roleid: Int!
+  userDetail: [UserDetailInput!]!
+  permission: [UserPermissionInput!]!
+  id: Int!
+  name: String
+  normalizedName: String
+  concurrencyStamp: String
+}
+
+input ReservoirInput {
+  id: Int!
+  race_reservoir_id: String
+  public_name: String
+  registered_name: String
+  reference_number: String
+  public_category: String
+  registered_category: String
+  grid_reference: String
+  capacity: Int!
+  surface_area: Int!
+  top_water_level: Decimal!
+  has_multiple_dams: Boolean!
+  key_facts: String
+  construction_start_date: DateTime!
+  verified_details_date: DateTime!
+  last_inspection_date: DateTime!
+  next_inspection_date: DateTime!
+  address: AddressInput
+  nearestTown: String
+}
+
+input AddressInput {
+  id: Int!
+  addressLine1: String
+  addressLine2: String
+  town: String
+  county: String
+  postcode: String
+  organisation: [OrganisationInput!]!
+}
+
+input OrganisationInput {
+  id: Int!
+  orgName: String
+  addresses: [AddressInput!]!
+}
+
+"The built-in `Decimal` scalar type."
+scalar Decimal
+
+input UserPermissionInput {
+  id: Int!
+  access_level: String!
+  start_date: DateTime
+  end_date: DateTime
+}

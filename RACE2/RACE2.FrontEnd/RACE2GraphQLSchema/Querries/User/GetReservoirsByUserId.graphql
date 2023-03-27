@@ -1,0 +1,26 @@
+﻿query GetReservoirsByUserId($newid:Int!){
+  reservoirsByUserId(id:$newid) {
+    id
+    userName
+    email
+    phoneNumber
+    passwordHash
+    c_mobile
+    c_emergency_phone
+    reservoirs{   
+      id 
+      public_name
+      registered_name
+      public_category 
+      nearestTown  
+      address{
+        id
+        addressLine1
+        addressLine2
+        town
+        county
+        postcode
+      }   
+      }  
+    }
+}

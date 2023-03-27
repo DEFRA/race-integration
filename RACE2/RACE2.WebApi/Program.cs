@@ -11,21 +11,16 @@ using System.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using HotChocolate.AspNetCore.Voyager;
 using RACE2.Logging.Service;
-//using Serilog;
 using RACE2.Logging;
-using Azure.Identity;
-//using Azure.Extensions.AspNetCore.Configuration.Secrets;
 using Microsoft.Extensions.Configuration;
-using Azure.Core;
-//using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//((IConfigurationBuilder)builder.Configuration).Sources.Clear();
-//((IConfigurationBuilder)builder.Configuration)
-//    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-//    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
-//    .AddEnvironmentVariables();
+((IConfigurationBuilder)builder.Configuration).Sources.Clear();
+((IConfigurationBuilder)builder.Configuration)
+    //.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+    //.AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
+    .AddEnvironmentVariables();
 
 //var defaultCredentials = new DefaultAzureCredential();
 //// Create the token credential instance with the client id of the Managed Identity
@@ -67,24 +62,21 @@ var builder = WebApplication.CreateBuilder(args);
 //        .Select("*", LabelFilter.Null)
 //);
 
-//var config = builder.Configuration;
-//if (builder.Environment.EnvironmentName == "Development")
-//{
-//    builder.WebHost.ConfigureKestrel(serverOptions =>
-//    {
-//        serverOptions.ListenAnyIP(5003, listenOptions => { });
-//    });
-//}
+var config = builder.Configuration;
+if (builder.Environment.EnvironmentName == "Development")
+{
+    builder.WebHost.ConfigureKestrel(serverOptions =>
+    {
+        serverOptions.ListenAnyIP(5003, listenOptions => { });
+    });
+}
+
 // Add services to the container.
 builder.Services.AddControllers();
-//builder.Host.UseSerilog();
 builder.Host.InjectSerilog();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<ILogService, LogService>();
-//builder.Services.AddSingleton<Serilog.ILogger>(Log.Logger);
-
-
 
 JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 builder.Services.AddAuthentication("Bearer")
@@ -142,6 +134,6 @@ app.UseAuthorization();
 //app.UseSerilogRequestLogging();
 
 app.MapGraphQL();
-app.UseVoyager("/graphql","/graphql-voyager");
+app.UseVoyager("/graphql", "/graphql-voyager");
 
 app.Run();

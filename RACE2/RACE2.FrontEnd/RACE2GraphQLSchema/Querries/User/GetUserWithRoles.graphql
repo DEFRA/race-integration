@@ -1,0 +1,10 @@
+﻿query GetUserWithRoles($newemail:String!){
+  userWithRoles(email:$newemail){
+  id
+  email
+  roles{
+    id
+    name
+  }
+  }
+  }
