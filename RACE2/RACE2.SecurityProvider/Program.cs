@@ -13,19 +13,19 @@ using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
-((IConfigurationBuilder)builder.Configuration).Sources.Clear();
-((IConfigurationBuilder)builder.Configuration)
-    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
-    .AddEnvironmentVariables();
+//((IConfigurationBuilder)builder.Configuration).Sources.Clear();
+//((IConfigurationBuilder)builder.Configuration)
+//    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+//    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
+//    .AddEnvironmentVariables();
 
-if (builder.Environment.EnvironmentName == "Development")
-{
-    builder.WebHost.ConfigureKestrel(serverOptions =>
-    {
-        serverOptions.ListenAnyIP(5010, listenOptions => { });
-    });
-}
+//if (builder.Environment.EnvironmentName == "Development")
+//{
+//    builder.WebHost.ConfigureKestrel(serverOptions =>
+//    {
+//        serverOptions.ListenAnyIP(5010, listenOptions => { });
+//    });
+//}
 
 var migrationsAssembly = typeof(Program).Assembly.GetName().Name;
 
@@ -33,8 +33,8 @@ var migrationsAssembly = typeof(Program).Assembly.GetName().Name;
 
 var connectionString = builder.Configuration["SqlConnection"];
 
-builder.Host.InjectSerilog();
-builder.Services.AddTransient<ILogService, LogService>();
+//builder.Host.InjectSerilog();
+//builder.Services.AddTransient<ILogService, LogService>();
 
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>

@@ -16,11 +16,11 @@ using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
-((IConfigurationBuilder)builder.Configuration).Sources.Clear();
-((IConfigurationBuilder)builder.Configuration)
-    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
-    .AddEnvironmentVariables();
+//((IConfigurationBuilder)builder.Configuration).Sources.Clear();
+//((IConfigurationBuilder)builder.Configuration)
+//    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+//    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
+//    .AddEnvironmentVariables();
 
 //var defaultCredentials = new DefaultAzureCredential();
 //// Create the token credential instance with the client id of the Managed Identity
@@ -62,21 +62,23 @@ var builder = WebApplication.CreateBuilder(args);
 //        .Select("*", LabelFilter.Null)
 //);
 
-var config = builder.Configuration;
-if (builder.Environment.EnvironmentName == "Development")
-{
-    builder.WebHost.ConfigureKestrel(serverOptions =>
-    {
-        serverOptions.ListenAnyIP(5003, listenOptions => { });
-    });
-}
+//var config = builder.Configuration;
+//if (builder.Environment.EnvironmentName == "Development")
+//{
+//    builder.WebHost.ConfigureKestrel(serverOptions =>
+//    {
+//        serverOptions.ListenAnyIP(5003, listenOptions => { });
+//    });
+//}
 
 // Add services to the container.
 builder.Services.AddControllers();
-builder.Host.InjectSerilog();
+
+//builder.Host.InjectSerilog();
+//builder.Services.AddTransient<ILogService, LogService>();
+
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IUserService, UserService>();
-builder.Services.AddTransient<ILogService, LogService>();
 
 JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 builder.Services.AddAuthentication("Bearer")
