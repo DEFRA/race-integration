@@ -14,4 +14,5 @@ RUN dotnet publish RACE2.FrontEnd/RACE2.FrontEnd.csproj -c Release -o /app/publi
 FROM nginx:alpine AS final
 WORKDIR /usr/share/nginx/html
 COPY --from=publish /app/publish/wwwroot .
+COPY RACE2.FrontEnd/wwwroot/appSettings.Production.json ./appSettings.json
 COPY RACE2.FrontEnd/nginx.conf /etc/nginx/nginx.conf

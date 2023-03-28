@@ -1,0 +1,148 @@
+az login
+
+az acr login -n race2acr
+
+docker build -t race2acr.azurecr.io/race2securityprovider:v1 -f Dockerfile_SecurityProvider .
+docker push race2acr.azurecr.io/race2securityprovider:v1
+
+docker build -t race2acr.azurecr.io/race2webapi:v1 -f Dockerfile_WebApi .
+docker push race2acr.azurecr.io/race2webapi:v1
+
+docker build -t race2acr.azurecr.io/race2frontend:v1 -f Dockerfile_FrontEnd .
+docker push race2acr.azurecr.io/race2frontend:v1
+
+# --- Azure Container App --- #
+$resource_group = "race2projectrg"
+$location="westeurope"
+$log_analytics_workspace="race2loganalytics"
+$CONTAINERAPPS_ENVIRONMENT="race2containerappenv"
+$ContainerAppName ="race2securityprovidercontainerapp"
+$remoteImageName="race2acr.azurecr.io/race2securityprovider:v1"
+$REGISTRY_USERNAME="Race2ACR"
+$REGISTRY_PASSWORD="3q23FKncYFoNMky5N+4arugBI6FHagtWC07sVgPHdo+ACRB3HwHE"
+
+az group create -n $resource_group -l $location
+
+az monitor log-analytics workspace create -n $log_analytics_workspaceT -g $resource_group -l $location
+az monitor log-analytics workspace get-shared-keys -n race2loganalytics -g $resource_group
+
+$LOG_ANALYTICS_WORKSPACE_CLIENT_ID=(az monitor log-analytics workspace show --query customerId -g $RESOURCE_GROUP -n $LOG_ANALYTICS_WORKSPACE --out tsv)
+$LOG_ANALYTICS_WORKSPACE_CLIENT_SECRET=(az monitor log-analytics workspace get-shared-keys --query primarySharedKey -g $RESOURCE_GROUP -n $LOG_ANALYTICS_WORKSPACE --out tsv)
+ 
+az containerapp env create `
+   --name $CONTAINERAPPS_ENVIRONMENT `
+   --resource-group $RESOURCE_GROUP `
+   --logs-workspace-id $LOG_ANALYTICS_WORKSPACE_CLIENT_ID `
+   --logs-workspace-key $LOG_ANALYTICS_WORKSPACE_CLIENT_SECRET `
+   --location "$location"
+ 
+------ Write-Host "Creating Container App"
+ 
+az containerapp create `
+  --name $ContainerAppName `
+  --resource-group $RESOURCE_GROUP `
+  --environment $CONTAINERAPPS_ENVIRONMENT `
+  --image $remoteImageName `
+  --registry-username $REGISTRY_USERNAME `
+  --registry-password $REGISTRY_PASSWORD `
+  --target-port 80 `
+  --ingress 'external' `
+  --cpu 0.5 `
+  --memory 1.0Gi `
+  --min-replicas 0 `
+  --max-replicas 2 `
+  --env-vars ASPNETCORE_ENVIRONMENT="Production"
+
+  $remoteImageName="race2acr.azurecr.io/race2webapi:v1"
+  $ContainerAppName ="race2webapicontainerapp"
+
+  az containerapp create `
+  --name $ContainerAppName `
+  --resource-group $RESOURCE_GROUP `
+  --environment $CONTAINERAPPS_ENVIRONMENT `
+  --image $remoteImageName `
+  --registry-username $REGISTRY_USERNAME `
+  --registry-password $REGISTRY_PASSWORD `
+  --target-port 80 `
+  --ingress 'external' `
+  --cpu 0.5 `
+  --memory 1.0Gi `
+  --min-replicas 0 `
+  --max-replicas 2 `
+  --env-vars ASPNETCORE_ENVIRONMENT="Production"
+
+  $remoteImageName="race2acr.azurecr.io/race2frontend:v1"
+  $ContainerAppName ="race2frontendcontainerapp"
+
+  az containerapp create `
+  --name $ContainerAppName `
+  --resource-group $RESOURCE_GROUP `
+  --environment $CONTAINERAPPS_ENVIRONMENT `
+  --image $remoteImageName `
+  --registry-username $REGISTRY_USERNAME `
+  --registry-password $REGISTRY_PASSWORD `
+  --target-port 80 `
+  --ingress 'external' `
+  --cpu 0.5 `
+  --memory 1.0Gi `
+  --min-replicas 0 `
+  --max-replicas 2 `
+  --env-vars ASPNETCORE_ENVIRONMENT="Production"
+
+ 
+-----Write-Host "Finished creating container app"
+ 
+Set-Location "$PSScriptRoot"
+
+az containerapp env create -n race2appenv -g race2projectrg \
+            --logs-destination log-analytics \
+            --logs-workspace-id race2loganalytics \
+            --logs-workspace-key myLogsWorkspaceKey \
+            --location westeurope
+            --internal-only
+
+Create a container app and retrieve its fully qualified domain name.
+
+az containerapp create -n MyContainerapp -g MyResourceGroup \
+    --image myregistry.azurecr.io/my-app:v1.0 --environment MyContainerappEnv \
+    --ingress external --target-port 80 \
+    --registry-server myregistry.azurecr.io --registry-username myregistry --registry-password $REGISTRY_PASSWORD \
+    --query properties.configuration.ingress.fqdn
+    
+Create a container app with resource requirements and replica count limits.
+
+az containerapp create -n MyContainerapp -g MyResourceGroup \
+    --image nginx --environment MyContainerappEnv \
+    --cpu 0.5 --memory 1.0Gi \
+    --min-replicas 4 --max-replicas 8
+
+Create a container app with secrets and environment variables.
+
+az containerapp create -n MyContainerapp -g MyResourceGroup \
+    --image my-app:v1.0 --environment MyContainerappEnv \
+    --secrets mysecret=secretvalue1 anothersecret="secret value 2" \
+    --env-vars GREETING="Hello, world" SECRETENV=secretref:anothersecret
+
+Create a container app using a YAML configuration. Example YAML configuration - https://aka.ms/azure-container-apps-yaml
+
+az containerapp create -n MyContainerapp -g MyResourceGroup \
+    --environment MyContainerappEnv \
+    --yaml "path/to/yaml/file.yml"
+
+az containerapp registry set -n race2frontend -g race2projectrg --server race2acr.azurecr.io.azurecr.io --username Race2ACR --password 3q23FKncYFoNMky5N+4arugBI6FHagtWC07sVgPHdo+ACRB3HwHE
+
+Create a container app
+
+az containerapp create `
+  --name race2frontend `
+  --resource-group race2projectrg `
+  --environment race2appcontainerenv `
+  --registry-username Race2ACR`
+  --registry-password 3q23FKncYFoNMky5N+4arugBI6FHagtWC07sVgPHdo+ACRB3HwHE`
+  --image race2acr.azurecr.io/race2frontend:v1`
+  --target-port 80 `
+  --ingress 'external' `
+  --min-replicas 0 `
+  --max-replicas 2 `
+  --env-vars ASPNETCORE_ENVIRONMENT="Production"
+
