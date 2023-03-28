@@ -39,6 +39,10 @@ namespace RACE2.DataModel
         public DateTime DateSent { get; set;}
 
         public DateTime DateReceived { get; set;}
+
+        public UserDetail SuppliedBy { get; set; } = new UserDetail();
+
+        public List<Reservoir> Reservoir { get; set; } = new List<Reservoir>();
     }
 
 

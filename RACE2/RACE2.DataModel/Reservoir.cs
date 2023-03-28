@@ -55,6 +55,8 @@ namespace RACE2.DataModel
 
         public List<UserReservoir> Reservoirs { get; set; } = new List<UserReservoir>();
 
+        public List<SupportingDocument> Documents { get; set; } = new List<SupportingDocument>();
+
     }
 
 }
