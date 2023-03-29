@@ -4,6 +4,7 @@ using RACE2.DataAccess;
 using RACE2.DataAccess.Repository;
 using RACE2.DataModel;
 using RACE2.Dto;
+using RACE2.Notification;
 using RACE2.Services;
 using Serilog;
 using Serilog.Events;
@@ -26,6 +27,10 @@ namespace RACE2.WebApi.QueryResolver
 
         public async Task<UserDetail> GetUserByEmailID(IUserService _userService, string email)
         {
+            RaceNotification raceNotification = new RaceNotification();
+            raceNotification.SendMail();
+            await raceNotification.SendEmailTestWithPersonalisation();
+
 
             return await _userService.GetUserByEmailID(email);     
             
