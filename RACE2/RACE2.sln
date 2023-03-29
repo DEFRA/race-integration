@@ -23,11 +23,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedFiles", "SharedFiles"
 	ProjectSection(SolutionItems) = preProject
 		appsettings.json = appsettings.json
 		azcommands.txt = azcommands.txt
+		ContaunerAppWorkspaceDeploy.ps1 = ContaunerAppWorkspaceDeploy.ps1
 		databasecreation.txt = databasecreation.txt
 		Dockerfile_FrontEnd = Dockerfile_FrontEnd
 		Dockerfile_FrontEndWeb = Dockerfile_FrontEndWeb
 		Dockerfile_SecurityProvider = Dockerfile_SecurityProvider
 		Dockerfile_WebApi = Dockerfile_WebApi
+		FrontEndDeploy.ps1 = FrontEndDeploy.ps1
+		SecurtyProviderDeploy.ps1 = SecurtyProviderDeploy.ps1
+		WebApiDeploy.ps1 = WebApiDeploy.ps1
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GraphQLCommands", "GraphQLCommands", "{D628ECA6-9B57-4882-A17F-43F61BE0B468}"

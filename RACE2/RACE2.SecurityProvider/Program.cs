@@ -15,8 +15,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 //((IConfigurationBuilder)builder.Configuration).Sources.Clear();
 //((IConfigurationBuilder)builder.Configuration)
-//    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-//    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
+//    //.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+//    //.AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
 //    .AddEnvironmentVariables();
 
 //if (builder.Environment.EnvironmentName == "Development")
@@ -32,6 +32,8 @@ var migrationsAssembly = typeof(Program).Assembly.GetName().Name;
 // Add services to the container.
 
 var connectionString = builder.Configuration["SqlConnection"];
+var blazorClientURL = builder.Configuration["ApplicationSettings:RACE2FrontEndURL"];
+var webapiURL = builder.Configuration["ApplicationSettings:RACE2WebApiURL"];
 
 //builder.Host.InjectSerilog();
 //builder.Services.AddTransient<ILogService, LogService>();
@@ -86,7 +88,7 @@ else
 {
     app.UseExceptionHandler("/Error");
 }
-HostingExtensions.InitializeDatabase(app);
+HostingExtensions.InitializeDatabase(app, blazorClientURL, webapiURL);
 app.UseCookiePolicy(new CookiePolicyOptions
 {
     MinimumSameSitePolicy = SameSiteMode.Lax

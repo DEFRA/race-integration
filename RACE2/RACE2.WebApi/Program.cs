@@ -125,7 +125,6 @@ builder.Services.AddGraphQLServer()
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-//app.UseSerilogRequestLogging();
 app.UseCors("CorsPolicy");
 
 app.UseRouting();
@@ -133,7 +132,6 @@ app.UseRouting();
 app.UseAuthentication();
 
 app.UseAuthorization();
-//app.UseSerilogRequestLogging();
 
 app.MapGraphQL();
 app.UseVoyager("/graphql", "/graphql-voyager");

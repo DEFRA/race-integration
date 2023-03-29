@@ -1,11 +1,11 @@
 $RESOURCE_GROUP = "race2projectrg"
 $LOCATION="westeurope"
 $CONTAINERAPPS_ENVIRONMENT="race2containerappenv"
-$CONTAINERAPPNAME ="race2securityprovider"
-$REMOTE_IMAGENAME="race2acr.azurecr.io/race2securityprovider:v1"
+$CONTAINERAPPNAME ="race2webapi"
+$REMOTE_IMAGENAME="race2acr.azurecr.io/race2webapi:v1"
 $REGISTRY_SERVER="race2acr.azurecr.io"
 $REGISTRY_USERNAME="Race2ACR"
-$REGISTRY_PASSWORD="3q23FKncYFoNMky5N+4arugBI6FHagtWC07sVgPHdo+ACRB3HwHE"
+$REGISTRY_PASSWORD="3q23FKncYFoNMky5N+4arugBI6FHagtWC07sVgPHdo+ACRB3HwHE"  
 
 az containerapp create `
   --name $CONTAINERAPPNAME `
@@ -16,10 +16,9 @@ az containerapp create `
   --registry-username $REGISTRY_USERNAME `
   --registry-password $REGISTRY_PASSWORD `
   --target-port 80 `
-  --ingress 'internal' `
+  --ingress 'external' `
   --cpu 0.5 `
   --memory 1.0Gi `
   --min-replicas 0 `
   --max-replicas 2 `
   --env-vars ASPNETCORE_ENVIRONMENT="Production"
-  
