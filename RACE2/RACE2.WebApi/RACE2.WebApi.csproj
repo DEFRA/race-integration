@@ -28,6 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\RACE2.Notification\RACE2.Notification.csproj" />
     <ProjectReference Include="..\RACE2.Services\RACE2.Services.csproj" />
   </ItemGroup>
 
