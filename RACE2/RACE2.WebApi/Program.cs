@@ -123,8 +123,15 @@ builder.Services.AddGraphQLServer()
 //options.UseSqlServer(connectionString));
 
 var app = builder.Build();
-app.UseHttpsRedirection();
+
 // Configure the HTTP request pipeline.
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Error");
+    app.UseHsts();
+}
+app.UseHttpsRedirection();
+
 app.UseCors("CorsPolicy");
 
 app.UseRouting();
