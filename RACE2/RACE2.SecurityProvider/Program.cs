@@ -1,3 +1,4 @@
+using IdentityServer4.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations.Internal;
@@ -34,6 +35,7 @@ var migrationsAssembly = typeof(Program).Assembly.GetName().Name;
 var connectionString = builder.Configuration["SqlConnection"];
 var blazorClientURL = builder.Configuration["ApplicationSettings:RACE2FrontEndURL"];
 var webapiURL = builder.Configuration["ApplicationSettings:RACE2WebApiURL"];
+var securityProviderURL = builder.Configuration["ApplicationSettings:RACE2SecurityProviderURL"];
 
 //builder.Host.InjectSerilog();
 //builder.Services.AddTransient<ILogService, LogService>();
@@ -78,6 +80,11 @@ builder.Services.Configure<IdentityOptions>(options =>
 builder.Services.AddScoped<IRandomPasswordGeneration, RandomPasswordGeneration>();
 
 var app = builder.Build();
+app.Use(async (ctx, next) =>
+{
+    ctx.SetIdentityServerOrigin(securityProviderURL);
+    await next();
+});
 
 // Configure the HTTP request pipeline.
 

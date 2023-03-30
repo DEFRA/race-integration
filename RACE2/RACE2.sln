@@ -27,6 +27,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedFiles", "SharedFiles"
 		databasecreation.txt = databasecreation.txt
 		Dockerfile_FrontEnd = Dockerfile_FrontEnd
 		Dockerfile_FrontEndWeb = Dockerfile_FrontEndWeb
+		Dockerfile_SecurityProvider = Dockerfile_SecurityProvider
 		Dockerfile_WebApi = Dockerfile_WebApi
 		FrontEndDeploy.ps1 = FrontEndDeploy.ps1
 		FrontEndWebDeploy.ps1 = FrontEndWebDeploy.ps1
