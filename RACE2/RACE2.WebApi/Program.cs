@@ -123,7 +123,7 @@ builder.Services.AddGraphQLServer()
 //options.UseSqlServer(connectionString));
 
 var app = builder.Build();
-
+app.UseHttpsRedirection();
 // Configure the HTTP request pipeline.
 app.UseCors("CorsPolicy");
 

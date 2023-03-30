@@ -3,11 +3,11 @@
     "RACE2.SecurityProvider": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "http://localhost:5010",
+      "launchUrl": "https://localhost:5010",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "ASPNETCORET_URLS": "http://localhost:5010",
-        "DOTNET_URLS": "http://localhost:5010",
+        "ASPNETCORET_URLS": "https://localhost:5010",
+        "DOTNET_URLS": "https://localhost:5010",
         "AZURE_APP_CONFIGURATION_ENDPOINT": "https://race2appconfig.azconfig.io",
         "AZURE_USER_ASSIGNED_IDENTITY_CLIENT_ID": "f324da0d-19e1-49df-8901-faab72ed2649",
         "AZURE_CLIENT_ID": "39ef2527-ca88-4bbc-b474-2d9aecf67f46",
@@ -20,7 +20,7 @@
         "ApplicationSettings__RACE2SecurityProviderURL": "https://race2securityprovider.gentlebush-defe7f09.westeurope.azurecontainerapps.io"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "http://localhost:5010",
+      "applicationUrl": "https://localhost:5010",
       "AllowedHosts": "*"
     },
     "Docker": {

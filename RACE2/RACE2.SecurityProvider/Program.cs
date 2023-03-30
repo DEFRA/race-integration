@@ -80,6 +80,7 @@ builder.Services.AddScoped<IRandomPasswordGeneration, RandomPasswordGeneration>(
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
@@ -87,7 +88,10 @@ if (app.Environment.IsDevelopment())
 else
 {
     app.UseExceptionHandler("/Error");
+    app.UseHsts();
 }
+app.UseHttpsRedirection();
+
 HostingExtensions.InitializeDatabase(app, blazorClientURL, webapiURL);
 app.UseCookiePolicy(new CookiePolicyOptions
 {

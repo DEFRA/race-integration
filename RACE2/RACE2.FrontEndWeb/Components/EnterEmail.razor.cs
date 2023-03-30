@@ -25,6 +25,7 @@ namespace RACE2.FrontEndWeb.Components
         public AppStore AppStore => State.Value;
 
         string? Email;
+        string? Password;
         private UserDetail CurrentUser;
 
         private string errorMsg1 = "Email entered does not exist!!! Please try again.";
@@ -81,7 +82,7 @@ namespace RACE2.FrontEndWeb.Components
                     }
                     else
                     {
-                        string pagelink = "/change-password";
+                        string pagelink = "/choose-a-reservoir";
                         NavigationManager.NavigateTo(pagelink, forceLoad);
                     }
                 }

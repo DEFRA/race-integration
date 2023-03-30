@@ -17,7 +17,7 @@
         "ApplicationSettings__RACE2SecurityProviderURL": "https://race2securityprovider.gentlebush-defe7f09.westeurope.azurecontainerapps.io"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "http://localhost:5003",
+      "applicationUrl": "https://localhost:5003",
       "AllowedHosts": "*"
     },
     "Docker": {
