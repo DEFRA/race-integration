@@ -22,17 +22,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedFiles", "SharedFiles", "{700FD329-25BD-4C96-8FE6-97DEB5370146}"
 	ProjectSection(SolutionItems) = preProject
 		appsettings.json = appsettings.json
-		azcommands.txt = azcommands.txt
-		ContaunerAppWorkspaceDeploy.ps1 = ContaunerAppWorkspaceDeploy.ps1
 		databasecreation.txt = databasecreation.txt
 		Dockerfile_FrontEnd = Dockerfile_FrontEnd
 		Dockerfile_FrontEndWeb = Dockerfile_FrontEndWeb
 		Dockerfile_SecurityProvider = Dockerfile_SecurityProvider
 		Dockerfile_WebApi = Dockerfile_WebApi
-		FrontEndDeploy.ps1 = FrontEndDeploy.ps1
-		FrontEndWebDeploy.ps1 = FrontEndWebDeploy.ps1
-		SecurtyProviderDeploy.ps1 = SecurtyProviderDeploy.ps1
-		WebApiDeploy.ps1 = WebApiDeploy.ps1
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GraphQLCommands", "GraphQLCommands", "{D628ECA6-9B57-4882-A17F-43F61BE0B468}"
@@ -53,7 +47,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.Logging", "RACE2.Logg
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{63895320-2B7A-4EC3-B146-0A84D4189D0D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.Notification", "..\RACE2.Notification\RACE2.Notification.csproj", "{C10F884C-54A9-430A-A39A-958486EF6C17}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.Notification", "RACE2.Notification\RACE2.Notification.csproj", "{7E46BD48-2360-4CB2-B456-C558C661D2B4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -105,10 +99,10 @@ Global
 		{63895320-2B7A-4EC3-B146-0A84D4189D0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{63895320-2B7A-4EC3-B146-0A84D4189D0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{63895320-2B7A-4EC3-B146-0A84D4189D0D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C10F884C-54A9-430A-A39A-958486EF6C17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C10F884C-54A9-430A-A39A-958486EF6C17}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C10F884C-54A9-430A-A39A-958486EF6C17}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C10F884C-54A9-430A-A39A-958486EF6C17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E46BD48-2360-4CB2-B456-C558C661D2B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E46BD48-2360-4CB2-B456-C558C661D2B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E46BD48-2360-4CB2-B456-C558C661D2B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E46BD48-2360-4CB2-B456-C558C661D2B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
