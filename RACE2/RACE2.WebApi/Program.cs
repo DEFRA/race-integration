@@ -74,8 +74,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers();
 
-//builder.Host.InjectSerilog();
-//builder.Services.AddTransient<ILogService, LogService>();
+builder.Host.InjectSerilog();
+builder.Services.AddTransient<ILogService, LogService>();
 
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IUserService, UserService>();
