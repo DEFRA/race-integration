@@ -8,7 +8,7 @@
     {
         public class HostingExtensions
         {
-            public static void InitializeDatabase(IApplicationBuilder app)
+            public static void InitializeDatabase(IApplicationBuilder app, string blazorClientURL, string webapiURL)
             {
                 using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
                 {
@@ -18,7 +18,7 @@
                     context.Database.Migrate();
                     if (!context.Clients.Any())
                     {
-                        foreach (var client in ServerConfiguration.Clients("http://localhost:5001"))
+                        foreach (var client in ServerConfiguration.Clients(blazorClientURL, webapiURL))
                         {
                             context.Clients.Add(client.ToEntity());
                         }

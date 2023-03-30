@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using RACE2.DataModel;
-
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -21,14 +20,11 @@ namespace RACE2.DataAccess.Repository
 {
     public class UserRepository : IUserRepository
     {
-        private readonly ILogService _logService;
-
         IConfiguration _configuration;
-        public UserRepository(IConfiguration configuration, ILogService logService)
+        public UserRepository(IConfiguration configuration)
         {
             _configuration = configuration;
             //_configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../appsettings.json").Build();
-            _logService = logService;
         }
 
         private IDbConnection Connection
@@ -61,8 +57,6 @@ namespace RACE2.DataAccess.Repository
 
         public async Task<UserDetail> GetUserByEmailID(string email)
         {
-            _logService.Write("Repository");
-
             try
             {
                 using (var conn = Connection)
@@ -78,7 +72,6 @@ namespace RACE2.DataAccess.Repository
             }
             catch (Exception ex)
             {
-                _logService.Error(ex, "Exception in GetUserByEmailID");
                 return null;
             }
 
@@ -117,7 +110,6 @@ namespace RACE2.DataAccess.Repository
             }
             catch (Exception ex)
             {
-                _logService.Error(ex, "Exception in GetUserWithRoles");
                 return null;
             }
 

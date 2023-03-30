@@ -59,30 +59,39 @@ namespace RACE2.SecurityProvider
             }
         }
 
-        public static List<Client> Clients(string blazorClientURL)
+        public static List<Client> Clients(string blazorClientURL,string webapiURL)
         {
             List<string> allowedCorsOrigins = new List<string>();
             allowedCorsOrigins.Add(blazorClientURL);
+            allowedCorsOrigins.Add(webapiURL);
             List<string> redirectUris = new List<string>();
             redirectUris.Add(blazorClientURL+ "/authentication/login-callback");
+            redirectUris.Add(blazorClientURL + "/signin-oidc");
+            redirectUris.Add(webapiURL);
             List<string> postLogoutRedirectUris = new List<string>();
             postLogoutRedirectUris.Add(blazorClientURL + "/authentication/logout-callback");
+            postLogoutRedirectUris.Add(blazorClientURL + "/signout-callback-oidc");
             List<Client> clients = new List<Client>();
-            Client client1 = new Client
+            Client blazorserverClient = new Client
             {
-                ClientId = "client1",
-                ClientName = "Client 1",
-                ClientSecrets = new[] {
-                    new Secret("client1_secret_code".Sha512()) },
-                AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
+                ClientName = "Blazor Server",
+                ClientId = "blazorServer",
+                AllowedGrantTypes = GrantTypes.Hybrid,
+                RedirectUris = redirectUris,
+                RequirePkce = false,
                 AllowedScopes = {
-                    "openid",
+                    IdentityServerConstants.StandardScopes.OpenId,
+                    IdentityServerConstants.StandardScopes.Profile,
+                    IdentityServerConstants.StandardScopes.Address,
                     "roles",
                     "race2WebApi"
-                }
+                },
+                ClientSecrets = { new Secret("blazorserver-secret".Sha512()) },
+                RequireConsent = false,
+                PostLogoutRedirectUris = postLogoutRedirectUris
             };
 
-            Client client2 = new Client
+            Client blazorwasmClient = new Client
             {
                 ClientId = "blazorWASM",
                 AllowedGrantTypes = GrantTypes.Code,
@@ -100,7 +109,7 @@ namespace RACE2.SecurityProvider
                 PostLogoutRedirectUris = postLogoutRedirectUris
             };
 
-            Client client3 = 
+            Client webapiClient = 
                 new Client
                 {
                     ClientId = "webapi",
@@ -115,14 +124,13 @@ namespace RACE2.SecurityProvider
                         "role",
                         "race2WebApi"
                     },
-                    AllowedCorsOrigins = new List<string> { "http://localhost:5003" },
-                    RedirectUris = new List<string> { "http://localhost:5003/graphql" }
+                    AllowedCorsOrigins = allowedCorsOrigins,
+                    RedirectUris = redirectUris
                 };
 
-
-            clients.Add(client1);
-            clients.Add(client2);
-            clients.Add(client3);
+            clients.Add(blazorserverClient);
+            clients.Add(blazorwasmClient);
+            clients.Add(webapiClient);
             return clients;
         }        
     }

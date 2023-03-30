@@ -6,7 +6,7 @@ update-database -context PersistedGrantDbContext
 Add-Migration InitialConfigurationMigration -c ConfigurationDbContext -o Migrations/IdentityServer/ConfigurationDb
 update-database -context ConfigurationDbContext
 
-//startup project->RACE2.SecurityProvider, packagemanager defualt project->RACE2.SecurityProvider
+//startup project->RACE2.SecurityProvider, packagemanager defualt project->RACE2.Dto
 Add-Migration InitialMigration -c ApplicationDbContext -o Migrations/IdentityServer/ApplicationDb
 update-database -context ApplicationDbContext
 
