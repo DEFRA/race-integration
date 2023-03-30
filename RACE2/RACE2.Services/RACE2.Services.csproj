@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RACE2.DataAccess\RACE2.DataAccess.csproj" />
+    <ProjectReference Include="..\RACE2.Notification\RACE2.Notification.csproj" />
   </ItemGroup>
 
 </Project>

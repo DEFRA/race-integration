@@ -20,11 +20,13 @@ namespace RACE2.DataAccess.Repository
 {
     public class UserRepository : IUserRepository
     {
+        private readonly ILogService _logService;
         IConfiguration _configuration;
-        public UserRepository(IConfiguration configuration)
+        public UserRepository(IConfiguration configuration, ILogService logService)
         {
             _configuration = configuration;
-            //_configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../appsettings.json").Build();
+            _logService = logService;
+                //_configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../appsettings.json").Build();
         }
 
         private IDbConnection Connection
@@ -57,6 +59,8 @@ namespace RACE2.DataAccess.Repository
 
         public async Task<UserDetail> GetUserByEmailID(string email)
         {
+
+            _logService.Write("Repository");
             try
             {
                 using (var conn = Connection)
