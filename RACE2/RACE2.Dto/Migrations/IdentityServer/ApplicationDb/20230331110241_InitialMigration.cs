@@ -75,30 +75,6 @@ namespace RACE2.Dto.Migrations.IdentityServer.ApplicationDb
                 });
 
             migrationBuilder.CreateTable(
-                name: "SupportingDocuments",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FileName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
-                    FileLocation = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: false),
-                    FileType = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
-                    DocumentName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
-                    DocumentDescription = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: false),
-                    DocumentType = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
-                    DocumentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DocumentStatus = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
-                    DocumentAuthorName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
-                    ProtectiveMarking = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
-                    DateSent = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateReceived = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SupportingDocuments", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Reservoirs",
                 columns: table => new
                 {
@@ -492,6 +468,37 @@ namespace RACE2.Dto.Migrations.IdentityServer.ApplicationDb
                 });
 
             migrationBuilder.CreateTable(
+                name: "SupportingDocuments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FileName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    FileLocation = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: false),
+                    FileType = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    DocumentName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    DocumentDescription = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: false),
+                    DocumentType = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    DocumentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DocumentStatus = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    DocumentAuthorName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    ProtectiveMarking = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    DateSent = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateReceived = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    SuppliedById = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SupportingDocuments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SupportingDocuments_AspNetUsers_SuppliedById",
+                        column: x => x.SuppliedById,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserAddresses",
                 columns: table => new
                 {
@@ -541,6 +548,30 @@ namespace RACE2.Dto.Migrations.IdentityServer.ApplicationDb
                         name: "FK_UserReservoirs_Reservoirs_ReservoirId",
                         column: x => x.ReservoirId,
                         principalTable: "Reservoirs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ReservoirSupportingDocument",
+                columns: table => new
+                {
+                    DocumentsId = table.Column<int>(type: "int", nullable: false),
+                    ReservoirId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ReservoirSupportingDocument", x => new { x.DocumentsId, x.ReservoirId });
+                    table.ForeignKey(
+                        name: "FK_ReservoirSupportingDocument_Reservoirs_ReservoirId",
+                        column: x => x.ReservoirId,
+                        principalTable: "Reservoirs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ReservoirSupportingDocument_SupportingDocuments_DocumentsId",
+                        column: x => x.DocumentsId,
+                        principalTable: "SupportingDocuments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -640,9 +671,19 @@ namespace RACE2.Dto.Migrations.IdentityServer.ApplicationDb
                 column: "addressid");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ReservoirSupportingDocument_ReservoirId",
+                table: "ReservoirSupportingDocument",
+                column: "ReservoirId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_SafetyMeasures_ReservoirId",
                 table: "SafetyMeasures",
                 column: "ReservoirId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SupportingDocuments_SuppliedById",
+                table: "SupportingDocuments",
+                column: "SuppliedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserAddresses_Addressid",
@@ -708,10 +749,10 @@ namespace RACE2.Dto.Migrations.IdentityServer.ApplicationDb
                 name: "OrganisationAddresses");
 
             migrationBuilder.DropTable(
-                name: "SafetyMeasures");
+                name: "ReservoirSupportingDocument");
 
             migrationBuilder.DropTable(
-                name: "SupportingDocuments");
+                name: "SafetyMeasures");
 
             migrationBuilder.DropTable(
                 name: "UserAddresses");
@@ -723,22 +764,25 @@ namespace RACE2.Dto.Migrations.IdentityServer.ApplicationDb
                 name: "UserReservoirs");
 
             migrationBuilder.DropTable(
+                name: "SupportingDocuments");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "FeatureFunctions");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
                 name: "Reservoirs");
 
             migrationBuilder.DropTable(
-                name: "Organisations");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Addresses");
+
+            migrationBuilder.DropTable(
+                name: "Organisations");
         }
     }
 }

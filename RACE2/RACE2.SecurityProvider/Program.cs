@@ -1,3 +1,5 @@
+using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
 using IdentityServer4.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -31,18 +33,27 @@ var builder = WebApplication.CreateBuilder(args);
 var migrationsAssembly = typeof(Program).Assembly.GetName().Name;
 
 // Add services to the container.
+var isDevelopment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
 
-var connectionString = builder.Configuration["SqlConnection"];
-var blazorClientURL = builder.Configuration["ApplicationSettings:RACE2FrontEndURL"];
-var webapiURL = builder.Configuration["ApplicationSettings:RACE2WebApiURL"];
-var securityProviderURL = builder.Configuration["ApplicationSettings:RACE2SecurityProviderURL"];
+//var blazorClientURL = builder.Configuration["ApplicationSettings:RACE2FrontEndURL"];
+//var webapiURL = builder.Configuration["ApplicationSettings:RACE2WebApiURL"];
+//var securityProviderURL = builder.Configuration["ApplicationSettings:RACE2SecurityProviderURL"];
+//var sqlConnectionString = builder.Configuration["SqlConnection"];
 
-//builder.Host.InjectSerilog();
-//builder.Services.AddTransient<ILogService, LogService>();
+// Load configuration from Azure App Configuration
+string appconfigConnectionString = builder.Configuration["AzureAppConfigConnString"];
+builder.Configuration.AddAzureAppConfiguration(appconfigConnectionString);
+var blazorClientURL= builder.Configuration["RACE2FrontEndURL"];
+var webapiURL = builder.Configuration["RACE2WebApiURL"];
+var securityProviderURL = builder.Configuration["RACE2SecurityProviderURL"];
 
+// Load configuration from Azure KeyVault Secret
+var secretClient = new SecretClient(new Uri(builder.Configuration["AzureVaultURL"]), new DefaultAzureCredential()); 
+var secret = await secretClient.GetSecretAsync("SqlServerConnString");
+var sqlConnectionString = secret.Value.Value;
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseSqlServer(sqlConnectionString));
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -55,12 +66,12 @@ builder.Services.AddRazorPages();
 builder.Services.AddIdentityServer()
             .AddConfigurationStore(options =>
             {
-                options.ConfigureDbContext = b => b.UseSqlServer(connectionString,
+                options.ConfigureDbContext = b => b.UseSqlServer(sqlConnectionString,
                     sql => sql.MigrationsAssembly(migrationsAssembly));
             })
             .AddOperationalStore(options =>
             {
-                options.ConfigureDbContext = b => b.UseSqlServer(connectionString,
+                options.ConfigureDbContext = b => b.UseSqlServer(sqlConnectionString,
                     sql => sql.MigrationsAssembly(migrationsAssembly));
             })
             .AddDeveloperSigningCredential()

@@ -12,7 +12,7 @@ using RACE2.Dto;
 namespace RACE2.Dto.Migrations.IdentityServer.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230328161139_InitialMigration")]
+    [Migration("20230331110241_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -648,7 +648,12 @@ namespace RACE2.Dto.Migrations.IdentityServer.ApplicationDb
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
+                    b.Property<int>("SuppliedById")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("SuppliedById");
 
                     b.ToTable("SupportingDocuments");
                 });
@@ -934,6 +939,21 @@ namespace RACE2.Dto.Migrations.IdentityServer.ApplicationDb
                     b.ToTable("AspNetUserRoles", (string)null);
                 });
 
+            modelBuilder.Entity("ReservoirSupportingDocument", b =>
+                {
+                    b.Property<int>("DocumentsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ReservoirId")
+                        .HasColumnType("int");
+
+                    b.HasKey("DocumentsId", "ReservoirId");
+
+                    b.HasIndex("ReservoirId");
+
+                    b.ToTable("ReservoirSupportingDocument");
+                });
+
             modelBuilder.Entity("AddressOrganisation", b =>
                 {
                     b.HasOne("RACE2.DataModel.Address", null)
@@ -1069,6 +1089,17 @@ namespace RACE2.Dto.Migrations.IdentityServer.ApplicationDb
                     b.Navigation("Reservoir");
                 });
 
+            modelBuilder.Entity("RACE2.DataModel.SupportingDocument", b =>
+                {
+                    b.HasOne("RACE2.DataModel.UserDetail", "SuppliedBy")
+                        .WithMany()
+                        .HasForeignKey("SuppliedById")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("SuppliedBy");
+                });
+
             modelBuilder.Entity("RACE2.DataModel.UserAddress", b =>
                 {
                     b.HasOne("RACE2.DataModel.Address", "Address")
@@ -1134,6 +1165,21 @@ namespace RACE2.Dto.Migrations.IdentityServer.ApplicationDb
                     b.HasOne("RACE2.DataModel.UserDetail", null)
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ReservoirSupportingDocument", b =>
+                {
+                    b.HasOne("RACE2.DataModel.SupportingDocument", null)
+                        .WithMany()
+                        .HasForeignKey("DocumentsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RACE2.DataModel.Reservoir", null)
+                        .WithMany()
+                        .HasForeignKey("ReservoirId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -13,8 +13,22 @@ using HotChocolate.AspNetCore.Voyager;
 using RACE2.Logging.Service;
 using RACE2.Logging;
 using Microsoft.Extensions.Configuration;
+using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
+using static System.Net.WebRequestMethods;
+using Microsoft.AspNetCore.Hosting;
+using RACE2.Dto;
 
 var builder = WebApplication.CreateBuilder(args);
+var isDevelopment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
+// Load configuration from Azure App Configuration
+string connectionString = @"Endpoint=https://race2appconfig.azconfig.io;Id=2vuX-l9-s0:HQ0rj5uB+4Us4xc5A9CU;Secret=DSm7qBpYJDgi2K4A0qxjDsMM8oe4CFjYaJ9fX7PsQa0=";
+builder.Configuration.AddAzureAppConfiguration(connectionString);
+
+// Load configuration from Azure KeyVault Secret
+var secretClient = new SecretClient(new Uri("https://race2keyvault.vault.azure.net/"), new DefaultAzureCredential());
+//var secret = await secretClient.GetSecretAsync("SqlServerConnString");
+var secret = await secretClient.GetSecretAsync("Sqlconnection");
 
 //((IConfigurationBuilder)builder.Configuration).Sources.Clear();
 //((IConfigurationBuilder)builder.Configuration)
@@ -62,7 +76,7 @@ var builder = WebApplication.CreateBuilder(args);
 //        .Select("*", LabelFilter.Null)
 //);
 
-//var config = builder.Configuration;
+var config = builder.Configuration;
 //if (builder.Environment.EnvironmentName == "Development")
 //{
 //    builder.WebHost.ConfigureKestrel(serverOptions =>
@@ -118,9 +132,9 @@ builder.Services.AddGraphQLServer()
     .AddQueryType<UserResolver>()
     .AddMutationType<MutationResolver>()
     .AddAuthorization();
-
-//builder.Services.AddDbContext<RACE2.DataAccess.ApplicationDbContext>(options =>
-//options.UseSqlServer(connectionString));
+var sqlconnectionString = builder.Configuration["SqlConnection"];
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+options.UseSqlServer(sqlconnectionString));
 
 var app = builder.Build();
 

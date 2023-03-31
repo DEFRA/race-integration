@@ -3,7 +3,6 @@
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
 EXPOSE 80
-EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
@@ -13,7 +12,6 @@ COPY ["RACE2.DataAccess/RACE2.DataAccess.csproj", "RACE2.DataAccess/"]
 COPY ["RACE2.Dto/RACE2.Dto.csproj", "RACE2.Dto/"]
 COPY ["RACE2.DataModel/RACE2.DataModel.csproj", "RACE2.DataModel/"]
 COPY ["RACE2.Logging/RACE2.Logging.csproj", "RACE2.Logging/"]
-COPY ["RACE2.Notification/RACE2.Notification.csproj", "RACE2.Notification/"]
 RUN dotnet restore "RACE2.WebApi/RACE2.WebApi.csproj"
 COPY . .
 WORKDIR "/src/RACE2.WebApi"
