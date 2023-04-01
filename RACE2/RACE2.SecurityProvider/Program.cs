@@ -41,16 +41,31 @@ var isDevelopment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")
 //var sqlConnectionString = builder.Configuration["SqlConnection"];
 
 // Load configuration from Azure App Configuration
-string appconfigConnectionString = builder.Configuration["AzureAppConfigConnString"];
-builder.Configuration.AddAzureAppConfiguration(appconfigConnectionString);
+//string appconfigConnectionString = builder.Configuration["AzureAppConfigConnString"];
+//builder.Configuration.AddAzureAppConfiguration(appconfigConnectionString);
+// Load configuration from Azure KeyVault Secret
+//var secretClient = new SecretClient(new Uri(builder.Configuration["AzureVaultURL"]), new DefaultAzureCredential());
+//var secret = await secretClient.GetSecretAsync("SqlServerConnString");
+//var sqlConnectionString = secret.Value.Value;
+
+builder.Host.ConfigureAppConfiguration(config =>
+{
+    var settings = config.Build();
+    var connectionString = settings["AzureAppConfigConnString"];
+
+    config.AddAzureAppConfiguration(options =>
+    {
+        options.Connect(connectionString);
+        options.ConfigureKeyVault(options =>
+        {
+            options.SetCredential(new DefaultAzureCredential());
+        });
+    });
+});
 var blazorClientURL= builder.Configuration["RACE2FrontEndURL"];
 var webapiURL = builder.Configuration["RACE2WebApiURL"];
 var securityProviderURL = builder.Configuration["RACE2SecurityProviderURL"];
-
-// Load configuration from Azure KeyVault Secret
-var secretClient = new SecretClient(new Uri(builder.Configuration["AzureVaultURL"]), new DefaultAzureCredential()); 
-var secret = await secretClient.GetSecretAsync("SqlServerConnString");
-var sqlConnectionString = secret.Value.Value;
+var sqlConnectionString = builder.Configuration["SqlConnectionString"]; 
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(sqlConnectionString));
