@@ -4,6 +4,7 @@ using IdentityServer4.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations.Internal;
+using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using RACE2.DataAccess;
 using RACE2.DataModel;
 using RACE2.Dto;
@@ -34,7 +35,7 @@ var migrationsAssembly = typeof(Program).Assembly.GetName().Name;
 
 // Add services to the container.
 var isDevelopment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
-
+var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 //var blazorClientURL = builder.Configuration["ApplicationSettings:RACE2FrontEndURL"];
 //var webapiURL = builder.Configuration["ApplicationSettings:RACE2WebApiURL"];
 //var securityProviderURL = builder.Configuration["ApplicationSettings:RACE2SecurityProviderURL"];
@@ -52,14 +53,25 @@ builder.Host.ConfigureAppConfiguration(config =>
 {
     var settings = config.Build();
     var connectionString = settings["AzureAppConfigConnString"];
-
+    //var connectionString = settings["AzureAppConfigURL"];
+    var credential = new DefaultAzureCredential();
     config.AddAzureAppConfiguration(options =>
     {
         options.Connect(connectionString);
+      
+        //options.Connect(new Uri(connectionString),credential);
         options.ConfigureKeyVault(options =>
         {
-            options.SetCredential(new DefaultAzureCredential());
+            options.SetCredential(credential);
         });
+
+        // Load configuration values with no label
+        //options.Select(KeyFilter.Any, LabelFilter.Null);
+        options.ConfigureRefresh(refreshOptions =>
+                refreshOptions.Register("refreshAll", refreshAll: true));
+        options.Select(KeyFilter.Any, LabelFilter.Null);
+        // Override with any configuration values specific to current hosting env
+        options.Select(KeyFilter.Any, Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"));
     });
 });
 var blazorClientURL= builder.Configuration["RACE2FrontEndURL"];
