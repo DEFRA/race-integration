@@ -52,14 +52,21 @@ var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 builder.Host.ConfigureAppConfiguration(config =>
 {
     var settings = config.Build();
-    var connectionString = settings["AzureAppConfigConnString"];
-    //var connectionString = settings["AzureAppConfigURL"];
+    //var connectionString = settings["AzureAppConfigConnString"];
+    var connectionString = settings["AzureAppConfigURL"];
     var credential = new DefaultAzureCredential();
+//    var azureCredentialOptions = new DefaultAzureCredentialOptions();
+//#if DEBUG
+//    azureCredentialOptions.SharedTokenCacheUsername = settings["AZURE_USERNAME"];
+//#endif
+
+//    var credential = new DefaultAzureCredential(azureCredentialOptions);
+
     config.AddAzureAppConfiguration(options =>
     {
-        options.Connect(connectionString);
+        //options.Connect(connectionString);
       
-        //options.Connect(new Uri(connectionString),credential);
+        options.Connect(new Uri(connectionString),credential);
         options.ConfigureKeyVault(options =>
         {
             options.SetCredential(credential);
