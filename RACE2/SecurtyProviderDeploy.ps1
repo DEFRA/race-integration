@@ -17,9 +17,11 @@ az containerapp create `
   --registry-password $REGISTRY_PASSWORD `
   --target-port 80 `
   --ingress 'external' `
-  --cpu 1.0 `
-  --memory 1.5Gi `
+  --cpu 0.5 `
+  --memory 1.0Gi `
   --min-replicas 0 `
   --max-replicas 2 `
-  --env-vars ASPNETCORE_ENVIRONMENT="Production"
+  --env-vars ASPNETCORE_ENVIRONMENT="Production" AzureAppConfigURL="https://race2appconfig.azconfig.io/" AZURE_APPCONFIGURATION_CONNECTIONSTRING="Endpoint=https://race2appconfig.azconfig.io;Id=Qb5j-l9-s0:NgoTP/YDtpUUr9NU4JUs;Secret=6XI19b3l46iqeePJ8xlAYYeevyp0NSL/mUvz8rNM7/M=" `
+  --user-assigned "Race2ManagedIdentity"
+  
   

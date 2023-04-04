@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations.Internal;
 using Microsoft.Extensions.Configuration.AzureAppConfiguration;
+using Microsoft.FeatureManagement;
 using RACE2.DataAccess;
 using RACE2.DataModel;
 using RACE2.Dto;
@@ -53,43 +54,36 @@ var builder = WebApplication.CreateBuilder(args);
 //var secret = await secretClient.GetSecretAsync("SqlServerConnString");
 //var sqlConnectionString = secret.Value.Value;
 
-builder.Host.ConfigureAppConfiguration(config =>
+builder.Configuration.AddAzureAppConfiguration(options =>
 {
-    var settings = config.Build();
-    //var connectionString = settings["AzureAppConfigConnString"];
-    var connectionString = settings["AzureAppConfigURL"];
+    var connectionString = builder.Configuration["AZURE_APPCONFIGURATION_CONNECTIONSTRING"];
+    var azureAppConfigUrl = builder.Configuration["AzureAppConfigURL"];
     var credential = new DefaultAzureCredential();
-//    var azureCredentialOptions = new DefaultAzureCredentialOptions();
-//#if DEBUG
-//    azureCredentialOptions.SharedTokenCacheUsername = settings["AZURE_USERNAME"];
-//#endif
+    
+    //options.Connect(connectionString);      
+    options.Connect(new Uri(azureAppConfigUrl),credential);
 
-//    var credential = new DefaultAzureCredential(azureCredentialOptions);
-
-    config.AddAzureAppConfiguration(options =>
+    options.ConfigureKeyVault(options =>
     {
-        //options.Connect(connectionString);
-      
-        options.Connect(new Uri(connectionString),credential);
-        options.ConfigureKeyVault(options =>
-        {
-            options.SetCredential(credential);
-        });
-
-        // Load configuration values with no label
-        //options.Select(KeyFilter.Any, LabelFilter.Null);
-        options.ConfigureRefresh(refreshOptions =>
-                refreshOptions.Register("refreshAll", refreshAll: true));
-        options.Select(KeyFilter.Any, LabelFilter.Null);
-        // Override with any configuration values specific to current hosting env
-        options.Select(KeyFilter.Any, Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"));
+        options.SetCredential(credential);
     });
+
+    // Load configuration values with no label
+    //options.Select(KeyFilter.Any, LabelFilter.Null);
+    options.ConfigureRefresh(refreshOptions =>
+            refreshOptions.Register("refreshAll", refreshAll: true));
+    options.Select(KeyFilter.Any, LabelFilter.Null);
+    // Override with any configuration values specific to current hosting env
+    options.Select(KeyFilter.Any, Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"));
 });
 var blazorClientURL= builder.Configuration["RACE2FrontEndURL"];
 var webapiURL = builder.Configuration["RACE2WebApiURL"];
 var securityProviderURL = builder.Configuration["RACE2SecurityProviderURL"];
-var sqlConnectionString = builder.Configuration["SqlConnectionString"]; 
+var sqlConnectionString = builder.Configuration["SqlConnectionString"];
 
+// Add Azure App Configuration and feature management services to the container.
+builder.Services.AddAzureAppConfiguration()
+                .AddFeatureManagement();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(sqlConnectionString));
 
