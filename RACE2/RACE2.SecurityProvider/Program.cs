@@ -23,19 +23,23 @@ var builder = WebApplication.CreateBuilder(args);
 //    //.AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
 //    .AddEnvironmentVariables();
 
-//if (builder.Environment.EnvironmentName == "Development")
+////var isDevelopment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
+////var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+//var env = builder.Configuration["ASPNETCORE_ENVIRONMENT"];
+//var isDevelopment = (env == "Development");
+//builder.WebHost.UseUrls(new[] { builder.Configuration["ASPNETCORET_URLS"] });
+
+//if (isDevelopment)
 //{
-//    builder.WebHost.ConfigureKestrel(serverOptions =>
-//    {
-//        serverOptions.ListenAnyIP(5010, listenOptions => { });
-//    });
+//    //builder.WebHost.UseUrls(new[] { builder.Configuration["ASPNETCORET_URLS"] });
+//    //    builder.WebHost.ConfigureKestrel(serverOptions =>
+//    //    {
+//    //        serverOptions.ListenAnyIP(5010, listenOptions => { });
+//    //    });
 //}
 
-var migrationsAssembly = typeof(Program).Assembly.GetName().Name;
-
 // Add services to the container.
-var isDevelopment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
-var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
 //var blazorClientURL = builder.Configuration["ApplicationSettings:RACE2FrontEndURL"];
 //var webapiURL = builder.Configuration["ApplicationSettings:RACE2WebApiURL"];
 //var securityProviderURL = builder.Configuration["ApplicationSettings:RACE2SecurityProviderURL"];
@@ -97,6 +101,7 @@ builder.Services.AddDefaultIdentity<UserDetail>(options => options.SignIn.Requir
 
 builder.Services.AddRazorPages();
 
+var migrationsAssembly = typeof(Program).Assembly.GetName().Name;
 builder.Services.AddIdentityServer()
             .AddConfigurationStore(options =>
             {
