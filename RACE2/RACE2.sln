@@ -54,6 +54,20 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.Notification", "RACE2.Notification\RACE2.Notification.csproj", "{7E46BD48-2360-4CB2-B456-C558C661D2B4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bicep Files", "Bicep Files", "{9E4A6273-3717-4549-B159-01B58CAB5C6D}"
+	ProjectSection(SolutionItems) = preProject
+		BicepFiles\createappconfig.bicep = BicepFiles\createappconfig.bicep
+		BicepFiles\createappworkspace.bicep = BicepFiles\createappworkspace.bicep
+		BicepFiles\createcontainerappenv.bicep = BicepFiles\createcontainerappenv.bicep
+		BicepFiles\createcontainerregistry.bicep = BicepFiles\createcontainerregistry.bicep
+		BicepFiles\createfrontendcontainerapp.bicep = BicepFiles\createfrontendcontainerapp.bicep
+		BicepFiles\createkeyvault.bicep = BicepFiles\createkeyvault.bicep
+		BicepFiles\createmanagedidentity.bicep = BicepFiles\createmanagedidentity.bicep
+		BicepFiles\createservicebuc.bicep = BicepFiles\createservicebuc.bicep
+		BicepFiles\createsqlserver.bicep = BicepFiles\createsqlserver.bicep
+		BicepFiles\createstorageaccount.bicep = BicepFiles\createstorageaccount.bicep
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
