@@ -18,87 +18,42 @@ using Azure.Security.KeyVault.Secrets;
 using static System.Net.WebRequestMethods;
 using Microsoft.AspNetCore.Hosting;
 using RACE2.Dto;
+using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 
 var builder = WebApplication.CreateBuilder(args);
-var isDevelopment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
-// Load configuration from Azure App Configuration
-string connectionString = @"Endpoint=https://race2appconfig.azconfig.io;Id=2vuX-l9-s0:HQ0rj5uB+4Us4xc5A9CU;Secret=DSm7qBpYJDgi2K4A0qxjDsMM8oe4CFjYaJ9fX7PsQa0=";
-builder.Configuration.AddAzureAppConfiguration(connectionString);
+builder.Configuration.AddAzureAppConfiguration(options =>
+{
+    //var connectionString = builder.Configuration["AZURE_APPCONFIGURATION_CONNECTIONSTRING"];
+    var azureAppConfigUrl = builder.Configuration["AzureAppConfigURL"];
+    var credential = new DefaultAzureCredential();
 
-// Load configuration from Azure KeyVault Secret
-var secretClient = new SecretClient(new Uri("https://race2keyvault.vault.azure.net/"), new DefaultAzureCredential());
-//var secret = await secretClient.GetSecretAsync("SqlServerConnString");
-var secret = await secretClient.GetSecretAsync("Sqlconnection");
-
-//((IConfigurationBuilder)builder.Configuration).Sources.Clear();
-//((IConfigurationBuilder)builder.Configuration)
-//    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-//    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
-//    .AddEnvironmentVariables();
-
-//var defaultCredentials = new DefaultAzureCredential();
-//// Create the token credential instance with the client id of the Managed Identity
-//var userAssignedIdentityClientId = Environment.GetEnvironmentVariable("AZURE_USER_ASSIGNED_IDENTITY_CLIENT_ID");
-
-//TokenCredential credentials = new ManagedIdentityCredential(userAssignedIdentityClientId);
-//#if DEBUG
-//credentials = new DefaultAzureCredential(new DefaultAzureCredentialOptions
-//{
-//    ManagedIdentityClientId = userAssignedIdentityClientId
-//});
-//#endif
-//builder.Configuration.AddAzureKeyVault(new Uri("https://race2keyvault.vault.azure.net/"), credentials,
-//                           new AzureKeyVaultConfigurationOptions
-//                           {
-//                               // Manager = new PrefixKeyVaultSecretManager(secretPrefix),
-//                               ReloadInterval = TimeSpan.FromMinutes(5)
-//                           });
-
-//var appConfigEndpoint = Environment.GetEnvironmentVariable("AZURE_APP_CONFIGURATION_ENDPOINT");
-//var userAssignedIdentityClientId = Environment.GetEnvironmentVariable("AZURE_USER_ASSIGNED_IDENTITY_CLIENT_ID");
-//var endpoint = new Uri(appConfigEndpoint);
-//// Create the token credential instance with the client id of the Managed Identity
-//TokenCredential credentials = new ManagedIdentityCredential(userAssignedIdentityClientId);
-//#if DEBUG
-//credentials = new DefaultAzureCredential(new DefaultAzureCredentialOptions
-//{
-//    ManagedIdentityClientId = userAssignedIdentityClientId
-//});
-//#endif
-//builder.Configuration.AddAzureAppConfiguration(options =>
-//    options
-//        .Connect(endpoint, credentials)
-//        .ConfigureKeyVault(kv =>
-//        {
-//            kv.SetCredential(credentials);
-//            kv.SetSecretRefreshInterval(TimeSpan.FromHours(12));
-//        })
-//        .Select("*", LabelFilter.Null)
-//);
-
-var config = builder.Configuration;
-//if (builder.Environment.EnvironmentName == "Development")
-//{
-//    builder.WebHost.ConfigureKestrel(serverOptions =>
-//    {
-//        serverOptions.ListenAnyIP(5003, listenOptions => { });
-//    });
-//}
+    //options.Connect(connectionString)      
+    options.Connect(new Uri(azureAppConfigUrl), credential)
+    .ConfigureKeyVault(options =>
+    {
+        options.SetCredential(credential);
+    })
+    .ConfigureRefresh(refreshOptions =>
+            refreshOptions.Register("refreshAll", refreshAll: true))
+    .Select(KeyFilter.Any, LabelFilter.Null)
+    // Override with any configuration values specific to current hosting env
+    .Select(KeyFilter.Any, Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"))
+    .UseFeatureFlags();
+});
 
 // Add services to the container.
 builder.Services.AddControllers();
 
 builder.Host.InjectSerilog();
 builder.Services.AddTransient<ILogService, LogService>();
-
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IUserService, UserService>();
-
+var authority = builder.Configuration["RACE2SecurityProviderURL"];
 JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 builder.Services.AddAuthentication("Bearer")
             .AddJwtBearer(o =>
             {
-                o.Authority = builder.Configuration["ApplicationSettings:RACE2SecurityProviderURL"];
+                o.Authority = authority;
                 o.RequireHttpsMetadata = false;
                 o.Audience = "race2WebApi";
                 o.TokenValidationParameters =

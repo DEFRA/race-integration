@@ -21,4 +21,6 @@ az containerapp create `
   --memory 1.0Gi `
   --min-replicas 0 `
   --max-replicas 2 `
-  --env-vars ASPNETCORE_ENVIRONMENT="Production"
+  --env-vars ASPNETCORE_ENVIRONMENT="Production" AzureAppConfigURL="https://race2appconfig.azconfig.io/" AZURE_CLIENT_ID="f324da0d-19e1-49df-8901-faab72ed2649" `
+  --user-assigned "Race2ManagedIdentity"
+ 

@@ -56,25 +56,22 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration.AddAzureAppConfiguration(options =>
 {
-    var connectionString = builder.Configuration["AZURE_APPCONFIGURATION_CONNECTIONSTRING"];
+    //var connectionString = builder.Configuration["AZURE_APPCONFIGURATION_CONNECTIONSTRING"];
     var azureAppConfigUrl = builder.Configuration["AzureAppConfigURL"];
     var credential = new DefaultAzureCredential();
     
-    //options.Connect(connectionString);      
-    options.Connect(new Uri(azureAppConfigUrl),credential);
-
-    options.ConfigureKeyVault(options =>
+    //options.Connect(connectionString)      
+    options.Connect(new Uri(azureAppConfigUrl),credential)
+    .ConfigureKeyVault(options =>
     {
         options.SetCredential(credential);
-    });
-
-    // Load configuration values with no label
-    //options.Select(KeyFilter.Any, LabelFilter.Null);
-    options.ConfigureRefresh(refreshOptions =>
-            refreshOptions.Register("refreshAll", refreshAll: true));
-    options.Select(KeyFilter.Any, LabelFilter.Null);
+    })
+    .ConfigureRefresh(refreshOptions =>
+            refreshOptions.Register("refreshAll", refreshAll: true))
+    .Select(KeyFilter.Any, LabelFilter.Null)
     // Override with any configuration values specific to current hosting env
-    options.Select(KeyFilter.Any, Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"));
+    .Select(KeyFilter.Any, Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"))
+    .UseFeatureFlags();
 });
 var blazorClientURL= builder.Configuration["RACE2FrontEndURL"];
 var webapiURL = builder.Configuration["RACE2WebApiURL"];
@@ -141,6 +138,10 @@ else
     app.UseExceptionHandler("/Error");
     app.UseHsts();
 }
+
+// Use Azure App Configuration middleware for dynamic configuration refresh.
+app.UseAzureAppConfiguration();
+
 app.UseHttpsRedirection();
 
 HostingExtensions.InitializeDatabase(app, blazorClientURL, webapiURL);
