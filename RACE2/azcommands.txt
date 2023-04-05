@@ -1,3 +1,5 @@
+Heroku portal login password: re53Rv01r
+
 az login
 
 az acr login -n race2acr
