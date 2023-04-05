@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Dapper;
 using Microsoft.Data.SqlClient;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
-using static Humanizer.In;
 using Microsoft.AspNetCore.Identity;
 using RACE2.Logging.Service;
 using RACE2.Dto;
