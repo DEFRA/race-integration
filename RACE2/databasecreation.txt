@@ -3,10 +3,23 @@
 Add-Migration InitialPersistedGranMigration -c PersistedGrantDbContext -o Migrations/IdentityServer/PersistedGrantDb
 update-database -context PersistedGrantDbContext
 
+//dotnet ef commands
+dotnet ef migrations add InitialMigration -c PersistedGrantDbContext -o Migrations/IdentityServer/PersistedGrantDb
+dotnet ef database update -c PersistedGrantDbContext
+
 Add-Migration InitialConfigurationMigration -c ConfigurationDbContext -o Migrations/IdentityServer/ConfigurationDb
 update-database -context ConfigurationDbContext
+
+//dotnet ef commands
+dotnet ef migrations add InitialMigration -c ConfigurationDbContext -o Migrations/IdentityServer/ConfigurationDb
+dotnet ef database update -c ConfigurationDbContext
 
 //startup project->RACE2.SecurityProvider, packagemanager defualt project->RACE2.Dto
 Add-Migration InitialMigration -c ApplicationDbContext -o Migrations/IdentityServer/ApplicationDb
 update-database -context ApplicationDbContext
+
+//dotnet ef commands
+dotnet ef migrations add InitialMigration -c ApplicationDbContext -o Migrations/IdentityServer/ApplicationDb
+dotnet ef database update -c ApplicationDbContext
+
 
