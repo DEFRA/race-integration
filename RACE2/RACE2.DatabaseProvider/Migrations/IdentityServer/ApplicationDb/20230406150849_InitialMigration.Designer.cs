@@ -12,11 +12,7 @@ using RACE2.DatabaseProvider;
 namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-<<<<<<<< HEAD:RACE2/RACE2.DatabaseProvider/Migrations/IdentityServer/ApplicationDb/20230406131314_InitialMigration.Designer.cs
-    [Migration("20230406131314_InitialMigration")]
-========
-    [Migration("20230406093125_InitialMigration")]
->>>>>>>> 936e97256e110db7b75cb16b71068692d89663bf:RACE2/RACE2.DatabaseProvider/Migrations/IdentityServer/ApplicationDb/20230406093125_InitialMigration.Designer.cs
+    [Migration("20230406150849_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

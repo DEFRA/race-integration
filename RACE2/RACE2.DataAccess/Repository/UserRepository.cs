@@ -33,7 +33,7 @@ namespace RACE2.DataAccess.Repository
         {
             get
             {
-                return new SqlConnection(_configuration["SqlConnection"]);
+                return new SqlConnection(_configuration["SqlConnectionString"]);
             }
         }
 
