@@ -19,6 +19,7 @@ using static System.Net.WebRequestMethods;
 using Microsoft.AspNetCore.Hosting;
 using RACE2.Dto;
 using Microsoft.Extensions.Configuration.AzureAppConfiguration;
+using RACE2.DatabaseProvider;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddAzureAppConfiguration(options =>

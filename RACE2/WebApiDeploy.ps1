@@ -1,16 +1,14 @@
 $RESOURCE_GROUP = "race2projectrg"
-$LOCATION="westeurope"
 $ENVIRONMENT="Production"
 $MANAGEDIDENTITY="Race2ManagedIdentity"
 $CONTAINERAPPS_ENVIRONMENT="race2containerappenv"
 $CONTAINERAPPNAME ="race2webapi"
 $REMOTE_IMAGENAME="race2acr.azurecr.io/race2webapi:v1"
-$REGISTRY_SERVER="race2acr.azurecr.io"
-$REGISTRY_USERNAME="Race2ACR"
-$REGISTRY_PASSWORD="3q23FKncYFoNMky5N+4arugBI6FHagtWC07sVgPHdo+ACRB3HwHE"  
+$REGISTRY_SERVER="race2acr.azurecr.io" 
 $APPCONFIG_URL="https://race2appconfig.azconfig.io/"
 
 $identityClientId = (az identity show --resource-group $RESOURCE_GROUP --name $MANAGEDIDENTITY --output json --query "clientId")
+$identityResourceId = (az identity show --resource-group $RESOURCE_GROUP --name $MANAGEDIDENTITY --output json --query "id")
 
 az containerapp create `
   --name $CONTAINERAPPNAME `
@@ -18,8 +16,7 @@ az containerapp create `
   --environment $CONTAINERAPPS_ENVIRONMENT `
   --image $REMOTE_IMAGENAME `
   --registry-server $REGISTRY_SERVER `
-  --registry-username $REGISTRY_USERNAME `
-  --registry-password $REGISTRY_PASSWORD `
+  --registry-identity $identityResourceId `
   --target-port 80 `
   --ingress 'external' `
   --cpu 0.5 `

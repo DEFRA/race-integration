@@ -23,8 +23,6 @@ using var configSettings = await httpClient.GetAsync("appSettings.json");
 using var stream = await configSettings.Content.ReadAsStreamAsync();
 
 builder.Configuration.AddJsonStream(stream);
-builder.Services.AddIdentity<UserDetail, Role>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
 string RACE2WebApiURL = builder.Configuration["RACE2WebApiURL"];
 builder.Services.AddScoped<IPasswordHasher<UserDetail>, PasswordHasher<UserDetail>>();
 builder.Services.AddOidcAuthentication(options =>

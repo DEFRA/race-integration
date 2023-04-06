@@ -7,14 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-      <ProjectReference Include="..\RACE2.DataModel\RACE2.DataModel.csproj" />
-      <PackageReference Include="IdentityServer4.EntityFramework" Version="4.1.2" />
-	  <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
-	  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.15" />
-	  <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.15" />
-	  <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.15" />
-	  <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="6.0.0" />
-	  <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
+    <ProjectReference Include="..\RACE2.DataModel\RACE2.DataModel.csproj" />
   </ItemGroup>
 
 </Project>
