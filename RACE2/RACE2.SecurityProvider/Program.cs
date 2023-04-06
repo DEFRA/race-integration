@@ -18,42 +18,6 @@ using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//((IConfigurationBuilder)builder.Configuration).Sources.Clear();
-//((IConfigurationBuilder)builder.Configuration)
-//    //.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-//    //.AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
-//    .AddEnvironmentVariables();
-
-////var isDevelopment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
-////var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-//var env = builder.Configuration["ASPNETCORE_ENVIRONMENT"];
-//var isDevelopment = (env == "Development");
-//builder.WebHost.UseUrls(new[] { builder.Configuration["ASPNETCORET_URLS"] });
-
-//if (isDevelopment)
-//{
-//    //builder.WebHost.UseUrls(new[] { builder.Configuration["ASPNETCORET_URLS"] });
-//    //    builder.WebHost.ConfigureKestrel(serverOptions =>
-//    //    {
-//    //        serverOptions.ListenAnyIP(5010, listenOptions => { });
-//    //    });
-//}
-
-// Add services to the container.
-
-//var blazorClientURL = builder.Configuration["ApplicationSettings:RACE2FrontEndURL"];
-//var webapiURL = builder.Configuration["ApplicationSettings:RACE2WebApiURL"];
-//var securityProviderURL = builder.Configuration["ApplicationSettings:RACE2SecurityProviderURL"];
-//var sqlConnectionString = builder.Configuration["SqlConnection"];
-
-// Load configuration from Azure App Configuration
-//string appconfigConnectionString = builder.Configuration["AzureAppConfigConnString"];
-//builder.Configuration.AddAzureAppConfiguration(appconfigConnectionString);
-// Load configuration from Azure KeyVault Secret
-//var secretClient = new SecretClient(new Uri(builder.Configuration["AzureVaultURL"]), new DefaultAzureCredential());
-//var secret = await secretClient.GetSecretAsync("SqlServerConnString");
-//var sqlConnectionString = secret.Value.Value;
-
 builder.Configuration.AddAzureAppConfiguration(options =>
 {
     //var connectionString = builder.Configuration["AZURE_APPCONFIGURATION_CONNECTIONSTRING"];
@@ -77,7 +41,7 @@ var blazorClientURL= builder.Configuration["RACE2FrontEndURL"];
 var webapiURL = builder.Configuration["RACE2WebApiURL"];
 var securityProviderURL = builder.Configuration["RACE2SecurityProviderURL"];
 var sqlConnectionString = builder.Configuration["SqlConnectionString"];
-
+ 
 // Add Azure App Configuration and feature management services to the container.
 builder.Services.AddAzureAppConfiguration()
                 .AddFeatureManagement();
