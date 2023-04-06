@@ -17,4 +17,11 @@ namespace RACE2.Dto
 
         public object? ResponseData { get; set; } 
     }
+
+    public class IntegrationPayLoadModel
+    {
+        public string? uuid { get; set; }
+
+        public string? email { get; set; }
+    }
 }
