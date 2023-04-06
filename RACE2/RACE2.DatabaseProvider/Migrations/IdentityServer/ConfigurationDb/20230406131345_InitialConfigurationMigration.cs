@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ConfigurationDb
 {
-    public partial class InitialMigration : Migration
+    public partial class InitialConfigurationMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

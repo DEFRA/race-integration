@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RACE2.DatabaseProvider.Migrations.IdentityServer.PersistedGrantDb
 {
-    public partial class InitialMigration : Migration
+    public partial class InitialPersistedGranMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
