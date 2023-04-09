@@ -10,16 +10,16 @@ az acr build -r race2acr -t race2acr.azurecr.io/race2frontend:v1 -f Dockerfile_F
 az acr build -r race2acr -t race2acr.azurecr.io/race2frontendweb:v1 -f Dockerfile_FrontEndWeb .
 
 podman build -t race2acr.azurecr.io/race2securityprovider:v1 -f Dockerfile_SecurityProvider .
-docker push race2acr.azurecr.io/race2securityprovider:v1
+podman push race2acr.azurecr.io/race2securityprovider:v1
 
 podman build -t race2acr.azurecr.io/race2webapi:v1 -f Dockerfile_WebApi .
-docker push race2acr.azurecr.io/race2webapi:v1
+podman push race2acr.azurecr.io/race2webapi:v1
 
 podman build -t race2acr.azurecr.io/race2frontend:v1 -f Dockerfile_FrontEnd .
-docker push race2acr.azurecr.io/race2frontend:v1
+podman push race2acr.azurecr.io/race2frontend:v1
 
 podman build -t race2acr.azurecr.io/race2frontendweb:v1 -f Dockerfile_FrontEndWeb .
-docker push race2acr.azurecr.io/race2frontendweb:v1
+podman push race2acr.azurecr.io/race2frontendweb:v1
 
 # --- Azure Container App --- #
 $resource_group = "race2projectrg"
