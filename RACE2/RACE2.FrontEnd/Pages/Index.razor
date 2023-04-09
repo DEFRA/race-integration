@@ -53,7 +53,7 @@
         AuthenticationState authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         if (authState.User.Identity.Name is not null)
         {
-            NavigationManager.NavigateTo("/choose-a-reservoir", true);
+            NavigationManager.NavigateTo("/annual-statements", true);
         }
     }
 
@@ -63,7 +63,7 @@
         AuthenticationState authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         if (authState.User.Identity.Name is not null)
         {
-            NavigationManager.NavigateTo("/choose-a-reservoir", true);
+            NavigationManager.NavigateTo("/annual-statements", true);
         }
         else
         {
@@ -71,6 +71,6 @@
         }
 
         //NavigationManager.NavigateTo("/authentication/login", forceLoad);
-        //NavigationManager.NavigateTo("/choose-a-reservoir", forceLoad);
+        //NavigationManager.NavigateTo("/annual-statements", forceLoad);
     }
 }
