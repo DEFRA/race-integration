@@ -28,9 +28,10 @@ $log_analytics_workspace="race2appworkspace"
 $CONTAINERAPPS_ENVIRONMENT="race2containerappenv"
 $ContainerAppName ="race2securityprovider"
 $remoteImageName="race2acr.azurecr.io/race2securityprovider:v1"
+$MANAGEDIDENTITY="Race2ManagedIdentity"
 $REGISTRY_SERVER="race2acr.azurecr.io"
-$REGISTRY_USERNAME="Race2ACR"
-$REGISTRY_PASSWORD="3q23FKncYFoNMky5N+4arugBI6FHagtWC07sVgPHdo+ACRB3HwHE"
+$identityClientId = (az identity show --resource-group $RESOURCE_GROUP --name $MANAGEDIDENTITY --output json --query "clientId")
+$identityResourceId = (az identity show --resource-group $RESOURCE_GROUP --name $MANAGEDIDENTITY --output json --query "id")
 
 az group create -n $resource_group -l $location
 
@@ -55,15 +56,15 @@ az containerapp create `
   --environment $CONTAINERAPPS_ENVIRONMENT `
   --image $remoteImageName `
   --registry-server $REGISTRY_SERVER `
-  --registry-username $REGISTRY_USERNAME `
-  --registry-password $REGISTRY_PASSWORD `
+  --registry-identity $identityResourceId `
   --target-port 80 `
   --ingress 'external' `
   --cpu 0.5 `
   --memory 1.0Gi `
   --min-replicas 0 `
   --max-replicas 2 `
-  --env-vars ASPNETCORE_ENVIRONMENT="Production"
+  --env-vars ASPNETCORE_ENVIRONMENT=$ENVIRONMENT AzureAppConfigURL=$APPCONFIG_URL AZURE_CLIENT_ID=$identityClientId `
+  --user-assigned $MANAGEDIDENTITY
 
   $remoteImageName="race2acr.azurecr.io/race2webapi:v1"
   $ContainerAppName ="race2webapicontainerapp"
@@ -73,15 +74,15 @@ az containerapp create `
   --resource-group $RESOURCE_GROUP `
   --environment $CONTAINERAPPS_ENVIRONMENT `
   --image $remoteImageName `
-  --registry-username $REGISTRY_USERNAME `
-  --registry-password $REGISTRY_PASSWORD `
+  --registry-identity $identityResourceId `
   --target-port 80 `
   --ingress 'external' `
   --cpu 0.5 `
   --memory 1.0Gi `
   --min-replicas 0 `
   --max-replicas 2 `
-  --env-vars ASPNETCORE_ENVIRONMENT="Production"
+  --env-vars ASPNETCORE_ENVIRONMENT=$ENVIRONMENT AzureAppConfigURL=$APPCONFIG_URL AZURE_CLIENT_ID=$identityClientId `
+  --user-assigned $MANAGEDIDENTITY
 
   $remoteImageName="race2acr.azurecr.io/race2frontend:v1"
   $ContainerAppName ="race2frontendcontainerapp"
@@ -91,15 +92,15 @@ az containerapp create `
   --resource-group $RESOURCE_GROUP `
   --environment $CONTAINERAPPS_ENVIRONMENT `
   --image $remoteImageName `
-  --registry-username $REGISTRY_USERNAME `
-  --registry-password $REGISTRY_PASSWORD `
+  --registry-identity $identityResourceId `
   --target-port 80 `
   --ingress 'external' `
   --cpu 0.5 `
   --memory 1.0Gi `
   --min-replicas 0 `
   --max-replicas 2 `
-  --env-vars ASPNETCORE_ENVIRONMENT="Production"
+  --env-vars ASPNETCORE_ENVIRONMENT=$ENVIRONMENT AzureAppConfigURL=$APPCONFIG_URL AZURE_CLIENT_ID=$identityClientId `
+  --user-assigned $MANAGEDIDENTITY
 
  
 -----Write-Host "Finished creating container app"
