@@ -3,7 +3,7 @@ WORKDIR /src
 COPY RACE2.FrontEnd/RACE2.FrontEnd.csproj RACE2.FrontEnd/
 COPY RACE2.DataAccess/RACE2.DataAccess.csproj RACE2.DataAccess/
 COPY RACE2.DataModel/RACE2.DataModel.csproj RACE2.DataModel/
-COPY RACE2.Dto/RACE2.Dto.csproj RACE2.dotnet/
+COPY RACE2.Dto/RACE2.Dto.csproj RACE2.Dto/
 RUN dotnet restore RACE2.FrontEnd/RACE2.FrontEnd.csproj
 COPY . .
 RUN dotnet build RACE2.FrontEnd/RACE2.FrontEnd.csproj -c Release -o /app/build
