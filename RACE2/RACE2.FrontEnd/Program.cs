@@ -37,6 +37,8 @@ builder.Services.AddRACE2GraphQLClient()
         //    new AuthenticationHeaderValue("Bearer", "Your Oauth token");
     });
 
+builder.Services.AddFluxor(o => o.ScanAssemblies(typeof(Program).Assembly));
+
 //builder.Services.AddOidcAuthentication(options =>
 //{
 //    // Configure your authentication provider options here.
