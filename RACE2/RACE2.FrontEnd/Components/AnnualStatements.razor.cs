@@ -44,5 +44,16 @@ namespace RACE2.FrontEnd.Components
             string pagelink = "/";
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }
+
+        public string text1 = "";
+        public string text2 = "";
+
+        public bool IsEnabled = false;
+
+        public async Task OnTabChanged(Tab tab)
+        {
+            text1 = $"Tab value: {tab.Value}";
+            text2 = $"Tab text: {tab.Text}";
+        }
     }
 }
