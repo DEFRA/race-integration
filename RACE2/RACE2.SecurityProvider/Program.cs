@@ -16,6 +16,7 @@ using RACE2.SecurityProvider;
 using RACE2.SecurityProvider.UtilityClasses;
 using RACE2.SecurityProvider.UtilityClasses.CompanyEmployees.OAuth.Extensions;
 using System.Configuration;
+using System.Data.SqlClient;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,7 +43,6 @@ var blazorClientURL= builder.Configuration["RACE2FrontEndURL"];
 var webapiURL = builder.Configuration["RACE2WebApiURL"];
 var securityProviderURL = builder.Configuration["RACE2SecurityProviderURL"];
 var sqlConnectionString = builder.Configuration["SqlConnectionString"];
- 
 // Add Azure App Configuration and feature management services to the container.
 builder.Services.AddAzureAppConfiguration()
                 .AddFeatureManagement();
@@ -59,18 +59,18 @@ builder.Services.AddRazorPages();
 
 var migrationsAssembly = typeof(Program).Assembly.GetName().Name;
 builder.Services.AddIdentityServer()
-            .AddConfigurationStore(options =>
-            {
-                options.ConfigureDbContext = b => b.UseSqlServer(sqlConnectionString,
-                    sql => sql.MigrationsAssembly(migrationsAssembly));
-            })
-            .AddOperationalStore(options =>
-            {
-                options.ConfigureDbContext = b => b.UseSqlServer(sqlConnectionString,
-                    sql => sql.MigrationsAssembly(migrationsAssembly));
-            })
-            .AddDeveloperSigningCredential()
-            .AddAspNetIdentity<UserDetail>();
+    .AddConfigurationStore(options =>
+    {
+        options.ConfigureDbContext = b => b.UseSqlServer(sqlConnectionString,
+            sql => sql.MigrationsAssembly(migrationsAssembly));
+    })
+    .AddOperationalStore(options =>
+    {
+        options.ConfigureDbContext = b => b.UseSqlServer(sqlConnectionString,
+            sql => sql.MigrationsAssembly(migrationsAssembly));
+    })
+    .AddDeveloperSigningCredential()
+    .AddAspNetIdentity<UserDetail>();
 
 builder.Services.Configure<IdentityOptions>(options =>
 {
@@ -109,7 +109,8 @@ app.UseAzureAppConfiguration();
 
 app.UseHttpsRedirection();
 
-HostingExtensions.InitializeDatabase(app, blazorClientURL, webapiURL);
+HostingExtensions.InitializeDatabase(app, blazorClientURL, webapiURL);//populate initial data
+
 app.UseCookiePolicy(new CookiePolicyOptions
 {
     MinimumSameSitePolicy = SameSiteMode.Lax

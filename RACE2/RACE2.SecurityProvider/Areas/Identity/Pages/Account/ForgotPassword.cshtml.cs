@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using RACE2.DataModel;
+using RACE2.Services;
 
 namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
 {
@@ -21,11 +22,13 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
     {
         private readonly UserManager<UserDetail> _userManager;
         private readonly IEmailSender _emailSender;
+        private readonly INotificationService _emailNotificationSender;
 
-        public ForgotPasswordModel(UserManager<UserDetail> userManager, IEmailSender emailSender)
+        public ForgotPasswordModel(UserManager<UserDetail> userManager, IEmailSender emailSender, INotificationService emailNotificationSender)
         {
             _userManager = userManager;
             _emailSender = emailSender;
+            _emailNotificationSender = emailNotificationSender;
         }
 
         /// <summary>
@@ -71,11 +74,11 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
                     values: new { area = "Identity", code },
                     protocol: Request.Scheme);
 
-                await _emailSender.SendEmailAsync(
-                    Input.Email,
-                    "Reset Password",
-                    $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
+                //await _emailSender.SendEmailAsync(
+                //    Input.Email,
+                //    "Reset Password",
+                //    $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                await _emailNotificationSender.SendMail(Input.Email,"Reset Password", $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
                 return RedirectToPage("./ForgotPasswordConfirmation");
             }
 
