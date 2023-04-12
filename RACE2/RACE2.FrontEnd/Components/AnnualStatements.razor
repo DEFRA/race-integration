@@ -1,0 +1,307 @@
+﻿@page "/annual-statements"
+@using Microsoft.AspNetCore.Authorization;
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@attribute [Authorize]
+
+<div class="govuk-width-container ">
+    <a class="govuk-back-link" @onclick="goback">Back</a>
+    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+        <!--
+        <div class="login-nav">
+          <ul class="login-nav__list">
+            <li class="login-nav__list-item-new"><a href="account?returnURL=dashboard-submitted"
+                class="govuk-link login-nav__link-new govuk-link--no-visited-state profile">Manage account</a></li>
+            <li class="login-nav__list-item-new"><a href="#"
+                class="govuk-link login-nav__link-new govuk-link--no-visited-state">Sign out</a></li>
+          </ul>
+        </div> -->
+
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-three-quarters">
+
+                    <h1 class="govuk-heading-xl">
+                        Your annual statements
+                    </h1>
+                    <div class="govuk-!-margin-bottom-6">
+                        <button class="govuk-button govuk-button" data-module="govuk-button" @onclick=@(args => GoToNextPage())>
+                            Start a new statement
+                        </button>
+                    </div>
+             </div>
+
+            <div class="govuk-grid-column-full">
+                <div class="govuk-tabs" data-module="govuk-tabs">
+                    <h2 class="govuk-tabs__title">
+                        Contents
+                    </h2>
+                    <Tabs OnTabChanged="OnTabChanged">
+                        <Tab Text="Submitted" Value="Submitted">
+                            <p>
+                                <div class="govuk-tabs__panel" id="submitted">
+                                    <h2 class="govuk-heading-l">Submitted</h2>
+                                    <table class="govuk-table govuk-!-margin-top-4">
+                                        <thead class="govuk-table__head">
+                                            <tr class="govuk-table__row">
+                                                <th scope="col" class="govuk-table__header app-custom-class govuk-!-width-one-half">Reservoir name</th>
+                                                <th scope="col" class="govuk-table__header app-custom-class">Date last edited</th>
+                                                <th scope="col" class="govuk-table__header app-custom-class">Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="govuk-table__body">
+                                            <tr class="govuk-table__row">
+                                                <td scope="row" class="govuk-table__cell">
+                                                    <a href="#"
+                                                       class="govuk-link govuk-link--no-visited-state">
+                                                        Breaker
+                                                        Falls
+                                                    </a>
+                                                </td>
+                                                <td class="govuk-table__cell">15/10/22</td>
+                                                <td class="govuk-table__cell">
+                                                    <strong class="govuk-tag govuk-tag--turquoise">
+                                                        Complete
+                                                    </strong>
+                                                </td>
+                                            </tr>
+                                            <tr class="govuk-table__row">
+                                                <td scope="row" class="govuk-table__cell">
+                                                    <a href="#" class="govuk-link govuk-link--no-visited-state">
+                                                        Half
+                                                        Moon Reservoir
+                                                    </a>
+                                                </td>
+                                                <td class="govuk-table__cell">03/05/22</td>
+                                                <td class="govuk-table__cell">
+                                                    <strong class="govuk-tag govuk-tag--turquoise">
+                                                        Complete
+                                                    </strong>
+                                                </td>
+                                            </tr>
+                                            <tr class="govuk-table__row">
+                                                <td scope="row" class="govuk-table__cell">
+                                                    <a href="#" class="govuk-link govuk-link--no-visited-state">
+                                                        Long
+                                                        Meadow Reservoir
+                                                    </a>
+                                                </td>
+                                                <td class="govuk-table__cell">05/04/22</td>
+                                                <td class="govuk-table__cell">
+                                                    <strong class="govuk-tag govuk-tag--turquoise">
+                                                        Complete
+                                                    </strong>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </p>
+                        </Tab>
+                        <Tab Text="Drafts" Value="Drafts">
+                            <p>
+                                <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="drafts">
+                                    <h2 class="govuk-heading-l">Drafts</h2>
+                                    <table class="govuk-table govuk-!-margin-top-4">
+                                        <thead class="govuk-table__head">
+                                            <tr class="govuk-table__row">
+                                                <th scope="col" class="govuk-table__header app-custom-class govuk-!-width-one-half">Reservoir name</th>
+                                                <th scope="col" class="govuk-table__header app-custom-class">Date last edited</th>
+                                                <th scope="col" class="govuk-table__header app-custom-class">Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="govuk-table__body">
+                                            <tr class="govuk-table__row">
+                                                <td scope="row" class="govuk-table__cell">
+                                                    <a href="#"
+                                                       class="govuk-link govuk-link--no-visited-state">
+                                                        Rockingham
+                                                        Reservoir
+                                                    </a>
+                                                </td>
+                                                <td class="govuk-table__cell">05/02/23</td>
+                                                <td class="govuk-table__cell">
+                                                    <strong class="govuk-tag govuk-tag--blue">
+                                                        In progress
+                                                    </strong>
+                                                </td>
+                                            </tr>
+                                            <tr class="govuk-table__row">
+                                                <td scope="row" class="govuk-table__cell">
+                                                    <a href="#"
+                                                       class="govuk-link govuk-link--no-visited-state">
+                                                        Manside
+                                                        Pool (ID355)
+                                                    </a>
+                                                </td>
+                                                <td class="govuk-table__cell">04/01/23</td>
+                                                <td class="govuk-table__cell">
+                                                    <strong class="govuk-tag govuk-tag--blue">
+                                                        In progress
+                                                    </strong>
+                                                </td>
+                                            </tr>
+                                            <tr class="govuk-table__row">
+                                                <td scope="row" class="govuk-table__cell">
+                                                    <a href="#"
+                                                       class="govuk-link govuk-link--no-visited-state">
+                                                        Kitely
+                                                        Moor
+                                                    </a>
+                                                </td>
+                                                <td class="govuk-table__cell">22/07/22</td>
+                                                <td class="govuk-table__cell">
+                                                    <strong class="govuk-tag govuk-tag--purple">
+                                                        Draft sent
+                                                    </strong>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </p>
+                        </Tab>
+                    </Tabs>
+             </div>
+        </div>
+
+
+@*
+            <div class="govuk-grid-column-full">
+                <div class="govuk-tabs" data-module="govuk-tabs">
+                    <h2 class="govuk-tabs__title">
+                        Contents
+                    </h2>
+                    <ul class="govuk-tabs__list">
+                        <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+                            <a class="govuk-tabs__tab" href="#submitted">
+                                Submitted
+                            </a>
+                        </li>
+                        <li class="govuk-tabs__list-item">
+                            <a class="govuk-tabs__tab" href="#drafts">
+                                Drafts
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="govuk-tabs__panel" id="submitted">
+                        <h2 class="govuk-heading-l">Submitted</h2>
+                        <table class="govuk-table govuk-!-margin-top-4">
+                            <thead class="govuk-table__head">
+                                <tr class="govuk-table__row">
+                                    <th scope="col" class="govuk-table__header app-custom-class govuk-!-width-one-half">Reservoir name</th>
+                                    <th scope="col" class="govuk-table__header app-custom-class">Date last edited</th>
+                                    <th scope="col" class="govuk-table__header app-custom-class">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="govuk-table__body">
+                                <tr class="govuk-table__row">
+                                    <td scope="row" class="govuk-table__cell">
+                                        <a href="#"
+                                           class="govuk-link govuk-link--no-visited-state">
+                                            Breaker
+                                            Falls
+                                        </a>
+                                    </td>
+                                    <td class="govuk-table__cell">15/10/22</td>
+                                    <td class="govuk-table__cell">
+                                        <strong class="govuk-tag govuk-tag--turquoise">
+                                            Complete
+                                        </strong>
+                                    </td>
+                                </tr>
+                                <tr class="govuk-table__row">
+                                    <td scope="row" class="govuk-table__cell">
+                                        <a href="#" class="govuk-link govuk-link--no-visited-state">
+                                            Half
+                                            Moon Reservoir
+                                        </a>
+                                    </td>
+                                    <td class="govuk-table__cell">03/05/22</td>
+                                    <td class="govuk-table__cell">
+                                        <strong class="govuk-tag govuk-tag--turquoise">
+                                            Complete
+                                        </strong>
+                                    </td>
+                                </tr>
+                                <tr class="govuk-table__row">
+                                    <td scope="row" class="govuk-table__cell">
+                                        <a href="#" class="govuk-link govuk-link--no-visited-state">
+                                            Long
+                                            Meadow Reservoir
+                                        </a>
+                                    </td>
+                                    <td class="govuk-table__cell">05/04/22</td>
+                                    <td class="govuk-table__cell">
+                                        <strong class="govuk-tag govuk-tag--turquoise">
+                                            Complete
+                                        </strong>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="drafts">
+                        <h2 class="govuk-heading-l">Drafts</h2>
+                        <table class="govuk-table govuk-!-margin-top-4">
+                            <thead class="govuk-table__head">
+                                <tr class="govuk-table__row">
+                                    <th scope="col" class="govuk-table__header app-custom-class govuk-!-width-one-half">Reservoir name</th>
+                                    <th scope="col" class="govuk-table__header app-custom-class">Date last edited</th>
+                                    <th scope="col" class="govuk-table__header app-custom-class">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="govuk-table__body">
+                                <tr class="govuk-table__row">
+                                    <td scope="row" class="govuk-table__cell">
+                                        <a href="#"
+                                           class="govuk-link govuk-link--no-visited-state">
+                                            Rockingham
+                                            Reservoir
+                                        </a>
+                                    </td>
+                                    <td class="govuk-table__cell">05/02/23</td>
+                                    <td class="govuk-table__cell">
+                                        <strong class="govuk-tag govuk-tag--blue">
+                                            In progress
+                                        </strong>
+                                    </td>
+                                </tr>
+                                <tr class="govuk-table__row">
+                                    <td scope="row" class="govuk-table__cell">
+                                        <a href="#"
+                                           class="govuk-link govuk-link--no-visited-state">
+                                            Manside
+                                            Pool (ID355)
+                                        </a>
+                                    </td>
+                                    <td class="govuk-table__cell">04/01/23</td>
+                                    <td class="govuk-table__cell">
+                                        <strong class="govuk-tag govuk-tag--blue">
+                                            In progress
+                                        </strong>
+                                    </td>
+                                </tr>
+                                <tr class="govuk-table__row">
+                                    <td scope="row" class="govuk-table__cell">
+                                        <a href="#"
+                                           class="govuk-link govuk-link--no-visited-state">
+                                            Kitely
+                                            Moor
+                                        </a>
+                                    </td>
+                                    <td class="govuk-table__cell">22/07/22</td>
+                                    <td class="govuk-table__cell">
+                                        <strong class="govuk-tag govuk-tag--purple">
+                                            Draft sent
+                                        </strong>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>*@
+        </div>
+    </main>
+</div>

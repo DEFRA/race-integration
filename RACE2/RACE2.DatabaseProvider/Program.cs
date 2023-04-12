@@ -15,11 +15,11 @@ builder.Services.AddIdentityServer()
         opt.ConfigureDbContext = c => c.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
             sql => sql.MigrationsAssembly(migrationAssembly));
     })
-        .AddOperationalStore(opt =>
-        {
-            opt.ConfigureDbContext = o => o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
-                sql => sql.MigrationsAssembly(migrationAssembly));
-        }); ;
+    .AddOperationalStore(opt =>
+    {
+        opt.ConfigureDbContext = o => o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
+            sql => sql.MigrationsAssembly(migrationAssembly));
+    });
 
 builder.Services.AddRazorPages();
 

@@ -96,7 +96,7 @@ namespace RACE2.FrontEnd.Components
         private void goback()
         {
             bool forceLoad = false;
-            string pagelink = "/";
+            string pagelink = "/annual-statements";
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }
     }

@@ -7,7 +7,7 @@ using Notify.Exceptions;
 
 namespace RACE2.Notification
 {
-    public class RaceNotification
+    public class RaceNotification: INotification
     {
       //  public string NOTIFY_API_URL = Environment.GetEnvironmentVariable("NOTIFY_API_URL");
         public string API_KEY = "race2frontend-34699fe1-7b6c-49b7-a562-358f403f75f1-921e2564-534c-4b0a-b705-b9ef5047dd45";
@@ -23,7 +23,7 @@ namespace RACE2.Notification
         public string TYPE_PARAM = "?type=";
         public string VERSION_PARAM = "/version/";
 
-        public string Emailaddress = "mahalakshmi.alagarsamy@capgemini.com" ;
+        //public string Emailaddress = "mahalakshmi.alagarsamy@capgemini.com" ;
         public string InvitationtemplateId = "8aac094b-9997-41c1-96fe-b35f415eea9f";
         public string CommentTemplateId = "0bbc0b12-aee0-4546-a20b-23e81489111c";
 
@@ -35,12 +35,12 @@ namespace RACE2.Notification
         public string emailReplyToId = null;
  
 
-        public void SendMail()
+        public async Task SendMail(string Emailaddress)
         {
             try
             {
                 var client = new NotificationClient("race2frontend-34699fe1-7b6c-49b7-a562-358f403f75f1-921e2564-534c-4b0a-b705-b9ef5047dd45");
-                EmailNotificationResponse response = client.SendEmail(Emailaddress, InvitationtemplateId, personalisation, reference, emailReplyToId);
+                EmailNotificationResponse response = await client.SendEmailAsync(Emailaddress, InvitationtemplateId, personalisation, reference, emailReplyToId);
             }
             catch (NotifyClientException ex)
             {
@@ -49,7 +49,21 @@ namespace RACE2.Notification
          
         }
 
-        public async Task SendEmailTestWithPersonalisation()
+        public async Task SendMail(string Emailaddress, string emailSubject, string emailContent)
+        {
+            try
+            {
+                var client = new NotificationClient("race2frontend-34699fe1-7b6c-49b7-a562-358f403f75f1-921e2564-534c-4b0a-b705-b9ef5047dd45");
+                EmailNotificationResponse response = await client.SendEmailAsync(Emailaddress, InvitationtemplateId, personalisation, reference, emailReplyToId);
+            }
+            catch (NotifyClientException ex)
+            {
+                throw ex;
+            }
+
+        }
+
+        public async Task SendEmailTestWithPersonalisation(string Emailaddress)
         {
             Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
             {

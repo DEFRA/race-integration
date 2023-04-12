@@ -28,9 +28,8 @@ namespace RACE2.WebApi.QueryResolver
         public async Task<UserDetail> GetUserByEmailID(IUserService _userService, string email)
         {
             RaceNotification raceNotification = new RaceNotification();
-            raceNotification.SendMail();
-            await raceNotification.SendEmailTestWithPersonalisation();
-
+            await raceNotification.SendMail(email);
+            await raceNotification.SendEmailTestWithPersonalisation(email);
 
             return await _userService.GetUserByEmailID(email);     
             

@@ -88,7 +88,7 @@ builder.Services.AddGraphQLServer()
     .AddQueryType<UserResolver>()
     .AddMutationType<MutationResolver>()
     .AddAuthorization();
-var sqlconnectionString = builder.Configuration["SqlConnection"];
+var sqlconnectionString = builder.Configuration["SqlConnectionString"];
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 options.UseSqlServer(sqlconnectionString));
 
