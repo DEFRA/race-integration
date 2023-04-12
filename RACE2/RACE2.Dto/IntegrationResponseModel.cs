@@ -24,4 +24,9 @@ namespace RACE2.Dto
 
         public string? email { get; set; }
     }
+
+    public class PayloadModel
+    {
+        public IntegrationPayLoadModel engineer_reservoir_search { get; set; } = new IntegrationPayLoadModel();
+    }
 }
