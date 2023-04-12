@@ -19,9 +19,9 @@ namespace RACE2.Services
             await _notificationService.SendMail(Emailaddress);
         }
 
-        public async Task SendMail(string Emailaddress, string emailSubject, string emailContent)
+        public async Task SendForgotPasswordMail(string emailAddress, string fullName, string resetLink)
         {
-            await _notificationService.SendMail(Emailaddress, emailSubject, emailContent);
+            await _notificationService.SendForgotPasswordMail(emailAddress, fullName, resetLink);
         }
 
         public async Task SendEmailTestWithPersonalisation(string Emailaddress)

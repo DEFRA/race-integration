@@ -56,8 +56,8 @@ namespace RACE2.DatabaseProvider
                 .HasDefaultValue(" ")
                 .HasMaxLength(64);
 
-            modelBuilder.Entity<UserDetail>()
-                .Property(e => e.c_parent_userid);
+            //modelBuilder.Entity<UserDetail>()
+            //    .Property(e => e.c_parent_userid);
 
             modelBuilder.Entity<UserDetail>()
                 .Property(e => e.c_type)

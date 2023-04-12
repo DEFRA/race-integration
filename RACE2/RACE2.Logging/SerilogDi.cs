@@ -25,7 +25,7 @@ namespace RACE2.Logging
             
               hostBuilder.UseSerilog((hostingContext, loggerConfiguration) =>
             {
-                var storageaccountstring = _configuration["StorageAccountConnString"];
+             //   var storageaccountstring = _configuration["StorageAccountConnString"];
 
                    var serviceClient = new BlobServiceClient("DefaultEndpointsProtocol=https;AccountName=race2storageaccount;AccountKey=+voxyaI7i37XXY89mgL3FAg/1JhvSezh1ENdokcV5GMwCOycBYNfYY15aUak3iD+DMvG0Z4kOc6u+ASt0Rq3ZA==;EndpointSuffix=core.windows.net");
                // var serviceClient = new BlobServiceClient(_configuration["StorageAccountConnString"]);

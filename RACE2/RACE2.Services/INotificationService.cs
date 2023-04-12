@@ -9,7 +9,7 @@ namespace RACE2.Services
     public interface INotificationService
     {
         Task SendMail(string Emailaddress);
-        Task SendMail(string Emailaddress, string emailSubject, string emailContent);
+        Task SendForgotPasswordMail(string emailAddress, string fullName, string resetLink);
         Task SendEmailTestWithPersonalisation(string Emailaddress);
     }
 }

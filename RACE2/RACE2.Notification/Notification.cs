@@ -26,6 +26,7 @@ namespace RACE2.Notification
         //public string Emailaddress = "mahalakshmi.alagarsamy@capgemini.com" ;
         public string InvitationtemplateId = "8aac094b-9997-41c1-96fe-b35f415eea9f";
         public string CommentTemplateId = "0bbc0b12-aee0-4546-a20b-23e81489111c";
+        public string ForgetPasswordTemplateId = "fc8f043f-b79c-4572-ad03-98641f5785a9";
 
         Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>();
             //{
@@ -49,12 +50,16 @@ namespace RACE2.Notification
          
         }
 
-        public async Task SendMail(string Emailaddress, string emailSubject, string emailContent)
+        public async Task SendForgotPasswordMail(string emailAddress, string fullName, string resetLink)
         {
+            Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
+            {
+                { "full_name", fullName },{"reset_link",resetLink}
+            };
             try
             {
-                var client = new NotificationClient("race2frontend-34699fe1-7b6c-49b7-a562-358f403f75f1-921e2564-534c-4b0a-b705-b9ef5047dd45");
-                EmailNotificationResponse response = await client.SendEmailAsync(Emailaddress, InvitationtemplateId, personalisation, reference, emailReplyToId);
+                var client = new NotificationClient(API_KEY);
+                EmailNotificationResponse response = await client.SendEmailAsync(emailAddress, ForgetPasswordTemplateId, personalisation, reference, emailReplyToId);
             }
             catch (NotifyClientException ex)
             {

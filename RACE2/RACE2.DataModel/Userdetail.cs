@@ -13,7 +13,7 @@ namespace RACE2.DataModel
     public  class UserDetail: IdentityUser<int>    
     {    
             public string? c_defra_id { get; set; }
-            public int c_parent_userid { get; set; }
+           
 
             public string? c_type { get; set; }         
          
