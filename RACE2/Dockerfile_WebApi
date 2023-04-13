@@ -7,6 +7,7 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["RACE2.WebApi/RACE2.WebApi.csproj", "RACE2.WebApi/"]
+COPY ["RACE2.DatabaseProvider/RACE2.DatabaseProvider.csproj", "RACE2.DatabaseProvider/"]
 COPY ["RACE2.Services/RACE2.Services.csproj", "RACE2.Services/"]
 COPY ["RACE2.DataAccess/RACE2.DataAccess.csproj", "RACE2.DataAccess/"]
 COPY ["RACE2.Dto/RACE2.Dto.csproj", "RACE2.Dto/"]

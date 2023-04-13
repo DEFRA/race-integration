@@ -28,17 +28,5 @@
     <ProjectReference Include="..\RACE2.DatabaseProvider\RACE2.DatabaseProvider.csproj" />
     <ProjectReference Include="..\RACE2.Services\RACE2.Services.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Content Update="appsettings.Development.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="appsettings.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="appsettings.Production.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
+	
 </Project>

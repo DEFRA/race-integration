@@ -37,6 +37,6 @@
   <ItemGroup>
     <ProjectReference Include="..\RACE2.DatabaseProvider\RACE2.DatabaseProvider.csproj" />
     <ProjectReference Include="..\RACE2.Services\RACE2.Services.csproj" />
-  </ItemGroup>
+  </ItemGroup> 
 
 </Project>

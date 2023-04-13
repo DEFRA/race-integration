@@ -2,7 +2,7 @@ Heroku portal login password: re53Rv01r
 
 az login
 
-az acr login -n race2acr
+az acr login -n race2acr  -n race2acr
 
 az acr build -r race2acr -t race2acr.azurecr.io/race2securityprovider:v1 -f Dockerfile_SecurityProvider .
 az acr build -r race2acr -t race2acr.azurecr.io/race2webapi:v1 -f Dockerfile_WebApi .

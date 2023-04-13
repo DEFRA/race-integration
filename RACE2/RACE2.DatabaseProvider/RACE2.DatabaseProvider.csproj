@@ -26,4 +26,10 @@
     <ProjectReference Include="..\RACE2.DataAccess\RACE2.DataAccess.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
