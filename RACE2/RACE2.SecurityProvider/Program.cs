@@ -12,9 +12,11 @@ using RACE2.DataModel;
 using RACE2.Dto;
 using RACE2.Logging;
 using RACE2.Logging.Service;
+using RACE2.Notification;
 using RACE2.SecurityProvider;
 using RACE2.SecurityProvider.UtilityClasses;
 using RACE2.SecurityProvider.UtilityClasses.CompanyEmployees.OAuth.Extensions;
+using RACE2.Services;
 using System.Configuration;
 using System.Data.SqlClient;
 
@@ -84,7 +86,7 @@ builder.Services.Configure<IdentityOptions>(options =>
 });
 
 builder.Services.AddScoped<IRandomPasswordGeneration, RandomPasswordGeneration>();
-
+builder.Services.AddScoped<INotification, RaceNotification>();
 var app = builder.Build();
 app.Use(async (ctx, next) =>
 {
