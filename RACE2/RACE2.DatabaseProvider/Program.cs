@@ -1,25 +1,34 @@
+using Azure.Identity;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using RACE2.DatabaseProvider;
+using RACE2.DataModel;
 
 var builder = WebApplication.CreateBuilder(args);
-var migrationAssembly = typeof(Program).Assembly.GetName().Name;
+
 // Add services to the container.
+var sqlConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(sqlConnectionString));
+builder.Services.AddIdentity<UserDetail, Role>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
+var migrationAssembly = typeof(Program).Assembly.GetName().Name;
 builder.Services.AddIdentityServer()
-    .AddInMemoryIdentityResources(ServerConfiguration.IdentityResources)
-    .AddTestUsers(ServerConfiguration.GetUsers())
-    .AddInMemoryClients(ServerConfiguration.GetClients())
-    .AddDeveloperSigningCredential()
-    .AddConfigurationStore(opt =>
+    .AddConfigurationStore(options =>
     {
-        opt.ConfigureDbContext = c => c.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
+        options.ConfigureDbContext = b => b.UseSqlServer(sqlConnectionString,
             sql => sql.MigrationsAssembly(migrationAssembly));
     })
-    .AddOperationalStore(opt =>
+    .AddOperationalStore(options =>
     {
-        opt.ConfigureDbContext = o => o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
+        options.ConfigureDbContext = b => b.UseSqlServer(sqlConnectionString,
             sql => sql.MigrationsAssembly(migrationAssembly));
-    });
+    })
+    .AddDeveloperSigningCredential()
+    .AddAspNetIdentity<UserDetail>();
 
 builder.Services.AddRazorPages();
 
@@ -33,13 +42,13 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseIdentityServer();
-
 app.UseHttpsRedirection();
+
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseIdentityServer();
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();
