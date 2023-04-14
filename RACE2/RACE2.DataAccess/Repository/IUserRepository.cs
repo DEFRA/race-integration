@@ -22,8 +22,8 @@ namespace RACE2.DataAccess.Repository
 
         public Task<IEnumerable<FeatureFunction>> GetFeaturePermissionForRole(int roleid);
 
-        public Task<UserDetail> GetReservoirsByUserId(int id);
-        public Task<UserDetail> GetReservoirsByUserEmailId(string email);
+        public Task<List<ReservoirDetailsDTO>> GetReservoirsByUserId(int id);
+     //  public Task<UserDetail> GetReservoirsByUserEmailId(string email);
 
     }
 }

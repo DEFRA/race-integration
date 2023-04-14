@@ -58,14 +58,14 @@ namespace RACE2.Services
             return await _userRepository.UpdatePasswordHashForUser(id, passwordhash);
         }
 
-        public async Task<UserDetail> GetReservoirsByUserId(int id)
-        {
-            return await _userRepository.GetReservoirsByUserId(id);
-        }
+        //public async Task<UserDetail> GetReservoirsByUserId(int id)
+        //{
+        //    return await _userRepository.GetReservoirsByUserId(id);
+        //}
 
-        public async Task<UserDetail> GetReservoirsByUserEmailId(string email)
+        public async Task<List<ReservoirDetailsDTO>> GetReservoirsByUserId(int Id)
         {
-            return await _userRepository.GetReservoirsByUserEmailId(email);
+            return await _userRepository.GetReservoirsByUserId(Id);
         }
 
         public async Task<IEnumerable<FeatureFunction>> GetFeaturePermissionForRole(int roleid)

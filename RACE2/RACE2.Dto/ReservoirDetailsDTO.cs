@@ -1,0 +1,34 @@
+﻿using RACE2.DataModel;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace RACE2.Dto
+{
+    public class ReservoirDetailsDTO
+    {
+        public string? race_reservoir_id { get; set; }  
+        public string? public_name { get; set; }
+        public string? registered_name { get; set; }
+        public string? reference_number { get; set; }
+        public string? public_category { get; set; }
+        public string? registered_category { get; set; }
+        public string? grid_reference { get; set; }
+        public int capacity { get; set; }
+        public int surface_area { get; set; }
+        public decimal top_water_level { get; set; }
+        public bool has_multiple_dams { get; set; }
+        public string? key_facts { get; set; }
+        public DateTime construction_start_date { get; set; }
+        public DateTime verified_details_date { get; set; }
+        public DateTime last_inspection_date { get; set; }
+        public DateTime next_inspection_date { get; set; }   
+
+        public Address? address { get; set; } = new Address();
+        public string? NearestTown { get; set; }
+       
+    }
+}
