@@ -21,11 +21,11 @@ namespace RACE2.FrontEnd.Components
 
         public CurrentUserDetailState CurrentUserDetailState => State.Value;
 
-        public NewReservoirDetails newReservoir = new NewReservoirDetails();
+        public ReservoirDetailsDTO newReservoir = new ReservoirDetailsDTO();
 
         protected override void OnInitialized()
         {
-            //newReservoir = CurrentUserDetailState.NewReservoirDetails;
+            //newReservoir = CurrentUserDetailState.ReservoirDetailsDTO;
         }
     }
 }

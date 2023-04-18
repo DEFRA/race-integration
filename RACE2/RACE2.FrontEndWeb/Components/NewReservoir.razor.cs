@@ -21,7 +21,7 @@ namespace RACE2.FrontEndWeb.Components
 
         public AppStore AppStore => State.Value;
 
-        public NewReservoirDetails newReservoir = new NewReservoirDetails();
+        public ReservoirDetailsDTO newReservoir = new ReservoirDetailsDTO();
 
         protected override void OnInitialized()
         {
