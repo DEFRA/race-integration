@@ -39,6 +39,12 @@ namespace RACE2.DatabaseProvider
         public DbSet<UserReservoir> UserReservoirs { get; set; }
 
         public DbSet<UserAddress> UserAddresses { get; set; }
+
+        public DbSet<PicklistDefinition> PicklistDefinitions { get; set; }
+
+        public DbSet<PicklistMapping> PicklistMappings { get; set; }
+
+        public DbSet<AuditTable> AuditTables { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
