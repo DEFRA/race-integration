@@ -16,7 +16,7 @@ namespace RACE2.FrontEndWeb.FluxorImplementation.Features
                IsLoggedIn: false,
                LastPasswordEntered:"",
                CurrentReservoir: new Reservoir(),
-               NewReservoirDetails: new NewReservoirDetails(),
+               NewReservoirDetails: new ReservoirDetailsDTO(),
                CurrentUserDetail: new UserDetail()
             );
     }

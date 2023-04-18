@@ -17,16 +17,16 @@
                         <label class="govuk-label govuk-label--m" for="ReservoirName">
                             Reservoir name
                         </label>
-                        <InputText id="ReservoirName" class="govuk-input" @bind-Value="newReservoir.ReservoirName" />
+                        <InputText id="ReservoirName" class="govuk-input" @bind-Value="newReservoir.registered_name" />
 
                     </div>
 
                     <div class="govuk-form-group">
 
                         <label class="govuk-label govuk-label--m" for="NearestPostcode">
-                            Nearest postcode
+                            Nearest town
                         </label>
-                        <InputText id="NearestPostcode" class="govuk-input govuk-!-width-one-quarter" @bind-Value="newReservoir.NearestPostcode" />
+                        <InputText id="NearestPostcode" class="govuk-input govuk-!-width-one-quarter" @bind-Value="newReservoir.NearestTown" />
                     </div>
 
                     <div class="govuk-form-group">
@@ -34,7 +34,7 @@
                         <label class="govuk-label govuk-label--m" for="new-grid-ref">
                             National Grid reference
                         </label>
-                        <InputText id="NationalGridRef" class="govuk-input govuk-!-width-one-third" @bind-Value="newReservoir.NationalGridRef" />
+                        <InputText id="NationalGridRef" class="govuk-input govuk-!-width-one-third" @bind-Value="newReservoir.grid_reference" />
                     </div>
 
                     <button class="govuk-button govuk-!-margin-top-6 govuk-!-margin-bottom-6" data-module="govuk-button" type="submit">Send</button>
