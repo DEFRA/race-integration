@@ -7,9 +7,9 @@ variables:
   vmImageName: 'ubuntu-latest'
 
   azureServiceConnection: 'AZR-RAC-POC1'
-  resourceGroupName: 'exampleRG'
+  resourceGroupName: 'RACE2ProjectRG'
   location: 'westeurope'
-
+  templateFile: 'BicepFiles/createstorageaccount.bicep'
 pool:
   vmImage: $(vmImageName)
 
@@ -23,5 +23,4 @@ steps:
     inlineScript: |
       az --version
       az group create --name $(resourceGroupName) --location $(location)
-      az deployment group create --resource-group $(resourceGroupName) --template-file ../bicepfiles/createresourcegroup.bicep
-      
+      az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile)
