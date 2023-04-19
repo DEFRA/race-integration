@@ -9,7 +9,7 @@ variables:
   azureServiceConnection: 'AZR-RAC-POC1'
   resourceGroupName: 'exampleRG'
   location: 'westeurope'
-  templateFile: '../../BicepFiles/createresourcegroup.bicep'
+  templateFile: '$env:BUILD_SOURCESDIRECTORY\BicepFiles\createresourcegroup.bicep'
 pool:
   vmImage: $(vmImageName)
 
