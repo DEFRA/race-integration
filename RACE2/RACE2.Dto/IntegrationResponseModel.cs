@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 
 namespace RACE2.Dto
@@ -15,7 +17,7 @@ namespace RACE2.Dto
 
         public string? Reason { get; set; }
 
-        public object? ResponseData { get; set; } 
+        public string ResponseData { get; set; } 
     }
 
     public class IntegrationPayLoadModel

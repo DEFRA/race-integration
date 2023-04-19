@@ -65,5 +65,11 @@ namespace RACE2.WebApi.QueryResolver
             var result = await _userService.GetFeaturePermissionForRole(roleid);
             return result;
         }
+
+        public async Task<IntegrationResponseModel> GetEngineerReservoirByUUID(IRACEIntegrationService _integrationService, string uuid)
+        {
+            var result = await _integrationService.GetEngineerReservoirByUUID(uuid);
+            return result;
+        }
     }
 }
