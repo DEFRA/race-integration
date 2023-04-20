@@ -15,9 +15,9 @@ pool:
   vmImage: $(vmImageName)
 
 steps:
-- task: AzureCLI@2
-  working-directory: ${{github.workspace}}/bicepfiles
+- task: AzureCLI@2  
   inputs:
+    working-directory: ${{github.workspace}}/bicepfiles
     azureSubscription: $(azureServiceConnection)
     scriptType: bash
     scriptLocation: inlineScript
