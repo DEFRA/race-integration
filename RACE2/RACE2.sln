@@ -70,6 +70,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bicep Files", "Bicep Files"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.DatabaseProvider", "RACE2.DatabaseProvider\RACE2.DatabaseProvider.csproj", "{9EDA1C2B-D094-4061-A3EA-E1BAE34E9C8F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploymentyamlfiles", "deploymentyamlfiles", "{E77DC034-434C-42C9-83F7-D50E73A132C6}"
+	ProjectSection(SolutionItems) = preProject
+		deploylogAnalyticsWorkspace.yml = deploylogAnalyticsWorkspace.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
