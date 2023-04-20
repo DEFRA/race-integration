@@ -10,12 +10,13 @@ variables:
   resourceGroupName: 'RACE2ProjectRG'
   location: 'westeurope'
   logAnalyticsWorkspaceName: 'race2appworkspace1'
-  templateFile: 'createappworkspace.bicep'
+  templateFile: './createappworkspace.bicep'
 pool:
   vmImage: $(vmImageName)
 
 steps:
 - task: AzureCLI@2
+  working-directory: ${{github.workspace}}/bicepfiles
   inputs:
     azureSubscription: $(azureServiceConnection)
     scriptType: bash
