@@ -17,7 +17,7 @@ pool:
 steps:
 - task: AzureCLI@2  
   inputs:
-    working-directory: ${{github.workspace}}/bicepfiles
+    workingDirectory: $(System.DefaultWorkingDirectory)/bicepfiles
     azureSubscription: $(azureServiceConnection)
     scriptType: bash
     scriptLocation: inlineScript
