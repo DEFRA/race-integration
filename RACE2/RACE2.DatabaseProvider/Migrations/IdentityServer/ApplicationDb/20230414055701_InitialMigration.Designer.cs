@@ -12,7 +12,7 @@ using RACE2.DatabaseProvider;
 namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230412103556_InitialMigration")]
+    [Migration("20230414055701_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
