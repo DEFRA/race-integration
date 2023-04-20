@@ -11,7 +11,7 @@ namespace RACE2.DataAccess.Repository
 {
     public class RACEIntegrationRepository : IRACEIntegrationRepository
     {
-        public async Task<IntegrationResponseModel> GetEngineerReservoirByUUID(string uuid, string email)
+        public async Task<IntegrationResponseModel> GetEngineerReservoirByUUID(string uuid)
         {
             string baseuri = "https://eadev.synapps-solutions.com/integration-poc/";
             try
@@ -20,7 +20,7 @@ namespace RACE2.DataAccess.Repository
 
                 IntegrationPayLoadModel model = new IntegrationPayLoadModel
                 {
-                    uuid = "0801117180006e9b",
+                    uuid = uuid, //"0801117180006e9b",
                     email = "edmund.engineer@eadev.synapps-solutions.com"
                 };
                 PayloadModel modelbody = new PayloadModel
@@ -28,7 +28,7 @@ namespace RACE2.DataAccess.Repository
                     engineer_reservoir_search = model
                 };
                
-                string body = JsonConvert.SerializeObject(model);
+                string body = JsonConvert.SerializeObject(modelbody);
                 var options = new RestClientOptions(baseuri)
                 {
                     RemoteCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true
@@ -48,7 +48,7 @@ namespace RACE2.DataAccess.Repository
                     StatusCode = System.Net.HttpStatusCode.OK,
                     Status = "Success",
                     Reason = "Success",
-                    ResponseData = stringOutput
+                    ResponseData = stringOutput.ToString()
                 };
                 return integrationResponseModel;
 

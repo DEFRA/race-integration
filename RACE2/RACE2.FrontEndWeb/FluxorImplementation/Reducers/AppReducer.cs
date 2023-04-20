@@ -25,7 +25,7 @@ namespace RACE2.FrontEndWeb.FluxorImplementation.Reducers
         public static AppStore ReduceStoreNewReservoirAction(AppStore state, StoreNewReservoirAction action)
              => state with { 
                  IsLoading = false, 
-                 NewReservoirDetails = action.NewReservoirDetails 
+                 NewReservoirDetails = action.ReservoirDetailsDTO
              };
 
         [ReducerMethod]

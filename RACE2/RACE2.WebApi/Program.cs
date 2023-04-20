@@ -49,6 +49,8 @@ builder.Host.InjectSerilog();
 builder.Services.AddTransient<ILogService, LogService>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IRACEIntegrationRepository,RACEIntegrationRepository>();
+builder.Services.AddTransient<IRACEIntegrationService, RACEIntegrationService>();
 var authority = builder.Configuration["RACE2SecurityProviderURL"];
 JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 builder.Services.AddAuthentication("Bearer")
@@ -85,6 +87,7 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddGraphQLServer()
     .RegisterService<IUserService>()
+    .RegisterService<IRACEIntegrationService>()
     .AddQueryType<UserResolver>()
     .AddMutationType<MutationResolver>()
     .AddAuthorization();

@@ -9,6 +9,6 @@ namespace RACE2.FrontEnd.FluxorImplementation.Stores
         string LastPasswordEntered,
         UserDetail CurrentUserDetail,
         Reservoir CurrentReservoir,
-        NewReservoirDetails NewReservoirDetails
+        ReservoirDetailsDTO NewReservoirDetails
     );
 }
