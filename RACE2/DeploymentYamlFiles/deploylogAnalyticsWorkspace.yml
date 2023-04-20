@@ -10,7 +10,7 @@ variables:
   resourceGroupName: 'RACE2ProjectRG'
   location: 'westeurope'
   logAnalyticsWorkspaceName: 'race2appworkspace1'
-  templateFile: $(System.DefaultWorkingDirectory)/../bicepfiles/createappworkspace.bicep
+  templateFile: 'createappworkspace.bicep'
 pool:
   vmImage: $(vmImageName)
 
