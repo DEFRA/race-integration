@@ -1,5 +1,5 @@
-param containerregistryname string
-param location string 
+param containerregistryname string = 'RACE2ACR'
+param location string =resourceGroup().location
 
 resource race2acrresource 'Microsoft.ContainerRegistry/registries@2023-01-01-preview' = {
   name: containerregistryname

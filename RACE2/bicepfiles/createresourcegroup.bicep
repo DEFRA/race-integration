@@ -1,5 +1,3 @@
-// =========== main.bicep ===========
-
 // Setting target scope
 targetScope = 'subscription'
 param resourceGroupName string
