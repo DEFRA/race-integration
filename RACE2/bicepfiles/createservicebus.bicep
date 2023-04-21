@@ -1,5 +1,5 @@
-param namespaces_Race2ServiceBus_name string = 'Race2ServiceBus'
-param loc string = 'westeurope'
+param namespaces_Race2ServiceBus_name string
+param loc string = resourceGroup().location
 
 resource namespaces_Race2ServiceBus_name_resource 'Microsoft.ServiceBus/namespaces@2022-10-01-preview' = {
   name: namespaces_Race2ServiceBus_name
