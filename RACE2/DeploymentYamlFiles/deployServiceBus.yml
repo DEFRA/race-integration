@@ -1,0 +1,25 @@
+trigger:
+- main
+
+name: Deploy ServiceBus
+
+variables:
+  vmImageName: 'ubuntu-latest'
+
+  azureServiceConnection: 'AZR-RAC-POC1'
+  resourceGroupName: 'RACE2ProjectRG1' 
+  templateFile: './RACE2/bicepfiles/createservicebus.bicep'
+
+pool:
+  vmImage: $(vmImageName)
+
+steps:
+- task: AzureCLI@2  
+  inputs:
+    azureSubscription: $(azureServiceConnection)
+    scriptType: bash
+    scriptLocation: inlineScript
+    useGlobalConfig: false    
+    inlineScript: |
+      az --version
+      az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) -p namespaces_Race2ServiceBus_name="Race2ServiceBus"

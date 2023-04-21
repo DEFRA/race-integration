@@ -1,5 +1,5 @@
 param vaults_Race2KeyVault_name string = 'Race2KeyVault'
-param loc string = 'westeurope'
+param loc string = resourceGroup().location
 
 resource vaults_Race2KeyVault_name_resource 'Microsoft.KeyVault/vaults@2022-11-01' = {
   name: vaults_Race2KeyVault_name
