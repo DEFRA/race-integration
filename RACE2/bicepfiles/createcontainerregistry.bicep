@@ -1,9 +1,9 @@
-param registries_Race2ACR_name string = 'Race2ACR'
-param loc string = 'westeurope'
+param containerregistryname string
+param location string 
 
-resource registries_Race2ACR_name_resource 'Microsoft.ContainerRegistry/registries@2023-01-01-preview' = {
-  name: registries_Race2ACR_name
-  location: loc
+resource race2acrresource 'Microsoft.ContainerRegistry/registries@2023-01-01-preview' = {
+  name: containerregistryname
+  location: location
   tags: {
     ServiceCode: 'RAC'
   }
@@ -55,7 +55,7 @@ resource registries_Race2ACR_name_resource 'Microsoft.ContainerRegistry/registri
 }
 
 resource registries_Race2ACR_name_repositories_admin 'Microsoft.ContainerRegistry/registries/scopeMaps@2023-01-01-preview' = {
-  parent: registries_Race2ACR_name_resource
+  parent: race2acrresource
   name: '_repositories_admin'
   properties: {
     description: 'Can perform all read, write and delete operations on the registry'
@@ -70,7 +70,7 @@ resource registries_Race2ACR_name_repositories_admin 'Microsoft.ContainerRegistr
 }
 
 resource registries_Race2ACR_name_repositories_pull 'Microsoft.ContainerRegistry/registries/scopeMaps@2023-01-01-preview' = {
-  parent: registries_Race2ACR_name_resource
+  parent: race2acrresource
   name: '_repositories_pull'
   properties: {
     description: 'Can pull any repository of the registry'
@@ -81,7 +81,7 @@ resource registries_Race2ACR_name_repositories_pull 'Microsoft.ContainerRegistry
 }
 
 resource registries_Race2ACR_name_repositories_push 'Microsoft.ContainerRegistry/registries/scopeMaps@2023-01-01-preview' = {
-  parent: registries_Race2ACR_name_resource
+  parent: race2acrresource
   name: '_repositories_push'
   properties: {
     description: 'Can push to any repository of the registry'

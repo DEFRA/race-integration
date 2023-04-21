@@ -1,0 +1,24 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "azureServiceConnection": {
+            "value": "AZR-RAC-POC1"
+      },
+      "location": {
+        "value": "westeurope"
+      },
+      "resourceGroupName": {
+        "value": "RACE2ProjectRG1"
+      },
+      "logAnalyticsWorkspaceName": {
+        "value": "race2appworkspace"
+      },
+      "managedEnvironments_race2containerappenv_name": {
+        "value": "race2containerappenv"
+      },
+      "containerregistryname": {
+        "value": "Race2ACR"
+      }
+    }
+}

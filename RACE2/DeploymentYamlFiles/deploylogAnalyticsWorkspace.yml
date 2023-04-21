@@ -1,7 +1,7 @@
 trigger:
 - main
 
-name: Deploy Bicep files
+name: Deploy LogAnalytics
 
 variables:
   vmImageName: 'ubuntu-latest'
