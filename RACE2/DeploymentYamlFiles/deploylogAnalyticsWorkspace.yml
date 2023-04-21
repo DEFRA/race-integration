@@ -1,7 +1,7 @@
 trigger:
 - main
 
-name: Deploy LogAnalytics
+name: Deploy LogAnalytics Workspace
 
 variables:
   vmImageName: 'ubuntu-latest'

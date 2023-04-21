@@ -1,7 +1,7 @@
 trigger:
 - main
 
-name: Deploy LogAnalytics
+name: Deploy Container App Env
 
 variables:
   vmImageName: 'ubuntu-latest'
