@@ -1,9 +1,18 @@
 param managedEnvironments_race2containerappenv_name string = 'race2containerappenv'
-param loc string = 'westwurope'
+param location string = 'westeurope'
+param logAnalyticsWorkspaceName string
+
+module logAnalyticsWorkspace 'createappworkspace.bicep' = {
+  name: logAnalyticsWorkspaceName
+  params: {
+    logAnalyticsWorkspaceName: logAnalyticsWorkspaceName
+    location: location
+  }
+}
 
 resource managedEnvironments_race2containerappenv_name_resource 'Microsoft.App/managedEnvironments@2022-10-01' = {
   name: managedEnvironments_race2containerappenv_name
-  location: loc
+  location: location
   tags: {
     ServiceCode: 'RAC'
   }
@@ -11,7 +20,8 @@ resource managedEnvironments_race2containerappenv_name_resource 'Microsoft.App/m
     appLogsConfiguration: {
       destination: 'log-analytics'
       logAnalyticsConfiguration: {
-        customerId: '92b64c2e-287a-423c-b3fe-14198a7f3fd5'
+        customerId: logAnalyticsWorkspace.outputs.customerid
+        sharedKey: logAnalyticsWorkspace.outputs.sharedKey
       }
     }
     zoneRedundant: false
@@ -19,3 +29,5 @@ resource managedEnvironments_race2containerappenv_name_resource 'Microsoft.App/m
     }
   }
 }
+
+output id string = managedEnvironments_race2containerappenv_name_resource.id

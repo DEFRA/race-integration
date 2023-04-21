@@ -1,26 +1,23 @@
 trigger:
 - main
 
-name: Deploy Bicep files
+name: Deploy ResourceGroup
 
 variables:
   vmImageName: 'ubuntu-latest'
+  templateFile: './RACE2/bicepfiles/createappworkspace.bicep'
+  parameterFile: './RACE2/DeploymentYamlFiles/race2Parameters.json'
 
-  azureServiceConnection: 'AZR-RAC-POC1'
-  resourceGroupName: 'RACE2ProjectRG'
-  location: 'westeurope'
-  templateFile: 'BicepFiles/createstorageaccount.bicep'
 pool:
   vmImage: $(vmImageName)
 
 steps:
 - task: AzureCLI@2
   inputs:
-    azureSubscription: $(azureServiceConnection)
+    azureSubscription: azureServiceConnection
     scriptType: bash
     scriptLocation: inlineScript
     useGlobalConfig: false
     inlineScript: |
       az --version
-      az group create --name $(resourceGroupName) --location $(location)
-      az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile)
+      az group create --name resourceGroupName --template-file $(templateFile) --parameters @$(parameterFile)
