@@ -5,9 +5,9 @@ name: Deploy ResourceGroup
 
 variables:
   vmImageName: 'ubuntu-latest'
-  templateFile: './RACE2/bicepfiles/createresourcegroup.bicep'
-  parameterFile: './RACE2/DeploymentYamlFiles/deployResourceGroupParameters.json'
   azureServiceConnection: 'AZR-RAC-POC1'
+  location : 'west europe'
+  resourceGroupName: 'RACE2ProjectRG1'
 pool:
   vmImage: $(vmImageName)
 
@@ -19,4 +19,4 @@ steps:
     scriptLocation: inlineScript
     useGlobalConfig: false
     inlineScript: |
-      az group create --template-file $(templateFile) --parameters @$(parameterFile)
+      az group create --name $(resourceGroupName) --location $(location)
