@@ -5,8 +5,8 @@
       "location": {
         "value": "westeurope"
       },      
-      "resourceGroupName": {
-        "value": "RACE2ProjectRG1"
+      "logAnalyticsWorkspaceName": {
+        "value": "race2appworkspace"
       }      
     }
 }
