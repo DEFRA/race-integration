@@ -20,7 +20,7 @@ resource managedEnvironments_race2containerappenv_name_resource 'Microsoft.App/m
     appLogsConfiguration: {
       destination: 'log-analytics'
       logAnalyticsConfiguration: {
-        customerId: logAnalyticsWorkspace.outputs.customerid
+        customerId: logAnalyticsWorkspace.outputs.customerId
         sharedKey: logAnalyticsWorkspace.outputs.sharedKey
       }
     }
