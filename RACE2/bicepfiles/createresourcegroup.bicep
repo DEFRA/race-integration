@@ -11,11 +11,3 @@ resource rg 'Microsoft.Resources/resourceGroups@2021-01-01' = {
   location: location
 }
 
-// Deploying storage account using module
-module stg './createstorageaccount.bicep' = {
-  name: 'storageDeployment'
-  scope: rg    // Deployed in the scope of resource group we created above
-  params: {
-    storageAccounts_race2storageaccount_name: 'race2stg'
-  }
-}

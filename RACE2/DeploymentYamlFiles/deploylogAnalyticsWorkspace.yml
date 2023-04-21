@@ -7,10 +7,9 @@ variables:
   vmImageName: 'ubuntu-latest'
 
   azureServiceConnection: 'AZR-RAC-POC1'
-  resourceGroupName: 'RACE2ProjectRG'
-  location: 'westeurope'
-  logAnalyticsWorkspaceName: 'race2appworkspace1'
+  resourceGroupName: 'RACE2ProjectRG1' 
   templateFile: './RACE2/bicepfiles/createappworkspace.bicep'
+  parameterFile: './RACE2/DeploymentYamlFiles/race2Parameters.json'
 pool:
   vmImage: $(vmImageName)
 
@@ -23,4 +22,4 @@ steps:
     useGlobalConfig: false    
     inlineScript: |
       az --version
-      az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) --parameters location='$(location)' logAnalyticsWorkspaceName='$(logAnalyticsWorkspaceName)'
+      az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) --parameters @$(parameterFile)
