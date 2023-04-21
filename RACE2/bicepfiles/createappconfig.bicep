@@ -1,9 +1,9 @@
-param configurationStores_race2appconfig_name string = 'race2appconfig'
-param loc string = 'westeurope'
+param configurationStores_race2appconfig_name string
+param location string = resourceGroup().location
 
 resource configurationStores_race2appconfig_name_resource 'Microsoft.AppConfiguration/configurationStores@2022-05-01' = {
   name: configurationStores_race2appconfig_name
-  location: loc
+  location: location
   tags: {
     ServiceCode: 'RAC'
   }
