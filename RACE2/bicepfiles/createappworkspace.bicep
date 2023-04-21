@@ -1,4 +1,4 @@
-param location string
+param location string = resourceGroup().location
 param logAnalyticsWorkspaceName string
 
 resource logAnalyticsWorkspace'Microsoft.OperationalInsights/workspaces@2020-03-01-preview' = {
