@@ -14,7 +14,7 @@ pool:
 steps:
 - task: AzureCLI@2
   inputs:
-    azureSubscription: azureServiceConnection
+    azureSubscription: $(azureServiceConnection)
     scriptType: bash
     scriptLocation: inlineScript
     useGlobalConfig: false
