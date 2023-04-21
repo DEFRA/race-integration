@@ -1,4 +1,4 @@
-param storageAccounts_race2storageaccount_name string = 'race2storageaccount'
+param storageAccounts_race2storageaccount_name string 
 param loc string = resourceGroup().location
 resource storageAccounts_race2storageaccount_name_resource 'Microsoft.Storage/storageAccounts@2022-09-01' = {
   name: storageAccounts_race2storageaccount_name
@@ -126,10 +126,6 @@ resource storageAccounts_race2storageaccount_name_default_race2appauditlog 'Micr
     denyEncryptionScopeOverride: false
     publicAccess: 'None'
   }
-  dependsOn: [
-
-    storageAccounts_race2storageaccount_name_resource
-  ]
 }
 
 resource Microsoft_Storage_storageAccounts_fileServices_shares_storageAccounts_race2storageaccount_name_default_race2appauditlog 'Microsoft.Storage/storageAccounts/fileServices/shares@2022-09-01' = {
@@ -140,8 +136,4 @@ resource Microsoft_Storage_storageAccounts_fileServices_shares_storageAccounts_r
     shareQuota: 5120
     enabledProtocols: 'SMB'
   }
-  dependsOn: [
-
-    storageAccounts_race2storageaccount_name_resource
-  ]
 }
