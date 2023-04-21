@@ -7,7 +7,7 @@ variables:
   vmImageName: 'ubuntu-latest'
   templateFile: './RACE2/bicepfiles/createresourcegroup.bicep'
   parameterFile: './RACE2/DeploymentYamlFiles/race2Parameters.json'
-  azureSubscription: 'AZR-RAC-POC1'
+  azureServiceConnection: 'AZR-RAC-POC1'
 pool:
   vmImage: $(vmImageName)
 
