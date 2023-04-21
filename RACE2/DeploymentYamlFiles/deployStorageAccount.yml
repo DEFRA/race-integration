@@ -1,0 +1,25 @@
+trigger:
+- main
+
+name: Deploy Storage Account
+
+variables:
+  vmImageName: 'ubuntu-latest'
+
+  azureServiceConnection: 'AZR-RAC-POC1'
+  resourceGroupName: 'RACE2ProjectRG1' 
+  templateFile: './RACE2/bicepfiles/createstorageaccount.bicep'
+
+pool:
+  vmImage: $(vmImageName)
+
+steps:
+- task: AzureCLI@2  
+  inputs:
+    azureSubscription: $(azureServiceConnection)
+    scriptType: bash
+    scriptLocation: inlineScript
+    useGlobalConfig: false    
+    inlineScript: |
+      az --version
+      az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) -p storageAccounts_race2storageaccount_name="race2storageaccount1"
