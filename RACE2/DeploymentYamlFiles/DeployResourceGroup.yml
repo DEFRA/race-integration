@@ -6,7 +6,7 @@ name: Deploy ResourceGroup
 variables:
   vmImageName: 'ubuntu-latest'
   azureServiceConnection: 'AZR-RAC-POC1'
-  location : 'west europe'
+  location : 'westeurope'
   resourceGroupName: 'RACE2ProjectRG1'
 pool:
   vmImage: $(vmImageName)
