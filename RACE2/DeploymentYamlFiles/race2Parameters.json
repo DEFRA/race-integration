@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
       "azureServiceConnection": {
-            "value": "AZR-RAC-POC1"
+        "value": "AZR-RAC-POC1"
       },
       "location": {
         "value": "westeurope"
