@@ -22,4 +22,4 @@ steps:
     useGlobalConfig: false    
     inlineScript: |
       az --version
-      az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) -p configurationStores_race2appconfig_name="race2appconfig"
+      az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) -p configurationStores_race2appconfig_name="race2appconfig1"
