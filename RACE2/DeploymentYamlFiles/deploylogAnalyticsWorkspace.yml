@@ -9,7 +9,7 @@ variables:
   azureServiceConnection: 'AZR-RAC-POC1'
   resourceGroupName: 'RACE2ProjectRG1' 
   templateFile: './RACE2/bicepfiles/createappworkspace.bicep'
-  parameterFile: './RACE2/DeploymentYamlFiles/deployResourceGroupParameters.json'
+  parameterFile: './RACE2/DeploymentYamlFiles/deploylogAnalyticsWorkspaceParameters.json'
 pool:
   vmImage: $(vmImageName)
 
