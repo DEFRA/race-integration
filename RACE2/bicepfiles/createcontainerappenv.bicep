@@ -1,5 +1,5 @@
-param managedEnvironments_race2containerappenv_name string = 'race2containerappenv'
-param location string = 'westeurope'
+param managedEnvironments_race2containerappenv_name string
+param location string = resourceGroup().location
 param logAnalyticsWorkspaceName string
 
 module logAnalyticsWorkspace 'createappworkspace.bicep' = {

@@ -4,6 +4,9 @@
     "parameters": {
       "logAnalyticsWorkspaceName": {
         "value": "race2appworkspace"
-      }      
+      },
+      "managedEnvironments_race2containerappenv_name": {
+        "value": "race2containerappenv"
+      }       
     }
 }

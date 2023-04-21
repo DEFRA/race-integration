@@ -1,7 +1,7 @@
 trigger:
 - main
 
-name: Deploy Container Registry
+name: Deploy LogAnalytics
 
 variables:
   vmImageName: 'ubuntu-latest'
@@ -9,6 +9,7 @@ variables:
   azureServiceConnection: 'AZR-RAC-POC1'
   resourceGroupName: 'RACE2ProjectRG1' 
   templateFile: './RACE2/bicepfiles/createcontainerregistry.bicep'
+  parametersFile: './RACE2/DeploymentYamlFiles/deployContainerAppEnvParameters.json'
 pool:
   vmImage: $(vmImageName)
 
@@ -21,4 +22,4 @@ steps:
     useGlobalConfig: false    
     inlineScript: |
       az --version
-      az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile)
+      az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) -p $(parametersFile)
