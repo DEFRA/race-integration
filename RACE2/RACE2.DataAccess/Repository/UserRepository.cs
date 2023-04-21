@@ -57,7 +57,7 @@ namespace RACE2.DataAccess.Repository
             }
         }
 
-        public async Task<UserDetail> GetUserByEmailID(string email)
+        public async Task<UserSpecificDto> GetUserByEmailID(string email)
         {
 
             _logService.Write("Repository");
@@ -69,8 +69,19 @@ namespace RACE2.DataAccess.Repository
                     DynamicParameters parameters = new DynamicParameters();
                     parameters.Add("Email", email, DbType.String);
 
-                    var user = await conn.QuerySingleAsync<UserDetail>("sp_GetUserByEmailID", parameters, commandType: CommandType.StoredProcedure);
-                    return user;
+                    var user = await conn.QueryAsync<UserSpecificDto,UserAddress,Address,UserSpecificDto>("sp_GetUserByEmailID", (user,useraddress,address) =>
+                    {
+                        user.addresses.Add(address);
+                        return user;
+
+                    }, parameters,null,true,splitOn: "Addressid,id", commandType: CommandType.StoredProcedure);
+                    var result = user.GroupBy(u => u.Id).Select(g =>
+                    {
+                        var groupedUser = g.First();
+                        groupedUser.addresses = g.Select(u => u.addresses.Single()).ToList();
+                        return groupedUser;
+                    });
+                    return result.FirstOrDefault();
 
                 }
             }

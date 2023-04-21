@@ -25,10 +25,10 @@ namespace RACE2.WebApi.QueryResolver
             return await _userService.GetUserById(id);
         }
 
-        public async Task<UserDetail> GetUserByEmailID(IUserService _userService, string email)
+        public async Task<UserSpecificDto> GetUserByEmailID(IUserService _userService, string email)
         {
             RaceNotification raceNotification = new RaceNotification();
-            await raceNotification.SendForgotPasswordMail("mahalakshmi.alagarsamy@capgemini.com", "Maha", "https://race2securityprovider.gentlebush-defe7f09.westeurope.azurecontainerapps.io/Identity/Account/ForgotPassword");
+         //   await raceNotification.SendForgotPasswordMail("mahalakshmi.alagarsamy@capgemini.com", "Maha", "https://race2securityprovider.gentlebush-defe7f09.westeurope.azurecontainerapps.io/Identity/Account/ForgotPassword");
             await raceNotification.SendMail(email);
             await raceNotification.SendEmailTestWithPersonalisation(email);
 
