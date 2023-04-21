@@ -5,7 +5,7 @@ name: Deploy ResourceGroup
 
 variables:
   vmImageName: 'ubuntu-latest'
-  templateFile: './RACE2/bicepfiles/createappworkspace.bicep'
+  templateFile: './RACE2/bicepfiles/createresourcegroup.bicep'
   parameterFile: './RACE2/DeploymentYamlFiles/race2Parameters.json'
 
 pool:
@@ -20,4 +20,4 @@ steps:
     useGlobalConfig: false
     inlineScript: |
       az --version
-      az group create --name resourceGroupName --template-file $(templateFile) --parameters @$(parameterFile)
+      az group create --template-file $(templateFile) --parameters @$(parameterFile)
