@@ -1,8 +1,8 @@
 param storageAccounts_race2storageaccount_name string = 'race2storageaccount'
-
+param loc string = resourceGroup().location
 resource storageAccounts_race2storageaccount_name_resource 'Microsoft.Storage/storageAccounts@2022-09-01' = {
   name: storageAccounts_race2storageaccount_name
-  location: 'westeurope'
+  location: loc
   tags: {
     ServiceCode: 'RAC'
   }
