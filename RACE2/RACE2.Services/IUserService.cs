@@ -12,7 +12,7 @@ namespace RACE2.Services
     {
         public Task<IEnumerable<UserDetail>> GetUserDetails();
         public Task<UserDetail> GetUserById(int id);
-        public Task<UserDetail> GetUserByEmailID(string email);
+        public Task<UserSpecificDto> GetUserByEmailID(string email);
         public Task<UserDetail> CreateUser(UserDetail newuser);
         public Task<UserDetail> ValidateUser(UserDetail loginuser);
         public Task<UserSpecificDto> GetUserWithRoles(string email);

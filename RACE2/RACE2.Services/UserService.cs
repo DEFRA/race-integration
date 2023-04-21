@@ -28,7 +28,7 @@ namespace RACE2.Services
             return await _userRepository.GetUserById(id);
         }
 
-        public async Task<UserDetail> GetUserByEmailID(string email)
+        public async Task<UserSpecificDto> GetUserByEmailID(string email)
         {
             return await _userRepository.GetUserByEmailID(email);
         }
