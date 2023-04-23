@@ -1,8 +1,8 @@
-param containerregistryname string = 'RACE2ACR1'
-param location string =resourceGroup().location
-param subscriptionid string = 'd9cce027-07b6-4275-a215-dd8d52b9d469'
-param resourcegroup string = 'RACE2ProjectRG1'
-param managedidentity string = 'Race2ManagedIdentity'
+param containerregistryname string 
+param location string
+param subscriptionid string 
+param resourcegroup string
+param managedidentity string
 
 resource race2acrresource 'Microsoft.ContainerRegistry/registries@2023-01-01-preview' = {
   name: containerregistryname
