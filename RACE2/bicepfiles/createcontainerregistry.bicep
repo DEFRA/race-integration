@@ -1,5 +1,8 @@
 param containerregistryname string = 'RACE2ACR1'
 param location string =resourceGroup().location
+param subscriptionid string = 'd9cce027-07b6-4275-a215-dd8d52b9d469'
+param resourcegroup string = 'RACE2ProjectRG1'
+param managedidentity string = 'Race2ManagedIdentity'
 
 resource race2acrresource 'Microsoft.ContainerRegistry/registries@2023-01-01-preview' = {
   name: containerregistryname
@@ -14,7 +17,7 @@ resource race2acrresource 'Microsoft.ContainerRegistry/registries@2023-01-01-pre
   identity: {
     type: 'UserAssigned'
     userAssignedIdentities: {
-      '/subscriptions/d9cce027-07b6-4275-a215-dd8d52b9d469/resourcegroups/RACE2ProjectRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/Race2ManagedIdentity': {
+      '/subscriptions/${subscriptionid}/resourcegroups/${resourcegroup}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/${managedidentity}': {
       }
     }
   }
