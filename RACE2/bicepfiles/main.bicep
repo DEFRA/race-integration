@@ -1,5 +1,5 @@
 param containerregistryName string 
-param location string =resourceGroup().location
+param location string 
 param subscriptionid string 
 param resourcegroup string
 param managedidentity string
