@@ -1,8 +1,9 @@
-param storageAccounts_race2storageaccount_name string 
-param loc string = resourceGroup().location
-resource storageAccounts_race2storageaccount_name_resource 'Microsoft.Storage/storageAccounts@2022-09-01' = {
-  name: storageAccounts_race2storageaccount_name
-  location: loc
+param storageAccountname string 
+param location string = resourceGroup().location
+
+resource storageAccountname_resource 'Microsoft.Storage/storageAccounts@2022-09-01' = {
+  name: storageAccountname
+  location: location
   tags: {
     ServiceCode: 'RAC'
   }
@@ -45,7 +46,7 @@ resource storageAccounts_race2storageaccount_name_resource 'Microsoft.Storage/st
 }
 
 resource storageAccounts_race2storageaccount_name_default 'Microsoft.Storage/storageAccounts/blobServices@2022-09-01' = {
-  parent: storageAccounts_race2storageaccount_name_resource
+  parent: storageAccountname_resource
   name: 'default'
   sku: {
     name: 'Standard_ZRS'
@@ -75,7 +76,7 @@ resource storageAccounts_race2storageaccount_name_default 'Microsoft.Storage/sto
 }
 
 resource Microsoft_Storage_storageAccounts_fileServices_storageAccounts_race2storageaccount_name_default 'Microsoft.Storage/storageAccounts/fileServices@2022-09-01' = {
-  parent: storageAccounts_race2storageaccount_name_resource
+  parent: storageAccountname_resource
   name: 'default'
   sku: {
     name: 'Standard_ZRS'
@@ -96,7 +97,7 @@ resource Microsoft_Storage_storageAccounts_fileServices_storageAccounts_race2sto
 }
 
 resource Microsoft_Storage_storageAccounts_queueServices_storageAccounts_race2storageaccount_name_default 'Microsoft.Storage/storageAccounts/queueServices@2022-09-01' = {
-  parent: storageAccounts_race2storageaccount_name_resource
+  parent: storageAccountname_resource
   name: 'default'
   properties: {
     cors: {
@@ -106,7 +107,7 @@ resource Microsoft_Storage_storageAccounts_queueServices_storageAccounts_race2st
 }
 
 resource Microsoft_Storage_storageAccounts_tableServices_storageAccounts_race2storageaccount_name_default 'Microsoft.Storage/storageAccounts/tableServices@2022-09-01' = {
-  parent: storageAccounts_race2storageaccount_name_resource
+  parent: storageAccountname_resource
   name: 'default'
   properties: {
     cors: {
