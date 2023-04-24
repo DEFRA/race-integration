@@ -33,7 +33,7 @@ module createcontainerregistry 'createcontainerregistry.bicep' = {
 
 module createappconfig 'createappconfig.bicep' = {
   scope: resourceGroup(resourcegroup)
-  name: 'containerregistrydeploy'
+  name: 'appconfigdeploy'
   params: {
     location: location
     subscriptionid: subscriptionid
