@@ -11,7 +11,7 @@ module createresourcegroup 'createresourcegroup.bicep' = {
   name: 'resourcegroupdeploy'
   params: {
     location: location
-    resourceGroupName: managedidentity
+    resourceGroupName: resourcegroup
   } 
 }
 
