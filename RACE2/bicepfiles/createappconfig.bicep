@@ -1,11 +1,11 @@
-param race2appconfigname string
+param appconfigName string
 param location string = resourceGroup().location
 param subscriptionid string 
 param resourcegroup string
 param managedidentity string
 
 resource race2appconfig_resource 'Microsoft.AppConfiguration/configurationStores@2022-05-01' = {
-  name: race2appconfigname
+  name: appconfigName
   location: location
   tags: {
     ServiceCode: 'RAC'
