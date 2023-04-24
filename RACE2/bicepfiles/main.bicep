@@ -6,15 +6,6 @@ param managedidentity string
 param logAnalyticsWorkspaceName string
 param race2appenvName string
 
-targetScope = 'subscription'
-module createresourcegroup 'createresourcegroup.bicep' = {
-  name: 'resourcegroupdeploy'
-  params: {
-    location: location
-    resourceGroupName: resourcegroup
-  } 
-}
-
 module createmanagedidentity 'createmanagedidentity.bicep' = {
   scope: resourceGroup(resourcegroup)
   name: 'managedidentitydeploy'
@@ -22,9 +13,6 @@ module createmanagedidentity 'createmanagedidentity.bicep' = {
     location: location
     miname: managedidentity
   }
-  dependsOn: [
-    createresourcegroup
-  ]
 }
 
 module createcontainerregistry 'createcontainerregistry.bicep' = {
@@ -38,7 +26,6 @@ module createcontainerregistry 'createcontainerregistry.bicep' = {
     managedidentity: managedidentity
   }
   dependsOn: [
-    createresourcegroup
     createmanagedidentity
   ]
 }
@@ -50,9 +37,6 @@ module createappworkspace 'createappworkspace.bicep' = {
     location: location
     logAnalyticsWorkspaceName: logAnalyticsWorkspaceName
   }
-  dependsOn: [
-    createresourcegroup
-  ]
 }
 
 module createcontainerappenv 'createcontainerappenv.bicep' = {
@@ -65,7 +49,6 @@ module createcontainerappenv 'createcontainerappenv.bicep' = {
     lawsSharedKey: createappworkspace.outputs.sharedKey
   }
   dependsOn: [
-    createresourcegroup
     createappworkspace
   ]
 }
