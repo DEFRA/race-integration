@@ -1,13 +1,15 @@
+param subscriptionid string 
+param tenantId string = subscription().tenantId
+param location string = resourceGroup().location
 param containerregistryName string 
 param race2appenvName string
 param namespaces_ServiceBus_name string
 param storageAccountName string
-param location string 
-param subscriptionid string 
 param resourcegroup string
 param managedidentity string
 param logAnalyticsWorkspaceName string
 param appconfigName string
+param keyvaultName string
 
 module createmanagedidentitymodule 'createmanagedidentity.bicep' = {
   scope: resourceGroup(resourcegroup)
@@ -51,6 +53,19 @@ module createstorageaccountmodule 'createstorageaccount.bicep' = {
   params: {
     location: location
     storageAccountname: storageAccountName
+  }
+  dependsOn: [
+    createmanagedidentitymodule
+  ]
+}
+
+module createkeyvaultmodule 'createkeyvault.bicep' = {
+  scope: resourceGroup(resourcegroup)
+  name: 'appconfigdeploy'
+  params: {
+    location: location
+    keyvaultName: keyvaultName
+    tenantId: tenantId
   }
   dependsOn: [
     createmanagedidentitymodule
