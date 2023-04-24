@@ -5,6 +5,9 @@
       "subscriptionid": {
         "value": "d9cce027-07b6-4275-a215-dd8d52b9d469"
       }, 
+      "tenantId": {
+        "value": "770a2450-0227-4c62-90c7-4e38537f1102"
+      }, 
       "location": {
         "value": "westeurope"
       },
@@ -13,6 +16,9 @@
       },
       "containerregistryName": {
         "value": "Race2ACR1"
+      },
+      "storageAccountName": {
+        "value": "Race2StorageAccount"
       },
       "appconfigName": {
         "value": "Race2AppConfig1"
