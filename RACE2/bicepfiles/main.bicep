@@ -1,5 +1,7 @@
 param containerregistryName string 
 param race2appenvName string
+param namespaces_ServiceBus_name string
+param storageAccountName string
 param location string 
 param subscriptionid string 
 param resourcegroup string
@@ -7,7 +9,7 @@ param managedidentity string
 param logAnalyticsWorkspaceName string
 param appconfigName string
 
-module createmanagedidentity 'createmanagedidentity.bicep' = {
+module createmanagedidentitymodule 'createmanagedidentity.bicep' = {
   scope: resourceGroup(resourcegroup)
   name: 'managedidentitydeploy'
   params: {
@@ -16,7 +18,7 @@ module createmanagedidentity 'createmanagedidentity.bicep' = {
   }
 }
 
-module createcontainerregistry 'createcontainerregistry.bicep' = {
+module createcontainerregistrymodule 'createcontainerregistry.bicep' = {
   scope: resourceGroup(resourcegroup)
   name: 'containerregistrydeploy'
   params: {
@@ -27,11 +29,35 @@ module createcontainerregistry 'createcontainerregistry.bicep' = {
     managedidentity: managedidentity
   }
   dependsOn: [
-    createmanagedidentity
+    createmanagedidentitymodule
   ]
 }
 
-module createappconfig 'createappconfig.bicep' = {
+module createservicebusmodule 'createservicebus.bicep' = {
+  scope: resourceGroup(resourcegroup)
+  name: 'servicebusdeploy'
+  params: {
+    location: location
+    namespaces_ServiceBus_name: namespaces_ServiceBus_name
+  }
+  dependsOn: [
+    createmanagedidentitymodule
+  ]
+}
+
+module createstorageaccountmodule 'createstorageaccount.bicep' = {
+  scope: resourceGroup(resourcegroup)
+  name: 'stoareacoountdeploy'
+  params: {
+    location: location
+    storageAccountname: storageAccountName
+  }
+  dependsOn: [
+    createmanagedidentitymodule
+  ]
+}
+
+module createappconfigmodule 'createappconfig.bicep' = {
   scope: resourceGroup(resourcegroup)
   name: 'appconfigdeploy'
   params: {
@@ -42,11 +68,11 @@ module createappconfig 'createappconfig.bicep' = {
     managedidentity: managedidentity
   }
   dependsOn: [
-    createmanagedidentity
+    createmanagedidentitymodule
   ]
 }
 
-module createappworkspace 'createappworkspace.bicep' = {
+module createappworkspacemodule 'createappworkspace.bicep' = {
   scope: resourceGroup(resourcegroup)
   name: 'appworkspacedeploy'
   params: {
@@ -55,16 +81,16 @@ module createappworkspace 'createappworkspace.bicep' = {
   }
 }
 
-module createcontainerappenv 'createcontainerappenv.bicep' = {
+module createcontainerappenvmodule 'createcontainerappenv.bicep' = {
   scope: resourceGroup(resourcegroup)
   name: 'race2appenvdeploy'
   params: {
     location: location
     race2appenv: race2appenvName
-    lawsCustromerId: createappworkspace.outputs.customerId
-    lawsSharedKey: createappworkspace.outputs.sharedKey
+    lawsCustromerId: createappworkspacemodule.outputs.customerId
+    lawsSharedKey: createappworkspacemodule.outputs.sharedKey
   }
   dependsOn: [
-    createappworkspace
+    createappworkspacemodule
   ]
 }

@@ -1,9 +1,9 @@
-param namespaces_Race2ServiceBus_name string
-param loc string = resourceGroup().location
+param namespaces_ServiceBus_name string
+param location string = resourceGroup().location
 
-resource namespaces_Race2ServiceBus_name_resource 'Microsoft.ServiceBus/namespaces@2022-10-01-preview' = {
-  name: namespaces_Race2ServiceBus_name
-  location: loc
+resource namespaces_ServiceBus_name_resource 'Microsoft.ServiceBus/namespaces@2022-10-01-preview' = {
+  name: namespaces_ServiceBus_name
+  location: location
   tags: {
     ServiceCode: 'RAC'
   }
@@ -21,9 +21,8 @@ resource namespaces_Race2ServiceBus_name_resource 'Microsoft.ServiceBus/namespac
 }
 
 resource namespaces_Race2ServiceBus_name_RootManageSharedAccessKey 'Microsoft.ServiceBus/namespaces/authorizationrules@2022-10-01-preview' = {
-  parent: namespaces_Race2ServiceBus_name_resource
+  parent: namespaces_ServiceBus_name_resource
   name: 'RootManageSharedAccessKey'
-  location: loc
   properties: {
     rights: [
       'Listen'
@@ -34,9 +33,8 @@ resource namespaces_Race2ServiceBus_name_RootManageSharedAccessKey 'Microsoft.Se
 }
 
 resource namespaces_Race2ServiceBus_name_default 'Microsoft.ServiceBus/namespaces/networkRuleSets@2022-10-01-preview' = {
-  parent: namespaces_Race2ServiceBus_name_resource
+  parent: namespaces_ServiceBus_name_resource
   name: 'default'
-  location: loc
   properties: {
     publicNetworkAccess: 'Enabled'
     defaultAction: 'Allow'
