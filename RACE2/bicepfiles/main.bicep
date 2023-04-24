@@ -1,4 +1,5 @@
 param containerregistryName string 
+param race2appconfigname string
 param location string 
 param subscriptionid string 
 param resourcegroup string
@@ -23,6 +24,21 @@ module createcontainerregistry 'createcontainerregistry.bicep' = {
     subscriptionid: subscriptionid
     resourcegroup: resourcegroup
     containerregistryname: containerregistryName
+    managedidentity: managedidentity
+  }
+  dependsOn: [
+    createmanagedidentity
+  ]
+}
+
+module createappconfig 'createappconfig.bicep' = {
+  scope: resourceGroup(resourcegroup)
+  name: 'containerregistrydeploy'
+  params: {
+    location: location
+    subscriptionid: subscriptionid
+    resourcegroup: resourcegroup
+    race2appconfigname: race2appconfigname
     managedidentity: managedidentity
   }
   dependsOn: [

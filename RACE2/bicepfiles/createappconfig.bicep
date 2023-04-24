@@ -1,8 +1,11 @@
-param configurationStores_race2appconfig_name string
+param race2appconfigname string
 param location string = resourceGroup().location
+param subscriptionid string 
+param resourcegroup string
+param managedidentity string
 
-resource configurationStores_race2appconfig_name_resource 'Microsoft.AppConfiguration/configurationStores@2022-05-01' = {
-  name: configurationStores_race2appconfig_name
+resource race2appconfig_resource 'Microsoft.AppConfiguration/configurationStores@2022-05-01' = {
+  name: race2appconfigname
   location: location
   tags: {
     ServiceCode: 'RAC'
@@ -13,7 +16,7 @@ resource configurationStores_race2appconfig_name_resource 'Microsoft.AppConfigur
   identity: {
     type: 'UserAssigned'
     userAssignedIdentities: {
-      '/subscriptions/d9cce027-07b6-4275-a215-dd8d52b9d469/resourceGroups/RACE2ProjectRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/Race2ManagedIdentity': {
+      '/subscriptions/${subscriptionid}/resourcegroups/${resourcegroup}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/${managedidentity}': {
       }
     }
   }

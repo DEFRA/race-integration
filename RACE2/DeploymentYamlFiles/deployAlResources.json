@@ -14,6 +14,9 @@
       "containerregistryName": {
         "value": "Race2ACR1"
       },
+      "appconfigName": {
+        "value": "Race2AppConfig1"
+      },
       "managedidentity": {
         "value": "Race2ManagedIdentity"
       }, 
