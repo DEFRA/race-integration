@@ -17,6 +17,9 @@
       "containerregistryName": {
         "value": "Race2ACR1"
       },
+      "namespaces_ServiceBus_name": {
+        "value": "Race2ServiceBus"
+      },
       "storageAccountName": {
         "value": "Race2StorageAccount"
       },
