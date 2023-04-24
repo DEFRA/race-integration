@@ -15,10 +15,10 @@
         "value": "Race2ACR1"
       },
       "namespaces_ServiceBus_name": {
-        "value": "Race2ServiceBus"
+        "value": "Race2ServiceBus1"
       },
       "storageAccountName": {
-        "value": "Race2StorageAccount"
+        "value": "Race2StorageAccount1"
       },
       "appconfigName": {
         "value": "Race2AppConfig1"
