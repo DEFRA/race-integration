@@ -1,5 +1,5 @@
 param containerregistryName string 
-param race2appconfigname string
+param race2appenvName string
 param location string 
 param subscriptionid string 
 param resourcegroup string
