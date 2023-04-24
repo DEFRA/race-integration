@@ -5,7 +5,7 @@ param subscriptionid string
 param resourcegroup string
 param managedidentity string
 param logAnalyticsWorkspaceName string
-param race2appenvName string
+param appconfigName string
 
 module createmanagedidentity 'createmanagedidentity.bicep' = {
   scope: resourceGroup(resourcegroup)
@@ -38,7 +38,7 @@ module createappconfig 'createappconfig.bicep' = {
     location: location
     subscriptionid: subscriptionid
     resourcegroup: resourcegroup
-    race2appconfigname: race2appconfigname
+    appconfigName: appconfigName
     managedidentity: managedidentity
   }
   dependsOn: [
