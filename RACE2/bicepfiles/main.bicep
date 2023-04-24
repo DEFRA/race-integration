@@ -61,7 +61,7 @@ module createstorageaccountmodule 'createstorageaccount.bicep' = {
 
 module createkeyvaultmodule 'createkeyvault.bicep' = {
   scope: resourceGroup(resourcegroup)
-  name: 'appconfigdeploy'
+  name: 'keyvaultdeploy'
   params: {
     location: location
     keyvaultName: keyvaultName
