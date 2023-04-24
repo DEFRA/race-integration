@@ -1,8 +1,8 @@
 @description('The name of the logical server.')
-param server string = uniqueString('sql', resourceGroup().id)
+param serverName string
 
 @description('Location for all resources.')
-param location string = resourceGroup().location
+param location string
 
 @description('The name of the Azure AD admin for the SQL server.')
 param aad_admin_name string
@@ -31,7 +31,7 @@ param AdminLogin string
 param AdminLoginPassword string
 
 resource server_resource 'Microsoft.Sql/servers@2020-11-01-preview' = {
-  name: server
+  name: serverName
   location: location
   identity: {
     type: 'UserAssigned'
