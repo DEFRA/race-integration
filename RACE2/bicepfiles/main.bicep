@@ -16,7 +16,7 @@ module createresourcegroup 'createresourcegroup.bicep' = {
 }
 
 module createmanagedidentity 'createmanagedidentity.bicep' = {
-  scope: resourceGroup(resourcegroup)
+  scope: resourceGroup('resourcegroupdeploy')
   name: 'managedidentitydeploy'
   params: {
     location: location
@@ -28,7 +28,7 @@ module createmanagedidentity 'createmanagedidentity.bicep' = {
 }
 
 module createcontainerregistry 'createcontainerregistry.bicep' = {
-  scope: resourceGroup(resourcegroup)
+  scope: resourceGroup('resourcegroupdeploy')
   name: 'containerregistrydeploy'
   params: {
     location: location
@@ -44,7 +44,7 @@ module createcontainerregistry 'createcontainerregistry.bicep' = {
 }
 
 module createappworkspace 'createappworkspace.bicep' = {
-  scope: resourceGroup(resourcegroup)
+  scope: resourceGroup('resourcegroupdeploy')
   name: 'appworkspacedeploy'
   params: {
     location: location
@@ -56,7 +56,7 @@ module createappworkspace 'createappworkspace.bicep' = {
 }
 
 module createcontainerappenv 'createcontainerappenv.bicep' = {
-  scope: resourceGroup(resourcegroup)
+  scope: resourceGroup('resourcegroupdeploy')
   name: 'race2appenvdeploy'
   params: {
     location: location
