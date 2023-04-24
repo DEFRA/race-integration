@@ -7,28 +7,22 @@ param logAnalyticsWorkspaceName string
 param race2appenvName string
 
 targetScope = 'subscription'
-module createresourcegroup 'createresourcegroup.bicep' = {
-  name: 'resourcegroupdeploy'
-  params: {
-    location: location
-    resourceGroupName: resourcegroup
-  } 
+resource rg 'Microsoft.Resources/resourceGroups@2021-01-01' = {
+  name: resourcegroup
+  location: location
 }
 
 module createmanagedidentity 'createmanagedidentity.bicep' = {
-  scope: resourceGroup('resourcegroupdeploy')
+  scope: rg
   name: 'managedidentitydeploy'
   params: {
     location: location
     miname: managedidentity
   }
-  dependsOn: [
-    createresourcegroup
-  ]
 }
 
 module createcontainerregistry 'createcontainerregistry.bicep' = {
-  scope: resourceGroup('resourcegroupdeploy')
+  scope: rg
   name: 'containerregistrydeploy'
   params: {
     location: location
@@ -38,25 +32,21 @@ module createcontainerregistry 'createcontainerregistry.bicep' = {
     managedidentity: managedidentity
   }
   dependsOn: [
-    createresourcegroup
     createmanagedidentity
   ]
 }
 
 module createappworkspace 'createappworkspace.bicep' = {
-  scope: resourceGroup('resourcegroupdeploy')
+  scope: rg
   name: 'appworkspacedeploy'
   params: {
     location: location
     logAnalyticsWorkspaceName: logAnalyticsWorkspaceName
   }
-  dependsOn: [
-    createresourcegroup
-  ]
 }
 
 module createcontainerappenv 'createcontainerappenv.bicep' = {
-  scope: resourceGroup('resourcegroupdeploy')
+  scope: rg
   name: 'race2appenvdeploy'
   params: {
     location: location
@@ -65,7 +55,6 @@ module createcontainerappenv 'createcontainerappenv.bicep' = {
     lawsSharedKey: createappworkspace.outputs.sharedKey
   }
   dependsOn: [
-    createresourcegroup
     createappworkspace
   ]
 }
