@@ -27,7 +27,7 @@
         "value": "Race2AppConfig1"
       },
       "keyvaultName": {
-        "value": "race2keyvault1"
+        "value": "Race2KeyVault1"
       },
       "managedidentity": {
         "value": "Race2ManagedIdentity"
