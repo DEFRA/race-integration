@@ -1,6 +1,6 @@
 param subscriptionid string 
-param tenantId string = subscription().tenantId
-param location string = resourceGroup().location
+param tenantId string
+param location string
 param containerregistryName string 
 param race2appenvName string
 param namespaces_ServiceBus_name string
