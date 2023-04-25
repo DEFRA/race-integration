@@ -48,7 +48,7 @@
         "value": "Race2Password123!"
       }, 
       "servers_race2sqldb_name": {
-        "value": "RACE2DB"
+        "value": "Race2Database"
       }       
     }
 }
