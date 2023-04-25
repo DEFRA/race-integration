@@ -1,15 +1,15 @@
 trigger:
 - main
 
-name: Deploy Container Registry
+name: Deploy Sql Server
 
 variables:
   vmImageName: 'ubuntu-latest'
 
   azureServiceConnection: 'AZR-RAC-POC1'
   resourceGroupName: 'RACE2ProjectRG1' 
-  templateFile: './RACE2/bicepfiles/createcontainerregistry.bicep'
-  parameterfile: './RACE2/DeploymentYamlFiles/deployAlResources.json'
+  templateFile: './RACE2/bicepfiles/createsqlserver.bicep'
+
 pool:
   vmImage: $(vmImageName)
 
@@ -22,4 +22,4 @@ steps:
     useGlobalConfig: false    
     inlineScript: |
       az --version
-      az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) -p @${parameterfile}
+      az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) -p serverName="race2sqlserver1" databaseName="Race2DB" location="westeurope" administratorLogin="sqladmin" administratorLoginPassword="Pass123!"
