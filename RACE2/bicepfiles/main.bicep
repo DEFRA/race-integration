@@ -10,6 +10,12 @@ param logAnalyticsWorkspaceName string
 param appconfigName string
 param keyvaultName string
 param location string = resourceGroup().location
+@secure()
+param servers_race2sqlserver_name string
+param administratorLogin string
+@secure()
+param administratorLoginPassword string
+param servers_race2sqldb_name string
 
 module createmanagedidentitymodule 'createmanagedidentity.bicep' = {
   scope: resourceGroup(resourcegroup)
@@ -81,6 +87,21 @@ module createappconfigmodule 'createappconfig.bicep' = {
     resourcegroup: resourcegroup
     appconfigName: appconfigName
     managedidentity: managedidentity
+  }
+  dependsOn: [
+    createmanagedidentitymodule
+  ]
+}
+
+module createsqlservermodule 'createsqlserver.bicep' = {
+  scope: resourceGroup(resourcegroup)
+  name: 'sqlserverdeploy'
+  params: {
+    location: location
+    servers_race2sqlserver_name: servers_race2sqlserver_name
+    administratorLogin: administratorLogin
+    administratorLoginPassword: administratorLoginPassword
+    servers_race2sqldb_name: servers_race2sqldb_name
   }
   dependsOn: [
     createmanagedidentitymodule
