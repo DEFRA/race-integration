@@ -125,6 +125,7 @@ resource Microsoft_Sql_servers_connectionPolicies_servers_race2sqlserver_name_de
 
 resource servers_race2sqlserver_name_RACE2DB 'Microsoft.Sql/servers/databases@2022-08-01-preview' = {
   parent: servers_race2sqlserver_name_resource
+  location: location
   name: 'RACE2DB'
   sku: {
     name: 'GP_Gen5'
@@ -172,7 +173,7 @@ resource Microsoft_Sql_servers_databases_auditingSettings_servers_race2sqlserver
     retentionDays: 0
     isAzureMonitorTargetEnabled: false
     state: 'Disabled'
-    storageAccountSubscriptionId: '00000000-0000-0000-0000-000000000000'
+    storageAccountSubscriptionId: 'd9cce027-07b6-4275-a215-dd8d52b9d469'
   }
   dependsOn: [
     servers_race2sqlserver_name_resource
@@ -185,7 +186,7 @@ resource Microsoft_Sql_servers_databases_extendedAuditingSettings_servers_race2s
     retentionDays: 0
     isAzureMonitorTargetEnabled: false
     state: 'Disabled'
-    storageAccountSubscriptionId: '00000000-0000-0000-0000-000000000000'
+    storageAccountSubscriptionId: 'd9cce027-07b6-4275-a215-dd8d52b9d469'
   }
   dependsOn: [
     servers_race2sqlserver_name_resource
