@@ -14,8 +14,8 @@ resource rg 'Microsoft.Resources/resourceGroups@2021-01-01' = {
 resource keyVault 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
   name: keyvaultName
   location: location
+  scope: rg
   properties:{
-    scope: rg
     enabledForTemplateDeployment: true
     enableRbacAuthorization: true
     tenantId: subscription().tenantId
