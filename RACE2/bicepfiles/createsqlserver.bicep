@@ -11,6 +11,7 @@ resource servers_race2sqlserver_name_resource 'Microsoft.Sql/servers@2022-08-01-
   kind: 'v12.0'
   properties: {
     administratorLogin: 'race2admin'
+    administratorLoginPassword: 'Pass123!'
     version: '12.0'
     minimalTlsVersion: '1.2'
     publicNetworkAccess: 'Enabled'
