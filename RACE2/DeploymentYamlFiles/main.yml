@@ -23,4 +23,4 @@ steps:
     useGlobalConfig: false    
     inlineScript: |
       az --version
-      az deployment create --template-file $(templateFile) -p resourceGroupName=$(resourceGroupName) location=$(location) keyvaultName=$(keyvaultName)
+      az deployment create --location $(location) --template-file $(templateFile) -p resourceGroupName=$(resourceGroupName) location=$(location) keyvaultName=$(keyvaultName)
