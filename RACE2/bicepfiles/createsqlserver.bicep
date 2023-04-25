@@ -14,15 +14,7 @@ resource servers_race2sqlserver_name_resource 'Microsoft.Sql/servers@2022-08-01-
     administratorLoginPassword: 'Pass123!'
     version: '12.0'
     minimalTlsVersion: '1.2'
-    publicNetworkAccess: 'Enabled'
-    administrators: {
-      administratorType: 'ActiveDirectory'
-      principalType: 'Group'
-      login: 'Kriss.Sahoo@defra.gov.uk'
-      sid: '160b1ec3-b830-4c1c-8e01-9039cf27364a'
-      tenantId: '770a2450-0227-4c62-90c7-4e38537f1102'
-      azureADOnlyAuthentication: false
-    }
+    publicNetworkAccess: 'Enabled'   
     restrictOutboundNetworkAccess: 'Disabled'
   }
 }
