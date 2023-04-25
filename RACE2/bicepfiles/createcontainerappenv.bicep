@@ -1,17 +1,10 @@
-param managedEnvironments_race2containerappenv_name string
+param race2appenv string
 param location string = resourceGroup().location
-param logAnalyticsWorkspaceName string
-
-module logAnalyticsWorkspace 'createappworkspace.bicep' = {
-  name: logAnalyticsWorkspaceName
-  params: {
-    logAnalyticsWorkspaceName: logAnalyticsWorkspaceName
-    location: location
-  }
-}
+param lawsCustromerId string
+param lawsSharedKey string
 
 resource managedEnvironments_race2containerappenv_name_resource 'Microsoft.App/managedEnvironments@2022-10-01' = {
-  name: managedEnvironments_race2containerappenv_name
+  name: race2appenv
   location: location
   tags: {
     ServiceCode: 'RAC'
@@ -20,8 +13,8 @@ resource managedEnvironments_race2containerappenv_name_resource 'Microsoft.App/m
     appLogsConfiguration: {
       destination: 'log-analytics'
       logAnalyticsConfiguration: {
-        customerId: logAnalyticsWorkspace.outputs.customerId
-        sharedKey: logAnalyticsWorkspace.outputs.sharedKey
+        customerId: lawsCustromerId
+        sharedKey: lawsSharedKey
       }
     }
     zoneRedundant: false

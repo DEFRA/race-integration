@@ -1,0 +1,42 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "subscriptionid": {
+        "value": "d9cce027-07b6-4275-a215-dd8d52b9d469"
+      }, 
+      "tenantId": {
+        "value": "770a2450-0227-4c62-90c7-4e38537f1102"
+      }, 
+      "location": {
+        "value": "westeurope"
+      }, 
+      "resourcegroup": {
+        "value": "Race2ProjectRG1"
+      },
+      "containerregistryName": {
+        "value": "Race2ACR1"
+      },
+      "namespaces_ServiceBus_name": {
+        "value": "Race2ServiceBus1"
+      },
+      "storageAccountName": {
+        "value": "race2storageaccount1"
+      },
+      "appconfigName": {
+        "value": "Race2AppConfig1"
+      },
+      "keyvaultName": {
+        "value": "Race2KeyVault1"
+      },
+      "managedidentity": {
+        "value": "Race2ManagedIdentity"
+      }, 
+      "logAnalyticsWorkspaceName": {
+        "value": "Race2LAWorkspace"
+      },
+      "race2appenvName": {
+        "value": "Race2AppEnv"
+      }        
+    }
+}
