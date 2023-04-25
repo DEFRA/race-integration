@@ -1,4 +1,5 @@
 param subscriptionid string 
+param tenantId string =  subscription().tenantId
 param containerregistryName string 
 param race2appenvName string
 param namespaces_ServiceBus_name string
@@ -64,6 +65,7 @@ module createkeyvaultmodule 'createkeyvault.bicep' = {
   params: {
     location: location
     keyvaultName: keyvaultName
+    tenantId: tenantId
   }
   dependsOn: [
     createmanagedidentitymodule

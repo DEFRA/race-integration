@@ -1,5 +1,6 @@
 param keyvaultName string
-param location string = resourceGroup().location
+param location string
+param tenantId string
 
 resource Race2KeyVault_resource 'Microsoft.KeyVault/vaults@2022-11-01' = {
     name: keyvaultName
@@ -8,7 +9,7 @@ resource Race2KeyVault_resource 'Microsoft.KeyVault/vaults@2022-11-01' = {
     properties:{
       enabledForTemplateDeployment: true
       enableRbacAuthorization: true
-      tenantId: subscription().tenantId
+      tenantId: tenantId
       sku: {
         family: 'A'
         name: 'standard'
