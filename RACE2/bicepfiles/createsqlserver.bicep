@@ -1,5 +1,9 @@
 @secure()
 param servers_race2sqlserver_name string
+param administratorLogin string
+@secure()
+param administratorLoginPassword string
+param servers_race2sqldb_name string
 param location string
 
 resource servers_race2sqlserver_name_resource 'Microsoft.Sql/servers@2022-08-01-preview' = {
@@ -10,8 +14,8 @@ resource servers_race2sqlserver_name_resource 'Microsoft.Sql/servers@2022-08-01-
   }
   kind: 'v12.0'
   properties: {
-    administratorLogin: 'race2admin'
-    administratorLoginPassword: 'Pass123!'
+    administratorLogin: administratorLogin
+    administratorLoginPassword: administratorLoginPassword
     version: '12.0'
     minimalTlsVersion: '1.2'
     publicNetworkAccess: 'Enabled'   
@@ -22,7 +26,7 @@ resource servers_race2sqlserver_name_resource 'Microsoft.Sql/servers@2022-08-01-
 resource servers_race2sqlserver_name_RACE2DB 'Microsoft.Sql/servers/databases@2022-08-01-preview' = {
   parent: servers_race2sqlserver_name_resource
   location: location
-  name: 'RACE2DB'
+  name: servers_race2sqldb_name
   sku: {
     name: 'GP_Gen5'
     tier: 'GeneralPurpose'

@@ -37,6 +37,18 @@
       },
       "race2appenvName": {
         "value": "Race2AppEnv"
-      }        
+      }, 
+      "servers_race2sqlserver_name": {
+        "value": "race2sqlserver1"
+      } ,
+      "administratorLogin": {
+        "value": "race2admin"
+      } ,
+      "administratorLoginPassword": {
+        "value": "Race2Password123!"
+      }, 
+      "servers_race2sqldb_name": {
+        "value": "RACE2DB"
+      }       
     }
 }
