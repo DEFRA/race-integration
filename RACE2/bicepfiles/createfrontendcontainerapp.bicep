@@ -17,7 +17,7 @@ resource registry 'Microsoft.ContainerRegistry/registries@2021-12-01-preview' ex
 
 resource managedidentity_resource 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' existing = {
   name: managedidentity
-  scope: resourceGroup(resourcegroup)
+  scope: resourceGroup(registryResourceGroup)
 }
 
 resource managedEnvironments_race2containerappenv_name_resource 'Microsoft.App/managedEnvironments@2022-10-01' existing = {
