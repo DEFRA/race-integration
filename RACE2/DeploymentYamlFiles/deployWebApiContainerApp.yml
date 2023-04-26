@@ -8,7 +8,7 @@ variables:
 
   azureServiceConnection: 'AZR-RAC-POC1'
   resourceGroupName: 'RACE2ProjectRG1' 
-  templateFile: './RACE2/bicepfiles/createsecurityprovidercontainerapp.bicep'
+  templateFile: './RACE2/bicepfiles/createwebapicontainerapp.bicep'
   parametersFile: './RACE2/DeploymentYamlFiles/deployContainerAppParameters.json'
 pool:
   vmImage: $(vmImageName)
