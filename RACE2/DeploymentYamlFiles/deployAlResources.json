@@ -49,6 +49,39 @@
       }, 
       "servers_race2sqldb_name": {
         "value": "Race2Database"
-      }       
+      },
+      "registryResourceGroup": {
+        "value": "Race2ProjectRG"
+      },
+      "registryName": {
+        "value": "race2acr"
+      },
+      "race2appenv": {
+        "value":"Race2AppEnv"
+      },
+      "useExternalIngress": {
+        "value": true
+      },
+      "containerPort": {
+        "value": 80
+      },
+      "frontEndContainerAppName": {
+        "value":"race2frontendapp"
+      },
+      "securityProviderContainerAppName": {
+        "value":"race2securityproviderapp"
+      },
+      "webApiContainerAppName": {
+        "value":"race2webapiapp"
+      },
+      "frontendcontainerImage": {
+        "value":"race2acr.azurecr.io/race2frontend:v1"
+      },
+      "securityprovidercontainerImage": {
+        "value":"race2acr.azurecr.io/race2securityprovider:v1"
+      },
+      "webapicontainerImage": {
+        "value":"race2acr.azurecr.io/race2webapi:v1"
+      }      
     }
 }
