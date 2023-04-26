@@ -134,14 +134,7 @@ resource containerSecurityProviderApp 'Microsoft.App/containerApps@2022-01-01-pr
         maxReplicas: 2      
       }
     }
-  }
-  identity: {
-    type: 'UserAssigned'
-    userAssignedIdentities: {
-      '/subscriptions/${subscriptionid}/resourcegroups/${resourcegroup}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/${managedidentity}': {
-      }
-    }
-  }
+  }  
 }
 
 resource containerWebApiApp 'Microsoft.App/containerApps@2022-01-01-preview' = {
@@ -180,14 +173,7 @@ resource containerWebApiApp 'Microsoft.App/containerApps@2022-01-01-preview' = {
         maxReplicas: 2      
       }
     }
-  }
-  identity: {
-    type: 'UserAssigned'
-    userAssignedIdentities: {
-      '/subscriptions/${subscriptionid}/resourcegroups/${resourcegroup}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/${managedidentity}': {
-      }
-    }
-  }
+  }  
 }
 
 
