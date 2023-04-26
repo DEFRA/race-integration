@@ -1,7 +1,4 @@
-param containerFrontEndAppName string
-param containerSecurityProviderAppName string
-param containerWebApiAppName string
-param logAnalyticsWorkspaceName string
+param securityProviderContainerAppName string
 param location string
 param race2appenv string
 param registryName string
@@ -9,7 +6,7 @@ param registryResourceGroup string
 param resourcegroup string
 param useExternalIngress bool = false
 param containerPort int
-param containerImage string
+param securityprovidercontainerImage string
 param managedidentity string
 param subscriptionid string 
 
@@ -23,7 +20,7 @@ resource managedEnvironments_race2containerappenv_name_resource 'Microsoft.App/m
 }
 
 resource containerSecurityProviderApp 'Microsoft.App/containerApps@2022-01-01-preview' = {
-  name: containerSecurityProviderAppName
+  name: securityProviderContainerAppName
   location: location
   properties: {
     managedEnvironmentId: managedEnvironments_race2containerappenv_name_resource.id    
@@ -49,8 +46,8 @@ resource containerSecurityProviderApp 'Microsoft.App/containerApps@2022-01-01-pr
     template: {
       containers: [
         {
-          image: containerImage
-          name: containerSecurityProviderAppName
+          image: securityprovidercontainerImage
+          name: securityProviderContainerAppName
         }
       ]
       scale: {

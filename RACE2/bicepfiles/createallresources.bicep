@@ -16,6 +16,16 @@ param administratorLogin string
 @secure()
 param administratorLoginPassword string
 param servers_race2sqldb_name string
+param frontEndContainerAppName string
+param securityProviderContainerAppName string
+param webApiContainerAppName string
+param registryName string
+param registryResourceGroup string
+param useExternalIngress bool = false
+param containerPort int
+param frontendcontainerImage string
+param securityprovidercontainerImage string
+param webapicontainerImage string
 
 module createmanagedidentitymodule 'createmanagedidentity.bicep' = {
   scope: resourceGroup(resourcegroup)
@@ -130,3 +140,66 @@ module createcontainerappenvmodule 'createcontainerappenv.bicep' = {
     createappworkspacemodule
   ]
 }
+
+module createfrontendcontainerappmodule 'createfrontendcontainerapp.bicep' = {
+  scope: resourceGroup(resourcegroup)
+  name: 'frontendcontainerappdeploy'
+  params: {
+    location: location
+    race2appenv: race2appenvName
+    frontEndContainerAppName: frontEndContainerAppName
+    registryName: registryName
+    registryResourceGroup: registryResourceGroup
+    resourcegroup: resourcegroup
+    useExternalIngress: useExternalIngress
+    containerPort: containerPort
+    frontendcontainerImage: frontendcontainerImage
+    managedidentity: managedidentity
+    subscriptionid: subscriptionid
+  }
+  dependsOn: [
+    createcontainerappenvmodule
+  ]
+}
+
+module createsecurityprovidercontainerappmodule 'createsecurityprovidercontainerapp.bicep' = {
+  scope: resourceGroup(resourcegroup)
+  name: 'securityprovidercontainerappdeploy'
+  params: {
+    location: location
+    race2appenv: race2appenvName
+    securityProviderContainerAppName: securityProviderContainerAppName
+    registryName: registryName
+    registryResourceGroup: registryResourceGroup
+    resourcegroup: resourcegroup
+    useExternalIngress: useExternalIngress
+    containerPort: containerPort
+    securityprovidercontainerImage: securityprovidercontainerImage
+    managedidentity: managedidentity
+    subscriptionid: subscriptionid
+  }
+  dependsOn: [
+    createcontainerappenvmodule
+  ]
+}
+module createwebapicontainerappmodule 'createwebapicontainerapp.bicep' = {
+  scope: resourceGroup(resourcegroup)
+  name: 'webapicontainerappdeploy'
+  params: {
+    location: location
+    race2appenv: race2appenvName
+    webApiContainerAppName: webApiContainerAppName
+    registryName: registryName
+    registryResourceGroup: registryResourceGroup
+    resourcegroup: resourcegroup
+    useExternalIngress: useExternalIngress
+    containerPort: containerPort
+    webapicontainerImage: webapicontainerImage
+    managedidentity: managedidentity
+    subscriptionid: subscriptionid
+  }
+  dependsOn: [
+    createcontainerappenvmodule
+  ]
+}
+
