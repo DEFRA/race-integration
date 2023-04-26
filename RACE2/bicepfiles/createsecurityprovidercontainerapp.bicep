@@ -1,4 +1,6 @@
+param containerFrontEndAppName string
 param containerSecurityProviderAppName string
+param containerWebApiAppName string
 param location string
 param race2appenv string
 param registryName string
