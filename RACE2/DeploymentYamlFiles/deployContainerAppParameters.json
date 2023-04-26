@@ -33,16 +33,22 @@
         "value":"race2frontendapp"
       },
       "containerSecurityProviderAppName": {
-        "value":"race2frontendapp"
+        "value":"race2securityproviderapp"
       },
       "containerWebApiAppName": {
-        "value":"race2frontendapp"
+        "value":"race2webapiapp"
       },
       "managedidentity": {
         "value":"Race2ManagedIdentity"
       },
-      "containerImage": {
+      "frontendcontainerImage": {
         "value":"race2acr.azurecr.io/race2frontend:v1"
+      },
+      "securityprovidercontainerImage": {
+        "value":"race2acr.azurecr.io/race2securityprovider:v1"
+      },
+      "webapicontainerImage": {
+        "value":"race2acr.azurecr.io/race2webapi:v1"
       }
     }
 }
