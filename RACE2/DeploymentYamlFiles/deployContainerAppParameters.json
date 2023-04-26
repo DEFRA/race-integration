@@ -17,8 +17,11 @@
       "registryName": {
         "value": "race2acr"
       },
-      "race2appenvName": {
+      "race2appenv": {
         "value":"Race2AppEnv"
+      },
+      "logAnalyticsWorkspaceName": {
+        "value":"Race2LogAnalyticsWS"
       },
       "useExternalIngress": {
         "value": true
