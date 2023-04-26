@@ -15,7 +15,7 @@
         "value": "Race2ProjectRG"
       },
       "registryName": {
-        "value": "Race2ACR"
+        "value": "race2acr"
       },
       "race2appenvName": {
         "value":"race2containerappenv"
