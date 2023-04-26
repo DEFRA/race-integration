@@ -1,6 +1,4 @@
-param containerFrontEndAppName string
 param containerSecurityProviderAppName string
-param containerWebApiAppName string
 param location string
 param race2appenv string
 param registryName string
@@ -11,7 +9,6 @@ param containerPort int
 param containerImage string
 param managedidentity string
 param subscriptionid string 
-param logAnalyticsWorkspaceName string
 
 resource registry 'Microsoft.ContainerRegistry/registries@2021-12-01-preview' existing = {
   name: registryName
@@ -50,7 +47,7 @@ resource containerSecurityProviderApp 'Microsoft.App/containerApps@2022-01-01-pr
       containers: [
         {
           image: containerImage
-          name: containerFrontEndAppName
+          name: containerSecurityProviderAppName
         }
       ]
       scale: {
