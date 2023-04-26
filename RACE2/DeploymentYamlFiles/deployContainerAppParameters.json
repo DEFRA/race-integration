@@ -29,7 +29,13 @@
       "containerPort": {
         "value": 80
       },
-      "containerAppName": {
+      "containerFrontEndAppName": {
+        "value":"race2frontendapp"
+      },
+      "containerSecurityProviderAppName": {
+        "value":"race2frontendapp"
+      },
+      "containerWebApiAppName": {
         "value":"race2frontendapp"
       },
       "managedidentity": {
