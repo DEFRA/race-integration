@@ -56,9 +56,6 @@
       "registryName": {
         "value": "race2acr"
       },
-      "race2appenv": {
-        "value":"Race2AppEnv"
-      },
       "useExternalIngress": {
         "value": true
       },
