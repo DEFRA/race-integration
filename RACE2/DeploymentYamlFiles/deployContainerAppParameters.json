@@ -1,0 +1,39 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "subscriptionid": {
+        "value": "d9cce027-07b6-4275-a215-dd8d52b9d469"
+      }, 
+      "location": {
+        "value": "westeurope"
+      }, 
+      "resourcegroup": {
+        "value": "Race2ProjectRG1"
+      },
+      "registryResourceGroup": {
+        "value": "Race2ProjectRG"
+      },
+      "registryName": {
+        "value": "Race2ACR"
+      },
+      "race2appenvName": {
+        "value":"race2containerappenv"
+      },
+      "useExternalIngress": {
+        "value": true
+      },
+      "containerPort": {
+        "value": 80
+      },
+      "containerAppName": {
+        "value":"race2frontendapp"
+      },
+      "managedidentity": {
+        "value":"Race2ManagedIdentity"
+      },
+      "containerImage": {
+        "value":"race2acr.azurecr.io/race2frontend:v1"
+      }
+    }
+}
