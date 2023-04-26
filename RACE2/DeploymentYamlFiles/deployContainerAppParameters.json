@@ -18,7 +18,7 @@
         "value": "race2acr"
       },
       "race2appenvName": {
-        "value":"race2containerappenv"
+        "value":"Race2AppEnv"
       },
       "useExternalIngress": {
         "value": true
