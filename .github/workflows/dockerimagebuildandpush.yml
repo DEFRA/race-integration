@@ -16,7 +16,7 @@ jobs:
       name: Build & push Docker image
       with:  
         working-directory: ./RACE2
-        image: race2acr.azurecr.io/race2securityprovider
+        image: race2securityprovider
         tags: latest
         registry: race2acr.azurecr.io
         dockerfile: ./RACE2/Dockerfile_SecurityProvider
