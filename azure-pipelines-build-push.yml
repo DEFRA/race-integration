@@ -3,7 +3,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 
 trigger:
-- master
+- main
 
 resources:
 - repo: self
@@ -13,17 +13,19 @@ variables:
 
 stages:
 - stage: Build
-  displayName: Build image
-  jobs:
+  displayName: Build and push stage
+  jobs:  
   - job: Build
-    displayName: Build
+    displayName: Build job
     pool:
-      vmImage: ubuntu-latest
+      vmImage: $(vmImageName)
     steps:
     - task: Docker@2
-      displayName: Build an image
+      displayName: Build and push an image to container registry
       inputs:
-        command: build
+        command: buildAndPush
+        repository: race2acr.azurecr.io
         dockerfile: '$(Build.SourcesDirectory)/RACE2/Dockerfile_SecurityProvider'
+        containerRegistry: AZR-RAC-POC1
         tags: |
           $(tag)
