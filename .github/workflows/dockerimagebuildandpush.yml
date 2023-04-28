@@ -15,10 +15,10 @@ jobs:
     - uses: mr-smithers-excellent/docker-build-push@v6
       name: Build & push Docker image
       with:  
-        working-directory: ./RACE2
+        context: RACE2
         image: race2securityprovider
         tags: latest
         registry: race2acr.azurecr.io
-        dockerfile: ./RACE2/Dockerfile_SecurityProvider
+        dockerfile: ./Dockerfile_SecurityProvider
         username: Race2ACR
         password: 3q23FKncYFoNMky5N+4arugBI6FHagtWC07sVgPHdo+ACRB3HwHE
