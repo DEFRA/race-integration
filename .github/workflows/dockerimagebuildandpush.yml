@@ -14,8 +14,8 @@ jobs:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
     - uses: mr-smithers-excellent/docker-build-push@v6
       name: Build & push Docker image
-      with:
-        working-directory: ./RACE2
+      with:  
+        working-directory: race-integration/RACE2
         image: race2acr.azurecr.io/race2securityprovider
         tags: latest
         registry: race2acr.azurecr.io
