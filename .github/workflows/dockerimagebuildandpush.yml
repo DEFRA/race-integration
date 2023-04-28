@@ -26,8 +26,10 @@ jobs:
             login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
             username: ${{ secrets.REGISTRY_USERNAME }}
             password: ${{ secrets.REGISTRY_PASSWORD }}
-        - name: Build & Push
+        - name: Build the frontend image and push it to ACR
           uses: docker/build-push-action@v2
           with:
             push: true
-            tags: ${{ secrets.ACR_ENDPOINT }}/${{ env.IMAGE_NAME }}:v1
+            tags: ${{ secrets.REGISTRY_LOGIN_SERVER }}/aspcoresample:v1
+            file: Race2/Dockerfile_SecurityProvider
+            
