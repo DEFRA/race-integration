@@ -1,6 +1,4 @@
 on: 
-  push:
-    tags: ["v*.*.*"]
   workflow_dispatch:
 name: Docker Image Build and Push
 env:
@@ -16,10 +14,7 @@ jobs:
         - name: 'Checkout GitHub Action'
           uses: actions/checkout@main
         - name: Checkout repository
-          uses: actions/checkout@v2
-        - name: Get tag
-          id: tag
-          uses: dawidd6/action-get-tag@v1  
+          uses: actions/checkout@v2       
         - name: 'Login via Azure CLI'
           uses: azure/login@v1
           with:
@@ -35,6 +30,4 @@ jobs:
           uses: docker/build-push-action@v2
           with:
             push: true
-            build-args: |
-              version=${{ steps.tag.outputs.tag }}
-            tags: ${{ secrets.ACR_ENDPOINT }}/${{ env.IMAGE_NAME }}:${{ steps.tag.outputs.tag }}
+            tags: ${{ secrets.ACR_ENDPOINT }}/${{ env.IMAGE_NAME }}:v1
