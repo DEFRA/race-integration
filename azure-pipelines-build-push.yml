@@ -26,6 +26,6 @@ stages:
         command: buildAndPush
         repository: race2acr.azurecr.io
         dockerfile: '$(Build.SourcesDirectory)/RACE2/Dockerfile_SecurityProvider'
-        containerRegistry: ACR_Service_Connection
+        containerRegistry: Race2ACR
         tags: |
           $(tag)
