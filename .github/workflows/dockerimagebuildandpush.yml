@@ -12,7 +12,11 @@ jobs:
         # checkout the repo
         - name: 'Checkout GitHub Action'
           uses: actions/checkout@main
-          
+        - name: Checkout repository
+          uses: actions/checkout@v2
+        - name: Get tag
+          id: tag
+          uses: dawidd6/action-get-tag@v1  
         - name: 'Login via Azure CLI'
           uses: azure/login@v1
           with:
