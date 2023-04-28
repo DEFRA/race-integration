@@ -1,5 +1,7 @@
 on: [workflow_dispatch]
 name: Docker Image Build and Push
+env:
+  IMAGE_NAME: departments-api
 permissions:
   id-token: write
   contents: read
@@ -28,4 +30,4 @@ jobs:
             push: true
             build-args: |
               version=${{ steps.tag.outputs.tag }}
-            tags: ${{ secrets.REGISTRY_LOGIN_SERVER }}/sc:${{ steps.tag.outputs.tag }}
+            tags: ${{ secrets.ACR_ENDPOINT }}/${{ env.IMAGE_NAME }}:${{ steps.tag.outputs.tag }}
