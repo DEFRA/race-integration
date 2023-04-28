@@ -31,5 +31,5 @@ jobs:
           with:
             push: true
             tags: ${{ secrets.REGISTRY_LOGIN_SERVER }}/aspcoresample:v1
-            file: ./Race2/Dockerfile_SecurityProvider
+            file: RACE2/Dockerfile_SecurityProvider
             
