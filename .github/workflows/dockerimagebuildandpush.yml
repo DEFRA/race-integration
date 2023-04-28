@@ -4,21 +4,24 @@ permissions:
   id-token: write
   contents: read
 jobs:
-  build-and-push:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@main
-    - name: Azure Login
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-    - uses: mr-smithers-excellent/docker-build-push@v6
-      name: Build & push Docker image
-      with:  
-        working-directory: ./RACE2
-        image: race2securityprovider
-        tags: latest
-        registry: race2acr.azurecr.io
-        dockerfile: ./RACE2/Dockerfile_SecurityProvider
-        username: Race2ACR
-        password: 3q23FKncYFoNMky5N+4arugBI6FHagtWC07sVgPHdo+ACRB3HwHE
+    build-and-deploy:
+        runs-on: ubuntu-latest
+        steps:
+        # checkout the repo
+        - name: 'Checkout GitHub Action'
+          uses: actions/checkout@main
+          
+        - name: 'Login via Azure CLI'
+          uses: azure/login@v1
+          with:
+            creds: ${{ secrets.AZURE_CREDENTIALS }}
+        
+        - name: 'Build and push image'
+          uses: azure/docker-login@v1
+          with:
+            login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+            username: ${{ secrets.REGISTRY_USERNAME }}
+            password: ${{ secrets.REGISTRY_PASSWORD }}
+        - run: |
+            docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/securityprovider:latest -f ./RACE2/Dockerfile_SecurityProvider
+            docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/securityprovider:latest
