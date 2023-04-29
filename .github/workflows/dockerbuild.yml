@@ -9,16 +9,24 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+
 jobs:
 
   build-container:
 
-    runs-on: ubuntu-latest
+     runs-on: ubuntu-latest
+     defaults:
+      run:
+        shell: bash
+        working-directory: RACE2
 
-    steps:
-    
-    - uses: actions/checkout@v3
-    
-    - name: Build the Docker image
-      working-directory: RACE2
-      run: docker build . --file Dockerfile_SecurityProvider --tag my-app-dotnet:$(date +%s)
+     steps:
+      - uses: actions/checkout@v3
+      - uses: azure/docker-login@v1
+        with:
+          login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+      - run: |
+          docker build . -f Dockerfile_SecurityProvider -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/securityprovider:${{ github.sha }}
+          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/securityprovider:${{ github.sha }}
