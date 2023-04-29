@@ -28,5 +28,5 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
       - run: |
-          docker build . -f Dockerfile_SecurityProvider -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/securityprovider:${{ github.sha }}
-          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/securityprovider:${{ github.sha }}
+          docker build . -f Dockerfile_SecurityProvider -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/race2securityprovider:${{ github.sha }}
+          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/race2securityprovider:${{ github.sha }}
