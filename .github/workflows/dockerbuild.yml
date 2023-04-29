@@ -21,12 +21,19 @@ jobs:
         working-directory: RACE2
 
      steps:
-      - uses: actions/checkout@v3
-      - uses: azure/docker-login@v1
-        with:
+     - name: 'Login via Azure CLI'
+       uses: azure/login@v1
+       with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+     - name: 'Checkout'
+       uses: actions/checkout@v3
+     - name: 'Azure CLI Login'
+       uses: azure/docker-login@v1
+       with:
           login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
-      - run: |
+     - name: 'Docker build and push'    
+       run: |
           docker build . -f Dockerfile_SecurityProvider -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/race2securityprovider:${{ github.sha }}
           docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/race2securityprovider:${{ github.sha }}
