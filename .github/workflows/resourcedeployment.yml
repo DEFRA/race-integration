@@ -1,0 +1,34 @@
+on:
+  push:
+    branches: none # [ main ]
+  pull_request:
+    branches: none # [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+name: Deploy Bicep template
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: RACE2
+    steps:
+    - uses: actions/checkout@main
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    - name: Deploy
+      uses: azure/CLI@v1
+      with:
+        azcliversion: 2.48.1
+        inlineScript: |
+          az --version
+          az deployment group what-if --name 'AllResourceDeployments' --resource-group 'RACE2ProjectRG1' --template-file './RACE2/DeploymentYamlFiles/deployAlResources.json' -p './RACE2/bicepfiles/createallresources.bicep'
+
+          az deployment group create --name 'AllResourceDeployments' --resource-group 'RACE2ProjectRG1' --template-file './RACE2/DeploymentYamlFiles/deployAlResources.json' -p './RACE2/bicepfiles/createallresources.bicep'
+              
+    - name: print result
+      run: echo "resources created successfully"
