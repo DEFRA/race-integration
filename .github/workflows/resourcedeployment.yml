@@ -27,9 +27,9 @@ jobs:
         inlineScript: |
           az --version
           az group create -n RACE2ProjectRG1 -l westeurope
-          az deployment group what-if --name 'AllResourceDeployments' --resource-group 'RACE2ProjectRG1' --template-file './RACE2/bicepfiles/createAlResources.bicep' -p './RACE2/DeploymentYamlFiles/createallresources.json'
+          az deployment group what-if --name 'AllResourceDeployments' --resource-group 'RACE2ProjectRG1' --template-file './bicepfiles/createAlResources.bicep' -p './DeploymentYamlFiles/deployAlResources.json'
 
-          az deployment group create --name 'AllResourceDeployments' --resource-group 'RACE2ProjectRG1' --template-file './RACE2/bicepfiles/createAlResources.bicep' -p './RACE2/bicepfiles/createallresources.json'
+          az deployment group create --name 'AllResourceDeployments' --resource-group 'RACE2ProjectRG1' --template-file './bicepfiles/createAlResources.bicep' -p './DeploymentYamlFiles/deployAlResources.json'
               
     - name: print result
       run: echo "resources created successfully"
