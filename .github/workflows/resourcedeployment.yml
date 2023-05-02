@@ -26,6 +26,7 @@ jobs:
         azcliversion: 2.48.1
         inlineScript: |
           az --version
+          az group create -n RACE2ProjectRG1 -l westeurope
           az deployment group what-if --name 'AllResourceDeployments' --resource-group 'RACE2ProjectRG1' --template-file './RACE2/DeploymentYamlFiles/deployAlResources.json' -p './RACE2/bicepfiles/createallresources.bicep'
 
           az deployment group create --name 'AllResourceDeployments' --resource-group 'RACE2ProjectRG1' --template-file './RACE2/DeploymentYamlFiles/deployAlResources.json' -p './RACE2/bicepfiles/createallresources.bicep'
