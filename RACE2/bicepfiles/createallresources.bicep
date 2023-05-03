@@ -5,7 +5,8 @@ param resourcegroup string
 param managedidentity string
 param servers_race2sqlserver_name string
 param servers_race2sqldb_name string
-param containerregistryName string@secure()
+param containerregistryName string
+@secure()
 param administratorLogin string
 @secure()
 param administratorLoginPassword string
