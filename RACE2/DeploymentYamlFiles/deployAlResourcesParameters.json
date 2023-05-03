@@ -14,6 +14,9 @@
       "resourcegroup": {
         "value": "Race2ProjectRG1"
       },
+      "managedidentity": {
+        "value": "Race2ManagedIdentity"
+      }, 
       "containerregistryName": {
         "value": "Race2ACR1"
       },
@@ -24,23 +27,14 @@
         "value": "race2storageaccount1"
       },
       "appconfigName": {
-        "value": "Race2AppConfig1"
+        "value": "Race2AppConfig2"
       },
       "keyvaultName": {
-        "value": "Race2KeyVault1"
+        "value": "Race2KeyVault2"
       },
-      "managedidentity": {
-        "value": "Race2ManagedIdentity"
-      }, 
-      "logAnalyticsWorkspaceName": {
-        "value": "Race2LAWorkspace"
-      },
-      "race2appenvName": {
-        "value": "Race2AppEnv"
-      }, 
       "servers_race2sqlserver_name": {
         "value": "race2sqlserver1"
-      } ,
+      },
       "administratorLogin": {
         "value": "race2admin"
       } ,
@@ -49,6 +43,12 @@
       }, 
       "servers_race2sqldb_name": {
         "value": "Race2Database"
+      },
+      "logAnalyticsWorkspaceName": {
+        "value": "Race2LAWorkspace"
+      },
+      "race2appenvName": {
+        "value": "Race2AppEnv"
       }
     }
 }

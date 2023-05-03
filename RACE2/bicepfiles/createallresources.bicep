@@ -55,7 +55,7 @@ module createservicebusmodule 'createservicebus.bicep' = {
 
 module createstorageaccountmodule 'createstorageaccount.bicep' = {
   scope: resourceGroup(resourcegroup)
-  name: 'stoareacoountdeploy'
+  name: 'storageaccountdeploy'
   params: {
     location: location
     storageAccountname: storageAccountName
