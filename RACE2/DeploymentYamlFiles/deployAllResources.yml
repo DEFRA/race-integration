@@ -1,7 +1,7 @@
 trigger:
-- main
+- kris
 
-name: Deploy Container Registry
+name: Deploy All Resources
 
 variables:
   vmImageName: 'ubuntu-latest'
