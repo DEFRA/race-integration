@@ -10,18 +10,18 @@
       }, 
       "resourcegroup": {
         "value": "Race2ProjectRG1"
-      },
+      },     
+      "managedidentity": {
+        "value": "Race2ManagedIdentity"
+      }, 
+      "race2appenvName": {
+        "value": "Race2AppEnv"
+      }, 
       "registryResourceGroup": {
         "value": "Race2ProjectRG"
       },
       "registryName": {
         "value": "race2acr"
-      },
-      "race2appenv": {
-        "value":"Race2AppEnv"
-      },
-      "logAnalyticsWorkspaceName": {
-        "value":"Race2LogAnalyticsWS"
       },
       "useExternalIngress": {
         "value": true
@@ -29,17 +29,14 @@
       "containerPort": {
         "value": 80
       },
-      "containerFrontEndAppName": {
+      "frontEndContainerAppName": {
         "value":"race2frontendapp"
       },
-      "containerSecurityProviderAppName": {
+      "securityProviderContainerAppName": {
         "value":"race2securityproviderapp"
       },
-      "containerWebApiAppName": {
+      "webApiContainerAppName": {
         "value":"race2webapiapp"
-      },
-      "managedidentity": {
-        "value":"Race2ManagedIdentity"
       },
       "frontendcontainerImage": {
         "value":"race2acr.azurecr.io/race2frontend:v1"
@@ -49,6 +46,6 @@
       },
       "webapicontainerImage": {
         "value":"race2acr.azurecr.io/race2webapi:v1"
-      }
+      }      
     }
 }
