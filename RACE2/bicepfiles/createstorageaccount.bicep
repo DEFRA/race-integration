@@ -9,7 +9,6 @@ resource storageAccountname_resource 'Microsoft.Storage/storageAccounts@2022-09-
   }
   sku: {
     name: 'Standard_ZRS'
-    tier: 'Standard'
   }
   kind: 'StorageV2'
   properties: {

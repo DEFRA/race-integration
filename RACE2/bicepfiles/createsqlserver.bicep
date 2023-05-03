@@ -12,7 +12,7 @@ resource servers_race2sqlserver_name_resource 'Microsoft.Sql/servers@2022-08-01-
   tags: {
     ServiceCode: 'RAC'
   }
-  kind: 'v12.0'
+
   properties: {
     administratorLogin: administratorLogin
     administratorLoginPassword: administratorLoginPassword
@@ -33,7 +33,7 @@ resource servers_race2sqlserver_name_RACE2DB 'Microsoft.Sql/servers/databases@20
     family: 'Gen5'
     capacity: 2
   }
-  kind: 'v12.0,user,vcore'
+
   properties: {
     collation: 'SQL_Latin1_General_CP1_CI_AS'
     maxSizeBytes: 34359738368
