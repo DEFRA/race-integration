@@ -56,36 +56,46 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.Notification", "RACE2
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bicepfiles", "bicepfiles", "{9E4A6273-3717-4549-B159-01B58CAB5C6D}"
 	ProjectSection(SolutionItems) = preProject
+		bicepfiles\createAllContainerApps.bicep = bicepfiles\createAllContainerApps.bicep
+		bicepfiles\createallresources.bicep = bicepfiles\createallresources.bicep
 		BicepFiles\createappconfig.bicep = BicepFiles\createappconfig.bicep
 		BicepFiles\createappworkspace.bicep = BicepFiles\createappworkspace.bicep
 		BicepFiles\createcontainerappenv.bicep = BicepFiles\createcontainerappenv.bicep
+		bicepfiles\createcontainerapps.bicep = bicepfiles\createcontainerapps.bicep
 		BicepFiles\createcontainerregistry.bicep = BicepFiles\createcontainerregistry.bicep
 		BicepFiles\createfrontendcontainerapp.bicep = BicepFiles\createfrontendcontainerapp.bicep
 		BicepFiles\createkeyvault.bicep = BicepFiles\createkeyvault.bicep
 		BicepFiles\createmanagedidentity.bicep = BicepFiles\createmanagedidentity.bicep
+		bicepfiles\createresourcegroup.bicep = bicepfiles\createresourcegroup.bicep
+		bicepfiles\createsecurityprovidercontainerapp.bicep = bicepfiles\createsecurityprovidercontainerapp.bicep
 		BicepFiles\createservicebuc.bicep = BicepFiles\createservicebuc.bicep
 		BicepFiles\createsqlserver.bicep = BicepFiles\createsqlserver.bicep
 		BicepFiles\createstorageaccount.bicep = BicepFiles\createstorageaccount.bicep
-		bicepfiles\main.bicep = bicepfiles\main.bicep
+		bicepfiles\createwebapicontainerapp.bicep = bicepfiles\createwebapicontainerapp.bicep
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.DatabaseProvider", "RACE2.DatabaseProvider\RACE2.DatabaseProvider.csproj", "{9EDA1C2B-D094-4061-A3EA-E1BAE34E9C8F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploymentyamlfiles", "deploymentyamlfiles", "{E77DC034-434C-42C9-83F7-D50E73A132C6}"
 	ProjectSection(SolutionItems) = preProject
+		DeploymentYamlFiles\deployAllContainerApps.yml = DeploymentYamlFiles\deployAllContainerApps.yml
+		DeploymentYamlFiles\deployAllContainerAppsParameters.json = DeploymentYamlFiles\deployAllContainerAppsParameters.json
 		DeploymentYamlFiles\deployAllResources.yml = DeploymentYamlFiles\deployAllResources.yml
-		DeploymentYamlFiles\deployAlResources.json = DeploymentYamlFiles\deployAlResources.json
+		DeploymentYamlFiles\deployAlResourcesParameters.json = DeploymentYamlFiles\deployAlResourcesParameters.json
 		DeploymentYamlFiles\deployAppConfig.yml = DeploymentYamlFiles\deployAppConfig.yml
 		DeploymentYamlFiles\deployContainerAppEnv.yml = DeploymentYamlFiles\deployContainerAppEnv.yml
 		DeploymentYamlFiles\deployContainerAppEnvParameters.json = DeploymentYamlFiles\deployContainerAppEnvParameters.json
+		DeploymentYamlFiles\deployContainerApps.yml = DeploymentYamlFiles\deployContainerApps.yml
 		DeploymentYamlFiles\deployContainerRegistry.yml = DeploymentYamlFiles\deployContainerRegistry.yml
+		DeploymentYamlFiles\deployFrontEndContainerApp.yml = DeploymentYamlFiles\deployFrontEndContainerApp.yml
 		DeploymentYamlFiles\deploylogAnalyticsWorkspace.yml = DeploymentYamlFiles\deploylogAnalyticsWorkspace.yml
 		DeploymentYamlFiles\deployManagedIdentity.yml = DeploymentYamlFiles\deployManagedIdentity.yml
 		DeploymentYamlFiles\DeployResourceGroup.yml = DeploymentYamlFiles\DeployResourceGroup.yml
+		DeploymentYamlFiles\deploySecurityProviderContainerApp.yml = DeploymentYamlFiles\deploySecurityProviderContainerApp.yml
 		DeploymentYamlFiles\deployServiceBus.yml = DeploymentYamlFiles\deployServiceBus.yml
 		DeploymentYamlFiles\deploySqlServer.yml = DeploymentYamlFiles\deploySqlServer.yml
 		DeploymentYamlFiles\deployStorageAccount.yml = DeploymentYamlFiles\deployStorageAccount.yml
-		DeploymentYamlFiles\main.yml = DeploymentYamlFiles\main.yml
+		DeploymentYamlFiles\deployWebApiContainerApp.yml = DeploymentYamlFiles\deployWebApiContainerApp.yml
 	EndProjectSection
 EndProject
 Global
