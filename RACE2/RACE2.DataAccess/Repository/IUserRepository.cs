@@ -20,9 +20,17 @@ namespace RACE2.DataAccess.Repository
         public Task<UserDetail> MatchUserWithEmailAndPasswordHash(string email, string passwordhash);
         public Task<UserDetail> UpdatePasswordHashForUser(int id, string passwordhash);      
 
+        
+
         public Task<IEnumerable<FeatureFunction>> GetFeaturePermissionForRole(int roleid);
 
         public Task<List<ReservoirDetailsDTO>> GetReservoirsByUserId(int id);
+
+        public Task<Organisation> GetOrganisationAddressbyId(int orgId);
+
+        public Task<List<DataModel.Action>> GetActionsListByReservoirId(int reservoirid);
+
+        public Task<List<SafetyMeasure>> GetSafetyMeasuresListByReservoirId(int reservoirid);
      //  public Task<UserDetail> GetReservoirsByUserEmailId(string email);
 
     }
