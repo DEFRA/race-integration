@@ -411,22 +411,22 @@ namespace RACE2.DataAccess.Repository
         {
             using (var conn = Connection)
             {
-                var query = @"select *
-                                from Organisations A
-                                inner join OrganisationAddresses B On A.Id = B.OrganisationId
-                                inner join Addresses C On C.id = B.Addressesid
-                                where A.Id = @orgId";
+                //var query = @"select *
+                //                from Organisations A
+                //                inner join OrganisationAddresses B On A.Id = B.OrganisationId
+                //                inner join Addresses C On C.id = B.Addressesid
+                //                where A.Id = @orgId";
                 var parameters = new DynamicParameters();
                 parameters.Add("orgId", orgId, DbType.Int64);
 
-                var OrgAddress = await conn.QueryAsync<Organisation,Address, Organisation>(query, (organisation,address) =>
+                var OrgAddress = await conn.QueryAsync<Organisation,Address, Organisation>("sp_GetOrganisationAddressbyId", (organisation,address) =>
                 {
                     
                     organisation.Addresses.Add(address);
                     return organisation;                 
                     
                   //  return orgdto;
-                }, parameters,splitOn: "Addressesid,OrganisationId");
+                }, parameters,splitOn: "Addressesid,OrganisationId", commandType: CommandType.StoredProcedure);
                 var result = OrgAddress.GroupBy(u => u.Id).Select(g =>
                 {
                     var groupedOrg = g.First();
