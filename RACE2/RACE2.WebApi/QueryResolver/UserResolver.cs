@@ -71,5 +71,22 @@ namespace RACE2.WebApi.QueryResolver
             var result = await _integrationService.GetEngineerReservoirByUUID(uuid);
             return result;
         }
+
+
+        public async Task<Organisation> GetOrganisationByUserId(IUserService _userService, int userId)
+        {
+           var result = await _userService.GetOrganisationAddressbyId(userId);
+            return result;
+        }
+
+        public async Task<List<DataModel.Action>> GetActionsListByReservoirId(IUserService _userService, int reservoirid)
+        {
+            return await _userService.GetActionsListByReservoirId(reservoirid);
+        }
+
+        public async Task<List<SafetyMeasure>> GetSafetyMeasuresListByReservoirId(IUserService _userService, int reservoirid)
+        {
+            return await _userService.GetSafetyMeasuresListByReservoirId(reservoirid);
+        }
     }
 }
