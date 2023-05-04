@@ -72,6 +72,23 @@ namespace RACE2.Services
         {
             return await _userRepository.GetFeaturePermissionForRole(roleid);
         }
+
+
+        public async Task<Organisation> GetOrganisationAddressbyId(int userId)
+        {
+            return await _userRepository.GetOrganisationAddressbyId(userId);
+        }
+
+        public async Task<List<DataModel.Action>> GetActionsListByReservoirId(int reservoirid)
+        {
+            return await _userRepository.GetActionsListByReservoirId(reservoirid);
+        }
+
+        public async Task<List<SafetyMeasure>> GetSafetyMeasuresListByReservoirId(int reservoirid)
+        {
+            return await _userRepository.GetSafetyMeasuresListByReservoirId(reservoirid) ;
+        }
+
     }
 
 }
