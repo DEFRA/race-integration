@@ -14,7 +14,6 @@ namespace RACE2.FrontEnd.FluxorImplementation.Features
           => new AppStore(
                IsLoading: false,
                IsLoggedIn: false,
-               LastPasswordEntered:"",
                CurrentReservoir: new Reservoir(),
                NewReservoirDetails: new ReservoirDetailsDTO(),
                CurrentUserDetail: new UserDetail()
