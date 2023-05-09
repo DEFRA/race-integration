@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using RACE2.DataModel;
+using RACE2.FrontEnd.Features.CurrentUserDetail.Store;
 using RACE2.FrontEnd.RACE2GraphQLSchema;
 using System.Security.Claims;
 
@@ -23,6 +24,7 @@ namespace RACE2.FrontEnd.Components
         private string[] filteredReservoirNames;
         private IEnumerable<Claim> UserClaims { get; set; }
         private string UserName { get; set; } = "Unknown";
+        private int UserId { get; set; } = 0;
 
         private string[] reservoirNames = Array.Empty<String>();
         //    {
@@ -43,10 +45,12 @@ namespace RACE2.FrontEnd.Components
                 UserName = authState.User.Identity.Name;
                 UserClaims = authState.User.Claims;
             }
+            var userDetails = await client.GetUserByEmailID.ExecuteAsync(UserName);
+            UserId = userDetails!.Data!.UserByEmailID.Id;
             //SelectedReservoirName = CurrentUserDetailState.CurrentReservoir.public_name;
-            var results = await client.GetReservoirsByUserEmailId.ExecuteAsync(UserName);
+            var results = await client.GetReservoirsByUserId.ExecuteAsync(UserId);
             List<string> reservoirNamesList = new List<string>();
-            foreach (var rn in results!.Data!.ReservoirsByUserEmailId.Reservoirs)
+            foreach (var rn in results!.Data!.ReservoirsByUserId)
             {
                 reservoirNamesList.Add(rn.Public_name);
             }
@@ -66,6 +70,7 @@ namespace RACE2.FrontEnd.Components
 
         public async void GoToNextPage()
         {
+            SelectedReservoirName = CurrentReservoir.public_name;
             bool forceLoad = false;
             string pagelink = "/reservoir-details";
             NavigationManager.NavigateTo(pagelink, forceLoad);
