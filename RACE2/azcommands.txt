@@ -1,5 +1,7 @@
 Heroku portal login password: re53Rv01r
 
+dotnet graphql download https://localhost:5003/graphql/ -f ./schema.graphql
+
 az login
 
 az acr login -n race2acr  -n race2acr
