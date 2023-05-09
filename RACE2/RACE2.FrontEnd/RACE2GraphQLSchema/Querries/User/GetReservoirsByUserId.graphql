@@ -2,8 +2,23 @@
   reservoirsByUserId(id:$newid) {
     public_name
     race_reservoir_id
+    reference_number
+    public_category
+    registered_category
+    grid_reference
+    capacity
+    surface_area
+    top_water_level
+    construction_start_date
+    verified_details_date
+    last_inspection_date
+    next_inspection_date
+    nearestTown
     address {
+      addressLine1
       addressLine2
+      town
+      county
       postcode
     }
   }  

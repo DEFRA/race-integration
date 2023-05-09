@@ -34,10 +34,5 @@ namespace RACE2.FrontEnd.FluxorImplementation.Reducers
                  IsLoggedIn = action.IsLoggedIn 
              };
 
-        [ReducerMethod]
-        public static AppStore ReduceStoreLastPasswordEnteredAction(AppStore state, StoreLastPasswordEnteredAction action)
-            => state with { 
-                LastPasswordEntered = action.LastPasswordEntered 
-            };
     }
 }
