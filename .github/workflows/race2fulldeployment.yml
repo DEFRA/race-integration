@@ -38,7 +38,7 @@ jobs:
       with:
           login-server: ${{ vars.REGISTRY_LOGIN_SERVER }}
           username: ${{ vars.REGISTRY_USERNAME }}
-          password: ${{ vars.REGISTRY_PASSWORD }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
     - name: 'Docker build and push - SecurityProvider'    
       run: |
         docker build . -f Dockerfile_SecurityProvider -t ${{ vars.REGISTRY_LOGIN_SERVER }}/race2securityprovider:latest
