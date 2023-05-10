@@ -24,9 +24,9 @@ jobs:
         azcliversion: 2.48.1
         inlineScript: |
           az --version
-          az group create -n ${{ vars.resourcegroup-name}} -l ${{vars.location}}
-          az deployment group what-if --name 'AllResourceDeployments' --resource-group ${{ vars.resourcegroup-name}} --template-file './RACE2/bicepfiles/createallresources.bicep' -p './RACE2/DeploymentYamlFiles/deployAlResourcesParameters.json'
-          az deployment group create --name 'AllResourceDeployments' --resource-group ${{ vars.resourcegroup-name}}' --template-file './RACE2/bicepfiles/createallresources.bicep' -p './RACE2/DeploymentYamlFiles/deployAlResourcesParameters.json'
+          az group create -n ${{ vars.resourcegroupname}} -l ${{vars.location}}
+          az deployment group what-if --name 'AllResourceDeployments' --resource-group ${{ vars.resourcegroupname}} --template-file './RACE2/bicepfiles/createallresources.bicep' -p './RACE2/DeploymentYamlFiles/deployAlResourcesParameters.json'
+          az deployment group create --name 'AllResourceDeployments' --resource-group ${{ vars.resourcegroupname}}' --template-file './RACE2/bicepfiles/createallresources.bicep' -p './RACE2/DeploymentYamlFiles/deployAlResourcesParameters.json'
     - name: print result
       run: echo "resources created successfully"
   
@@ -65,9 +65,9 @@ jobs:
         azcliversion: 2.48.1
         inlineScript: |
           az --version
-          az deployment group what-if --name 'AllContainerAppsDeployments' --resource-group ${{ vars.resourcegroup-name}} --template-file './RACE2/bicepfiles/createAllContainerApps.bicep' -p './RACE2/DeploymentYamlFiles/deployAllContainerAppsParameters.json'
+          az deployment group what-if --name 'AllContainerAppsDeployments' --resource-group ${{ vars.resourcegroupname}} --template-file './RACE2/bicepfiles/createAllContainerApps.bicep' -p './RACE2/DeploymentYamlFiles/deployAllContainerAppsParameters.json'
 
-          az deployment group create --name 'AllContainerAppsDeployments' --resource-group ${{ vars.resourcegroup-name}} --template-file './RACE2/bicepfiles/createAllContainerApps.bicep' -p './RACE2/DeploymentYamlFiles/deployAllContainerAppsParameters.json'
+          az deployment group create --name 'AllContainerAppsDeployments' --resource-group ${{ vars.resourcegroupname}} --template-file './RACE2/bicepfiles/createAllContainerApps.bicep' -p './RACE2/DeploymentYamlFiles/deployAllContainerAppsParameters.json'
               
     - name: print result
       run: echo "container apps created successfully"
