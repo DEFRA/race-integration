@@ -12,7 +12,7 @@
         "value": "westeurope"
       }, 
       "resourcegroup": {
-        "value": "Race2ProjectRG1"
+        "value": "RGPRACE2ALLRESOURCES201"
       },
       "managedidentity": {
         "value": "Race2ManagedIdentity"
