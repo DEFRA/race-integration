@@ -12,16 +12,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - uses: actions/checkout@main
     - name: Azure Login
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
-    - name: 'Checkout'
-      uses: actions/checkout@v3
     - name: Deploy All resources
       uses: azure/CLI@v1
       with:
-        azcliversion: 2.48.1
+        azcliversion: ${{ vars.azcliversion}}
         inlineScript: |
           az --version
           az group create -n ${{ vars.resourcegroupname}} -l ${{vars.location}}
@@ -37,21 +36,21 @@ jobs:
     - name: 'Azure ACR Login'
       uses: azure/docker-login@v1
       with:
-          login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
-          username: ${{ secrets.REGISTRY_USERNAME }}
-          password: ${{ secrets.REGISTRY_PASSWORD }}
+          login-server: ${{ vars.REGISTRY_LOGIN_SERVER }}
+          username: ${{ vars.REGISTRY_USERNAME }}
+          password: ${{ vars.REGISTRY_PASSWORD }}
     - name: 'Docker build and push - SecurityProvider'    
       run: |
-        docker build . -f Dockerfile_SecurityProvider -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/race2securityprovider:latest
-        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/race2securityprovider:latest
+        docker build . -f Dockerfile_SecurityProvider -t ${{ vars.REGISTRY_LOGIN_SERVER }}/race2securityprovider:latest
+        docker push ${{ vars.REGISTRY_LOGIN_SERVER }}/race2securityprovider:latest
     - name: 'Docker build and push - WebApi'    
       run: |
-        docker build . -f Dockerfile_WebApi -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/race2webapi:latest
-        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/race2webapi:latest
+        docker build . -f Dockerfile_WebApi -t ${{ vars.REGISTRY_LOGIN_SERVER }}/race2webapi:latest
+        docker push ${{ vars.REGISTRY_LOGIN_SERVER }}/race2webapi:latest
     - name: 'Docker build and push - FrontEnd'    
       run: |
-        docker build . -f Dockerfile_FrontEnd -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/race2frontend:latest
-        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/race2frontend:latest
+        docker build . -f Dockerfile_FrontEnd -t ${{ vars.REGISTRY_LOGIN_SERVER }}/race2frontend:latest
+        docker push ${{ vars.REGISTRY_LOGIN_SERVER }}/race2frontend:latest
 
     - name: print result
       run: echo "container images created successfully"
@@ -59,10 +58,11 @@ jobs:
     runs-on: ubuntu-latest
     needs: build-and-deploy
     steps:
+    - uses: actions/checkout@main
     - name: Deploy Container Apps
       uses: azure/CLI@v1
       with:
-        azcliversion: 2.48.1
+        azcliversion: ${{ vars.azcliversion}}
         inlineScript: |
           az --version
           az deployment group what-if --name 'AllContainerAppsDeployments' --resource-group ${{ vars.resourcegroupname}} --template-file './RACE2/bicepfiles/createAllContainerApps.bicep' -p './RACE2/DeploymentYamlFiles/deployAllContainerAppsParameters.json'
