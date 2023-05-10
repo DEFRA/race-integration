@@ -1,0 +1,31 @@
+on:
+  push:
+    branches: [none] # [ main ]
+  pull_request:
+    branches: [none] # [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+name: Deploy ContainerApps
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@main
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    - name: Deploy
+      uses: azure/CLI@v1
+      with:
+        azcliversion: 2.48.1
+        inlineScript: |
+          az --version
+          az deployment group what-if --name 'AllContainerAppsDeployments' --resource-group 'RACE2ProjectRG1' --template-file './RACE2/bicepfiles/createAllContainerApps.bicep' -p './RACE2/DeploymentYamlFiles/deployAllContainerAppsParameters.json'
+
+          az deployment group create --name 'AllContainerAppsDeployments' --resource-group 'RACE2ProjectRG1' --template-file './RACE2/bicepfiles/createAllContainerApps.bicep' -p './RACE2/DeploymentYamlFiles/deployAllContainerAppsParameters.json'
+              
+    - name: print result
+      run: echo "container apps created successfully"

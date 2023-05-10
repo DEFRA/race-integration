@@ -20,6 +20,7 @@ namespace RACE2.Services
         public Task<UserDetail> UpdatePasswordHashForUser(int id, string passwordhash);
       //  public Task<UserDetail> GetReservoirsByUserId(int id);
         public Task<List<ReservoirDetailsDTO>> GetReservoirsByUserId(int id);
+        public Task<List<ReservoirDetailsDTO>> GetReservoirsByUserEmailId(string emailId);
         public Task<IEnumerable<FeatureFunction>> GetFeaturePermissionForRole(int roleid);
 
         public Task<Organisation> GetOrganisationAddressbyId(int userId);
