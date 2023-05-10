@@ -7,7 +7,7 @@ variables:
   vmImageName: 'ubuntu-latest'
   azureServiceConnection: 'AZR-RAC-POC1'
   location : 'westeurope'
-  resourceGroupName: 'RACE2ProjectRG1'
+  resourceGroupName: 'RGPRACE2ALLRESOURCES201'
 pool:
   vmImage: $(vmImageName)
 
