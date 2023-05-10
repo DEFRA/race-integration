@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using RACE2.DataModel;
+using RACE2.FrontEnd.Features.CurrentUserDetail.Store;
 using RACE2.FrontEnd.RACE2GraphQLSchema;
 using System.Security.Claims;
 
@@ -21,8 +22,10 @@ namespace RACE2.FrontEnd.Components
         bool? IsLoggedIn;
         string? filter;
         private string[] filteredReservoirNames;
+        private List<Reservoir> ReservoirsLinkedToUser { get; set; } =new List<Reservoir>();
         private IEnumerable<Claim> UserClaims { get; set; }
         private string UserName { get; set; } = "Unknown";
+        private int UserId { get; set; } = 0;
 
         private string[] reservoirNames = Array.Empty<String>();
         //    {
@@ -43,12 +46,31 @@ namespace RACE2.FrontEnd.Components
                 UserName = authState.User.Identity.Name;
                 UserClaims = authState.User.Claims;
             }
-            //SelectedReservoirName = CurrentUserDetailState.CurrentReservoir.public_name;
-            var results = await client.GetReservoirsByUserEmailId.ExecuteAsync(UserName);
+            var userDetails = await client.GetUserByEmailID.ExecuteAsync(UserName);
+            UserId = userDetails!.Data!.UserByEmailID.Id;
+            var results = await client.GetReservoirsByUserId.ExecuteAsync(UserId);
             List<string> reservoirNamesList = new List<string>();
-            foreach (var rn in results!.Data!.ReservoirsByUserEmailId.Reservoirs)
+            var reservoirs = results!.Data!.ReservoirsByUserId;
+
+            foreach (var rn in reservoirs)
             {
                 reservoirNamesList.Add(rn.Public_name);
+                var r = new Reservoir()
+                {
+                    race_reservoir_id= rn.Race_reservoir_id,
+                    public_name = rn.Public_name,
+                    NearestTown = rn.NearestTown,
+                    grid_reference=rn.Grid_reference
+                }; 
+                r.address = new Address()
+                {
+                    AddressLine1 = rn.Address.AddressLine1,
+                    AddressLine2 = rn.Address.AddressLine2,
+                    Town=rn.Address.Town,
+                    County=rn.Address.County,
+                    Postcode = rn.Address.Postcode
+                };
+                ReservoirsLinkedToUser.Add(r);
             }
             reservoirNames = reservoirNamesList.ToArray<string>();
         }
@@ -66,6 +88,8 @@ namespace RACE2.FrontEnd.Components
 
         public async void GoToNextPage()
         {
+            SelectedReservoirName = CurrentReservoir.public_name;
+            var sr= ReservoirsLinkedToUser.FirstOrDefault(r=>r.public_name== SelectedReservoirName);
             bool forceLoad = false;
             string pagelink = "/reservoir-details";
             NavigationManager.NavigateTo(pagelink, forceLoad);
@@ -91,7 +115,7 @@ namespace RACE2.FrontEnd.Components
             SelectedReservoirName = reservoir;
             CurrentReservoir.public_name = reservoir;
             filteredReservoirNames = null;
-        }
+        }       
 
         private void goback()
         {
