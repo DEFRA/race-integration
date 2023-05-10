@@ -7,7 +7,7 @@ variables:
   vmImageName: 'ubuntu-latest'
 
   azureServiceConnection: 'AZR-RAC-POC1'
-  resourceGroupName: 'RACE2ProjectRG1' 
+  resourceGroupName: 'RGPRACE2ALLRESOURCES201' 
   templateFile: './RACE2/bicepfiles/createcontainerappenv.bicep'
   parametersFile: './RACE2/DeploymentYamlFiles/deployContainerAppEnvParameters.json'
 pool:
