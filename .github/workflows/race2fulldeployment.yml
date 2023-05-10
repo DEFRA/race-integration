@@ -42,16 +42,16 @@ jobs:
           password: ${{ secrets.REGISTRY_PASSWORD }}
     - name: 'Docker build and push - SecurityProvider'    
       run: |
-        docker build . -f Dockerfile_SecurityProvider -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/race2securityprovider:${{ github.sha }}
-        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/race2securityprovider:${{ github.sha }}
+        docker build . -f Dockerfile_SecurityProvider -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/race2securityprovider:latest
+        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/race2securityprovider:latest
     - name: 'Docker build and push - WebApi'    
       run: |
-        docker build . -f Dockerfile_WebApi -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/race2webapi:${{ github.sha }}
-        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/race2webapi:${{ github.sha }}
+        docker build . -f Dockerfile_WebApi -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/race2webapi:latest
+        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/race2webapi:latest
     - name: 'Docker build and push - FrontEnd'    
       run: |
-        docker build . -f Dockerfile_FrontEnd -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/race2frontend:${{ github.sha }}
-        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/race2frontend:${{ github.sha }}
+        docker build . -f Dockerfile_FrontEnd -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/race2frontend:latest
+        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/race2frontend:latest
 
     - name: print result
       run: echo "container images created successfully"
