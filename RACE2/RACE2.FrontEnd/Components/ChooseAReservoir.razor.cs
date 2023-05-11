@@ -3,9 +3,10 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using RACE2.DataModel;
-using RACE2.FrontEnd.Features.CurrentUserDetail.Store;
+using RACE2.FrontEnd.FluxorImplementation.Stores;
 using RACE2.FrontEnd.RACE2GraphQLSchema;
 using System.Security.Claims;
+using RACE2.FrontEnd.FluxorImplementation.Actions;
 
 namespace RACE2.FrontEnd.Components
 {
@@ -15,10 +16,16 @@ namespace RACE2.FrontEnd.Components
         public RACE2GraphQLClient client { get; set; } = default!;
         [Inject]
         public NavigationManager NavigationManager { get; set; } = default!;
+        [Inject]
+        public IState<CurrentUserDetailState> CurrentUserDetailState { get; set; } = default!;
+        [Inject]
+        public IState<CurrentReservoirState> CurrentReservoirState { get; set; } = default!;
+
+        [Inject]
+        public IDispatcher Dispatcher { get; set; } = default!;        
 
         public Reservoir CurrentReservoir { get; set; } = new Reservoir();
         string? SelectedReservoirName;
-        string CurrentUserEmail;
         bool? IsLoggedIn;
         string? filter;
         private string[] filteredReservoirNames;
@@ -39,16 +46,49 @@ namespace RACE2.FrontEnd.Components
 
         protected override async void OnInitialized()
         {
+            
             AuthenticationState authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
 
-            if (authState.User.Identity.Name is not null)
-            {
-                UserName = authState.User.Identity.Name;
-                UserClaims = authState.User.Claims;
-            }
-            var userDetails = await client.GetUserByEmailID.ExecuteAsync(UserName);
-            UserId = userDetails!.Data!.UserByEmailID.Id;
-            var results = await client.GetReservoirsByUserId.ExecuteAsync(UserId);
+            //if (authState.User.Identity.Name is not null)
+            //{
+            //    UserName = authState.User.Identity.Name;
+            //    UserClaims = authState.User.Claims;
+            //}
+            //var userDetails = await client.GetUserByEmailID.ExecuteAsync(UserName);
+            //UserId = userDetails!.Data!.UserByEmailID.Id;
+            //var results = await client.GetReservoirsByUserId.ExecuteAsync(UserId);
+            //List<string> reservoirNamesList = new List<string>();
+            //var reservoirs = results!.Data!.ReservoirsByUserId;
+
+            //foreach (var rn in reservoirs)
+            //{
+            //    reservoirNamesList.Add(rn.Public_name);
+            //    var r = new Reservoir()
+            //    {
+            //        race_reservoir_id = rn.Race_reservoir_id,
+            //        public_name = rn.Public_name,
+            //        NearestTown = rn.NearestTown,
+            //        grid_reference = rn.Grid_reference
+            //    };
+            //    r.address = new Address()
+            //    {
+            //        AddressLine1 = rn.Address.AddressLine1,
+            //        AddressLine2 = rn.Address.AddressLine2,
+            //        Town = rn.Address.Town,
+            //        County = rn.Address.County,
+            //        Postcode = rn.Address.Postcode
+            //    };
+            //    ReservoirsLinkedToUser.Add(r);
+            //}
+            //reservoirNames = reservoirNamesList.ToArray<string>();
+
+            base.OnInitialized();
+        }
+
+        private async void LoadReservoirs()
+        {
+            var currentUser = CurrentUserDetailState.Value.CurrentUserDetail;
+            var results = await client.GetReservoirsByUserId.ExecuteAsync(currentUser.Id);
             List<string> reservoirNamesList = new List<string>();
             var reservoirs = results!.Data!.ReservoirsByUserId;
 
@@ -57,24 +97,23 @@ namespace RACE2.FrontEnd.Components
                 reservoirNamesList.Add(rn.Public_name);
                 var r = new Reservoir()
                 {
-                    race_reservoir_id= rn.Race_reservoir_id,
+                    race_reservoir_id = rn.Race_reservoir_id,
                     public_name = rn.Public_name,
                     NearestTown = rn.NearestTown,
-                    grid_reference=rn.Grid_reference
-                }; 
+                    grid_reference = rn.Grid_reference
+                };
                 r.address = new Address()
                 {
                     AddressLine1 = rn.Address.AddressLine1,
                     AddressLine2 = rn.Address.AddressLine2,
-                    Town=rn.Address.Town,
-                    County=rn.Address.County,
+                    Town = rn.Address.Town,
+                    County = rn.Address.County,
                     Postcode = rn.Address.Postcode
                 };
                 ReservoirsLinkedToUser.Add(r);
             }
             reservoirNames = reservoirNamesList.ToArray<string>();
         }
-
         private async Task<IEnumerable<string>> SearchValues(string value)
         {
             // In real life use an asynchronous function for fetching data from an api.
@@ -82,17 +121,10 @@ namespace RACE2.FrontEnd.Components
 
             // if text is null or empty, show complete list
             if (string.IsNullOrEmpty(value))
+            {                
                 return reservoirNames;
+            }
             return reservoirNames.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
-        }
-
-        public async void GoToNextPage()
-        {
-            SelectedReservoirName = CurrentReservoir.public_name;
-            var sr= ReservoirsLinkedToUser.FirstOrDefault(r=>r.public_name== SelectedReservoirName);
-            bool forceLoad = false;
-            string pagelink = "/reservoir-details";
-            NavigationManager.NavigateTo(pagelink, forceLoad);
         }
 
         async Task HandleInput(ChangeEventArgs e)
@@ -115,13 +147,43 @@ namespace RACE2.FrontEnd.Components
             SelectedReservoirName = reservoir;
             CurrentReservoir.public_name = reservoir;
             filteredReservoirNames = null;
-        }       
+        }
+
+        public async void GoToNextPage()
+        {
+            SelectedReservoirName = CurrentReservoir.public_name;
+            var selectedReservoir = ReservoirsLinkedToUser.FirstOrDefault(r => r.public_name == SelectedReservoirName);
+            var action = new StoreReservoirAction(selectedReservoir);
+            Dispatcher.Dispatch(action);
+            bool forceLoad = false;
+            string pagelink = "/reservoir-details";
+            NavigationManager.NavigateTo(pagelink, forceLoad);
+        }
 
         private void goback()
         {
             bool forceLoad = false;
             string pagelink = "/annual-statements";
             NavigationManager.NavigateTo(pagelink, forceLoad);
+        }
+
+        protected override void OnAfterRender(bool firstRender)
+        {
+            if (firstRender)
+            {
+                CurrentUserDetailState.StateChanged += StateChanged;
+                CurrentReservoirState.StateChanged += StateChanged;
+            }            
+        }
+        public void StateChanged(object sender, EventArgs args)
+        {
+            InvokeAsync(StateHasChanged);
+        }
+
+        void IDisposable.Dispose()
+        {
+            CurrentUserDetailState.StateChanged -= StateChanged;
+            CurrentReservoirState.StateChanged -= StateChanged;
         }
     }
 }

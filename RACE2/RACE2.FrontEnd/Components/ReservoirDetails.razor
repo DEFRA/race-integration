@@ -1,11 +1,13 @@
 ﻿@page "/reservoir-details"
 @using Microsoft.AspNetCore.Authorization;
+@implements IDisposable
+@inject AuthenticationStateProvider AuthenticationStateProvider
 @attribute [Authorize]
 
 <div class="govuk-width-container ">
 
     <a class="govuk-back-link" @onclick="goback">Back</a>
     <h3>reservoir_details</h3>
-    <h3>Search results for</h3>
+    <h3>Search results for @CurrentReservoirState.Value.CurrentReservoir.public_name</h3>
 </div>
 

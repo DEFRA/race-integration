@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Identity;
 using RACE2.DataModel;
-using RACE2.FrontEnd.Features.CurrentUserDetail.Store;
+using RACE2.FrontEnd.FluxorImplementation.Stores;
 //using RACE2.FrontEnd.RACE2GraphQLSchema;
 using RACE2.FrontEnd.Utilities;
 

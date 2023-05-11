@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using RACE2.DataModel;
-using RACE2.FrontEnd.Features.CurrentUserDetail.Store;
+using RACE2.FrontEnd.FluxorImplementation.Stores;
 
 namespace RACE2.FrontEnd.Components
 {

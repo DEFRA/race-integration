@@ -28,9 +28,9 @@ namespace RACE2.WebApi.QueryResolver
         public async Task<UserSpecificDto> GetUserByEmailID(IUserService _userService, string email)
         {
             RaceNotification raceNotification = new RaceNotification();
-         //   await raceNotification.SendForgotPasswordMail("mahalakshmi.alagarsamy@capgemini.com", "Maha", "https://race2securityprovider.gentlebush-defe7f09.westeurope.azurecontainerapps.io/Identity/Account/ForgotPassword");
-            await raceNotification.SendMail(email);
-            await raceNotification.SendEmailTestWithPersonalisation(email);
+            //await raceNotification.SendForgotPasswordMail("mahalakshmi.alagarsamy@capgemini.com", "Maha", "https://race2securityprovider.gentlebush-defe7f09.westeurope.azurecontainerapps.io/Identity/Account/ForgotPassword");
+            //await raceNotification.SendMail(email);
+            //await raceNotification.SendEmailTestWithPersonalisation(email);
 
             return await _userService.GetUserByEmailID(email);     
             
@@ -47,12 +47,6 @@ namespace RACE2.WebApi.QueryResolver
             var result = await _userService.MatchUserWithEmailAndPasswordHash(email,passwordhash);
             return result;
         }
-
-        //public async Task<UserDetail> GetReservoirsByUserId(IUserService _userService, int id)
-        //{
-        //    var result = await _userService.GetReservoirsByUserId(id);
-        //    return result;
-        //}
 
         public async Task<List<ReservoirDetailsDTO>> GetReservoirsByUserId(IUserService _userService, int id)
         {
