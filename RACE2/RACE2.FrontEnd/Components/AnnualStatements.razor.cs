@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using RACE2.DataModel;
+using RACE2.FrontEnd.FluxorImplementation.Actions;
+using RACE2.FrontEnd.FluxorImplementation.Stores;
 using RACE2.FrontEnd.RACE2GraphQLSchema;
 using System.Security.Claims;
 
@@ -14,14 +16,19 @@ namespace RACE2.FrontEnd.Components
         public RACE2GraphQLClient client { get; set; } = default!;
         [Inject]
         public NavigationManager NavigationManager { get; set; } = default!;
+        [Inject]
+        public IState<CurrentUserDetailState> CurrentUserDetailState { get; set; } = default!;
+        [Inject]
+        public IDispatcher Dispatcher { get; set; } = default!;
 
         string CurrentUserEmail;
         bool? IsLoggedIn;
         private IEnumerable<Claim> UserClaims { get; set; }
-        private string UserName { get; set; } = "Unknown";
-        private List<Reservoir> ReservoirsLinkedToUser { get; set; } = new List<Reservoir>();
         private int UserId { get; set; } = 0;
-        private string[] reservoirNames = Array.Empty<String>();
+        private string UserName { get; set; } = "Unknown";
+        private UserDetail UserDetail { get; set; } 
+        private List<Reservoir> ReservoirsLinkedToUser { get; set; } = new List<Reservoir>();
+
 
         protected override async void OnInitialized()
         {
@@ -34,13 +41,18 @@ namespace RACE2.FrontEnd.Components
             }
             var userDetails = await client.GetUserByEmailID.ExecuteAsync(UserName);
             UserId = userDetails!.Data!.UserByEmailID.Id;
+            UserDetail = new UserDetail()
+            {
+                UserName= UserName,
+                Id= UserId,
+                Email= userDetails!.Data!.UserByEmailID.Email
+            };
             var results = await client.GetReservoirsByUserId.ExecuteAsync(UserId);
             List<string> reservoirNamesList = new List<string>();
             var reservoirs = results!.Data!.ReservoirsByUserId;
 
             foreach (var rn in reservoirs)
             {
-                reservoirNamesList.Add(rn.Public_name);
                 var r = new Reservoir()
                 {
                     race_reservoir_id = rn.Race_reservoir_id,
@@ -58,11 +70,14 @@ namespace RACE2.FrontEnd.Components
                 };
                 ReservoirsLinkedToUser.Add(r);
             }
-            reservoirNames = reservoirNamesList.ToArray<string>();
+            var action = new StoreUserDetailAction(UserDetail);
+            Dispatcher.Dispatch(action);
+            base.OnInitialized();
         }
 
         public async void GoToNextPage()
         {
+            var u = CurrentUserDetailState.Value.CurrentUserDetail;
             bool forceLoad = false;
             string pagelink = "/choose-a-reservoir";
             NavigationManager.NavigateTo(pagelink, forceLoad);
@@ -84,6 +99,23 @@ namespace RACE2.FrontEnd.Components
         {
             text1 = $"Tab value: {tab.Value}";
             text2 = $"Tab text: {tab.Text}";
+        }
+
+        protected override void OnAfterRender(bool firstRender)
+        {
+            if (firstRender)
+            {
+                CurrentUserDetailState.StateChanged += StateChanged;
+            }
+        }
+        public void StateChanged(object sender, EventArgs args)
+        {
+            InvokeAsync(StateHasChanged);
+        }
+
+        void IDisposable.Dispose()
+        {
+            CurrentUserDetailState.StateChanged -= StateChanged;
         }
     }
 }
