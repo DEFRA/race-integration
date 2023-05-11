@@ -99,23 +99,6 @@ namespace RACE2.FrontEnd.Components
         {
             text1 = $"Tab value: {tab.Value}";
             text2 = $"Tab text: {tab.Text}";
-        }
-
-        protected override void OnAfterRender(bool firstRender)
-        {
-            if (firstRender)
-            {
-                CurrentUserDetailState.StateChanged += StateChanged;
-            }
-        }
-        public void StateChanged(object sender, EventArgs args)
-        {
-            InvokeAsync(StateHasChanged);
-        }
-
-        void IDisposable.Dispose()
-        {
-            CurrentUserDetailState.StateChanged -= StateChanged;
-        }
+        }        
     }
 }

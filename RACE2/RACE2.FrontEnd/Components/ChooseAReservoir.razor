@@ -1,6 +1,6 @@
 ﻿@page "/choose-a-reservoir"
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
 @using Microsoft.AspNetCore.Authorization;
-@implements IDisposable
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @attribute [Authorize]
 
@@ -21,8 +21,8 @@
 
                 <div class="autocomplete">
                     <EditForm Model="@CurrentReservoir">
-                        <InputText @bind-Value="@SelectedReservoirName" @oninput=HandleInput class="form-control filter" @onclick=LoadReservoirs
-                                   style="width:400px;border: 2px solid #000000;border-radius:unset;font-size: 18px;" autocomplete="off" aria-autocomplete="none" />
+                        <InputText @bind-Value="@SelectedReservoirName" @oninput=HandleInput class="form-control filter" 
+                                   style="width:600px;border: 2px solid #000000;border-radius:unset;font-size: 18px;" autocomplete="off" aria-autocomplete="none" />
                         @if (filteredReservoirNames is not null)
                         {
                             <ul class="options">

@@ -45,10 +45,34 @@ namespace RACE2.FrontEnd.Components
         //};
 
         protected override async void OnInitialized()
-        {
-            
-            AuthenticationState authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        {            
+            var currentUser = CurrentUserDetailState.Value.CurrentUserDetail;
+            var results = await client.GetReservoirsByUserId.ExecuteAsync(currentUser.Id);
+            List<string> reservoirNamesList = new List<string>();
+            var reservoirs = results!.Data!.ReservoirsByUserId;
 
+            foreach (var rn in reservoirs)
+            {
+                reservoirNamesList.Add(rn.Public_name);
+                var r = new Reservoir()
+                {
+                    race_reservoir_id = rn.Race_reservoir_id,
+                    public_name = rn.Public_name,
+                    NearestTown = rn.NearestTown,
+                    grid_reference = rn.Grid_reference
+                };
+                r.address = new Address()
+                {
+                    AddressLine1 = rn.Address.AddressLine1,
+                    AddressLine2 = rn.Address.AddressLine2,
+                    Town = rn.Address.Town,
+                    County = rn.Address.County,
+                    Postcode = rn.Address.Postcode
+                };
+                ReservoirsLinkedToUser.Add(r);
+            }
+            reservoirNames = reservoirNamesList.ToArray<string>();
+            AuthenticationState authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
             //if (authState.User.Identity.Name is not null)
             //{
             //    UserName = authState.User.Identity.Name;
@@ -84,36 +108,7 @@ namespace RACE2.FrontEnd.Components
 
             base.OnInitialized();
         }
-
-        private async void LoadReservoirs()
-        {
-            var currentUser = CurrentUserDetailState.Value.CurrentUserDetail;
-            var results = await client.GetReservoirsByUserId.ExecuteAsync(currentUser.Id);
-            List<string> reservoirNamesList = new List<string>();
-            var reservoirs = results!.Data!.ReservoirsByUserId;
-
-            foreach (var rn in reservoirs)
-            {
-                reservoirNamesList.Add(rn.Public_name);
-                var r = new Reservoir()
-                {
-                    race_reservoir_id = rn.Race_reservoir_id,
-                    public_name = rn.Public_name,
-                    NearestTown = rn.NearestTown,
-                    grid_reference = rn.Grid_reference
-                };
-                r.address = new Address()
-                {
-                    AddressLine1 = rn.Address.AddressLine1,
-                    AddressLine2 = rn.Address.AddressLine2,
-                    Town = rn.Address.Town,
-                    County = rn.Address.County,
-                    Postcode = rn.Address.Postcode
-                };
-                ReservoirsLinkedToUser.Add(r);
-            }
-            reservoirNames = reservoirNamesList.ToArray<string>();
-        }
+        
         private async Task<IEnumerable<string>> SearchValues(string value)
         {
             // In real life use an asynchronous function for fetching data from an api.
@@ -165,25 +160,6 @@ namespace RACE2.FrontEnd.Components
             bool forceLoad = false;
             string pagelink = "/annual-statements";
             NavigationManager.NavigateTo(pagelink, forceLoad);
-        }
-
-        protected override void OnAfterRender(bool firstRender)
-        {
-            if (firstRender)
-            {
-                CurrentUserDetailState.StateChanged += StateChanged;
-                CurrentReservoirState.StateChanged += StateChanged;
-            }            
-        }
-        public void StateChanged(object sender, EventArgs args)
-        {
-            InvokeAsync(StateHasChanged);
-        }
-
-        void IDisposable.Dispose()
-        {
-            CurrentUserDetailState.StateChanged -= StateChanged;
-            CurrentReservoirState.StateChanged -= StateChanged;
-        }
+        }        
     }
 }
