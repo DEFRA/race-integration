@@ -1,12 +1,11 @@
 ﻿using Fluxor;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using RACE2.DataModel;
 using RACE2.FrontEnd.FluxorImplementation.Stores;
-using RACE2.FrontEnd.RACE2GraphQLSchema;
-using System.Security.Claims;
 using RACE2.FrontEnd.FluxorImplementation.Actions;
-using Microsoft.AspNetCore.Components;
+using RACE2.FrontEnd.RACE2GraphQLSchema;
 
 namespace RACE2.FrontEnd.Components
 {
@@ -16,8 +15,6 @@ namespace RACE2.FrontEnd.Components
         public RACE2GraphQLClient client { get; set; } = default!;
         [Inject]
         public NavigationManager NavigationManager { get; set; } = default!;
-        [Inject]
-        public IState<CurrentUserDetailState> CurrentUserDetailState { get; set; } = default!;
         [Inject]
         public IState<CurrentReservoirState> CurrentReservoirState { get; set; } = default!;
 
@@ -38,25 +35,6 @@ namespace RACE2.FrontEnd.Components
             bool forceLoad = false;
             string pagelink = "/choose-a-reservoir";
             NavigationManager.NavigateTo(pagelink, forceLoad);
-        }
-
-        protected override void OnAfterRender(bool firstRender)
-        {
-            if (firstRender)
-            {
-                CurrentUserDetailState.StateChanged += StateChanged;
-                CurrentReservoirState.StateChanged += StateChanged;
-            }
-        }
-        public void StateChanged(object sender, EventArgs args)
-        {
-            InvokeAsync(StateHasChanged);
-        }
-
-        void IDisposable.Dispose()
-        {
-            CurrentUserDetailState.StateChanged -= StateChanged;
-            CurrentReservoirState.StateChanged -= StateChanged;
-        }
+        }        
     }
 }
