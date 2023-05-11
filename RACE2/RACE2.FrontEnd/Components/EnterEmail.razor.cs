@@ -1,7 +1,7 @@
 ﻿using Fluxor;
 using Microsoft.AspNetCore.Components;
 using RACE2.DataModel;
-using RACE2.FrontEnd.Features.CurrentUserDetail.Store;
+using RACE2.FrontEnd.FluxorImplementation.Stores;
 using RACE2.FrontEnd.RACE2GraphQLSchema;
 using RACE2.FrontEnd.Utilities;
 using System;
