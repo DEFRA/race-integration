@@ -1,6 +1,6 @@
 ﻿using Fluxor;
 using Microsoft.AspNetCore.Components;
-using RACE2.FrontEnd.Features.CurrentUserDetail.Store;
+using RACE2.FrontEnd.FluxorImplementation.Stores;
 
 namespace RACE2.FrontEnd.Components
 {
