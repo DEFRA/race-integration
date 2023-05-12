@@ -155,6 +155,11 @@ namespace RACE2.FrontEnd.Components
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }
 
+        public async void GoToSaveComebackLaterPage()
+        {
+
+        }
+
         private void goback()
         {
             bool forceLoad = false;
