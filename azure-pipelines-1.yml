@@ -16,4 +16,5 @@ steps:
     azureSubscription: 'AZR-RAC-POC1'
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
-    inlineScript: 'az acr build -r race2acr -t race2acr.azurecr.io/race2securityprovider:v5-f Dockerfile_SecurityProvider .'
+    inlineScript: |
+      'az acr build -r race2acr -t race2acr.azurecr.io/race2securityprovider:v5 -f Dockerfile_SecurityProvider .'
