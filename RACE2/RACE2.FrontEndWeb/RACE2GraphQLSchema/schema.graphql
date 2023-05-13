@@ -12,12 +12,16 @@ enum ApplyPolicy {
 type UserResolver {
   userDetails: [UserDetail!]!
   byId(id: Int!): UserDetail!
-  userByEmailID(email: String!): UserDetail!
-  userWithRoles(email: String!): UserDetail!
+  userByEmailID(email: String!): UserSpecificDto!
+  userWithRoles(email: String!): UserSpecificDto!
   matchUserWithEmailAndPasswordHash(email: String! passwordhash: String!): UserDetail!
-  reservoirsByUserId(id: Int!): UserDetail!
-  reservoirsByUserEmailId(email: String!): UserDetail!
+  reservoirsByUserId(id: Int!): [ReservoirDetailsDTO!]!
+  reservoirsByUserEmailId(emailId: String!): [ReservoirDetailsDTO!]!
   featurePermissionForRole(roleid: Int!): [FeatureFunction!]!
+  engineerReservoirByUUID(uuid: String!): IntegrationResponseModel!
+  organisationByUserId(userId: Int!): Organisation!
+  actionsListByReservoirId(reservoirid: Int!): [Action!]!
+  safetyMeasuresListByReservoirId(reservoirid: Int!): [SafetyMeasure!]!
 }
 
 type MutationResolver {
@@ -28,7 +32,6 @@ type MutationResolver {
 
 type UserDetail {
   c_defra_id: String
-  c_parent_userid: Int!
   c_type: String
   c_first_name: String
   c_last_name: String
@@ -42,9 +45,8 @@ type UserDetail {
   c_created_on_date: DateTime!
   c_last_access_date: DateTime!
   c_IsFirstTimeUser: Boolean!
-  roles: [Role!]!
-  reservoirs: [Reservoir!]!
-  addresses: [Address!]!
+  reservoirs: [UserReservoir!]!
+  addresses: [UserAddress!]!
   organisation: Organisation
   id: Int!
   userName: String
@@ -63,19 +65,11 @@ type UserDetail {
   accessFailedCount: Int!
 }
 
-type FeatureFunction {
-  id: Int!
-  name: String!
-  displayName: String
-  description: String
-  start_date: DateTime!
-  end_date: DateTime!
-  permission: [UserPermission!]!
-}
-
-input UserDetailInput {
+type UserSpecificDto {
+  roles: [Role!]!
+  reservoir: [Reservoir!]!
+  addresses: [Address!]!
   c_defra_id: String
-  c_parent_userid: Int!
   c_type: String
   c_first_name: String
   c_last_name: String
@@ -89,9 +83,117 @@ input UserDetailInput {
   c_created_on_date: DateTime!
   c_last_access_date: DateTime!
   c_IsFirstTimeUser: Boolean!
-  roles: [RoleInput!]!
-  reservoirs: [ReservoirInput!]!
-  addresses: [AddressInput!]!
+  reservoirs: [UserReservoir!]!
+  organisation: Organisation
+  id: Int!
+  userName: String
+  normalizedUserName: String
+  email: String
+  normalizedEmail: String
+  emailConfirmed: Boolean!
+  passwordHash: String
+  securityStamp: String
+  concurrencyStamp: String
+  phoneNumber: String
+  phoneNumberConfirmed: Boolean!
+  twoFactorEnabled: Boolean!
+  lockoutEnd: DateTime
+  lockoutEnabled: Boolean!
+  accessFailedCount: Int!
+}
+
+type ReservoirDetailsDTO {
+  race_reservoir_id: String
+  public_name: String
+  registered_name: String
+  reference_number: String
+  public_category: String
+  registered_category: String
+  grid_reference: String
+  capacity: Int!
+  surface_area: Int!
+  top_water_level: Decimal!
+  has_multiple_dams: Boolean!
+  key_facts: String
+  construction_start_date: DateTime!
+  verified_details_date: DateTime!
+  last_inspection_date: DateTime!
+  next_inspection_date: DateTime!
+  address: Address
+  nearestTown: String
+}
+
+type FeatureFunction {
+  id: Int!
+  name: String!
+  displayName: String
+  description: String
+  start_date: DateTime!
+  end_date: DateTime!
+  permission: [UserPermission!]!
+}
+
+type IntegrationResponseModel {
+  statusCode: HttpStatusCode!
+  status: String
+  reason: String
+  responseData: String!
+}
+
+type Organisation {
+  id: Int!
+  orgName: String
+  addresses: [Address!]!
+}
+
+type Action {
+  id: Int!
+  reference: String!
+  category: String!
+  type: String!
+  summary: String!
+  description: String!
+  frequency: String!
+  priority: String!
+  isComplianceAction: Boolean!
+  ownerType: String!
+  ownedBy: UserDetail!
+  createdDate: DateTime!
+  targetDate: DateTime!
+  notes: String!
+  reservoir: Reservoir!
+}
+
+type SafetyMeasure {
+  id: Int!
+  reference: String!
+  type: String!
+  othertype: String!
+  description: String!
+  createddate: DateTime!
+  targetdate: DateTime!
+  status: String!
+  notes: String!
+  reservoir: Reservoir!
+}
+
+input UserDetailInput {
+  c_defra_id: String
+  c_type: String
+  c_first_name: String
+  c_last_name: String
+  c_mobile: String
+  c_emergency_phone: String
+  c_job_title: String
+  c_current_panel: String
+  c_paon: String
+  c_saon: String
+  c_status: String
+  c_created_on_date: DateTime!
+  c_last_access_date: DateTime!
+  c_IsFirstTimeUser: Boolean!
+  reservoirs: [UserReservoirInput!]!
+  addresses: [UserAddressInput!]!
   organisation: OrganisationInput
   id: Int!
   userName: String
@@ -108,6 +210,26 @@ input UserDetailInput {
   lockoutEnd: DateTime
   lockoutEnabled: Boolean!
   accessFailedCount: Int!
+}
+
+type UserPermission {
+  id: Int!
+  access_level: String!
+  start_date: DateTime
+  end_date: DateTime
+}
+
+"The built-in `Decimal` scalar type."
+scalar Decimal
+
+type Address {
+  id: Int!
+  addressLine1: String
+  addressLine2: String
+  town: String
+  county: String
+  postcode: String
+  organisation: [Organisation!]!
 }
 
 type Reservoir {
@@ -130,13 +252,14 @@ type Reservoir {
   next_inspection_date: DateTime!
   address: Address
   nearestTown: String
+  reservoirs: [UserReservoir!]!
+  documents: [SupportingDocument!]!
 }
 
 type Role {
   c_display_name: String
   c_description: String
   c_parent_roleid: Int!
-  userDetail: [UserDetail!]!
   permission: [UserPermission!]!
   id: Int!
   name: String
@@ -147,39 +270,116 @@ type Role {
 "The `DateTime` scalar represents an ISO-8601 compliant date time type."
 scalar DateTime
 
-type Address {
+type UserAddress {
+  id: Int!
+  addressType: String
+  userDetail: UserDetail
+  address: Address
+}
+
+type UserReservoir {
+  id: Int!
+  userDetail: UserDetail!
+  reservoir: Reservoir!
+  appointment_type: String
+  appointment_start_date: DateTime!
+  appointment_end_date: DateTime!
+}
+
+enum HttpStatusCode {
+  CONTINUE
+  SWITCHING_PROTOCOLS
+  PROCESSING
+  EARLY_HINTS
+  OK
+  CREATED
+  ACCEPTED
+  NON_AUTHORITATIVE_INFORMATION
+  NO_CONTENT
+  RESET_CONTENT
+  PARTIAL_CONTENT
+  MULTI_STATUS
+  ALREADY_REPORTED
+  IM_USED
+  AMBIGUOUS
+  MOVED
+  REDIRECT
+  REDIRECT_METHOD
+  NOT_MODIFIED
+  USE_PROXY
+  UNUSED
+  TEMPORARY_REDIRECT
+  PERMANENT_REDIRECT
+  BAD_REQUEST
+  UNAUTHORIZED
+  PAYMENT_REQUIRED
+  FORBIDDEN
+  NOT_FOUND
+  METHOD_NOT_ALLOWED
+  NOT_ACCEPTABLE
+  PROXY_AUTHENTICATION_REQUIRED
+  REQUEST_TIMEOUT
+  CONFLICT
+  GONE
+  LENGTH_REQUIRED
+  PRECONDITION_FAILED
+  REQUEST_ENTITY_TOO_LARGE
+  REQUEST_URI_TOO_LONG
+  UNSUPPORTED_MEDIA_TYPE
+  REQUESTED_RANGE_NOT_SATISFIABLE
+  EXPECTATION_FAILED
+  MISDIRECTED_REQUEST
+  UNPROCESSABLE_ENTITY
+  LOCKED
+  FAILED_DEPENDENCY
+  UPGRADE_REQUIRED
+  PRECONDITION_REQUIRED
+  TOO_MANY_REQUESTS
+  REQUEST_HEADER_FIELDS_TOO_LARGE
+  UNAVAILABLE_FOR_LEGAL_REASONS
+  INTERNAL_SERVER_ERROR
+  NOT_IMPLEMENTED
+  BAD_GATEWAY
+  SERVICE_UNAVAILABLE
+  GATEWAY_TIMEOUT
+  HTTP_VERSION_NOT_SUPPORTED
+  VARIANT_ALSO_NEGOTIATES
+  INSUFFICIENT_STORAGE
+  LOOP_DETECTED
+  NOT_EXTENDED
+  NETWORK_AUTHENTICATION_REQUIRED
+}
+
+input UserReservoirInput {
+  id: Int!
+  userDetail: UserDetailInput!
+  reservoir: ReservoirInput!
+  appointment_type: String
+  appointment_start_date: DateTime!
+  appointment_end_date: DateTime!
+}
+
+input UserAddressInput {
+  id: Int!
+  addressType: String
+  userDetail: UserDetailInput
+  address: AddressInput
+}
+
+input OrganisationInput {
+  id: Int!
+  orgName: String
+  addresses: [AddressInput!]!
+}
+
+input AddressInput {
   id: Int!
   addressLine1: String
   addressLine2: String
   town: String
   county: String
   postcode: String
-  organisation: [Organisation!]!
-}
-
-type Organisation {
-  id: Int!
-  orgName: String
-  addresses: [Address!]!
-}
-
-type UserPermission {
-  id: Int!
-  access_level: String!
-  start_date: DateTime
-  end_date: DateTime
-}
-
-input RoleInput {
-  c_display_name: String
-  c_description: String
-  c_parent_roleid: Int!
-  userDetail: [UserDetailInput!]!
-  permission: [UserPermissionInput!]!
-  id: Int!
-  name: String
-  normalizedName: String
-  concurrencyStamp: String
+  organisation: [OrganisationInput!]!
 }
 
 input ReservoirInput {
@@ -202,30 +402,42 @@ input ReservoirInput {
   next_inspection_date: DateTime!
   address: AddressInput
   nearestTown: String
+  reservoirs: [UserReservoirInput!]!
+  documents: [SupportingDocumentInput!]!
 }
 
-input AddressInput {
+type SupportingDocument {
   id: Int!
-  addressLine1: String
-  addressLine2: String
-  town: String
-  county: String
-  postcode: String
-  organisation: [OrganisationInput!]!
+  fileName: String!
+  fileLocation: String!
+  fileType: String!
+  documentName: String!
+  documentDescription: String!
+  documentType: String!
+  documentDate: DateTime!
+  documentStatus: String!
+  documentAuthorName: String!
+  protectiveMarking: String!
+  dateSent: DateTime!
+  dateReceived: DateTime!
+  suppliedBy: UserDetail!
+  reservoir: [Reservoir!]!
 }
 
-input OrganisationInput {
+input SupportingDocumentInput {
   id: Int!
-  orgName: String
-  addresses: [AddressInput!]!
-}
-
-"The built-in `Decimal` scalar type."
-scalar Decimal
-
-input UserPermissionInput {
-  id: Int!
-  access_level: String!
-  start_date: DateTime
-  end_date: DateTime
+  fileName: String!
+  fileLocation: String!
+  fileType: String!
+  documentName: String!
+  documentDescription: String!
+  documentType: String!
+  documentDate: DateTime!
+  documentStatus: String!
+  documentAuthorName: String!
+  protectiveMarking: String!
+  dateSent: DateTime!
+  dateReceived: DateTime!
+  suppliedBy: UserDetailInput!
+  reservoir: [ReservoirInput!]!
 }

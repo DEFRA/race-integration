@@ -10,6 +10,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="RACE2GraphQLSchema\Mutations\User\UpdatePasswordHashForUser.graphql" />
+    <None Remove="RACE2GraphQLSchema\Querries\User\GetAllUsers.graphql" />
+    <None Remove="RACE2GraphQLSchema\Querries\User\GetReservoirsByUser EmailId.graphql" />
+    <None Remove="RACE2GraphQLSchema\Querries\User\GetReservoirsByUserId.graphql" />
+    <None Remove="RACE2GraphQLSchema\Querries\User\GetUserByEmailID.graphql" />
+    <None Remove="RACE2GraphQLSchema\Querries\User\GetUserById.graphql" />
+    <None Remove="RACE2GraphQLSchema\Querries\User\GetUserWithRoles.graphql" />
+    <None Remove="RACE2GraphQLSchema\Querries\User\MatchUserWithEmailAndPasswordHash.graphql" />
+    <None Remove="RACE2GraphQLSchema\schema.extensions.graphql" />
+    <None Remove="RACE2GraphQLSchema\schema.graphql" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Fluxor" Version="5.7.0" />
     <PackageReference Include="Fluxor.Blazor.Web" Version="5.7.0" />
     <PackageReference Include="Fluxor.Blazor.Web.ReduxDevTools" Version="5.7.0" />
