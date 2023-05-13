@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using RACE2.DataModel;
-using RACE2.FrontEndWeb.FluxorImplementation.Actions;
 using RACE2.FrontEndWeb.FluxorImplementation.Stores;
 
 namespace RACE2.FrontEndWeb.Components
@@ -11,12 +10,13 @@ namespace RACE2.FrontEndWeb.Components
     public partial class EnterPassword
     {
         [Inject]
-        public IState<AppStore> State { get; set; } = default!;
+        public IState<CurrentUserDetailState> State { get; set; } = default!;
 
         [Inject]
         public IDispatcher Dispatcher { get; set; } = default!;
 
-        public AppStore AppStore => State.Value;
+        public CurrentUserDetailState CurrentUserDetailState => State.Value;
+
         [Inject]
         public NavigationManager NavigationManager { get; set; } = default!;
 
@@ -28,9 +28,9 @@ namespace RACE2.FrontEndWeb.Components
         UserDetail CurrentUser;
         protected override void OnInitialized()
         {
-            if (AppStore.CurrentUserDetail is not null)
+            if (CurrentUserDetailState.CurrentUserDetail is not null)
             {
-                CurrentUser = AppStore.CurrentUserDetail;
+                CurrentUser = CurrentUserDetailState.CurrentUserDetail;
             }
             base.OnInitialized();
         }

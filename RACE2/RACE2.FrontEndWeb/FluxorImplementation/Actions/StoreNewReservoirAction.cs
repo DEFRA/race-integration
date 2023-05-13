@@ -5,8 +5,8 @@ namespace RACE2.FrontEndWeb.FluxorImplementation.Actions
 {
     public class StoreNewReservoirAction
     {
-        public ReservoirDetailsDTO? ReservoirDetailsDTO { get; }
+        public ReservoirDetailsDTO? NewReservoirDetails { get; }
         public StoreNewReservoirAction(ReservoirDetailsDTO? newReservoirDetails)
-            => ReservoirDetailsDTO = newReservoirDetails;
+            => NewReservoirDetails = newReservoirDetails;
     }
 }
