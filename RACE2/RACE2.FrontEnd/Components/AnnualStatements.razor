@@ -1,5 +1,6 @@
 ﻿@page "/annual-statements"
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
+@using Microsoft.AspNetCore.Authorization;
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @attribute [Authorize]
 
@@ -35,7 +36,7 @@
                         <Tab Text="Submitted" Value="Submitted"  >
                             <p>
                                 <div class="govuk-tabs__panel" id="submitted">
-                                    <table class="govuk-table govuk-!-margin-top-4">
+                                    <table class="govuk-table govuk-!-margin-top-4" style="border: 1px solid black">
                                         <thead class="govuk-table__head">
                                             <tr class="govuk-table__row">
                                                 <th scope="col" class="govuk-table__header app-custom-class govuk-!-width-one-half">Reservoir name</th>
