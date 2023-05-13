@@ -72,6 +72,11 @@ namespace RACE2.FrontEnd.Components
             }
             var action = new StoreUserDetailAction(UserDetail);
             Dispatcher.Dispatch(action);
+
+            await InvokeAsync(() =>
+            {
+                StateHasChanged();
+            });
             base.OnInitialized();
         }
 
