@@ -15,7 +15,7 @@ variables:
   containerRegistryFullName: 'Race2ACR'
   appName: 'Race2ImagePOC'
   adoSpClientId: '39ef2527-ca88-4bbc-b474-2d9aecf67f46'
-  dockerFilePath: 'Dockerfile_SecurityProvider'
+  dockerFilePath: './Dockerfile_SecurityProvider'
   azureServiceConnection: 'AZR-RAC-POC1'
 
 stages:
