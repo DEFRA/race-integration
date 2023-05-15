@@ -10,22 +10,31 @@ resources:
 
 variables:
   tag: '$(Build.BuildId)'
-
+  subscriptionName: 
+  adoSpClientId:
+  adoSpClientSecret:
+  tenantId:
+  containerRegistryFullName: 
+  appName: 
 stages:
-- stage: Build
-  displayName: Build and push stage
+- stag:
+me: Build and push stagecontainerRegistryFullName
   jobs:  
   - job: Build
     displayName: Build job
     pool:
       vmImage: $(vmImageName)
-    steps:
-    - task: Docker@2
-      displayName: Build and push an image to container registry
-      inputs:
-        command: buildAndPush
-        repository: race2acr.azurecr.io
-        dockerfile: '$(Build.SourcesDirectory)/RACE2/Dockerfile_SecurityProvider'
-        containerRegistry: Race2ACR
-        tags: |
-          $(tag)
+    steps:subscriptionName
+    - task: AzurePowerShell@5 
+      displayName: 'Build and publish helm chart and container image to Azure Container Registry' 
+      inputs: azureSubscription: $(subscriptionName) 
+      ScriptType: 'InlineScript' Inline: | 
+      az login --service-principal -u $(adoSpClientId) -p $(adoSpClientSecret) --tenant $(tenantId) 
+      if ($LastExitCode -ne 0) { Write-Host “##vso[task.complete result=Failed;]DONE” exit 1 } 
+      cd $(Build.SourcesDirectory) 
+      az acr build --image $(containerRegistryFullName)/$(appName):$(tag) 
+      --registry $(containerRegistryFullName) 
+      --platform 'linux/amd64' 
+      --build-arg INTERNAL_FEED_ACCESSTOKEN=$(System.AccessToken) 
+      --file $(dockerFilePath) . 
+      if ($LastExitCode -ne 0) { Write-Host “##vso[task.complete result=Failed;]DONE” exit 1 }
