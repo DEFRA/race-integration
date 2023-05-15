@@ -10,13 +10,12 @@ resources:
 
 variables:
   tag: '$(Build.BuildId)'
-  subscriptionName: 'AZR-RAC-POC1'
-  adoSpClientId:'39ef2527-ca88-4bbc-b474-2d9aecf67f46'
-  adoSpClientSecret:'P8J8Q~bvpvv9brjyqqCxriIlloll_WvyAiQQfc.-'
+  subscriptionName: 'AZR-RAC-POC1'  
   tenantId: '770a2450-0227-4c62-90c7-4e38537f1102'
   containerRegistryFullName: 'Race2ACR'
   appName: 'Race2ImagePOC'
-  
+  adoSpClientId: '39ef2527-ca88-4bbc-b474-2d9aecf67f46'
+
 stages:
 - stage : Build and push stagecontainerRegistryFullName
   displayName: Build image
@@ -28,10 +27,20 @@ stages:
     steps:
     - task: AzurePowerShell@5 
       displayName: 'Build and publish helm chart and container image to Azure Container Registry' 
-      inputs: azureSubscription: $(subscriptionName) 
-      ScriptType: 'InlineScript' Inline: | 
+      inputs: 
+        azureSubscription: $(subscriptionName) 
+        ScriptType: 'InlineScript'
+        Inline: | 
         az login --service-principal -u $(adoSpClientId) -p $(adoSpClientSecret) --tenant $(tenantId) 
-        if ($LastExitCode -ne 0) { Write-Host “##vso[task.complete result=Failed;]DONE” exit 1 } 
-        cd $(Build.SourcesDirectory) 
-        az acr build --image $(containerRegistryFullName)/$(appName):$(tag) --registry $(containerRegistryFullName) --platform 'linux/amd64'  --build-arg INTERNAL_FEED_ACCESSTOKEN=$(System.AccessToken) --file $(dockerFilePath) . 
-        if ($LastExitCode -ne 0) { Write-Host “##vso[task.complete result=Failed;]DONE” exit 1 }
+        if ($LastExitCode -ne 0)
+         { 
+           Write-Host “##vso[task.complete result=Failed;]DONE”
+           exit 1 
+         } 
+         cd $(Build.SourcesDirectory) 
+         az acr build --image $(containerRegistryFullName)/$(appName):$(tag) --registry $(containerRegistryFullName) --platform 'linux/amd64' --build-arg INTERNAL_FEED_ACCESSTOKEN=$(System.AccessToken) --file $(dockerFilePath) . 
+         if ($LastExitCode -ne 0) 
+         {
+            Write-Host “##vso[task.complete result=Failed;]DONE”
+            exit 1
+         }
