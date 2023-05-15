@@ -17,7 +17,7 @@ variables:
   adoSpClientId: '39ef2527-ca88-4bbc-b474-2d9aecf67f46'
 
 stages:
-- stage : Build and push stagecontainerRegistryFullName
+- stage : Buildandpush
   displayName: Build image
   jobs:  
   - job: Build
