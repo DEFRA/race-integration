@@ -26,23 +26,14 @@ stages:
     pool:
       vmImage: ubuntu-latest
     steps:
-    - task: AzurePowerShell@5 
+    - task: AzureCLI@2 
       displayName: 'Build and publish helm chart and container image to Azure Container Registry' 
-      inputs: 
-        azureSubscription: $(subscriptionName) 
-        ScriptType: 'InlineScript'
-        Inline: |
-            azurePowerShellVersion: LatestVersion 
-            az login --service-principal -u $(adoSpClientId) -p $(adoSpClientSecret) --tenant $(tenantId) 
-            if ($LastExitCode -ne 0)
-            { 
-              Write-Host “##vso[task.complete result=Failed;]DONE”
-              exit 1 
-            } 
-            cd $(Build.SourcesDirectory) 
-            az acr build --image $(containerRegistryFullName)/$(appName):$(tag) --registry $(containerRegistryFullName) --platform 'linux/amd64' --build-arg INTERNAL_FEED_ACCESSTOKEN=$(System.AccessToken) --file $(dockerFilePath) . 
-            if ($LastExitCode -ne 0) 
-            {
-                Write-Host “##vso[task.complete result=Failed;]DONE”
-                exit 1
-            }
+      inputs:
+        azureSubscription: $(azureServiceConnection)
+        scriptType: bash
+        scriptLocation: inlineScript
+        useGlobalConfig: false    
+        inlineScript: |
+          az --version
+          az acr build -r race2acr -t race2acr.azurecr.io/race2securityprovider:v1 -f Dockerfile_SecurityProvider .
+        
