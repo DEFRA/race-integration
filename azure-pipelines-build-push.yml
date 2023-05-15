@@ -31,8 +31,8 @@ stages:
       inputs: 
         azureSubscription: $(subscriptionName) 
         ScriptType: 'InlineScript'
-        Inline: | 
-            az version
+        Inline: |
+            azurePowerShellVersion: LatestVersion 
             az login --service-principal -u $(adoSpClientId) -p $(adoSpClientSecret) --tenant $(tenantId) 
             if ($LastExitCode -ne 0)
             { 
