@@ -13,8 +13,12 @@ variables:
   subscriptionName: 'AZR-RAC-POC1'  
   tenantId: '770a2450-0227-4c62-90c7-4e38537f1102'
   containerRegistryFullName: 'Race2ACR'
-  appName: 'race2securityprovider'
-  dockerFilename: 'Dockerfile_SecurityProvider'
+  appNameSP: 'race2securityprovider'
+  dockerFilenameSP: 'Dockerfile_SecurityProvider'
+  appNameFE: 'race2frontend'
+  dockerFilenameFE: 'Dockerfile_FrontEnd'
+  appNameAPI: 'race2webapi'
+  dockerFilenameAPI: 'Dockerfile_WebApi'
   adoSpClientId: '39ef2527-ca88-4bbc-b474-2d9aecf67f46'
   dockerFilePath: './Dockerfile_SecurityProvider'
   azureServiceConnection: 'AZR-RAC-POC1'
@@ -39,5 +43,7 @@ stages:
         inlineScript: |
           az --version
           az login --service-principal -u $(adoSpClientId) -p $(adoSpClientSecret) --tenant $(tenantId) 
-          az acr build -r $(containerRegistryFullName) -t $(containerRegistryURL)/$(appName):$(tag) -f $(Build.SourcesDirectory)/RACE2/$(dockerFilename) $(Build.SourcesDirectory)/RACE2
+          az acr build -r $(containerRegistryFullName) -t $(containerRegistryURL)/$(appNameSP):$(tag) -f $(Build.SourcesDirectory)/RACE2/$(dockerFilenameSP) $(Build.SourcesDirectory)/RACE2
+          az acr build -r $(containerRegistryFullName) -t $(containerRegistryURL)/$(appNameFE):$(tag) -f $(Build.SourcesDirectory)/RACE2/$(dockerFilenameFE) $(Build.SourcesDirectory)/RACE2
+          az acr build -r $(containerRegistryFullName) -t $(containerRegistryURL)/$(appNameAPI):$(tag) -f $(Build.SourcesDirectory)/RACE2/$(dockerFilenameAPI) $(Build.SourcesDirectory)/RACE2
         
