@@ -12,7 +12,7 @@ variables:
   tag: '$(Build.BuildId)'
   subscriptionName: 'AZR-RAC-POC1'
   adoSpClientId:'39ef2527-ca88-4bbc-b474-2d9aecf67f46'
-  adoSpClientSecret:
+  adoSpClientSecret:'P8J8Q~bvpvv9brjyqqCxriIlloll_WvyAiQQfc.-'
   tenantId: '770a2450-0227-4c62-90c7-4e38537f1102'
   containerRegistryFullName: 'Race2ACR'
   appName: 'Race2ImagePOC'
