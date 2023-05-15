@@ -38,5 +38,5 @@ stages:
         inlineScript: |
           az --version
           az login --service-principal -u $(adoSpClientId) -p $(adoSpClientSecret) --tenant $(tenantId) 
-          az acr build -r $(containerRegistryFullName) -t $(containerRegistryFullName).azurecr.io/$(appName):$(tag) -f $(Build.SourcesDirectory)/RACE2/$(dockerFilename) $(Build.SourcesDirectory)/RACE2
+          az acr build -r $(containerRegistryFullName) -t $(containerRegistryFullName).azurecr.io/$(appName):v5 -f $(Build.SourcesDirectory)/RACE2/$(dockerFilename) $(Build.SourcesDirectory)/RACE2
         
