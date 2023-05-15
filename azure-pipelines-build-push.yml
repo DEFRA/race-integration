@@ -15,6 +15,7 @@ variables:
   containerRegistryFullName: 'Race2ACR'
   appName: 'Race2ImagePOC'
   adoSpClientId: '39ef2527-ca88-4bbc-b474-2d9aecf67f46'
+  dockerFilePath: 'Dockerfile_SecurityProvider'
 
 stages:
 - stage : Buildandpush
@@ -31,6 +32,7 @@ stages:
         azureSubscription: $(subscriptionName) 
         ScriptType: 'InlineScript'
         Inline: | 
+            az version
             az login --service-principal -u $(adoSpClientId) -p $(adoSpClientSecret) --tenant $(tenantId) 
             if ($LastExitCode -ne 0)
             { 
