@@ -16,15 +16,16 @@ variables:
   tenantId: '770a2450-0227-4c62-90c7-4e38537f1102'
   containerRegistryFullName: 'Race2ACR'
   appName: 'Race2ImagePOC'
+  
 stages:
-- stag:
-me: Build and push stagecontainerRegistryFullName
+- stage : Build and push stagecontainerRegistryFullName
+  displayName: Build image
   jobs:  
   - job: Build
     displayName: Build job
     pool:
-      vmImage: $(vmImageName)
-    steps:subscriptionName
+      vmImage: ubuntu-latest
+    steps:
     - task: AzurePowerShell@5 
       displayName: 'Build and publish helm chart and container image to Azure Container Registry' 
       inputs: azureSubscription: $(subscriptionName) 
