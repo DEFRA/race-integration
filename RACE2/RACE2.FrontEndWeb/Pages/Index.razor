@@ -59,7 +59,7 @@
     public async void GoToNextPage()
     {
         bool forceLoad = true;
-        //AuthenticationState authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        AuthenticationState authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         if (authState.User.Identity.Name is not null)
         {
             NavigationManager.NavigateTo("/annual-statements", true);
