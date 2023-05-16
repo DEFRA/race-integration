@@ -1,7 +1,6 @@
 ﻿using Fluxor;
 using Microsoft.AspNetCore.Components;
 using RACE2.DataModel;
-using RACE2.FrontEndWeb.FluxorImplementation.Actions;
 using RACE2.FrontEndWeb.FluxorImplementation.Stores;
 using RACE2.FrontEndWeb.RACE2GraphQLSchema;
 using RACE2.FrontEndWeb.Utilities;
@@ -16,32 +15,16 @@ namespace RACE2.FrontEndWeb.Components
         [Inject]
         public NavigationManager NavigationManager { get; set; } = default!;
 
-        [Inject]
-        public IState<AppStore> State { get; set; } = default!;
-
-        [Inject]
-        public IDispatcher Dispatcher { get; set; } = default!;
-
-        public AppStore AppStore => State.Value;
-
         string? Email;
-        string? Password;
         private UserDetail CurrentUser;
+        private UserModel userModel => new UserModel();
 
         private string errorMsg1 = "Email entered does not exist!!! Please try again.";
         private string errorMsg2 = "Input is not a valid email address!!! Please try again.";
 
         protected override void OnInitialized()
-        {
-            if (AppStore.CurrentUserDetail != null)
-            {
-                if (AppStore.CurrentUserDetail is not null)
-                {
-                    CurrentUser = AppStore.CurrentUserDetail;
-                    Email = CurrentUser.Email;
-                }
-            }
-            base.OnInitialized();
+        {        
+
         }
 
         protected async Task<string> GetEmailFromDatabase(string email)
@@ -66,15 +49,15 @@ namespace RACE2.FrontEndWeb.Components
 
         public async Task GoToNextPage()
         {
-            if (Email != null && Email.Trim().Length != 0 && RegexUtilities.IsValidEmail(Email))
+            string email = userModel.Email;
+            string password = userModel.Password;
+            if (email != null && email.Trim().Length != 0 && RegexUtilities.IsValidEmail(email))
             {
                 bool forceLoad = false;
 
-                string emailInDatabase = await GetEmailFromDatabase(Email);
+                string emailInDatabase = await GetEmailFromDatabase(email);
                 if (emailInDatabase != null && emailInDatabase.Trim().Length != 0)
                 {
-                    var action = new StoreUserDetailAction(CurrentUser);                   
-                    Dispatcher.Dispatch(action);
                     if (CurrentUser.PasswordHash is null)
                     {
                         string pagelink = "/enter-password";
@@ -82,7 +65,7 @@ namespace RACE2.FrontEndWeb.Components
                     }
                     else
                     {
-                        string pagelink = "/choose-a-reservoir";
+                        string pagelink = "/";
                         NavigationManager.NavigateTo(pagelink, forceLoad);
                     }
                 }
@@ -103,5 +86,11 @@ namespace RACE2.FrontEndWeb.Components
             string pagelink = "/";
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }
+    }
+
+    public class UserModel
+    {
+        public string Email { get; set; }
+        public string Password { get; set; }
     }
 }
