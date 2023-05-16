@@ -3,7 +3,7 @@ $ENVIRONMENT="Production"
 $MANAGEDIDENTITY="Race2ManagedIdentity"
 $CONTAINERAPPS_ENVIRONMENT="race2containerappenv"
 $CONTAINERAPPNAME ="race2webapi"
-$REMOTE_IMAGENAME="race2acr.azurecr.io/race2webapi:v1"
+$REMOTE_IMAGENAME="race2acr.azurecr.io/race2webapi:latest"
 $REGISTRY_SERVER="race2acr.azurecr.io" 
 $APPCONFIG_URL="https://race2appconfig.azconfig.io/"
 
