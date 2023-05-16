@@ -18,10 +18,10 @@
         "value": "Race2AppEnv"
       }, 
       "registryResourceGroup": {
-        "value": "Race2ProjectRG"
+        "value": "Race2ProjectRG1"
       },
       "registryName": {
-        "value": "race2acr"
+        "value": "race2acr1"
       },
       "useExternalIngress": {
         "value": true

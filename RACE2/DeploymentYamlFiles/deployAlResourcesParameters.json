@@ -42,7 +42,7 @@
         "value": "Race2Password123!"
       }, 
       "servers_race2sqldb_name": {
-        "value": "Race2Database"
+        "value": "Race2Database1"
       },
       "logAnalyticsWorkspaceName": {
         "value": "Race2LAWorkspace1"
