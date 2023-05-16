@@ -1,4 +1,6 @@
 ﻿@page "/"
+@inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
 <div class="govuk-width-container ">
     <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
@@ -44,4 +46,30 @@
         </div>
     </main>
 </div>
+@code {
+    protected override async void OnInitialized()
+    {
+        AuthenticationState authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        if (authState.User.Identity.Name is not null)
+        {
+            NavigationManager.NavigateTo("/annual-statements", true);
+        }
+    }
 
+    public async void GoToNextPage()
+    {
+        bool forceLoad = true;
+        //AuthenticationState authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        if (authState.User.Identity.Name is not null)
+        {
+            NavigationManager.NavigateTo("/annual-statements", true);
+        }
+        else
+        {
+            NavigationManager.NavigateTo("login", forceLoad);
+        }
+
+        //NavigationManager.NavigateTo("/authentication/login", forceLoad);
+        //NavigationManager.NavigateTo("/annual-statements", forceLoad);
+    }
+}

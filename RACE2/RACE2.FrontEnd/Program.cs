@@ -24,7 +24,6 @@ using var stream = await configSettings.Content.ReadAsStreamAsync();
 
 builder.Configuration.AddJsonStream(stream);
 string RACE2WebApiURL = builder.Configuration["RACE2WebApiURL"];
-builder.Services.AddScoped<IPasswordHasher<UserDetail>, PasswordHasher<UserDetail>>();
 builder.Services.AddOidcAuthentication(options =>
 {
     builder.Configuration.Bind("oidc", options.ProviderOptions);
