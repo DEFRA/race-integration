@@ -12,10 +12,10 @@
         "value": "Race2ProjectRG1"
       },     
       "managedidentity": {
-        "value": "Race2ManagedIdentity"
+        "value": "Race2ManagedIdentity1"
       }, 
       "race2appenvName": {
-        "value": "Race2AppEnv"
+        "value": "Race2AppEnv1"
       }, 
       "registryResourceGroup": {
         "value": "Race2ProjectRG1"
