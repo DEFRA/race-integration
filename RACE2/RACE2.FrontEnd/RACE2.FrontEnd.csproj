@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Components\AnnualStatements.razor~RFccbacb1.TMP" />
     <None Remove="RACE2GraphQLSchema\Querries\User\GetReservoirsByUser EmailId.graphql" />
   </ItemGroup>
 

@@ -1,30 +1,33 @@
 ﻿using Fluxor;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using RACE2.DataModel;
 using RACE2.FrontEndWeb.FluxorImplementation.Stores;
+using RACE2.FrontEndWeb.FluxorImplementation.Actions;
+using RACE2.FrontEndWeb.RACE2GraphQLSchema;
 
 namespace RACE2.FrontEndWeb.Components
 {
     public partial class ReservoirDetails
     {
         [Inject]
-        public NavigationManager NavigationManager { get; set; } = default!;
-
+        public RACE2GraphQLClient client { get; set; } = default!;
         [Inject]
-        public IState<AppStore> State { get; set; } = default!;
+        public NavigationManager NavigationManager { get; set; } = default!;
+        [Inject]
+        public IState<CurrentReservoirState> CurrentReservoirState { get; set; } = default!;
 
         [Inject]
         public IDispatcher Dispatcher { get; set; } = default!;
 
-        public AppStore AppStore => State.Value;
         public Reservoir CurrentReservoir { get; set; } = new Reservoir();
         public string ReservoirName { get; set; } = default!;
 
-        protected override void OnInitialized()
+        protected override async void OnInitialized()
         {
+            AuthenticationState authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
             base.OnInitialized();
-            CurrentReservoir = AppStore.CurrentReservoir;
         }
 
         private void goback()
@@ -32,6 +35,6 @@ namespace RACE2.FrontEndWeb.Components
             bool forceLoad = false;
             string pagelink = "/choose-a-reservoir";
             NavigationManager.NavigateTo(pagelink, forceLoad);
-        }
+        }        
     }
 }

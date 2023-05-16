@@ -3,12 +3,12 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using RACE2.DataModel;
-using RACE2.FrontEnd.FluxorImplementation.Actions;
-using RACE2.FrontEnd.FluxorImplementation.Stores;
-using RACE2.FrontEnd.RACE2GraphQLSchema;
+using RACE2.FrontEndWeb.FluxorImplementation.Actions;
+using RACE2.FrontEndWeb.FluxorImplementation.Stores;
+using RACE2.FrontEndWeb.RACE2GraphQLSchema;
 using System.Security.Claims;
 
-namespace RACE2.FrontEnd.Components
+namespace RACE2.FrontEndWeb.Components
 {
     public partial class AnnualStatements
     {

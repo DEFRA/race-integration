@@ -6,30 +6,27 @@
 
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds" style="margin-top:40px;">
-            <EditForm Model=AppStore.CurrentUserDetail>
+            <EditForm Model="@userModel" OnSubmit="@GoToNextPage">
                <div class="govuk-form-group">
                     <h1 class="govuk-label-wrapper">
                         <label class="govuk-label govuk-label--l" for="event-name">
                             Enter your email address
                         </label>
                     </h1>
-                    <InputText class="govuk-input" @bind-Value="@Email"
+                    <InputText class="govuk-input" @bind-Value="userModel.Email"
+                               style="border: 2px solid #000000;border-radius:unset;font-size: 18px;">
+                    </InputText>
+                    <br/>
+                    <h1 class="govuk-label-wrapper">
+                        <label class="govuk-label govuk-label--l" for="event-name">
+                            Enter your password
+                        </label>
+                    </h1>
+                    <InputText class="govuk-input" @bind-Value="userModel.Password"
                                style="border: 2px solid #000000;border-radius:unset;font-size: 18px;">
                     </InputText>
                 </div>
-                <div class="govuk-form-group">
-                    <h1 class="govuk-label-wrapper">
-                        <label class="govuk-label govuk-label--l" for="event-name">
-                            Enter the password
-                        </label>
-                    </h1>
-                    <p>Your password must be 8 or more characters. Use a mixture of letters, numbers and symbols.</p>
-                    <InputText class="govuk-input" @bind-Value="@Password" type="password"
-                                style="border: 2px solid #000000;border-radius:unset;font-size: 18px;">
-                    </InputText>
-                </div>
-                <button class="govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8" @onclick=@(args => GoToNextPage())
-                        data-module="govuk-button">
+                <button class="govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8" type="submit">
                     Continue
                 </button>
             </EditForm>
