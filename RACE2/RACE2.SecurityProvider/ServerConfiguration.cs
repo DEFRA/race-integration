@@ -74,11 +74,14 @@ namespace RACE2.SecurityProvider
             List<Client> clients = new List<Client>();
             Client blazorserverClient = new Client
             {
-                ClientName = "Blazor Server",
                 ClientId = "blazorServer",
-                AllowedGrantTypes = GrantTypes.Hybrid,
-                RedirectUris = redirectUris,
-                RequirePkce = false,
+                ClientSecrets = { new Secret("blazorserver-secret".Sha512()) },
+                ClientName = "Blazor Server",
+                AllowedGrantTypes = GrantTypes.Code,
+                RedirectUris = { blazorClientURL + "/signin-oidc" },
+                FrontChannelLogoutUri =  blazorClientURL + "/signin-oidc",
+                PostLogoutRedirectUris = { blazorClientURL + "/signout-callback-oidc" },
+                AllowOfflineAccess = true,
                 AllowedScopes = {
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
@@ -86,9 +89,9 @@ namespace RACE2.SecurityProvider
                     "roles",
                     "race2WebApi"
                 },
-                ClientSecrets = { new Secret("blazorserver-secret".Sha512()) },
+                RequirePkce = true,
                 RequireConsent = false,
-                PostLogoutRedirectUris = postLogoutRedirectUris
+                AllowPlainTextPkce = false
             };
 
             Client blazorwasmClient = new Client
