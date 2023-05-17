@@ -3,12 +3,13 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using RACE2.DataModel;
+using RACE2.FrontEnd.Components;
 using RACE2.FrontEnd.FluxorImplementation.Actions;
 using RACE2.FrontEnd.FluxorImplementation.Stores;
 using RACE2.FrontEnd.RACE2GraphQLSchema;
 using System.Security.Claims;
 
-namespace RACE2.FrontEnd.Components
+namespace RACE2.FrontEnd.Pages.S12Pages
 {
     public partial class AnnualStatements
     {
@@ -33,12 +34,12 @@ namespace RACE2.FrontEnd.Components
         protected override async void OnInitialized()
         {
             AuthenticationState authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-
-            if (authState.User.Identity.Name is not null)
-            {
-                UserName = authState.User.Identity.Name;
-                UserClaims = authState.User.Claims;
-            }
+            UserName = authState.User.Claims.ToArray()[6].Value;
+            //if (authState.User.Identity.Name is not null)
+            //{
+            //    UserName = authState.User.Identity.Name;
+            //    UserClaims = authState.User.Claims;
+            //}
             var userDetails = await client.GetUserByEmailID.ExecuteAsync(UserName);
             UserId = userDetails!.Data!.UserByEmailID.Id;
             UserDetail = new UserDetail()

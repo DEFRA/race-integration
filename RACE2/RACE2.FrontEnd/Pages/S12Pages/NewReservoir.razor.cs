@@ -4,7 +4,7 @@ using RACE2.Dto;
 using RACE2.FrontEnd.FluxorImplementation.Stores;
 //using RACE2.FrontEnd.RACE2GraphQLSchema;
 
-namespace RACE2.FrontEnd.Components
+namespace RACE2.FrontEnd.Pages.S12Pages
 {
     public partial class NewReservoir
     {

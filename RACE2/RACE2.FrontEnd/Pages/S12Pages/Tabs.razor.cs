@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace RACE2.FrontEnd.Components
+namespace RACE2.FrontEnd.Pages.S12Pages
 {
     public partial class Tabs
     {

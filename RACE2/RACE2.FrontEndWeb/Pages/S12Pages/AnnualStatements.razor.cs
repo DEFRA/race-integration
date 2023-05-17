@@ -8,7 +8,7 @@ using RACE2.FrontEndWeb.FluxorImplementation.Stores;
 using RACE2.FrontEndWeb.RACE2GraphQLSchema;
 using System.Security.Claims;
 
-namespace RACE2.FrontEndWeb.Components
+namespace RACE2.FrontEndWeb.Pages.S12Pages
 {
     public partial class AnnualStatements
     {
