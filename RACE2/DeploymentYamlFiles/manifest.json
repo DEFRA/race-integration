@@ -1,0 +1,76 @@
+{
+  "applications": [
+    {
+      "displayName": "ACR-DefraGovUK-AZD-RAC-POC1",
+      "originalDisplayName": "",
+      "IdentifierUris": "",
+      "secretAutoRenewalEnabled": true,
+      "renewalNotificationEmailAddress": "mahalakshmi.alagarsamy@defra.gov.uk",
+      "notes": "",
+      "keyVault": {
+        "name": "Race2KeyVault",
+        "resourceGroup": "RACE2ProjectRG",
+        "secrets": [
+          {
+            "key": "ACR-DefraGovUK-AZD-RAC-POC1",
+            "clientSecretDescriptionPrefix": "description text",            
+             "type": "ClientSecret",
+              "validityInDays": 365       
+          }
+        ]
+      },
+      "api": {
+        "oauth2PermissionScopes": [
+          {
+            "id": "00000000-0000-0000-0000-000000000000",
+            "adminConsentDisplayName": "admin display name",
+            "adminConsentDescription": "admin description",
+            "userConsentDisplayName": "user consent display name",
+            "userConsentDescription": "user consent description",
+            "isEnabled": true,
+            "lang": null,
+            "origin": "Application",
+            "type": "User",
+            "value": "user_impersonation"
+          }
+        ]
+      },
+      "appRoles": [
+        {
+          "allowedMemberTypes": [ "Application" ],
+          "description": "role description",
+          "displayName": "role title",
+          "id": "",
+          "isEnabled": true,
+          "lang": null,
+          "origin": "Application",
+          "value": "role value"
+        }
+      ],
+      "requiredResourceAccess": [
+        {
+          "resourceAppId": "00000000-0000-0000-0000-000000000000",
+          "resourceAccess": [
+            {
+              "id": "00000000-0000-0000-0000-000000000000",
+              "type": "Scope"
+            }
+          ]
+        }
+      ],
+      "signInAudience": "AzureADMyOrg",
+      "publicClient": {
+        "redirectUris": []
+      },
+      "web": {
+        "homePageUrl": "https://consento.com",
+        "logoutUrl": "https://consento.com/logout",
+        "redirectUris": [],
+        "implicitGrantSettings": {
+          "enableAccessTokenIssuance": false,
+          "enableIdTokenIssuance": true
+        }
+      }
+    }
+  ]
+}
