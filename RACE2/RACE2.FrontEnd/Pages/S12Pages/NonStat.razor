@@ -1,4 +1,8 @@
 ﻿@page "/non-stat"
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+@using Microsoft.AspNetCore.Authorization;
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@attribute [Authorize]
 
 <div class="govuk-width-container ">
     <a class="govuk-back-link" href="javascript:history.back()">Back</a>

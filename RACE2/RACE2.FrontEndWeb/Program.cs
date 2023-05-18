@@ -1,3 +1,4 @@
+using Azure.Identity;
 using Fluxor;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
@@ -6,13 +7,35 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using RACE2.DataModel;
 using static System.Net.WebRequestMethods;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Configuration.AddAzureAppConfiguration(options =>
+{
+    //var connectionString = builder.Configuration["AZURE_APPCONFIGURATION_CONNECTIONSTRING"];
+    var azureAppConfigUrl = builder.Configuration["AzureAppConfigURL"];
+    var credential = new DefaultAzureCredential();
+
+    //options.Connect(connectionString)      
+    options.Connect(new Uri(azureAppConfigUrl), credential)
+    .ConfigureKeyVault(options =>
+    {
+        options.SetCredential(credential);
+    })
+    .ConfigureRefresh(refreshOptions =>
+            refreshOptions.Register("refreshAll", refreshAll: true))
+    .Select(KeyFilter.Any, LabelFilter.Null)
+    // Override with any configuration values specific to current hosting env
+    .Select(KeyFilter.Any, Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"))
+    .UseFeatureFlags();
+});
+var blazorClientURL = builder.Configuration["RACE2FrontEndURL"];
+var RACE2WebApiURL = builder.Configuration["RACE2WebApiURL"];
+var RACE2IDPURL = builder.Configuration["RACE2SecurityProviderURL"];
 //IConfiguration _configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../appsettings.json").Build();
-string RACE2WebApiURL = builder.Configuration["ApplicationSettings:RACE2WebApiURL"];
-string RACE2IDPURL = builder.Configuration["ApplicationSettings:RACE2SecurityProviderURL"];
+
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
@@ -70,6 +93,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");

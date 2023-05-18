@@ -6,7 +6,7 @@ using RACE2.Dto;
 using RACE2.FrontEnd.FluxorImplementation.Stores;
 //using RACE2.FrontEnd.RACE2GraphQLSchema;
 
-namespace RACE2.FrontEnd.Components
+namespace RACE2.FrontEnd.Pages.S12Pages
 {
     public partial class ReservoirNotListed
     {
@@ -34,6 +34,13 @@ namespace RACE2.FrontEnd.Components
         public void GoToNextPage()
         {
             NavigationManager.NavigateTo("/new-reservoir", forceLoad);
+        }
+
+        private void goback()
+        {
+            bool forceLoad = false;
+            string pagelink = "/choose-a-reservoir";
+            NavigationManager.NavigateTo(pagelink, forceLoad);
         }
     }
 }

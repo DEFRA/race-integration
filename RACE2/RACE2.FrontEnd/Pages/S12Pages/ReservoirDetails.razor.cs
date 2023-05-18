@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using RACE2.DataModel;
-using RACE2.FrontEndWeb.FluxorImplementation.Stores;
-using RACE2.FrontEndWeb.FluxorImplementation.Actions;
-using RACE2.FrontEndWeb.RACE2GraphQLSchema;
+using RACE2.FrontEnd.FluxorImplementation.Stores;
+using RACE2.FrontEnd.FluxorImplementation.Actions;
+using RACE2.FrontEnd.RACE2GraphQLSchema;
 
-namespace RACE2.FrontEndWeb.Components
+namespace RACE2.FrontEnd.Pages.S12Pages
 {
     public partial class ReservoirDetails
     {
@@ -28,6 +28,16 @@ namespace RACE2.FrontEndWeb.Components
         {
             AuthenticationState authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
             base.OnInitialized();
+        }
+
+        public async void GoToNextPage()
+        {
+            NavigationManager.NavigateTo("/confirm-operator", true);
+        }
+
+        public async void GoToSaveComebackLaterPage()
+        {
+
         }
 
         private void goback()

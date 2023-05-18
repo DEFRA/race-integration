@@ -8,7 +8,7 @@ using RACE2.FrontEndWeb.FluxorImplementation.Stores;
 using RACE2.FrontEndWeb.RACE2GraphQLSchema;
 using System.Security.Claims;
 
-namespace RACE2.FrontEndWeb.Components
+namespace RACE2.FrontEndWeb.Pages.S12Pages
 {
     public partial class AnnualStatements
     {
@@ -33,12 +33,12 @@ namespace RACE2.FrontEndWeb.Components
         protected override async void OnInitialized()
         {
             AuthenticationState authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-
-            if (authState.User.Identity.Name is not null)
-            {
-                UserName = authState.User.Identity.Name;
-                UserClaims = authState.User.Claims;
-            }
+            UserName = authState.User.Claims.ToArray()[6].Value;
+            //if (authState.User.Identity.Name is not null)
+            //{
+            //    UserName = authState.User.Identity.Name;
+            //    UserClaims = authState.User.Claims;
+            //}
             var userDetails = await client.GetUserByEmailID.ExecuteAsync(UserName);
             UserId = userDetails!.Data!.UserByEmailID.Id;
             UserDetail = new UserDetail()
