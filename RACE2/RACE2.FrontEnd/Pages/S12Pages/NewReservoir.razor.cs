@@ -2,14 +2,14 @@
 using Microsoft.AspNetCore.Components;
 using RACE2.Dto;
 using RACE2.FrontEnd.FluxorImplementation.Stores;
-//using RACE2.FrontEnd.RACE2GraphQLSchema;
+using RACE2.FrontEnd.RACE2GraphQLSchema;
 
-namespace RACE2.FrontEnd.Components
+namespace RACE2.FrontEnd.Pages.S12Pages
 {
     public partial class NewReservoir
     {
-        //[Inject]
-        //public RACE2GraphQLClient client { get; set; } = default!;
+        [Inject]
+        public RACE2GraphQLClient client { get; set; } = default!;
         [Inject]
         public NavigationManager NavigationManager { get; set; } = default!;
 
@@ -26,6 +26,13 @@ namespace RACE2.FrontEnd.Components
         protected override void OnInitialized()
         {
             //newReservoir = CurrentUserDetailState.ReservoirDetailsDTO;
+        }
+
+        private void goback()
+        {
+            bool forceLoad = false;
+            string pagelink = "/reservoir-not-listed";
+            NavigationManager.NavigateTo(pagelink, forceLoad);
         }
     }
 }
