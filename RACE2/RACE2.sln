@@ -71,6 +71,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.DatabaseProvider", "R
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploymentyamlfiles", "deploymentyamlfiles", "{E77DC034-434C-42C9-83F7-D50E73A132C6}"
 	ProjectSection(SolutionItems) = preProject
+		..\..\..\..\..\..\DefraCommon\Defra.Pipeline.Common\tests\integrationtests\devops\pipelines\appregscript-integrationtest.yaml = ..\..\..\..\..\..\DefraCommon\Defra.Pipeline.Common\tests\integrationtests\devops\pipelines\appregscript-integrationtest.yaml
+		azure-pipelines-2.yml = azure-pipelines-2.yml
 		DeploymentYamlFiles\deployAllResources.yml = DeploymentYamlFiles\deployAllResources.yml
 		DeploymentYamlFiles\deployAlResources.json = DeploymentYamlFiles\deployAlResources.json
 		DeploymentYamlFiles\deployAppConfig.yml = DeploymentYamlFiles\deployAppConfig.yml
