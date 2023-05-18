@@ -35,5 +35,12 @@ namespace RACE2.FrontEnd.Pages.S12Pages
         {
             NavigationManager.NavigateTo("/new-reservoir", forceLoad);
         }
+
+        private void goback()
+        {
+            bool forceLoad = false;
+            string pagelink = "/choose-a-reservoir";
+            NavigationManager.NavigateTo(pagelink, forceLoad);
+        }
     }
 }
