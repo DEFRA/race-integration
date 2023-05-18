@@ -62,3 +62,108 @@ a, .btn-link {
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
+.tabs {
+    width: 100%;
+    background-color: #ffffff;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.tab {
+    background-color: #FCFCFC;
+    color: #737375;
+    padding: 15px 10px;
+    min-width: 150px;
+    border: 1px solid #D3D3D3;
+    cursor: pointer;
+}
+
+.tab-filling {
+    border-bottom: 1px solid #D3D3D3;
+    width: 100%;
+    font-size: 10px;
+    font-weight: 400;
+}
+
+    .tab-filling.tab-filling-left {
+        text-align: left;
+        color: #000000;
+        padding-top: 15px;
+    }
+
+    .tab-filling.tab-filling-right {
+        text-align: right;
+        color: #000000;
+        padding-top: 15px;
+    }
+
+.tab.tab-active {
+    background-color: #ffffff;
+    border-bottom: 0px solid;
+    color: #30256C;
+    font-weight: bold;
+}
+
+.tab.tab-disabled {
+    background-color: #D3D3D3;
+    border-bottom: 1px solid #D3D3D3;
+    color: #FCFCFC;
+    font-weight: bold;
+    cursor: not-allowed;
+}
+
+.tab-container {
+    display: inline-flex;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+
+.tab-content {
+    padding-top: 0px;
+    text-align: left;
+}
+
+.autocomplete {
+    position: relative;
+}
+
+.autocomplete .options {
+    position: absolute;
+    top: 40px;
+    left: 0;
+    background: white;
+    width: 600px;
+    padding: 0;
+    z-index: 10;
+    border: 1px solid #d4d4d4;
+    border-radius: 0rem;
+    box-shadow: 0 30px 25px 8px rgba(0, 0, 0, 0.1);
+}
+
+.autocomplete .option {
+    display: block;
+    padding: 0.25rem;
+    border-bottom: 1px solid #d4d4d4;
+}
+
+.autocomplete .option .option-text {
+    padding: 0.25rem 0.5rem;
+    font-size: 18px;
+}
+
+.autocomplete .option:hover {
+    background: #1d70b8;
+    color: #ffffff;
+}
+
+.autocomplete .option.disabled {
+    background-color: lightgrey;
+    cursor: not-allowed;
+}
+
+.autocomplete .option.disabled:hover {
+    background: lightgrey;
+    color: var(--bs-body);
+}
