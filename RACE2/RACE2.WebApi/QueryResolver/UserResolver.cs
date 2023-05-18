@@ -79,9 +79,9 @@ namespace RACE2.WebApi.QueryResolver
             return result;
         }
 
-        public async Task<List<DataModel.Action>> GetActionsListByReservoirId(IUserService _userService, int reservoirid)
+        public async Task<List<DataModel.Action>> GetActionsListByReservoirId(IUserService _userService, int reservoirid, int category)
         {
-            return await _userService.GetActionsListByReservoirId(reservoirid);
+            return await _userService.GetActionsListByReservoirId(reservoirid,category);
         }
 
         public async Task<List<SafetyMeasure>> GetSafetyMeasuresListByReservoirId(IUserService _userService, int reservoirid)
