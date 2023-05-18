@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Identity;
 using RACE2.Logging.Service;
 using RACE2.Dto;
 using System.Data.SqlClient;
+using RACE2.Logging;
 
 namespace RACE2.DataAccess.Repository
 {
@@ -438,13 +439,15 @@ namespace RACE2.DataAccess.Repository
             }
         }
 
-        public async Task<List<DataModel.Action>> GetActionsListByReservoirId(int reservoirid)
+        public async Task<List<DataModel.Action>> GetActionsListByReservoirId(int reservoirid, int category)
         {
+            var strCategory = (Category)category;
             using (var conn = Connection)
             {
                // var query = @"Select * from Actions where ReservoirId=@Id";
                 var parameters = new DynamicParameters();
                 parameters.Add("reservoirid", reservoirid, DbType.Int64);
+                parameters.Add("category", strCategory.ToString(), DbType.String);
                 var actionlist = await conn.QueryAsync<DataModel.Action>("sp_GetActionsListByReservoirId", parameters,commandType:CommandType.StoredProcedure);
                 return actionlist.ToList();
             }
