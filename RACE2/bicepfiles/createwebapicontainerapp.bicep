@@ -10,7 +10,7 @@ param webapicontainerImage string
 param managedidentity string
 param subscriptionid string 
 
-resource registry 'Microsoft.ContainerRegistry/registries@2021-12-01-preview' existing = {
+resource registry 'Microsoft.ContainerRegistry/registries@2023-01-01-preview' existing = {
   name: registryName
   scope: resourceGroup(registryResourceGroup)
 }
@@ -19,7 +19,7 @@ resource managedEnvironments_race2containerappenv_name_resource 'Microsoft.App/m
   name: race2appenv 
 }
 
-resource containerWebApiApp 'Microsoft.App/containerApps@2022-01-01-preview' = {
+resource containerWebApiApp 'Microsoft.App/containerApps@2022-11-01-preview' = {
   name: webApiContainerAppName
   location: location
   properties: {

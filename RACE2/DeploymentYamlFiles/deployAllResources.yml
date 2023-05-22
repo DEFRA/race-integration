@@ -9,8 +9,10 @@ variables:
   azureServiceConnection: 'AZR-RAC-POC1'
   resourceGroupName: 'Race2ProjectRG1'
   location: 'westeurope' 
-  templateFile: './RACE2/bicepfiles/createallresources.bicep'
-  parameterfile: './RACE2/DeploymentYamlFiles/deployAlResourcesParameters.json'
+  servicePrincipalId: '39ef2527-ca88-4bbc-b474-2d9aecf67f46'
+  templateFileResourceGroup: './RACE2/bicepfiles/createresourcegroup.bicep'  
+  templateFileAllResources: './RACE2/bicepfiles/createallresources.bicep'
+  parameterfileAllResources: './RACE2/DeploymentYamlFiles/deployAlResourcesParameters.json'
 pool:
   vmImage: $(vmImageName)
 
@@ -23,5 +25,6 @@ steps:
     useGlobalConfig: false    
     inlineScript: |
       az --version
-      az group create -n $(resourceGroupName) -l $(location)
-      az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) -p @$(parameterfile)
+      #az group create -n $(resourceGroupName) -l $(location)
+      az group create -n $(resourceGroupName) --template-file $(templateFileResourceGroup) -p resourceGroupName=$(resourceGroupName) location=$(location) servicePrincipalId=$(servicePrincipalId)
+      az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFileAllResources) -p @$(parameterfileAllResources)
