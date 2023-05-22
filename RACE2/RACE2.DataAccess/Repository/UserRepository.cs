@@ -439,7 +439,7 @@ namespace RACE2.DataAccess.Repository
             }
         }
 
-        public async Task<List<DataModel.Action>> GetActionsListByReservoirId(int reservoirid, int category)
+        public async Task<List<DataModel.Action>> GetActionsListByReservoirIdAndCategory(int reservoirid, int category)
         {
             var strCategory = (Category)category;
             using (var conn = Connection)

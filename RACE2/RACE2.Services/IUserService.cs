@@ -25,7 +25,7 @@ namespace RACE2.Services
 
         public Task<Organisation> GetOrganisationAddressbyId(int userId);
 
-        public Task<List<DataModel.Action>> GetActionsListByReservoirId(int reservoirid, int category);
+        public Task<List<DataModel.Action>> GetActionsListByReservoirIdAndCategory(int reservoirid, int category);
 
         public Task<List<SafetyMeasure>> GetSafetyMeasuresListByReservoirId(int reservoirid);
     }
