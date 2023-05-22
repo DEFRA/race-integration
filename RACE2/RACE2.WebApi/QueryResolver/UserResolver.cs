@@ -1,4 +1,5 @@
-﻿using HotChocolate.Resolvers;
+﻿using HotChocolate.Language;
+using HotChocolate.Resolvers;
 using HotChocolate.Subscriptions;
 using RACE2.DataAccess;
 using RACE2.DataAccess.Repository;
@@ -87,6 +88,13 @@ namespace RACE2.WebApi.QueryResolver
         public async Task<List<SafetyMeasure>> GetSafetyMeasuresListByReservoirId(IUserService _userService, int reservoirid)
         {
             return await _userService.GetSafetyMeasuresListByReservoirId(reservoirid);
+        }
+
+      
+        
+        public async Task<Address> GetAddressByReservoirId(IUserService _userService,int reservoirid, string operatortype)
+        {
+            return await _userService.GetAddressByReservoirId(reservoirid, operatortype);
         }
     }
 }

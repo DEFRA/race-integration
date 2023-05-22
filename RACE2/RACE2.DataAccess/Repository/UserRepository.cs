@@ -438,7 +438,7 @@ namespace RACE2.DataAccess.Repository
             var strCategory = (Category)category;
             using (var conn = Connection)
             {
-               // var query = @"Select * from Actions where ReservoirId=@Id";
+              
                 var parameters = new DynamicParameters();
                 parameters.Add("reservoirid", reservoirid, DbType.Int64);
                 parameters.Add("category", strCategory.ToString(), DbType.String);
@@ -451,13 +451,32 @@ namespace RACE2.DataAccess.Repository
         {
             using (var conn = Connection)
             {
-               // var query = @"Select * from SafetyMeasures where ReservoirId=@Id";
+               
                 var parameters = new DynamicParameters();
                 parameters.Add("reservoirid", reservoirid, DbType.Int64);
                 var actionlist = await conn.QueryAsync<SafetyMeasure>("sp_GetSafetyMeasuresListByReservoirId", parameters, commandType: CommandType.StoredProcedure);
                 return actionlist.ToList();
             }
         }
+
+        public async Task<Address> GetAddressByReservoirId(int reservoirid, string operatortype)
+        {
+            using (var conn = Connection)
+            {
+                if(operatortype == "Organisation")
+                {
+                    var parameters = new DynamicParameters();
+                    parameters.Add("reservoirid", reservoirid, DbType.Int64);
+                    var OrgAddress = await conn.QueryAsync<Address>("sp_GetAddressForReservoir", parameters, commandType: CommandType.StoredProcedure);
+                  
+
+                    return OrgAddress.FirstOrDefault();
+                }
+
+                return new Address();
+            }
+        }
+
 
 
     }

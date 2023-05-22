@@ -44,6 +44,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.FrontEndWeb", "RACE2.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StoredProcedures", "StoredProcedures", "{F40D405C-8DD0-44A8-81BF-9072721B1300}"
 	ProjectSection(SolutionItems) = preProject
+		sp_GetActionsListByReservoirId.sql = sp_GetActionsListByReservoirId.sql
+		sp_GetAddressForReservoir.sql = sp_GetAddressForReservoir.sql
+		sp_GetOrganisationAddressbyId.sql = sp_GetOrganisationAddressbyId.sql
+		sp_GetSafetyMeasuresListByReservoirId.sql = sp_GetSafetyMeasuresListByReservoirId.sql
 		sp_GetUserByEmailID.sql = sp_GetUserByEmailID.sql
 		sp_GetUserWithRoles.sql = sp_GetUserWithRoles.sql
 	EndProjectSection
