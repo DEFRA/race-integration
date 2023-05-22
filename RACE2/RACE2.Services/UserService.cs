@@ -85,9 +85,9 @@ namespace RACE2.Services
             return await _userRepository.GetOrganisationAddressbyId(userId);
         }
 
-        public async Task<List<DataModel.Action>> GetActionsListByReservoirId(int reservoirid, int category)
+        public async Task<List<DataModel.Action>> GetActionsListByReservoirIdAndCategory(int reservoirid, int category)
         {
-            return await _userRepository.GetActionsListByReservoirId(reservoirid,category);
+            return await _userRepository.GetActionsListByReservoirIdAndCategory(reservoirid,category);
         }
 
         public async Task<List<SafetyMeasure>> GetSafetyMeasuresListByReservoirId(int reservoirid)
