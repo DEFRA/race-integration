@@ -89,6 +89,11 @@ namespace RACE2.Services
             return await _userRepository.GetSafetyMeasuresListByReservoirId(reservoirid) ;
         }
 
+        public async Task<Address> GetAddressByReservoirId(int reservoirid, string operatortype)
+        {
+            return await _userRepository.GetAddressByReservoirId(reservoirid,operatortype);
+        }
+
     }
 
 }

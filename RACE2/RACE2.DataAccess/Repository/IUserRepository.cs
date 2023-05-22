@@ -31,7 +31,9 @@ namespace RACE2.DataAccess.Repository
         public Task<List<DataModel.Action>> GetActionsListByReservoirId(int reservoirid, int category);
 
         public Task<List<SafetyMeasure>> GetSafetyMeasuresListByReservoirId(int reservoirid);
-     //  public Task<UserDetail> GetReservoirsByUserEmailId(string email);
+        //  public Task<UserDetail> GetReservoirsByUserEmailId(string email);
+
+        public Task<Address> GetAddressByReservoirId(int reservoirid, string operatortype);
 
     }
 }
