@@ -54,16 +54,23 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.Notification", "RACE2
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bicepfiles", "bicepfiles", "{9E4A6273-3717-4549-B159-01B58CAB5C6D}"
 	ProjectSection(SolutionItems) = preProject
+		bicepfiles\createAllContainerApps.bicep = bicepfiles\createAllContainerApps.bicep
+		bicepfiles\createallresources.bicep = bicepfiles\createallresources.bicep
 		BicepFiles\createappconfig.bicep = BicepFiles\createappconfig.bicep
 		BicepFiles\createappworkspace.bicep = BicepFiles\createappworkspace.bicep
 		BicepFiles\createcontainerappenv.bicep = BicepFiles\createcontainerappenv.bicep
+		bicepfiles\createcontainerapps.bicep = bicepfiles\createcontainerapps.bicep
 		BicepFiles\createcontainerregistry.bicep = BicepFiles\createcontainerregistry.bicep
 		BicepFiles\createfrontendcontainerapp.bicep = BicepFiles\createfrontendcontainerapp.bicep
 		BicepFiles\createkeyvault.bicep = BicepFiles\createkeyvault.bicep
 		BicepFiles\createmanagedidentity.bicep = BicepFiles\createmanagedidentity.bicep
+		bicepfiles\createresourcegroup.bicep = bicepfiles\createresourcegroup.bicep
+		bicepfiles\createsecurityprovidercontainerapp.bicep = bicepfiles\createsecurityprovidercontainerapp.bicep
 		BicepFiles\createservicebuc.bicep = BicepFiles\createservicebuc.bicep
+		bicepfiles\createservicebus.bicep = bicepfiles\createservicebus.bicep
 		BicepFiles\createsqlserver.bicep = BicepFiles\createsqlserver.bicep
 		BicepFiles\createstorageaccount.bicep = BicepFiles\createstorageaccount.bicep
+		bicepfiles\createwebapicontainerapp.bicep = bicepfiles\createwebapicontainerapp.bicep
 		bicepfiles\main.bicep = bicepfiles\main.bicep
 	EndProjectSection
 EndProject
@@ -71,7 +78,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.DatabaseProvider", "R
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploymentyamlfiles", "deploymentyamlfiles", "{E77DC034-434C-42C9-83F7-D50E73A132C6}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\..\..\..\..\DefraCommon\Defra.Pipeline.Common\tests\integrationtests\devops\pipelines\appregscript-integrationtest.yaml = ..\..\..\..\..\..\DefraCommon\Defra.Pipeline.Common\tests\integrationtests\devops\pipelines\appregscript-integrationtest.yaml
+		..\..\..\DefraCommon\Defra.Pipeline.Common\tests\integrationtests\devops\pipelines\appregscript-integrationtest.yaml = ..\..\..\DefraCommon\Defra.Pipeline.Common\tests\integrationtests\devops\pipelines\appregscript-integrationtest.yaml
 		azure-pipelines-2.yml = azure-pipelines-2.yml
 		DeploymentYamlFiles\deployAllResources.yml = DeploymentYamlFiles\deployAllResources.yml
 		DeploymentYamlFiles\deployAlResources.json = DeploymentYamlFiles\deployAlResources.json
