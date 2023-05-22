@@ -74,7 +74,7 @@ namespace RACE2.Services
         }
 
 
-        public async Task<Organisation> GetOrganisationAddressbyId(int userId)
+        public async Task<OrganisationDTO> GetOrganisationAddressbyId(int userId)
         {
             return await _userRepository.GetOrganisationAddressbyId(userId);
         }

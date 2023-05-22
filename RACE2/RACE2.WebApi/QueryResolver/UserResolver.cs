@@ -73,9 +73,9 @@ namespace RACE2.WebApi.QueryResolver
         }
 
 
-        public async Task<Organisation> GetOrganisationByUserId(IUserService _userService, int userId)
+        public async Task<OrganisationDTO> GetOrganisationAddressbyId(IUserService _userService, int orgId)
         {
-           var result = await _userService.GetOrganisationAddressbyId(userId);
+           var result = await _userService.GetOrganisationAddressbyId(orgId);
             return result;
         }
 

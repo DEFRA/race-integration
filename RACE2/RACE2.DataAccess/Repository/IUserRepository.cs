@@ -26,7 +26,7 @@ namespace RACE2.DataAccess.Repository
 
         public Task<List<ReservoirDetailsDTO>> GetReservoirsByUserId(int id);
 
-        public Task<Organisation> GetOrganisationAddressbyId(int orgId);
+        public Task<OrganisationDTO> GetOrganisationAddressbyId(int orgId);
 
         public Task<List<DataModel.Action>> GetActionsListByReservoirId(int reservoirid, int category);
 
