@@ -12,8 +12,8 @@ using RACE2.DatabaseProvider;
 namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230412103556_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20230519174523_UpdateDataModelMigration")]
+    partial class UpdateDataModelMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -141,6 +141,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                         .HasColumnType("nvarchar(64)");
 
                     b.Property<DateTime>("CreatedDate")
+                        .HasMaxLength(64)
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -161,15 +162,12 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                         .HasMaxLength(1024)
                         .HasColumnType("nvarchar(1024)");
 
-                    b.Property<int>("OwnedById")
-                        .HasColumnType("int");
-
-                    b.Property<string>("OwnerType")
+                    b.Property<string>("Priority")
                         .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
-                    b.Property<string>("Priority")
+                    b.Property<string>("RaceActionId")
                         .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
@@ -197,8 +195,6 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OwnedById");
-
                     b.HasIndex("ReservoirId");
 
                     b.ToTable("Actions");
@@ -224,12 +220,52 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                     b.Property<string>("Postcode")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("RaceAddressKey")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
                     b.Property<string>("Town")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");
 
                     b.ToTable("Addresses");
+                });
+
+            modelBuilder.Entity("RACE2.DataModel.AuditTable", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
+
+                    b.Property<string>("ColumnName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NewValue")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OldValue")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TableName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("id");
+
+                    b.ToTable("AuditTables");
                 });
 
             modelBuilder.Entity("RACE2.DataModel.Comment", b =>
@@ -260,8 +296,11 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                     b.Property<int?>("ParentCommentidId")
                         .HasColumnType("int");
 
+                    b.Property<string>("RaceCommentId")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
                     b.Property<string>("RelatesToObject")
-                        .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
@@ -296,6 +335,10 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                         .IsRequired()
                         .HasMaxLength(1024)
                         .HasColumnType("nvarchar(1024)");
+
+                    b.Property<string>("RaceEarlyInspectionId")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.Property<string>("ReasonSummary")
                         .IsRequired()
@@ -403,12 +446,106 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("BusinessType")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
                     b.Property<string>("OrgName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Organisations");
+                });
+
+            modelBuilder.Entity("RACE2.DataModel.OrganisationReservoir", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("OrganisationId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ReservoirId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrganisationId");
+
+                    b.HasIndex("ReservoirId");
+
+                    b.ToTable("OrganisationReservoirs");
+                });
+
+            modelBuilder.Entity("RACE2.DataModel.PicklistDefinition", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("DisplayLabel")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PicklistName")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("PicklistType")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<bool>("isDefault")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PicklistDefinitions");
+                });
+
+            modelBuilder.Entity("RACE2.DataModel.PicklistMapping", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("BackendValue")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("PicklistValue")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PicklistMappings");
                 });
 
             modelBuilder.Entity("RACE2.DataModel.Reservoir", b =>
@@ -419,71 +556,75 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("NearestTown")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("addressid")
+                    b.Property<int?>("Addressid")
                         .HasColumnType("int");
 
-                    b.Property<int>("capacity")
+                    b.Property<int>("Capacity")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("construction_start_date")
+                    b.Property<DateTime>("ConstructionStartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("grid_reference")
+                    b.Property<string>("GridReference")
                         .HasMaxLength(12)
                         .HasColumnType("nvarchar(12)");
 
-                    b.Property<bool>("has_multiple_dams")
+                    b.Property<bool>("HasMultipleDams")
                         .HasColumnType("bit");
 
-                    b.Property<string>("key_facts")
+                    b.Property<string>("KeyFacts")
                         .HasMaxLength(512)
                         .HasColumnType("nvarchar(512)");
 
-                    b.Property<DateTime>("last_inspection_date")
+                    b.Property<DateTime>("LastInspectionDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("next_inspection_date")
+                    b.Property<string>("NearestTown")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("NextInspectionDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("public_category")
+                    b.Property<string>("OperatorType")
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
-                    b.Property<string>("public_name")
+                    b.Property<string>("PublicCategory")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("PublicName")
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<string>("race_reservoir_id")
+                    b.Property<string>("RaceReservoirId")
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
-                    b.Property<string>("reference_number")
+                    b.Property<string>("ReferenceNumber")
                         .HasMaxLength(8)
                         .HasColumnType("nvarchar(8)");
 
-                    b.Property<string>("registered_category")
+                    b.Property<string>("RegisteredCategory")
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
-                    b.Property<string>("registered_name")
+                    b.Property<string>("RegisteredName")
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<int>("surface_area")
+                    b.Property<int>("SurfaceArea")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("top_water_level")
+                    b.Property<decimal>("TopWaterLevel")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<DateTime>("verified_details_date")
+                    b.Property<DateTime>("VerifiedDetailsDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("addressid");
+                    b.HasIndex("Addressid");
 
                     b.ToTable("Reservoirs");
                 });
@@ -545,17 +686,18 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                         .HasColumnType("nvarchar(1024)");
 
                     b.Property<string>("Notes")
-                        .IsRequired()
                         .HasMaxLength(1024)
                         .HasColumnType("nvarchar(1024)");
 
                     b.Property<string>("Othertype")
-                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
+                    b.Property<string>("RaceSafetyMeasureId")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
                     b.Property<string>("Reference")
-                        .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
@@ -580,6 +722,19 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                     b.HasIndex("ReservoirId");
 
                     b.ToTable("SafetyMeasures");
+                });
+
+            modelBuilder.Entity("RACE2.DataModel.SubmissionStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SubmissionStatus");
                 });
 
             modelBuilder.Entity("RACE2.DataModel.SupportingDocument", b =>
@@ -741,6 +896,22 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                     b.Property<bool>("c_IsFirstTimeUser")
                         .HasColumnType("bit");
 
+                    b.Property<string>("c_alternative_email")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("c_alternative_emergence_phone")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("c_alternative_mobile")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("c_alternative_phone")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
                     b.Property<DateTime>("c_created_on_date")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
@@ -819,6 +990,9 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                         .HasColumnType("nvarchar(64)")
                         .HasDefaultValue(" ");
 
+                    b.Property<string>("race_id")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
@@ -876,14 +1050,18 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("Appointment_end_date")
+                    b.Property<DateTime>("AppointmentEndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("Appointment_start_date")
+                    b.Property<DateTime>("AppointmentStartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Appointment_type")
+                    b.Property<string>("AppointmentType")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RaceAppointmentId")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.Property<int>("ReservoirId")
                         .HasColumnType("int");
@@ -934,15 +1112,15 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
             modelBuilder.Entity("ReservoirSupportingDocument", b =>
                 {
-                    b.Property<int>("DocumentsId")
-                        .HasColumnType("int");
-
                     b.Property<int>("ReservoirId")
                         .HasColumnType("int");
 
-                    b.HasKey("DocumentsId", "ReservoirId");
+                    b.Property<int>("SupportingDocumentsId")
+                        .HasColumnType("int");
 
-                    b.HasIndex("ReservoirId");
+                    b.HasKey("ReservoirId", "SupportingDocumentsId");
+
+                    b.HasIndex("SupportingDocumentsId");
 
                     b.ToTable("ReservoirSupportingDocument");
                 });
@@ -1000,19 +1178,11 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
             modelBuilder.Entity("RACE2.DataModel.Action", b =>
                 {
-                    b.HasOne("RACE2.DataModel.UserDetail", "OwnedBy")
-                        .WithMany()
-                        .HasForeignKey("OwnedById")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("RACE2.DataModel.Reservoir", "Reservoir")
                         .WithMany()
                         .HasForeignKey("ReservoirId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("OwnedBy");
 
                     b.Navigation("Reservoir");
                 });
@@ -1062,13 +1232,32 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                     b.Navigation("Reservoir");
                 });
 
+            modelBuilder.Entity("RACE2.DataModel.OrganisationReservoir", b =>
+                {
+                    b.HasOne("RACE2.DataModel.Organisation", "Organisation")
+                        .WithMany()
+                        .HasForeignKey("OrganisationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RACE2.DataModel.Reservoir", "Reservoir")
+                        .WithMany()
+                        .HasForeignKey("ReservoirId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Organisation");
+
+                    b.Navigation("Reservoir");
+                });
+
             modelBuilder.Entity("RACE2.DataModel.Reservoir", b =>
                 {
-                    b.HasOne("RACE2.DataModel.Address", "address")
+                    b.HasOne("RACE2.DataModel.Address", "Address")
                         .WithMany()
-                        .HasForeignKey("addressid");
+                        .HasForeignKey("Addressid");
 
-                    b.Navigation("address");
+                    b.Navigation("Address");
                 });
 
             modelBuilder.Entity("RACE2.DataModel.SafetyMeasure", b =>
@@ -1131,7 +1320,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
             modelBuilder.Entity("RACE2.DataModel.UserReservoir", b =>
                 {
                     b.HasOne("RACE2.DataModel.Reservoir", "Reservoir")
-                        .WithMany("Reservoirs")
+                        .WithMany("UserReservoirs")
                         .HasForeignKey("ReservoirId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1164,15 +1353,15 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
             modelBuilder.Entity("ReservoirSupportingDocument", b =>
                 {
-                    b.HasOne("RACE2.DataModel.SupportingDocument", null)
-                        .WithMany()
-                        .HasForeignKey("DocumentsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("RACE2.DataModel.Reservoir", null)
                         .WithMany()
                         .HasForeignKey("ReservoirId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RACE2.DataModel.SupportingDocument", null)
+                        .WithMany()
+                        .HasForeignKey("SupportingDocumentsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -1184,7 +1373,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
             modelBuilder.Entity("RACE2.DataModel.Reservoir", b =>
                 {
-                    b.Navigation("Reservoirs");
+                    b.Navigation("UserReservoirs");
                 });
 
             modelBuilder.Entity("RACE2.DataModel.Role", b =>
