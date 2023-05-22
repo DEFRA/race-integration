@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -11,16 +12,17 @@ namespace RACE2.DataModel
     public class UserReservoir
     {
         public int Id { get; set; }
-
+        [StringLength(64)]
+        public string? RaceAppointmentId { get; set; }
         public UserDetail UserDetail { get; set; } = new UserDetail();
 
         public Reservoir Reservoir { get; set; } = new Reservoir();       
 
-        public string? Appointment_type { get; set; }
+        public string? AppointmentType { get; set; }
 
-        public DateTime Appointment_start_date { get; set; }
+        public DateTime AppointmentStartDate { get; set; }
 
-        public DateTime Appointment_end_date { get; set; }
+        public DateTime AppointmentEndDate { get; set; }
 
      
     }

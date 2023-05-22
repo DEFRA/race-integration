@@ -423,7 +423,7 @@ namespace RACE2.DataAccess.Repository
                 var OrgAddress = await conn.QueryAsync<Organisation,Address, Organisation>("sp_GetOrganisationAddressbyId", (organisation,address) =>
                 {
                     
-                    organisation.Addresses.Add(address);
+                   // organisation.Addresses.Add(address);
                     return organisation;                 
                     
                   //  return orgdto;
@@ -431,7 +431,7 @@ namespace RACE2.DataAccess.Repository
                 var result = OrgAddress.GroupBy(u => u.Id).Select(g =>
                 {
                     var groupedOrg = g.First();
-                    groupedOrg.Addresses= g.Select(u => u.Addresses.Single()).ToList();
+                   // groupedOrg.Addresses= g.Select(u => u.Addresses.Single()).ToList();
                     return groupedOrg;
                 });
 

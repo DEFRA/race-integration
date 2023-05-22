@@ -14,8 +14,11 @@ namespace RACE2.DataModel
         [Key, Required]
         public int Id { get; set; }
         public string? OrgName { get; set; }
+        [StringLength(64)]
+        [Required]  
+        public string? BusinessType { get; set; }    
 
-        public List<Address> Addresses { get; set; } = new List<Address>();
+        //public List<Address> Addresses { get; set; } = new List<Address>();
 
         
     }

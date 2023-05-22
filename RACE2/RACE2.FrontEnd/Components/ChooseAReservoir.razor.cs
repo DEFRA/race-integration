@@ -89,7 +89,7 @@ namespace RACE2.FrontEnd.Components
         void SelectReservoir(string reservoir)
         {
             SelectedReservoirName = reservoir;
-            CurrentReservoir.public_name = reservoir;
+            CurrentReservoir.PublicName = reservoir;
             filteredReservoirNames = null;
         }
 

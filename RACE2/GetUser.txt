@@ -38,3 +38,24 @@ query($newid:String!)
 {
   "newid":"maha.alagar@gmail.com"
 }
+
+
+query($reservoirid:Int!,$categorystr:Int!){
+actionsListByReservoirId(reservoirid: $reservoirid,category: $categorystr)
+
+{
+id,
+reference,
+
+category,
+
+summary
+
+}
+
+}
+
+{
+  "reservoirid": 38,
+  "categorystr": 1
+}

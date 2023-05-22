@@ -45,7 +45,7 @@ namespace RACE2.FrontEndWeb.Components
         protected override async void OnInitialized()
         {
             base.OnInitialized();
-            SelectedReservoirName = AppStore.CurrentReservoir.public_name;
+            SelectedReservoirName = AppStore.CurrentReservoir.PublicName;
             IsLoggedIn = AppStore.IsLoggedIn;
             CurrentUserId = AppStore.CurrentUserDetail.Id;
             var results = await client.GetReservoirsByUserId.ExecuteAsync(CurrentUserId);
@@ -95,7 +95,7 @@ namespace RACE2.FrontEndWeb.Components
         void SelectReservoir(string reservoir)
         {
             SelectedReservoirName = reservoir;
-            CurrentReservoir.public_name = reservoir;
+            CurrentReservoir.PublicName = reservoir;
             var action = new StoreReservoirAction(CurrentReservoir);
             Dispatcher.Dispatch(action);
             filteredReservoirNames = null;
