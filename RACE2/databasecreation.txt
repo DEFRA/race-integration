@@ -1,3 +1,5 @@
+dotnet tool install --global dotnet-ef
+
 //startup project->RACE2.SecurityProvider, packagemanager defualt project->RACE2.SecurityProvider
 
 Add-Migration InitialPersistedGranMigration -c PersistedGrantDbContext -o Migrations/IdentityServer/PersistedGrantDb
