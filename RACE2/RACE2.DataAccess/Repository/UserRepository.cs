@@ -408,30 +408,24 @@ namespace RACE2.DataAccess.Repository
         }
 
 
-        public async Task<Organisation> GetOrganisationAddressbyId(int orgId)
+        public async Task<OrganisationDTO> GetOrganisationAddressbyId(int orgId)
         {
             using (var conn = Connection)
             {
-                //var query = @"select *
-                //                from Organisations A
-                //                inner join OrganisationAddresses B On A.Id = B.OrganisationId
-                //                inner join Addresses C On C.id = B.Addressesid
-                //                where A.Id = @orgId";
+                
                 var parameters = new DynamicParameters();
                 parameters.Add("orgId", orgId, DbType.Int64);
 
-                var OrgAddress = await conn.QueryAsync<Organisation,Address, Organisation>("sp_GetOrganisationAddressbyId", (organisation,address) =>
-                {
-                    
-                   // organisation.Addresses.Add(address);
-                    return organisation;                 
-                    
-                  //  return orgdto;
-                }, parameters,splitOn: "Addressesid,OrganisationId", commandType: CommandType.StoredProcedure);
+                var OrgAddress = await conn.QueryAsync<OrganisationDTO, Address, OrganisationDTO>("sp_GetOrganisationAddressbyId", (organisation,address) =>
+                { 
+                    organisation.Addresses.Add(address);
+                    return organisation;
+                 
+                }, parameters,splitOn: "Addressid,OrganisationId", commandType: CommandType.StoredProcedure);
                 var result = OrgAddress.GroupBy(u => u.Id).Select(g =>
                 {
                     var groupedOrg = g.First();
-                   // groupedOrg.Addresses= g.Select(u => u.Addresses.Single()).ToList();
+                   groupedOrg.Addresses= g.Select(u => u.Addresses.Single()).ToList();
                     return groupedOrg;
                 });
 
