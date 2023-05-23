@@ -353,7 +353,7 @@ namespace RACE2.DataAccess.Repository
         {
             using (var conn = Connection)
             {
-                var query = @"Select B.race_reservoir_id,B.*,c.Id, c.*
+                var query = @"Select B.RaceReservoirId,B.*,c.Id, c.*
                                from UserReservoirs A 
                               inner join Reservoirs B on A.ReservoirId = B.Id
                               inner Join Addresses C On C.id = B.addressid
@@ -363,7 +363,7 @@ namespace RACE2.DataAccess.Repository
                 parameters.Add("id", id, DbType.String);
                 var reservoirs = await conn.QueryAsync<ReservoirDetailsDTO,  Address, ReservoirDetailsDTO>(query, (reservoir, address) =>
                 {
-                    reservoir.address = address;
+                    reservoir.Address = address;
                    // Reservoirs.Add(reservoir);
                     return reservoir;
                 }, parameters, splitOn: "ReservoirId,id");
