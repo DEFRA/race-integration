@@ -26,5 +26,5 @@ steps:
     inlineScript: |
       az --version
       #az group create -n $(resourceGroupName) -l $(location)
-      az deployment group create -n $(resourceGroupName) --template-file $(templateFileResourceGroup) --parameters resourceGroupName=$(resourceGroupName) location=$(location) servicePrincipalId=$(servicePrincipalId)
+      az deployment group create --template-file $(templateFileResourceGroup) --parameters resourceGroupName=$(resourceGroupName) location=$(location) servicePrincipalId=$(servicePrincipalId)
       az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFileAllResources) --parameter @$(parameterfileAllResources)
