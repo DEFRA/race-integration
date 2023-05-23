@@ -2,9 +2,11 @@
   userWithRoles(email:$newemail){
   id
   email
+  c_last_name
   roles{
     id
     name
+    normalizedName
   }
   }
   }
