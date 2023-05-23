@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <None Remove="Components\AnnualStatements.razor~RFccbacb1.TMP" />
-    <None Remove="RACE2GraphQLSchema\Querries\User\GetReservoirsByUser EmailId.graphql" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,10 +23,10 @@
     <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="6.0.16" />
     <PackageReference Include="PSC.Blazor.Components.Tabs" Version="1.0.6" />
 	<PackageReference Include="StrawberryShake.Blazor" Version="13.0.5" />
-    <PackageReference Include="System.Reactive" Version="5.0.0" />
-	<PackageReference Include="Fluxor" Version="5.7.0" />
-	<PackageReference Include="Fluxor.Blazor.Web" Version="5.7.0" />
-	<PackageReference Include="Fluxor.Blazor.Web.ReduxDevTools" Version="5.7.0" />
+    <PackageReference Include="System.Reactive" Version="6.0.0" />
+	<PackageReference Include="Fluxor" Version="5.8.0" />
+	<PackageReference Include="Fluxor.Blazor.Web" Version="5.8.0" />
+	<PackageReference Include="Fluxor.Blazor.Web.ReduxDevTools" Version="5.8.0" />
   </ItemGroup>
 
   <ItemGroup>
