@@ -80,7 +80,7 @@ namespace RACE2.Services
         }
 
 
-        public async Task<Organisation> GetOrganisationAddressbyId(int userId)
+        public async Task<OrganisationDTO> GetOrganisationAddressbyId(int userId)
         {
             return await _userRepository.GetOrganisationAddressbyId(userId);
         }
@@ -93,6 +93,11 @@ namespace RACE2.Services
         public async Task<List<SafetyMeasure>> GetSafetyMeasuresListByReservoirId(int reservoirid)
         {
             return await _userRepository.GetSafetyMeasuresListByReservoirId(reservoirid) ;
+        }
+
+        public async Task<Address> GetAddressByReservoirId(int reservoirid, string operatortype)
+        {
+            return await _userRepository.GetAddressByReservoirId(reservoirid,operatortype);
         }
 
     }

@@ -1,0 +1,26 @@
+trigger:
+- main
+
+name: Deploy Bicep files
+
+variables:
+  vmImageName: 'ubuntu-latest'
+
+  azureServiceConnection: 'AZR-RAC-POC1'
+  resourceGroupName: 'RACE2ProjectRG'
+  location: 'westeurope'
+  logAnalyticsWorkspaceName: 'race2appworkspace1'
+  templateFile: 'bicepfiles/createappworkspace.bicep'
+pool:
+  vmImage: $(vmImageName)
+
+steps:
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: $(azureServiceConnection)
+    scriptType: bash
+    scriptLocation: inlineScript
+    useGlobalConfig: false    
+    inlineScript: |
+      az --version
+      az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) --parameters location='$(location)' logAnalyticsWorkspaceName='$(logAnalyticsWorkspaceName)'

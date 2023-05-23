@@ -12,6 +12,7 @@ namespace RACE2.DataModel
     [Table("UserDetails")]
     public  class UserDetail: IdentityUser<int>    
     {    
+            public string? race_id { get; set; }
             public string? c_defra_id { get; set; }
            
 
@@ -24,11 +25,23 @@ namespace RACE2.DataModel
             public string? c_mobile { get; set; }           
                   
             public string? c_emergency_phone { get; set; }
-            
-           // public string? c_organisation_id { get; set; }
-           
-                      
-            public string? c_job_title { get; set; }
+
+            [StringLength(64)]
+            public string? c_alternative_email { get; set; }
+
+            [StringLength(64)]
+            public string? c_alternative_mobile { get; set; }
+
+            [StringLength(64)]
+            public string? c_alternative_phone { get; set; }
+
+            [StringLength(64)]
+            public string? c_alternative_emergence_phone { get; set; }
+
+        // public string? c_organisation_id { get; set; }
+
+
+        public string? c_job_title { get; set; }
           
             public string? c_current_panel { get; set; }
           

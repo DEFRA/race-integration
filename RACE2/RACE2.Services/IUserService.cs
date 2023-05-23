@@ -23,10 +23,12 @@ namespace RACE2.Services
         public Task<List<ReservoirDetailsDTO>> GetReservoirsByUserEmailId(string emailId);
         public Task<IEnumerable<FeatureFunction>> GetFeaturePermissionForRole(int roleid);
 
-        public Task<Organisation> GetOrganisationAddressbyId(int userId);
+        public Task<OrganisationDTO> GetOrganisationAddressbyId(int userId);
 
         public Task<List<DataModel.Action>> GetActionsListByReservoirIdAndCategory(int reservoirid, int category);
 
         public Task<List<SafetyMeasure>> GetSafetyMeasuresListByReservoirId(int reservoirid);
+
+        public Task<Address> GetAddressByReservoirId(int reservoirid, string operatortype);
     }
 }

@@ -119,9 +119,7 @@ namespace RACE2.DataAccess.Repository
                     });
                     return result.FirstOrDefault();
 
-                    //getfeaturefuntion(userid)
-                    //getreservoirs(userid)
-                    //getaddress(userid)
+                   
                 }
             }
             catch (Exception ex)
@@ -408,30 +406,24 @@ namespace RACE2.DataAccess.Repository
         }
 
 
-        public async Task<Organisation> GetOrganisationAddressbyId(int orgId)
+        public async Task<OrganisationDTO> GetOrganisationAddressbyId(int orgId)
         {
             using (var conn = Connection)
             {
-                //var query = @"select *
-                //                from Organisations A
-                //                inner join OrganisationAddresses B On A.Id = B.OrganisationId
-                //                inner join Addresses C On C.id = B.Addressesid
-                //                where A.Id = @orgId";
+                
                 var parameters = new DynamicParameters();
                 parameters.Add("orgId", orgId, DbType.Int64);
 
-                var OrgAddress = await conn.QueryAsync<Organisation,Address, Organisation>("sp_GetOrganisationAddressbyId", (organisation,address) =>
-                {
-                    
+                var OrgAddress = await conn.QueryAsync<OrganisationDTO, Address, OrganisationDTO>("sp_GetOrganisationAddressbyId", (organisation,address) =>
+                { 
                     organisation.Addresses.Add(address);
-                    return organisation;                 
-                    
-                  //  return orgdto;
-                }, parameters,splitOn: "Addressesid,OrganisationId", commandType: CommandType.StoredProcedure);
+                    return organisation;
+                 
+                }, parameters,splitOn: "Addressid,OrganisationId", commandType: CommandType.StoredProcedure);
                 var result = OrgAddress.GroupBy(u => u.Id).Select(g =>
                 {
                     var groupedOrg = g.First();
-                    groupedOrg.Addresses= g.Select(u => u.Addresses.Single()).ToList();
+                   groupedOrg.Addresses= g.Select(u => u.Addresses.Single()).ToList();
                     return groupedOrg;
                 });
 
@@ -444,7 +436,7 @@ namespace RACE2.DataAccess.Repository
             var strCategory = (Category)category;
             using (var conn = Connection)
             {
-               // var query = @"Select * from Actions where ReservoirId=@Id";
+              
                 var parameters = new DynamicParameters();
                 parameters.Add("reservoirid", reservoirid, DbType.Int64);
                 parameters.Add("category", strCategory.ToString(), DbType.String);
@@ -457,13 +449,32 @@ namespace RACE2.DataAccess.Repository
         {
             using (var conn = Connection)
             {
-               // var query = @"Select * from SafetyMeasures where ReservoirId=@Id";
+               
                 var parameters = new DynamicParameters();
                 parameters.Add("reservoirid", reservoirid, DbType.Int64);
                 var actionlist = await conn.QueryAsync<SafetyMeasure>("sp_GetSafetyMeasuresListByReservoirId", parameters, commandType: CommandType.StoredProcedure);
                 return actionlist.ToList();
             }
         }
+
+        public async Task<Address> GetAddressByReservoirId(int reservoirid, string operatortype)
+        {
+            using (var conn = Connection)
+            {
+                if(operatortype == "Organisation")
+                {
+                    var parameters = new DynamicParameters();
+                    parameters.Add("reservoirid", reservoirid, DbType.Int64);
+                    var OrgAddress = await conn.QueryAsync<Address>("sp_GetAddressForReservoir", parameters, commandType: CommandType.StoredProcedure);
+                  
+
+                    return OrgAddress.FirstOrDefault();
+                }
+
+                return new Address();
+            }
+        }
+
 
 
     }

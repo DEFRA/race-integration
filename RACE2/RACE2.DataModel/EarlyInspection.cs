@@ -14,6 +14,8 @@ namespace RACE2.DataModel
     {
         [Key, Required]
         public int Id { get; set; }
+        [StringLength(64)]
+        public string? RaceEarlyInspectionId { get; set; }
         [StringLength(64),Required]
         public string Reference { get; set; }
         [StringLength(64),Required]

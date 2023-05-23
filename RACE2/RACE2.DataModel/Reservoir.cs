@@ -16,46 +16,43 @@ namespace RACE2.DataModel
         [Key, Required]
         public int Id { get; set; }
         [StringLength(64)]
-        public string? race_reservoir_id { get; set; }
+        public string? RaceReservoirId { get; set; }
         [StringLength(200)]
-        public string? public_name { get; set; }
+        public string? PublicName { get; set; }
         [StringLength(200)]
-        public string? registered_name { get;set; }
+        public string? RegisteredName { get;set; }
         [StringLength(8)]
-        public string? reference_number { get; set; }
+        public string? ReferenceNumber { get; set; }
         [StringLength(64)]
-        public string? public_category { get; set; }
+        public string? PublicCategory { get; set; }
         [StringLength(64)]
-        public string? registered_category { get;set; }
+        public string? RegisteredCategory { get;set; }
         [StringLength(12)]
-        public string? grid_reference { get; set; }       
-        public int capacity { get; set; }
-        public int surface_area { get; set; }
-        public decimal top_water_level { get; set; }
-        public bool has_multiple_dams { get; set; }
+        public string? GridReference { get; set; }       
+        public int Capacity { get; set; }
+        public int SurfaceArea { get; set; }
+        public decimal TopWaterLevel { get; set; }
+        public bool HasMultipleDams { get; set; }
         [StringLength(512)]
-        public string? key_facts { get; set; }
-        public DateTime construction_start_date { get; set; }
-        public DateTime verified_details_date { get; set; }
+        public string? KeyFacts { get; set; }
+        public DateTime ConstructionStartDate { get; set; }
+        public DateTime VerifiedDetailsDate { get; set; }
 
-        public DateTime last_inspection_date { get; set; }
+        public DateTime LastInspectionDate { get; set; }
 
-        public DateTime next_inspection_date { get; set; }
+        public DateTime NextInspectionDate { get; set; }
 
        // public List<UserDetail> users { get; set; } = new List<UserDetail>();
 
-        public Address? address { get; set; } = new Address();
+        public Address? Address { get; set; } = new Address();
         public string? NearestTown { get; set; }
        
-       // public EarlyInspection EarlyInspection { get; set; } = new EarlyInspection();
-        
-        //public Action Action { get; set; } =   new Action();
+       public List<UserReservoir> UserReservoirs { get; set; } = new List<UserReservoir>();
 
-     //   public FloodPlan FloodPlan { get; set; } = new FloodPlan();
+        public List<SupportingDocument> SupportingDocuments { get; set; } = new List<SupportingDocument>();
 
-        public List<UserReservoir> Reservoirs { get; set; } = new List<UserReservoir>();
-
-        public List<SupportingDocument> Documents { get; set; } = new List<SupportingDocument>();
+        [StringLength(64)]
+        public string? OperatorType { get; set; }
 
     }
 

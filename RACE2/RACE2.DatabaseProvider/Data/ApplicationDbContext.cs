@@ -45,6 +45,12 @@ namespace RACE2.DatabaseProvider
         public DbSet<PicklistMapping> PicklistMappings { get; set; }
 
         public DbSet<AuditTable> AuditTables { get; set; }
+
+        public DbSet<OrganisationReservoir> OrganisationReservoirs { get; set;}
+
+        public DbSet<OrganisationAddress> OrganisationAddresses { get; set; }
+
+        public DbSet<SubmissionStatus> SubmissionStatus { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -193,10 +199,10 @@ namespace RACE2.DatabaseProvider
             //    .WithMany(right => right.Addresses)
             //    .UsingEntity(join => join.ToTable("UserAddresses"));
 
-            modelBuilder.Entity<Address>()
-                .HasMany(left => left.Organisation)
-                .WithMany(right => right.Addresses)
-                .UsingEntity(join => join.ToTable("OrganisationAddresses"));
+            //modelBuilder.Entity<Address>()
+            //    .HasMany(left => left.Organisation)
+            //    .WithMany(right => right.Addresses)
+            //    .UsingEntity(join => join.ToTable("OrganisationAddresses"));
         }
     }
 

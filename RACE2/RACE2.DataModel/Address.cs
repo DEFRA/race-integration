@@ -13,6 +13,8 @@ namespace RACE2.DataModel
     {
         [Key, Required]
         public int id { get; set; }
+        [StringLength(64)]
+        public string? RaceAddressKey { get; set; }
         public string? AddressLine1 { get; set; }
         public string? AddressLine2 { get; set; }
         public string? Town { get; set; }
@@ -23,7 +25,7 @@ namespace RACE2.DataModel
 
        // public List<UserDetail> UserDetail { get; set; }    = new List<UserDetail>();
 
-        public List<Organisation> Organisation { get; set; } = new List<Organisation>();
+        //public List<Organisation> Organisation { get; set; } = new List<Organisation>();
 
     }
 }
