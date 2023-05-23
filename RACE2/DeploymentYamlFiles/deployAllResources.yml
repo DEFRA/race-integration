@@ -25,6 +25,6 @@ steps:
     useGlobalConfig: false    
     inlineScript: |
       az --version
-      #az group create -n $(resourceGroupName) -l $(location)
-      az group create -n $(resourceGroupName) -l $(location) --template-file $(templateFileResourceGroup) --parameters resourceGroupName=$(resourceGroupName) location=$(location) servicePrincipalId=$(servicePrincipalId)
+      az group create -n $(resourceGroupName) -l $(location)
+      #az group create -n $(resourceGroupName) --template-file $(templateFileResourceGroup) --parameters resourceGroupName=$(resourceGroupName) location=$(location) servicePrincipalId=$(servicePrincipalId)
       az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFileAllResources) --parameter @$(parameterfileAllResources)
