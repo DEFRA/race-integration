@@ -119,9 +119,7 @@ namespace RACE2.DataAccess.Repository
                     });
                     return result.FirstOrDefault();
 
-                    //getfeaturefuntion(userid)
-                    //getreservoirs(userid)
-                    //getaddress(userid)
+                   
                 }
             }
             catch (Exception ex)
