@@ -56,12 +56,12 @@ namespace RACE2.FrontEnd.Pages.S12Pages
                 reservoirNamesList.Add(rn.Public_name);
                 var r = new Reservoir()
                 {
-                    race_reservoir_id = rn.Race_reservoir_id,
-                    public_name = rn.Public_name,
+                    RaceReservoirId = rn.Race_reservoir_id,
+                    PublicName = rn.Public_name,
                     NearestTown = rn.NearestTown,
-                    grid_reference = rn.Grid_reference
+                    GridReference = rn.Grid_reference
                 };
-                r.address = new Address()
+                r.Address = new Address()
                 {
                     AddressLine1 = rn.Address.AddressLine1,
                     AddressLine2 = rn.Address.AddressLine2,
@@ -140,14 +140,14 @@ namespace RACE2.FrontEnd.Pages.S12Pages
         void SelectReservoir(string reservoir)
         {
             SelectedReservoirName = reservoir;
-            CurrentReservoir.public_name = reservoir;
+            CurrentReservoir.PublicName = reservoir;
             filteredReservoirNames = null;
         }
 
         public async void GoToNextPage()
         {
-            SelectedReservoirName = CurrentReservoir.public_name;
-            var selectedReservoir = ReservoirsLinkedToUser.FirstOrDefault(r => r.public_name == SelectedReservoirName);
+            SelectedReservoirName = CurrentReservoir.PublicName;
+            var selectedReservoir = ReservoirsLinkedToUser.FirstOrDefault(r => r.PublicName == SelectedReservoirName);
             var action = new StoreReservoirAction(selectedReservoir);
             Dispatcher.Dispatch(action);
             bool forceLoad = false;
