@@ -1,5 +1,5 @@
 trigger:
-- kris
+- none
 
 name: Deploy All Resources
 
@@ -26,5 +26,5 @@ steps:
     inlineScript: |
       az --version
       #az group create -n $(resourceGroupName) -l $(location)
-      az group create -n $(resourceGroupName) --template-file $(templateFileResourceGroup) -p resourceGroupName=$(resourceGroupName) location=$(location) servicePrincipalId=$(servicePrincipalId)
-      az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFileAllResources) -p @$(parameterfileAllResources)
+      az group create -n $(resourceGroupName) --template-file $(templateFileResourceGroup) --parameters resourceGroupName=$(resourceGroupName) location=$(location) servicePrincipalId=$(servicePrincipalId)
+      az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFileAllResources) --parameter @$(parameterfileAllResources)
