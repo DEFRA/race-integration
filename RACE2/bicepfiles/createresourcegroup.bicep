@@ -1,13 +1,11 @@
 // Setting target scope
 targetScope = 'subscription'
 param resourceGroupName string
-param location string
 param servicePrincipalId string
 
 // Creating resource group
-resource rg 'Microsoft.Resources/resourceGroups@2021-01-01' = {
+resource rg 'Microsoft.Resources/resourceGroups@2021-01-01' existing = {
   name: resourceGroupName
-  location: location
 }
 
 resource contributorRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
