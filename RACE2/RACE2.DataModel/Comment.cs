@@ -14,7 +14,9 @@ namespace RACE2.DataModel
         [Key, Required]
         public int Id { get; set; }
         [StringLength(64)]
-        public string RelatesToObject { get; set; }
+        public string? RaceCommentId { get; set; }
+        [StringLength(64)]
+        public string? RelatesToObject { get; set; }
        public int RelatesToRecord { get; set; }
 
         public UserDetail CreatedBy { get; set; }

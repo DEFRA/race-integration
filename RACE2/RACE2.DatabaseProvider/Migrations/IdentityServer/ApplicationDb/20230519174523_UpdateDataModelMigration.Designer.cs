@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RACE2.DatabaseProvider;
 
@@ -11,9 +12,10 @@ using RACE2.DatabaseProvider;
 namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230519174523_UpdateDataModelMigration")]
+    partial class UpdateDataModelMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +23,21 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("AddressOrganisation", b =>
+                {
+                    b.Property<int>("Addressesid")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OrganisationId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Addressesid", "OrganisationId");
+
+                    b.HasIndex("OrganisationId");
+
+                    b.ToTable("OrganisationAddresses", (string)null);
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
@@ -442,34 +459,6 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                     b.ToTable("Organisations");
                 });
 
-            modelBuilder.Entity("RACE2.DataModel.OrganisationAddress", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("Addressid")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OrganisationId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Addressid");
-
-                    b.HasIndex("OrganisationId");
-
-                    b.ToTable("OrganisationAddresses");
-                });
-
             modelBuilder.Entity("RACE2.DataModel.OrganisationReservoir", b =>
                 {
                     b.Property<int>("Id")
@@ -481,17 +470,12 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                     b.Property<int>("OrganisationId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PrimaryContactId")
-                        .HasColumnType("int");
-
                     b.Property<int>("ReservoirId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("OrganisationId");
-
-                    b.HasIndex("PrimaryContactId");
 
                     b.HasIndex("ReservoirId");
 
@@ -1141,6 +1125,21 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                     b.ToTable("ReservoirSupportingDocument");
                 });
 
+            modelBuilder.Entity("AddressOrganisation", b =>
+                {
+                    b.HasOne("RACE2.DataModel.Address", null)
+                        .WithMany()
+                        .HasForeignKey("Addressesid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RACE2.DataModel.Organisation", null)
+                        .WithMany()
+                        .HasForeignKey("OrganisationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.HasOne("RACE2.DataModel.Role", null)
@@ -1233,36 +1232,11 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                     b.Navigation("Reservoir");
                 });
 
-            modelBuilder.Entity("RACE2.DataModel.OrganisationAddress", b =>
-                {
-                    b.HasOne("RACE2.DataModel.Address", "Address")
-                        .WithMany()
-                        .HasForeignKey("Addressid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("RACE2.DataModel.Organisation", "Organisation")
-                        .WithMany()
-                        .HasForeignKey("OrganisationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Address");
-
-                    b.Navigation("Organisation");
-                });
-
             modelBuilder.Entity("RACE2.DataModel.OrganisationReservoir", b =>
                 {
                     b.HasOne("RACE2.DataModel.Organisation", "Organisation")
                         .WithMany()
                         .HasForeignKey("OrganisationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("RACE2.DataModel.UserDetail", "PrimaryContact")
-                        .WithMany()
-                        .HasForeignKey("PrimaryContactId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1273,8 +1247,6 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                         .IsRequired();
 
                     b.Navigation("Organisation");
-
-                    b.Navigation("PrimaryContact");
 
                     b.Navigation("Reservoir");
                 });
