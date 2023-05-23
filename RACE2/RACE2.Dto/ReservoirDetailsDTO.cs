@@ -10,25 +10,25 @@ namespace RACE2.Dto
 {
     public class ReservoirDetailsDTO
     {
-        public string? race_reservoir_id { get; set; }  
-        public string? public_name { get; set; }
-        public string? registered_name { get; set; }
-        public string? reference_number { get; set; }
-        public string? public_category { get; set; }
-        public string? registered_category { get; set; }
-        public string? grid_reference { get; set; }
-        public int capacity { get; set; }
-        public int surface_area { get; set; }
-        public decimal top_water_level { get; set; }
-        public bool has_multiple_dams { get; set; }
-        public string? key_facts { get; set; }
-        public DateTime construction_start_date { get; set; }
-        public DateTime verified_details_date { get; set; }
-        public DateTime last_inspection_date { get; set; }
-        public DateTime next_inspection_date { get; set; }   
-
-        public Address? address { get; set; } = new Address();
+        public string? RaceReservoirId { get; set; }  
+        public string? PublicName { get; set; }
+        public string? RegisteredName { get; set; }
+        public string? ReferenceNumber { get; set; }
+        public string? PublicCategory { get; set; }
+        public string? RegisteredCategory { get; set; }
+        public string? GridReference { get; set; }
+        public int Capacity { get; set; }
+        public int SurfaceArea { get; set; }
+        public decimal TopWaterLevel { get; set; }
+        public bool HasMultipleDams { get; set; }
+        public string? KeyFacts { get; set; }
+        public DateTime ConstructionStartDate { get; set; }
+        public DateTime VerifiedDetailsDate { get; set; }
+        public DateTime LastInspectionDate { get; set; }
+        public DateTime NextInspectionDate { get; set; }
+        public Address? Address { get; set; } = new Address();
         public string? NearestTown { get; set; }
-       
+        public string? OperatorType { get; set; }
+
     }
 }
