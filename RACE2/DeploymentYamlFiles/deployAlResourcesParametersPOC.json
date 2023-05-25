@@ -1,0 +1,54 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "subscriptionid": {
+        "value": "d9cce027-07b6-4275-a215-dd8d52b9d469"
+      }, 
+      "tenantId": {
+        "value": "770a2450-0227-4c62-90c7-4e38537f1102"
+      }, 
+      "location": {
+        "value": "westeurope"
+      }, 
+      "resourcegroup": {
+        "value": "Race2ProjectRG1"
+      },
+      "managedidentity": {
+        "value": "Race2ManagedIdentity1"
+      }, 
+      "containerregistryName": {
+        "value": "Race2ACR1"
+      },
+      "namespaces_ServiceBus_name": {
+        "value": "Race2ServiceBus1"
+      },
+      "storageAccountName": {
+        "value": "race2storageaccount1"
+      },
+      "appconfigName": {
+        "value": "Race2AppConfig1"
+      },
+      "keyvaultName": {
+        "value": "Race2KeyVault1"
+      },
+      "servers_race2sqlserver_name": {
+        "value": "race2sqlserver1"
+      },
+      "administratorLogin": {
+        "value": "race2admin"
+      } ,
+      "administratorLoginPassword": {
+        "value": "Race2Password123!"
+      }, 
+      "servers_race2sqldb_name": {
+        "value": "Race2Database1"
+      },
+      "logAnalyticsWorkspaceName": {
+        "value": "Race2LAWorkspace1"
+      },
+      "race2appenvName": {
+        "value": "Race2AppEnv1"
+      }
+    }
+}

@@ -6,10 +6,10 @@ name: Deploy All Resources
 variables:
   vmImageName: 'ubuntu-latest'
 
-  azureServiceConnection: 'AZR-RAC-DEV1'
+  azureServiceConnection: 'AZR-RAC-POC1'
   resourceGroupName: 'Race2ProjectRG1'
   location: 'westeurope' 
-  servicePrincipalId: '96b8b0ef-e54f-4455-981e-33eaacd977e8'
+  servicePrincipalId: '39ef2527-ca88-4bbc-b474-2d9aecf67f46'
   templateFileResourceGroup: './RACE2/bicepfiles/createresourcegroup.bicep'  
   templateFileAllResources: './RACE2/bicepfiles/createallresources.bicep'
   parameterfileAllResources: './RACE2/DeploymentYamlFiles/deployAlResourcesParameters.json'
