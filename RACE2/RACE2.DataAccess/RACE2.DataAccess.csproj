@@ -13,8 +13,8 @@
     </ItemGroup>
 	
     <ItemGroup>
+      <ProjectReference Include="..\RACE2.Common\RACE2.Common.csproj" />
       <ProjectReference Include="..\RACE2.Dto\RACE2.Dto.csproj" />
-      <ProjectReference Include="..\RACE2.Logging\RACE2.Logging.csproj" />
     </ItemGroup>
 </Project>
 

@@ -7,11 +7,10 @@ using Microsoft.EntityFrameworkCore.Migrations.Internal;
 using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using Microsoft.FeatureManagement;
 using RACE2.DataAccess;
-using RACE2.DatabaseProvider;
+using RACE2.DatabaseProvider.Data;
 using RACE2.DataModel;
 using RACE2.Dto;
-using RACE2.Logging;
-using RACE2.Logging.Service;
+
 using RACE2.Notification;
 using RACE2.SecurityProvider;
 using RACE2.SecurityProvider.UtilityClasses;
