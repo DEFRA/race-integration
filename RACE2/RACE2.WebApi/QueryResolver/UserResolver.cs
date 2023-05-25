@@ -1,4 +1,5 @@
-﻿using HotChocolate.Language;
+﻿using GreenDonut;
+using HotChocolate.Language;
 using HotChocolate.Resolvers;
 using HotChocolate.Subscriptions;
 using RACE2.DataAccess;
@@ -7,18 +8,33 @@ using RACE2.DataModel;
 using RACE2.Dto;
 using RACE2.Notification;
 using RACE2.Services;
-using Serilog;
-using Serilog.Events;
+
 
 namespace RACE2.WebApi.QueryResolver
 {
     public class UserResolver
     {
-        
-       
+        private readonly ILogger<UserResolver> _logger;  
+
+        public UserResolver(ILogger<UserResolver> logger)   
+        {
+            _logger = logger;
+        }
+
         public async Task<IEnumerable<UserDetail>> GetUserDetails(IUserService _userService)
         {
-            return await _userService.GetUserDetails();
+            try
+            {
+                _logger.LogInformation("GetUserDetailsReselvor");
+                var result = await _userService.GetUserDetails();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return null;
+            }
+                       
         }
 
         public async Task<UserDetail> GetById(IUserService _userService, int id)
@@ -94,7 +110,17 @@ namespace RACE2.WebApi.QueryResolver
         
         public async Task<Address> GetAddressByReservoirId(IUserService _userService,int reservoirid, string operatortype)
         {
-            return await _userService.GetAddressByReservoirId(reservoirid, operatortype);
+            try
+            {
+                _logger.LogInformation("calling GetAddressByReservoirIdReselvor");
+                return await _userService.GetAddressByReservoirId(reservoirid, operatortype);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return null;
+            }
+
         }
     }
 }
