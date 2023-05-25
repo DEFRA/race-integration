@@ -55,10 +55,10 @@ namespace RACE2.FrontEndWeb.Pages.S12Pages
             {
                 var r = new Reservoir()
                 {
-                    RaceReservoirId = rn.Race_reservoir_id,
-                    PublicName = rn.Public_name,
+                    RaceReservoirId = rn.RaceReservoirId,
+                    PublicName = rn.PublicName,
                     NearestTown = rn.NearestTown,
-                    GridReference = rn.Grid_reference
+                    GridReference = rn.GridReference
                 };
                 r.Address = new Address()
                 {

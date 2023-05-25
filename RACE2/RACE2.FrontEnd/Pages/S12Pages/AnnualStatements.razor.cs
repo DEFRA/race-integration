@@ -34,12 +34,12 @@ namespace RACE2.FrontEnd.Pages.S12Pages
         protected override async void OnInitialized()
         {
             AuthenticationState authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-            UserName = authState.User.Claims.ToArray()[6].Value;
-            //if (authState.User.Identity.Name is not null)
-            //{
-            //    UserName = authState.User.Identity.Name;
-            //    UserClaims = authState.User.Claims;
-            //}
+            //UserName = authState.User.Claims.ToArray()[6].Value;
+            if (authState.User.Identity.Name is not null)
+            {
+                UserName = authState.User.Identity.Name;
+                UserClaims = authState.User.Claims;
+            }
             var userDetails = await client.GetUserByEmailID.ExecuteAsync(UserName);
             UserId = userDetails!.Data!.UserByEmailID.Id;
             UserDetail = new UserDetail()
@@ -56,10 +56,10 @@ namespace RACE2.FrontEnd.Pages.S12Pages
             {
                 var r = new Reservoir()
                 {
-                    RaceReservoirId = rn.Race_reservoir_id,
-                    PublicName = rn.Public_name,
+                    RaceReservoirId = rn.RaceReservoirId,
+                    PublicName = rn.PublicName,
                     NearestTown = rn.NearestTown,
-                    GridReference = rn.Grid_reference
+                    GridReference = rn.GridReference
                 };
                 r.Address = new Address()
                 {

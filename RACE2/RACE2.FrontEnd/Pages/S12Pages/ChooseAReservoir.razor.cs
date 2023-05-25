@@ -53,13 +53,13 @@ namespace RACE2.FrontEnd.Pages.S12Pages
 
             foreach (var rn in reservoirs)
             {
-                reservoirNamesList.Add(rn.Public_name);
+                reservoirNamesList.Add(rn.PublicName);
                 var r = new Reservoir()
                 {
-                    RaceReservoirId = rn.Race_reservoir_id,
-                    PublicName = rn.Public_name,
+                    RaceReservoirId = rn.RaceReservoirId,
+                    PublicName = rn.PublicName,
                     NearestTown = rn.NearestTown,
-                    GridReference = rn.Grid_reference
+                    GridReference = rn.GridReference
                 };
                 r.Address = new Address()
                 {
