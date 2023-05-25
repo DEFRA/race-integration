@@ -20,7 +20,7 @@ resource Race2KeyVault_resource 'Microsoft.KeyVault/vaults@2022-11-01' = {
     }
 
     resource storageNameSecret 'secrets' = {
-    name: 'AppInsightConnectionString'
+    name: 'AppInsightsConnectionString'
     properties: {
       contentType: 'text/plain'
       value: appInsightConnectionString
