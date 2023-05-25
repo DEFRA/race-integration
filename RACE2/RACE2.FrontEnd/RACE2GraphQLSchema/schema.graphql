@@ -19,9 +19,10 @@ type UserResolver {
   reservoirsByUserEmailId(emailId: String!): [ReservoirDetailsDTO!]!
   featurePermissionForRole(roleid: Int!): [FeatureFunction!]!
   engineerReservoirByUUID(uuid: String!): IntegrationResponseModel!
-  organisationByUserId(userId: Int!): Organisation!
-  actionsListByReservoirId(reservoirid: Int!): [Action!]!
+  organisationAddressbyId(orgId: Int!): OrganisationDTO!
+  actionsListByReservoirIdAndCategory(reservoirid: Int! category: Int!): [Action!]!
   safetyMeasuresListByReservoirId(reservoirid: Int!): [SafetyMeasure!]!
+  addressByReservoirId(reservoirid: Int! operatortype: String!): Address!
 }
 
 type MutationResolver {
@@ -31,12 +32,17 @@ type MutationResolver {
 }
 
 type UserDetail {
+  race_id: String
   c_defra_id: String
   c_type: String
   c_first_name: String
   c_last_name: String
   c_mobile: String
   c_emergency_phone: String
+  c_alternative_email: String
+  c_alternative_mobile: String
+  c_alternative_phone: String
+  c_alternative_emergence_phone: String
   c_job_title: String
   c_current_panel: String
   c_paon: String
@@ -69,12 +75,17 @@ type UserSpecificDto {
   roles: [Role!]!
   reservoir: [Reservoir!]!
   addresses: [Address!]!
+  race_id: String
   c_defra_id: String
   c_type: String
   c_first_name: String
   c_last_name: String
   c_mobile: String
   c_emergency_phone: String
+  c_alternative_email: String
+  c_alternative_mobile: String
+  c_alternative_phone: String
+  c_alternative_emergence_phone: String
   c_job_title: String
   c_current_panel: String
   c_paon: String
@@ -103,24 +114,25 @@ type UserSpecificDto {
 }
 
 type ReservoirDetailsDTO {
-  race_reservoir_id: String
-  public_name: String
-  registered_name: String
-  reference_number: String
-  public_category: String
-  registered_category: String
-  grid_reference: String
+  raceReservoirId: String
+  publicName: String
+  registeredName : String
+  referenceNumber: String
+  publicCategory: String
+  registeredCategory: String
+  gridReference: String
   capacity: Int!
-  surface_area: Int!
-  top_water_level: Decimal!
-  has_multiple_dams: Boolean!
-  key_facts: String
-  construction_start_date: DateTime!
-  verified_details_date: DateTime!
-  last_inspection_date: DateTime!
-  next_inspection_date: DateTime!
+  surfaceArea: Int!
+  topWaterLevel: Decimal!
+  hasMultipleDams: Boolean!
+  keyFacts: String
+  constructionStartDate: DateTime!
+  verifiedDetailsDate: DateTime!
+  lastInspectionDate: DateTime!
+  nextInspectionDate: DateTime!
   address: Address
   nearestTown: String
+  operatorType: String
 }
 
 type FeatureFunction {
@@ -140,14 +152,16 @@ type IntegrationResponseModel {
   responseData: String!
 }
 
-type Organisation {
+type OrganisationDTO {
   id: Int!
   orgName: String
+  businessType: String
   addresses: [Address!]!
 }
 
 type Action {
   id: Int!
+  raceActionId: String!
   reference: String!
   category: String!
   type: String!
@@ -156,8 +170,6 @@ type Action {
   frequency: String!
   priority: String!
   isComplianceAction: Boolean!
-  ownerType: String!
-  ownedBy: UserDetail!
   createdDate: DateTime!
   targetDate: DateTime!
   notes: String!
@@ -166,24 +178,40 @@ type Action {
 
 type SafetyMeasure {
   id: Int!
-  reference: String!
+  raceSafetyMeasureId: String
+  reference: String
   type: String!
-  othertype: String!
+  othertype: String
   description: String!
   createddate: DateTime!
   targetdate: DateTime!
   status: String!
-  notes: String!
+  notes: String
   reservoir: Reservoir!
 }
 
+type Address {
+  id: Int!
+  raceAddressKey: String
+  addressLine1: String
+  addressLine2: String
+  town: String
+  county: String
+  postcode: String
+}
+
 input UserDetailInput {
+  race_id: String
   c_defra_id: String
   c_type: String
   c_first_name: String
   c_last_name: String
   c_mobile: String
   c_emergency_phone: String
+  c_alternative_email: String
+  c_alternative_mobile: String
+  c_alternative_phone: String
+  c_alternative_emergence_phone: String
   c_job_title: String
   c_current_panel: String
   c_paon: String
@@ -212,79 +240,8 @@ input UserDetailInput {
   accessFailedCount: Int!
 }
 
-type UserPermission {
-  id: Int!
-  access_level: String!
-  start_date: DateTime
-  end_date: DateTime
-}
-
-"The built-in `Decimal` scalar type."
-scalar Decimal
-
-type Address {
-  id: Int!
-  addressLine1: String
-  addressLine2: String
-  town: String
-  county: String
-  postcode: String
-  organisation: [Organisation!]!
-}
-
-type Reservoir {
-  id: Int!
-  race_reservoir_id: String
-  public_name: String
-  registered_name: String
-  reference_number: String
-  public_category: String
-  registered_category: String
-  grid_reference: String
-  capacity: Int!
-  surface_area: Int!
-  top_water_level: Decimal!
-  has_multiple_dams: Boolean!
-  key_facts: String
-  construction_start_date: DateTime!
-  verified_details_date: DateTime!
-  last_inspection_date: DateTime!
-  next_inspection_date: DateTime!
-  address: Address
-  nearestTown: String
-  reservoirs: [UserReservoir!]!
-  documents: [SupportingDocument!]!
-}
-
-type Role {
-  c_display_name: String
-  c_description: String
-  c_parent_roleid: Int!
-  permission: [UserPermission!]!
-  id: Int!
-  name: String
-  normalizedName: String
-  concurrencyStamp: String
-}
-
 "The `DateTime` scalar represents an ISO-8601 compliant date time type."
 scalar DateTime
-
-type UserAddress {
-  id: Int!
-  addressType: String
-  userDetail: UserDetail
-  address: Address
-}
-
-type UserReservoir {
-  id: Int!
-  userDetail: UserDetail!
-  reservoir: Reservoir!
-  appointment_type: String
-  appointment_start_date: DateTime!
-  appointment_end_date: DateTime!
-}
 
 enum HttpStatusCode {
   CONTINUE
@@ -350,13 +307,83 @@ enum HttpStatusCode {
   NETWORK_AUTHENTICATION_REQUIRED
 }
 
+type UserPermission {
+  id: Int!
+  access_level: String!
+  start_date: DateTime
+  end_date: DateTime
+}
+
+"The built-in `Decimal` scalar type."
+scalar Decimal
+
+type Reservoir {
+  id: Int!
+  raceReservoirId: String
+  publicName: String
+  registeredName: String
+  referenceNumber: String
+  publicCategory: String
+  registeredCategory: String
+  gridReference: String
+  capacity: Int!
+  surfaceArea: Int!
+  topWaterLevel: Decimal!
+  hasMultipleDams: Boolean!
+  keyFacts: String
+  constructionStartDate: DateTime!
+  verifiedDetailsDate: DateTime!
+  lastInspectionDate: DateTime!
+  nextInspectionDate: DateTime!
+  address: Address
+  nearestTown: String
+  userReservoirs: [UserReservoir!]!
+  supportingDocuments: [SupportingDocument!]!
+  operatorType: String
+}
+
+type Role {
+  c_display_name: String
+  c_description: String
+  c_parent_roleid: Int!
+  permission: [UserPermission!]!
+  id: Int!
+  name: String
+  normalizedName: String
+  concurrencyStamp: String
+}
+
+type Organisation {
+  id: Int!
+  orgName: String
+  businessType: String!
+}
+
+type UserAddress {
+  id: Int!
+  addressType: String
+  userDetail: UserDetail
+  address: Address
+}
+
+type UserReservoir {
+  id: Int!
+  raceAppointmentId: String
+  userDetail: UserDetail!
+  reservoir: Reservoir!
+  appointmentType: String
+  appointmentStartDate: DateTime!
+  appointmentEndDate: DateTime!
+}
+
 input UserReservoirInput {
   id: Int!
+  raceAppointmentId: String
   userDetail: UserDetailInput!
   reservoir: ReservoirInput!
-  appointment_type: String
-  appointment_start_date: DateTime!
-  appointment_end_date: DateTime!
+  appointmentType: String
+  appointmentStartDate: DateTime!
+  appointmentEndDate: DateTime!
 }
 
 input UserAddressInput {
@@ -369,41 +396,42 @@ input UserAddressInput {
 input OrganisationInput {
   id: Int!
   orgName: String
-  addresses: [AddressInput!]!
+  businessType: String!
 }
 
 input AddressInput {
   id: Int!
+  raceAddressKey: String
   addressLine1: String
   addressLine2: String
   town: String
   county: String
   postcode: String
-  organisation: [OrganisationInput!]!
 }
 
 input ReservoirInput {
   id: Int!
-  race_reservoir_id: String
-  public_name: String
-  registered_name: String
-  reference_number: String
-  public_category: String
-  registered_category: String
-  grid_reference: String
+  raceReservoirId: String
+  publicName: String
+  registeredName: String
+  referenceNumber: String
+  publicCategory: String
+  registeredCategory: String
+  gridReference: String
   capacity: Int!
-  surface_area: Int!
-  top_water_level: Decimal!
-  has_multiple_dams: Boolean!
-  key_facts: String
-  construction_start_date: DateTime!
-  verified_details_date: DateTime!
-  last_inspection_date: DateTime!
-  next_inspection_date: DateTime!
+  surfaceArea: Int!
+  topWaterLevel: Decimal!
+  hasMultipleDams: Boolean!
+  keyFacts: String
+  constructionStartDate: DateTime!
+  verifiedDetailsDate: DateTime!
+  lastInspectionDate: DateTime!
+  nextInspectionDate: DateTime!
   address: AddressInput
   nearestTown: String
-  reservoirs: [UserReservoirInput!]!
-  documents: [SupportingDocumentInput!]!
+  userReservoirs: [UserReservoirInput!]!
+  supportingDocuments: [SupportingDocumentInput!]!
+  operatorType: String
 }
 
 type SupportingDocument {

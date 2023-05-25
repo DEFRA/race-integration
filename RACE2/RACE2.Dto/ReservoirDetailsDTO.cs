@@ -25,10 +25,10 @@ namespace RACE2.Dto
         public DateTime ConstructionStartDate { get; set; }
         public DateTime VerifiedDetailsDate { get; set; }
         public DateTime LastInspectionDate { get; set; }
-        public DateTime NextInspectionDate { get; set; }   
-
+        public DateTime NextInspectionDate { get; set; }
         public Address? Address { get; set; } = new Address();
         public string? NearestTown { get; set; }
-       
+        public string? OperatorType { get; set; }
+
     }
 }
