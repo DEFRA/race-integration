@@ -36,8 +36,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\RACE2.Common\RACE2.Common.csproj" />
     <ProjectReference Include="..\RACE2.DataModel\RACE2.DataModel.csproj" />
     <ProjectReference Include="..\RACE2.Dto\RACE2.Dto.csproj" />
+    <ProjectReference Include="..\RACE2.Infrastructure\RACE2.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
