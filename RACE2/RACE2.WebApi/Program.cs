@@ -48,6 +48,7 @@ builder.Configuration.AddAzureAppConfiguration(options =>
 builder.Services.AddControllers();
 builder.Services.AddLoggingServices(builder.Configuration);
 builder.Services.AddDbContextServices(builder.Configuration);
+
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IRACEIntegrationRepository,RACEIntegrationRepository>();
