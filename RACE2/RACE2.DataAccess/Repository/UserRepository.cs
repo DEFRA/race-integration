@@ -12,22 +12,23 @@ using Dapper;
 //using Microsoft.Data.SqlClient;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using Microsoft.AspNetCore.Identity;
-using RACE2.Logging.Service;
+//using RACE2.Logging.Service;
 using RACE2.Dto;
 using System.Data.SqlClient;
-using RACE2.Logging;
+using Microsoft.Extensions.Logging;
+using RACE2.Common;
+//using RACE2.Logging;
 
 namespace RACE2.DataAccess.Repository
 {
     public class UserRepository : IUserRepository
     {
-        private readonly ILogService _logService;
-        IConfiguration _configuration;
-        public UserRepository(IConfiguration configuration, ILogService logService)
+        private readonly ILogger<UserRepository> _logger;
+        private readonly IConfiguration _configuration;
+        public UserRepository(IConfiguration configuration, ILogger<UserRepository> logger)
         {
             _configuration = configuration;
-            _logService = logService;
-                //_configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../appsettings.json").Build();
+            _logger = logger;
         }
 
         private IDbConnection Connection
@@ -61,7 +62,7 @@ namespace RACE2.DataAccess.Repository
         public async Task<UserSpecificDto> GetUserByEmailID(string email)
         {
 
-            _logService.Write("Repository");
+           // _logService.Write("Repository");
             try
             {
                 using (var conn = Connection)
@@ -459,19 +460,28 @@ namespace RACE2.DataAccess.Repository
 
         public async Task<Address> GetAddressByReservoirId(int reservoirid, string operatortype)
         {
-            using (var conn = Connection)
+            try
             {
-                if(operatortype == "Organisation")
+                _logger.LogInformation("Entering the UserRepository to GetAddressByReservoirId ");
+                using (var conn = Connection)
                 {
-                    var parameters = new DynamicParameters();
-                    parameters.Add("reservoirid", reservoirid, DbType.Int64);
-                    var OrgAddress = await conn.QueryAsync<Address>("sp_GetAddressForReservoir", parameters, commandType: CommandType.StoredProcedure);
-                  
+                    if (operatortype == "Organisation")
+                    {
+                        var parameters = new DynamicParameters();
+                        parameters.Add("reservoirid", reservoirid, DbType.Int64);
+                        var OrgAddress = await conn.QueryAsync<Address>("sp_GetAddressForReservoir", parameters, commandType: CommandType.StoredProcedure);
 
-                    return OrgAddress.FirstOrDefault();
+
+                        return OrgAddress.FirstOrDefault();
+                    }
+
+                    return new Address();
                 }
-
-                return new Address();
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return null;
             }
         }
 
