@@ -16,7 +16,7 @@ param namespaces_ServiceBus_name string
 param storageAccountName string
 param logAnalyticsWorkspaceName string
 param race2appenvName string
-
+param race2appinsightName string
 module createmanagedidentitymodule 'createmanagedidentity.bicep' = {
   scope: resourceGroup(resourcegroup)
   name: 'managedidentitydeploy'
@@ -115,6 +115,19 @@ module createappworkspacemodule 'createappworkspace.bicep' = {
     location: location
     logAnalyticsWorkspaceName: logAnalyticsWorkspaceName
   }
+}
+
+module createappinsightmodule 'createappinsight.bicep' = {
+  scope: resourceGroup(resourcegroup)
+  name: 'appinsightdeploy'
+  params: {
+    location: location
+    logAnalyticsWorkspaceid: createappworkspacemodule.outputs.id
+    race2appinsight: race2appinsightName
+  }
+  dependsOn: [
+    createappworkspacemodule
+  ]
 }
 
 module createcontainerappenvmodule 'createcontainerappenv.bicep' = {

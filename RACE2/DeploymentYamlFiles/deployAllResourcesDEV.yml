@@ -7,12 +7,12 @@ variables:
   vmImageName: 'ubuntu-latest'
 
   azureServiceConnection: 'AZR-RAC-DEV1'
-  resourceGroupName: 'Race2ProjectRG1'
+  resourceGroupName: 'DEVRACINFRG1401'
   location: 'westeurope' 
   servicePrincipalId: '96b8b0ef-e54f-4455-981e-33eaacd977e8'
   templateFileResourceGroup: './RACE2/bicepfiles/createresourcegroup.bicep'  
   templateFileAllResources: './RACE2/bicepfiles/createallresources.bicep'
-  parameterfileAllResources: './RACE2/DeploymentYamlFiles/deployAlResourcesParameters.json'
+  parameterfileAllResources: './RACE2/DeploymentYamlFiles/deployAlResourcesParametersDEV.json'
 pool:
   vmImage: $(vmImageName)
 
