@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration.AzureAppConfiguration;
-using RACE2.DatabaseProvider;
+using RACE2.DatabaseProvider.Data;
 using RACE2.DataModel;
 
 var builder = WebApplication.CreateBuilder(args);
