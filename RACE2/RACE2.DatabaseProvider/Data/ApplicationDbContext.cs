@@ -7,7 +7,7 @@ using RACE2.DataModel;
 using System.Data;
 using System.IO;
 
-namespace RACE2.DatabaseProvider
+namespace RACE2.DatabaseProvider.Data
 {
     public class ApplicationDbContext : IdentityDbContext<UserDetail, Role, int, IdentityUserClaim<int>, UserRole, IdentityUserLogin<int>,
         IdentityRoleClaim<int>, IdentityUserToken<int>>
@@ -46,7 +46,7 @@ namespace RACE2.DatabaseProvider
 
         public DbSet<AuditTable> AuditTables { get; set; }
 
-        public DbSet<OrganisationReservoir> OrganisationReservoirs { get; set;}
+        public DbSet<OrganisationReservoir> OrganisationReservoirs { get; set; }
 
         public DbSet<OrganisationAddress> OrganisationAddresses { get; set; }
 
@@ -206,15 +206,15 @@ namespace RACE2.DatabaseProvider
         }
     }
 
-//    public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
-//    {
-//        public ApplicationDbContext CreateDbContext(string[] args)
-//        {
-//            IConfigurationRoot configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/appsettings.json").Build();
-//            var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
-//            var connectionString = configuration.GetConnectionString("DefaultConnection");
-//            builder.UseSqlServer(connectionString);
-//            return new ApplicationDbContext(builder.Options);
-//        }
-//    }
+    //    public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
+    //    {
+    //        public ApplicationDbContext CreateDbContext(string[] args)
+    //        {
+    //            IConfigurationRoot configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/appsettings.json").Build();
+    //            var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
+    //            var connectionString = configuration.GetConnectionString("DefaultConnection");
+    //            builder.UseSqlServer(connectionString);
+    //            return new ApplicationDbContext(builder.Options);
+    //        }
+    //    }
 }
