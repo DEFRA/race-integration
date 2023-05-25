@@ -87,6 +87,7 @@ module createkeyvaultmodule 'createkeyvault.bicep' = {
     location: location
     keyvaultName: keyvaultName
     tenantId: tenantId
+    appInsightConnectionString: createappinsightmodule.outputs.connectionString
   }
   dependsOn: [
     createmanagedidentitymodule
@@ -126,7 +127,7 @@ module createappinsightmodule 'createappinsight.bicep' = {
     race2appinsight: race2appinsightName
   }
   dependsOn: [
-    createappworkspacemodule
+    createmanagedidentitymodule
   ]
 }
 
