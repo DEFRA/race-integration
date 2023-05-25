@@ -354,7 +354,7 @@ namespace RACE2.DataAccess.Repository
         {
             using (var conn = Connection)
             {
-                var query = @"Select B.race_reservoir_id,B.*,c.Id, c.*
+                var query = @"Select B.RaceReservoirId,B.*,c.Id, c.*
                                from UserReservoirs A 
                               inner join Reservoirs B on A.ReservoirId = B.Id
                               inner Join Addresses C On C.id = B.addressid
