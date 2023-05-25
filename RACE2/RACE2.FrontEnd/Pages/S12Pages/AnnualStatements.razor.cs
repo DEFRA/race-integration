@@ -33,20 +33,26 @@ namespace RACE2.FrontEnd.Pages.S12Pages
 
         protected override async void OnInitialized()
         {
+//#if DEBUG
+//            Thread.Sleep(10000);
+//#endif
             AuthenticationState authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-            //UserName = authState.User.Claims.ToArray()[6].Value;
+
             if (authState.User.Identity.Name is not null)
             {
                 UserName = authState.User.Identity.Name;
                 UserClaims = authState.User.Claims;
             }
-            var userDetails = await client.GetUserByEmailID.ExecuteAsync(UserName);
-            UserId = userDetails!.Data!.UserByEmailID.Id;
+            //var userDetails = await client.GetUserByEmailID.ExecuteAsync(UserName);
+            //UserId = userDetails!.Data!.UserByEmailID.Id;
+            var userDetails = await client.GetUserWithRoles.ExecuteAsync(UserName);
+            UserId = userDetails!.Data!.UserWithRoles.Id;
             UserDetail = new UserDetail()
             {
                 UserName= UserName,
                 Id= UserId,
-                Email= userDetails!.Data!.UserByEmailID.Email
+                //Email= userDetails!.Data!.UserByEmailID.Email
+                Email = userDetails!.Data!.UserWithRoles.Email
             };
             var results = await client.GetReservoirsByUserId.ExecuteAsync(UserId);
             List<string> reservoirNamesList = new List<string>();

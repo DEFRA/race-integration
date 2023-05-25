@@ -39,13 +39,15 @@ namespace RACE2.FrontEndWeb.Pages.S12Pages
             //    UserName = authState.User.Identity.Name;
             //    UserClaims = authState.User.Claims;
             //}
-            var userDetails = await client.GetUserByEmailID.ExecuteAsync(UserName);
-            UserId = userDetails!.Data!.UserByEmailID.Id;
+            //var userDetails = await client.GetUserByEmailID.ExecuteAsync(UserName);
+            //UserId = userDetails!.Data!.UserByEmailID.Id;
+            var userDetails = await client.GetUserWithRoles.ExecuteAsync(UserName);
+            UserId = userDetails!.Data!.UserWithRoles.Id;
             UserDetail = new UserDetail()
             {
-                UserName= UserName,
-                Id= UserId,
-                Email= userDetails!.Data!.UserByEmailID.Email
+                UserName = UserName,
+                Id = UserId,
+                Email = userDetails!.Data!.UserWithRoles.Email
             };
             var results = await client.GetReservoirsByUserId.ExecuteAsync(UserId);
             List<string> reservoirNamesList = new List<string>();
@@ -80,6 +82,10 @@ namespace RACE2.FrontEndWeb.Pages.S12Pages
             base.OnInitialized();
         }
 
+        protected override async void OnAfterRender(bool firstRender)
+        {
+            
+        }
         public async void GoToNextPage()
         {
             var u = CurrentUserDetailState.Value.CurrentUserDetail;
