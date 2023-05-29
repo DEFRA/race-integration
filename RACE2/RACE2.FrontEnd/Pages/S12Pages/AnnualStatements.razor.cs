@@ -33,9 +33,6 @@ namespace RACE2.FrontEnd.Pages.S12Pages
 
         protected override async void OnInitialized()
         {
-//#if DEBUG
-//            Thread.Sleep(10000);
-//#endif
             AuthenticationState authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
 
             if (authState.User.Identity.Name is not null)
