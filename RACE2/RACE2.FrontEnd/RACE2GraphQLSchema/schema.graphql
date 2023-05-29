@@ -116,7 +116,7 @@ type UserSpecificDto {
 type ReservoirDetailsDTO {
   raceReservoirId: String
   publicName: String
-  registeredName : String
+  registeredName: String
   referenceNumber: String
   publicCategory: String
   registeredCategory: String

@@ -29,15 +29,16 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.18.1" />
     <PackageReference Include="StrawberryShake.Blazor" Version="13.0.5" />
-	<PackageReference Include="System.Reactive" Version="6.0.0" />
 	<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.16" />
 	<PackageReference Include="Azure.Identity" Version="1.9.0" />
-	<PackageReference Include="Microsoft.Azure.AppConfiguration.AspNetCore" Version="6.0.0" />
+	<PackageReference Include="Microsoft.Azure.AppConfiguration.AspNetCore" Version="6.0.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\RACE2.Common\RACE2.Common.csproj" />
     <ProjectReference Include="..\RACE2.DataModel\RACE2.DataModel.csproj" />
     <ProjectReference Include="..\RACE2.Dto\RACE2.Dto.csproj" />
+    <ProjectReference Include="..\RACE2.Infrastructure\RACE2.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

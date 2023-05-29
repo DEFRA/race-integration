@@ -61,6 +61,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bicepfiles", "bicepfiles", 
 		bicepfiles\createAllContainerApps.bicep = bicepfiles\createAllContainerApps.bicep
 		bicepfiles\createallresources.bicep = bicepfiles\createallresources.bicep
 		BicepFiles\createappconfig.bicep = BicepFiles\createappconfig.bicep
+		bicepfiles\createappinsight.bicep = bicepfiles\createappinsight.bicep
 		BicepFiles\createappworkspace.bicep = BicepFiles\createappworkspace.bicep
 		BicepFiles\createcontainerappenv.bicep = BicepFiles\createcontainerappenv.bicep
 		bicepfiles\createcontainerapps.bicep = bicepfiles\createcontainerapps.bicep
@@ -104,9 +105,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploymentyamlfiles", "depl
 		DeploymentYamlFiles\manifest.json = DeploymentYamlFiles\manifest.json
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RACE2.Common", "RACE2.Common\RACE2.Common.csproj", "{91189633-5470-4485-BE4A-EBB1A184EC2A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.Common", "RACE2.Common\RACE2.Common.csproj", "{91189633-5470-4485-BE4A-EBB1A184EC2A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RACE2.Infrastructure", "RACE2.Infrastructure\RACE2.Infrastructure.csproj", "{542D8E86-5013-407D-AAF3-DCA22A8B116D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.Infrastructure", "RACE2.Infrastructure\RACE2.Infrastructure.csproj", "{542D8E86-5013-407D-AAF3-DCA22A8B116D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
