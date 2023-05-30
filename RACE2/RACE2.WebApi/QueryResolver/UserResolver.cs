@@ -122,5 +122,23 @@ namespace RACE2.WebApi.QueryResolver
             }
 
         }
+
+        public async Task<List<OperatorDTO>> GetOperatorsforReservoir(IUserService _userService,int reservoirid, string operatortype)
+        {
+            try
+            {
+                _logger.LogInformation("calling GetOperatorsforReservoir");
+                return await _userService.GetOperatorsforReservoir(reservoirid, operatortype);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return null;
+            }
+        }
+
+
+
+
     }
 }
