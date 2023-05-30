@@ -50,7 +50,7 @@ namespace RACE2.FrontEnd.Components
             {
                 if (System.Text.RegularExpressions.Regex.Match(pw, passwordRegEx).Success)
                 {
-                    bool forceLoad = true;
+                    bool forceLoad = false;
                     NavigationManager.NavigateTo("/account-confirmation", forceLoad);
                 }
                 else

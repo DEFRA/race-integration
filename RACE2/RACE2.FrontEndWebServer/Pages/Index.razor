@@ -79,13 +79,13 @@
 
     private async void GoToLoginPage()
     {
-        bool forceLoad = true;
+        bool forceLoad = false;
         NavigationManager.NavigateTo("/login", forceLoad);
     }
 
     private async void GoToNextPage()
     {
-        bool forceLoad = true;
+        bool forceLoad = false;
         NavigationManager.NavigateTo("/annual-statements", forceLoad);
         //if (authState.User.Claims == null)
         //{

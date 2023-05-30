@@ -47,14 +47,14 @@ namespace RACE2.FrontEnd.Components
                 //SignInResult loginResult = await SignInManager!.CheckPasswordSignInAsync(CurrentUser, Password, false); 
                 if (true)
                 {
-                    bool forceLoad = true;
+                    bool forceLoad = false;
                     NavigationManager.NavigateTo("/choose-a-reservoir", forceLoad);
                 }
                 else
                 {
                     Password = "Password is correct. Try again.";
                     //change later
-                    bool forceLoad = true;
+                    bool forceLoad = false;
                     NavigationManager.NavigateTo("/choose-a-reservoir", forceLoad);
                 }
             }
