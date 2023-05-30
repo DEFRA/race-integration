@@ -109,6 +109,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.Common", "RACE2.Commo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.Infrastructure", "RACE2.Infrastructure\RACE2.Infrastructure.csproj", "{542D8E86-5013-407D-AAF3-DCA22A8B116D}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.FrontEndWebServer", "RACE2.FrontEndWebServer\RACE2.FrontEndWebServer.csproj", "{6C0ADAE3-8342-4C89-8F7C-7D34ABD9FBBF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -171,6 +173,10 @@ Global
 		{542D8E86-5013-407D-AAF3-DCA22A8B116D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{542D8E86-5013-407D-AAF3-DCA22A8B116D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{542D8E86-5013-407D-AAF3-DCA22A8B116D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C0ADAE3-8342-4C89-8F7C-7D34ABD9FBBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C0ADAE3-8342-4C89-8F7C-7D34ABD9FBBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C0ADAE3-8342-4C89-8F7C-7D34ABD9FBBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C0ADAE3-8342-4C89-8F7C-7D34ABD9FBBF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
