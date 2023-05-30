@@ -27,6 +27,7 @@ namespace RACE2.FrontEnd.Pages.S12Pages
         protected override async void OnInitialized()
         {
             AuthenticationState authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            CurrentReservoir = CurrentReservoirState.Value.CurrentReservoir;
             base.OnInitialized();
         }
 
