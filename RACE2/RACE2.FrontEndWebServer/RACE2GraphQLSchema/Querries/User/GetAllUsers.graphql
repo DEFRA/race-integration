@@ -1,0 +1,8 @@
+﻿query GetUserDetails
+{
+  userDetails {
+    id
+    passwordHash
+    email
+  }
+}

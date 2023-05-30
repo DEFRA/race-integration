@@ -3,13 +3,14 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using RACE2.DataModel;
-using RACE2.FrontEnd.Components;
-using RACE2.FrontEnd.FluxorImplementation.Actions;
-using RACE2.FrontEnd.FluxorImplementation.Stores;
-using RACE2.FrontEnd.RACE2GraphQLSchema;
+using RACE2.FrontEndWebServer.FluxorImplementation.Actions;
+using RACE2.FrontEndWebServer.FluxorImplementation.Stores;
+using RACE2.FrontEndWebServer.RACE2GraphQLSchema;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 
-namespace RACE2.FrontEnd.Pages.S12Pages
+namespace RACE2.FrontEndWebServer.Pages.S12Pages
 {
     public partial class AnnualStatements
     {
@@ -34,21 +35,20 @@ namespace RACE2.FrontEnd.Pages.S12Pages
         protected override async void OnInitialized()
         {
             AuthenticationState authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-
-            if (authState.User.Identity.Name is not null)
-            {
-                UserName = authState.User.Identity.Name;
-                UserClaims = authState.User.Claims;
-            }
+            UserName = authState.User.Claims.ToArray()[6].Value;
+            //if (authState.User.Identity.Name is not null)
+            //{
+            //    UserName = authState.User.Identity.Name;
+            //    UserClaims = authState.User.Claims;
+            //}
             //var userDetails = await client.GetUserByEmailID.ExecuteAsync(UserName);
             //UserId = userDetails!.Data!.UserByEmailID.Id;
             var userDetails = await client.GetUserWithRoles.ExecuteAsync(UserName);
             UserId = userDetails!.Data!.UserWithRoles.Id;
             UserDetail = new UserDetail()
             {
-                UserName= UserName,
-                Id= UserId,
-                //Email= userDetails!.Data!.UserByEmailID.Email
+                UserName = UserName,
+                Id = UserId,
                 Email = userDetails!.Data!.UserWithRoles.Email
             };
             var results = await client.GetReservoirsByUserId.ExecuteAsync(UserId);
@@ -84,6 +84,10 @@ namespace RACE2.FrontEnd.Pages.S12Pages
             base.OnInitialized();
         }
 
+        protected override async void OnAfterRender(bool firstRender)
+        {
+            
+        }
         public async void GoToNextPage()
         {
             var u = CurrentUserDetailState.Value.CurrentUserDetail;
