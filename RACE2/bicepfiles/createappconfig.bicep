@@ -27,4 +27,12 @@ resource race2appconfig_resource 'Microsoft.AppConfiguration/configurationStores
     softDeleteRetentionInDays: 7
     enablePurgeProtection: false
   }
+
+  resource storageNameKeyValue 'keyValues' = {
+    name: 'AppInsightsConnectionString'
+    properties: {
+      contentType: 'application/vnd.microsoft.appconfig.keyvaultref+json;charset=utf-8'
+      value: '{"uri":"https://race2keyvault.vault.azure.net/secrets/AppInSightsConnectionString"}'
+    }
+  }
 }

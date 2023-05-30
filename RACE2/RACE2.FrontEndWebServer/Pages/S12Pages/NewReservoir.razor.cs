@@ -1,10 +1,10 @@
 ﻿using Fluxor;
 using Microsoft.AspNetCore.Components;
 using RACE2.Dto;
-using RACE2.FrontEnd.FluxorImplementation.Stores;
-using RACE2.FrontEnd.RACE2GraphQLSchema;
+using RACE2.FrontEndWebServer.FluxorImplementation.Stores;
+using RACE2.FrontEndWebServer.RACE2GraphQLSchema;
 
-namespace RACE2.FrontEnd.Pages.S12Pages
+namespace RACE2.FrontEndWebServer.Pages.S12Pages
 {
     public partial class NewReservoir
     {

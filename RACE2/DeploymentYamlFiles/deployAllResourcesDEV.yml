@@ -1,0 +1,30 @@
+trigger:
+- none
+
+name: Deploy All Resources
+
+variables:
+  vmImageName: 'ubuntu-latest'
+
+  azureServiceConnection: 'AZR-RAC-DEV1'
+  resourceGroupName: 'DEVRACINFRG1401'
+  location: 'westeurope' 
+  servicePrincipalId: '96b8b0ef-e54f-4455-981e-33eaacd977e8'
+  templateFileResourceGroup: './RACE2/bicepfiles/createresourcegroup.bicep'  
+  templateFileAllResources: './RACE2/bicepfiles/createallresources.bicep'
+  parameterfileAllResources: './RACE2/DeploymentYamlFiles/deployAlResourcesParametersDEV.json'
+pool:
+  vmImage: $(vmImageName)
+
+steps:
+- task: AzureCLI@2  
+  inputs:
+    azureSubscription: $(azureServiceConnection)
+    scriptType: bash
+    scriptLocation: inlineScript
+    useGlobalConfig: false    
+    inlineScript: |
+      az --version
+      az group create -n $(resourceGroupName) -l $(location)
+      az deployment group create --template-file $(templateFileResourceGroup) --parameters resourceGroupName=$(resourceGroupName) servicePrincipalId=$(servicePrincipalId)
+      az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFileAllResources) --parameter @$(parameterfileAllResources)
