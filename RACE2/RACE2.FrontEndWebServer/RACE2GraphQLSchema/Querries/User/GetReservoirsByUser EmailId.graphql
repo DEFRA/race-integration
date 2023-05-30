@@ -1,0 +1,10 @@
+﻿query GetReservoirsByUserEmailId($newemail:String!){
+  reservoirsByUserEmailId(emailId:$newemail) {    
+    publicName
+    raceReservoirId
+    address {
+      addressLine2
+      postcode
+    }
+    }
+}
