@@ -26,6 +26,7 @@ namespace RACE2.FrontEnd.Pages.S12Pages
         protected override void OnInitialized()
         {
             //newReservoir = CurrentUserDetailState.ReservoirDetailsDTO;
+            base.OnInitialized();
         }
 
         private void goback()
