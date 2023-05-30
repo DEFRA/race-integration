@@ -36,7 +36,8 @@ namespace RACE2.FrontEnd.Pages.S12Pages
 
         public async void GoToNextPage()
         {
-            NavigationManager.NavigateTo("/confirm-operator", true);
+            bool forceLoad = false;
+            NavigationManager.NavigateTo("/confirm-operator", forceLoad);
         }
 
         public async void GoToSaveComebackLaterPage()
