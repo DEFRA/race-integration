@@ -35,5 +35,7 @@ namespace RACE2.DataAccess.Repository
 
         public Task<Address> GetAddressByReservoirId(int reservoirid, string operatortype);
 
+        public Task<List<OperatorDTO>> GetOperatorsforReservoir(int reservoirid, string operatortype);
+
     }
 }
