@@ -21,7 +21,7 @@ namespace RACE2.FrontEnd.Pages.S12Pages
         private void goback()
         {
             bool forceLoad = false;
-            string pagelink = "/confirm-reservoir";
+            string pagelink = "/reservoir-details";
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }
     }
