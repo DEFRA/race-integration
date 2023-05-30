@@ -39,14 +39,6 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         private int UserId { get; set; } = 0;
 
         private string[] reservoirNames = Array.Empty<String>();
-        //    {
-        //    "River Foss Flood Storage Reservoir",
-        //    "River Nar Flood Storage Area",
-        //    "River Park Pond",
-        //    "River Rase North Branch",
-        //    "River Rase South Branch",
-        //    "Rockingham Reservoir"
-        //};
 
         protected override async void OnInitialized()
         {            

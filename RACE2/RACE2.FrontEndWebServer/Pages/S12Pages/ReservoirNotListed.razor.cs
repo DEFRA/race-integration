@@ -28,6 +28,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         protected override void OnInitialized()
         {
             //newReservoir = CurrentUserDetailState.NewReservoirDetails;
+            base.OnInitialized();
         }
 
         bool forceLoad = true;
