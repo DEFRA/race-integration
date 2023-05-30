@@ -1,0 +1,17 @@
+﻿<CascadingValue Value="this">
+    <div class="tabs">
+        <div class="tab-container">
+            @foreach (Tab tabPage in Pages)
+            {
+                <div class="tab @GetTabCSS(tabPage)" @onclick=@( () => ActivatePage(tabPage) )>
+                    @tabPage.Text
+                </div>
+            }
+        </div>
+        <div class="tab-content">
+            @ChildContent
+        </div>
+    </div>
+</CascadingValue>
+
+
