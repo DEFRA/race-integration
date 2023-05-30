@@ -460,22 +460,35 @@ namespace RACE2.DataAccess.Repository
 
         public async Task<Address> GetAddressByReservoirId(int reservoirid, string operatortype)
         {
+            _logger.LogInformation("Getting Operator details of the reservoir {reservoirid} with operatorType as {operatortype}", reservoirid, operatortype);
             try
             {
-                _logger.LogInformation("Entering the UserRepository to GetAddressByReservoirId ");
+                
                 using (var conn = Connection)
                 {
-                    if (operatortype == "Organisation")
+                    var parameters = new DynamicParameters();
+                    parameters.Add("reservoirid", reservoirid, DbType.Int64);
+                    if (operatortype != null && operatortype == "Organisation")
                     {
-                        var parameters = new DynamicParameters();
-                        parameters.Add("reservoirid", reservoirid, DbType.Int64);
+                                              
                         var OrgAddress = await conn.QueryAsync<Address>("sp_GetAddressForReservoir", parameters, commandType: CommandType.StoredProcedure);
 
+                       return OrgAddress.FirstOrDefault();
+                    }
+                    else if (operatortype != null && operatortype == "Individual")
+                    {
+
+                        var OrgAddress = await conn.QueryAsync<Address>("sp_GetAddressForReservoir", parameters, commandType: CommandType.StoredProcedure);
 
                         return OrgAddress.FirstOrDefault();
                     }
+                    else
+                    {
+                        _logger.LogInformation($"The input is not valid {operatortype}");
+                        return null;
+                    }
 
-                    return new Address();
+                    
                 }
             }
             catch(Exception ex)
@@ -483,6 +496,52 @@ namespace RACE2.DataAccess.Repository
                 _logger.LogError(ex, ex.Message);
                 return null;
             }
+
+           
+            
+        }
+
+
+        public async Task<List<OperatorDTO>> GetOperatorsforReservoir(int reservoirid, string operatortype)
+        {
+            _logger.LogInformation("Getting Operator details of the reservoir {reservoirid} with operatorType as {operatortype}", reservoirid, operatortype);
+            try
+            {
+
+                using (var conn = Connection)
+                {
+                    var parameters = new DynamicParameters();
+                    parameters.Add("reservoirid", reservoirid, DbType.Int64);
+                    if (operatortype != null && operatortype == "Organisation")
+                    {
+
+                        var operatorlist = await conn.QueryAsync<OperatorDTO>("sp_GetOperatorListAsIndiviForReservoir", parameters, commandType: CommandType.StoredProcedure);
+
+                        return operatorlist.ToList();
+                    }
+                    else if (operatortype != null && operatortype == "Individual")
+                    {
+
+                        var operatorlist = await conn.QueryAsync<OperatorDTO>("sp_GetOperatorListAsIndiviForReservoir", parameters, commandType: CommandType.StoredProcedure);
+
+                        return operatorlist.ToList();
+                    }
+                    else
+                    {
+                        _logger.LogInformation($"The input is not valid {operatortype}");
+                        return null;
+                    }
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return null;
+            }
+
+
         }
 
 
