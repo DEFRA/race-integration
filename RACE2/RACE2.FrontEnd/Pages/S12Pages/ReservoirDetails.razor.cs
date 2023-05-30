@@ -16,6 +16,8 @@ namespace RACE2.FrontEnd.Pages.S12Pages
         [Inject]
         public NavigationManager NavigationManager { get; set; } = default!;
         [Inject]
+        public IState<CurrentUserDetailState> CurrentUserDetailState { get; set; } = default!;
+        [Inject]
         public IState<CurrentReservoirState> CurrentReservoirState { get; set; } = default!;
 
         [Inject]
@@ -27,7 +29,8 @@ namespace RACE2.FrontEnd.Pages.S12Pages
         protected override async void OnInitialized()
         {
             AuthenticationState authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-            CurrentReservoir = CurrentReservoirState.Value.CurrentReservoir;
+            var currentUser = CurrentUserDetailState.Value.CurrentUserDetail;
+            var currentReservoir = CurrentReservoirState.Value.CurrentReservoir;
             base.OnInitialized();
         }
 
