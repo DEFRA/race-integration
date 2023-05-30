@@ -17,17 +17,18 @@ namespace RACE2.FrontEnd.Pages.S12Pages
             AuthenticationState authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
             if (authState.User.Identity.Name is not null)
             {
-                NavigationManager.NavigateTo("/annual-statements", true);
+                bool forceLoad = false;
+                NavigationManager.NavigateTo("/annual-statements", forceLoad);
             }
         }
 
         public async void GoToNextPage()
         {
-            bool forceLoad = true;
             AuthenticationState authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            bool forceLoad = false;
             if (authState.User.Identity.Name is not null)
             {
-                NavigationManager.NavigateTo("/annual-statements", true);
+                NavigationManager.NavigateTo("/annual-statements", forceLoad);
             }
             else
             {

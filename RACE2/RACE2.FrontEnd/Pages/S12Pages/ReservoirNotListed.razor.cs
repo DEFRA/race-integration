@@ -31,7 +31,7 @@ namespace RACE2.FrontEnd.Pages.S12Pages
             base.OnInitialized();
         }
 
-        bool forceLoad = true;
+        bool forceLoad = false;
         public void GoToNextPage()
         {
             NavigationManager.NavigateTo("/new-reservoir", forceLoad);
