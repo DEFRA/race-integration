@@ -4,15 +4,15 @@ using Microsoft.AspNetCore.Identity;
 using RACE2.DataModel;
 using RACE2.Dto;
 using RACE2.FrontEnd.FluxorImplementation.Stores;
+using RACE2.FrontEnd.RACE2GraphQLSchema;
 //using RACE2.FrontEnd.RACE2GraphQLSchema;
 
 namespace RACE2.FrontEnd.Pages.S12Pages
 {
     public partial class ReservoirNotListed
     {
-
-        //[Inject]
-        //public RACE2GraphQLClient client { get; set; } = default!;
+        [Inject]
+        public RACE2GraphQLClient client { get; set; } = default!;
         [Inject]
         public NavigationManager NavigationManager { get; set; } = default!;
         [Inject]
@@ -28,6 +28,7 @@ namespace RACE2.FrontEnd.Pages.S12Pages
         protected override void OnInitialized()
         {
             //newReservoir = CurrentUserDetailState.NewReservoirDetails;
+            base.OnInitialized();
         }
 
         bool forceLoad = true;
