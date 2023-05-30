@@ -1,0 +1,57 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "subscriptionid": {
+        "value": "97ea02ef-73bc-4ee9-b320-b38a6b41b4d7"
+      }, 
+      "tenantId": {
+        "value": "770a2450-0227-4c62-90c7-4e38537f1102"
+      }, 
+      "location": {
+        "value": "uksouth"
+      }, 
+      "resourcegroup": {
+        "value": "DEVRACINFRG1401"
+      },
+      "managedidentity": {
+        "value": "DEVRACINFMI1401"
+      }, 
+      "containerregistryName": {
+        "value": "DEVRACINFCR1401"
+      },
+      "namespaces_ServiceBus_name": {
+        "value": "DEVRACINFSB1401"
+      },
+      "storageAccountName": {
+        "value": "DEVRACINFST1401"
+      },
+      "appconfigName": {
+        "value": "DEVRACINFAC1401"
+      },
+      "keyvaultName": {
+        "value": "DEVRACINFVT1401"
+      },
+      "servers_race2sqlserver_name": {
+        "value": "DEVRACINFSS1401"
+      },
+      "administratorLogin": {
+        "value": "race2admin"
+      } ,
+      "administratorLoginPassword": {
+        "value": "Race2Password123!"
+      }, 
+      "servers_race2sqldb_name": {
+        "value": "DEVRACINFDB1401"
+      },
+      "logAnalyticsWorkspaceName": {
+        "value": "DEVRACINFWS1401"
+      },
+      "race2appenvName": {
+        "value": "DEVRACINFAE1401"
+      },
+      "race2appinsightName": {
+        "value": "DEVRACINFAI1401"
+      }
+    }
+}
