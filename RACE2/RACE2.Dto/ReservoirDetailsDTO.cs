@@ -10,6 +10,8 @@ namespace RACE2.Dto
 {
     public class ReservoirDetailsDTO
     {
+        public int Id { get; set; }
+
         public string? RaceReservoirId { get; set; }  
         public string? PublicName { get; set; }
         public string? RegisteredName { get; set; }
