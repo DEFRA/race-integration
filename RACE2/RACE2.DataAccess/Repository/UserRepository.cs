@@ -522,7 +522,7 @@ namespace RACE2.DataAccess.Repository
                     if (operatortype != null && operatortype == "Organisation")
                     {
 
-                        var operatorlist = await conn.QueryAsync<OperatorDTO>("sp_GetOperatorListAsIndiviForReservoir", parameters, commandType: CommandType.StoredProcedure);
+                        var operatorlist = await conn.QueryAsync<OperatorDTO>("sp_GetOperatorListAsOrgForReservoir", parameters, commandType: CommandType.StoredProcedure);
 
                         return operatorlist.ToList();
                     }
