@@ -57,7 +57,7 @@ builder.Services.AddAuthentication(options =>
         options.ClientSecret = "blazorserver-secret";
 
         // When set to code, the middleware will use PKCE protection
-        options.ResponseType = "code";
+        options.ResponseType = "code id_token";
 
         // Save the tokens we receive from the IDP
         options.SaveTokens = true;
