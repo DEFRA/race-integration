@@ -100,6 +100,12 @@ namespace RACE2.Services
             return await _userRepository.GetAddressByReservoirId(reservoirid,operatortype);
         }
 
+        public async Task<List<OperatorDTO>> GetOperatorsforReservoir(int reservoirid, string operatortype)
+        {
+            return await _userRepository.GetOperatorsforReservoir(reservoirid, operatortype);
+        }
+
+
     }
 
 }
