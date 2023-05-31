@@ -23,6 +23,10 @@ namespace RACE2.FrontEnd.Pages.S12Pages
         protected override async void OnInitialized()
         {
             var currentUser = CurrentUserDetailState.Value.CurrentUserDetail;
+            var currentReservoir = CurrentReservoirState.Value.CurrentReservoir;
+            //var operatorDetails = await client.GetOperatorsforReservoir.ExecuteAsync(currentReservoir.Id, currentReservoir.OperatorType);
+            var operatorDetails = await client.GetOperatorsforReservoir.ExecuteAsync(40, currentReservoir.OperatorType);
+            var x = operatorDetails!.Data!.OperatorsforReservoir.ToList()[0].AddressLine1;
             base.OnInitialized();
         }
         public async void GoToNextPage()

@@ -2,6 +2,7 @@
   reservoirsByUserEmailId(emailId:$newemail) {    
     publicName
     raceReservoirId
+    operatorType
     address {
       addressLine2
       postcode

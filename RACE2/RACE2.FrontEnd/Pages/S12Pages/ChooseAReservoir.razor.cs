@@ -55,11 +55,12 @@ namespace RACE2.FrontEnd.Pages.S12Pages
             {
                 reservoirNamesList.Add(rn.PublicName);
                 var r = new Reservoir()
-                {
+                {                    
                     RaceReservoirId = rn.RaceReservoirId,
                     PublicName = rn.PublicName,
                     NearestTown = rn.NearestTown,
-                    GridReference = rn.GridReference
+                    GridReference = rn.GridReference,
+                    OperatorType = rn.OperatorType
                 };
                 r.Address = new Address()
                 {
