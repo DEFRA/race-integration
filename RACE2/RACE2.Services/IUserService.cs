@@ -30,5 +30,8 @@ namespace RACE2.Services
         public Task<List<SafetyMeasure>> GetSafetyMeasuresListByReservoirId(int reservoirid);
 
         public Task<Address> GetAddressByReservoirId(int reservoirid, string operatortype);
+
+        public Task<List<OperatorDTO>> GetOperatorsforReservoir(int reservoirid, string operatortype);
+
     }
 }
