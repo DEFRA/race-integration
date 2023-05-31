@@ -9,6 +9,7 @@
   <ItemGroup>
     <None Remove="RACE2GraphQLSchema\Mutations\User\UpdatePasswordHashForUser.graphql" />
     <None Remove="RACE2GraphQLSchema\Querries\User\GetAllUsers.graphql" />
+    <None Remove="RACE2GraphQLSchema\Querries\User\GetOperatorsforReservoir.graphql" />
     <None Remove="RACE2GraphQLSchema\Querries\User\GetReservoirsByUser EmailId.graphql" />
     <None Remove="RACE2GraphQLSchema\Querries\User\GetReservoirsByUserId.graphql" />
     <None Remove="RACE2GraphQLSchema\Querries\User\GetUserByEmailID.graphql" />

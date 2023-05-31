@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <None Remove="Components\AnnualStatements.razor~RFccbacb1.TMP" />
+    <None Remove="race2graphqlschema\querries\user\GetOperatorsforReservoir.graphql" />
   </ItemGroup>
 
   <ItemGroup>
@@ -39,6 +40,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RACE2.Dto\RACE2.Dto.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <GenerateGraphQLCodeItems Remove="race2graphqlschema\querries\user\GetOperatorsforReservoir.graphql" />
   </ItemGroup>
 
 </Project>
