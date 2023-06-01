@@ -5,6 +5,7 @@ using RACE2.Dto;
 using RACE2.FrontEnd.FluxorImplementation.Actions;
 using RACE2.FrontEnd.FluxorImplementation.Stores;
 using RACE2.FrontEnd.RACE2GraphQLSchema;
+using RACE2.FrontEnd.Utilities;
 using StrawberryShake;
 using System.Reactive.Threading.Tasks;
 
@@ -28,12 +29,13 @@ namespace RACE2.FrontEnd.Pages.S12Pages
 
         public UserDetail UserDetail { get; set; }
 
+        private YesNoClass _yesnoOption = new YesNoClass();
+
         protected override async void OnInitialized()
         {
             UserDetail = CurrentUserDetailState.Value.CurrentUserDetail;
             var currentReservoir = CurrentReservoirState.Value.CurrentReservoir;
             var operatorDetailsList = await client.GetOperatorsforReservoir.ExecuteAsync(currentReservoir.Id, currentReservoir.OperatorType);
-            //var operatorDetailsList = await client.GetOperatorsforReservoir.ExecuteAsync(40, currentReservoir.OperatorType);
             var OperatorDetailsList = operatorDetailsList!.Data!.OperatorsforReservoir.ToList();
             foreach (var o in OperatorDetailsList)
             {
@@ -64,7 +66,18 @@ namespace RACE2.FrontEnd.Pages.S12Pages
         }
         public async void GoToNextPage()
         {
+            var value = _yesnoOption.YesNoOptions.ToString();
 
+            bool forceLoad = false;
+
+            if (value == "Yes")
+            {
+                NavigationManager.NavigateTo("/new-operator-details/", forceLoad);
+            }
+            else
+            {
+                NavigationManager.NavigateTo("/non-stat", forceLoad);
+            }
         }
 
         public async void GoToSaveComebackLaterPage()
