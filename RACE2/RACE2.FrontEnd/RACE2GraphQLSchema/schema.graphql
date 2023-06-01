@@ -115,6 +115,7 @@ type UserSpecificDto {
 }
 
 type ReservoirDetailsDTO {
+  id: Int!
   raceReservoirId: String
   publicName: String
   registeredName: String
@@ -202,8 +203,11 @@ type Address {
 }
 
 type OperatorDTO {
+  operatorFirstName: String
+  operatorlastName: String
+  orgName: String
   email: String
-  c_mobile: String
+  mobile: String
   addressLine1: String
   addressLine2: String
   town: String
