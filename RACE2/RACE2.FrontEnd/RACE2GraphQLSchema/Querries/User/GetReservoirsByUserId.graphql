@@ -1,5 +1,6 @@
 ﻿query GetReservoirsByUserId($newid:Int!){
   reservoirsByUserId(id:$newid) {
+    id
     publicName
     raceReservoirId
     referenceNumber
