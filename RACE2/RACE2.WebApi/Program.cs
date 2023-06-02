@@ -24,6 +24,7 @@ using RACE2.DatabaseProvider.Data;
 using RACE2.Common;
 using Microsoft.Extensions.Logging;
 using RACE2.Infrastructure;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddAzureAppConfiguration(options =>
@@ -57,16 +58,19 @@ builder.Services.AddTransient<IRACEIntegrationService, RACEIntegrationService>()
 var authority = builder.Configuration["RACE2SecurityProviderURL"];
 JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 builder.Services.AddAuthentication("Bearer")
-            .AddJwtBearer(o =>
+            .AddJwtBearer(jwtBearerOptions =>
             {
-                o.Authority = authority;
-                o.RequireHttpsMetadata = false;
-                o.Audience = "race2WebApi";
-                o.TokenValidationParameters =
+                jwtBearerOptions.Authority = authority;
+                jwtBearerOptions.RequireHttpsMetadata = false;
+                jwtBearerOptions.Audience = "race2WebApi";
+                jwtBearerOptions.TokenValidationParameters =
                     new TokenValidationParameters
                     {
                         RoleClaimType = "role"
                     };
+                jwtBearerOptions.TokenValidationParameters.ValidateAudience = true;
+                jwtBearerOptions.TokenValidationParameters.ValidateIssuer = true;
+                jwtBearerOptions.TokenValidationParameters.ValidateIssuerSigningKey = true;
             });
 
 builder.Services.AddCors(options =>

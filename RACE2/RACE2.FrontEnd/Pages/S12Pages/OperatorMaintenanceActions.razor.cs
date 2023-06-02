@@ -11,7 +11,7 @@ using System.Reactive.Threading.Tasks;
 
 namespace RACE2.FrontEnd.Pages.S12Pages
 {
-    public partial class NewOperatorDetails
+    public partial class OperatorMaintenanceActions
     {
         [Inject]
         public NavigationManager NavigationManager { get; set; } = default!;
@@ -24,11 +24,23 @@ namespace RACE2.FrontEnd.Pages.S12Pages
 
         [Inject]
         public IDispatcher Dispatcher { get; set; } = default!;
+        public async void GoToNextPage()
+        {
+            bool forceLoad = false;
+            NavigationManager.NavigateTo("/add-operator/", forceLoad);
+        }
 
-        public List<OperatorDTO> OperatorDetails { get; set; }
+        public async void GoToSaveComebackLaterPage()
+        {
 
-        public UserDetail UserDetail { get; set; }
+        }
 
-        private YesNoClass _yesnoOption = new YesNoClass();
+        private void goback()
+        {
+            bool forceLoad = false;
+            string pagelink = "/alternate-supervising-engineer";
+            NavigationManager.NavigateTo(pagelink, forceLoad);
+        }
     }
 }
+
