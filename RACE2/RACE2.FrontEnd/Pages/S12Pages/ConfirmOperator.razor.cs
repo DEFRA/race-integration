@@ -72,11 +72,11 @@ namespace RACE2.FrontEnd.Pages.S12Pages
 
             if (value == "Yes")
             {
-                NavigationManager.NavigateTo("/new-operator-details/", forceLoad);
+                NavigationManager.NavigateTo("/add-operator/", forceLoad);
             }
             else
             {
-                NavigationManager.NavigateTo("/non-stat", forceLoad);
+                NavigationManager.NavigateTo("/alternate-supervising-engineer", forceLoad);
             }
         }
 
