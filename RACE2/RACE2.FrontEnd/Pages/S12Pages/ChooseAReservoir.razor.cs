@@ -7,11 +7,17 @@ using RACE2.FrontEnd.FluxorImplementation.Stores;
 using RACE2.FrontEnd.RACE2GraphQLSchema;
 using System.Security.Claims;
 using RACE2.FrontEnd.FluxorImplementation.Actions;
+using Microsoft.AspNetCore.Components.Web;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 
 namespace RACE2.FrontEnd.Pages.S12Pages
 {
     public partial class ChooseAReservoir
     {
+        [Inject]
+        public SignOutSessionStateManager SignOutManager { get; set; } = default!;
         [Inject]
         public RACE2GraphQLClient client { get; set; } = default!;
         [Inject]
@@ -159,7 +165,7 @@ namespace RACE2.FrontEnd.Pages.S12Pages
 
         public async void GoToSaveComebackLaterPage()
         {
-
+            await BeginSignOut(null);
         }
 
         private void goback()
@@ -167,6 +173,12 @@ namespace RACE2.FrontEnd.Pages.S12Pages
             bool forceLoad = false;
             string pagelink = "/annual-statements";
             NavigationManager.NavigateTo(pagelink, forceLoad);
-        }        
+        }
+
+        private async Task BeginSignOut(MouseEventArgs args)
+        {
+            await SignOutManager.SetSignOutState();
+            NavigationManager.NavigateTo("authentication/logout");
+        }
     }
 }
