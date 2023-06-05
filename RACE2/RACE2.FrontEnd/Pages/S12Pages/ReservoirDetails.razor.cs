@@ -6,11 +6,15 @@ using RACE2.DataModel;
 using RACE2.FrontEnd.FluxorImplementation.Stores;
 using RACE2.FrontEnd.FluxorImplementation.Actions;
 using RACE2.FrontEnd.RACE2GraphQLSchema;
+using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 
 namespace RACE2.FrontEnd.Pages.S12Pages
 {
     public partial class ReservoirDetails
     {
+        [Inject]
+        public SignOutSessionStateManager SignOutManager { get; set; } = default!;
         [Inject]
         public RACE2GraphQLClient client { get; set; } = default!;
         [Inject]
@@ -40,9 +44,10 @@ namespace RACE2.FrontEnd.Pages.S12Pages
             NavigationManager.NavigateTo("/confirm-operator", forceLoad);
         }
 
-        public async void GoToSaveComebackLaterPage()
+        private async Task BeginSignOut(MouseEventArgs args)
         {
-
+            await SignOutManager.SetSignOutState();
+            NavigationManager.NavigateTo("authentication/logout");
         }
 
         private void goback()

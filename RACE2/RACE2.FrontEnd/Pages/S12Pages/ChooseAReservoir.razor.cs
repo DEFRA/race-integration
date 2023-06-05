@@ -163,11 +163,6 @@ namespace RACE2.FrontEnd.Pages.S12Pages
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }
 
-        public async void GoToSaveComebackLaterPage()
-        {
-            await BeginSignOut(null);
-        }
-
         private void goback()
         {
             bool forceLoad = false;
