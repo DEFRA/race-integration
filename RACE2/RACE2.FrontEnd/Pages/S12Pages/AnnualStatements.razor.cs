@@ -59,10 +59,12 @@ namespace RACE2.FrontEnd.Pages.S12Pages
             {
                 var r = new Reservoir()
                 {
+                    Id = rn.Id,
                     RaceReservoirId = rn.RaceReservoirId,
                     PublicName = rn.PublicName,
                     NearestTown = rn.NearestTown,
-                    GridReference = rn.GridReference
+                    GridReference = rn.GridReference,
+                    OperatorType = rn.OperatorType
                 };
                 r.Address = new Address()
                 {
@@ -77,6 +79,9 @@ namespace RACE2.FrontEnd.Pages.S12Pages
             var action = new StoreUserDetailAction(UserDetail);
             Dispatcher.Dispatch(action);
 
+            var action1 = new StoreUserReservoirsAction(ReservoirsLinkedToUser);
+            Dispatcher.Dispatch(action1);
+
             await InvokeAsync(() =>
             {
                 StateHasChanged();
@@ -86,7 +91,6 @@ namespace RACE2.FrontEnd.Pages.S12Pages
 
         public async void GoToNextPage()
         {
-            var u = CurrentUserDetailState.Value.CurrentUserDetail;
             bool forceLoad = false;
             string pagelink = "/choose-a-reservoir";
             NavigationManager.NavigateTo(pagelink, forceLoad);
