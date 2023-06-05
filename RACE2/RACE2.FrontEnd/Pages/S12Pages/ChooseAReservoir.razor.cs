@@ -9,7 +9,6 @@ using System.Security.Claims;
 using RACE2.FrontEnd.FluxorImplementation.Actions;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 
 namespace RACE2.FrontEnd.Pages.S12Pages
