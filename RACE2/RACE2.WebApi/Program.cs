@@ -27,23 +27,23 @@ using RACE2.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Configuration.AddAzureAppConfiguration(options =>
-{
+//builder.Configuration.AddAzureAppConfiguration(options =>
+//{
     
-    var azureAppConfigUrl = builder.Configuration["AzureAppConfigURL"];  
-    var credential = new DefaultAzureCredential();       
-    options.Connect(new Uri(azureAppConfigUrl), credential)
-    .ConfigureKeyVault(options =>
-    {
-        options.SetCredential(credential);
-    })
-    .ConfigureRefresh(refreshOptions =>
-            refreshOptions.Register("refreshAll", refreshAll: true))
-    .Select(KeyFilter.Any, LabelFilter.Null)
-    // Override with any configuration values specific to current hosting env
-    .Select(KeyFilter.Any, Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"))
-    .UseFeatureFlags();
-});
+//    var azureAppConfigUrl = builder.Configuration["AzureAppConfigURL"];  
+//    var credential = new DefaultAzureCredential();       
+//    options.Connect(new Uri(azureAppConfigUrl), credential)
+//    .ConfigureKeyVault(options =>
+//    {
+//        options.SetCredential(credential);
+//    })
+//    .ConfigureRefresh(refreshOptions =>
+//            refreshOptions.Register("refreshAll", refreshAll: true))
+//    .Select(KeyFilter.Any, LabelFilter.Null)
+//    // Override with any configuration values specific to current hosting env
+//    .Select(KeyFilter.Any, Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"))
+//    .UseFeatureFlags();
+//});
 
 // Add services to the container.
 builder.Services.AddControllers();
