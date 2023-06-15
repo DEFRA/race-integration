@@ -15,7 +15,7 @@ namespace RACE2.Dto
 
        public string? OperatorFirstName { get; set; }
 
-        public string? OperatorlastName { get; set; }
+        public string? OperatorLastName { get; set; }
 
         public string? OrgName { get; set; }
         public string? Email { get; set; }
