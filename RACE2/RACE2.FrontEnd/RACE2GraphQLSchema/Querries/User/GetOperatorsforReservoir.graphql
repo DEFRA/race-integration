@@ -4,7 +4,7 @@ query GetOperatorsforReservoir($reservoirid:Int!,$operatorstr:String!){
 		email
 		mobile
 		operatorFirstName
-		operatorlastName
+		operatorLastName
 		addressLine1
 		addressLine2
 		town

@@ -204,7 +204,7 @@ type Address {
 
 type OperatorDTO {
   operatorFirstName: String
-  operatorlastName: String
+  operatorLastName: String
   orgName: String
   email: String
   mobile: String

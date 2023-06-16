@@ -50,7 +50,7 @@ namespace RACE2.FrontEnd.Pages.S12Pages
                 }
                 var operatorDTO = new OperatorDTO();
                 operatorDTO.OperatorFirstName = o.OperatorFirstName is null ? "" : o.OperatorFirstName;
-                operatorDTO.OperatorlastName = o.OperatorlastName is null ? "" : o.OperatorlastName;
+                operatorDTO.OperatorLastName = o.OperatorLastName is null ? "" : o.OperatorLastName;
                 operatorDTO.OrgName = o.OrgName is null ? "" : o.OrgName;
                 operatorDTO.AddressLine1 = o.AddressLine1;
                 operatorDTO.AddressLine2 = o.AddressLine2 is null ? "" : o.AddressLine2;
