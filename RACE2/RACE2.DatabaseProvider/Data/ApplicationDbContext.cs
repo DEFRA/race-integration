@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using RACE2.DataModel;
 using System.Data;
+using System.Drawing;
 using System.IO;
 
 namespace RACE2.DatabaseProvider.Data
@@ -51,6 +52,12 @@ namespace RACE2.DatabaseProvider.Data
         public DbSet<OrganisationAddress> OrganisationAddresses { get; set; }
 
         public DbSet<SubmissionStatus> SubmissionStatus { get; set; }
+        public DbSet<ScreenDefinition> ScreenDefinitions { get; set; }
+
+        public DbSet<ScreenSequence> ScreenSequences { get; set; }
+
+        public DbSet<ScreenSequenceAuditHistory> screenSequenceAuditHistories { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -187,6 +194,8 @@ namespace RACE2.DatabaseProvider.Data
 
             modelBuilder.Entity<UserRole>()
                 .Property(e => e.c_status);
+
+
 
             //modelBuilder.Entity<UserDetail>()
             //    .HasMany(left => left.Reservoirs)
