@@ -29,11 +29,10 @@ namespace RACE2.DataModel
         [Required]
         public UserDetail ModifiedBy { get; set; } = new UserDetail();
         [Required]
-        public ScreenDefinition LastModifiedScreen { get; set; } = new ScreenDefinition();
+        public int LastModifiedScreen { get; set; }
         [Required]
         public DateTime SubmittedOn { get; set; }
         [Required]
-        public string? SubmittedBy { get; set;} 
-
+        public int SubmittedBy  { get; set;} 
     }
 }
