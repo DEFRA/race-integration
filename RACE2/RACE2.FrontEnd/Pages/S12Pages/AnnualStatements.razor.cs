@@ -103,6 +103,15 @@ namespace RACE2.FrontEnd.Pages.S12Pages
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }
 
+        private void gotoPage(Reservoir reservoir)
+        {
+            var action = new StoreReservoirAction(reservoir);
+            Dispatcher.Dispatch(action);
+            bool forceLoad = false;
+            string pagelink = "/reservoir-details";
+            NavigationManager.NavigateTo(pagelink, forceLoad);
+        }
+
         public string text1 = "";
         public string text2 = "";
 

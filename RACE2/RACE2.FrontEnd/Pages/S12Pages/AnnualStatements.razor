@@ -81,7 +81,7 @@
                                             {
                                                 <tr class="govuk-table__row">
                                                     <td class="govuk-table__cell">
-                                                        <a href="#" class="govuk-link govuk-link--no-visited-state">
+                                                    <a class="govuk-link govuk-link--no-visited-state" @onclick=@(args => gotoPage(reservoir))>
                                                             @reservoir.PublicName
                                                         </a>
                                                     </td>
