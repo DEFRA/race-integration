@@ -53,7 +53,7 @@ namespace RACE2.FrontEnd.Pages.S12Pages
         private void goback()
         {
             bool forceLoad = false;
-            string pagelink = "/choose-a-reservoir";
+            string pagelink = "/annual-statements";
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }        
     }
