@@ -137,6 +137,20 @@ namespace RACE2.WebApi.QueryResolver
             }
         }
 
+        public async Task<List<SubmissionStatusDTO>> GetReservoirStatusByEmail(IUserService _userService, string email)
+        {
+            try
+            {
+                _logger.LogInformation("calling GetReservoirStatusByEmail");
+                return await _userService.GetReservoirStatusByEmail(email);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return null;
+            }
+        }
+
 
 
 
