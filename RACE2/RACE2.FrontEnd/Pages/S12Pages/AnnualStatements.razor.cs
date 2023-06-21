@@ -112,6 +112,13 @@ namespace RACE2.FrontEnd.Pages.S12Pages
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }
 
+        private void gotoSubmissionPage(Reservoir reservoir)
+        {
+            bool forceLoad = false;
+            string pagelink = "/s12-statement-confirmation";
+            NavigationManager.NavigateTo(pagelink, forceLoad);
+        }
+
         public string text1 = "";
         public string text2 = "";
 
