@@ -29,7 +29,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         {
             var value = _statnonstat.StatNonStatOptions.ToString();
 
-            bool forceLoad = true;
+            bool forceLoad = false;
 
             if (value == "Statutory")
             {

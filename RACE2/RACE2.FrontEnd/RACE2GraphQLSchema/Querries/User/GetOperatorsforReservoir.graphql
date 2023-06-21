@@ -1,0 +1,15 @@
+query GetOperatorsforReservoir($reservoirid:Int!,$operatorstr:String!){
+	operatorsforReservoir(reservoirid: $reservoirid, operatortype: $operatorstr)
+	{
+		email
+		mobile
+		operatorFirstName
+		operatorLastName
+		addressLine1
+		addressLine2
+		town
+		county
+		postcode
+		orgName
+	}
+}

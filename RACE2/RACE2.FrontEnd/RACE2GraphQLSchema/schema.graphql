@@ -23,6 +23,7 @@ type UserResolver {
   actionsListByReservoirIdAndCategory(reservoirid: Int! category: Int!): [Action!]!
   safetyMeasuresListByReservoirId(reservoirid: Int!): [SafetyMeasure!]!
   addressByReservoirId(reservoirid: Int! operatortype: String!): Address!
+  operatorsforReservoir(reservoirid: Int! operatortype: String!): [OperatorDTO!]!
 }
 
 type MutationResolver {
@@ -114,6 +115,7 @@ type UserSpecificDto {
 }
 
 type ReservoirDetailsDTO {
+  id: Int!
   raceReservoirId: String
   publicName: String
   registeredName: String
@@ -200,6 +202,19 @@ type Address {
   postcode: String
 }
 
+type OperatorDTO {
+  operatorFirstName: String
+  operatorLastName: String
+  orgName: String
+  email: String
+  mobile: String
+  addressLine1: String
+  addressLine2: String
+  town: String
+  county: String
+  postcode: String
+}
+
 input UserDetailInput {
   race_id: String
   c_defra_id: String
@@ -238,6 +253,16 @@ input UserDetailInput {
   lockoutEnd: DateTime
   lockoutEnabled: Boolean!
   accessFailedCount: Int!
+}
+
+input UserReservoirInput {
+  id: Int!
+  raceAppointmentId: String
+  userDetail: UserDetailInput!
+  reservoir: ReservoirInput!
+  appointmentType: String
+  appointmentStartDate: DateTime!
+  appointmentEndDate: DateTime!
 }
 
 "The `DateTime` scalar represents an ISO-8601 compliant date time type."
@@ -376,16 +401,6 @@ type UserReservoir {
   appointmentEndDate: DateTime!
 }
 
-input UserReservoirInput {
-  id: Int!
-  raceAppointmentId: String
-  userDetail: UserDetailInput!
-  reservoir: ReservoirInput!
-  appointmentType: String
-  appointmentStartDate: DateTime!
-  appointmentEndDate: DateTime!
-}
-
 input UserAddressInput {
   id: Int!
   addressType: String
@@ -407,6 +422,24 @@ input AddressInput {
   town: String
   county: String
   postcode: String
+}
+
+type SupportingDocument {
+  id: Int!
+  fileName: String!
+  fileLocation: String!
+  fileType: String!
+  documentName: String!
+  documentDescription: String!
+  documentType: String!
+  documentDate: DateTime!
+  documentStatus: String!
+  documentAuthorName: String!
+  protectiveMarking: String!
+  dateSent: DateTime!
+  dateReceived: DateTime!
+  suppliedBy: UserDetail!
+  reservoir: [Reservoir!]!
 }
 
 input ReservoirInput {
@@ -432,24 +465,6 @@ input ReservoirInput {
   userReservoirs: [UserReservoirInput!]!
   supportingDocuments: [SupportingDocumentInput!]!
   operatorType: String
-}
-
-type SupportingDocument {
-  id: Int!
-  fileName: String!
-  fileLocation: String!
-  fileType: String!
-  documentName: String!
-  documentDescription: String!
-  documentType: String!
-  documentDate: DateTime!
-  documentStatus: String!
-  documentAuthorName: String!
-  protectiveMarking: String!
-  dateSent: DateTime!
-  dateReceived: DateTime!
-  suppliedBy: UserDetail!
-  reservoir: [Reservoir!]!
 }
 
 input SupportingDocumentInput {

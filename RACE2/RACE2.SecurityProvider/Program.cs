@@ -26,9 +26,9 @@ builder.Configuration.AddAzureAppConfiguration(options =>
     //var connectionString = builder.Configuration["AZURE_APPCONFIGURATION_CONNECTIONSTRING"];
     var azureAppConfigUrl = builder.Configuration["AzureAppConfigURL"];
     var credential = new DefaultAzureCredential();
-    
+
     //options.Connect(connectionString)      
-    options.Connect(new Uri(azureAppConfigUrl),credential)
+    options.Connect(new Uri(azureAppConfigUrl), credential)
     .ConfigureKeyVault(options =>
     {
         options.SetCredential(credential);
