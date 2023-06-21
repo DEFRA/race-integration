@@ -41,7 +41,7 @@
     content: "An error has occurred."
 }
 
-.tabs {
+/*.tabs {
     width: 100%;
     background-color: #ffffff;
     font-size: 20px;
@@ -102,7 +102,7 @@
 .tab-content {
     padding-top: 0px;
     text-align: left;
-}
+}*/
 
 .autocomplete {
     position: relative;
