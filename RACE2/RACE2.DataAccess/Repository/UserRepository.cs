@@ -552,6 +552,42 @@ namespace RACE2.DataAccess.Repository
         }
 
 
+        public async Task<List<SubmissionStatusDTO>> GetReservoirStatusByEmail(string email)
+        {
+            _logger.LogInformation("Getting Reservoir status for the user {email}", email);
+            try
+            {
+
+                using (var conn = Connection)
+                {
+                    var parameters = new DynamicParameters();
+                    parameters.Add("email", email, DbType.String);
+                    if (email != null)
+                    {
+
+                        var operatorlist = await conn.QueryAsync<SubmissionStatusDTO>("sp_GetReservoirStatusByEmail", parameters, commandType: CommandType.StoredProcedure);
+
+                        return operatorlist.ToList();
+                    }
+                  
+                    else
+                    {
+                        _logger.LogInformation($"The input is not valid or null {email}");
+                        return null;
+                    }
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return null;
+            }
+
+        }
+
+
 
     }
 }
