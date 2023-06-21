@@ -31,7 +31,12 @@ namespace RACE2.FrontEnd.Pages.S12Pages
                 NavigationManager.NavigateTo("/s12-statement-send-draft", forceLoad);
             }
         }
-
+        private void goback()
+        {
+            bool forceLoad = false;
+            string pagelink = "/annual-statements";
+            NavigationManager.NavigateTo(pagelink, forceLoad);
+        }
         private async Task BeginSignOut(MouseEventArgs args)
         {
             await SignOutManager.SetSignOutState();
