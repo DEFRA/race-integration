@@ -190,22 +190,3 @@
         </div>
     </main>
 </div>
-
-@code{
-    private bool submitted = true;
-    private bool drafts = false;
-    private void DisplayTab(int TabNumber)
-    {
-        switch (TabNumber)
-        {
-            case 1:
-                this.submitted = true;
-                this.drafts = false;
-                break;
-            case 2:
-                this.submitted = false;
-                this.drafts = true;
-                break;
-        }
-    }
-}
