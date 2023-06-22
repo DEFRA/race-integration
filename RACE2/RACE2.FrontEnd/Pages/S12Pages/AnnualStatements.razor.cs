@@ -146,15 +146,32 @@ namespace RACE2.FrontEnd.Pages.S12Pages
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }
 
-        public string text1 = "";
-        public string text2 = "";
+        //public string text1 = "";
+        //public string text2 = "";
 
-        public bool IsEnabled = false;
+        //public bool IsEnabled = false;
 
-        public async Task OnTabChanged(Tab tab)
+        //public async Task OnTabChanged(Tab tab)
+        //{
+        //    text1 = $"Tab value: {tab.Value}";
+        //    text2 = $"Tab text: {tab.Text}";
+        //}
+        //
+        private bool submitted = true;
+        private bool drafts = false;
+        private void DisplayTab(int TabNumber)
         {
-            text1 = $"Tab value: {tab.Value}";
-            text2 = $"Tab text: {tab.Text}";
-        }        
+            switch (TabNumber)
+            {
+                case 1:
+                    this.submitted = true;
+                    this.drafts = false;
+                    break;
+                case 2:
+                    this.submitted = false;
+                    this.drafts = true;
+                    break;
+            }
+        }
     }
 }
