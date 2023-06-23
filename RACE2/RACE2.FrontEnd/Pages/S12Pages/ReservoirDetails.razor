@@ -25,7 +25,7 @@
                                 @CurrentReservoirState.Value.CurrentReservoir.PublicName
                             </dd>
                             <dd class="govuk-summary-list__actions">
-                                <a class="govuk-link govuk-link--no-visited-state" href="#">
+                                <a class="govuk-link govuk-link--no-visited-state" @onclick="changeReservoirDetailsName">
                                     Change<span class="govuk-visually-hidden">Reservoir name</span>
                                 </a>
                             </dd>
@@ -39,7 +39,7 @@
                                 @CurrentReservoirState.Value.CurrentReservoir.NearestTown
                             </dd>
                             <dd class="govuk-summary-list__actions">
-                                <a class="govuk-link govuk-link--no-visited-state" href="#">
+                                <a class="govuk-link govuk-link--no-visited-state" @onclick="changeReservoirDetailsNearestTown">
                                     Change<span class="govuk-visually-hidden">Nearest town</span>
                                 </a>
                             </dd>
@@ -52,7 +52,7 @@
                                 @CurrentReservoirState.Value.CurrentReservoir.GridReference
                             </dd>
                             <dd class="govuk-summary-list__actions">
-                                <a class="govuk-link govuk-link--no-visited-state" href="#">
+                                <a class="govuk-link govuk-link--no-visited-state" @onclick="changeReservoirDetailsGridReference">
                                     Change<span class="govuk-visually-hidden">National Grid reference</span>
                                 </a>
                             </dd>

@@ -55,6 +55,27 @@ namespace RACE2.FrontEnd.Pages.S12Pages
             bool forceLoad = false;
             string pagelink = "/annual-statements";
             NavigationManager.NavigateTo(pagelink, forceLoad);
-        }        
+        }
+
+        private void changeReservoirDetailsName()
+        {
+            bool forceLoad = false;
+            string pagelink = "/reservoir-details-change-name";
+            NavigationManager.NavigateTo(pagelink, forceLoad);
+        }
+
+        private void changeReservoirDetailsNearestTown()
+        {
+            bool forceLoad = false;
+            string pagelink = "/reservoir-details-change-nearesttown";
+            NavigationManager.NavigateTo(pagelink, forceLoad);
+        }
+
+        private void changeReservoirDetailsGridReference()
+        {
+            bool forceLoad = false;
+            string pagelink = "/reservoir-details-change-gridreference";
+            NavigationManager.NavigateTo(pagelink, forceLoad);
+        }
     }
 }

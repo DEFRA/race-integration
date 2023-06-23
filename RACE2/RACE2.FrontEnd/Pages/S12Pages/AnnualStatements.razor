@@ -18,7 +18,7 @@
         </div> -->
 
         <div class="govuk-grid-row">
-            <div class="govuk-grid-column-three-quarters">
+            <div class="govuk-grid-column-full">
 
                 <h1 class="govuk-heading-xl">
                     Your annual statements
@@ -41,22 +41,22 @@
                     @if (submitted)
                     {
                         <div class="tabcontent">
-                            <div class="govuk-tabs__panel" id="submitted">
-                                <table class="govuk-table govuk-!-margin-top-0" style="border: 1px solid grey;padding:3px;">
+                                <div class="govuk-tabs__panel" id="submitted">
+                                <table class="govuk-table govuk-!-margin-top-0" style="border: 1px solid grey;border-bottom:none;padding:3px;">
                                     <thead class="govuk-table__head">
                                         <tr class="govuk-table__row">
-                                            <th scope="col" class="govuk-table__header app-custom-class govuk-!-width-one-half">Reservoir name</th>
+                                            <th scope="col" class="govuk-table__header app-custom-class govuk-!-width-one-half" style="padding:10px;">Reservoir name</th>
                                             <th scope="col" class="govuk-table__header app-custom-class">Date submitted</th>
                                             <th scope="col" class="govuk-table__header app-custom-class">Status</th>
                                         </tr>
                                     </thead>
-                                    <tbody class="govuk-table__body">
+                                        <tbody class="govuk-table__body" style="padding:10px;">
                                         @foreach (var reservoirstatus in ReservoirStatusLinkedToUserComplete)
                                         {
                                             <tr class="govuk-table__row">
                                                 <td class="govuk-table__cell">
-                                                    <a class="govuk-link govuk-link--no-visited-state" @onclick=@(args => gotoSubmissionPage(reservoirstatus))>
-                                                        @reservoirstatus.PublicName
+                                                    <a class="govuk-link govuk-link--no-visited-state" @onclick=@(args => gotoSubmissionPage(reservoirstatus)) style="padding:10px;">
+                                                            @reservoirstatus.PublicName
                                                     </a>
                                                 </td>
                                                 <td class="govuk-table__cell">
@@ -78,10 +78,10 @@
                     {
                         <div class="tabcontent">
                             <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="drafts">
-                                    <table class="govuk-table govuk-!-margin-top-0" style="border: 1px solid grey;padding:3px;">
+                                    <table class="govuk-table govuk-!-margin-top-0" style="border: 1px solid grey;border-bottom:none;padding:3px;">
                                     <thead class="govuk-table__head">
                                         <tr class="govuk-table__row">
-                                            <th scope="col" class="govuk-table__header app-custom-class govuk-!-width-one-half">Reservoir name</th>
+                                            <th scope="col" class="govuk-table__header app-custom-class govuk-!-width-one-half" style="padding:10px;">Reservoir name</th>
                                             <th scope="col" class="govuk-table__header app-custom-class">Date last edited</th>
                                             <th scope="col" class="govuk-table__header app-custom-class">Status</th>
                                         </tr>
@@ -91,8 +91,8 @@
                                         {
                                             <tr class="govuk-table__row">
                                                 <td class="govuk-table__cell">
-                                                    <a class="govuk-link govuk-link--no-visited-state" @onclick=@(args => gotoPage(reservoirstatus))>
-                                                        @reservoirstatus.PublicName
+                                                        <a class="govuk-link govuk-link--no-visited-state" @onclick=@(args => gotoPage(reservoirstatus)) style="padding:10px;">
+                                                            @reservoirstatus.PublicName
                                                     </a>
                                                 </td>
                                                 <td class="govuk-table__cell">

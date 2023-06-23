@@ -1,0 +1,45 @@
+﻿@page "/reservoir-details-new-name"
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+@using Microsoft.AspNetCore.Authorization;
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@attribute [Authorize]
+
+<div class="govuk-width-container ">
+
+
+    <a class="govuk-back-link" href="javascript:history.back()">Back</a>
+
+
+    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+
+
+
+        <div class="govuk-grid-row">
+
+            <div class="govuk-grid-column-two-thirds">
+
+                <h1 class="govuk-heading-xl">Change name of the reservoir</h1>
+
+                <form class="form" action="/Beta/submit-s12-statement/V1/s12-statement/reservoir-details/confirm-2" method="post">
+
+                    <div class="govuk-form-group">
+                        <label class="govuk-label govuk-label--m" for="reservoir-postcode">
+                            Name
+                        </label>
+                        <input class="govuk-input govuk-!-width-one-quarter" id="reservoir-postcode" name="reservoir-postcode" type="text" value="PO10 1AB">
+                    </div>
+
+
+                    <button class="govuk-button govuk-!-margin-top-6 govuk-!-margin-bottom-6" data-module="govuk-button">
+                        Save and continue
+                    </button>
+
+
+                </form>
+
+            </div>
+        </div>
+
+
+    </main>
+</div>
