@@ -157,6 +157,7 @@ namespace RACE2.FrontEnd.Pages.S12Pages
         //    text2 = $"Tab text: {tab.Text}";
         //}
         //
+
         private bool submitted = true;
         private bool drafts = false;
         private void DisplayTab(int TabNumber)
