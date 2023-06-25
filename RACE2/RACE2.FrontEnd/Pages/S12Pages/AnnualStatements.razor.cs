@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using RACE2.DataModel;
+using RACE2.Dto;
 using RACE2.FrontEnd.Components;
 using RACE2.FrontEnd.FluxorImplementation.Actions;
 using RACE2.FrontEnd.FluxorImplementation.Stores;
@@ -29,7 +30,9 @@ namespace RACE2.FrontEnd.Pages.S12Pages
         private string UserName { get; set; } = "Unknown";
         private UserDetail UserDetail { get; set; } 
         private List<Reservoir> ReservoirsLinkedToUser { get; set; } = new List<Reservoir>();
-
+        private List<SubmissionStatusDTO> ReservoirStatusLinkedToUser { get; set; } = new List<SubmissionStatusDTO>();
+        private List<SubmissionStatusDTO> ReservoirStatusLinkedToUserComplete { get; set; } = new List<SubmissionStatusDTO>();
+        private List<SubmissionStatusDTO> ReservoirStatusLinkedToUserDraft { get; set; } = new List<SubmissionStatusDTO>();
 
         protected override async void OnInitialized()
         {
@@ -51,8 +54,24 @@ namespace RACE2.FrontEnd.Pages.S12Pages
                 //Email= userDetails!.Data!.UserByEmailID.Email
                 Email = userDetails!.Data!.UserWithRoles.Email
             };
+
+            var resultsOfReservoirWithStatus = await client.GetReservoirStatusByEmail.ExecuteAsync(UserDetail.Email);
+
+            var reservoirStatusLinkedToUser = resultsOfReservoirWithStatus!.Data!.ReservoirStatusByEmail;
+            foreach (var rs in reservoirStatusLinkedToUser)
+            {
+                var s = new SubmissionStatusDTO()
+                {
+                    PublicName = rs.PublicName,
+                    SubmittedOn= new DateTime(rs.SubmittedOn.Year, rs.SubmittedOn.Month, rs.SubmittedOn.Day),
+                    Status = rs.Status
+                };
+                ReservoirStatusLinkedToUser.Add(s);
+            }
+            ReservoirStatusLinkedToUserComplete= ReservoirStatusLinkedToUser.Where(st=>st.Status.ToUpper() == "COMPLETE").ToList();
+            ReservoirStatusLinkedToUserDraft = ReservoirStatusLinkedToUser.Where(st => st.Status.ToUpper() != "COMPLETE").ToList();
             var results = await client.GetReservoirsByUserId.ExecuteAsync(UserId);
-            List<string> reservoirNamesList = new List<string>();
+
             var reservoirs = results!.Data!.ReservoirsByUserId;
 
             foreach (var rn in reservoirs)
@@ -76,11 +95,11 @@ namespace RACE2.FrontEnd.Pages.S12Pages
                 };
                 ReservoirsLinkedToUser.Add(r);
             }
-            var action = new StoreUserDetailAction(UserDetail);
-            Dispatcher.Dispatch(action);
+            var actionUserDetail = new StoreUserDetailAction(UserDetail);
+            Dispatcher.Dispatch(actionUserDetail);
 
-            var action1 = new StoreUserReservoirsAction(ReservoirsLinkedToUser);
-            Dispatcher.Dispatch(action1);
+            var actionReservoirsLinkedToUser = new StoreUserReservoirsAction(ReservoirsLinkedToUser);
+            Dispatcher.Dispatch(actionReservoirsLinkedToUser);
 
             await InvokeAsync(() =>
             {
@@ -103,31 +122,57 @@ namespace RACE2.FrontEnd.Pages.S12Pages
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }
 
-        private void gotoPage(Reservoir reservoir)
+        private void gotoPage(SubmissionStatusDTO reservoirStatus)
         {
+            var reservoir= ReservoirsLinkedToUser.Where(s=>s.PublicName== reservoirStatus.PublicName).FirstOrDefault();
             var action = new StoreReservoirAction(reservoir);
             Dispatcher.Dispatch(action);
             bool forceLoad = false;
             string pagelink = "/reservoir-details";
+            if (reservoirStatus.Status.ToUpper()=="DRAFT SENT")
+            {
+                pagelink= "/s12-statement-confirmation-draft-sent";
+            }
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }
 
-        private void gotoSubmissionPage(Reservoir reservoir)
+        private void gotoSubmissionPage(SubmissionStatusDTO reservoirStatus)
         {
+            var reservoir = ReservoirsLinkedToUser.Where(s => s.PublicName == reservoirStatus.PublicName).FirstOrDefault();
+            var action = new StoreReservoirAction(reservoir);
+            Dispatcher.Dispatch(action);
             bool forceLoad = false;
             string pagelink = "/s12-statement-confirmation";
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }
 
-        public string text1 = "";
-        public string text2 = "";
+        //public string text1 = "";
+        //public string text2 = "";
 
-        public bool IsEnabled = false;
+        //public bool IsEnabled = false;
 
-        public async Task OnTabChanged(Tab tab)
+        //public async Task OnTabChanged(Tab tab)
+        //{
+        //    text1 = $"Tab value: {tab.Value}";
+        //    text2 = $"Tab text: {tab.Text}";
+        //}
+        //
+
+        private bool submitted = true;
+        private bool drafts = false;
+        private void DisplayTab(int TabNumber)
         {
-            text1 = $"Tab value: {tab.Value}";
-            text2 = $"Tab text: {tab.Text}";
-        }        
+            switch (TabNumber)
+            {
+                case 1:
+                    this.submitted = true;
+                    this.drafts = false;
+                    break;
+                case 2:
+                    this.submitted = false;
+                    this.drafts = true;
+                    break;
+            }
+        }
     }
 }

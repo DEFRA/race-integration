@@ -41,7 +41,12 @@
     content: "An error has occurred."
 }
 
-.tabs {
+a:hover {
+    cursor: pointer;
+}
+
+/* for tabs in blazor */
+/*.tabs {
     width: 100%;
     background-color: #ffffff;
     font-size: 20px;
@@ -102,8 +107,38 @@
 .tab-content {
     padding-top: 0px;
     text-align: left;
+}*/
+.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
 }
 
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.tab button hover {
+    background-color: #ddd;
+}
+
+.tabcontent {
+    /* padding: 6px 12px;
+    border: 1px solid black;
+    border-top: none;*/
+    padding: 0px;
+    border: none;
+}
+
+/* for autocompelte in blazor */
 .autocomplete {
     position: relative;
 }

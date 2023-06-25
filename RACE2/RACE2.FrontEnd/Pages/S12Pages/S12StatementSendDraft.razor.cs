@@ -15,6 +15,12 @@ namespace RACE2.FrontEnd.Pages.S12Pages
             bool forceLoad = false;
             NavigationManager.NavigateTo("/s12-statement-confirmation-draft-sent", forceLoad);
         }
+        private void goback()
+        {
+            bool forceLoad = false;
+            string pagelink = "/annual-statements";
+            NavigationManager.NavigateTo(pagelink, forceLoad);
+        }
 
         public class DraftModel
         {
