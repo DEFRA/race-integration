@@ -1,7 +1,7 @@
 Heroku portal login password: re53Rv01r
 
 dotnet new tool-manifest
-dotnet tool install StrawberryShake.Tools --version 13.0.5 --local
+dotnet tool install StrawberryShake.Tools --version 13.2.1 --local
 dotnet graphql init https://localhost:5003/graphql/ -n RACE2GraphQLClient -p ./RACE2GraphQLSchema
 dotnet graphql download https://localhost:5003/graphql/ -f ./RACE2GraphQLSchema/schema.graphql
 

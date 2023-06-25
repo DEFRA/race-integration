@@ -18,19 +18,104 @@
         </div> -->
 
         <div class="govuk-grid-row">
-            <div class="govuk-grid-column-three-quarters">
+            <div class="govuk-grid-column-full">
 
-                    <h1 class="govuk-heading-xl">
-                        Your annual statements
-                    </h1>
-                    <div class="govuk-!-margin-bottom-6">
-                        <button class="govuk-button govuk-button" data-module="govuk-button" @onclick=@(args => GoToNextPage())>
-                            Start a new statement
+                <h1 class="govuk-heading-xl">
+                    Your annual statements
+                </h1>
+                <div class="govuk-!-margin-bottom-6">
+                    <button class="govuk-button govuk-button" data-module="govuk-button" @onclick=@(args => GoToNextPage())>
+                        Start a new statement
+                    </button>
+                </div>
+                <div class="govuk-grid-column-full">
+                    <div class="govuk-tabs" data-module="govuk-tabs">
+                    <div class="tab">
+                        <button @onclick="(x=>DisplayTab(1))" style="@(submitted?"background-color:#808080;color:white;":"")">
+                            Submitted
+                        </button>
+                        <button @onclick="(x=>DisplayTab(2))" style="@(drafts?"background-color:#808080;color:white;":"")">
+                            Drafts
                         </button>
                     </div>
-             </div>
+                    @if (submitted)
+                    {
+                        <div class="tabcontent">
+                                <div class="govuk-tabs__panel" id="submitted">
+                                <table class="govuk-table govuk-!-margin-top-0" style="border: 1px solid grey;border-bottom:none;padding:3px;">
+                                    <thead class="govuk-table__head">
+                                        <tr class="govuk-table__row">
+                                            <th scope="col" class="govuk-table__header app-custom-class govuk-!-width-one-half" style="padding:10px;">Reservoir name</th>
+                                            <th scope="col" class="govuk-table__header app-custom-class">Date submitted</th>
+                                            <th scope="col" class="govuk-table__header app-custom-class">Status</th>
+                                        </tr>
+                                    </thead>
+                                        <tbody class="govuk-table__body" style="padding:10px;">
+                                        @foreach (var reservoirstatus in ReservoirStatusLinkedToUserComplete)
+                                        {
+                                            <tr class="govuk-table__row">
+                                                <td class="govuk-table__cell">
+                                                    <a class="govuk-link govuk-link--no-visited-state" @onclick=@(args => gotoSubmissionPage(reservoirstatus)) style="padding:10px;">
+                                                            @reservoirstatus.PublicName
+                                                    </a>
+                                                </td>
+                                                <td class="govuk-table__cell">
+                                                    @reservoirstatus.SubmittedOn.ToShortDateString()
+                                                </td>
+                                                <td class="govuk-table__cell">
+                                                    <strong class="govuk-tag govuk-tag--turquoise">
+                                                        @reservoirstatus.Status
+                                                    </strong>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    }
+                    @if (drafts)
+                    {
+                        <div class="tabcontent">
+                            <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="drafts">
+                                    <table class="govuk-table govuk-!-margin-top-0" style="border: 1px solid grey;border-bottom:none;padding:3px;">
+                                    <thead class="govuk-table__head">
+                                        <tr class="govuk-table__row">
+                                            <th scope="col" class="govuk-table__header app-custom-class govuk-!-width-one-half" style="padding:10px;">Reservoir name</th>
+                                            <th scope="col" class="govuk-table__header app-custom-class">Date last edited</th>
+                                            <th scope="col" class="govuk-table__header app-custom-class">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="govuk-table__body">
+                                        @foreach (var reservoirstatus in ReservoirStatusLinkedToUserDraft)
+                                        {
+                                            <tr class="govuk-table__row">
+                                                <td class="govuk-table__cell">
+                                                        <a class="govuk-link govuk-link--no-visited-state" @onclick=@(args => gotoPage(reservoirstatus)) style="padding:10px;">
+                                                            @reservoirstatus.PublicName
+                                                    </a>
+                                                </td>
+                                                <td class="govuk-table__cell">
+                                                    @reservoirstatus.SubmittedOn.ToShortDateString()
+                                                </td>
+                                                <td class="govuk-table__cell">
+                                                    <strong class="govuk-tag govuk-tag--turquoise">
+                                                        @reservoirstatus.Status
+                                                    </strong>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    }
+                </div>
+                </div>
 
-           <div class="govuk-grid-column-full">
+             </div>
+             
+@*           <div class="govuk-grid-column-full">
                 <div class="govuk-tabs" data-module="govuk-tabs">
                     <Tabs OnTabChanged="OnTabChanged">
                         <Tab Text="Submitted" Value="Submitted"  >
@@ -44,20 +129,20 @@
                                             </tr>
                                         </thead>
                                         <tbody class="govuk-table__body">
-                                            @foreach (var reservoir in ReservoirsLinkedToUser)
+                                        @foreach (var reservoirstatus in ReservoirStatusLinkedToUserComplete)
                                             {
                                                 <tr class="govuk-table__row">
                                                     <td class="govuk-table__cell">
-                                                    <a class="govuk-link govuk-link--no-visited-state" @onclick=@(args => gotoSubmissionPage(reservoir))>
-                                                            @reservoir.PublicName
+                                                    <a class="govuk-link govuk-link--no-visited-state" @onclick=@(args => gotoSubmissionPage(reservoirstatus))>
+                                                        @reservoirstatus.PublicName
                                                         </a>                                                        
                                                     </td>
                                                     <td class="govuk-table__cell">
-                                                        @reservoir.VerifiedDetailsDate.ToShortDateString()
+                                                    @reservoirstatus.SubmittedOn.ToShortDateString()
                                                     </td>
                                                     <td class="govuk-table__cell">
                                                         <strong class="govuk-tag govuk-tag--turquoise">
-                                                            Complete
+                                                        @reservoirstatus.Status
                                                         </strong>
                                                     </td>
                                                 </tr>
@@ -77,31 +162,31 @@
                                             </tr>
                                         </thead>
                                         <tbody class="govuk-table__body">
-                                            @foreach (var reservoir in ReservoirsLinkedToUser)
-                                            {
-                                                <tr class="govuk-table__row">
-                                                    <td class="govuk-table__cell">
-                                                    <a class="govuk-link govuk-link--no-visited-state" @onclick=@(args => gotoPage(reservoir))>
-                                                            @reservoir.PublicName
-                                                        </a>
-                                                    </td>
-                                                    <td class="govuk-table__cell">
-                                                        @reservoir.VerifiedDetailsDate.ToShortDateString()
-                                                    </td>
-                                                    <td class="govuk-table__cell">
-                                                        <strong class="govuk-tag govuk-tag--turquoise">
-                                                            Draft
-                                                        </strong>
-                                                    </td>
-                                                </tr>
-                                            }
+                                        @foreach (var reservoirstatus in ReservoirStatusLinkedToUserDraft)
+                                        {
+                                            <tr class="govuk-table__row">
+                                                <td class="govuk-table__cell">
+                                                    <a class="govuk-link govuk-link--no-visited-state" @onclick=@(args => gotoPage(reservoirstatus))>
+                                                        @reservoirstatus.PublicName
+                                                    </a>
+                                                </td>
+                                                <td class="govuk-table__cell">
+                                                    @reservoirstatus.SubmittedOn.ToShortDateString()
+                                                </td>
+                                                <td class="govuk-table__cell">
+                                                    <strong class="govuk-tag govuk-tag--turquoise">
+                                                        @reservoirstatus.Status
+                                                    </strong>
+                                                </td>
+                                            </tr>
+                                        }
                                         </tbody>
                                     </table>
                                 </div>
                         </Tab>
                     </Tabs>
-             </div>
-        </div>
+                </div>
+            </div>*@
         </div>
     </main>
 </div>
