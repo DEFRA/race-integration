@@ -6,7 +6,7 @@ using RACE2.Services;
 namespace RACE2.BackEnd.Mutation
 {
     [MutationType]
-    public class MutationResolver
+    public class UserMutationResolver
     {
         public async Task<UserDetail> CreateUser(IUserService _userService, UserDetail newuser)
         {

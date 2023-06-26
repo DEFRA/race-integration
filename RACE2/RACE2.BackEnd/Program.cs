@@ -48,6 +48,8 @@ builder.Services.AddDbContextServices(builder.Configuration);
 
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IReservoirRepository, ReservoirRepository>();
+builder.Services.AddTransient<IReservoirService, ReservoirService>();
 builder.Services.AddTransient<IRACEIntegrationRepository, RACEIntegrationRepository>();
 builder.Services.AddTransient<IRACEIntegrationService, RACEIntegrationService>();
 
@@ -82,6 +84,7 @@ builder.Services.AddCors(options =>
 });
 builder.Services.AddGraphQLServer()
     .RegisterService<IUserService>()
+    .RegisterService<IReservoirService>()
     .RegisterService<IRACEIntegrationService>()
     .AddTypes()
     .AddAuthorization();

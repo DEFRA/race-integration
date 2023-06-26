@@ -18,28 +18,9 @@ namespace RACE2.DataAccess.Repository
         public Task<UserDetail> ValidateUser(UserDetail loginuser);
         public Task<UserSpecificDto> GetUserWithRoles(string email);
         public Task<UserDetail> MatchUserWithEmailAndPasswordHash(string email, string passwordhash);
-        public Task<UserDetail> UpdatePasswordHashForUser(int id, string passwordhash);      
-
-        
+        public Task<UserDetail> UpdatePasswordHashForUser(int id, string passwordhash);          
 
         public Task<IEnumerable<FeatureFunction>> GetFeaturePermissionForRole(int roleid);
-
-        public Task<List<ReservoirDetailsDTO>> GetReservoirsByUserId(int id);
-
         public Task<OrganisationDTO> GetOrganisationAddressbyId(int orgId);
-
-        public Task<List<DataModel.Action>> GetActionsListByReservoirIdAndCategory(int reservoirid, int category);
-
-        public Task<List<SafetyMeasure>> GetSafetyMeasuresListByReservoirId(int reservoirid);
-        //  public Task<UserDetail> GetReservoirsByUserEmailId(string email);
-
-        public Task<Address> GetAddressByReservoirId(int reservoirid, string operatortype);
-
-        public Task<List<OperatorDTO>> GetOperatorsforReservoir(int reservoirid, string operatortype);
-
-       // public Task<List<>>
-
-        public Task<List<SubmissionStatusDTO>> GetReservoirStatusByEmail(string email);
-
     }
 }
