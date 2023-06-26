@@ -1,0 +1,46 @@
+﻿@page "/s12-statement-confirmation"
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+@using Microsoft.AspNetCore.Authorization;
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@attribute [Authorize]
+
+<div class="govuk-width-container ">
+
+    <a class="govuk-back-link" @onclick="goback">Back</a>
+
+    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+
+                <div class="govuk-panel govuk-panel--confirmation">
+                    <h1 class="govuk-panel__title">
+                        Annual statement submitted
+                    </h1>
+                    <div class="govuk-panel__body">
+                        Your reference number is<br>12 34 56 78
+                    </div>
+                </div>
+
+                <p class="govuk-body">We have sent you a confirmation email</p>
+
+                <h2 class="govuk-heading-m govuk-!-padding-top-6">What happens next</h2>
+
+                <p class="govuk-body">
+                    The Reservoir Safety team at the Environment Agency might contact you for more information.
+                </p>
+
+                <p class="govuk-body">
+                    You can go to your <a class="govuk-link govuk-link--no-visited-state"
+                                          href="#">account</a> to manage your account or submit another annual statement.
+                </p>
+
+                <p class="govuk-!-margin-top-8"><a href="#" class="govuk-link govuk-link--no-visited-state">What did you think of this service?</a> (takes 30 seconds)</p>
+
+            </div>
+        </div>
+
+    </main>
+</div>
+
+

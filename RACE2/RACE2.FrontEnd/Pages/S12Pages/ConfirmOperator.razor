@@ -38,7 +38,7 @@
                                             @if (CurrentOperatorDetail.OrgName != "")
                                                 @CurrentOperatorDetail.OrgName
                                             else
-                                                @CurrentOperatorDetail.OperatorFirstName @CurrentOperatorDetail.OperatorlastName
+                                                @CurrentOperatorDetail.OperatorFirstName @CurrentOperatorDetail.OperatorLastName
                                             </dd>
                                             <dd class="govuk-summary-list__actions">
                                                 <a class="govuk-link" href="#">
@@ -115,7 +115,7 @@
                         Continue
                     </button>
                     <button class="govuk-button govuk-button--secondary govuk-!-margin-top-6 govuk-!-margin-bottom-9"
-                            data-module="govuk-button" @onclick=@(args => GoToSaveComebackLaterPage())>
+                            data-module="govuk-button" @onclick="BeginSignOut">
                         Save and come back later
                     </button>
                 </div>

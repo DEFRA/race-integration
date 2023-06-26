@@ -37,5 +37,9 @@ namespace RACE2.DataAccess.Repository
 
         public Task<List<OperatorDTO>> GetOperatorsforReservoir(int reservoirid, string operatortype);
 
+       // public Task<List<>>
+
+        public Task<List<SubmissionStatusDTO>> GetReservoirStatusByEmail(string email);
+
     }
 }

@@ -9,7 +9,6 @@ using System.Security.Claims;
 using RACE2.FrontEnd.FluxorImplementation.Actions;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 
 namespace RACE2.FrontEnd.Pages.S12Pages
@@ -24,6 +23,8 @@ namespace RACE2.FrontEnd.Pages.S12Pages
         public NavigationManager NavigationManager { get; set; } = default!;
         [Inject]
         public IState<CurrentUserDetailState> CurrentUserDetailState { get; set; } = default!;
+        [Inject]
+        public IState<UserReservoirsState> UserReservoirsState { get; set; } = default!;
         [Inject]
         public IState<CurrentReservoirState> CurrentReservoirState { get; set; } = default!;
 
@@ -41,79 +42,19 @@ namespace RACE2.FrontEnd.Pages.S12Pages
         private int UserId { get; set; } = 0;
 
         private string[] reservoirNames = Array.Empty<String>();
-        //    {
-        //    "River Foss Flood Storage Reservoir",
-        //    "River Nar Flood Storage Area",
-        //    "River Park Pond",
-        //    "River Rase North Branch",
-        //    "River Rase South Branch",
-        //    "Rockingham Reservoir"
-        //};
 
         protected override async void OnInitialized()
         {            
             var currentUser = CurrentUserDetailState.Value.CurrentUserDetail;
-            var results = await client.GetReservoirsByUserId.ExecuteAsync(currentUser.Id);
+            ReservoirsLinkedToUser = UserReservoirsState.Value.UserReservoirs;
             List<string> reservoirNamesList = new List<string>();
-            var reservoirs = results!.Data!.ReservoirsByUserId;
-
-            foreach (var rn in reservoirs)
+            foreach (var reservoir in ReservoirsLinkedToUser)
             {
-                reservoirNamesList.Add(rn.PublicName);
-                var r = new Reservoir()
-                { 
-                    Id = rn.Id,
-                    RaceReservoirId = rn.RaceReservoirId,
-                    PublicName = rn.PublicName,
-                    NearestTown = rn.NearestTown,
-                    GridReference = rn.GridReference,
-                    OperatorType = rn.OperatorType
-                };
-                r.Address = new Address()
-                {
-                    AddressLine1 = rn.Address.AddressLine1,
-                    AddressLine2 = rn.Address.AddressLine2,
-                    Town = rn.Address.Town,
-                    County = rn.Address.County,
-                    Postcode = rn.Address.Postcode
-                };
-                ReservoirsLinkedToUser.Add(r);
+                reservoirNamesList.Add(reservoir.PublicName);
             }
+
             reservoirNames = reservoirNamesList.ToArray<string>();
-            AuthenticationState authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-            //if (authState.User.Identity.Name is not null)
-            //{
-            //    UserName = authState.User.Identity.Name;
-            //    UserClaims = authState.User.Claims;
-            //}
-            //var userDetails = await client.GetUserByEmailID.ExecuteAsync(UserName);
-            //UserId = userDetails!.Data!.UserByEmailID.Id;
-            //var results = await client.GetReservoirsByUserId.ExecuteAsync(UserId);
-            //List<string> reservoirNamesList = new List<string>();
-            //var reservoirs = results!.Data!.ReservoirsByUserId;
-
-            //foreach (var rn in reservoirs)
-            //{
-            //    reservoirNamesList.Add(rn.Public_name);
-            //    var r = new Reservoir()
-            //    {
-            //        race_reservoir_id = rn.Race_reservoir_id,
-            //        public_name = rn.Public_name,
-            //        NearestTown = rn.NearestTown,
-            //        grid_reference = rn.Grid_reference
-            //    };
-            //    r.address = new Address()
-            //    {
-            //        AddressLine1 = rn.Address.AddressLine1,
-            //        AddressLine2 = rn.Address.AddressLine2,
-            //        Town = rn.Address.Town,
-            //        County = rn.Address.County,
-            //        Postcode = rn.Address.Postcode
-            //    };
-            //    ReservoirsLinkedToUser.Add(r);
-            //}
-            //reservoirNames = reservoirNamesList.ToArray<string>();
-
+           
             base.OnInitialized();
         }
         
@@ -136,7 +77,6 @@ namespace RACE2.FrontEnd.Pages.S12Pages
             if (filter?.Length > 0)
             {
                 filteredReservoirNames = reservoirNames.Where(r => r.Contains(filter)).ToArray();
-                //customers = await http.GetFromJsonAsync<List<Customer>>("https://localhost:5002/api/companyfilter/" + filter.ToString());
             }
             else
             {
@@ -161,11 +101,6 @@ namespace RACE2.FrontEnd.Pages.S12Pages
             bool forceLoad = false;
             string pagelink = "/reservoir-details";
             NavigationManager.NavigateTo(pagelink, forceLoad);
-        }
-
-        public async void GoToSaveComebackLaterPage()
-        {
-            await BeginSignOut(null);
         }
 
         private void goback()

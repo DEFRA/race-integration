@@ -254,15 +254,12 @@
                     name="visual-inspect-description-reason-1" rows="5" aria-describedby="more-detail-hint"></textarea>
             </div>
 
-            <div>
-                <button role="button" draggable="false"
-                    class="govuk-button govuk-!-margin-top-6 govuk-!-margin-bottom-6 govuk-!-margin-right-4"
-                    data-module="govuk-button">
+            <div style="padding-top:10px;">
+                <button class="govuk-button govuk-!-margin-top-6 govuk-!-margin-bottom-6 govuk-!-margin-right-4" @onclick=@(args => GoToNextPage())>
                     Continue
                 </button>
-                <button type="submit"
-                    class="govuk-button govuk-button--secondary govuk-!-margin-top-6 govuk-!-margin-bottom-9"
-                    data-module="govuk-button">
+                <button class="govuk-button govuk-button--secondary govuk-!-margin-top-6 govuk-!-margin-bottom-9"
+                        data-module="govuk-button" @onclick="BeginSignOut">
                     Save and come back later
                 </button>
             </div>

@@ -10,7 +10,6 @@ using RACE2.WebApi.QueryResolver;
 using System.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using HotChocolate.AspNetCore.Voyager;
-
 using Microsoft.Extensions.Configuration;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
@@ -29,9 +28,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddAzureAppConfiguration(options =>
 {
-    
-    var azureAppConfigUrl = builder.Configuration["AzureAppConfigURL"];  
-    var credential = new DefaultAzureCredential();       
+
+    var azureAppConfigUrl = builder.Configuration["AzureAppConfigURL"];
+    var credential = new DefaultAzureCredential();
     options.Connect(new Uri(azureAppConfigUrl), credential)
     .ConfigureKeyVault(options =>
     {
