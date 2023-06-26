@@ -105,6 +105,10 @@ namespace RACE2.Services
             return await _userRepository.GetOperatorsforReservoir(reservoirid, operatortype);
         }
 
+        public async Task<List<SubmissionStatusDTO>> GetReservoirStatusByEmail(string email)
+        {
+            return await _userRepository.GetReservoirStatusByEmail(email);
+        }
 
     }
 

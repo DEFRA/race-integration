@@ -1,6 +1,6 @@
 ﻿@page "/alternate-supervising-engineer"
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
-@using Microsoft.AspNetCore.Authorization;
+@using Microsoft.AspNetCore.Authorization
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @attribute [Authorize]
 
@@ -31,7 +31,7 @@
                         Continue
                     </button>
                     <button class="govuk-button govuk-button--secondary govuk-!-margin-top-6 govuk-!-margin-bottom-9"
-                            data-module="govuk-button" @onclick=@(args => GoToSaveComebackLaterPage())>
+                            data-module="govuk-button" @onclick="BeginSignOut">
                         Save and come back later
                     </button>
                 </div>

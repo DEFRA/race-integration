@@ -1,5 +1,6 @@
 ﻿using Fluxor;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using RACE2.DataModel;
 using RACE2.Dto;
 using RACE2.FrontEnd.FluxorImplementation.Actions;
@@ -8,11 +9,15 @@ using RACE2.FrontEnd.RACE2GraphQLSchema;
 using RACE2.FrontEnd.Utilities;
 using StrawberryShake;
 using System.Reactive.Threading.Tasks;
+using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 
 namespace RACE2.FrontEnd.Pages.S12Pages
 {
     public partial class ConfirmOperator
     {
+        [Inject]
+        public SignOutSessionStateManager SignOutManager { get; set; } = default!;
         [Inject]
         public NavigationManager NavigationManager { get; set; } = default!;
         [Inject]
@@ -45,7 +50,7 @@ namespace RACE2.FrontEnd.Pages.S12Pages
                 }
                 var operatorDTO = new OperatorDTO();
                 operatorDTO.OperatorFirstName = o.OperatorFirstName is null ? "" : o.OperatorFirstName;
-                operatorDTO.OperatorlastName = o.OperatorlastName is null ? "" : o.OperatorlastName;
+                operatorDTO.OperatorLastName = o.OperatorLastName is null ? "" : o.OperatorLastName;
                 operatorDTO.OrgName = o.OrgName is null ? "" : o.OrgName;
                 operatorDTO.AddressLine1 = o.AddressLine1;
                 operatorDTO.AddressLine2 = o.AddressLine2 is null ? "" : o.AddressLine2;
@@ -80,9 +85,10 @@ namespace RACE2.FrontEnd.Pages.S12Pages
             }
         }
 
-        public async void GoToSaveComebackLaterPage()
+        private async Task BeginSignOut(MouseEventArgs args)
         {
-
+            await SignOutManager.SetSignOutState();
+            NavigationManager.NavigateTo("authentication/logout");
         }
 
         private void goback()

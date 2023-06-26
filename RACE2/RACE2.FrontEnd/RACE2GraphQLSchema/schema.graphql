@@ -24,6 +24,7 @@ type UserResolver {
   safetyMeasuresListByReservoirId(reservoirid: Int!): [SafetyMeasure!]!
   addressByReservoirId(reservoirid: Int! operatortype: String!): Address!
   operatorsforReservoir(reservoirid: Int! operatortype: String!): [OperatorDTO!]!
+  reservoirStatusByEmail(email: String!): [SubmissionStatusDTO!]!
 }
 
 type MutationResolver {
@@ -204,7 +205,7 @@ type Address {
 
 type OperatorDTO {
   operatorFirstName: String
-  operatorlastName: String
+  operatorLastName: String
   orgName: String
   email: String
   mobile: String
@@ -213,6 +214,20 @@ type OperatorDTO {
   town: String
   county: String
   postcode: String
+}
+
+type SubmissionStatusDTO {
+  service: FeatureFunction!
+  publicName: String!
+  isCurrent: Boolean!
+  isLegacySubmission: Boolean!
+  dueDate: DateTime!
+  status: String!
+  lastModified: DateTime!
+  modifiedBy: UserDetail!
+  lastModifiedScreen: ScreenDefinition!
+  submittedOn: DateTime!
+  submittedBy: UserDetail!
 }
 
 input UserDetailInput {
@@ -267,6 +282,15 @@ input UserReservoirInput {
 
 "The `DateTime` scalar represents an ISO-8601 compliant date time type."
 scalar DateTime
+
+type ScreenDefinition {
+  id: Int!
+  screenName: String!
+  title: String
+  hasSignificantChange: Boolean!
+  modified: DateTime!
+  modifiedBy: UserDetail!
+}
 
 enum HttpStatusCode {
   CONTINUE

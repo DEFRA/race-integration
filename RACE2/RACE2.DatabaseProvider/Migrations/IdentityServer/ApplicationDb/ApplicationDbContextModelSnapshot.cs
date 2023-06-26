@@ -740,6 +740,102 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                     b.ToTable("SafetyMeasures");
                 });
 
+            modelBuilder.Entity("RACE2.DataModel.ScreenDefinition", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<bool?>("HasSignificantChange")
+                        .IsRequired()
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("Modified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ModifiedById")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ScreenName")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("Title")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ModifiedById");
+
+                    b.ToTable("ScreenDefinition");
+                });
+
+            modelBuilder.Entity("RACE2.DataModel.ScreenSequence", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("ScreenId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SequenceNumber")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ServiceId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ScreenId");
+
+                    b.HasIndex("ServiceId");
+
+                    b.ToTable("ScreenSequences");
+                });
+
+            modelBuilder.Entity("RACE2.DataModel.ScreenSequenceAuditHistory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ChangeEvent")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ModifiedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("NewValue")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OldValue")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ServiceId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ModifiedById");
+
+                    b.HasIndex("ServiceId");
+
+                    b.ToTable("ScreenSequenceAuditHistories");
+                });
+
             modelBuilder.Entity("RACE2.DataModel.SubmissionStatus", b =>
                 {
                     b.Property<int>("Id")
@@ -748,7 +844,51 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<DateTime>("DueDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsCurrent")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsLegacySubmission")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("LastModifiedScreenId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ModifiedById")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ReservoirId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ServiceId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SubmittedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("SubmittedOn")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("LastModifiedScreenId");
+
+                    b.HasIndex("ModifiedById");
+
+                    b.HasIndex("ReservoirId");
+
+                    b.HasIndex("ServiceId");
+
+                    b.HasIndex("SubmittedById");
 
                     b.ToTable("SubmissionStatus");
                 });
@@ -1297,6 +1437,98 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                         .IsRequired();
 
                     b.Navigation("Reservoir");
+                });
+
+            modelBuilder.Entity("RACE2.DataModel.ScreenDefinition", b =>
+                {
+                    b.HasOne("RACE2.DataModel.UserDetail", "ModifiedBy")
+                        .WithMany()
+                        .HasForeignKey("ModifiedById")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ModifiedBy");
+                });
+
+            modelBuilder.Entity("RACE2.DataModel.ScreenSequence", b =>
+                {
+                    b.HasOne("RACE2.DataModel.ScreenDefinition", "Screen")
+                        .WithMany()
+                        .HasForeignKey("ScreenId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RACE2.DataModel.FeatureFunction", "Service")
+                        .WithMany()
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Screen");
+
+                    b.Navigation("Service");
+                });
+
+            modelBuilder.Entity("RACE2.DataModel.ScreenSequenceAuditHistory", b =>
+                {
+                    b.HasOne("RACE2.DataModel.UserDetail", "ModifiedBy")
+                        .WithMany()
+                        .HasForeignKey("ModifiedById")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RACE2.DataModel.FeatureFunction", "Service")
+                        .WithMany()
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ModifiedBy");
+
+                    b.Navigation("Service");
+                });
+
+            modelBuilder.Entity("RACE2.DataModel.SubmissionStatus", b =>
+                {
+                    b.HasOne("RACE2.DataModel.ScreenDefinition", "LastModifiedScreen")
+                        .WithMany()
+                        .HasForeignKey("LastModifiedScreenId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RACE2.DataModel.UserDetail", "ModifiedBy")
+                        .WithMany()
+                        .HasForeignKey("ModifiedById")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RACE2.DataModel.Reservoir", "Reservoir")
+                        .WithMany()
+                        .HasForeignKey("ReservoirId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RACE2.DataModel.FeatureFunction", "Service")
+                        .WithMany()
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RACE2.DataModel.UserDetail", "SubmittedBy")
+                        .WithMany()
+                        .HasForeignKey("SubmittedById")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("LastModifiedScreen");
+
+                    b.Navigation("ModifiedBy");
+
+                    b.Navigation("Reservoir");
+
+                    b.Navigation("Service");
+
+                    b.Navigation("SubmittedBy");
                 });
 
             modelBuilder.Entity("RACE2.DataModel.SupportingDocument", b =>
