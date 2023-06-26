@@ -6,9 +6,9 @@ namespace RACE2.BackEnd.Types
     [QueryType]
     public class RoleQueryResolver
     {
-        private readonly ILogger<UserResolver> _logger;
+        private readonly ILogger<UserQueryResolver> _logger;
 
-        public RoleQueryResolver(ILogger<UserResolver> logger)
+        public RoleQueryResolver(ILogger<UserQueryResolver> logger)
         {
             _logger = logger;
         }

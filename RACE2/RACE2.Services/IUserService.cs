@@ -17,23 +17,11 @@ namespace RACE2.Services
         public Task<UserDetail> ValidateUser(UserDetail loginuser);
         public Task<UserSpecificDto> GetUserWithRoles(string email);
         public Task<UserDetail> MatchUserWithEmailAndPasswordHash(string email, string passwordhash);
-        public Task<UserDetail> UpdatePasswordHashForUser(int id, string passwordhash);
-      //  public Task<UserDetail> GetReservoirsByUserId(int id);
-        public Task<List<ReservoirDetailsDTO>> GetReservoirsByUserId(int id);
-        public Task<List<ReservoirDetailsDTO>> GetReservoirsByUserEmailId(string emailId);
-        public Task<IEnumerable<FeatureFunction>> GetFeaturePermissionForRole(int roleid);
+        public Task<UserDetail> UpdatePasswordHashForUser(int id, string passwordhash);      
 
         public Task<OrganisationDTO> GetOrganisationAddressbyId(int userId);
 
-        public Task<List<DataModel.Action>> GetActionsListByReservoirIdAndCategory(int reservoirid, int category);
-
-        public Task<List<SafetyMeasure>> GetSafetyMeasuresListByReservoirId(int reservoirid);
-
-        public Task<Address> GetAddressByReservoirId(int reservoirid, string operatortype);
-
-        public Task<List<OperatorDTO>> GetOperatorsforReservoir(int reservoirid, string operatortype);
-
-        public Task<List<SubmissionStatusDTO>> GetReservoirStatusByEmail(string email);
+        public Task<IEnumerable<FeatureFunction>> GetFeaturePermissionForRole(int roleid);
 
     }
 }
