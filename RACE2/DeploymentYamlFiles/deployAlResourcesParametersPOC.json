@@ -12,28 +12,28 @@
         "value": "westeurope"
       }, 
       "resourcegroup": {
-        "value": "Race2ProjectRG1"
+        "value": "Race2ProjectRG"
       },
       "managedidentity": {
-        "value": "Race2ManagedIdentity1"
+        "value": "Race2ManagedIdentity"
       }, 
       "containerregistryName": {
         "value": "Race2ACR1"
       },
       "namespaces_ServiceBus_name": {
-        "value": "Race2ServiceBus1"
+        "value": "Race2ServiceBus"
       },
       "storageAccountName": {
-        "value": "race2storageaccount1"
+        "value": "race2storageaccount"
       },
       "appconfigName": {
-        "value": "Race2AppConfig1"
+        "value": "Race2AppConfig"
       },
       "keyvaultName": {
-        "value": "Race2KeyVault1"
+        "value": "Race2KeyVault"
       },
       "servers_race2sqlserver_name": {
-        "value": "race2sqlserver1"
+        "value": "race2sqlserver"
       },
       "administratorLogin": {
         "value": "race2admin"
@@ -42,13 +42,13 @@
         "value": "Race2Password123!"
       }, 
       "servers_race2sqldb_name": {
-        "value": "Race2Database1"
+        "value": "Race2Database"
       },
       "logAnalyticsWorkspaceName": {
-        "value": "Race2LAWorkspace1"
+        "value": "Race2LAWorkspace"
       },
       "race2appenvName": {
-        "value": "Race2AppEnv1"
+        "value": "Race2AppEnv"
       }
     }
 }

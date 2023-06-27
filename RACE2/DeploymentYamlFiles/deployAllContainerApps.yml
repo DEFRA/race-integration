@@ -14,7 +14,7 @@ variables:
 
   subscriptionName: 'AZR-RAC-POC1'  
   tenantId: '770a2450-0227-4c62-90c7-4e38537f1102'
-  containerRegistryFullName: 'Race2ACR1'
+  containerRegistryFullName: 'Race2ACR'
   appNameSP: 'race2securityprovider'
   dockerFilenameSP: 'Dockerfile_SecurityProvider'
   appNameFE: 'race2frontend'
@@ -24,8 +24,8 @@ variables:
   adoSpClientId: '39ef2527-ca88-4bbc-b474-2d9aecf67f46'
   adoSpClientSecret: 'P8J8Q~bvpvv9brjyqqCxriIlloll_WvyAiQQfc.-'
   azureServiceConnection: 'AZR-RAC-POC1'
-  containerRegistryURL: 'race2acr1.azurecr.io'
-  resourceGroupName: 'RACE2ProjectRG1'
+  containerRegistryURL: 'race2acr.azurecr.io'
+  resourceGroupName: 'RACE2ProjectRG'
   templateFile: '$(Build.SourcesDirectory)/RACE2/bicepfiles/createAllContainerApps.bicep'
   parameterfile: '$(Build.SourcesDirectory)/RACE2/DeploymentYamlFiles/deployAllContainerAppsParameters.json'
 
