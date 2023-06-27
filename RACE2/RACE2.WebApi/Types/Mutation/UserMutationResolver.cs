@@ -3,9 +3,10 @@ using RACE2.DataAccess;
 using RACE2.DataModel;
 using RACE2.Services;
 
-namespace RACE2.WebApi.MutationResolver
+namespace RACE2.WebApi.Mutation
 {
-    public class MutationResolver
+    [MutationType]
+    public class UserMutationResolver
     {
         public async Task<UserDetail> CreateUser(IUserService _userService, UserDetail newuser)
         {
