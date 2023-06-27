@@ -1,22 +1,16 @@
-﻿using GreenDonut;
-using HotChocolate.Language;
-using HotChocolate.Resolvers;
-using HotChocolate.Subscriptions;
-using RACE2.DataAccess;
-using RACE2.DataAccess.Repository;
-using RACE2.DataModel;
+﻿using RACE2.DataModel;
 using RACE2.Dto;
 using RACE2.Notification;
 using RACE2.Services;
 
-
-namespace RACE2.WebApi.QueryResolver
+namespace RACE2.WebApi.Types
 {
-    public class UserResolver
+    [QueryType]
+    public class UserQueryResolver
     {
-        private readonly ILogger<UserResolver> _logger;  
+        private readonly ILogger<UserQueryResolver> _logger;
 
-        public UserResolver(ILogger<UserResolver> logger)   
+        public UserQueryResolver(ILogger<UserQueryResolver> logger)
         {
             _logger = logger;
         }
@@ -34,7 +28,7 @@ namespace RACE2.WebApi.QueryResolver
                 _logger.LogError(ex, ex.Message);
                 return null;
             }
-                       
+
         }
 
         public async Task<UserDetail> GetById(IUserService _userService, int id)
@@ -49,25 +43,19 @@ namespace RACE2.WebApi.QueryResolver
             //await raceNotification.SendMail(email);
             //await raceNotification.SendEmailTestWithPersonalisation(email);
 
-            return await _userService.GetUserByEmailID(email);     
-            
+            return await _userService.GetUserByEmailID(email);
+
         }
 
-        public async Task<UserSpecificDto> GetUserWithRoles(IUserService _userService,string email)
+        public async Task<UserSpecificDto> GetUserWithRoles(IUserService _userService, string email)
         {
-            var result=  await _userService.GetUserWithRoles(email);
+            var result = await _userService.GetUserWithRoles(email);
             return result;
         }
 
         public async Task<UserDetail> MatchUserWithEmailAndPasswordHash(IUserService _userService, string email, string passwordhash)
         {
-            var result = await _userService.MatchUserWithEmailAndPasswordHash(email,passwordhash);
-            return result;
-        }        
-
-        public async Task<IEnumerable<FeatureFunction>> GetFeaturePermissionForRole(IUserService _userService,int roleid)
-        {
-            var result = await _userService.GetFeaturePermissionForRole(roleid);
+            var result = await _userService.MatchUserWithEmailAndPasswordHash(email, passwordhash);
             return result;
         }
 
@@ -79,8 +67,8 @@ namespace RACE2.WebApi.QueryResolver
 
         public async Task<OrganisationDTO> GetOrganisationAddressbyId(IUserService _userService, int orgId)
         {
-           var result = await _userService.GetOrganisationAddressbyId(orgId);
+            var result = await _userService.GetOrganisationAddressbyId(orgId);
             return result;
-        } 
-    }
+        }
+    } 
 }
