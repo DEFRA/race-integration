@@ -1,0 +1,7 @@
+﻿query GetReservoirById($newid:Int!){
+reservoirById(id:$newid) {
+  publicName
+  gridReference
+  nearestTown
+}
+}

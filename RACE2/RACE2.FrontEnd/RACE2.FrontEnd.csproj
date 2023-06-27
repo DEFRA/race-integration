@@ -38,7 +38,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <GenerateGraphQLCodeItems Remove="race2graphqlschema\querries\user\GetOperatorsforReservoir.graphql" />
+    <None Remove="RACE2GraphQLSchema\Mutations\Reservoir\UpdateReservoir.graphql" />
+    <None Remove="RACE2GraphQLSchema\Querries\Reservoir\GetReservoirById.graphql" />
   </ItemGroup>
 
 </Project>

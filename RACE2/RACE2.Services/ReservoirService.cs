@@ -22,9 +22,9 @@ namespace RACE2.Services
         {
             return await _reservoirRepository.GetReservoirById(id);
         }
-        public async Task<Reservoir> UpdateReservoir(int id, Reservoir updatedReservoir)
+        public async Task<Reservoir> UpdateReservoir(ReservoirUpdateDetailsDTO updatedReservoir)
         {
-                return await _reservoirRepository.UpdateReservoir(id, updatedReservoir);
+                return await _reservoirRepository.UpdateReservoir(updatedReservoir);
         }
 
         //public async Task<UserDetail> GetReservoirsByUserId(int id)

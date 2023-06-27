@@ -7,10 +7,10 @@ namespace RACE2.BackEnd.Types.Mutation
     [MutationType]
     public class ReservoirMutationResolver
     {
-        public async Task<Reservoir> UpdateReservoir(IReservoirService _reservoirService, int id,Reservoir updatedReservoir)
+        public async Task<Reservoir> UpdateReservoir(IReservoirService _reservoirService, ReservoirUpdateDetailsDTO updatedReservoir)
         {
-            Reservoir existingReservoir= await _reservoirService.GetReservoirById(id);    
-            var result = await _reservoirService.UpdateReservoir(existingReservoir.Id,updatedReservoir);
+            Reservoir existingReservoir= await _reservoirService.GetReservoirById(updatedReservoir.Id);    
+            var result = await _reservoirService.UpdateReservoir(updatedReservoir);
             return result;
         }
     }
