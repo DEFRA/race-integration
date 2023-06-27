@@ -4,9 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using RACE2.DataAccess.Repository;
 using RACE2.Services;
-using RACE2.WebApi.Configurations;
-using RACE2.WebApi.MutationResolver;
-using RACE2.WebApi.QueryResolver;
 using System.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using HotChocolate.AspNetCore.Voyager;
@@ -51,7 +48,9 @@ builder.Services.AddDbContextServices(builder.Configuration);
 
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IUserService, UserService>();
-builder.Services.AddTransient<IRACEIntegrationRepository,RACEIntegrationRepository>();
+builder.Services.AddTransient<IReservoirRepository, ReservoirRepository>();
+builder.Services.AddTransient<IReservoirService, ReservoirService>();
+builder.Services.AddTransient<IRACEIntegrationRepository, RACEIntegrationRepository>();
 builder.Services.AddTransient<IRACEIntegrationService, RACEIntegrationService>();
 
 var authority = builder.Configuration["RACE2SecurityProviderURL"];
@@ -83,14 +82,12 @@ builder.Services.AddCors(options =>
             .AllowAnyHeader();
         });
 });
-
 builder.Services.AddGraphQLServer()
     .RegisterService<IUserService>()
+    .RegisterService<IReservoirService>()
     .RegisterService<IRACEIntegrationService>()
-    .AddQueryType<UserResolver>()
-    .AddMutationType<MutationResolver>()
+    .AddTypes()
     .AddAuthorization();
-
 
 var app = builder.Build();
 

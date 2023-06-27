@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 
-namespace RACE2.WebApi.MutationResolver
+namespace RACE2.RACE2.WebApi.Mutation
 {
-    [ExtendObjectType("Mutation")]
+    [MutationType]
     //[Authorize]
     public class RoleMutationResolver
     {
