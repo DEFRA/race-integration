@@ -299,6 +299,7 @@ input UserDetailInput {
 
 input ReservoirUpdateDetailsDTOInput {
   id: Int!
+  userId: Int!
   publicName: String
   gridReference: String
   nearestTown: String
