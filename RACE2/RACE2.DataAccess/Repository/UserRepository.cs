@@ -94,7 +94,6 @@ namespace RACE2.DataAccess.Repository
 
         }
 
-
         public async Task<UserSpecificDto> GetUserWithRoles(string email)
         {
             try
@@ -127,7 +126,6 @@ namespace RACE2.DataAccess.Repository
             {
                 return null;
             }
-
 
         }
         public async Task<UserDetail> CreateUser(UserDetail newuser)
@@ -320,70 +318,7 @@ namespace RACE2.DataAccess.Repository
             }
         }
 
-        ////public async Task<UserDetail> GetReservoirsByUserId(int id)
-        //{
-        //    using (var conn = Connection)
-        //    {
-        //        var query = @"Select A.Id, A.*,B.UserDetailId,B.ReservoirId,c.Id, c.*,d.id,d.AddressLine1,d.AddressLine2,d.town,d.postcode,d.county
-        //                      from AspNetUsers A 
-        //                      inner join UserReservoirs B ON  A.Id =b.UserDetailId 
-        //                      inner join Reservoirs c On c.Id = b.ReservoirId 
-        //                      inner join Addresses d On d.id = c.addressid
-        //                      Where A.Id=@Id";
-
-        //        var parameters = new DynamicParameters();
-        //        parameters.Add("Id", id, DbType.Int32);
-        //        var users = await conn.QueryAsync<UserDetail, UserReservoir, Address, UserDetail>(query, (user, reservoir, address) =>
-        //        {
-        //            reservoir.Reservoir.address = address;
-        //            user.Reservoirs.Add(reservoir);
-
-        //            return user;
-        //        }, parameters, splitOn: "ReservoirId,id");
-        //        var result = users.GroupBy(u => u.Id).Select(g =>
-        //        {
-        //            var groupedUser = g.First();
-        //            groupedUser.Reservoirs = g.Select(u => u.Reservoirs.FirstOrDefault()).ToList();
-        //            return groupedUser;
-        //        });
-        //        return result.FirstOrDefault();
-        //    }
-        //}
-
-        public async Task<List<ReservoirDetailsDTO>> GetReservoirsByUserId(int id)
-        {
-            _logger.LogInformation("Getting Reservoir details for the user {id} ", id);
-
-            try
-            {
-                if (id != 0) 
-                {
-                    using (var conn = Connection)
-                    {
-
-                        var parameters = new DynamicParameters();
-                        parameters.Add("id", id, DbType.String);
-                        var reservoirs = await conn.QueryAsync<ReservoirDetailsDTO, Address, ReservoirDetailsDTO>("sp_GetReservoirsbyUserId", (reservoir, address) =>
-                        {
-                            reservoir.Address = address;
-
-                            return reservoir;
-                        }, parameters, null, true, splitOn: "ReservoirId,id", commandType: CommandType.StoredProcedure);
-                        return reservoirs.ToList();
-                    }
-                }
-                else
-                {
-                    _logger.LogInformation("THe input is not valid");
-                    return null;
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, ex.Message);
-                return null;
-            }
-        }
+        
 
         public async Task<IEnumerable<FeatureFunction>> GetFeaturePermissionForRole(int roleid)
         {
@@ -438,156 +373,5 @@ namespace RACE2.DataAccess.Repository
                 return result.FirstOrDefault();
             }
         }
-
-        public async Task<List<DataModel.Action>> GetActionsListByReservoirIdAndCategory(int reservoirid, int category)
-        {
-            var strCategory = (Category)category;
-            using (var conn = Connection)
-            {
-              
-                var parameters = new DynamicParameters();
-                parameters.Add("reservoirid", reservoirid, DbType.Int64);
-                parameters.Add("category", strCategory.ToString(), DbType.String);
-                var actionlist = await conn.QueryAsync<DataModel.Action>("sp_GetActionsListByReservoirId", parameters,commandType:CommandType.StoredProcedure);
-                return actionlist.ToList();
-            }
-        }
-
-        public async Task<List<SafetyMeasure>> GetSafetyMeasuresListByReservoirId(int reservoirid)
-        {
-            using (var conn = Connection)
-            {
-               
-                var parameters = new DynamicParameters();
-                parameters.Add("reservoirid", reservoirid, DbType.Int64);
-                var actionlist = await conn.QueryAsync<SafetyMeasure>("sp_GetSafetyMeasuresListByReservoirId", parameters, commandType: CommandType.StoredProcedure);
-                return actionlist.ToList();
-            }
-        }
-
-        public async Task<Address> GetAddressByReservoirId(int reservoirid, string operatortype)
-        {
-            _logger.LogInformation("Getting Operator details of the reservoir {reservoirid} with operatorType as {operatortype}", reservoirid, operatortype);
-            try
-            {
-                
-                using (var conn = Connection)
-                {
-                    var parameters = new DynamicParameters();
-                    parameters.Add("reservoirid", reservoirid, DbType.Int64);
-                    if (operatortype != null && operatortype == "Organisation")
-                    {
-                                              
-                        var OrgAddress = await conn.QueryAsync<Address>("sp_GetAddressForReservoir", parameters, commandType: CommandType.StoredProcedure);
-
-                       return OrgAddress.FirstOrDefault();
-                    }
-                    else if (operatortype != null && operatortype == "Individual")
-                    {
-
-                        var OrgAddress = await conn.QueryAsync<Address>("sp_GetAddressForReservoir", parameters, commandType: CommandType.StoredProcedure);
-
-                        return OrgAddress.FirstOrDefault();
-                    }
-                    else
-                    {
-                        _logger.LogInformation($"The input is not valid {operatortype}");
-                        return null;
-                    }
-
-                    
-                }
-            }
-            catch(Exception ex)
-            {
-                _logger.LogError(ex, ex.Message);
-                return null;
-            }
-
-           
-            
-        }
-
-
-        public async Task<List<OperatorDTO>> GetOperatorsforReservoir(int reservoirid, string operatortype)
-        {
-            _logger.LogInformation("Getting Operator details of the reservoir {reservoirid} with operatorType as {operatortype}", reservoirid, operatortype);
-            try
-            {
-
-                using (var conn = Connection)
-                {
-                    var parameters = new DynamicParameters();
-                    parameters.Add("reservoirid", reservoirid, DbType.Int64);
-                    if (operatortype != null && operatortype == "Organisation")
-                    {
-
-                        var operatorlist = await conn.QueryAsync<OperatorDTO>("sp_GetOperatorListAsOrgForReservoir", parameters, commandType: CommandType.StoredProcedure);
-
-                        return operatorlist.ToList();
-                    }
-                    else if (operatortype != null && operatortype == "Individual")
-                    {
-
-                        var operatorlist = await conn.QueryAsync<OperatorDTO>("sp_GetOperatorListAsIndiviForReservoir", parameters, commandType: CommandType.StoredProcedure);
-
-                        return operatorlist.ToList();
-                    }
-                    else
-                    {
-                        _logger.LogInformation($"The input is not valid {operatortype}");
-                        return null;
-                    }
-
-
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, ex.Message);
-                return null;
-            }
-
-
-        }
-
-
-        public async Task<List<SubmissionStatusDTO>> GetReservoirStatusByEmail(string email)
-        {
-            _logger.LogInformation("Getting Reservoir status for the user {email}", email);
-            try
-            {
-
-                using (var conn = Connection)
-                {
-                    var parameters = new DynamicParameters();
-                    parameters.Add("email", email, DbType.String);
-                    if (email != null)
-                    {
-
-                        var operatorlist = await conn.QueryAsync<SubmissionStatusDTO>("sp_GetReservoirStatusByEmail", parameters, commandType: CommandType.StoredProcedure);
-
-                        return operatorlist.ToList();
-                    }
-                  
-                    else
-                    {
-                        _logger.LogInformation($"The input is not valid or null {email}");
-                        return null;
-                    }
-
-
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, ex.Message);
-                return null;
-            }
-
-        }
-
-
-
     }
 }
