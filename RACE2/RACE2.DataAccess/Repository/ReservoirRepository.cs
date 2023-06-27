@@ -45,19 +45,36 @@ namespace RACE2.DataAccess.Repository
                 return reservoir;
             }
         }
-        public async Task<Reservoir> UpdateReservoir(int id, Reservoir reservoir)
+        public async Task<Reservoir> UpdateReservoir(ReservoirUpdateDetailsDTO updatedReservoir)
         {
-            using (var conn = Connection)
+            try
             {
-                string updateQuery = @"UPDATE [dbo].Reservoir SET PublicName = @PublicName WHERE Id = @Id";
-                var parameters = new DynamicParameters();
-                parameters.Add("Id", reservoir.Id, DbType.Int32);
-                parameters.Add("PublicName", reservoir.PublicName, DbType.String);
-                parameters.Add("GridReference", reservoir.GridReference, DbType.String);
-                parameters.Add("NearestTown", reservoir.NearestTown, DbType.String);
-                var reservirUpdated = await conn.QuerySingleAsync<Reservoir>(updateQuery, parameters);
-                return reservirUpdated;
+                using (var conn = Connection)
+                {
+                    int id = updatedReservoir.Id;
+                    string updateQuery = @"UPDATE Reservoirs SET PublicName = @PublicName,GridReference=@GridReference,NearestTown=@NearestTown WHERE Id = @Id";
+                    var parameters = new DynamicParameters();
+                    parameters.Add("Id", id, DbType.Int32);
+                    parameters.Add("PublicName", updatedReservoir.PublicName, DbType.String);
+                    parameters.Add("GridReference", updatedReservoir.GridReference, DbType.String);
+                    parameters.Add("NearestTown", updatedReservoir.NearestTown, DbType.String);
+                    var reservoirUpdatedCount = await conn.ExecuteAsync(updateQuery, parameters);
+                    if (reservoirUpdatedCount == 1)
+                    {
+                        var reservoirUpdated = await GetReservoirById(id);
+                        return reservoirUpdated;
+                    }
+                    else
+                    {
+                        return null;
+                    }                    
+                }
             }
+            catch (Exception ex) 
+            {
+                string err = ex.Message;
+                return null;
+            };
         }
 
         ////public async Task<UserDetail> GetReservoirsByUserId(int id)

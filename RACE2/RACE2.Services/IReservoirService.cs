@@ -11,7 +11,7 @@ namespace RACE2.Services
     public interface IReservoirService
     {
         Task<Reservoir> GetReservoirById(int id);
-        Task<Reservoir> UpdateReservoir(int id, Reservoir updatedReservoir);
+        Task<Reservoir> UpdateReservoir(ReservoirUpdateDetailsDTO updatedReservoir);
         //  public Task<UserDetail> GetReservoirsByUserId(int id);
         public Task<List<ReservoirDetailsDTO>> GetReservoirsByUserId(int id);
         public Task<List<ReservoirDetailsDTO>> GetReservoirsByUserEmailId(string emailId);

@@ -11,7 +11,7 @@ namespace RACE2.DataAccess.Repository
     public interface IReservoirRepository
     {
         public Task<Reservoir> GetReservoirById(int id);
-        public Task<Reservoir> UpdateReservoir(int id, Reservoir reservoir);
+        public Task<Reservoir> UpdateReservoir(ReservoirUpdateDetailsDTO updatedReservoir);
         public Task<List<ReservoirDetailsDTO>> GetReservoirsByUserId(int id);
         public Task<List<DataModel.Action>> GetActionsListByReservoirIdAndCategory(int reservoirid, int category);
       

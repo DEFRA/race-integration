@@ -71,5 +71,25 @@ namespace RACE2.BackEnd.Types
                 return null;
             }
         }
+
+        public async Task<List<ReservoirDetailsDTO>> GetReservoirsByUserEmailId(IReservoirService _reservoirService, string emailId)
+        {
+            var result = await _reservoirService.GetReservoirsByUserEmailId(emailId);
+            return result;
+        }
+
+        public async Task<List<SubmissionStatusDTO>> GetReservoirStatusByEmail(IReservoirService _reservoirService, string email)
+        {
+            try
+            {
+                _logger.LogInformation("calling GetReservoirStatusByEmail");
+                return await _reservoirService.GetReservoirStatusByEmail(email);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return null;
+            }
+        }
     }
 }
