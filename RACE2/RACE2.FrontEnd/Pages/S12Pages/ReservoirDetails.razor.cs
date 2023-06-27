@@ -8,6 +8,7 @@ using RACE2.FrontEnd.FluxorImplementation.Actions;
 using RACE2.FrontEnd.RACE2GraphQLSchema;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
+using RACE2.Dto;
 
 namespace RACE2.FrontEnd.Pages.S12Pages
 {
@@ -28,24 +29,32 @@ namespace RACE2.FrontEnd.Pages.S12Pages
         public IDispatcher Dispatcher { get; set; } = default!;
 
         public Reservoir CurrentReservoir { get; set; } = new Reservoir();
+        public UserDetail CurrentUser { get; set; } = new UserDetail();
         public string ReservoirName { get; set; } = default!;
 
         protected override async void OnInitialized()
         {
             AuthenticationState authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-            var currentUser = CurrentUserDetailState.Value.CurrentUserDetail;
-            var currentReservoir = CurrentReservoirState.Value.CurrentReservoir;
+            CurrentUser = CurrentUserDetailState.Value.CurrentUserDetail;
+            CurrentReservoir = CurrentReservoirState.Value.CurrentReservoir;
             base.OnInitialized();
         }
 
-        public async void GoToNextPage()
+        public async Task GoToNextPage()
         {
+            ReservoirUpdateDetailsDTOInput updatedReservoir = new ReservoirUpdateDetailsDTOInput();
+            updatedReservoir.Id = CurrentReservoir.Id;
+            updatedReservoir.UserId = CurrentUser.Id;
+            updatedReservoir.PublicName = CurrentReservoir.PublicName;
+            updatedReservoir.GridReference= CurrentReservoir.GridReference;
+            updatedReservoir.NearestTown= CurrentReservoir.NearestTown;
+            var savedReservoir = await client.UpdateReservoir.ExecuteAsync(updatedReservoir);
             bool forceLoad = false;
             NavigationManager.NavigateTo("/confirm-operator", forceLoad);
         }
 
         private async Task BeginSignOut(MouseEventArgs args)
-        {
+        {            
             await SignOutManager.SetSignOutState();
             NavigationManager.NavigateTo("authentication/logout");
         }
