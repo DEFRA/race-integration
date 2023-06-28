@@ -25,5 +25,4 @@ RUN dotnet publish "RACE2.SecurityProvider.csproj" -c Release -o /app/publish /p
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENV AzureAppConfigURL=https://race2appconfig.azconfig.io/
 ENTRYPOINT ["dotnet", "RACE2.SecurityProvider.dll"]
