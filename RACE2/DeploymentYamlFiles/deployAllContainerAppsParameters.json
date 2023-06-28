@@ -15,7 +15,7 @@
         "value": "Race2ManagedIdentity"
       }, 
       "race2appenvName": {
-        "value": "Race2AppEnv"
+        "value": "race2containerappenv"
       }, 
       "registryResourceGroup": {
         "value": "Race2ProjectRG"
