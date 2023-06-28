@@ -21,34 +21,34 @@ using System.Data.SqlClient;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//builder.Configuration.AddAzureAppConfiguration(options =>
-//{
-//    //var connectionString = builder.Configuration["AZURE_APPCONFIGURATION_CONNECTIONSTRING"];
-//    var azureAppConfigUrl = builder.Configuration["AzureAppConfigURL"];
-//    var credential = new DefaultAzureCredential();
+builder.Configuration.AddAzureAppConfiguration(options =>
+{
+    //var connectionString = builder.Configuration["AZURE_APPCONFIGURATION_CONNECTIONSTRING"];
+    var azureAppConfigUrl = builder.Configuration["AzureAppConfigURL"];
+    var credential = new DefaultAzureCredential();
 
-//    //options.Connect(connectionString)      
-//    options.Connect(new Uri(azureAppConfigUrl), credential)
-//    .ConfigureKeyVault(options =>
-//    {
-//        options.SetCredential(credential);
-//    })
-//    .ConfigureRefresh(refreshOptions =>
-//            refreshOptions.Register("refreshAll", refreshAll: true))
-//    .Select(KeyFilter.Any, LabelFilter.Null)
-//    // Override with any configuration values specific to current hosting env
-//    .Select(KeyFilter.Any, Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"))
-//    .UseFeatureFlags();
-//});
-//var blazorClientURL= builder.Configuration["RACE2FrontEndURL"];
-//var webapiURL = builder.Configuration["RACE2WebApiURL"];
-//var securityProviderURL = builder.Configuration["RACE2SecurityProviderURL"];
-//var sqlConnectionString = builder.Configuration["SqlConnectionString"];
+    //options.Connect(connectionString)      
+    options.Connect(new Uri(azureAppConfigUrl), credential)
+    .ConfigureKeyVault(options =>
+    {
+        options.SetCredential(credential);
+    })
+    .ConfigureRefresh(refreshOptions =>
+            refreshOptions.Register("refreshAll", refreshAll: true))
+    .Select(KeyFilter.Any, LabelFilter.Null)
+    // Override with any configuration values specific to current hosting env
+    .Select(KeyFilter.Any, Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"))
+    .UseFeatureFlags();
+});
+var blazorClientURL = builder.Configuration["RACE2FrontEndURL"];
+var webapiURL = builder.Configuration["RACE2WebApiURL"];
+var securityProviderURL = builder.Configuration["RACE2SecurityProviderURL"];
+var sqlConnectionString = builder.Configuration["SqlConnectionString"];
 
-var blazorClientURL = "https://race2frontendweb.gentlebush-defe7f09.westeurope.azurecontainerapps.io";
-var webapiURL = "https://race2webapi.gentlebush-defe7f09.westeurope.azurecontainerapps.io/graphql/";
-var securityProviderURL = "https://race2securityprovider.gentlebush-defe7f09.westeurope.azurecontainerapps.io";
-var sqlConnectionString = "Server=tcp:race2sqlserver.database.windows.net,1433;Initial Catalog=RACE2Database;Persist Security Info=False;User ID=race2admin;Password=Race2Password123!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+//var blazorClientURL = "https://race2frontendweb.gentlebush-defe7f09.westeurope.azurecontainerapps.io";
+//var webapiURL = "https://race2webapi.gentlebush-defe7f09.westeurope.azurecontainerapps.io/graphql/";
+//var securityProviderURL = "https://race2securityprovider.gentlebush-defe7f09.westeurope.azurecontainerapps.io";
+//var sqlConnectionString = "Server=tcp:race2sqlserver.database.windows.net,1433;Initial Catalog=RACE2Database;Persist Security Info=False;User ID=race2admin;Password=Race2Password123!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 // Add Azure App Configuration and feature management services to the container.
 builder.Services.AddAzureAppConfiguration()
                 .AddFeatureManagement();
@@ -111,11 +111,11 @@ else
 }
 
 // Use Azure App Configuration middleware for dynamic configuration refresh.
-//app.UseAzureAppConfiguration();
+app.UseAzureAppConfiguration();
 
 app.UseHttpsRedirection();
 
-//HostingExtensions.InitializeDatabase(app, blazorClientURL, webapiURL);//populate initial data
+HostingExtensions.InitializeDatabase(app, blazorClientURL, webapiURL);//populate initial data
 
 app.UseCookiePolicy(new CookiePolicyOptions
 {
