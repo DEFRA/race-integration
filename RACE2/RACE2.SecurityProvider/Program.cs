@@ -115,7 +115,7 @@ else
 
 app.UseHttpsRedirection();
 
-HostingExtensions.InitializeDatabase(app, blazorClientURL, webapiURL);//populate initial data
+//HostingExtensions.InitializeDatabase(app, blazorClientURL, webapiURL);//populate initial data
 
 app.UseCookiePolicy(new CookiePolicyOptions
 {
