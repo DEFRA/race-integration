@@ -25,4 +25,6 @@ RUN dotnet publish "RACE2.WebApi.csproj" -c Release -o /app/publish /p:UseAppHos
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+ARG AzureAppConfigURL
+ENV AzureAppConfigURL=$AzureAppConfigURL
 ENTRYPOINT ["dotnet", "RACE2.WebApi.dll"]
