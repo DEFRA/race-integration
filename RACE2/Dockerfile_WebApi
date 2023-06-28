@@ -1,6 +1,5 @@
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
-ENV ASPNETCORE_ENVIRONMENT $Production
-ENV AzureAppConfigURL "https://race2appconfig.azconfig.io/"
+
 WORKDIR /app
 EXPOSE 80
 
@@ -25,4 +24,6 @@ RUN dotnet publish "RACE2.WebApi.csproj" -c Release -o /app/publish /p:UseAppHos
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+ENV ASPNETCORE_ENVIRONMENT Production
+ENV AzureAppConfigURL "https://race2appconfig.azconfig.io/"
 ENTRYPOINT ["dotnet", "RACE2.WebApi.dll"]
