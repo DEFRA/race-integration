@@ -111,7 +111,7 @@ else
 }
 
 // Use Azure App Configuration middleware for dynamic configuration refresh.
-app.UseAzureAppConfiguration();
+//app.UseAzureAppConfiguration();
 
 app.UseHttpsRedirection();
 
