@@ -54,7 +54,8 @@ builder.Services.AddTransient<IRACEIntegrationRepository, RACEIntegrationReposit
 builder.Services.AddTransient<IRACEIntegrationService, RACEIntegrationService>();
 
 var authority = builder.Configuration["RACE2SecurityProviderURL"];
-//var authority = "https://race2securityprovider.gentlebush-defe7f09.westeurope.azurecontainerapps.io";
+//var dbConnString= builder.Configuration["SqlConnectionString"];
+
 JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 builder.Services.AddAuthentication("Bearer")
             .AddJwtBearer(jwtBearerOptions =>

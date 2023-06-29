@@ -7,7 +7,7 @@
       "launchUrl": "graphql",
       "applicationUrl": "https://localhost:5003",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_ENVIRONMENT": "Staging",
         //"AZURE_APP_CONFIGURATION_ENDPOINT": "https://race2appconfig.azconfig.io",
         //"AZURE_USER_ASSIGNED_IDENTITY_CLIENT_ID": "f324da0d-19e1-49df-8901-faab72ed2649",
         //"AZURE_CLIENT_ID": "39ef2527-ca88-4bbc-b474-2d9aecf67f46",
