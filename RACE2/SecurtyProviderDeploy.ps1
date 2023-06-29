@@ -1,11 +1,12 @@
 $RESOURCE_GROUP = "race2projectrg"
 $ENVIRONMENT="Production"
 $MANAGEDIDENTITY="Race2ManagedIdentity"
+$APPCONFIG_URL="https://race2appconfig.azconfig.io/"
+$REGISTRY_SERVER="race2acr.azurecr.io"
 $CONTAINERAPPS_ENVIRONMENT="race2containerappenv"
 $CONTAINERAPPNAME ="race2securityprovider"
 $REMOTE_IMAGENAME="race2acr.azurecr.io/race2securityprovider:latest"
-$APPCONFIG_URL="https://race2appconfig.azconfig.io/"
-$REGISTRY_SERVER="race2acr.azurecr.io"
+
 $identityClientId = (az identity show --resource-group $RESOURCE_GROUP --name $MANAGEDIDENTITY --output json --query "clientId")
 $identityResourceId = (az identity show --resource-group $RESOURCE_GROUP --name $MANAGEDIDENTITY --output json --query "id")
 
