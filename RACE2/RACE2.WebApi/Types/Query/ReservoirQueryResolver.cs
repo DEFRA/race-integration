@@ -27,12 +27,6 @@ namespace RACE2.WebApi.Types
             return result;
         }
 
-        //public async Task<List<ReservoirDetailsDTO>> GetReservoirsByUserEmailId(IReservoirService _reservoirService, string emailId)
-        //{
-        //    var result = await _reservoirService.GetReservoirsByUserEmailId(emailId);
-        //    return result;
-        //}
-
         public async Task<List<DataModel.Action>> GetActionsListByReservoirIdAndCategory(IReservoirService _reservoirService, int reservoirid, int category)
         {
             return await _reservoirService.GetActionsListByReservoirIdAndCategory(reservoirid, category);
