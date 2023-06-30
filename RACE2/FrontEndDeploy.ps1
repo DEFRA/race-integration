@@ -20,7 +20,7 @@ $identityResourceId = (az identity show --resource-group $RESOURCE_GROUP --name 
   --ingress 'external' `
   --cpu 0.5 `
   --memory 1.0Gi `
-  --min-replicas 0 `
+  --min-replicas 1 `
   --max-replicas 2 `
   --env-vars ASPNETCORE_ENVIRONMENT="Production" AzureAppConfigURL=$APPCONFIG_URL AZURE_CLIENT_ID=$identityClientId `
   --user-assigned $MANAGEDIDENTITY
