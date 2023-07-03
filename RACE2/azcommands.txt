@@ -6,8 +6,11 @@ dotnet graphql init https://localhost:5003/graphql/ -n RACE2GraphQLClient -p ./R
 dotnet graphql download https://localhost:5003/graphql/ -f ./RACE2GraphQLSchema/schema.graphql
 
 az login
+az login -u kriss.sahoo@defra.gov.uk -p Saudamini123!
 
 az acr login -n race2acr  -n race2acr
+az acr login -n race2acr -u Race2Acr -p 3q23FKncYFoNMky5N+4arugBI6FHagtWC07sVgPHdo+ACRB3HwHE
+az acr login race2acr.azurecr.io -n race2acr -u Race2Acr -p 3q23FKncYFoNMky5N+4arugBI6FHagtWC07sVgPHdo+ACRB3HwHE
 
 az acr build -r race2acr -t race2acr.azurecr.io/race2securityprovider:v1 -f Dockerfile_SecurityProvider .
 az acr build -r race2acr -t race2acr.azurecr.io/race2webapi:v1 -f Dockerfile_WebApi .
