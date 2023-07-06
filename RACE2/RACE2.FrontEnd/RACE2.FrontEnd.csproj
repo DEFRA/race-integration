@@ -18,7 +18,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="6.0.19" />
     <PackageReference Include="PSC.Blazor.Components.Tabs" Version="1.0.6" />
-	<PackageReference Include="StrawberryShake.Blazor" Version="13.3.0" />
+	<PackageReference Include="StrawberryShake.Blazor" Version="13.3.1" />
 	<PackageReference Include="Fluxor" Version="5.9.0" />
 	<PackageReference Include="Fluxor.Blazor.Web" Version="5.9.0" />
 	<PackageReference Include="Fluxor.Blazor.Web.ReduxDevTools" Version="5.9.0" />
