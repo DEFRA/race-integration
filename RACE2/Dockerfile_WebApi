@@ -1,14 +1,13 @@
-#See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
-
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
+
 WORKDIR /app
 EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["RACE2.WebApi/RACE2.WebApi.csproj", "RACE2.WebApi/"]
-COPY ["RACE2.WebApi/RACE2.WebApi.csproj", "RACE2.WebApi/"]
 COPY ["RACE2.Common/RACE2.Common.csproj", "RACE2.Common/"]
+COPY ["RACE2.Infrastructure/RACE2.Infrastructure.csproj", "RACE2.Infrastructure/"]
 COPY ["RACE2.DatabaseProvider/RACE2.DatabaseProvider.csproj", "RACE2.DatabaseProvider/"]
 COPY ["RACE2.Services/RACE2.Services.csproj", "RACE2.Services/"]
 COPY ["RACE2.DataAccess/RACE2.DataAccess.csproj", "RACE2.DataAccess/"]
@@ -27,4 +26,6 @@ RUN dotnet publish "RACE2.WebApi.csproj" -c Release -o /app/publish /p:UseAppHos
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+ENV ASPNETCORE_ENVIRONMENT Production
+ENV AzureAppConfigURL "https://race2appconfig.azconfig.io/"
 ENTRYPOINT ["dotnet", "RACE2.WebApi.dll"]

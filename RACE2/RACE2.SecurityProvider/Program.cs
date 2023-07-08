@@ -40,10 +40,15 @@ builder.Configuration.AddAzureAppConfiguration(options =>
     .Select(KeyFilter.Any, Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"))
     .UseFeatureFlags();
 });
-var blazorClientURL= builder.Configuration["RACE2FrontEndURL"];
+var blazorClientURL = builder.Configuration["RACE2FrontEndURL"];
 var webapiURL = builder.Configuration["RACE2WebApiURL"];
 var securityProviderURL = builder.Configuration["RACE2SecurityProviderURL"];
 var sqlConnectionString = builder.Configuration["SqlConnectionString"];
+
+//var blazorClientURL = "https://race2frontendweb.gentlebush-defe7f09.westeurope.azurecontainerapps.io";
+//var webapiURL = "https://race2webapi.gentlebush-defe7f09.westeurope.azurecontainerapps.io/graphql/";
+//var securityProviderURL = "https://race2securityprovider.gentlebush-defe7f09.westeurope.azurecontainerapps.io";
+//var sqlConnectionString = "Server=tcp:race2sqlserver.database.windows.net,1433;Initial Catalog=RACE2Database;Persist Security Info=False;User ID=race2admin;Password=Race2Password123!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 // Add Azure App Configuration and feature management services to the container.
 builder.Services.AddAzureAppConfiguration()
                 .AddFeatureManagement();
@@ -110,7 +115,7 @@ app.UseAzureAppConfiguration();
 
 app.UseHttpsRedirection();
 
-HostingExtensions.InitializeDatabase(app, blazorClientURL, webapiURL);//populate initial data
+//HostingExtensions.InitializeDatabase(app, blazorClientURL, webapiURL);//populate initial data
 
 app.UseCookiePolicy(new CookiePolicyOptions
 {

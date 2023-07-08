@@ -58,57 +58,17 @@ namespace RACE2.Services
             return await _userRepository.UpdatePasswordHashForUser(id, passwordhash);
         }
 
-        //public async Task<UserDetail> GetReservoirsByUserId(int id)
-        //{
-        //    return await _userRepository.GetReservoirsByUserId(id);
-        //}
-
-        public async Task<List<ReservoirDetailsDTO>> GetReservoirsByUserId(int Id)
-        {
-            return await _userRepository.GetReservoirsByUserId(Id);
-        }
-
-        public async Task<List<ReservoirDetailsDTO>> GetReservoirsByUserEmailId(string emailId)
-        {
-            var id = GetUserByEmailID(emailId).Result.Id;
-            return await _userRepository.GetReservoirsByUserId(id);
-        }
+       
 
         public async Task<IEnumerable<FeatureFunction>> GetFeaturePermissionForRole(int roleid)
         {
             return await _userRepository.GetFeaturePermissionForRole(roleid);
         }
 
-
         public async Task<OrganisationDTO> GetOrganisationAddressbyId(int userId)
         {
             return await _userRepository.GetOrganisationAddressbyId(userId);
-        }
-
-        public async Task<List<DataModel.Action>> GetActionsListByReservoirIdAndCategory(int reservoirid, int category)
-        {
-            return await _userRepository.GetActionsListByReservoirIdAndCategory(reservoirid,category);
-        }
-
-        public async Task<List<SafetyMeasure>> GetSafetyMeasuresListByReservoirId(int reservoirid)
-        {
-            return await _userRepository.GetSafetyMeasuresListByReservoirId(reservoirid) ;
-        }
-
-        public async Task<Address> GetAddressByReservoirId(int reservoirid, string operatortype)
-        {
-            return await _userRepository.GetAddressByReservoirId(reservoirid,operatortype);
-        }
-
-        public async Task<List<OperatorDTO>> GetOperatorsforReservoir(int reservoirid, string operatortype)
-        {
-            return await _userRepository.GetOperatorsforReservoir(reservoirid, operatortype);
-        }
-
-        public async Task<List<SubmissionStatusDTO>> GetReservoirStatusByEmail(string email)
-        {
-            return await _userRepository.GetReservoirStatusByEmail(email);
-        }
+        }       
 
     }
 
