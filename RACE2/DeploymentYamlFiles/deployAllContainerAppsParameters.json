@@ -9,19 +9,19 @@
         "value": "westeurope"
       }, 
       "resourcegroup": {
-        "value": "Race2ProjectRG1"
+        "value": "Race2ProjectRG"
       },     
       "managedidentity": {
-        "value": "Race2ManagedIdentity1"
+        "value": "Race2ManagedIdentity"
       }, 
       "race2appenvName": {
-        "value": "Race2AppEnv1"
+        "value": "race2containerappenv"
       }, 
       "registryResourceGroup": {
-        "value": "Race2ProjectRG1"
+        "value": "Race2ProjectRG"
       },
       "registryName": {
-        "value": "race2acr1"
+        "value": "race2acr"
       },
       "useExternalIngress": {
         "value": true

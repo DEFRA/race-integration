@@ -7,7 +7,7 @@ variables:
   vmImageName: 'ubuntu-latest'
 
   azureServiceConnection: 'AZR-RAC-POC1'
-  resourceGroupName: 'Race2ProjectRG1'
+  resourceGroupName: 'Race2ProjectRG'
   location: 'westeurope' 
   servicePrincipalId: '39ef2527-ca88-4bbc-b474-2d9aecf67f46'
   templateFileResourceGroup: './RACE2/bicepfiles/createresourcegroup.bicep'  
