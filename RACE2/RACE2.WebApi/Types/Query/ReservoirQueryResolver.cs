@@ -2,6 +2,11 @@
 using RACE2.Dto;
 using RACE2.Notification;
 using RACE2.Services;
+using System.Security.Cryptography;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Wordprocessing;
+using DocumentFormat.OpenXml;
+using System.IO.Packaging;
 
 namespace RACE2.WebApi.Types
 {
@@ -17,6 +22,7 @@ namespace RACE2.WebApi.Types
 
         public async Task<Reservoir> GetReservoirById(IReservoirService _reservoirService, int id)
         {
+            OpenAndAddTextToWordDocument(@"d:\temp\test1.docx", "Test Doc");
             var result = await _reservoirService.GetReservoirById(id);
             return result;
         }
@@ -84,6 +90,28 @@ namespace RACE2.WebApi.Types
                 _logger.LogError(ex, ex.Message);
                 return null;
             }
+        }
+
+        public void OpenAndAddTextToWordDocument(string filepath, string txt)
+        {
+            // Open a WordprocessingDocument for editing using the filepath.
+            WordprocessingDocument wordprocessingDocument =
+                WordprocessingDocument.Create(filepath, WordprocessingDocumentType.Document);
+
+            wordprocessingDocument.AddMainDocumentPart();
+
+            // Create the Document DOM. 
+            wordprocessingDocument.MainDocumentPart.Document =
+              new Document(
+                new Body(
+                  new Paragraph(
+                    new Run(
+                      new Text("Hello World!")))));
+
+            // Save changes to the main document part. 
+            wordprocessingDocument.MainDocumentPart.Document.Save();
+            // Close the handle explicitly.
+            wordprocessingDocument.Dispose();
         }
     }
 }
