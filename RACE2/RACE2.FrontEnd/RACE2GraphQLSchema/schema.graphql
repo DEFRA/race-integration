@@ -20,6 +20,9 @@ type Query {
   operatorsforReservoir(reservoirid: Int! operatortype: String!): [OperatorDTO!]!
   reservoirsByUserEmailId(emailId: String!): [ReservoirDetailsDTO!]!
   reservoirStatusByEmail(email: String!): [SubmissionStatusDTO!]!
+  writeContentToBlob(blobName: String! content: String!): String!
+  downloadBlobToLocalFile(blobName: String! fileName: String!): String!
+  uploadToBlobFromLocalFile(blobName: String! fileName: String!): String!
 }
 
 type Mutation {
