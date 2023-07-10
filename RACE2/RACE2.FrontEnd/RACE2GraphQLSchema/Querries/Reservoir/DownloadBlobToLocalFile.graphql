@@ -1,0 +1,3 @@
+query DownloadBlobToLocalFile($blobName:String!,$fileName:String!){
+  downloadBlobToLocalFile(blobName:$blobName, fileName: $fileName)
+}
