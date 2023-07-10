@@ -27,7 +27,6 @@ namespace RACE2.WebApi.Types
 
         public async Task<Reservoir> GetReservoirById(IReservoirService _reservoirService, int id)
         {
-            OpenAndAddTextToWordDocument();
             var result = await _reservoirService.GetReservoirById(id);
             return result;
         }
@@ -95,6 +94,73 @@ namespace RACE2.WebApi.Types
                 _logger.LogError(ex, ex.Message);
                 return null;
             }
+        }
+
+        public async Task<string> WriteContentToBlob()
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                using (WordprocessingDocument wordprocessingDocument = WordprocessingDocument.Create(ms, WordprocessingDocumentType.Document, true))
+                {
+                    MainDocumentPart mainPart = wordprocessingDocument.AddMainDocumentPart();
+                    mainPart.Document =
+                         new Document(
+                           new Body(
+                             new Paragraph(
+                               new Run(
+                                 new Text("Hello World!")))));
+                    mainPart.Document.Save();
+                }
+                // connection to be given in configuration files or env variable  - Get value from step 10 given in article
+
+                var connectionString = "DefaultEndpointsProtocol=https;AccountName=race2storageaccount;AccountKey=+voxyaI7i37XXY89mgL3FAg/1JhvSezh1ENdokcV5GMwCOycBYNfYY15aUak3iD+DMvG0Z4kOc6u+ASt0Rq3ZA==;EndpointSuffix=core.windows.net";
+                var containerName = "race2webapicontainer";
+                var blobName = "testdata.docx";
+                // create a client with the connection
+
+                BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
+
+                BlobClient blobClient = container.GetBlobClient(blobName);
+
+                ms.Position = 0;
+                blobClient.Upload(ms);
+            }
+            return "Success";
+        }
+
+        public async Task<string> DownloadBlobToLocalFile()
+        {
+            var connectionString = "DefaultEndpointsProtocol=https;AccountName=race2storageaccount;AccountKey=+voxyaI7i37XXY89mgL3FAg/1JhvSezh1ENdokcV5GMwCOycBYNfYY15aUak3iD+DMvG0Z4kOc6u+ASt0Rq3ZA==;EndpointSuffix=core.windows.net";
+            var containerName = "race2webapicontainer";
+            var blobName = "testdata.docx";
+            // create a client with the connection
+
+            BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
+
+            BlobClient blobClient = container.GetBlobClient(blobName);
+            Stream file = File.OpenWrite(@"c:\temp\testdata11.docx");
+            blobClient.DownloadTo(file);
+            file.Dispose();
+            return "Success";
+        }
+
+        public async Task<string> UploadToBlobFromLocalFile()
+        {
+            var connectionString = "DefaultEndpointsProtocol=https;AccountName=race2storageaccount;AccountKey=+voxyaI7i37XXY89mgL3FAg/1JhvSezh1ENdokcV5GMwCOycBYNfYY15aUak3iD+DMvG0Z4kOc6u+ASt0Rq3ZA==;EndpointSuffix=core.windows.net";
+            var containerName = "race2webapicontainer";
+            var blobName = "testdata.docx";
+            // create a client with the connection
+
+            BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
+
+            BlobClient blobClient = container.GetBlobClient(blobName);
+
+            using (Stream stream = File.OpenRead(@"c:\temp\testdata11.docx"))
+            {
+                blobClient.Upload(stream);
+            }
+;
+            return "Success";
         }
 
         public void OpenAndAddTextToWordDocument()
@@ -173,23 +239,26 @@ namespace RACE2.WebApi.Types
 
                 // create a client with the connection
 
-                BlobServiceClient blobServiceClient = new BlobServiceClient(connectionString);
+                BlobContainerClient container = new BlobContainerClient("DefaultEndpointsProtocol=https;AccountName=race2storageaccount;AccountKey=+voxyaI7i37XXY89mgL3FAg/1JhvSezh1ENdokcV5GMwCOycBYNfYY15aUak3iD+DMvG0Z4kOc6u+ASt0Rq3ZA==;EndpointSuffix=core.windows.net","race2webapicontainer");
 
-                // container name which we created
+                // container name which we created                
 
-                BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("race2webapicontainer");
+                BlobClient blobClient = container.GetBlobClient("testdata.docx");
 
-                BlobClient blobClient = containerClient.GetBlobClient("testdata");
+                //var blobHttpHeader = new BlobHttpHeaders();
 
-                var blobHttpHeader = new BlobHttpHeaders();
+                //blobHttpHeader.ContentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
 
-                blobHttpHeader.ContentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
-
-                blobClient.UploadAsync(ms, blobHttpHeader); // can use memory stream or file stream or Direct File path
-
+                //blobClient.Upload(ms, blobHttpHeader); // can use memory stream or file stream or Direct File path
+                ms.Position = 0;
+                blobClient.Upload(ms);
+                
+                var u=blobClient.Uri.AbsoluteUri;
                 //return blobClient.Uri.AbsoluteUri;
-
-                }
+                Stream file = File.OpenWrite(@"c:\temp\testdata11.docx");
+                blobClient.DownloadTo(file);
+                file.Dispose();
+            }
             }
         }
 }
