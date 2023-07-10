@@ -19,10 +19,12 @@ namespace RACE2.WebApi.Types
     public class ReservoirQueryResolver
     {
         private readonly ILogger<ReservoirQueryResolver> _logger;
+        private readonly IConfiguration _configuration;
 
-        public ReservoirQueryResolver(ILogger<ReservoirQueryResolver> logger)
+        public ReservoirQueryResolver(ILogger<ReservoirQueryResolver> logger, IConfiguration configuration)
         {
             _logger = logger;
+            _configuration = configuration;
         }
 
         public async Task<Reservoir> GetReservoirById(IReservoirService _reservoirService, int id)
@@ -96,7 +98,7 @@ namespace RACE2.WebApi.Types
             }
         }
 
-        public async Task<string> WriteContentToBlob()
+        public string WriteContentToBlob(string blobName, string content)
         {
             using (MemoryStream ms = new MemoryStream())
             {
@@ -108,14 +110,14 @@ namespace RACE2.WebApi.Types
                            new Body(
                              new Paragraph(
                                new Run(
-                                 new Text("Hello World!")))));
+                                 new Text(content)))));
                     mainPart.Document.Save();
                 }
                 // connection to be given in configuration files or env variable  - Get value from step 10 given in article
 
-                var connectionString = "DefaultEndpointsProtocol=https;AccountName=race2storageaccount;AccountKey=+voxyaI7i37XXY89mgL3FAg/1JhvSezh1ENdokcV5GMwCOycBYNfYY15aUak3iD+DMvG0Z4kOc6u+ASt0Rq3ZA==;EndpointSuffix=core.windows.net";
-                var containerName = "race2webapicontainer";
-                var blobName = "testdata.docx";
+                var connectionString = _configuration["StorageAccountConnectionString"];
+                var containerName = _configuration["StorageAccountContainer"];
+                
                 // create a client with the connection
 
                 BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
@@ -123,41 +125,41 @@ namespace RACE2.WebApi.Types
                 BlobClient blobClient = container.GetBlobClient(blobName);
 
                 ms.Position = 0;
-                blobClient.Upload(ms);
+                blobClient.Upload(ms,true);
             }
             return "Success";
         }
 
-        public async Task<string> DownloadBlobToLocalFile()
+        public string DownloadBlobToLocalFile(string blobName, string fileName)
         {
-            var connectionString = "DefaultEndpointsProtocol=https;AccountName=race2storageaccount;AccountKey=+voxyaI7i37XXY89mgL3FAg/1JhvSezh1ENdokcV5GMwCOycBYNfYY15aUak3iD+DMvG0Z4kOc6u+ASt0Rq3ZA==;EndpointSuffix=core.windows.net";
-            var containerName = "race2webapicontainer";
-            var blobName = "testdata.docx";
+            var connectionString = _configuration["StorageAccountConnectionString"];
+            var containerName = _configuration["StorageAccountContainer"];
+
             // create a client with the connection
 
             BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
 
             BlobClient blobClient = container.GetBlobClient(blobName);
-            Stream file = File.OpenWrite(@"c:\temp\testdata11.docx");
+            Stream file = File.OpenWrite(fileName);
             blobClient.DownloadTo(file);
             file.Dispose();
             return "Success";
         }
 
-        public async Task<string> UploadToBlobFromLocalFile()
+        public string UploadToBlobFromLocalFile(string blobName,string fileName)
         {
-            var connectionString = "DefaultEndpointsProtocol=https;AccountName=race2storageaccount;AccountKey=+voxyaI7i37XXY89mgL3FAg/1JhvSezh1ENdokcV5GMwCOycBYNfYY15aUak3iD+DMvG0Z4kOc6u+ASt0Rq3ZA==;EndpointSuffix=core.windows.net";
-            var containerName = "race2webapicontainer";
-            var blobName = "testdata.docx";
+            var connectionString = _configuration["StorageAccountConnectionString"];
+            var containerName = _configuration["StorageAccountContainer"];
+
             // create a client with the connection
 
             BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
 
             BlobClient blobClient = container.GetBlobClient(blobName);
 
-            using (Stream stream = File.OpenRead(@"c:\temp\testdata11.docx"))
+            using (Stream stream = File.OpenRead(fileName))
             {
-                blobClient.Upload(stream);
+                blobClient.Upload(stream, true);
             }
 ;
             return "Success";
