@@ -58,10 +58,20 @@
                             </dd>
                         </div>
                     </dl>
-
+                    <div style="padding-top:10px;">
+                        <InputFile OnChange="OnInputFileChange" multiple />
+                    </div>
                     <div style="padding-top:10px;">
                         <button class="govuk-button govuk-!-margin-top-6 govuk-!-margin-bottom-6 govuk-!-margin-right-4" @onclick=@(args => GoToNextPage())>
                             Continue
+                        </button>
+                        <button class="govuk-button govuk-button--secondary govuk-!-margin-top-6 govuk-!-margin-bottom-9"
+                                data-module="govuk-button" @onclick="DownloadReportTemplate">
+                            Download Report Template
+                        </button>
+                        <button class="govuk-button govuk-button--secondary govuk-!-margin-top-6 govuk-!-margin-bottom-9"
+                                data-module="govuk-button" @onclick="UploadCompletedReport">
+                            Upload Completed Report
                         </button>
                         <button class="govuk-button govuk-button--secondary govuk-!-margin-top-6 govuk-!-margin-bottom-9"
                                 data-module="govuk-button" @onclick="BeginSignOut">
