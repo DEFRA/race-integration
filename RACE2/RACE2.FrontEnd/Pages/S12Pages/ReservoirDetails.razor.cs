@@ -32,8 +32,8 @@ namespace RACE2.FrontEnd.Pages.S12Pages
         public UserDetail CurrentUser { get; set; } = new UserDetail();
         public string ReservoirName { get; set; } = default!;
         string Message = "No file(s) selected";
-        IReadOnlyList<IBrowserFile> selectedFiles;
         string selectedFile = "";
+        string selectedFolder = "";
         bool isUpload=false;
 
         protected override async void OnInitialized()
@@ -65,10 +65,9 @@ namespace RACE2.FrontEnd.Pages.S12Pages
 
         private void OnInputFileChange(InputFileChangeEventArgs e)
         {
-            selectedFiles = e.GetMultipleFiles();
-            selectedFile = selectedFiles.FirstOrDefault().Name;
-            Message = $"{selectedFiles.Count} file(s) selected";
-            this.StateHasChanged();
+            selectedFile = e.File.Name;
+            if (selectedFile ==null) return;
+            //this.StateHasChanged();
         }
 
         private void goback()
@@ -89,7 +88,8 @@ namespace RACE2.FrontEnd.Pages.S12Pages
         {
             var blobName = "s12ReportComplete" + "_" + CurrentUser.UserName + "_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + ".docx";
             //var filename = "c:\\temp\\s12ReportComplete_kriss.sahoo@capgemini.com_1172023.docx";
-            var filename = "c:\\temp\\"+selectedFile;
+            var filename = selectedFolder+selectedFile;
+
             if (!String.IsNullOrWhiteSpace(filename))
             {
                 var result1 = await client.UploadToBlobFromLocalFile.ExecuteAsync(blobName, filename);
