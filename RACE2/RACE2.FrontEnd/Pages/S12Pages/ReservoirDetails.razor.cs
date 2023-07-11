@@ -9,6 +9,7 @@ using RACE2.FrontEnd.RACE2GraphQLSchema;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using RACE2.Dto;
+using Microsoft.AspNetCore.Components.Forms;
 
 namespace RACE2.FrontEnd.Pages.S12Pages
 {
@@ -24,13 +25,16 @@ namespace RACE2.FrontEnd.Pages.S12Pages
         public IState<CurrentUserDetailState> CurrentUserDetailState { get; set; } = default!;
         [Inject]
         public IState<CurrentReservoirState> CurrentReservoirState { get; set; } = default!;
-
         [Inject]
         public IDispatcher Dispatcher { get; set; } = default!;
 
         public Reservoir CurrentReservoir { get; set; } = new Reservoir();
         public UserDetail CurrentUser { get; set; } = new UserDetail();
         public string ReservoirName { get; set; } = default!;
+        string Message = "No file(s) selected";
+        IReadOnlyList<IBrowserFile> selectedFiles;
+        string selectedFile = "";
+        bool isUpload=false;
 
         protected override async void OnInitialized()
         {
@@ -59,11 +63,37 @@ namespace RACE2.FrontEnd.Pages.S12Pages
             NavigationManager.NavigateTo("authentication/logout");
         }
 
+        private void OnInputFileChange(InputFileChangeEventArgs e)
+        {
+            selectedFiles = e.GetMultipleFiles();
+            selectedFile = selectedFiles.FirstOrDefault().Name;
+            Message = $"{selectedFiles.Count} file(s) selected";
+            this.StateHasChanged();
+        }
+
         private void goback()
         {
             bool forceLoad = false;
             string pagelink = "/annual-statements";
             NavigationManager.NavigateTo(pagelink, forceLoad);
+        }
+
+        private async void DownloadReportTemplate()
+        {
+            var blobName = "s12ReportTemplate" +"_" +CurrentUser.UserName + "_" + DateTime.Now.Day+ DateTime.Now.Month + DateTime.Now.Year +".docx";
+            var result1 = await client.WriteContentToBlob.ExecuteAsync(blobName,CurrentReservoir.PublicName);
+            var result2 = await client.DownloadBlobToLocalFile.ExecuteAsync(blobName, "c:\\temp\\"+blobName);
+        }
+
+        private async void UploadCompletedReport()
+        {
+            var blobName = "s12ReportComplete" + "_" + CurrentUser.UserName + "_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + ".docx";
+            //var filename = "c:\\temp\\s12ReportComplete_kriss.sahoo@capgemini.com_1172023.docx";
+            var filename = "c:\\temp\\"+selectedFile;
+            if (!String.IsNullOrWhiteSpace(filename))
+            {
+                var result1 = await client.UploadToBlobFromLocalFile.ExecuteAsync(blobName, filename);
+            }
         }
 
         private void changeReservoirDetailsName()
