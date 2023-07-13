@@ -58,14 +58,14 @@
                             </dd>
                         </div>
                     </dl>
-                    <div class="govuk-form-group">                       
+@*                    <div class="govuk-form-group">                       
                         <label class="govuk-label govuk-label--m" for="FileName">
                             Enter folder of file to upload
                         </label>
                         <InputText id="FileName" class="govuk-input" @bind-Value="@selectedFolder" />
-                        <br/>
+                        <br /><br /><br />
                         <InputFile OnChange="OnInputFileChange" />
-                    </div>
+                    </div>*@
                     <div style="padding-top:10px;">
                         <button class="govuk-button govuk-!-margin-top-6 govuk-!-margin-bottom-6 govuk-!-margin-right-4" @onclick=@(args => GoToNextPage())>
                             Continue

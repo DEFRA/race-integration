@@ -31,10 +31,9 @@ namespace RACE2.FrontEnd.Pages.S12Pages
         public Reservoir CurrentReservoir { get; set; } = new Reservoir();
         public UserDetail CurrentUser { get; set; } = new UserDetail();
         public string ReservoirName { get; set; } = default!;
-        string Message = "No file(s) selected";
-        string selectedFile = "";
-        string selectedFolder = "";
-        bool isUpload=false;
+        //string selectedFile = "";
+        //string selectedFolder = "";
+        //Stream seletedFileContent { get; set; }
 
         protected override async void OnInitialized()
         {
@@ -63,12 +62,13 @@ namespace RACE2.FrontEnd.Pages.S12Pages
             NavigationManager.NavigateTo("authentication/logout");
         }
 
-        private void OnInputFileChange(InputFileChangeEventArgs e)
-        {
-            selectedFile = e.File.Name;
-            if (selectedFile ==null) return;
-            //this.StateHasChanged();
-        }
+        //private void OnInputFileChange(InputFileChangeEventArgs e)
+        //{
+        //    selectedFile = e.File.Name;
+        //    seletedFileContent = e.File.OpenReadStream();
+        //    if (selectedFile ==null) return;
+        //    this.StateHasChanged();
+        //}
 
         private void goback()
         {
@@ -86,14 +86,19 @@ namespace RACE2.FrontEnd.Pages.S12Pages
 
         private async void UploadCompletedReport()
         {
-            var blobName = "s12ReportComplete" + "_" + CurrentUser.UserName + "_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + ".docx";
-            //var filename = "c:\\temp\\s12ReportComplete_kriss.sahoo@capgemini.com_1172023.docx";
-            var filename = selectedFolder+selectedFile;
+            //    var blobName = "s12ReportComplete" + "_" + CurrentUser.UserName + "_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + ".docx";
+            //    //var filename = "c:\\temp\\s12ReportComplete_kriss.sahoo@capgemini.com_1172023.docx";
+            //    var filename = selectedFolder+selectedFile;
 
-            if (!String.IsNullOrWhiteSpace(filename))
-            {
-                var result1 = await client.UploadToBlobFromLocalFile.ExecuteAsync(blobName, filename);
-            }
+            //    if (!String.IsNullOrWhiteSpace(filename))
+            //    {
+            //        var result1 = await client.UploadToBlobFromLocalFile.ExecuteAsync(blobName, filename);
+            //    }
+
+
+            bool forceLoad = false;
+            string pagelink = "/upload-s12report";
+            NavigationManager.NavigateTo(pagelink, forceLoad);
         }
 
         private void changeReservoirDetailsName()
