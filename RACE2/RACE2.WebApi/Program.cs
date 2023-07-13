@@ -25,7 +25,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddAzureAppConfiguration(options =>
 {
-
     var azureAppConfigUrl = builder.Configuration["AzureAppConfigURL"];
     var credential = new DefaultAzureCredential();
     options.Connect(new Uri(azureAppConfigUrl), credential)
@@ -99,9 +98,12 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Error");
     app.UseHsts();
 }
+
 app.UseHttpsRedirection();
 
 app.UseCors("CorsPolicy");
+
+app.UseStaticFiles();
 
 app.UseRouting();
 
@@ -111,5 +113,7 @@ app.UseAuthorization();
 
 app.MapGraphQL();
 app.UseVoyager("/graphql", "/graphql-voyager");
+
+app.MapControllers();
 
 app.Run();
