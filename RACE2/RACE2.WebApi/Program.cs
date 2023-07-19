@@ -41,7 +41,6 @@ builder.Configuration.AddAzureAppConfiguration(options =>
 });
 
 // Add services to the container.
-builder.Services.AddControllers();
 builder.Services.AddLoggingServices(builder.Configuration);
 builder.Services.AddDbContextServices(builder.Configuration);
 
@@ -53,7 +52,6 @@ builder.Services.AddTransient<IRACEIntegrationRepository, RACEIntegrationReposit
 builder.Services.AddTransient<IRACEIntegrationService, RACEIntegrationService>();
 
 var authority = builder.Configuration["RACE2SecurityProviderURL"];
-//var dbConnString= builder.Configuration["SqlConnectionString"];
 
 JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 builder.Services.AddAuthentication("Bearer")
@@ -113,7 +111,5 @@ app.UseAuthorization();
 
 app.MapGraphQL();
 app.UseVoyager("/graphql", "/graphql-voyager");
-
-app.MapControllers();
 
 app.Run();

@@ -11,6 +11,8 @@ using RACE2.DatabaseProvider.Data;
 using RACE2.Common;
 using Microsoft.Extensions.Logging;
 using RACE2.Infrastructure;
+using RACE2.DataAccess.Repository;
+using RACE2.Services;
 //using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,6 +32,18 @@ builder.Configuration.AddAzureAppConfiguration(options =>
     .Select(KeyFilter.Any, Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"))
     .UseFeatureFlags();
 });
+
+// Add services to the container.
+builder.Services.AddLoggingServices(builder.Configuration);
+builder.Services.AddDbContextServices(builder.Configuration);
+
+builder.Services.AddTransient<IUserRepository, UserRepository>();
+builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IReservoirRepository, ReservoirRepository>();
+builder.Services.AddTransient<IReservoirService, ReservoirService>();
+builder.Services.AddTransient<IRACEIntegrationRepository, RACEIntegrationRepository>();
+builder.Services.AddTransient<IRACEIntegrationService, RACEIntegrationService>();
+
 builder.Services
     .AddGraphQLServer()
     .AddTypes()
