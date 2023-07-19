@@ -16,7 +16,7 @@ namespace RACE2.BackEnd.Types.Mutation
             _logger = logger;
             _configuration = configuration;
         }
-        public async Task<Author> UploadFileAsync(int authorId, IFile file, CancellationToken cancellationToken)
+        public async Task<String> UploadFileAsync(int authorId, IFile file, CancellationToken cancellationToken)
         {
             //var fileName = file.Name;
             //var fileSize = file.Length;
@@ -45,7 +45,7 @@ namespace RACE2.BackEnd.Types.Mutation
                 stream.Position = 0;
                 blobClient.Upload(stream, true);
             }
-            return new Author(authorId, "Jon Skeet");
+            return "Success";
         }
     }
 }
