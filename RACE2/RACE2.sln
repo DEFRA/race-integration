@@ -32,12 +32,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedFiles", "SharedFiles"
 		WebApiDeploy.ps1 = WebApiDeploy.ps1
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GraphQLCommands", "GraphQLCommands", "{D628ECA6-9B57-4882-A17F-43F61BE0B468}"
-	ProjectSection(SolutionItems) = preProject
-		GetUser.txt = GetUser.txt
-		ValidateUser.txt = ValidateUser.txt
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StoredProcedures", "StoredProcedures", "{F40D405C-8DD0-44A8-81BF-9072721B1300}"
 	ProjectSection(SolutionItems) = preProject
 		sp_GetActionsListByReservoirId.sql = sp_GetActionsListByReservoirId.sql
@@ -109,6 +103,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.FrontEndWebServer", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.WebApi", "RACE2.WebApi\RACE2.WebApi.csproj", "{9C0A89C3-F142-40DA-ADB8-56F012014726}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.BackEnd", "RACE2.BackEnd\RACE2.BackEnd.csproj", "{8DB5CD19-A899-4563-BBF4-32361F023CCD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -171,6 +167,10 @@ Global
 		{9C0A89C3-F142-40DA-ADB8-56F012014726}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C0A89C3-F142-40DA-ADB8-56F012014726}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C0A89C3-F142-40DA-ADB8-56F012014726}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DB5CD19-A899-4563-BBF4-32361F023CCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DB5CD19-A899-4563-BBF4-32361F023CCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DB5CD19-A899-4563-BBF4-32361F023CCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DB5CD19-A899-4563-BBF4-32361F023CCD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

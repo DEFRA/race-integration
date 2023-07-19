@@ -1,11 +1,11 @@
 ﻿{
   "profiles": {
-    "RACE2.WebApi": {
+    "RACE2.BackEnd": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
       "launchUrl": "graphql",
-      "applicationUrl": "https://localhost:5013",
+      "applicationUrl": "https://localhost:5003",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Staging",
         //"AZURE_APP_CONFIGURATION_ENDPOINT": "https://race2appconfig.azconfig.io",

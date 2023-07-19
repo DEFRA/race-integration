@@ -32,6 +32,7 @@ builder.Services.AddRACE2GraphQLClient()
     .ConfigureHttpClient(client =>
     {
         client.BaseAddress = new Uri(RACE2WebApiURL);
+        client.DefaultRequestHeaders.Add("GraphQL-Preflight", "1");
         //client.DefaultRequestHeaders.Authorization =
         //    new AuthenticationHeaderValue("Bearer", "Your Oauth token");
     });
