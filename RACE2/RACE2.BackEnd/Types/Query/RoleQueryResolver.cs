@@ -14,7 +14,7 @@ namespace RACE2.BackEnd.Types
             _configuration = configuration;
         }
 
-        public async Task<IEnumerable<FeatureFunction>> GetFeaturePermissionForRole(IUserService _userService, int roleid)
+        public async Task<IEnumerable<FeatureFunction>> GetFeaturePermissionForRole([Service] IUserService _userService, int roleid)
         {
             var result = await _userService.GetFeaturePermissionForRole(roleid);
             return result;
