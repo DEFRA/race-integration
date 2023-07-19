@@ -6,12 +6,12 @@ using DocumentFormat.OpenXml;
 namespace RACE2.BackEnd.Types.Mutation
 {
     [MutationType]
-    public class Mutation
+    public class FileUploadMutationResolver
     {
-        private readonly ILogger<Mutation> _logger;
+        private readonly ILogger<FileUploadMutationResolver> _logger;
         private readonly IConfiguration _configuration;
 
-        public Mutation(ILogger<Mutation> logger, IConfiguration configuration)
+        public FileUploadMutationResolver(ILogger<FileUploadMutationResolver> logger, IConfiguration configuration)
         {
             _logger = logger;
             _configuration = configuration;
