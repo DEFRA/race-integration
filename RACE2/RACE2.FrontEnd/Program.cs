@@ -13,30 +13,24 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-var httpClient1 = new HttpClient()
+var httpClientFrontEndApp = new HttpClient()
 {
     BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)
 };
-builder.Services.AddScoped(sp => httpClient1);
 
-using var configSettings = await httpClient1.GetAsync("appSettings.json");
+using var configSettings = await httpClientFrontEndApp.GetAsync("appSettings.json");
 
 using var stream = await configSettings.Content.ReadAsStreamAsync();
 
 builder.Configuration.AddJsonStream(stream);
 string RACE2WebApiURL = builder.Configuration["RACE2WebApiURL"];
 
-var httpClient = new HttpClient()
-{
-    BaseAddress = new Uri(RACE2WebApiURL)
-};
-builder.Services.AddScoped(sp => httpClient);
-
 builder.Services.AddOidcAuthentication(options =>
 {
     builder.Configuration.Bind("oidc", options.ProviderOptions);
 });
-builder.Services.AddRACE2GraphQLClient()
+builder.Services
+    .AddRACE2GraphQLClient()
     .ConfigureHttpClient(client =>
     {
         client.BaseAddress = new Uri(RACE2WebApiURL);
