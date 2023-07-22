@@ -1,7 +1,20 @@
+using Microsoft.Extensions.Configuration;
 using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
+using static System.Net.WebRequestMethods;
+using Microsoft.AspNetCore.Hosting;
+using RACE2.Dto;
 using Microsoft.Extensions.Configuration.AzureAppConfiguration;
+using Microsoft.Extensions.Logging.ApplicationInsights;
+using Microsoft.ApplicationInsights.AspNetCore.Extensions;
+using RACE2.DatabaseProvider.Data;
+using RACE2.Common;
+using Microsoft.Extensions.Logging;
+using RACE2.Infrastructure;
 using RACE2.DataAccess.Repository;
 using RACE2.Services;
+using HotChocolate.AspNetCore.Voyager;
+//using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddAzureAppConfiguration(options =>
@@ -22,6 +35,9 @@ builder.Configuration.AddAzureAppConfiguration(options =>
 });
 
 // Add services to the container.
+builder.Services.AddLoggingServices(builder.Configuration);
+builder.Services.AddDbContextServices(builder.Configuration);
+
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IReservoirRepository, ReservoirRepository>();
@@ -48,10 +64,33 @@ builder.Services
     .RegisterService<IRACEIntegrationService>()
     .AddTypes()
     .AddType<UploadType>()
-    .AddMutationConventions();
+    .AddMutationConventions(); 
+
+//builder.Services
+//    .AddGraphQLServer()
+//    .RegisterService<IUserService>()
+//    .RegisterService<IReservoirService>()
+//    .RegisterService<IRACEIntegrationService>()
+//    .AddTypes()
+//    .AddType<UploadType>()
+//    .AddMutationConventions();
 
 var app = builder.Build();
-app.UseCors("CorsPolicy");
-app.MapGraphQL();
 
-app.RunWithGraphQLCommands(args);
+// Configure the HTTP request pipeline.
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Error");
+    app.UseHsts();
+}
+
+app.UseHttpsRedirection();
+
+app.UseCors("CorsPolicy");
+
+app.UseStaticFiles();
+
+app.MapGraphQL();
+app.UseVoyager("/graphql", "/graphql-voyager");
+
+app.Run();

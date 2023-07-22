@@ -1,11 +1,14 @@
-﻿using Path = System.IO.Path;
-using System.IO;
-using System.Text;
-using Azure.Storage.Blobs;
+﻿using Azure.Storage.Blobs;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Wordprocessing;
+using DocumentFormat.OpenXml;
+using RACE2.DataModel;
+using RACE2.Dto;
+using RACE2.Services;
 
-namespace RACE2.BackEnd.Types
-{ 
-   [MutationType]
+namespace RACE2.BackEnd.Types.Mutation
+{
+    //[MutationType]
     public class FileUploadMutationResolver
     {
         private readonly ILogger<FileUploadMutationResolver> _logger;
@@ -47,10 +50,8 @@ namespace RACE2.BackEnd.Types
                 blobClient.Upload(stream, true);
             }
             return new ResultData("Success");
-        }
+        }       
     }
 
     public record ResultData(string Result);
 }
-
-

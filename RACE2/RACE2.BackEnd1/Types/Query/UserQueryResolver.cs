@@ -9,10 +9,12 @@ namespace RACE2.BackEnd.Types
     public class UserQueryResolver
     {
         private readonly ILogger<UserQueryResolver> _logger;
+        private readonly IConfiguration _configuration;
 
-        public UserQueryResolver(ILogger<UserQueryResolver> logger)
+        public UserQueryResolver(ILogger<UserQueryResolver> logger, IConfiguration configuration)
         {
             _logger = logger;
+            _configuration = configuration;
         }
 
         public async Task<IEnumerable<UserDetail>> GetUserDetails(IUserService _userService)

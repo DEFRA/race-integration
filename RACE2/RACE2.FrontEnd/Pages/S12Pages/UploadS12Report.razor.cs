@@ -9,6 +9,7 @@ using RACE2.Dto;
 using RACE2.FrontEnd.FluxorImplementation.Actions;
 using RACE2.FrontEnd.FluxorImplementation.Stores;
 using RACE2.FrontEnd.RACE2GraphQLSchema;
+using StrawberryShake;
 //using RACE2.FrontEnd.RACE2GraphQLSchema;
 
 namespace RACE2.FrontEnd.Pages.S12Pages
@@ -41,17 +42,26 @@ namespace RACE2.FrontEnd.Pages.S12Pages
             CurrentReservoir = CurrentReservoirState.Value.CurrentReservoir;
             base.OnInitialized();
         }
-
+        private void OnInputFileChange(InputFileChangeEventArgs e)
+        {
+            selectedFile = e.File.Name;
+            seletedFileContent = e.File.OpenReadStream();
+            if (selectedFile == null) return;
+            this.StateHasChanged();
+        }
         private async void UploadCompletedReport()
         {
             var s = seletedFileContent;
             var blobName = "s12ReportComplete" + "_" + CurrentUser.UserName + "_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + ".docx";
-            //var filename = "c:\\temp\\s12ReportComplete_kriss.sahoo@capgemini.com_1172023.docx";
-            var filename = selectedFolder + selectedFile;
+            var filename = selectedFile;
 
             if (!String.IsNullOrWhiteSpace(filename))
             {
-                var result1 = await client.UploadToBlobFromLocalFile.ExecuteAsync(blobName, filename);
+                //var result1 = await client.UploadToBlobFromLocalFile.ExecuteAsync(blobName, filename);
+                var fileToUpload = new UploadFileInput();
+                fileToUpload.File = new Upload(seletedFileContent, filename);
+                fileToUpload.BlobName = blobName;
+                var result1 = await client.UploadFile.ExecuteAsync(fileToUpload);
             }
         }
 
@@ -60,14 +70,6 @@ namespace RACE2.FrontEnd.Pages.S12Pages
             bool forceLoad = false;
             string pagelink = "/reservoir-details";
             NavigationManager.NavigateTo(pagelink, forceLoad);
-        }
-
-        private void OnInputFileChange(InputFileChangeEventArgs e)
-        {
-            selectedFile = e.File.Name;
-            seletedFileContent = e.File.OpenReadStream();
-            if (selectedFile == null) return;
-            this.StateHasChanged();
-        }
+        }        
     }
 }

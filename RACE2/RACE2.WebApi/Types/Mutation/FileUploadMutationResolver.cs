@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 using Azure.Storage.Blobs;
 
-namespace RACE2.BackEnd.Types
+namespace RACE2.WebApi.Types
 { 
    [MutationType]
     public class FileUploadMutationResolver

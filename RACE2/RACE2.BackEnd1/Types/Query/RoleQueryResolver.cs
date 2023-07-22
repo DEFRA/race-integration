@@ -6,11 +6,12 @@ namespace RACE2.BackEnd.Types
     [QueryType]
     public class RoleQueryResolver
     {
-        private readonly ILogger<UserQueryResolver> _logger;
-
-        public RoleQueryResolver(ILogger<UserQueryResolver> logger)
+        private readonly ILogger<RoleQueryResolver> _logger;
+        private readonly IConfiguration _configuration;
+        public RoleQueryResolver(ILogger<RoleQueryResolver> logger, IConfiguration configuration)
         {
             _logger = logger;
+            _configuration = configuration;
         }
 
         public async Task<IEnumerable<FeatureFunction>> GetFeaturePermissionForRole(IUserService _userService, int roleid)

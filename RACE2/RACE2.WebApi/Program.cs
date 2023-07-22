@@ -86,6 +86,8 @@ builder.Services.AddGraphQLServer()
     .RegisterService<IReservoirService>()
     .RegisterService<IRACEIntegrationService>()
     .AddTypes()
+    .AddType<UploadType>()
+    .AddMutationConventions()
     .AddAuthorization();
 
 var app = builder.Build();

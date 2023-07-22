@@ -48,4 +48,9 @@
     <None Remove="RACE2GraphQLSchema\Querries\Reservoir\GetReservoirById.graphql" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="RACE2GraphQLSchema\Mutations\FileUpload\" />
+    <Folder Include="RACE2GraphQLSchema\Mutations\User\" />
+  </ItemGroup>
+
 </Project>
