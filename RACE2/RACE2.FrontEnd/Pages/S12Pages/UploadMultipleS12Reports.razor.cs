@@ -47,7 +47,7 @@ namespace RACE2.FrontEnd.Pages.S12Pages
         {
             uploadedFiles= e.GetMultipleFiles().ToArray();
             NoOfFilesChosen = e.GetMultipleFiles().Count();
-            if (NoOfFilesChosen == 0) return;
+            //if (NoOfFilesChosen == 0) return;
             this.StateHasChanged();
         }
         private async void UploadCompletedReport()
