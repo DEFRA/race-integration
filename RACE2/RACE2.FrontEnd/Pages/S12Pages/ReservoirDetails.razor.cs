@@ -97,7 +97,8 @@ namespace RACE2.FrontEnd.Pages.S12Pages
 
 
             bool forceLoad = false;
-            string pagelink = "/upload-s12report";
+            //string pagelink = "/upload-s12report";
+            string pagelink = "/upload-multiple-s12reports";
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }
 

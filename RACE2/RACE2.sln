@@ -103,7 +103,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.FrontEndWebServer", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.WebApi", "RACE2.WebApi\RACE2.WebApi.csproj", "{9C0A89C3-F142-40DA-ADB8-56F012014726}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RACE2.BackEnd", "RACE2.BackEnd\RACE2.BackEnd.csproj", "{9065AB65-9226-4F54-8729-D6CF5C542FC0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.BackEnd", "RACE2.BackEnd\RACE2.BackEnd.csproj", "{9065AB65-9226-4F54-8729-D6CF5C542FC0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
