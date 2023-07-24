@@ -55,7 +55,7 @@ namespace RACE2.FrontEnd.Pages.S12Pages
             for (int i = 0; i < NoOfFilesChosen; i++)
             {
 
-                var blobName = "s12ReportComplete" + "_" + CurrentUser.UserName + "_" + DateTime.Now.Day.ToString() + DateTime.Now.Month.ToString() + DateTime.Now.Year.ToString() +"_"+(i + 1).ToString() + ".docx";
+                var blobName = "s12ReportComplete" + "_" + CurrentUser.UserName + "_" + DateTime.Now.Day.ToString("D2") + DateTime.Now.Month.ToString("D2") + DateTime.Now.Year.ToString("D4") +"_"+(i + 1).ToString() + ".docx";
 
                 var filename = uploadedFiles[i].Name;
 
