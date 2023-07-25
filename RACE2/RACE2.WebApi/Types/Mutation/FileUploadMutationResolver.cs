@@ -19,7 +19,7 @@ namespace RACE2.WebApi.Types
 
         public async Task<ResultData> UploadFileAsync(string blobName, IFile file, CancellationToken cancellationToken)
         {
-            //var fileName = file.Name;
+            var fileName = file.Name;
             //var fileSize = file.Length;
             //string fileToWriteTo = @"d:\temp\test.png";
             //// We can now work with standard stream functionality of .NET
