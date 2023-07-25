@@ -30,13 +30,13 @@
         "value": 80
       },
       "frontEndContainerAppName": {
-        "value":"race2frontendapp"
+        "value":"race2frontend"
       },
       "securityProviderContainerAppName": {
-        "value":"race2securityproviderapp"
+        "value":"race2securityprovider"
       },
       "webApiContainerAppName": {
-        "value":"race2webapiapp"
+        "value":"race2webapi"
       },
       "frontendcontainerImage": {
         "value":"race2acr.azurecr.io/race2frontend:latest"
