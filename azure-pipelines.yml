@@ -25,7 +25,7 @@ variables:
   - name: containerRegistry
     value: 'AZR-RAC-POC1-DockerRegistry'
   - name: tag
-    value: '$(Build.BuildId)'
+    value: 'latest'
 
 stages:
 - stage: Build
