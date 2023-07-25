@@ -1,0 +1,7 @@
+﻿mutation UploadFile($input:UploadFileInput!){
+  uploadFile(input:$input) {         
+      resultData {
+        result
+      }
+  }
+}

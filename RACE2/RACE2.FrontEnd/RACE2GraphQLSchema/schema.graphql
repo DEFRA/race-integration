@@ -26,16 +26,45 @@ type Query {
 }
 
 type Mutation {
-  createUser(newuser: UserDetailInput!): UserDetail!
-  validateUser(loginuser: UserDetailInput!): UserDetail!
-  updatePasswordHashForUser(id: Int! passwordhash: String!): UserDetail!
-  updateReservoir(updatedReservoir: ReservoirUpdateDetailsDTOInput!): Reservoir!
+  createUser(input: CreateUserInput!): CreateUserPayload!
+  validateUser(input: ValidateUserInput!): ValidateUserPayload!
+  updatePasswordHashForUser(input: UpdatePasswordHashForUserInput!): UpdatePasswordHashForUserPayload!
+  updateReservoir(input: UpdateReservoirInput!): UpdateReservoirPayload!
+  uploadFile(input: UploadFileInput!): UploadFilePayload!
 }
+
+"The `Upload` scalar type represents a file upload."
+scalar Upload
 
 enum ApplyPolicy {
   BEFORE_RESOLVER
   AFTER_RESOLVER
   VALIDATION
+}
+
+type Reservoir {
+  id: Int!
+  raceReservoirId: String
+  publicName: String
+  registeredName: String
+  referenceNumber: String
+  publicCategory: String
+  registeredCategory: String
+  gridReference: String
+  capacity: Int!
+  surfaceArea: Int!
+  topWaterLevel: Decimal!
+  hasMultipleDams: Boolean!
+  keyFacts: String
+  constructionStartDate: DateTime!
+  verifiedDetailsDate: DateTime!
+  lastInspectionDate: DateTime!
+  nextInspectionDate: DateTime!
+  address: Address
+  nearestTown: String
+  userReservoirs: [UserReservoir!]!
+  supportingDocuments: [SupportingDocument!]!
+  operatorType: String
 }
 
 type FeatureFunction {
@@ -142,31 +171,6 @@ type UserDetail {
   lockoutEnd: DateTime
   lockoutEnabled: Boolean!
   accessFailedCount: Int!
-}
-
-type Reservoir {
-  id: Int!
-  raceReservoirId: String
-  publicName: String
-  registeredName: String
-  referenceNumber: String
-  publicCategory: String
-  registeredCategory: String
-  gridReference: String
-  capacity: Int!
-  surfaceArea: Int!
-  topWaterLevel: Decimal!
-  hasMultipleDams: Boolean!
-  keyFacts: String
-  constructionStartDate: DateTime!
-  verifiedDetailsDate: DateTime!
-  lastInspectionDate: DateTime!
-  nextInspectionDate: DateTime!
-  address: Address
-  nearestTown: String
-  userReservoirs: [UserReservoir!]!
-  supportingDocuments: [SupportingDocument!]!
-  operatorType: String
 }
 
 type ReservoirDetailsDTO {
@@ -303,10 +307,17 @@ input UserDetailInput {
 input ReservoirUpdateDetailsDTOInput {
   id: Int!
   userId: Int!
-  publicName: String
-  gridReference: String
-  nearestTown: String
+  publicName: String!
+  gridReference: String!
+  nearestTown: String!
 }
+
+type ResultData {
+  result: String!
+}
+
+"The `DateTime` scalar represents an ISO-8601 compliant date time type."
+scalar DateTime
 
 input OrganisationInput {
   id: Int!
@@ -331,9 +342,6 @@ input UserReservoirInput {
   appointmentEndDate: DateTime!
 }
 
-"The `DateTime` scalar represents an ISO-8601 compliant date time type."
-scalar DateTime
-
 type ScreenDefinition {
   id: Int!
   screenName: String!
@@ -342,27 +350,6 @@ type ScreenDefinition {
   modified: DateTime!
   modifiedBy: UserDetail!
 }
-
-type SupportingDocument {
-  id: Int!
-  fileName: String!
-  fileLocation: String!
-  fileType: String!
-  documentName: String!
-  documentDescription: String!
-  documentType: String!
-  documentDate: DateTime!
-  documentStatus: String!
-  documentAuthorName: String!
-  protectiveMarking: String!
-  dateSent: DateTime!
-  dateReceived: DateTime!
-  suppliedBy: UserDetail!
-  reservoir: [Reservoir!]!
-}
-
-"The built-in `Decimal` scalar type."
-scalar Decimal
 
 type UserAddress {
   id: Int!
@@ -375,16 +362,6 @@ type Organisation {
   id: Int!
   orgName: String
   businessType: String!
-}
-
-type UserReservoir {
-  id: Int!
-  raceAppointmentId: String
-  userDetail: UserDetail!
-  reservoir: Reservoir!
-  appointmentType: String
-  appointmentStartDate: DateTime!
-  appointmentEndDate: DateTime!
 }
 
 type Role {
@@ -469,6 +446,37 @@ type UserPermission {
   end_date: DateTime
 }
 
+type SupportingDocument {
+  id: Int!
+  fileName: String!
+  fileLocation: String!
+  fileType: String!
+  documentName: String!
+  documentDescription: String!
+  documentType: String!
+  documentDate: DateTime!
+  documentStatus: String!
+  documentAuthorName: String!
+  protectiveMarking: String!
+  dateSent: DateTime!
+  dateReceived: DateTime!
+  suppliedBy: UserDetail!
+  reservoir: [Reservoir!]!
+}
+
+type UserReservoir {
+  id: Int!
+  raceAppointmentId: String
+  userDetail: UserDetail!
+  reservoir: Reservoir!
+  appointmentType: String
+  appointmentStartDate: DateTime!
+  appointmentEndDate: DateTime!
+}
+
+"The built-in `Decimal` scalar type."
+scalar Decimal
+
 input ReservoirInput {
   id: Int!
   raceReservoirId: String
@@ -520,4 +528,46 @@ input SupportingDocumentInput {
   dateReceived: DateTime!
   suppliedBy: UserDetailInput!
   reservoir: [ReservoirInput!]!
+}
+
+input CreateUserInput {
+  newuser: UserDetailInput!
+}
+
+type CreateUserPayload {
+  userDetail: UserDetail
+}
+
+input ValidateUserInput {
+  loginuser: UserDetailInput!
+}
+
+type ValidateUserPayload {
+  userDetail: UserDetail
+}
+
+input UpdatePasswordHashForUserInput {
+  id: Int!
+  passwordhash: String!
+}
+
+type UpdatePasswordHashForUserPayload {
+  userDetail: UserDetail
+}
+
+input UpdateReservoirInput {
+  updatedReservoir: ReservoirUpdateDetailsDTOInput!
+}
+
+type UpdateReservoirPayload {
+  reservoir: Reservoir
+}
+
+input UploadFileInput {
+  blobName: String!
+  file: Upload!
+}
+
+type UploadFilePayload {
+  resultData: ResultData
 }

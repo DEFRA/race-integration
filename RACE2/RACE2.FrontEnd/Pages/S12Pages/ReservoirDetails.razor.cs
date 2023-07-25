@@ -45,12 +45,12 @@ namespace RACE2.FrontEnd.Pages.S12Pages
 
         public async Task GoToNextPage()
         {
-            ReservoirUpdateDetailsDTOInput updatedReservoir = new ReservoirUpdateDetailsDTOInput();
-            updatedReservoir.Id = CurrentReservoir.Id;
-            updatedReservoir.UserId = CurrentUser.Id;
-            updatedReservoir.PublicName = CurrentReservoir.PublicName;
-            updatedReservoir.GridReference= CurrentReservoir.GridReference;
-            updatedReservoir.NearestTown= CurrentReservoir.NearestTown;
+            UpdateReservoirInput updatedReservoir = new UpdateReservoirInput();          
+            updatedReservoir.UpdatedReservoir.Id = CurrentReservoir.Id;
+            updatedReservoir.UpdatedReservoir.UserId = CurrentUser.Id;
+            updatedReservoir.UpdatedReservoir.PublicName = CurrentReservoir.PublicName;
+            updatedReservoir.UpdatedReservoir.GridReference = CurrentReservoir.GridReference;
+            updatedReservoir.UpdatedReservoir.NearestTown = CurrentReservoir.NearestTown;
             var savedReservoir = await client.UpdateReservoir.ExecuteAsync(updatedReservoir);
             bool forceLoad = false;
             NavigationManager.NavigateTo("/confirm-operator", forceLoad);
@@ -97,7 +97,8 @@ namespace RACE2.FrontEnd.Pages.S12Pages
 
 
             bool forceLoad = false;
-            string pagelink = "/upload-s12report";
+            //string pagelink = "/upload-s12report";
+            string pagelink = "/upload-multiple-s12reports";
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }
 

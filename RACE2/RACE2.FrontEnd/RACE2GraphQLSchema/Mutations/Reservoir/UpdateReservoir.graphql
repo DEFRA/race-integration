@@ -1,5 +1,7 @@
-﻿mutation UpdateReservoir($Input:ReservoirUpdateDetailsDTOInput!){
-  updateReservoir(updatedReservoir: $Input){
-    publicName
+﻿mutation UpdateReservoir($input: UpdateReservoirInput!){
+  updateReservoir(input: $input) {
+        reservoir {
+          publicName
+        }
   }
-}
+}    
