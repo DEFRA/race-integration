@@ -47,4 +47,10 @@ stages:
         useGlobalConfig: false    
         inlineScript: |
           az --version
+
+          az login --service-principal -u $(adoSpClientId) -p $(adoSpClientSecret) --tenant $(tenantId) 
+          az acr build -r $(containerRegistryFullName) -t $(containerRegistryURL)/$(appNameSP):$(tag) -f $(Build.SourcesDirectory)/RACE2/$(dockerFilenameSP) $(Build.SourcesDirectory)/RACE2
+          az acr build -r $(containerRegistryFullName) -t $(containerRegistryURL)/$(appNameAPI):$(tag) -f $(Build.SourcesDirectory)/RACE2/$(dockerFilenameAPI) $(Build.SourcesDirectory)/RACE2
+          az acr build -r $(containerRegistryFullName) -t $(containerRegistryURL)/$(appNameFE):$(tag) -f $(Build.SourcesDirectory)/RACE2/$(dockerFilenameFE) $(Build.SourcesDirectory)/RACE2
+
           az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) -p @$(parameterfile)
