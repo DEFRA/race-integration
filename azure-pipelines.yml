@@ -20,7 +20,7 @@ variables:
     value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_WebApi'
   - name: repository_frontend
     value: 'race2frontend'
-  - name: dockerfile_webapi
+  - name: dockerfile_frontend
     value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_FrontEnd'
   - name: containerRegistry
     value: 'AZR-RAC-POC1-DockerRegistry'
