@@ -9,7 +9,12 @@ resources:
 - repo: self
 
 variables:
-  tag: '$(Build.BuildId)'
+  - name: repository
+    value: 'Race2ACR'
+  - name: dockerfile
+    value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_SecurityProvider'
+  - name: containerRegistry
+    value: 'AZR-RAC-POC1-DockerRegistry'
 
 stages:
 - stage: Build
@@ -21,9 +26,10 @@ stages:
       vmImage: ubuntu-latest
     steps:
     - task: Docker@2
-      displayName: Build an image
+      displayName: Build and push an image
       inputs:
-        command: build
-        dockerfile: '$(Build.SourcesDirectory)/RACE2/Dockerfile_SecurityProvider'
-        tags: |
-          $(tag)
+        command: buildAndPush
+        repository: ${{ variables.repository }}
+        dockerfile: ${{ variables.dockerfile }}
+        containerRegistry: ${{ variables.containerRegistry }}
+        tags: $(Build.BuildId)
