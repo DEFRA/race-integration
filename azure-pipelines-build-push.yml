@@ -22,7 +22,7 @@ variables:
   appNameAPI: 'race2webapi'
   dockerFilenameAPI: 'Dockerfile_WebApi'
   adoSpClientId: '39ef2527-ca88-4bbc-b474-2d9aecf67f46'
-  adoSpClientSecret: 'P8J8Q~bvpvv9brjyqqCxriIlloll_WvyAiQQfc.-'
+  adoSpClientSecret: ''
   azureServiceConnection: 'AZR-RAC-POC1'
   containerRegistryURL: 'race2acr.azurecr.io'
   resourceGroupName: 'RACE2ProjectRG'
