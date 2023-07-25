@@ -10,11 +10,13 @@ resources:
 
 variables:
   - name: repository
-    value: 'Race2ACR'
+    value: 'race2securityprovider'
   - name: dockerfile
     value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_SecurityProvider'
   - name: containerRegistry
     value: 'AZR-RAC-POC1-DockerRegistry'
+  - name: tag
+    value: '$(Build.BuildId)'
 
 stages:
 - stage: Build
@@ -32,4 +34,4 @@ stages:
         repository: ${{ variables.repository }}
         dockerfile: ${{ variables.dockerfile }}
         containerRegistry: ${{ variables.containerRegistry }}
-        tags: $(Build.BuildId)
+        tags: ${{ variables.tag }}
