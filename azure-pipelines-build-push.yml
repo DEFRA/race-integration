@@ -9,9 +9,7 @@ resources:
 - repo: self
 
 variables:
-
   tag: 'latest'
-
   subscriptionName: 'AZR-RAC-POC1'  
   tenantId: '770a2450-0227-4c62-90c7-4e38537f1102'
   containerRegistryFullName: 'Race2ACR'
