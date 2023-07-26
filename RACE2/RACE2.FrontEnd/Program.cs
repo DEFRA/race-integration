@@ -19,7 +19,7 @@ var httpClient = new HttpClient()
 };
 builder.Services.AddScoped(sp => httpClient);
 
-using var configSettings = await httpClient.GetAsync("appSettings.Production.json");
+using var configSettings = await httpClient.GetAsync("appSettings.json");
 
 using var stream = await configSettings.Content.ReadAsStreamAsync();
 
