@@ -13,12 +13,13 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-var httpClientFrontEndApp = new HttpClient()
+var httpClient = new HttpClient()
 {
     BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)
 };
+builder.Services.AddScoped(sp => httpClient);
 
-using var configSettings = await httpClientFrontEndApp.GetAsync("appSettings.json");
+using var configSettings = await httpClient.GetAsync("appSettings.json");
 
 using var stream = await configSettings.Content.ReadAsStreamAsync();
 
