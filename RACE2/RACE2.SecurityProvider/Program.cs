@@ -115,7 +115,7 @@ app.UseAzureAppConfiguration();
 
 app.UseHttpsRedirection();
 
-//HostingExtensions.InitializeDatabase(app, blazorClientURL, webapiURL);//populate initial data
+HostingExtensions.InitializeDatabase(app, blazorClientURL);//populate initial data
 
 app.UseCookiePolicy(new CookiePolicyOptions
 {
@@ -126,7 +126,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseIdentityServer();
-app.UseAuthentication();
+//app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();
