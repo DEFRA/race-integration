@@ -59,17 +59,17 @@ namespace RACE2.SecurityProvider
             }
         }
 
-        public static List<Client> Clients(string blazorClientURL,string webapiURL)
+        public static List<Client> Clients(string blazorClientURL)
         {
             List<string> allowedCorsOrigins = new List<string>();
             allowedCorsOrigins.Add(blazorClientURL);
-            allowedCorsOrigins.Add(webapiURL);
+            //allowedCorsOrigins.Add(webapiURL);
             List<string> redirectUris = new List<string>();
-            redirectUris.Add(blazorClientURL+ "/authentication/login-callback");
+            //redirectUris.Add(blazorClientURL+ "/authentication/login-callback");
             redirectUris.Add(blazorClientURL + "/signin-oidc");
-            redirectUris.Add(webapiURL);
+            //redirectUris.Add(webapiURL);
             List<string> postLogoutRedirectUris = new List<string>();
-            postLogoutRedirectUris.Add(blazorClientURL + "/authentication/logout-callback");
+            //postLogoutRedirectUris.Add(blazorClientURL + "/authentication/logout-callback");
             postLogoutRedirectUris.Add(blazorClientURL + "/signout-callback-oidc");
             List<Client> clients = new List<Client>();
             Client blazorserverClient = new Client
@@ -77,7 +77,10 @@ namespace RACE2.SecurityProvider
                 ClientId = "blazorServer",
                 ClientSecrets = { new Secret("blazorserver-secret".Sha512()) },
                 ClientName = "Blazor Server",
-                AllowedGrantTypes = GrantTypes.Code,
+                AllowedGrantTypes = GrantTypes.Hybrid,
+                RequirePkce = false,
+                RequireConsent = false,
+                AllowPlainTextPkce = false,
                 RedirectUris = { blazorClientURL + "/signin-oidc" },
                 FrontChannelLogoutUri =  blazorClientURL + "/signin-oidc",
                 PostLogoutRedirectUris = { blazorClientURL + "/signout-callback-oidc" },
@@ -89,51 +92,49 @@ namespace RACE2.SecurityProvider
                     "roles",
                     "race2WebApi"
                 },
-                RequirePkce = true,
-                RequireConsent = false,
-                AllowPlainTextPkce = false
+                AllowedCorsOrigins = allowedCorsOrigins
             };
 
-            Client blazorwasmClient = new Client
-            {
-                ClientId = "blazorWASM",
-                AllowedGrantTypes = GrantTypes.Code,
-                RequirePkce = true,
-                RequireClientSecret = false,
-                AllowedCorsOrigins = allowedCorsOrigins,
-                AllowedScopes =
-                {
-                    IdentityServerConstants.StandardScopes.OpenId,
-                    IdentityServerConstants.StandardScopes.Profile,
-                    "race2WebApi",
-                    "roles"
-                },
-                RedirectUris = redirectUris,
-                PostLogoutRedirectUris = postLogoutRedirectUris
-            };
+            //Client blazorwasmClient = new Client
+            //{
+            //    ClientId = "blazorWASM",
+            //    AllowedGrantTypes = GrantTypes.Code,
+            //    RequirePkce = true,
+            //    RequireClientSecret = false,
+            //    AllowedCorsOrigins = allowedCorsOrigins,
+            //    AllowedScopes =
+            //    {
+            //        IdentityServerConstants.StandardScopes.OpenId,
+            //        IdentityServerConstants.StandardScopes.Profile,
+            //        "race2WebApi",
+            //        "roles"
+            //    },
+            //    RedirectUris = redirectUris,
+            //    PostLogoutRedirectUris = postLogoutRedirectUris
+            //};
 
-            Client webapiClient = 
-                new Client
-                {
-                    ClientId = "webapi",
-                    ClientSecrets = new List<Secret> { new("secret".Sha512()) },
-                    ClientName = "Banana Cake Pop",
-                    AllowedGrantTypes = GrantTypes.Code,
-                    AllowedScopes = new List<string>
-                    {
-                        "openid",
-                        "profile",
-                        "email",
-                        "role",
-                        "race2WebApi"
-                    },
-                    AllowedCorsOrigins = allowedCorsOrigins,
-                    RedirectUris = redirectUris
-                };
+            //Client webapiClient = 
+            //    new Client
+            //    {
+            //        ClientId = "webapi",
+            //        ClientSecrets = new List<Secret> { new("secret".Sha512()) },
+            //        ClientName = "Banana Cake Pop",
+            //        AllowedGrantTypes = GrantTypes.Code,
+            //        AllowedScopes = new List<string>
+            //        {
+            //            "openid",
+            //            "profile",
+            //            "email",
+            //            "role",
+            //            "race2WebApi"
+            //        },
+            //        AllowedCorsOrigins = allowedCorsOrigins,
+            //        RedirectUris = redirectUris
+            //    };
 
             clients.Add(blazorserverClient);
-            clients.Add(blazorwasmClient);
-            clients.Add(webapiClient);
+            //clients.Add(blazorwasmClient);
+            //clients.Add(webapiClient);
             return clients;
         }        
     }
