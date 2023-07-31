@@ -15,19 +15,15 @@
 
                 <h1 class="govuk-heading-xl">What is the new reservoir name?</h1>
 
-                <EditForm Model="@UserDetail" OnSubmit="UploadCompletedReport">
-
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-label--m">
                             Choose file(s) to upload
                         </label>
                         <br />
-                        <InputFile OnChange="OnInputFileChange" multiple accept=".docx,.dotx,.pdf,.png,.jpg,.jpeg" />
+                        <InputFile OnChange="@OnInputFileChange" multiple />
                     </div>
 
                     <button class="govuk-button govuk-!-margin-top-6 govuk-!-margin-bottom-6" data-module="govuk-button" type="submit">Upload File</button>
-
-                </EditForm>
 
             </div>
         </div>
