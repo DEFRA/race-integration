@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Identity;
 using RACE2.DataModel;
 using RACE2.Dto;
@@ -17,8 +16,6 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
 {
     public partial class UploadMultipleS12Reports
     {
-        [Inject]
-        public SignOutSessionStateManager SignOutManager { get; set; } = default!;
         [Inject]
         public RACE2GraphQLClient client { get; set; } = default!;
         [Inject]

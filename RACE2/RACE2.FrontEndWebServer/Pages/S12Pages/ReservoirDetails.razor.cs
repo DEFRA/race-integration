@@ -7,7 +7,6 @@ using RACE2.FrontEndWebServer.FluxorImplementation.Stores;
 using RACE2.FrontEndWebServer.FluxorImplementation.Actions;
 using RACE2.FrontEndWebServer.RACE2GraphQLSchema;
 using Microsoft.AspNetCore.Components.Web;
-using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using RACE2.Dto;
 using Microsoft.AspNetCore.Components.Forms;
 
@@ -15,8 +14,6 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
 {
     public partial class ReservoirDetails
     {
-        [Inject]
-        public SignOutSessionStateManager SignOutManager { get; set; } = default!;
         [Inject]
         public RACE2GraphQLClient client { get; set; } = default!;
         [Inject]
@@ -58,7 +55,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
 
         public async void GoToSaveComebackLaterPage()
         {
-
+            NavigationManager.NavigateTo("/authentication/logout");
         }
 
         private void goback()
@@ -66,11 +63,6 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             bool forceLoad = false;
             string pagelink = "/choose-a-reservoir";
             NavigationManager.NavigateTo(pagelink, forceLoad);
-        }
-        private async Task BeginSignOut(MouseEventArgs args)
-        {
-            await SignOutManager.SetSignOutState();
-            NavigationManager.NavigateTo("authentication/logout");
         }
         private async void DownloadReportTemplate()
         {
