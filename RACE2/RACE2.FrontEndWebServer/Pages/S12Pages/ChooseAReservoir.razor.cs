@@ -35,15 +35,26 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         private string[] filteredReservoirNames;
         private List<Reservoir> ReservoirsLinkedToUser { get; set; } =new List<Reservoir>();
         private IEnumerable<Claim> UserClaims { get; set; }
-        private string UserName { get; set; } = "Unknown";
         private int UserId { get; set; } = 0;
-
+        private string UserName { get; set; } = "Unknown";
+        private UserDetail UserDetail { get; set; }
         private string[] reservoirNames = Array.Empty<String>();
 
         protected override async void OnInitialized()
-        {            
-            var currentUser = CurrentUserDetailState.Value.CurrentUserDetail;
-            var results = await client.GetReservoirsByUserId.ExecuteAsync(currentUser.Id);
+        {
+            AuthenticationState authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
+            //var userDetails = await client.GetUserByEmailID.ExecuteAsync(UserName);
+            //UserId = userDetails!.Data!.UserByEmailID.Id;
+            var userDetails = await client.GetUserByEmailID.ExecuteAsync(UserName);
+            UserId = userDetails!.Data!.UserByEmailID.Id;
+            UserDetail = new UserDetail()
+            {
+                UserName = UserName,
+                Id = UserId,
+                Email = userDetails!.Data!.UserByEmailID.Email
+            };
+            var results = await client.GetReservoirsByUserId.ExecuteAsync(UserId);
             List<string> reservoirNamesList = new List<string>();
             var reservoirs = results!.Data!.ReservoirsByUserId;
 
@@ -67,40 +78,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 };
                 ReservoirsLinkedToUser.Add(r);
             }
-            reservoirNames = reservoirNamesList.ToArray<string>();
-            AuthenticationState authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-            //if (authState.User.Identity.Name is not null)
-            //{
-            //    UserName = authState.User.Identity.Name;
-            //    UserClaims = authState.User.Claims;
-            //}
-            //var userDetails = await client.GetUserByEmailID.ExecuteAsync(UserName);
-            //UserId = userDetails!.Data!.UserByEmailID.Id;
-            //var results = await client.GetReservoirsByUserId.ExecuteAsync(UserId);
-            //List<string> reservoirNamesList = new List<string>();
-            //var reservoirs = results!.Data!.ReservoirsByUserId;
-
-            //foreach (var rn in reservoirs)
-            //{
-            //    reservoirNamesList.Add(rn.Public_name);
-            //    var r = new Reservoir()
-            //    {
-            //        race_reservoir_id = rn.Race_reservoir_id,
-            //        public_name = rn.Public_name,
-            //        NearestTown = rn.NearestTown,
-            //        grid_reference = rn.Grid_reference
-            //    };
-            //    r.address = new Address()
-            //    {
-            //        AddressLine1 = rn.Address.AddressLine1,
-            //        AddressLine2 = rn.Address.AddressLine2,
-            //        Town = rn.Address.Town,
-            //        County = rn.Address.County,
-            //        Postcode = rn.Address.Postcode
-            //    };
-            //    ReservoirsLinkedToUser.Add(r);
-            //}
-            //reservoirNames = reservoirNamesList.ToArray<string>();
+            reservoirNames = reservoirNamesList.ToArray<string>();           
 
             base.OnInitialized();
         }
@@ -124,7 +102,6 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             if (filter?.Length > 0)
             {
                 filteredReservoirNames = reservoirNames.Where(r => r.Contains(filter)).ToArray();
-                //customers = await http.GetFromJsonAsync<List<Customer>>("https://localhost:5002/api/companyfilter/" + filter.ToString());
             }
             else
             {
@@ -153,7 +130,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
 
         public async void GoToSaveComebackLaterPage()
         {
-
+            NavigationManager.NavigateTo("/authentication/logout");
         }
 
         private void goback()

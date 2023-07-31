@@ -8,6 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="RACE2GraphQLSchema\Mutations\User\**" />
+    <Content Remove="RACE2GraphQLSchema\Mutations\User\**" />
+    <EmbeddedResource Remove="RACE2GraphQLSchema\Mutations\User\**" />
+    <GraphQL Remove="RACE2GraphQLSchema\Mutations\User\**" />
+    <None Remove="RACE2GraphQLSchema\Mutations\User\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <GraphQL Remove="race2graphqlschema\querries\reservoir\DownloadBlobToLocalFile.graphql" />
     <GraphQL Remove="race2graphqlschema\querries\reservoir\UploadToBlobFromLocalFile.graphql" />
     <GraphQL Remove="race2graphqlschema\querries\reservoir\WriteContentToBlob.graphql" />
@@ -50,7 +58,6 @@
 
   <ItemGroup>
     <Folder Include="RACE2GraphQLSchema\Mutations\FileUpload\" />
-    <Folder Include="RACE2GraphQLSchema\Mutations\User\" />
   </ItemGroup>
 
 </Project>
