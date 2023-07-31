@@ -44,24 +44,24 @@
                                             </tr>
                                         </thead>
                                         <tbody class="govuk-table__body">
-                                            @foreach (var reservoir in ReservoirsLinkedToUser)
-                                            {
-                                                <tr class="govuk-table__row">
-                                                    <td class="govuk-table__cell">
-                                                        <a href="#" class="govuk-link govuk-link--no-visited-state">
-                                                            @reservoir.PublicName
-                                                        </a>                                                        
-                                                    </td>
-                                                    <td class="govuk-table__cell">
-                                                        @reservoir.VerifiedDetailsDate.ToShortDateString()
-                                                    </td>
-                                                    <td class="govuk-table__cell">
-                                                        <strong class="govuk-tag govuk-tag--turquoise">
-                                                            Complete
-                                                        </strong>
-                                                    </td>
-                                                </tr>
-                                            }
+                                        @foreach (var reservoirstatus in ReservoirStatusLinkedToUserComplete)
+                                        {
+                                            <tr class="govuk-table__row">
+                                                <td class="govuk-table__cell">
+                                                    <a class="govuk-link govuk-link--no-visited-state" @onclick=@(args => gotoSubmissionPage(reservoirstatus))>
+                                                        @reservoirstatus.PublicName
+                                                    </a>
+                                                </td>
+                                                <td class="govuk-table__cell">
+                                                    @reservoirstatus.SubmittedOn.ToShortDateString()
+                                                </td>
+                                                <td class="govuk-table__cell">
+                                                    <strong class="govuk-tag govuk-tag--turquoise">
+                                                        @reservoirstatus.Status
+                                                    </strong>
+                                                </td>
+                                            </tr>
+                                        }
                                         </tbody>
                                     </table>
                                 </div>
@@ -77,24 +77,24 @@
                                             </tr>
                                         </thead>
                                         <tbody class="govuk-table__body">
-                                            @foreach (var reservoir in ReservoirsLinkedToUser)
-                                            {
-                                                <tr class="govuk-table__row">
-                                                    <td class="govuk-table__cell">
-                                                        <a href="#" class="govuk-link govuk-link--no-visited-state">
-                                                            @reservoir.PublicName
-                                                        </a>
-                                                    </td>
-                                                    <td class="govuk-table__cell">
-                                                        @reservoir.VerifiedDetailsDate.ToShortDateString()
-                                                    </td>
-                                                    <td class="govuk-table__cell">
-                                                        <strong class="govuk-tag govuk-tag--turquoise">
-                                                            Draft
-                                                        </strong>
-                                                    </td>
-                                                </tr>
-                                            }
+                                        @foreach (var reservoirstatus in ReservoirStatusLinkedToUserDraft)
+                                        {
+                                            <tr class="govuk-table__row">
+                                                <td class="govuk-table__cell">
+                                                    <a class="govuk-link govuk-link--no-visited-state" @onclick=@(args => gotoPage(reservoirstatus))>
+                                                        @reservoirstatus.PublicName
+                                                    </a>
+                                                </td>
+                                                <td class="govuk-table__cell">
+                                                    @reservoirstatus.SubmittedOn.ToShortDateString()
+                                                </td>
+                                                <td class="govuk-table__cell">
+                                                    <strong class="govuk-tag govuk-tag--turquoise">
+                                                        @reservoirstatus.Status
+                                                    </strong>
+                                                </td>
+                                            </tr>
+                                        }
                                         </tbody>
                                     </table>
                                 </div>
