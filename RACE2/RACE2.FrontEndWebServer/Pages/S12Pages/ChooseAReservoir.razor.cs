@@ -130,7 +130,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
 
         public async void GoToSaveComebackLaterPage()
         {
-            NavigationManager.NavigateTo("/authentication/logout");
+            NavigationManager.NavigateTo("logout");
         }
 
         private void goback()

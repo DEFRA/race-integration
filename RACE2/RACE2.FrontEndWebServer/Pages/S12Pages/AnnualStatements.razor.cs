@@ -145,6 +145,10 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             string pagelink = "/s12-statement-confirmation";
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }
+        private void Dispose()
+        {
+            this.Dispose(true);
+        }
 
         public string text1 = "";
         public string text2 = "";
