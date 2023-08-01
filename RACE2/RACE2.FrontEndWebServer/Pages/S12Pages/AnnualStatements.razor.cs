@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using RACE2.DataModel;
+using RACE2.Dto;
 using RACE2.FrontEndWebServer.FluxorImplementation.Actions;
 using RACE2.FrontEndWebServer.FluxorImplementation.Stores;
 using RACE2.FrontEndWebServer.RACE2GraphQLSchema;
@@ -30,7 +31,9 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         private string UserName { get; set; } = "Unknown";
         private UserDetail UserDetail { get; set; } 
         private List<Reservoir> ReservoirsLinkedToUser { get; set; } = new List<Reservoir>();
-
+        private List<SubmissionStatusDTO> ReservoirStatusLinkedToUser { get; set; } = new List<SubmissionStatusDTO>();
+        private List<SubmissionStatusDTO> ReservoirStatusLinkedToUserComplete { get; set; } = new List<SubmissionStatusDTO>();
+        private List<SubmissionStatusDTO> ReservoirStatusLinkedToUserDraft { get; set; } = new List<SubmissionStatusDTO>();
         private IEnumerable<Claim> Claims { get; set; }
 
         protected override async void OnInitialized()
@@ -39,26 +42,43 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
             //var userDetails = await client.GetUserByEmailID.ExecuteAsync(UserName);
             //UserId = userDetails!.Data!.UserByEmailID.Id;
-            var userDetails = await client.GetUserWithRoles.ExecuteAsync(UserName);
-            UserId = userDetails!.Data!.UserWithRoles.Id;
+            var userDetails = await client.GetUserByEmailID.ExecuteAsync(UserName);
+            UserId = userDetails!.Data!.UserByEmailID.Id;
             UserDetail = new UserDetail()
             {
                 UserName = UserName,
                 Id = UserId,
-                Email = userDetails!.Data!.UserWithRoles.Email
+                Email = userDetails!.Data!.UserByEmailID.Email
             };
+            var resultsOfReservoirWithStatus = await client.GetReservoirStatusByEmail.ExecuteAsync(UserDetail.Email);
+
+            var reservoirStatusLinkedToUser = resultsOfReservoirWithStatus!.Data!.ReservoirStatusByEmail;
+            foreach (var rs in reservoirStatusLinkedToUser)
+            {
+                var s = new SubmissionStatusDTO()
+                {
+                    PublicName = rs.PublicName,
+                    SubmittedOn = new DateTime(rs.SubmittedOn.Year, rs.SubmittedOn.Month, rs.SubmittedOn.Day),
+                    Status = rs.Status
+                };
+                ReservoirStatusLinkedToUser.Add(s);
+            }
+            ReservoirStatusLinkedToUserComplete = ReservoirStatusLinkedToUser.Where(st => st.Status.ToUpper() == "COMPLETE").ToList();
+            ReservoirStatusLinkedToUserDraft = ReservoirStatusLinkedToUser.Where(st => st.Status.ToUpper() != "COMPLETE").ToList();
             var results = await client.GetReservoirsByUserId.ExecuteAsync(UserId);
-            List<string> reservoirNamesList = new List<string>();
+
             var reservoirs = results!.Data!.ReservoirsByUserId;
 
             foreach (var rn in reservoirs)
             {
                 var r = new Reservoir()
                 {
+                    Id = rn.Id,
                     RaceReservoirId = rn.RaceReservoirId,
                     PublicName = rn.PublicName,
                     NearestTown = rn.NearestTown,
-                    GridReference = rn.GridReference
+                    GridReference = rn.GridReference,
+                    OperatorType = rn.OperatorType
                 };
                 r.Address = new Address()
                 {
@@ -70,8 +90,11 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 };
                 ReservoirsLinkedToUser.Add(r);
             }
-            var action = new StoreUserDetailAction(UserDetail);
-            Dispatcher.Dispatch(action);
+            var actionUserDetail = new StoreUserDetailAction(UserDetail);
+            Dispatcher.Dispatch(actionUserDetail);
+
+            var actionReservoirsLinkedToUser = new StoreUserReservoirsAction(ReservoirsLinkedToUser);
+            Dispatcher.Dispatch(actionReservoirsLinkedToUser);
 
             await InvokeAsync(() =>
             {
@@ -97,6 +120,34 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             bool forceLoad = false;
             string pagelink = "/";
             NavigationManager.NavigateTo(pagelink, forceLoad);
+        }
+
+        private void gotoPage(SubmissionStatusDTO reservoirStatus)
+        {
+            var reservoir = ReservoirsLinkedToUser.Where(s => s.PublicName == reservoirStatus.PublicName).FirstOrDefault();
+            var action = new StoreReservoirAction(reservoir);
+            Dispatcher.Dispatch(action);
+            bool forceLoad = false;
+            string pagelink = "/reservoir-details";
+            if (reservoirStatus.Status.ToUpper() == "DRAFT SENT")
+            {
+                pagelink = "/s12-statement-confirmation-draft-sent";
+            }
+            NavigationManager.NavigateTo(pagelink, forceLoad);
+        }
+
+        private void gotoSubmissionPage(SubmissionStatusDTO reservoirStatus)
+        {
+            var reservoir = ReservoirsLinkedToUser.Where(s => s.PublicName == reservoirStatus.PublicName).FirstOrDefault();
+            var action = new StoreReservoirAction(reservoir);
+            Dispatcher.Dispatch(action);
+            bool forceLoad = false;
+            string pagelink = "/s12-statement-confirmation";
+            NavigationManager.NavigateTo(pagelink, forceLoad);
+        }
+        private void Dispose()
+        {
+            this.Dispose(true);
         }
 
         public string text1 = "";

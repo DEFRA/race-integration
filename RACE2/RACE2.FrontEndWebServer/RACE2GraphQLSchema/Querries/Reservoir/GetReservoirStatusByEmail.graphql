@@ -1,0 +1,10 @@
+﻿query GetReservoirStatusByEmail($newemail:String!){
+  reservoirStatusByEmail(email:$newemail) {
+    publicName
+    status
+    submittedBy {
+      userName
+    }
+    submittedOn
+  }
+}

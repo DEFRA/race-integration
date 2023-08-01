@@ -8,23 +8,25 @@ namespace RACE2.FrontEndWebServer.FluxorImplementation.Reducers
     {
         [ReducerMethod]
         public static CurrentUserDetailState ReduceStoreUserDetailAction(CurrentUserDetailState state, StoreUserDetailAction action)
-             => new CurrentUserDetailState(currentUserDetail:action.CurrentUserDetail);
+             => new CurrentUserDetailState(currentUserDetail: action.CurrentUserDetail);
 
         [ReducerMethod]
         public static CurrentReservoirState ReduceStoreReservoirAction(CurrentReservoirState state, StoreReservoirAction action)
              => new CurrentReservoirState(currentReservoir: action.CurrentReservoir);
 
-        //[ReducerMethod]
-        //public static AppStore ReduceStoreNewReservoirAction(AppStore state, StoreNewReservoirAction action)
-        //     => state with { 
-        //         IsLoading = false, 
-        //         NewReservoirDetails = action.NewReservoirDetails 
-        //     };
+        [ReducerMethod]
+        public static UserReservoirsState ReduceStoreUserReservoirsAction(UserReservoirsState state, StoreUserReservoirsAction action)
+             => new UserReservoirsState(userReservoirs: action.UserReservoirs);
+
+        [ReducerMethod]
+        public static NewReservoirState ReduceStoreNewReservoirAction(NewReservoirState state, StoreNewReservoirAction action)
+             => new NewReservoirState(newReservoir: action.NewReservoir);
 
         [ReducerMethod]
         public static AppStore ReduceStoreIsLoggedInAction(AppStore state, StoreIsLoggedInAction action)
-             => state with { 
-                 IsLoggedIn = action.IsLoggedIn 
+             => state with
+             {
+                 IsLoggedIn = action.IsLoggedIn
              };
 
     }
