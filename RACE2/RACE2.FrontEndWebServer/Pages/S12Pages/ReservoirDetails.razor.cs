@@ -20,7 +20,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         public NavigationManager NavigationManager { get; set; } = default!;
         [Inject]
         public IState<CurrentReservoirState> CurrentReservoirState { get; set; } = default!;
-
+        [Inject]
+        public IState<CurrentUserDetailState> CurrentUserDetailState { get; set; } = default!;
         [Inject]
         public IDispatcher Dispatcher { get; set; } = default!;
 
@@ -44,6 +45,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 Id = UserId,
                 Email = userDetails!.Data!.UserByEmailID.Email
             };
+            CurrentReservoir = CurrentReservoirState.Value.CurrentReservoir;
             base.OnInitialized();
         }
 
@@ -55,7 +57,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
 
         public async void GoToSaveComebackLaterPage()
         {
-            NavigationManager.NavigateTo("/authentication/logout");
+            NavigationManager.NavigateTo("logout");
         }
 
         private void goback()
