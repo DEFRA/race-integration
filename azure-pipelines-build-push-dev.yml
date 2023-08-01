@@ -1,0 +1,54 @@
+# Docker
+# Build a Docker image
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+trigger:
+- main
+
+resources:
+- repo: self
+
+variables:
+  tag: 'latest'
+  subscriptionName: 'AZR-RAC-DEV1'  
+  tenantId: '770a2450-0227-4c62-90c7-4e38537f1102'
+  containerRegistryFullName: 'Race2ACR'
+  appNameSP: 'race2securityprovider'
+  dockerFilenameSP: 'Dockerfile_SecurityProvider'
+  appNameFE: 'race2frontendwebserver'
+  dockerFilenameFE: 'Dockerfile_FrontEndWebServer'
+  appNameAPI: 'race2webapi'
+  dockerFilenameAPI: 'Dockerfile_WebApi'
+  adoSpClientId: '39ef2527-ca88-4bbc-b474-2d9aecf67f46'
+  adoSpClientSecret: ''
+  azureServiceConnection: 'AZR-RAC-DEV1'
+  containerRegistryURL: 'race2acr.azurecr.io'
+  resourceGroupName: 'RACE2ProjectRG'
+  templateFile: '$(Build.SourcesDirectory)/RACE2/bicepfiles/createAllContainerApps.bicep'
+  parameterfile: '$(Build.SourcesDirectory)/RACE2/DeploymentYamlFiles/deployAllContainerAppsParameters.json'
+
+stages:
+- stage : Buildandpush
+  displayName: Build image
+  jobs:  
+  - job: Build
+    displayName: Build job
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: AzureCLI@2 
+      displayName: 'Build and publish helm chart and container image to Azure Container Registry' 
+      inputs:
+        azureSubscription: $(azureServiceConnection)
+        scriptType: bash
+        scriptLocation: inlineScript
+        useGlobalConfig: false    
+        inlineScript: |
+          az --version
+          az login --service-principal -u $(adoSpClientId) -p $(adoSpClientSecret) --tenant $(tenantId) 
+          az acr build -r $(containerRegistryFullName) -t $(containerRegistryURL)/$(appNameSP):$(tag) -f $(Build.SourcesDirectory)/RACE2/$(dockerFilenameSP) $(Build.SourcesDirectory)/RACE2
+          az acr build -r $(containerRegistryFullName) -t $(containerRegistryURL)/$(appNameFE):$(tag) -f $(Build.SourcesDirectory)/RACE2/$(dockerFilenameFE) $(Build.SourcesDirectory)/RACE2
+          az acr build -r $(containerRegistryFullName) -t $(containerRegistryURL)/$(appNameAPI):$(tag) -f $(Build.SourcesDirectory)/RACE2/$(dockerFilenameAPI) $(Build.SourcesDirectory)/RACE2
+
+          az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) -p @$(parameterfile)
+
