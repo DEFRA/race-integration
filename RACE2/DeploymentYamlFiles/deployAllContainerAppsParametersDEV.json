@@ -21,7 +21,7 @@
         "value": "DEVRACINFRG1401"
       },
       "registryName": {
-        "value": "DEVRACINFCR1401"
+        "value": "devracinfcr1401"
       },
       "useExternalIngress": {
         "value": true
