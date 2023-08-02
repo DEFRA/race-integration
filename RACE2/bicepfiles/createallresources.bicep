@@ -12,7 +12,7 @@ param administratorLogin string
 param administratorLoginPassword string
 param appconfigName string
 param keyvaultName string
-param namespaces_ServiceBus_name string
+param serviceBus_name string
 param storageAccountName string
 param logAnalyticsWorkspaceName string
 param race2appenvName string
@@ -46,7 +46,7 @@ module createservicebusmodule 'createservicebus.bicep' = {
   name: 'servicebusdeploy'
   params: {
     location: location
-    namespaces_ServiceBus_name: namespaces_ServiceBus_name
+    serviceBus_name: serviceBus_name
   }
   dependsOn: [
     createmanagedidentitymodule
