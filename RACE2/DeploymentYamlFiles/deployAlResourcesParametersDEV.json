@@ -20,7 +20,7 @@
       "containerregistryName": {
         "value": "DEVRACINFCR1401"
       },
-      "namespaces_ServiceBus_name": {
+      "serviceBusName": {
         "value": "DEVRACINFSB1401"
       },
       "storageAccountName": {

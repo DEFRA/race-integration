@@ -1,8 +1,8 @@
-param serviceBus_name string
+param serviceBusName string
 param location string = resourceGroup().location
 
 resource ServiceBus_name_resource 'Microsoft.ServiceBus/namespaces@2022-10-01-preview' = {
-  name: serviceBus_name
+  name: serviceBusName
   location: location
   tags: {
     ServiceCode: 'RAC'
