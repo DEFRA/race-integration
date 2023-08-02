@@ -7,21 +7,21 @@
       }, 
       "location": {
         "value": "uksouth"
-      }, 
+      },
       "resourcegroup": {
-        "value": "Race2ProjectRG"
-      },     
+        "value": "DEVRACINFRG1401"
+      },
       "managedidentity": {
-        "value": "Race2ManagedIdentity"
-      }, 
+        "value": "DEVRACINFMI1401"
+      },
       "race2appenvName": {
-        "value": "race2containerappenv"
-      }, 
+        "value": "DEVRACINFAE1401"
+      },
       "registryResourceGroup": {
-        "value": "Race2ProjectRG"
+        "value": "DEVRACINFRG1401"
       },
       "registryName": {
-        "value": "race2acr"
+        "value": "DEVRACINFCR1401"
       },
       "useExternalIngress": {
         "value": true
