@@ -103,8 +103,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.FrontEndWebServer", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.WebApi", "RACE2.WebApi\RACE2.WebApi.csproj", "{9C0A89C3-F142-40DA-ADB8-56F012014726}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.BackEnd", "RACE2.BackEnd\RACE2.BackEnd.csproj", "{9065AB65-9226-4F54-8729-D6CF5C542FC0}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -167,10 +165,6 @@ Global
 		{9C0A89C3-F142-40DA-ADB8-56F012014726}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C0A89C3-F142-40DA-ADB8-56F012014726}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C0A89C3-F142-40DA-ADB8-56F012014726}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9065AB65-9226-4F54-8729-D6CF5C542FC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9065AB65-9226-4F54-8729-D6CF5C542FC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9065AB65-9226-4F54-8729-D6CF5C542FC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9065AB65-9226-4F54-8729-D6CF5C542FC0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
