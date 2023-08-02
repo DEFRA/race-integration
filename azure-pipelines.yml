@@ -1,62 +1,30 @@
-# Docker
-# Build a Docker image
-# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
-
 trigger:
 - none
 
-resources:
-- repo: self
+name: Deploy All Resources
 
 variables:
- 
-  - name: repository_securityprovider
-    value: 'race2securityprovider'
-  - name: dockerfile_securityprovider
-    value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_SecurityProvider'
-  - name: repository_webapi
-    value: 'race2webapi'
-  - name: dockerfile_webapi
-    value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_WebApi'
-  - name: repository_frontendwebserver
-    value: 'race2frontendwebserver'
-  - name: dockerfile_frontendwebserver
-    value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_FrontEndWebServer'
-  - name: containerRegistry
-    value: 'AZR-RAC-POC1-DockerRegistry'
-  - name: tag
-    value: 'latest'
+  vmImageName: 'ubuntu-latest'
 
-stages:
-- stage: Build
-  displayName: Build image
-  jobs:
-  - job: Build
-    displayName: Build
-    pool:
-      vmImage: ubuntu-latest
-    steps:
-    - task: Docker@2
-      displayName: Build and push an image - securityProvider
-      inputs:
-        command: buildAndPush
-        repository: ${{ variables.repository_securityprovider }}
-        dockerfile: ${{ variables.dockerfile_securityprovider }}
-        containerRegistry: ${{ variables.containerRegistry }}
-        tags: ${{ variables.tag }}
-    - task: Docker@2
-      displayName: Build and push an image - WebApi
-      inputs:
-        command: buildAndPush
-        repository: ${{ variables.repository_webapi }}
-        dockerfile: ${{ variables.dockerfile_webapi }}
-        containerRegistry: ${{ variables.containerRegistry }}
-        tags: ${{ variables.tag }}
-    - task: Docker@2
-      displayName: Build and push an image - FrontEndWebServer
-      inputs:
-        command: buildAndPush
-        repository: ${{ variables.repository_frontendwebserver }}
-        dockerfile: ${{ variables.dockerfile_frontendwebserver }}
-        containerRegistry: ${{ variables.containerRegistry }}
-        tags: ${{ variables.tag }}
+  azureServiceConnection: 'AZR-RAC-DEV1'
+  resourceGroupName: 'DEVRACINFRG1401'
+  location: 'uksouth' 
+  servicePrincipalId: '96b8b0ef-e54f-4455-981e-33eaacd977e8'
+  templateFileResourceGroup: './RACE2/bicepfiles/createresourcegroup.bicep'  
+  templateFileAllResources: './RACE2/bicepfiles/createallresources.bicep'
+  parameterfileAllResources: './RACE2/DeploymentYamlFiles/deployAlResourcesParametersDEV.json'
+pool:
+  vmImage: $(vmImageName)
+
+steps:
+- task: AzureCLI@2  
+  inputs:
+    azureSubscription: $(azureServiceConnection)
+    scriptType: bash
+    scriptLocation: inlineScript
+    useGlobalConfig: false    
+    inlineScript: |
+      az --version
+      az group create -n $(resourceGroupName) -l $(location)
+      az deployment group create --template-file $(templateFileResourceGroup) --parameters resourceGroupName=$(resourceGroupName) servicePrincipalId=$(servicePrincipalId)
+      az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFileAllResources) --parameter @$(parameterfileAllResources)
