@@ -35,4 +35,40 @@ resource acrPushRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-
   }
 }
 
+resource kvCeritificateOfficerRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: 'ResourceGroupKeyVaultCertificateOfficer'
+  properties: {
+    roleDefinitionId: 'a4417e6f-fecd-4de8-b567-7b0420556985'
+    principalId: servicePrincipalId
+    principalType: 'ServicePrincipal'
+  }
+}
+
+resource kvSecrestOfficerRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: 'ResourceGroupKeyVaultSecretsOfficer'
+  properties: {
+    roleDefinitionId: 'b86a8fe4-44ce-4948-aee5-eccb2c155cd7'
+    principalId: servicePrincipalId
+    principalType: 'ServicePrincipal'
+  }
+}
+
+resource kvSecretsUserRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: 'ResourceGroupKeyVaultSecretsUser'
+  properties: {
+    roleDefinitionId: '4633458b-17de-408a-b874-0445c86b69e6'
+    principalId: servicePrincipalId
+    principalType: 'ServicePrincipal'
+  }
+}
+
+resource appConfigDataReaderRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: 'ResourceGroupAppConfigDataReader'
+  properties: {
+    roleDefinitionId: '516239f1-63e1-4d78-a4de-a74fb236a071'
+    principalId: servicePrincipalId
+    principalType: 'ServicePrincipal'
+  }
+}
+
 output resourceGroupName string = rg.name
