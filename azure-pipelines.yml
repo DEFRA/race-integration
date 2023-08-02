@@ -23,38 +23,6 @@ variables:
   parameterfile: '$(Build.SourcesDirectory)/RACE2/DeploymentYamlFiles/deployAllContainerAppsParametersDEV.json'
 
 stages:
-- stage: Build
-  displayName: Build image
-  jobs:
-  - job: Build
-    displayName: Build
-    pool:
-      vmImage: ubuntu-latest
-    steps:
-    - task: Docker@2
-      displayName: Build and push an image - securityProvider
-      inputs:
-        command: buildAndPush
-        repository: ${{ variables.repository_securityprovider }}
-        dockerfile: ${{ variables.dockerfile_securityprovider }}
-        containerRegistry: ${{ variables.containerRegistry }}
-        tags: ${{ variables.tag }}
-    - task: Docker@2
-      displayName: Build and push an image - WebApi
-      inputs:
-        command: buildAndPush
-        repository: ${{ variables.repository_webapi }}
-        dockerfile: ${{ variables.dockerfile_webapi }}
-        containerRegistry: ${{ variables.containerRegistry }}
-        tags: ${{ variables.tag }}
-    - task: Docker@2
-      displayName: Build and push an image - FrontEndWebServer
-      inputs:
-        command: buildAndPush
-        repository: ${{ variables.repository_frontendwebserver }}
-        dockerfile: ${{ variables.dockerfile_frontendwebserver }}
-        containerRegistry: ${{ variables.containerRegistry }}
-        tags: ${{ variables.tag }}
 - stage : DeployContainerApps
   displayName: Deploy Container Apps to Azure Portal
   jobs:  
