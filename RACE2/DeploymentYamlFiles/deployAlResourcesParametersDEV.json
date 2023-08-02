@@ -24,7 +24,7 @@
         "value": "DEVRACINFSB1401"
       },
       "storageAccountName": {
-        "value": "DEVRACINFST1401"
+        "value": "devracinfst1401"
       },
       "appconfigName": {
         "value": "DEVRACINFAC1401"
