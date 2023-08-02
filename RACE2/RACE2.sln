@@ -72,8 +72,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploymentyamlfiles", "deploymentyamlfiles", "{E77DC034-434C-42C9-83F7-D50E73A132C6}"
 	ProjectSection(SolutionItems) = preProject
 		DeploymentYamlFiles\Add-AdAppRegistrations.ps1 = DeploymentYamlFiles\Add-AdAppRegistrations.ps1
-		DeploymentYamlFiles\deployAllContainerApps.yml = DeploymentYamlFiles\deployAllContainerApps.yml
-		DeploymentYamlFiles\deployAllContainerAppsParameters.json = DeploymentYamlFiles\deployAllContainerAppsParameters.json
+		DeploymentYamlFiles\deployAllContainerAppsDEV.yml = DeploymentYamlFiles\deployAllContainerAppsDEV.yml
+		DeploymentYamlFiles\deployAllContainerAppsParametersDEV.json = DeploymentYamlFiles\deployAllContainerAppsParametersDEV.json
+		DeploymentYamlFiles\deployAllContainerAppsParametersPOC.json = DeploymentYamlFiles\deployAllContainerAppsParametersPOC.json
+		DeploymentYamlFiles\deployAllContainerAppsPOC.yml = DeploymentYamlFiles\deployAllContainerAppsPOC.yml
 		DeploymentYamlFiles\deployAllResourcesDEV.yml = DeploymentYamlFiles\deployAllResourcesDEV.yml
 		DeploymentYamlFiles\deployAllResourcesPOC.yml = DeploymentYamlFiles\deployAllResourcesPOC.yml
 		DeploymentYamlFiles\deployAlResourcesParametersDEV.json = DeploymentYamlFiles\deployAlResourcesParametersDEV.json
