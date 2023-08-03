@@ -9,18 +9,10 @@ resources:
 - repo: self
 
 variables:
-  repository_securityprovider: 'race2securityprovider'
-  dockerfile_securityprovider: '$(Build.SourcesDirectory)/RACE2/Dockerfile_SecurityProvider'
-  repository_webapi: 'race2webapi'
-  dockerfile_webapi: '$(Build.SourcesDirectory)/RACE2/Dockerfile_WebApi'
-  repository_frontendwebserver: 'race2frontendwebserver'
-  dockerfile_frontendwebserver: '$(Build.SourcesDirectory)/RACE2/Dockerfile_FrontEndWebServer'
-  containerRegistry: 'AZR-RAC-DEV1-DockerRegistry'
-  tag: 'latest'
-  azureServiceConnection: 'AZR-RAC-DEV1'
-  resourceGroupName: 'DEVRACINFRG1401'
+  azureServiceConnection: 'AZR-RAC-POC1'
+  resourceGroupName: 'RACE2ProjectRG'
   templateFile: '$(Build.SourcesDirectory)/RACE2/bicepfiles/createAllContainerApps.bicep'
-  parameterfile: '$(Build.SourcesDirectory)/RACE2/DeploymentYamlFiles/deployAllContainerAppsParametersDEV.json'
+  parameterfile: '$(Build.SourcesDirectory)/RACE2/DeploymentYamlFiles/deployAllContainerAppsParametersPOC.json'
 
 stages:
 - stage : DeployContainerApps
