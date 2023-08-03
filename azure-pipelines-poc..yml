@@ -26,13 +26,21 @@ variables:
     value: 'AZR-RAC-POC1-DockerRegistry'
   - name: tag
     value: 'latest'
+  - name: azureServiceConnection
+    value: 'AZR-RAC-POC1'
+  - name: resourceGroupName
+    value: 'RACE2ProjectRG'
+  - name: templateFile
+    value: '$(Build.SourcesDirectory)/RACE2/bicepfiles/createAllContainerApps.bicep'
+  - name: parameterfile
+    value: '$(Build.SourcesDirectory)/RACE2/DeploymentYamlFiles/deployAllContainerAppsParametersPOC.json'
 
 stages:
-- stage: Build
-  displayName: Build image
+- stage: BuildAndPush
+  displayName: Build and Push image
   jobs:
-  - job: Build
-    displayName: Build
+  - job: BuildAndPush
+    displayName: Build and Push image
     pool:
       vmImage: ubuntu-latest
     steps:
@@ -60,3 +68,21 @@ stages:
         dockerfile: ${{ variables.dockerfile_frontendwebserver }}
         containerRegistry: ${{ variables.containerRegistry }}
         tags: ${{ variables.tag }}
+- stage : DeployContainerApps
+  displayName: Deploy Container Apps to Azure Portal
+  jobs:  
+  - job: Deploy
+    displayName: Deploy Container Apps to Azure Portal
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: AzureCLI@2 
+      displayName: 'Deploy Container Apps to Azure Portal' 
+      inputs:
+        azureSubscription: $(azureServiceConnection)
+        scriptType: bash
+        scriptLocation: inlineScript
+        useGlobalConfig: false    
+        inlineScript: |
+          az --version
+          az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) -p @$(parameterfile)
