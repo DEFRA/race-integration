@@ -113,6 +113,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DockerFiles", "DockerFiles"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PowerShellScripts", "PowerShellScripts", "{D6498281-D82F-4C78-8B8A-B5EBC644E670}"
 	ProjectSection(SolutionItems) = preProject
+		ContainerAppWorkspaceDeployDEV.ps1 = ContainerAppWorkspaceDeployDEV.ps1
+		ContainerAppWorkspaceDeployPOC.ps1 = ContainerAppWorkspaceDeployPOC.ps1
 		FrontEndWebServerDeployDEV.ps1 = FrontEndWebServerDeployDEV.ps1
 		FrontEndWebServerDeployPOC.ps1 = FrontEndWebServerDeployPOC.ps1
 		SecurtyProviderDeployDEV.ps1 = SecurtyProviderDeployDEV.ps1
