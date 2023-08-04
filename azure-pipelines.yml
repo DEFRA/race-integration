@@ -85,4 +85,4 @@ stages:
         useGlobalConfig: false    
         inlineScript: |
           az --version
-          az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) -p @$(parameterfile)
+          az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) -p @$(parameterfile) -p @$(tag)
