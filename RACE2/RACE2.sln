@@ -22,14 +22,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedFiles", "SharedFiles"
 		appsettings.json = appsettings.json
 		azcommands.txt = azcommands.txt
 		databasecreation.txt = databasecreation.txt
-		Dockerfile_FrontEnd = Dockerfile_FrontEnd
-		Dockerfile_FrontEndWeb = Dockerfile_FrontEndWeb
-		Dockerfile_SecurityProvider = Dockerfile_SecurityProvider
-		Dockerfile_WebApi = Dockerfile_WebApi
-		FrontEndDeploy.ps1 = FrontEndDeploy.ps1
-		FrontEndWebDeploy.ps1 = FrontEndWebDeploy.ps1
-		SecurtyProviderDeploy.ps1 = SecurtyProviderDeploy.ps1
-		WebApiDeploy.ps1 = WebApiDeploy.ps1
+		GetUser.txt = GetUser.txt
+		global.json = global.json
+		ValidateUser.txt = ValidateUser.txt
+		webapp.istioinaction.io.cert.pem = webapp.istioinaction.io.cert.pem
+		webapp.istioinaction.io.key.pem = webapp.istioinaction.io.key.pem
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StoredProcedures", "StoredProcedures", "{F40D405C-8DD0-44A8-81BF-9072721B1300}"
@@ -104,6 +101,36 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.FrontEndWebServer", "RACE2.FrontEndWebServer\RACE2.FrontEndWebServer.csproj", "{6C0ADAE3-8342-4C89-8F7C-7D34ABD9FBBF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.WebApi", "RACE2.WebApi\RACE2.WebApi.csproj", "{9C0A89C3-F142-40DA-ADB8-56F012014726}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DockerFiles", "DockerFiles", "{1CCBCC8A-C04F-4D81-AA4D-47C5248BA747}"
+	ProjectSection(SolutionItems) = preProject
+		Dockerfile = Dockerfile
+		Dockerfile_FrontEnd = Dockerfile_FrontEnd
+		Dockerfile_FrontEndWebServer = Dockerfile_FrontEndWebServer
+		Dockerfile_SecurityProvider = Dockerfile_SecurityProvider
+		Dockerfile_WebApi = Dockerfile_WebApi
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PowerShellScripts", "PowerShellScripts", "{D6498281-D82F-4C78-8B8A-B5EBC644E670}"
+	ProjectSection(SolutionItems) = preProject
+		FrontEndWebServerDeployDEV.ps1 = FrontEndWebServerDeployDEV.ps1
+		FrontEndWebServerDeployPOC.ps1 = FrontEndWebServerDeployPOC.ps1
+		SecurtyProviderDeployDEV.ps1 = SecurtyProviderDeployDEV.ps1
+		SecurtyProviderDeployPOC.ps1 = SecurtyProviderDeployPOC.ps1
+		WebApiDeployDEV.ps1 = WebApiDeployDEV.ps1
+		WebApiDeployPOC.ps1 = WebApiDeployPOC.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PipelineYamlFiles", "PipelineYamlFiles", "{BF766C13-0D25-42E7-9D64-8830E106606E}"
+	ProjectSection(SolutionItems) = preProject
+		..\azure-pipelines-3.yml = ..\azure-pipelines-3.yml
+		..\azure-pipelines-4.yml = ..\azure-pipelines-4.yml
+		..\azure-pipelines-build-push-dev.yml = ..\azure-pipelines-build-push-dev.yml
+		..\azure-pipelines-build-push-poc.yml = ..\azure-pipelines-build-push-poc.yml
+		..\azure-pipelines-build-push.yml = ..\azure-pipelines-build-push.yml
+		..\azure-pipelines-dev.yml = ..\azure-pipelines-dev.yml
+		..\azure-pipelines-poc..yml = ..\azure-pipelines-poc..yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
