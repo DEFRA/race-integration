@@ -39,13 +39,13 @@
         "value":"race2webapi"
       },
       "frontendcontainerImage": {
-        "value": "devracinfcr1401.azurecr.io/race2frontendwebserver:latest"
+        "value": "devracinfcr1401.azurecr.io/race2frontendwebserver"
       },
       "securityprovidercontainerImage": {
-        "value": "devracinfcr1401.azurecr.io/race2securityprovider:latest"
+        "value": "devracinfcr1401.azurecr.io/race2securityprovider"
       },
       "webapicontainerImage": {
-        "value": "devracinfcr1401.azurecr.io/race2webapi:latest"
+        "value": "devracinfcr1401.azurecr.io/race2webapi"
       }      
     }
 }
