@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{C9674DCB-5085-4A16-B785-4C70DD1589BD}") = "Integration Services Project2", "Integration Services Project2.dtproj", "{2009F068-2A59-425D-9734-DB2F51B6099E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Azure|Default = Azure|Default
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2009F068-2A59-425D-9734-DB2F51B6099E}.Azure|Default.ActiveCfg = Azure
+		{2009F068-2A59-425D-9734-DB2F51B6099E}.Azure|Default.Build.0 = Azure
+		{2009F068-2A59-425D-9734-DB2F51B6099E}.Development|Default.ActiveCfg = Development
+		{2009F068-2A59-425D-9734-DB2F51B6099E}.Development|Default.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {785B63ED-95D0-4E35-84C6-E0D853A106B0}
+	EndGlobalSection
+EndGlobal
