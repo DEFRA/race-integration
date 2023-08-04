@@ -3,13 +3,13 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 
 trigger:
-- main
+- none
 
 resources:
 - repo: self
 
 variables:
-  tag: 'latest'
+  tag: '$(Build.BuildId)'
   subscriptionName: 'AZR-RAC-POC1'  
   tenantId: '770a2450-0227-4c62-90c7-4e38537f1102'
   containerRegistryFullName: 'Race2ACR'

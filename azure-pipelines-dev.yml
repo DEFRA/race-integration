@@ -23,9 +23,9 @@ variables:
   - name: dockerfile_frontendwebserver
     value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_FrontEndWebServer'
   - name: containerRegistry
-    value: 'AZR-RAC-POC1-DockerRegistry'
+    value: 'AZR-RAC-DEV1-DockerRegistry'
   - name: tag
-    value: 'latest'
+    value: '$(Build.BuildId)'
   - name: azureServiceConnection
     value: 'AZR-RAC-DEV1'
   - name: resourceGroupName
@@ -36,11 +36,11 @@ variables:
     value: '$(Build.SourcesDirectory)/RACE2/DeploymentYamlFiles/deployAllContainerAppsParametersDEV.json'
 
 stages:
-- stage: Build
-  displayName: Build image
+- stage: buildAndPush
+  displayName: Build and push images
   jobs:
-  - job: Build
-    displayName: Build
+  - job: BuildAndPush
+    displayName: Build and push images
     pool:
       vmImage: ubuntu-latest
     steps:

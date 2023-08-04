@@ -25,7 +25,7 @@ variables:
   - name: containerRegistry
     value: 'AZR-RAC-POC1-DockerRegistry'
   - name: tag
-    value: 'latest'
+    value: '$(Build.BuildId)'
   - name: azureServiceConnection
     value: 'AZR-RAC-POC1'
   - name: resourceGroupName
@@ -37,10 +37,10 @@ variables:
 
 stages:
 - stage: BuildAndPush
-  displayName: Build and Push image
+  displayName: Build and Push images
   jobs:
   - job: BuildAndPush
-    displayName: Build and Push image
+    displayName: Build and Push images
     pool:
       vmImage: ubuntu-latest
     steps:
