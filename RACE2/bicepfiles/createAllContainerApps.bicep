@@ -13,6 +13,7 @@ param registryName string
 param registryResourceGroup string
 param useExternalIngress bool = false
 param containerPort int
+param tag string
 
 module createfrontendcontainerappmodule 'createfrontendcontainerapp.bicep' = {
   scope: resourceGroup(resourcegroup)
@@ -29,6 +30,7 @@ module createfrontendcontainerappmodule 'createfrontendcontainerapp.bicep' = {
     frontendcontainerImage: frontendcontainerImage
     managedidentity: managedidentity
     subscriptionid: subscriptionid
+    tag: tag
   }
 }
 
@@ -47,6 +49,7 @@ module createsecurityprovidercontainerappmodule 'createsecurityprovidercontainer
     securityprovidercontainerImage: securityprovidercontainerImage
     managedidentity: managedidentity
     subscriptionid: subscriptionid
+    tag: tag
   }
 }
 module createwebapicontainerappmodule 'createwebapicontainerapp.bicep' = {
@@ -64,5 +67,6 @@ module createwebapicontainerappmodule 'createwebapicontainerapp.bicep' = {
     webapicontainerImage: webapicontainerImage
     managedidentity: managedidentity
     subscriptionid: subscriptionid
+    tag: tag
   }
 }

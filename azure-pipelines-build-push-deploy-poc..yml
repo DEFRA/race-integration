@@ -23,24 +23,24 @@ variables:
   - name: dockerfile_frontendwebserver
     value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_FrontEndWebServer'
   - name: containerRegistry
-    value: 'AZR-RAC-DEV1-DockerRegistry'
+    value: 'AZR-RAC-POC1-DockerRegistry'
   - name: tag
     value: '$(Build.BuildId)'
   - name: azureServiceConnection
-    value: 'AZR-RAC-DEV1'
+    value: 'AZR-RAC-POC1'
   - name: resourceGroupName
-    value: 'DEVRACINFRG1401'
+    value: 'RACE2ProjectRG'
   - name: templateFile
     value: '$(Build.SourcesDirectory)/RACE2/bicepfiles/createAllContainerApps.bicep'
   - name: parameterfile
-    value: '$(Build.SourcesDirectory)/RACE2/DeploymentYamlFiles/deployAllContainerAppsParametersDEV.json'
+    value: '$(Build.SourcesDirectory)/RACE2/DeploymentYamlFiles/deployAllContainerAppsParametersPOC.json'
 
 stages:
-- stage: buildAndPush
-  displayName: Build and push images
+- stage: BuildAndPush
+  displayName: Build and Push images
   jobs:
   - job: BuildAndPush
-    displayName: Build and push images
+    displayName: Build and Push images
     pool:
       vmImage: ubuntu-latest
     steps:
@@ -85,4 +85,4 @@ stages:
         useGlobalConfig: false    
         inlineScript: |
           az --version
-          az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) -p @$(parameterfile) @$(tag)
+          az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) -p @$(parameterfile)

@@ -4,8 +4,15 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="RACE2GraphQLSchema\Mutations\User\**" />
+    <Content Remove="RACE2GraphQLSchema\Mutations\User\**" />
+    <EmbeddedResource Remove="RACE2GraphQLSchema\Mutations\User\**" />
+    <GraphQL Remove="RACE2GraphQLSchema\Mutations\User\**" />
+    <None Remove="RACE2GraphQLSchema\Mutations\User\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <GraphQL Remove="race2graphqlschema\querries\reservoir\DownloadBlobToLocalFile.graphql" />
@@ -50,7 +57,6 @@
 
   <ItemGroup>
     <Folder Include="RACE2GraphQLSchema\Mutations\FileUpload\" />
-    <Folder Include="RACE2GraphQLSchema\Mutations\User\" />
   </ItemGroup>
 
 </Project>

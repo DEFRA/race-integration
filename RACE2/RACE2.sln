@@ -22,14 +22,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedFiles", "SharedFiles"
 		appsettings.json = appsettings.json
 		azcommands.txt = azcommands.txt
 		databasecreation.txt = databasecreation.txt
-		Dockerfile_FrontEnd = Dockerfile_FrontEnd
-		Dockerfile_FrontEndWeb = Dockerfile_FrontEndWeb
-		Dockerfile_SecurityProvider = Dockerfile_SecurityProvider
-		Dockerfile_WebApi = Dockerfile_WebApi
-		FrontEndDeploy.ps1 = FrontEndDeploy.ps1
-		FrontEndWebDeploy.ps1 = FrontEndWebDeploy.ps1
-		SecurtyProviderDeploy.ps1 = SecurtyProviderDeploy.ps1
-		WebApiDeploy.ps1 = WebApiDeploy.ps1
+		GetUser.txt = GetUser.txt
+		global.json = global.json
+		ValidateUser.txt = ValidateUser.txt
+		webapp.istioinaction.io.cert.pem = webapp.istioinaction.io.cert.pem
+		webapp.istioinaction.io.key.pem = webapp.istioinaction.io.key.pem
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StoredProcedures", "StoredProcedures", "{F40D405C-8DD0-44A8-81BF-9072721B1300}"
@@ -72,11 +69,13 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploymentyamlfiles", "deploymentyamlfiles", "{E77DC034-434C-42C9-83F7-D50E73A132C6}"
 	ProjectSection(SolutionItems) = preProject
 		DeploymentYamlFiles\Add-AdAppRegistrations.ps1 = DeploymentYamlFiles\Add-AdAppRegistrations.ps1
-		DeploymentYamlFiles\deployAllContainerApps.yml = DeploymentYamlFiles\deployAllContainerApps.yml
-		DeploymentYamlFiles\deployAllContainerAppsParameters.json = DeploymentYamlFiles\deployAllContainerAppsParameters.json
-		DeploymentYamlFiles\deployAllResources.yml = DeploymentYamlFiles\deployAllResources.yml
+		DeploymentYamlFiles\deployAllContainerAppsDEV.yml = DeploymentYamlFiles\deployAllContainerAppsDEV.yml
+		DeploymentYamlFiles\deployAllContainerAppsParametersDEV.json = DeploymentYamlFiles\deployAllContainerAppsParametersDEV.json
+		DeploymentYamlFiles\deployAllContainerAppsParametersPOC.json = DeploymentYamlFiles\deployAllContainerAppsParametersPOC.json
+		DeploymentYamlFiles\deployAllContainerAppsPOC.yml = DeploymentYamlFiles\deployAllContainerAppsPOC.yml
+		DeploymentYamlFiles\deployAllResourcesDEV.yml = DeploymentYamlFiles\deployAllResourcesDEV.yml
 		DeploymentYamlFiles\deployAllResourcesPOC.yml = DeploymentYamlFiles\deployAllResourcesPOC.yml
-		DeploymentYamlFiles\deployAlResourcesParameters.json = DeploymentYamlFiles\deployAlResourcesParameters.json
+		DeploymentYamlFiles\deployAlResourcesParametersDEV.json = DeploymentYamlFiles\deployAlResourcesParametersDEV.json
 		DeploymentYamlFiles\deployAlResourcesParametersPOC.json = DeploymentYamlFiles\deployAlResourcesParametersPOC.json
 		DeploymentYamlFiles\deployAppConfig.yml = DeploymentYamlFiles\deployAppConfig.yml
 		DeploymentYamlFiles\deployContainerAppEnv.yml = DeploymentYamlFiles\deployContainerAppEnv.yml
@@ -103,7 +102,39 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.FrontEndWebServer", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.WebApi", "RACE2.WebApi\RACE2.WebApi.csproj", "{9C0A89C3-F142-40DA-ADB8-56F012014726}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.BackEnd", "RACE2.BackEnd\RACE2.BackEnd.csproj", "{9065AB65-9226-4F54-8729-D6CF5C542FC0}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DockerFiles", "DockerFiles", "{1CCBCC8A-C04F-4D81-AA4D-47C5248BA747}"
+	ProjectSection(SolutionItems) = preProject
+		Dockerfile = Dockerfile
+		Dockerfile_FrontEnd = Dockerfile_FrontEnd
+		Dockerfile_FrontEndWebServer = Dockerfile_FrontEndWebServer
+		Dockerfile_SecurityProvider = Dockerfile_SecurityProvider
+		Dockerfile_WebApi = Dockerfile_WebApi
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PowerShellScripts", "PowerShellScripts", "{D6498281-D82F-4C78-8B8A-B5EBC644E670}"
+	ProjectSection(SolutionItems) = preProject
+		ContainerAppWorkspaceDeployDEV.ps1 = ContainerAppWorkspaceDeployDEV.ps1
+		ContainerAppWorkspaceDeployPOC.ps1 = ContainerAppWorkspaceDeployPOC.ps1
+		FrontEndWebServerDeployDEV.ps1 = FrontEndWebServerDeployDEV.ps1
+		FrontEndWebServerDeployPOC.ps1 = FrontEndWebServerDeployPOC.ps1
+		SecurtyProviderDeployDEV.ps1 = SecurtyProviderDeployDEV.ps1
+		SecurtyProviderDeployPOC.ps1 = SecurtyProviderDeployPOC.ps1
+		WebApiDeployDEV.ps1 = WebApiDeployDEV.ps1
+		WebApiDeployPOC.ps1 = WebApiDeployPOC.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PipelineYamlFiles", "PipelineYamlFiles", "{BF766C13-0D25-42E7-9D64-8830E106606E}"
+	ProjectSection(SolutionItems) = preProject
+		..\azure-pipelines-0.yml = ..\azure-pipelines-0.yml
+		..\azure-pipelines-1.yml = ..\azure-pipelines-1.yml
+		..\azure-pipelines-2.yml = ..\azure-pipelines-2.yml
+		..\azure-pipelines-3.yml = ..\azure-pipelines-3.yml
+		..\azure-pipelines-4.yml = ..\azure-pipelines-4.yml
+		..\azure-pipelines-build-push-dev.yml = ..\azure-pipelines-build-push-dev.yml
+		..\azure-pipelines-build-push-poc.yml = ..\azure-pipelines-build-push-poc.yml
+		..\azure-pipelines-build-push.yml = ..\azure-pipelines-build-push.yml
+		..\azure-pipelines.yml = ..\azure-pipelines.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -167,10 +198,6 @@ Global
 		{9C0A89C3-F142-40DA-ADB8-56F012014726}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C0A89C3-F142-40DA-ADB8-56F012014726}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C0A89C3-F142-40DA-ADB8-56F012014726}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9065AB65-9226-4F54-8729-D6CF5C542FC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9065AB65-9226-4F54-8729-D6CF5C542FC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9065AB65-9226-4F54-8729-D6CF5C542FC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9065AB65-9226-4F54-8729-D6CF5C542FC0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

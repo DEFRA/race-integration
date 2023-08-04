@@ -9,6 +9,7 @@ param containerPort int
 param frontendcontainerImage string
 param managedidentity string
 param subscriptionid string 
+param tag string
 
 resource registry 'Microsoft.ContainerRegistry/registries@2023-01-01-preview' existing = {
   name: registryName
@@ -46,7 +47,7 @@ resource containerFrontEndApp 'Microsoft.App/containerApps@2022-01-01-preview' =
     template: {
       containers: [
         {
-          image: frontendcontainerImage
+          image: concat(frontendcontainerImage,':',tag)
           name: frontEndContainerAppName
         }
       ]

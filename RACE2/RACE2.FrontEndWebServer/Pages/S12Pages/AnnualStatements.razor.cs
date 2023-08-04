@@ -122,6 +122,34 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }
 
+        private void gotoPage(SubmissionStatusDTO reservoirStatus)
+        {
+            var reservoir = ReservoirsLinkedToUser.Where(s => s.PublicName == reservoirStatus.PublicName).FirstOrDefault();
+            var action = new StoreReservoirAction(reservoir);
+            Dispatcher.Dispatch(action);
+            bool forceLoad = false;
+            string pagelink = "/reservoir-details";
+            if (reservoirStatus.Status.ToUpper() == "DRAFT SENT")
+            {
+                pagelink = "/s12-statement-confirmation-draft-sent";
+            }
+            NavigationManager.NavigateTo(pagelink, forceLoad);
+        }
+
+        private void gotoSubmissionPage(SubmissionStatusDTO reservoirStatus)
+        {
+            var reservoir = ReservoirsLinkedToUser.Where(s => s.PublicName == reservoirStatus.PublicName).FirstOrDefault();
+            var action = new StoreReservoirAction(reservoir);
+            Dispatcher.Dispatch(action);
+            bool forceLoad = false;
+            string pagelink = "/s12-statement-confirmation";
+            NavigationManager.NavigateTo(pagelink, forceLoad);
+        }
+        private void Dispose()
+        {
+            this.Dispose(true);
+        }
+
         public string text1 = "";
         public string text2 = "";
 
