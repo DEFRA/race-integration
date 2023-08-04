@@ -9,26 +9,33 @@ resources:
 - repo: self
 
 variables:
-  - name: azureServiceConnection
-    value: 'AZR-RAC-DEV1'
-  - name: resourceGroupName
-    value: 'DEVRACINFRG1401'
-  - name: templateFile
-    value: '$(Build.SourcesDirectory)/RACE2/bicepfiles/createAllContainerApps.bicep'
-  - name: parameterfile
-    value: '$(Build.SourcesDirectory)/RACE2/DeploymentYamlFiles/deployAllContainerAppsParametersDEV.json'
+  tag: '$(Build.BuildId)'
+  subscriptionName: 'AZR-RAC-DEV1'  
+  tenantId: '770a2450-0227-4c62-90c7-4e38537f1102'
+  containerRegistryFullName: 'DEVRACINFCR1401'
+  appNameSP: 'race2securityprovider'
+  dockerFilenameSP: 'Dockerfile_SecurityProvider'
+  appNameFE: 'race2frontendwebserver'
+  dockerFilenameFE: 'Dockerfile_FrontEndWebServer'
+  appNameAPI: 'race2webapi'
+  dockerFilenameAPI: 'Dockerfile_WebApi'
+  azureServiceConnection: 'AZR-RAC-DEV1'
+  containerRegistryURL: 'devracinfcr1401.azurecr.io'
+  resourceGroupName: 'DEVRACINFRG1401'
+  templateFile: '$(Build.SourcesDirectory)/RACE2/bicepfiles/createAllContainerApps.bicep'
+  parameterfile: '$(Build.SourcesDirectory)/RACE2/DeploymentYamlFiles/deployAllContainerAppsParameters.json'
 
 stages:
-- stage : DeployContainerApps
-  displayName: Deploy Container Apps to Azure Portal
+- stage : Buildandpush
+  displayName: Build image
   jobs:  
-  - job: Deploy
-    displayName: Deploy Container Apps to Azure Portal
+  - job: Build
+    displayName: Build job
     pool:
       vmImage: ubuntu-latest
     steps:
     - task: AzureCLI@2 
-      displayName: 'Deploy Container Apps to Azure Portal' 
+      displayName: 'Build and publish helm chart and container image to Azure Container Registry' 
       inputs:
         azureSubscription: $(azureServiceConnection)
         scriptType: bash
@@ -36,4 +43,10 @@ stages:
         useGlobalConfig: false    
         inlineScript: |
           az --version
+          az login --service-principal -u $(adoSpClientId) -p $(adoSpClientSecret) --tenant $(tenantId) 
+          az acr build -r $(containerRegistryFullName) -t $(containerRegistryURL)/$(appNameSP):$(tag) -f $(Build.SourcesDirectory)/RACE2/$(dockerFilenameSP) $(Build.SourcesDirectory)/RACE2
+          az acr build -r $(containerRegistryFullName) -t $(containerRegistryURL)/$(appNameFE):$(tag) -f $(Build.SourcesDirectory)/RACE2/$(dockerFilenameFE) $(Build.SourcesDirectory)/RACE2
+          az acr build -r $(containerRegistryFullName) -t $(containerRegistryURL)/$(appNameAPI):$(tag) -f $(Build.SourcesDirectory)/RACE2/$(dockerFilenameAPI) $(Build.SourcesDirectory)/RACE2
+
           az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) -p @$(parameterfile)
+
