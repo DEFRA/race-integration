@@ -84,6 +84,6 @@ stages:
         scriptLocation: inlineScript
         useGlobalConfig: false    
         inlineScript: |
-          $tag= '{\"tag\":\"$(tag)\"}'
+          $tag= '{\"tag\":\"${{ variables.tag }}\"}'
           az --version
           az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) --parameters @$(parameterfile) tag=$tag
