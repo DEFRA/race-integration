@@ -85,6 +85,6 @@ stages:
         useGlobalConfig: false    
         inlineScript: |
           tagJson= '{\"tag\":\"$(tag)\"}'
-          echo "$tagtagJson"
+          echo "$tagJson"
           az --version
           az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) --parameters @$(parameterfile) tag=tagJson
