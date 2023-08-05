@@ -10,6 +10,7 @@ param securityprovidercontainerImage string
 param managedidentity string
 param subscriptionid string 
 param tag string
+var imageName= '$(securityprovidercontainerImage):$(tag)'
 
 resource registry 'Microsoft.ContainerRegistry/registries@2023-01-01-preview' existing = {
   name: registryName
@@ -47,7 +48,7 @@ resource containerSecurityProviderApp 'Microsoft.App/containerApps@2022-01-01-pr
     template: {
       containers: [
         {
-          image: concat(securityprovidercontainerImage,':',tag)
+          image: imageName //concat(securityprovidercontainerImage,':',tag)
           name: securityProviderContainerAppName
         }
       ]
