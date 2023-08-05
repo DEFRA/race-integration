@@ -10,7 +10,7 @@ param webapicontainerImage string
 param managedidentity string
 param subscriptionid string 
 param tag string
-//var tagVal=json(tag)
+var tagVal=json(tag)
 
 resource registry 'Microsoft.ContainerRegistry/registries@2023-01-01-preview' existing = {
   name: registryName
@@ -48,7 +48,7 @@ resource containerWebApiApp 'Microsoft.App/containerApps@2022-11-01-preview' = {
     template: {
       containers: [
         {
-          image:'${webapicontainerImage}:${tag}'
+          image: concat('${webapicontainerImage}',':','${tagVal}')
           name: webApiContainerAppName
         }
       ]
