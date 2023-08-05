@@ -1,4 +1,3 @@
-
 using 'createAllContainerApps.bicep'
 
 param subscriptionid = '97ea02ef-73bc-4ee9-b320-b38a6b41b4d7'
