@@ -11,7 +11,7 @@ param managedidentity string
 param subscriptionid string 
 param tag string
 var tagVal=json(tag)
-var imageName= '$(securityprovidercontainerImage):$(tag)'
+var imageName= '$(securityprovidercontainerImage):$(tagVal)'
 
 resource registry 'Microsoft.ContainerRegistry/registries@2023-01-01-preview' existing = {
   name: registryName
