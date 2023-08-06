@@ -3,13 +3,13 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 
 trigger:
-- none
-
+  - none
+  
 resources:
 - repo: self
 
 variables:
- 
+  
   - name: repository_securityprovider
     value: 'race2securityprovider'
   - name: dockerfile_securityprovider
