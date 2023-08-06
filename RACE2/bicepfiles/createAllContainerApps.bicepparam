@@ -15,5 +15,5 @@ param webApiContainerAppName = 'race2webapi'
 param frontendcontainerImage = 'devracinfcr1401.azurecr.io/race2frontendwebserver'
 param securityprovidercontainerImage = 'devracinfcr1401.azurecr.io/race2securityprovider'
 param webapicontainerImage = 'devracinfcr1401.azurecr.io/race2webapi'
-param tag = '$(Build.BuildId)'
+param tag = '{tag:$($(Build.BuildId))}'
 
