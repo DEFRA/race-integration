@@ -48,7 +48,7 @@ resource containerSecurityProviderApp 'Microsoft.App/containerApps@2022-01-01-pr
     template: {
       containers: [
         {
-          image: concat('${securityprovidercontainerImage}',':','${tagVal.tag}')
+          image:'${securityprovidercontainerImage}:${tagVal.tag}' //concat('${securityprovidercontainerImage}',':','${tagVal.tag}')
           name: securityProviderContainerAppName
         }
       ]

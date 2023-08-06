@@ -48,7 +48,7 @@ resource containerWebApiApp 'Microsoft.App/containerApps@2022-11-01-preview' = {
     template: {
       containers: [
         {
-          image: concat('${webapicontainerImage}',':','${tagVal.tag}')
+          image: '${webapicontainerImage}:${tagVal.tag}' //concat('${webapicontainerImage}',':','${tagVal.tag}')
           name: webApiContainerAppName
         }
       ]

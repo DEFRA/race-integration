@@ -48,7 +48,7 @@ resource containerFrontEndApp 'Microsoft.App/containerApps@2022-01-01-preview' =
     template: {
       containers: [
         {
-          image: concat('${frontendcontainerImage}',':','${tagVal.tag}')
+          image: '${frontendcontainerImage}:${tagVal.tag}' //concat('${frontendcontainerImage}',':','${tagVal.tag}')
           name: frontEndContainerAppName
         }
       ]
