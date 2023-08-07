@@ -48,6 +48,20 @@ resource containerSecurityProviderApp 'Microsoft.App/containerApps@2022-01-01-pr
     template: {
       containers: [
         {
+          env: [
+            {
+              name: 'ASPNETCORE_ENVIRONMENT'
+              value: 'Production'
+            }
+            {
+              name: 'AzureAppConfigURL'
+              value: 'https://race2appconfig.azconfig.io/'
+            }
+            {
+              name: 'AZURE_CLIENT_ID'
+              value: 'f324da0d-19e1-49df-8901-faab72ed2649'
+            }
+          ]
           image:'${securityprovidercontainerImage}:${tagVal.tag}' //concat('${securityprovidercontainerImage}',':','${tagVal.tag}')
           name: securityProviderContainerAppName
         }
