@@ -25,7 +25,7 @@ variables:
   containerRegistryURL: 'race2acr.azurecr.io'
   resourceGroupName: 'RACE2ProjectRG'
   templateFile: '$(Build.SourcesDirectory)/RACE2/bicepfiles/createAllContainerApps.bicep'
-  parameterfile: '$(Build.SourcesDirectory)/RACE2/DeploymentYamlFiles/deployAllContainerAppsParameters.json'
+  parameterfile: '$(Build.SourcesDirectory)/RACE2/DeploymentYamlFiles/deployAllContainerAppsParametersPOC.json'
 
 stages:
 - stage : Buildandpush
@@ -50,5 +50,5 @@ stages:
           az acr build -r $(containerRegistryFullName) -t $(containerRegistryURL)/$(appNameFE):$(tag) -f $(Build.SourcesDirectory)/RACE2/$(dockerFilenameFE) $(Build.SourcesDirectory)/RACE2
           az acr build -r $(containerRegistryFullName) -t $(containerRegistryURL)/$(appNameAPI):$(tag) -f $(Build.SourcesDirectory)/RACE2/$(dockerFilenameAPI) $(Build.SourcesDirectory)/RACE2
 
-          az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) -p @$(parameterfile)
+          az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) -p @$(parameterfile) tag='{tag:$(tag)}'
 
