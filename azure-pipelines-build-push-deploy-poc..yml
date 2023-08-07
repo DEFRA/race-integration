@@ -31,8 +31,6 @@ variables:
     value: 'AZR-RAC-POC1'
   - name: resourceGroupName
     value: 'RACE2ProjectRG'
-  - name: managedIdentityName
-    value: 'Race2ManagedIdentity'
   - name: templateFile
     value: '$(Build.SourcesDirectory)/RACE2/bicepfiles/createAllContainerApps.bicep'
   - name: parameterfile
@@ -88,4 +86,4 @@ stages:
         useGlobalConfig: false    
         inlineScript: |
           az --version
-          az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) -p @$(parameterfile) tag='{tag:$(tag)}' azureClientId=(az identity show --resource-group $resourceGroupName --name $managedIdentityName --output json --query "clientId")
+          az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) -p @$(parameterfile) tag='{tag:$(tag)}'
