@@ -53,7 +53,7 @@ resource containerSecurityProviderApp 'Microsoft.App/containerApps@2022-01-01-pr
         }
       ]
       scale: {
-        minReplicas: 0  
+        minReplicas: 1  
         maxReplicas: 2      
       }
     }

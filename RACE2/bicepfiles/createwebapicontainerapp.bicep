@@ -53,7 +53,7 @@ resource containerWebApiApp 'Microsoft.App/containerApps@2022-11-01-preview' = {
         }
       ]
       scale: {
-        minReplicas: 0  
+        minReplicas: 1  
         maxReplicas: 2      
       }
     }
