@@ -9,6 +9,9 @@ param containerPort int
 param frontendcontainerImage string
 param managedidentity string
 param subscriptionid string 
+param appConfigURL string
+param aspnetCoreEnv string 
+param azureClientId string
 param tag string
 var tagVal=json(tag)
 
@@ -48,6 +51,20 @@ resource containerFrontEndApp 'Microsoft.App/containerApps@2022-01-01-preview' =
     template: {
       containers: [
         {
+          env: [
+            {
+              name: 'ASPNETCORE_ENVIRONMENT'
+              value: aspnetCoreEnv
+            }
+            {
+              name: 'AzureAppConfigURL'
+              value: appConfigURL
+            }
+            {
+              name: 'AZURE_CLIENT_ID'
+              value: azureClientId
+            }
+          ]
           image: '${frontendcontainerImage}:${tagVal.tag}' //concat('${frontendcontainerImage}',':','${tagVal.tag}')
           name: frontEndContainerAppName
         }

@@ -9,6 +9,9 @@ param containerPort int
 param securityprovidercontainerImage string
 param managedidentity string
 param subscriptionid string 
+param appConfigURL string
+param aspnetCoreEnv string 
+param azureClientId string
 param tag string
 var tagVal=json(tag)
 
@@ -51,15 +54,15 @@ resource containerSecurityProviderApp 'Microsoft.App/containerApps@2022-01-01-pr
           env: [
             {
               name: 'ASPNETCORE_ENVIRONMENT'
-              value: 'Production'
+              value: aspnetCoreEnv
             }
             {
               name: 'AzureAppConfigURL'
-              value: 'https://race2appconfig.azconfig.io/'
+              value: appConfigURL
             }
             {
               name: 'AZURE_CLIENT_ID'
-              value: 'f324da0d-19e1-49df-8901-faab72ed2649'
+              value: azureClientId
             }
           ]
           image:'${securityprovidercontainerImage}:${tagVal.tag}' //concat('${securityprovidercontainerImage}',':','${tagVal.tag}')

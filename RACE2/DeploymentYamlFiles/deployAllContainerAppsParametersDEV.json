@@ -20,8 +20,17 @@
       "registryResourceGroup": {
         "value": "DEVRACINFRG1401"
       },
+      "aspnetCoreEnv": {
+        "value": "Production"
+      },
+      "appConfigURL": {
+        "value": "https://devracinfac1401.azconfig.io/"
+      },
       "registryName": {
         "value": "devracinfcr1401"
+      },
+      "azureClientId": {
+        "value": "993e8eee-8b30-47e1-bace-acfbed894b5e"
       },
       "useExternalIngress": {
         "value": true
@@ -46,6 +55,6 @@
       },
       "webapicontainerImage": {
         "value": "devracinfcr1401.azurecr.io/race2webapi"
-      }      
+      }
     }
 }

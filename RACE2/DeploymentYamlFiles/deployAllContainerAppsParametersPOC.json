@@ -20,6 +20,15 @@
       "registryResourceGroup": {
         "value": "Race2ProjectRG"
       },
+      "aspnetCoreEnv": {
+        "value": "Production"
+      },
+      "azureClientId": {
+        "value": "f324da0d-19e1-49df-8901-faab72ed2649"
+      },
+      "appConfigURL": {
+        "value": "https://race2appconfig.azconfig.io/"
+      },     
       "registryName": {
         "value": "race2acr"
       },
@@ -46,6 +55,6 @@
       },
       "webapicontainerImage": {
         "value":"race2acr.azurecr.io/race2webapi"
-      }      
+      } 
     }
 }
