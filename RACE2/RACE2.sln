@@ -106,9 +106,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DockerFiles", "DockerFiles"
 	ProjectSection(SolutionItems) = preProject
 		Dockerfile = Dockerfile
 		Dockerfile_FrontEnd = Dockerfile_FrontEnd
-		Dockerfile_FrontEndWebServer = Dockerfile_FrontEndWebServer
-		Dockerfile_SecurityProvider = Dockerfile_SecurityProvider
-		Dockerfile_WebApi = Dockerfile_WebApi
+		Dockerfile_FrontEndWebServer_DEV = Dockerfile_FrontEndWebServer_DEV
+		Dockerfile_FrontEndWebServer_POC = Dockerfile_FrontEndWebServer_POC
+		Dockerfile_SecurityProvider_DEV = Dockerfile_SecurityProvider_DEV
+		Dockerfile_SecurityProvider_POC = Dockerfile_SecurityProvider_POC
+		Dockerfile_WebApi_DEV = Dockerfile_WebApi_DEV
+		Dockerfile_WebApi_POC = Dockerfile_WebApi_POC
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PowerShellScripts", "PowerShellScripts", "{D6498281-D82F-4C78-8B8A-B5EBC644E670}"
