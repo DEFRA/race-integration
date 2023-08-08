@@ -84,7 +84,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploymentyamlfiles", "depl
 		DeploymentYamlFiles\deployContainerRegistry.yml = DeploymentYamlFiles\deployContainerRegistry.yml
 		DeploymentYamlFiles\deployFrontEndContainerApp.yml = DeploymentYamlFiles\deployFrontEndContainerApp.yml
 		DeploymentYamlFiles\deploylogAnalyticsWorkspace.yml = DeploymentYamlFiles\deploylogAnalyticsWorkspace.yml
-		deploylogAnalyticsWorkspace.yml = deploylogAnalyticsWorkspace.yml
 		DeploymentYamlFiles\deployManagedIdentity.yml = DeploymentYamlFiles\deployManagedIdentity.yml
 		DeploymentYamlFiles\DeployResourceGroup.yml = DeploymentYamlFiles\DeployResourceGroup.yml
 		DeploymentYamlFiles\deploySecurityProviderContainerApp.yml = DeploymentYamlFiles\deploySecurityProviderContainerApp.yml
@@ -103,41 +102,43 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.FrontEndWebServer", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.WebApi", "RACE2.WebApi\RACE2.WebApi.csproj", "{9C0A89C3-F142-40DA-ADB8-56F012014726}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DockerFiles", "DockerFiles", "{E1E9DD3C-59BF-4A35-875C-EFE1931035E7}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DockerFiles", "DockerFiles", "{1CCBCC8A-C04F-4D81-AA4D-47C5248BA747}"
 	ProjectSection(SolutionItems) = preProject
-		.dockerignore = .dockerignore
 		Dockerfile = Dockerfile
 		Dockerfile_FrontEnd = Dockerfile_FrontEnd
-		Dockerfile_FrontEndWebServer = Dockerfile_FrontEndWebServer
-		Dockerfile_SecurityProvider = Dockerfile_SecurityProvider
-		Dockerfile_WebApi = Dockerfile_WebApi
+		Dockerfile_FrontEndWebServer_DEV = Dockerfile_FrontEndWebServer_DEV
+		Dockerfile_FrontEndWebServer_POC = Dockerfile_FrontEndWebServer_POC
+		Dockerfile_SecurityProvider_DEV = Dockerfile_SecurityProvider_DEV
+		Dockerfile_SecurityProvider_POC = Dockerfile_SecurityProvider_POC
+		Dockerfile_WebApi_DEV = Dockerfile_WebApi_DEV
+		Dockerfile_WebApi_POC = Dockerfile_WebApi_POC
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PipelineYamlFiles", "PipelineYamlFiles", "{EF8A34A5-1497-48DB-BDFA-0769A371C318}"
-	ProjectSection(SolutionItems) = preProject
-		..\azure-pipelines-1.yml = ..\azure-pipelines-1.yml
-		..\azure-pipelines-2.yml = ..\azure-pipelines-2.yml
-		..\azure-pipelines-3.yml = ..\azure-pipelines-3.yml
-		..\azure-pipelines-4.yml = ..\azure-pipelines-4.yml
-		..\azure-pipelines-build-push-dev.yml = ..\azure-pipelines-build-push-dev.yml
-		..\azure-pipelines-build-push-poc.yml = ..\azure-pipelines-build-push-poc.yml
-		..\azure-pipelines-build-push.yml = ..\azure-pipelines-build-push.yml
-		..\azure-pipelines-dev.yml = ..\azure-pipelines-dev.yml
-		..\azure-pipelines-poc..yml = ..\azure-pipelines-poc..yml
-		..\azure-pipelines.yml = ..\azure-pipelines.yml
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PowerShellScripts", "PowerShellScripts", "{21F46DBE-7856-4C0E-8FE2-A08F67B9F7CB}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PowerShellScripts", "PowerShellScripts", "{D6498281-D82F-4C78-8B8A-B5EBC644E670}"
 	ProjectSection(SolutionItems) = preProject
 		ContainerAppWorkspaceDeployDEV.ps1 = ContainerAppWorkspaceDeployDEV.ps1
 		ContainerAppWorkspaceDeployPOC.ps1 = ContainerAppWorkspaceDeployPOC.ps1
-		FrontEndDeployPOC.ps1 = FrontEndDeployPOC.ps1
 		FrontEndWebServerDeployDEV.ps1 = FrontEndWebServerDeployDEV.ps1
 		FrontEndWebServerDeployPOC.ps1 = FrontEndWebServerDeployPOC.ps1
 		SecurtyProviderDeployDEV.ps1 = SecurtyProviderDeployDEV.ps1
 		SecurtyProviderDeployPOC.ps1 = SecurtyProviderDeployPOC.ps1
 		WebApiDeployDEV.ps1 = WebApiDeployDEV.ps1
 		WebApiDeployPOC.ps1 = WebApiDeployPOC.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PipelineYamlFiles", "PipelineYamlFiles", "{BF766C13-0D25-42E7-9D64-8830E106606E}"
+	ProjectSection(SolutionItems) = preProject
+		..\azure-pipelines-0.yml = ..\azure-pipelines-0.yml
+		..\azure-pipelines-1.yml = ..\azure-pipelines-1.yml
+		..\azure-pipelines-2.yml = ..\azure-pipelines-2.yml
+		..\azure-pipelines-3.yml = ..\azure-pipelines-3.yml
+		..\azure-pipelines-4.yml = ..\azure-pipelines-4.yml
+		..\azure-pipelines-build-push-deploy-dev.yml = ..\azure-pipelines-build-push-deploy-dev.yml
+		..\azure-pipelines-build-push-deploy-poc..yml = ..\azure-pipelines-build-push-deploy-poc..yml
+		..\azure-pipelines-build-push-dev.yml = ..\azure-pipelines-build-push-dev.yml
+		..\azure-pipelines-build-push-poc.yml = ..\azure-pipelines-build-push-poc.yml
+		..\azure-pipelines-build-push.yml = ..\azure-pipelines-build-push.yml
+		..\azure-pipelines.yml = ..\azure-pipelines.yml
 	EndProjectSection
 EndProject
 Global
