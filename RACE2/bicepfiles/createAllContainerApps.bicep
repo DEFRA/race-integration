@@ -13,6 +13,10 @@ param registryName string
 param registryResourceGroup string
 param useExternalIngress bool = false
 param containerPort int
+param appConfigURL string
+param aspnetCoreEnv string 
+param azureClientId string
+param tag string
 
 module createfrontendcontainerappmodule 'createfrontendcontainerapp.bicep' = {
   scope: resourceGroup(resourcegroup)
@@ -29,6 +33,10 @@ module createfrontendcontainerappmodule 'createfrontendcontainerapp.bicep' = {
     frontendcontainerImage: frontendcontainerImage
     managedidentity: managedidentity
     subscriptionid: subscriptionid
+    appConfigURL: appConfigURL
+    aspnetCoreEnv: aspnetCoreEnv
+    azureClientId: azureClientId
+    tag: tag
   }
 }
 
@@ -47,6 +55,10 @@ module createsecurityprovidercontainerappmodule 'createsecurityprovidercontainer
     securityprovidercontainerImage: securityprovidercontainerImage
     managedidentity: managedidentity
     subscriptionid: subscriptionid
+    appConfigURL: appConfigURL
+    aspnetCoreEnv: aspnetCoreEnv
+    azureClientId: azureClientId
+    tag: tag
   }
 }
 module createwebapicontainerappmodule 'createwebapicontainerapp.bicep' = {
@@ -64,5 +76,9 @@ module createwebapicontainerappmodule 'createwebapicontainerapp.bicep' = {
     webapicontainerImage: webapicontainerImage
     managedidentity: managedidentity
     subscriptionid: subscriptionid
+    appConfigURL: appConfigURL
+    aspnetCoreEnv: aspnetCoreEnv
+    azureClientId: azureClientId
+    tag: tag
   }
 }

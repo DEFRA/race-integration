@@ -61,15 +61,11 @@ namespace RACE2.SecurityProvider
 
         public static List<Client> Clients(string blazorClientURL)
         {
-            List<string> allowedCorsOrigins = new List<string>();
-            allowedCorsOrigins.Add(blazorClientURL);
-            //allowedCorsOrigins.Add(webapiURL);
+            //List<string> allowedCorsOrigins = new List<string>();
+            //allowedCorsOrigins.Add(blazorClientURL);
             List<string> redirectUris = new List<string>();
-            //redirectUris.Add(blazorClientURL+ "/authentication/login-callback");
             redirectUris.Add(blazorClientURL + "/signin-oidc");
-            //redirectUris.Add(webapiURL);
             List<string> postLogoutRedirectUris = new List<string>();
-            //postLogoutRedirectUris.Add(blazorClientURL + "/authentication/logout-callback");
             postLogoutRedirectUris.Add(blazorClientURL + "/signout-callback-oidc");
             List<Client> clients = new List<Client>();
             Client blazorserverClient = new Client
@@ -79,20 +75,20 @@ namespace RACE2.SecurityProvider
                 ClientName = "Blazor Server",
                 AllowedGrantTypes = GrantTypes.Hybrid,
                 RequirePkce = false,
+                //AllowPlainTextPkce = false,
                 RequireConsent = false,
-                AllowPlainTextPkce = false,
-                RedirectUris = { blazorClientURL + "/signin-oidc" },
-                FrontChannelLogoutUri =  blazorClientURL + "/signin-oidc",
-                PostLogoutRedirectUris = { blazorClientURL + "/signout-callback-oidc" },
-                AllowOfflineAccess = true,
+                //AllowedCorsOrigins = allowedCorsOrigins,
+                RedirectUris = redirectUris,
+                //FrontChannelLogoutUri =  blazorClientURL + "/signin-oidc",
+                PostLogoutRedirectUris = postLogoutRedirectUris,
+                //AllowOfflineAccess = true,
                 AllowedScopes = {
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
                     IdentityServerConstants.StandardScopes.Address,
                     "roles",
                     "race2WebApi"
-                },
-                AllowedCorsOrigins = allowedCorsOrigins
+                }                
             };
 
             //Client blazorwasmClient = new Client

@@ -9,6 +9,11 @@ param containerPort int
 param webapicontainerImage string
 param managedidentity string
 param subscriptionid string 
+param appConfigURL string
+param aspnetCoreEnv string 
+param azureClientId string
+param tag string
+var tagVal=json(tag)
 
 resource registry 'Microsoft.ContainerRegistry/registries@2023-01-01-preview' existing = {
   name: registryName
@@ -46,12 +51,26 @@ resource containerWebApiApp 'Microsoft.App/containerApps@2022-11-01-preview' = {
     template: {
       containers: [
         {
-          image: webapicontainerImage
+          env: [
+            {
+              name: 'ASPNETCORE_ENVIRONMENT'
+              value: aspnetCoreEnv
+            }
+            {
+              name: 'AzureAppConfigURL'
+              value: appConfigURL
+            }
+            {
+              name: 'AZURE_CLIENT_ID'
+              value: azureClientId
+            }
+          ]
+          image: '${webapicontainerImage}:${tagVal.tag}' //concat('${webapicontainerImage}',':','${tagVal.tag}')
           name: webApiContainerAppName
         }
       ]
       scale: {
-        minReplicas: 0  
+        minReplicas: 1  
         maxReplicas: 2      
       }
     }

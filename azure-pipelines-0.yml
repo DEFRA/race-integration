@@ -18,14 +18,14 @@ variables:
     value: 'race2webapi'
   - name: dockerfile_webapi
     value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_WebApi'
-  - name: repository_frontendwebserver
-    value: 'race2frontendwebserver'
-  - name: dockerfile_frontendwebserver
-    value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_FrontEndWebServer'
+  - name: repository_frontend
+    value: 'race2frontend'
+  - name: dockerfile_frontend
+    value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_FrontEnd'
   - name: containerRegistry
     value: 'AZR-RAC-POC1-DockerRegistry'
   - name: tag
-    value: 'latest'
+    value: '$(Build.BuildId)'
 
 stages:
 - stage: Build
@@ -53,10 +53,10 @@ stages:
         containerRegistry: ${{ variables.containerRegistry }}
         tags: ${{ variables.tag }}
     - task: Docker@2
-      displayName: Build and push an image - FrontEndWebServer
+      displayName: Build and push an image - FrontEnd
       inputs:
         command: buildAndPush
-        repository: ${{ variables.repository_frontendwebserver }}
-        dockerfile: ${{ variables.dockerfile_frontendwebserver }}
+        repository: ${{ variables.repository_frontend }}
+        dockerfile: ${{ variables.dockerfile_frontend }}
         containerRegistry: ${{ variables.containerRegistry }}
         tags: ${{ variables.tag }}

@@ -9,7 +9,7 @@ resources:
 - repo: self
 
 variables:
-  tag: 'latest'
+  tag: '$(Build.BuildId)'
   subscriptionName: 'AZR-RAC-POC1'  
   tenantId: '770a2450-0227-4c62-90c7-4e38537f1102'
   containerRegistryFullName: 'Race2ACR'
@@ -20,7 +20,6 @@ variables:
   appNameAPI: 'race2webapi'
   dockerFilenameAPI: 'Dockerfile_WebApi'
   adoSpClientId: '39ef2527-ca88-4bbc-b474-2d9aecf67f46'
-  adoSpClientSecret: ''
   azureServiceConnection: 'AZR-RAC-POC1'
   containerRegistryURL: 'race2acr.azurecr.io'
   resourceGroupName: 'RACE2ProjectRG'
@@ -36,6 +35,13 @@ stages:
     pool:
       vmImage: ubuntu-latest
     steps:
+    - task: AzureKeyVault@2
+      displayName: 'Obtain Docker Password'
+      inputs:
+        azureSubscription: 'AZR-RAC-POC1'
+        KeyVaultName: 'Race2KeyVault'
+        SecretsFilter: 'ADO-DefraGovUK-AZD-RAC-POC1'
+        RunAsPreJob: true
     - task: AzureCLI@2 
       displayName: 'Build and publish helm chart and container image to Azure Container Registry' 
       inputs:
@@ -45,10 +51,9 @@ stages:
         useGlobalConfig: false    
         inlineScript: |
           az --version
-          az login --service-principal -u $(adoSpClientId) -p $(adoSpClientSecret) --tenant $(tenantId) 
+          az login --service-principal -u $(adoSpClientId) -p $(ADO-DefraGovUK-AZD-RAC-POC1) --tenant $(tenantId) 
           az acr build -r $(containerRegistryFullName) -t $(containerRegistryURL)/$(appNameSP):$(tag) -f $(Build.SourcesDirectory)/RACE2/$(dockerFilenameSP) $(Build.SourcesDirectory)/RACE2
           az acr build -r $(containerRegistryFullName) -t $(containerRegistryURL)/$(appNameFE):$(tag) -f $(Build.SourcesDirectory)/RACE2/$(dockerFilenameFE) $(Build.SourcesDirectory)/RACE2
           az acr build -r $(containerRegistryFullName) -t $(containerRegistryURL)/$(appNameAPI):$(tag) -f $(Build.SourcesDirectory)/RACE2/$(dockerFilenameAPI) $(Build.SourcesDirectory)/RACE2
 
           az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) -p @$(parameterfile)
-

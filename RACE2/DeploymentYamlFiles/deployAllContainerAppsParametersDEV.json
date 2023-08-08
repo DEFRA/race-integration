@@ -1,0 +1,60 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "subscriptionid": {
+        "value": "97ea02ef-73bc-4ee9-b320-b38a6b41b4d7"
+      }, 
+      "location": {
+        "value": "uksouth"
+      },
+      "resourcegroup": {
+        "value": "DEVRACINFRG1401"
+      },
+      "managedidentity": {
+        "value": "DEVRACINFMI1401"
+      },
+      "race2appenvName": {
+        "value": "DEVRACINFAE1401"
+      },
+      "registryResourceGroup": {
+        "value": "DEVRACINFRG1401"
+      },
+      "aspnetCoreEnv": {
+        "value": "Production"
+      },
+      "appConfigURL": {
+        "value": "https://devracinfac1401.azconfig.io/"
+      },
+      "registryName": {
+        "value": "devracinfcr1401"
+      },
+      "azureClientId": {
+        "value": "993e8eee-8b30-47e1-bace-acfbed894b5e"
+      },
+      "useExternalIngress": {
+        "value": true
+      },
+      "containerPort": {
+        "value": 80
+      },
+      "frontEndContainerAppName": {
+        "value":"race2frontendwebserver"
+      },
+      "securityProviderContainerAppName": {
+        "value":"race2securityprovider"
+      },
+      "webApiContainerAppName": {
+        "value":"race2webapi"
+      },
+      "frontendcontainerImage": {
+        "value": "devracinfcr1401.azurecr.io/race2frontendwebserver"
+      },
+      "securityprovidercontainerImage": {
+        "value": "devracinfcr1401.azurecr.io/race2securityprovider"
+      },
+      "webapicontainerImage": {
+        "value": "devracinfcr1401.azurecr.io/race2webapi"
+      }
+    }
+}

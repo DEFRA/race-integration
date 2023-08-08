@@ -1,0 +1,12 @@
+﻿<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="LUK-CND13325F9.RACE2DB"
+  DTS:DTSID="{7256D5F8-4544-4B42-8B04-C0DDB50869F9}"
+  DTS:CreationName="OLEDB">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectRetryCount="1"
+      DTS:ConnectRetryInterval="5"
+      DTS:ConnectionString="Data Source=LUK-CND13325F9;Initial Catalog=RACE2DB;Provider=SQLNCLI11.1;Integrated Security=SSPI;Application Name=SSIS-Integration Services Project1-{7256D5F8-4544-4B42-8B04-C0DDB50869F9}LUK-CND13325F9.RACE2DB;Auto Translate=False;" />
+  </DTS:ObjectData>
+</DTS:ConnectionManager>

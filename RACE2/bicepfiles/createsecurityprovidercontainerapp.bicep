@@ -9,6 +9,11 @@ param containerPort int
 param securityprovidercontainerImage string
 param managedidentity string
 param subscriptionid string 
+param appConfigURL string
+param aspnetCoreEnv string 
+param azureClientId string
+param tag string
+var tagVal=json(tag)
 
 resource registry 'Microsoft.ContainerRegistry/registries@2023-01-01-preview' existing = {
   name: registryName
@@ -46,12 +51,26 @@ resource containerSecurityProviderApp 'Microsoft.App/containerApps@2022-01-01-pr
     template: {
       containers: [
         {
-          image: securityprovidercontainerImage
+          env: [
+            {
+              name: 'ASPNETCORE_ENVIRONMENT'
+              value: aspnetCoreEnv
+            }
+            {
+              name: 'AzureAppConfigURL'
+              value: appConfigURL
+            }
+            {
+              name: 'AZURE_CLIENT_ID'
+              value: azureClientId
+            }
+          ]
+          image:'${securityprovidercontainerImage}:${tagVal.tag}' //concat('${securityprovidercontainerImage}',':','${tagVal.tag}')
           name: securityProviderContainerAppName
         }
       ]
       scale: {
-        minReplicas: 0  
+        minReplicas: 1  
         maxReplicas: 2      
       }
     }
