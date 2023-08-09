@@ -138,7 +138,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PipelineYamlFiles", "Pipeli
 		..\azure-pipelines-build-push-dev.yml = ..\azure-pipelines-build-push-dev.yml
 		..\azure-pipelines-build-push-poc.yml = ..\azure-pipelines-build-push-poc.yml
 		..\azure-pipelines-build-push.yml = ..\azure-pipelines-build-push.yml
-		..\azure-pipelines.yml = ..\azure-pipelines.yml
 	EndProjectSection
 EndProject
 Global
