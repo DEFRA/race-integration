@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server;
 using Microsoft.AspNetCore.Components.Web;
-using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using RACE2.DataModel;
@@ -53,7 +52,7 @@ builder.Services.AddAuthentication(options =>
     {
         options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
         options.SignOutScheme = OpenIdConnectDefaults.AuthenticationScheme;
-        options.Authority = "https://race2securityprovider.politemeadow-dcdc1a32.westeurope.azurecontainerapps.io/"; // RACE2IDPURL;
+        options.Authority = RACE2IDPURL;
         options.ClientId = "blazorServer";
         options.ClientSecret = "blazorserver-secret";
 

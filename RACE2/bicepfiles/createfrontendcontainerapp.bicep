@@ -64,6 +64,10 @@ resource containerFrontEndApp 'Microsoft.App/containerApps@2022-01-01-preview' =
               name: 'AZURE_CLIENT_ID'
               value: azureClientId
             }
+            {
+              name: 'DOTNET_FQDN'
+              value: 'race2securityprovider.politemeadow-dcdc1a32.westeurope.azurecontainerapps.io'
+            }
           ]
           image: '${frontendcontainerImage}:${tagVal.tag}' //concat('${frontendcontainerImage}',':','${tagVal.tag}')
           name: frontEndContainerAppName
