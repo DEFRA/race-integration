@@ -53,7 +53,7 @@ builder.Services.AddAuthentication(options =>
     {
         options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
         options.SignOutScheme = OpenIdConnectDefaults.AuthenticationScheme;
-        options.Authority = RACE2IDPURL;
+        options.Authority = "https://race2frontendwebserver.mangoriver-96d926a0.uksouth.azurecontainerapps.io"; // RACE2IDPURL;
         options.ClientId = "blazorServer";
         options.ClientSecret = "blazorserver-secret";
 
@@ -79,15 +79,9 @@ builder.Services.AddFluxor(o =>
     o.ScanAssemblies(typeof(Program).Assembly);
     o.UseReduxDevTools(rdt => { rdt.Name = "RACE2 application"; });
 });
-builder.Services.Configure<ForwardedHeadersOptions>(options =>
-{
-    options.ForwardedHeaders =
-        ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
-});
 
 var app = builder.Build();
 
-app.UseForwardedHeaders();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
