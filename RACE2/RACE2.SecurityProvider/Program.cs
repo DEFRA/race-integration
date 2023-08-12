@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations.Internal;
 using Microsoft.Extensions.Configuration.AzureAppConfiguration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.FeatureManagement;
 using RACE2.DataAccess;
 using RACE2.DatabaseProvider.Data;
@@ -63,20 +64,28 @@ builder.Services.AddDefaultIdentity<UserDetail>(options => options.SignIn.Requir
 
 builder.Services.AddRazorPages();
 
-var migrationsAssembly = typeof(Program).Assembly.GetName().Name;
+//var migrationsAssembly = typeof(Program).Assembly.GetName().Name;
+//builder.Services.AddIdentityServer()
+//    .AddConfigurationStore(options =>
+//    {
+//        options.ConfigureDbContext = b => b.UseSqlServer(sqlConnectionString,
+//            sql => sql.MigrationsAssembly(migrationsAssembly));
+//    })
+//    .AddOperationalStore(options =>
+//    {
+//        options.ConfigureDbContext = b => b.UseSqlServer(sqlConnectionString,
+//            sql => sql.MigrationsAssembly(migrationsAssembly));
+//    })
+//    .AddDeveloperSigningCredential()
+//    .AddAspNetIdentity<UserDetail>();
+
 builder.Services.AddIdentityServer()
-    .AddConfigurationStore(options =>
-    {
-        options.ConfigureDbContext = b => b.UseSqlServer(sqlConnectionString,
-            sql => sql.MigrationsAssembly(migrationsAssembly));
-    })
-    .AddOperationalStore(options =>
-    {
-        options.ConfigureDbContext = b => b.UseSqlServer(sqlConnectionString,
-            sql => sql.MigrationsAssembly(migrationsAssembly));
-    })
-    .AddDeveloperSigningCredential()
-    .AddAspNetIdentity<UserDetail>();
+            .AddInMemoryIdentityResources(ServerConfiguration.IdentityResources)
+            .AddInMemoryApiResources(ServerConfiguration.ApiResources)
+            .AddInMemoryApiScopes(ServerConfiguration.ApiScopes)
+            .AddInMemoryClients(ServerConfiguration.Clients(blazorClientURL))
+            .AddAspNetIdentity<UserDetail>()
+            .AddDeveloperSigningCredential();
 
 builder.Services.Configure<IdentityOptions>(options =>
 {
@@ -115,7 +124,7 @@ app.UseAzureAppConfiguration();
 
 app.UseHttpsRedirection();
 
-HostingExtensions.InitializeDatabase(app, blazorClientURL);//populate initial data
+//HostingExtensions.InitializeDatabase(app, blazorClientURL);//populate initial data
 
 app.UseCookiePolicy(new CookiePolicyOptions
 {
