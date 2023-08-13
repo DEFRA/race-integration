@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations.Internal;
 using Microsoft.Extensions.Configuration.AzureAppConfiguration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.FeatureManagement;
 using RACE2.DataAccess;
 using RACE2.DatabaseProvider.Data;
@@ -77,6 +78,14 @@ builder.Services.AddIdentityServer()
     })
     .AddDeveloperSigningCredential()
     .AddAspNetIdentity<UserDetail>();
+
+//builder.Services.AddIdentityServer()
+//            .AddInMemoryIdentityResources(ServerConfiguration.IdentityResources)
+//            .AddInMemoryApiResources(ServerConfiguration.ApiResources)
+//            .AddInMemoryApiScopes(ServerConfiguration.ApiScopes)
+//            .AddInMemoryClients(ServerConfiguration.Clients(blazorClientURL))
+//            .AddAspNetIdentity<UserDetail>()
+//            .AddDeveloperSigningCredential();
 
 builder.Services.Configure<IdentityOptions>(options =>
 {
