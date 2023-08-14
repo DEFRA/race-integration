@@ -64,28 +64,28 @@ builder.Services.AddDefaultIdentity<UserDetail>(options => options.SignIn.Requir
 
 builder.Services.AddRazorPages();
 
-var migrationsAssembly = typeof(Program).Assembly.GetName().Name;
-builder.Services.AddIdentityServer()
-    .AddConfigurationStore(options =>
-    {
-        options.ConfigureDbContext = b => b.UseSqlServer(sqlConnectionString,
-            sql => sql.MigrationsAssembly(migrationsAssembly));
-    })
-    .AddOperationalStore(options =>
-    {
-        options.ConfigureDbContext = b => b.UseSqlServer(sqlConnectionString,
-            sql => sql.MigrationsAssembly(migrationsAssembly));
-    })
-    .AddDeveloperSigningCredential()
-    .AddAspNetIdentity<UserDetail>();
-
+//var migrationsAssembly = typeof(Program).Assembly.GetName().Name;
 //builder.Services.AddIdentityServer()
-//            .AddInMemoryIdentityResources(ServerConfiguration.IdentityResources)
-//            .AddInMemoryApiResources(ServerConfiguration.ApiResources)
-//            .AddInMemoryApiScopes(ServerConfiguration.ApiScopes)
-//            .AddInMemoryClients(ServerConfiguration.Clients(blazorClientURL))
-//            .AddAspNetIdentity<UserDetail>()
-//            .AddDeveloperSigningCredential();
+//    .AddConfigurationStore(options =>
+//    {
+//        options.ConfigureDbContext = b => b.UseSqlServer(sqlConnectionString,
+//            sql => sql.MigrationsAssembly(migrationsAssembly));
+//    })
+//    .AddOperationalStore(options =>
+//    {
+//        options.ConfigureDbContext = b => b.UseSqlServer(sqlConnectionString,
+//            sql => sql.MigrationsAssembly(migrationsAssembly));
+//    })
+//    .AddDeveloperSigningCredential()
+//    .AddAspNetIdentity<UserDetail>();
+
+builder.Services.AddIdentityServer()
+            .AddInMemoryIdentityResources(ServerConfiguration.IdentityResources)
+            .AddInMemoryApiResources(ServerConfiguration.ApiResources)
+            .AddInMemoryApiScopes(ServerConfiguration.ApiScopes)
+            .AddInMemoryClients(ServerConfiguration.Clients(blazorClientURL))
+            .AddAspNetIdentity<UserDetail>()
+            .AddDeveloperSigningCredential();
 
 builder.Services.Configure<IdentityOptions>(options =>
 {
