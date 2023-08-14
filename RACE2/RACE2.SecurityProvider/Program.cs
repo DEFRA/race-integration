@@ -124,7 +124,7 @@ app.UseAzureAppConfiguration();
 
 app.UseHttpsRedirection();
 
-HostingExtensions.InitializeDatabase(app, blazorClientURL);//seed initial data
+//HostingExtensions.InitializeDatabase(app, blazorClientURL);//seed initial data
 
 app.UseCookiePolicy(new CookiePolicyOptions
 {

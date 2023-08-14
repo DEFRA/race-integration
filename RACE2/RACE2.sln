@@ -141,6 +141,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PipelineYamlFiles", "Pipeli
 		..\azure-pipelines.yml = ..\azure-pipelines.yml
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.FrontEndWeb", "RACE2.FrontEndWeb\RACE2.FrontEndWeb.csproj", "{27542D7A-99A2-4303-B285-E576804F6CA9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -203,6 +205,10 @@ Global
 		{9C0A89C3-F142-40DA-ADB8-56F012014726}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C0A89C3-F142-40DA-ADB8-56F012014726}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C0A89C3-F142-40DA-ADB8-56F012014726}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27542D7A-99A2-4303-B285-E576804F6CA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27542D7A-99A2-4303-B285-E576804F6CA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27542D7A-99A2-4303-B285-E576804F6CA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27542D7A-99A2-4303-B285-E576804F6CA9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

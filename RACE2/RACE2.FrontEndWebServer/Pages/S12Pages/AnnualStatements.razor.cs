@@ -32,7 +32,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         private UserDetail UserDetail { get; set; } 
         private List<Reservoir> ReservoirsLinkedToUser { get; set; } = new List<Reservoir>();
         private List<SubmissionStatusDTO> ReservoirStatusLinkedToUser { get; set; } = new List<SubmissionStatusDTO>();
-        private List<SubmissionStatusDTO> ReservoirStatusLinkedToUserComplete { get; set; } = new List<SubmissionStatusDTO>();
+        private List<SubmissionStatusDTO> ReservoirStatusLinkedToUserSubmitted { get; set; } = new List<SubmissionStatusDTO>();
         private List<SubmissionStatusDTO> ReservoirStatusLinkedToUserDraft { get; set; } = new List<SubmissionStatusDTO>();
         private IEnumerable<Claim> Claims { get; set; }
 
@@ -63,8 +63,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 };
                 ReservoirStatusLinkedToUser.Add(s);
             }
-            ReservoirStatusLinkedToUserComplete = ReservoirStatusLinkedToUser.Where(st => st.Status.ToUpper() == "COMPLETE").ToList();
-            ReservoirStatusLinkedToUserDraft = ReservoirStatusLinkedToUser.Where(st => st.Status.ToUpper() != "COMPLETE").ToList();
+            ReservoirStatusLinkedToUserSubmitted = ReservoirStatusLinkedToUser.Where(st => st.Status.ToUpper() == "SUBMITTED").ToList();
+            ReservoirStatusLinkedToUserDraft = ReservoirStatusLinkedToUser.Where(st => st.Status.ToUpper() != "SUBMITTED").ToList();
             var results = await client.GetReservoirsByUserId.ExecuteAsync(UserId);
 
             var reservoirs = results!.Data!.ReservoirsByUserId;
