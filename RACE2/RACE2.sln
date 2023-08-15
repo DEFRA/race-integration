@@ -50,6 +50,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bicepfiles", "bicepfiles", 
 		BicepFiles\createappconfig.bicep = BicepFiles\createappconfig.bicep
 		bicepfiles\createappinsight.bicep = bicepfiles\createappinsight.bicep
 		BicepFiles\createappworkspace.bicep = BicepFiles\createappworkspace.bicep
+		bicepfiles\createcontainerapp.bicep = bicepfiles\createcontainerapp.bicep
 		BicepFiles\createcontainerappenv.bicep = BicepFiles\createcontainerappenv.bicep
 		bicepfiles\createcontainerapps.bicep = bicepfiles\createcontainerapps.bicep
 		BicepFiles\createcontainerregistry.bicep = BicepFiles\createcontainerregistry.bicep
