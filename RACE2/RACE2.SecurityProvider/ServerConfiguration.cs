@@ -64,9 +64,13 @@ namespace RACE2.SecurityProvider
             //List<string> allowedCorsOrigins = new List<string>();
             //allowedCorsOrigins.Add(blazorClientURL);
             List<string> redirectUris = new List<string>();
-            redirectUris.Add(blazorClientURL + "/signin-oidc");
+            //redirectUris.Add(blazorClientURL + "/signin-oidc");
+            redirectUris.Add("https://race2securityprovider.politemeadow-dcdc1a32.westeurope.azurecontainerapps.io/signin-oidc");
+            redirectUris.Add("https://localhost:5001/signin-oidc");
             List<string> postLogoutRedirectUris = new List<string>();
-            postLogoutRedirectUris.Add(blazorClientURL + "/signout-callback-oidc");
+            //postLogoutRedirectUris.Add(blazorClientURL + "/signout-callback-oidc");
+            postLogoutRedirectUris.Add("https://race2securityprovider.politemeadow-dcdc1a32.westeurope.azurecontainerapps.io/signout-callback-oidc");
+            postLogoutRedirectUris.Add("https://localhost:5001/signout-callback-oidc");
             List<Client> clients = new List<Client>();
             Client blazorserverClient = new Client
             {

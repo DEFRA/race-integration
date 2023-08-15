@@ -63,8 +63,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 };
                 ReservoirStatusLinkedToUser.Add(s);
             }
-            ReservoirStatusLinkedToUserSubmitted = ReservoirStatusLinkedToUser.Where(st => st.Status.ToUpper() == "SUBMITTED").ToList();
-            ReservoirStatusLinkedToUserDraft = ReservoirStatusLinkedToUser.Where(st => st.Status.ToUpper() != "SUBMITTED").ToList();
+            ReservoirStatusLinkedToUserSubmitted = ReservoirStatusLinkedToUser.Where(st => st.Status.ToUpper() == "COMPLETE").ToList();
+            ReservoirStatusLinkedToUserDraft = ReservoirStatusLinkedToUser.Where(st => st.Status.ToUpper() != "COMPLETE").ToList();
             var results = await client.GetReservoirsByUserId.ExecuteAsync(UserId);
 
             var reservoirs = results!.Data!.ReservoirsByUserId;
