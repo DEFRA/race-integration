@@ -6,6 +6,9 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
+EXPOSE 80
+EXPOSE 443
+
 COPY ["RACE2.FrontEndWebServer/RACE2.FrontEndWebServer.csproj", "RACE2.FrontEndWebServer/"]
 COPY ["RACE2.DataAccess/RACE2.DataAccess.csproj", "RACE2.DataAccess/"]
 COPY ["RACE2.DataModel/RACE2.DataModel.csproj", "RACE2.DataModel/"]

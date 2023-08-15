@@ -5,7 +5,6 @@ param registryName string
 param registryResourceGroup string
 param resourcegroup string
 param useExternalIngress bool = false
-param containerPort int
 param frontendwebcontainerImage string
 param managedidentity string
 param subscriptionid string 
@@ -45,7 +44,7 @@ resource containerFrontEndWebApp 'Microsoft.App/containerApps@2022-01-01-preview
       ]
       ingress: {
         external: useExternalIngress
-        targetPort: containerPort
+        targetPort: 443
       }
     }
     template: {
