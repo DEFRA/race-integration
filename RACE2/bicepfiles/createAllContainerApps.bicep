@@ -46,7 +46,7 @@ module createfrontendcontainerappmodule 'createfrontendcontainerapp.bicep' = {
 
 module createfrontendwebcontainerappmodule 'createfrontendwebcontainerapp.bicep' = {
   scope: resourceGroup(resourcegroup)
-  name: 'frontendcontainerappdeploy'
+  name: 'frontendcontainerwebappdeploy'
   params: {
     location: location
     race2appenv: race2appenvName
@@ -68,7 +68,7 @@ module createfrontendwebcontainerappmodule 'createfrontendwebcontainerapp.bicep'
 
 module createfrontendwebservercontainerappmodule 'createfrontendwebservercontainerapp.bicep' = {
   scope: resourceGroup(resourcegroup)
-  name: 'frontendcontainerappdeploy'
+  name: 'frontendcontainerwebserverappdeploy'
   params: {
     location: location
     race2appenv: race2appenvName
