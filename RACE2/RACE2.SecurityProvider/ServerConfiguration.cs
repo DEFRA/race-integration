@@ -63,7 +63,7 @@ namespace RACE2.SecurityProvider
         {
             get
             {
-                Client client = new Client
+                Client blazorserverClient = new Client
                 {
                     ClientName = "Blazor Server",
                     ClientId = "blazorServer",
@@ -86,13 +86,46 @@ namespace RACE2.SecurityProvider
                         "https://race2frontendweb.gentlepebble-ae1a2a45.westeurope.azurecontainerapps.io/signout-callback-oidc",
                         "https://localhost:5001/signout-callback-oidc"
                     },
+                    AllowedCorsOrigins = new List<string> {
+                        "https://race2frontendwebserver.gentlepebble-ae1a2a45.westeurope.azurecontainerapps.io",
+                        "https://race2frontendweb.gentlepebble-ae1a2a45.westeurope.azurecontainerapps.io",
+                        "https://localhost:5001"
+                    },
                     RequirePkce = false,
                     RequireConsent = false
                 };
 
-                List<Client> clients = new List<Client>();
-                clients.Add(client);
+                Client blazorwasmClient = new Client
+                {
+                    ClientName = "Blazor WASM",
+                    ClientId = "blazorWASM",
+                    AllowedGrantTypes = GrantTypes.Code,
+                    RequirePkce = true,
+                    RequireClientSecret = false,
+                    AllowedCorsOrigins = new List<string> {
+                        "https://race2frontend.gentlepebble-ae1a2a45.westeurope.azurecontainerapps.io",
+                        "https://localhost:5001"
+                    },
+                    AllowedScopes =
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        "race2WebApi",
+                        "roles"
+                    },
+                    RedirectUris = new List<string> {
+                        "https://race2frontend.gentlepebble-ae1a2a45.westeurope.azurecontainerapps.io/authentication/login-callback",
+                        "https://localhost:5001/authentication/login-callback"
+                    },
+                    PostLogoutRedirectUris = new List<string> {
+                        "https://race2frontend.gentlepebble-ae1a2a45.westeurope.azurecontainerapps.io/authentication/logout-callback",
+                        "https://localhost:5001/authentication/logout-callback"
+                    }
+                };
 
+                List<Client> clients = new List<Client>();
+                clients.Add(blazorserverClient);
+                clients.Add(blazorwasmClient);
                 return clients;
             }
         }
@@ -173,9 +206,9 @@ namespace RACE2.SecurityProvider
         //        RedirectUris = redirectUris
         //    };
 
-        //clients.Add(blazorserverClient);
-        //    //clients.Add(blazorwasmClient);
-        //    //clients.Add(webapiClient);
+        //   clients.Add(blazorserverClient);
+        //   clients.Add(blazorwasmClient);
+        //    clients.Add(webapiClient);
         //    return clients;
         //}        
     }
