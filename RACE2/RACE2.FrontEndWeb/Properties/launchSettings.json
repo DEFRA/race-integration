@@ -1,0 +1,14 @@
+﻿{  
+  "profiles": {
+    "RACE2.FrontEndWeb": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "applicationUrl": "https://localhost:5001",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "AzureAppConfigURL": "https://race2appconfig.azconfig.io/"
+      }
+    }
+  }
+}

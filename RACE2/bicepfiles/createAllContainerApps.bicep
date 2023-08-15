@@ -9,6 +9,10 @@ param webApiContainerAppName string
 param webapicontainerImage string
 param frontEndContainerAppName string
 param frontendcontainerImage string
+param frontEndWebContainerAppName string
+param frontendwebcontainerImage string
+param frontEndWebServerContainerAppName string
+param frontendwebservercontainerImage string
 param registryName string
 param registryResourceGroup string
 param useExternalIngress bool = false
@@ -31,6 +35,50 @@ module createfrontendcontainerappmodule 'createfrontendcontainerapp.bicep' = {
     useExternalIngress: useExternalIngress
     containerPort: containerPort
     frontendcontainerImage: frontendcontainerImage
+    managedidentity: managedidentity
+    subscriptionid: subscriptionid
+    appConfigURL: appConfigURL
+    aspnetCoreEnv: aspnetCoreEnv
+    azureClientId: azureClientId
+    tag: tag
+  }
+}
+
+module createfrontendwebcontainerappmodule 'createfrontendwebcontainerapp.bicep' = {
+  scope: resourceGroup(resourcegroup)
+  name: 'frontendcontainerwebappdeploy'
+  params: {
+    location: location
+    race2appenv: race2appenvName
+    frontEndWebContainerAppName: frontEndWebContainerAppName
+    registryName: registryName
+    registryResourceGroup: registryResourceGroup
+    resourcegroup: resourcegroup
+    useExternalIngress: useExternalIngress
+    containerPort: containerPort
+    frontendwebcontainerImage: frontendwebcontainerImage
+    managedidentity: managedidentity
+    subscriptionid: subscriptionid
+    appConfigURL: appConfigURL
+    aspnetCoreEnv: aspnetCoreEnv
+    azureClientId: azureClientId
+    tag: tag
+  }
+}
+
+module createfrontendwebservercontainerappmodule 'createfrontendwebservercontainerapp.bicep' = {
+  scope: resourceGroup(resourcegroup)
+  name: 'frontendcontainerwebserverappdeploy'
+  params: {
+    location: location
+    race2appenv: race2appenvName
+    frontEndWebServerContainerAppName: frontEndWebServerContainerAppName
+    registryName: registryName
+    registryResourceGroup: registryResourceGroup
+    resourcegroup: resourcegroup
+    useExternalIngress: useExternalIngress
+    containerPort: containerPort
+    frontendwebservercontainerImage: frontendwebservercontainerImage
     managedidentity: managedidentity
     subscriptionid: subscriptionid
     appConfigURL: appConfigURL

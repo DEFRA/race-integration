@@ -19,6 +19,14 @@ variables:
     value: 'race2webapi'
   - name: dockerfile_webapi
     value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_WebApi_POC'
+  - name: repository_frontend
+    value: 'race2frontend'
+  - name: dockerfile_frontend
+    value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_FrontEnd_POC'
+  - name: repository_frontendweb
+    value: 'race2frontendweb'
+  - name: dockerfile_frontendweb
+    value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_FrontEndWeb_POC'
   - name: repository_frontendwebserver
     value: 'race2frontendwebserver'
   - name: dockerfile_frontendwebserver
@@ -60,15 +68,32 @@ stages:
         repository: ${{ variables.repository_webapi }}
         dockerfile: ${{ variables.dockerfile_webapi }}
         containerRegistry: ${{ variables.containerRegistry }}
+        tags: ${{ variables.tag }}    
+    - task: Docker@2
+      displayName: Build and push an image - FrontEnd
+      inputs:
+        command: buildAndPush
+        repository: ${{ variables.repository_frontend }}
+        dockerfile: ${{ variables.dockerfile_frontend }}
+        containerRegistry: ${{ variables.containerRegistry }}
+        tags: ${{ variables.tag }}
+    - task: Docker@2
+      displayName: Build and push an image - FrontEndWeb
+      inputs:
+        command: buildAndPush
+        repository: ${{ variables.repository_frontendweb }}
+        dockerfile: ${{ variables.dockerfile_frontendweb }}
+        containerRegistry: ${{ variables.containerRegistry }}
         tags: ${{ variables.tag }}
     - task: Docker@2
       displayName: Build and push an image - FrontEndWebServer
       inputs:
         command: buildAndPush
-        repository: ${{ variables.repository_frontendwebserver }}
-        dockerfile: ${{ variables.dockerfile_frontendwebserver }}
+        repository: ${{ variables.repository_frontendwebServer }}
+        dockerfile: ${{ variables.dockerfile_frontendwebServer }}
         containerRegistry: ${{ variables.containerRegistry }}
         tags: ${{ variables.tag }}
+
 - stage : DeployContainerApps
   displayName: Deploy Container Apps to Azure Portal
   jobs:  
