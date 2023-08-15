@@ -59,85 +59,124 @@ namespace RACE2.SecurityProvider
             }
         }
 
-        public static List<Client> Clients(string blazorClientURL)
+        public static List<Client> Clients
         {
-            //List<string> allowedCorsOrigins = new List<string>();
-            //allowedCorsOrigins.Add(blazorClientURL);
-            List<string> redirectUris = new List<string>();
-            //redirectUris.Add(blazorClientURL + "/signin-oidc");
-            redirectUris.Add("https://race2frontendwebserver.mangoriver-96d926a0.uksouth.azurecontainerapps.io/signin-oidc");
-            redirectUris.Add("https://race2frontendweb.mangoriver-96d926a0.uksouth.azurecontainerapps.io/signin-oidc");
-            redirectUris.Add("https://localhost:5001/signin-oidc");
-            List<string> postLogoutRedirectUris = new List<string>();
-            //postLogoutRedirectUris.Add(blazorClientURL + "/signout-callback-oidc");
-            postLogoutRedirectUris.Add("https://race2frontendwebserver.mangoriver-96d926a0.uksouth.azurecontainerapps.io/signout-callback-oidc");
-            postLogoutRedirectUris.Add("https://race2frontendweb.mangoriver-96d926a0.uksouth.azurecontainerapps.io/signout-callback-oidc");
-            postLogoutRedirectUris.Add("https://localhost:5001/signout-callback-oidc");
-            List<Client> clients = new List<Client>();
-            Client blazorserverClient = new Client
+            get
             {
-                ClientId = "blazorServer",
-                ClientSecrets = { new Secret("blazorserver-secret".Sha512()) },
-                ClientName = "Blazor Server",
-                AllowedGrantTypes = GrantTypes.Hybrid,
-                RequirePkce = false,
-                //AllowPlainTextPkce = false,
-                RequireConsent = false,
-                //AllowedCorsOrigins = allowedCorsOrigins,
-                RedirectUris = redirectUris,
-                //FrontChannelLogoutUri =  blazorClientURL + "/signin-oidc",
-                PostLogoutRedirectUris = postLogoutRedirectUris,
-                //AllowOfflineAccess = true,
-                AllowedScopes = {
-                    IdentityServerConstants.StandardScopes.OpenId,
-                    IdentityServerConstants.StandardScopes.Profile,
-                    IdentityServerConstants.StandardScopes.Address,
-                    "roles",
-                    "race2WebApi"
-                }                
-            };
+                Client client = new Client
+                {
+                    ClientName = "Blazor Server",
+                    ClientId = "blazorServer",
+                    ClientSecrets = { new Secret("blazorserver-secret".Sha512()) },
+                    AllowedGrantTypes = GrantTypes.Hybrid,
+                    AllowedScopes = {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.Address,
+                        "roles",
+                        "race2WebApi"
+                    },
+                    RedirectUris = new List<string> {
+                        "https://race2frontendwebserver.gentlepebble-ae1a2a45.westeurope.azurecontainerapps.io/signin-oidc",
+                        "https://race2frontendweb.gentlepebble-ae1a2a45.westeurope.azurecontainerapps.io/signin-oidc",
+                        "https://localhost:5001/signin-oidc"
+                    },
+                    PostLogoutRedirectUris = new List<string> {
+                        "https://race2frontendwebserver.gentlepebble-ae1a2a45.westeurope.azurecontainerapps.io/signout-callback-oidc",
+                        "https://race2frontendweb.gentlepebble-ae1a2a45.westeurope.azurecontainerapps.io/signout-callback-oidc",
+                        "https://localhost:5001/signout-callback-oidc"
+                    },
+                    RequirePkce = false,
+                    RequireConsent = false
+                };
 
-            //Client blazorwasmClient = new Client
-            //{
-            //    ClientId = "blazorWASM",
-            //    AllowedGrantTypes = GrantTypes.Code,
-            //    RequirePkce = true,
-            //    RequireClientSecret = false,
-            //    AllowedCorsOrigins = allowedCorsOrigins,
-            //    AllowedScopes =
-            //    {
-            //        IdentityServerConstants.StandardScopes.OpenId,
-            //        IdentityServerConstants.StandardScopes.Profile,
-            //        "race2WebApi",
-            //        "roles"
-            //    },
-            //    RedirectUris = redirectUris,
-            //    PostLogoutRedirectUris = postLogoutRedirectUris
-            //};
+                List<Client> clients = new List<Client>();
+                clients.Add(client);
 
-            //Client webapiClient = 
-            //    new Client
-            //    {
-            //        ClientId = "webapi",
-            //        ClientSecrets = new List<Secret> { new("secret".Sha512()) },
-            //        ClientName = "Banana Cake Pop",
-            //        AllowedGrantTypes = GrantTypes.Code,
-            //        AllowedScopes = new List<string>
-            //        {
-            //            "openid",
-            //            "profile",
-            //            "email",
-            //            "role",
-            //            "race2WebApi"
-            //        },
-            //        AllowedCorsOrigins = allowedCorsOrigins,
-            //        RedirectUris = redirectUris
-            //    };
+                return clients;
+            }
+        }
 
-            clients.Add(blazorserverClient);
-            //clients.Add(blazorwasmClient);
-            //clients.Add(webapiClient);
-            return clients;
-        }        
+        //public static List<Client> Clients(string blazorClientURL)
+        //{
+        //    //List<string> allowedCorsOrigins = new List<string>();
+        //    //allowedCorsOrigins.Add(blazorClientURL);
+        //    List<string> redirectUris = new List<string>();
+        //    //redirectUris.Add(blazorClientURL + "/signin-oidc");
+        //    redirectUris.Add("https://race2frontendwebserver.gentlepebble-ae1a2a45.westeurope.azurecontainerapps.io/signin-oidc");
+        //    redirectUris.Add("https://race2frontendweb.gentlepebble-ae1a2a45.westeurope.azurecontainerapps.io/signin-oidc");
+        //    redirectUris.Add("https://localhost:5001/signin-oidc");
+        //    List<string> postLogoutRedirectUris = new List<string>();
+        //    //postLogoutRedirectUris.Add(blazorClientURL + "/signout-callback-oidc");
+        //    postLogoutRedirectUris.Add("https://race2frontendwebserver.gentlepebble-ae1a2a45.westeurope.azurecontainerapps.io/signout-callback-oidc");
+        //    postLogoutRedirectUris.Add("https://race2frontendweb.gentlepebble-ae1a2a45.westeurope.azurecontainerapps.io/signout-callback-oidc");
+        //    postLogoutRedirectUris.Add("https://localhost:5001/signout-callback-oidc");
+        //    List<Client> clients = new List<Client>();
+        //    Client blazorserverClient = new Client
+        //    {
+        //        ClientId = "blazorServer",
+        //        ClientSecrets = { new Secret("blazorserver-secret".Sha512()) },
+        //        ClientName = "Blazor Server",
+        //        AllowedGrantTypes = GrantTypes.Hybrid,
+        //        RequirePkce = false,
+        //        //AllowPlainTextPkce = false,
+        //        RequireConsent = false,
+        //        //AllowedCorsOrigins = allowedCorsOrigins,
+        //        RedirectUris = redirectUris,
+        //        //FrontChannelLogoutUri =  blazorClientURL + "/signin-oidc",
+        //        PostLogoutRedirectUris = postLogoutRedirectUris,
+        //        //AllowOfflineAccess = true,
+        //        AllowedScopes = {
+        //            IdentityServerConstants.StandardScopes.OpenId,
+        //            IdentityServerConstants.StandardScopes.Profile,
+        //            IdentityServerConstants.StandardScopes.Address,
+        //            "roles",
+        //            "race2WebApi"
+        //        }                
+        //    };
+
+
+        //Client blazorwasmClient = new Client
+        //{
+        //    ClientId = "blazorWASM",
+        //    AllowedGrantTypes = GrantTypes.Code,
+        //    RequirePkce = true,
+        //    RequireClientSecret = false,
+        //    AllowedCorsOrigins = allowedCorsOrigins,
+        //    AllowedScopes =
+        //    {
+        //        IdentityServerConstants.StandardScopes.OpenId,
+        //        IdentityServerConstants.StandardScopes.Profile,
+        //        "race2WebApi",
+        //        "roles"
+        //    },
+        //    RedirectUris = redirectUris,
+        //    PostLogoutRedirectUris = postLogoutRedirectUris
+        //};
+
+        //Client webapiClient = 
+        //    new Client
+        //    {
+        //        ClientId = "webapi",
+        //        ClientSecrets = new List<Secret> { new("secret".Sha512()) },
+        //        ClientName = "Banana Cake Pop",
+        //        AllowedGrantTypes = GrantTypes.Code,
+        //        AllowedScopes = new List<string>
+        //        {
+        //            "openid",
+        //            "profile",
+        //            "email",
+        //            "role",
+        //            "race2WebApi"
+        //        },
+        //        AllowedCorsOrigins = allowedCorsOrigins,
+        //        RedirectUris = redirectUris
+        //    };
+
+        //clients.Add(blazorserverClient);
+        //    //clients.Add(blazorwasmClient);
+        //    //clients.Add(webapiClient);
+        //    return clients;
+        //}        
     }
 }
