@@ -24,7 +24,7 @@ resource managedEnvironments_race2containerappenv_name_resource 'Microsoft.App/m
   name: race2appenv 
 }
 
-resource containerFrontEndApp 'Microsoft.App/containerApps@2022-01-01-preview' = {
+resource containerFrontEndApp 'Microsoft.App/containerApps@2022-11-01-preview' = {
   name: frontEndContainerAppName
   location: location
   properties: {

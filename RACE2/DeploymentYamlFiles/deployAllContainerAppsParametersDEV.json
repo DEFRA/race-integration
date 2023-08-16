@@ -41,6 +41,12 @@
       "frontEndContainerAppName": {
         "value":"race2frontendwebserver"
       },
+      "frontEndWebContainerAppName": {
+        "value":"race2frontendweb"
+      },
+      "frontEndWebServerContainerAppName": {
+        "value":"race2frontendwebserver"
+      },
       "securityProviderContainerAppName": {
         "value":"race2securityprovider"
       },
@@ -49,6 +55,12 @@
       },
       "frontendcontainerImage": {
         "value": "devracinfcr1401.azurecr.io/race2frontendwebserver"
+      },
+      "frontendwebcontainerImage": {
+        "value":"devracinfcr1401.azurecr.io/race2frontendweb"
+      },
+      "frontendwebservercontainerImage": {
+        "value":"devracinfcr1401.azurecr.io/race2frontendwebserver"
       },
       "securityprovidercontainerImage": {
         "value": "devracinfcr1401.azurecr.io/race2securityprovider"
