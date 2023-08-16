@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration.AzureAppConfiguration;
+using Microsoft.IdentityModel.Logging;
 using RACE2.DataModel;
 using static System.Net.WebRequestMethods;
 
@@ -70,9 +71,14 @@ builder.Services.AddAuthentication(options =>
         options.Scope.Add("race2WebApi");
     });
 
-
 builder.Services.AddRACE2GraphQLClient()
     .ConfigureHttpClient(client => client.BaseAddress = new Uri(RACE2WebApiURL));
+
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders =
+        ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+});
 
 builder.Services.AddFluxor(o =>
 {
@@ -81,10 +87,7 @@ builder.Services.AddFluxor(o =>
 });
 
 var app = builder.Build();
-app.UseForwardedHeaders(new ForwardedHeadersOptions
-{
-    ForwardedHeaders = ForwardedHeaders.All
-});
+app.UseForwardedHeaders();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -103,5 +106,5 @@ app.UseAuthorization();
 
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
-
+IdentityModelEventSource.ShowPII = true;
 app.Run();
