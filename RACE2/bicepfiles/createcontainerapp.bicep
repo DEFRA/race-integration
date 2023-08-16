@@ -17,7 +17,7 @@ param envList array = []
 param revisionMode string = 'Single'
 param useProbes bool = true
 
-resource containerApp 'Microsoft.App/containerApps@2022-03-01' = {
+resource containerApp 'Microsoft.App/containerApps@2023-05-01' = {
   name: containerAppName
   location: location
   properties: {
