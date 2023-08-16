@@ -9,7 +9,7 @@ COPY ["RACE2.FrontEndWeb/RACE2.FrontEndWeb.csproj", "RACE2.FrontEndWeb/"]
 COPY ["RACE2.DataAccess/RACE2.DataAccess.csproj", "RACE2.DataAccess/"]
 COPY ["RACE2.DataModel/RACE2.DataModel.csproj", "RACE2.DataModel/"]
 COPY ["RACE2.Dto/RACE2.Dto.csproj", "RACE2.Dto/"]
-RUN dotnet restore "RACE2.FrontEndWebr/RACE2.FrontEndWeb.csproj"
+RUN dotnet restore "RACE2.FrontEndWeb/RACE2.FrontEndWeb.csproj"
 COPY . .
 WORKDIR "/src/RACE2.FrontEndWeb"
 RUN dotnet build "RACE2.FrontEndWeb.csproj" -c Release -o /app/build
