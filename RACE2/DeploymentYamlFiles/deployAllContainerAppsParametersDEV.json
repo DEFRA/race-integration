@@ -39,7 +39,7 @@
         "value": 80
       },
       "frontEndContainerAppName": {
-        "value":"race2frontendwebserver"
+        "value":"race2frontend"
       },
       "frontEndWebContainerAppName": {
         "value":"race2frontendweb"
@@ -54,7 +54,7 @@
         "value":"race2webapi"
       },
       "frontendcontainerImage": {
-        "value": "devracinfcr1401.azurecr.io/race2frontendwebserver"
+        "value": "devracinfcr1401.azurecr.io/race2frontend"
       },
       "frontendwebcontainerImage": {
         "value":"devracinfcr1401.azurecr.io/race2frontendweb"
