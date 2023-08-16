@@ -15,12 +15,12 @@ param managedidentity string
 param subscriptionid string 
 param logAnalyticsWorkspaceName string
 
-resource registry 'Microsoft.ContainerRegistry/registries@2021-12-01-preview' existing = {
+resource registry 'Microsoft.ContainerRegistry/registries@2022-12-01' existing = {
   name: registryName
   scope: resourceGroup(registryResourceGroup)
 }
 
-resource logAnalyticsWorkspace'Microsoft.OperationalInsights/workspaces@2020-03-01-preview' = {
+resource logAnalyticsWorkspace'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
   name: logAnalyticsWorkspaceName
   location: location
   properties: any({
@@ -34,7 +34,7 @@ resource logAnalyticsWorkspace'Microsoft.OperationalInsights/workspaces@2020-03-
   })
 }
 
-resource managedEnvironments_race2containerappenv_name_resource 'Microsoft.App/managedEnvironments@2022-10-01' = {
+resource managedEnvironments_race2containerappenv_name_resource 'Microsoft.App/managedEnvironments@2023-05-01' = {
   name: race2appenv
   location: location
   tags: {
@@ -54,7 +54,7 @@ resource managedEnvironments_race2containerappenv_name_resource 'Microsoft.App/m
   }
 }
 
-resource containerFrontEndApp 'Microsoft.App/containerApps@2022-01-01-preview' = {
+resource containerFrontEndApp 'Microsoft.App/containerApps@2023-05-01' = {
   name: containerFrontEndAppName
   location: location
   properties: {
@@ -100,7 +100,7 @@ resource containerFrontEndApp 'Microsoft.App/containerApps@2022-01-01-preview' =
   }
 }
 
-resource containerSecurityProviderApp 'Microsoft.App/containerApps@2022-01-01-preview' = {
+resource containerSecurityProviderApp 'Microsoft.App/containerApps@2023-05-01' = {
   name: containerSecurityProviderAppName
   location: location
   properties: {
@@ -146,7 +146,7 @@ resource containerSecurityProviderApp 'Microsoft.App/containerApps@2022-01-01-pr
   }
 }
 
-resource containerWebApiApp 'Microsoft.App/containerApps@2022-01-01-preview' = {
+resource containerWebApiApp 'Microsoft.App/containerApps@2023-05-01' = {
   name: containerWebApiAppName
   location: location
   properties: {

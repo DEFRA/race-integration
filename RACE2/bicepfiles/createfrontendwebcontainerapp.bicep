@@ -64,6 +64,10 @@ resource containerFrontEndWebApp 'Microsoft.App/containerApps@2022-01-01-preview
               name: 'AZURE_CLIENT_ID'
               value: azureClientId
             }
+            {
+              name: 'ASPNETCORE_FORWARDEDHEADERS_ENABLED'
+              value: 'true'
+            }
           ]
           image: '${frontendwebcontainerImage}:${tagVal.tag}' //concat('${frontendcontainerImage}',':','${tagVal.tag}')
           name: frontEndWebContainerAppName
