@@ -55,11 +55,6 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             NavigationManager.NavigateTo("/confirm-operator", forceLoad);
         }
 
-        public async void GoToSaveComebackLaterPage()
-        {
-            NavigationManager.NavigateTo("logout");
-        }
-
         private void goback()
         {
             bool forceLoad = false;
