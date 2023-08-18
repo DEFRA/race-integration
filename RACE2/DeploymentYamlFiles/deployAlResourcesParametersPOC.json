@@ -18,7 +18,7 @@
         "value": "Race2ManagedIdentity"
       }, 
       "containerregistryName": {
-        "value": "Race2ACR1"
+        "value": "Race2ACR"
       },
       "namespaces_ServiceBus_name": {
         "value": "Race2ServiceBus"
@@ -42,13 +42,16 @@
         "value": "Race2Password123!"
       }, 
       "servers_race2sqldb_name": {
-        "value": "Race2Database"
+        "value": "Race2DB"
       },
       "logAnalyticsWorkspaceName": {
         "value": "Race2LAWorkspace"
       },
       "race2appenvName": {
         "value": "Race2AppEnv"
+      },
+      "race2appinsightName": {
+        "value": "RACE2AppInSights"
       }
     }
 }
