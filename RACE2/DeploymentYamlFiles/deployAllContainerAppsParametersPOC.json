@@ -38,6 +38,18 @@
       "containerPort": {
         "value": 80
       },
+      "revisionMode ": {
+        "value": "Single"
+      },
+      "useProbes": {
+        "value": true
+      },
+      "minReplicas": {
+        "value": 1
+      },
+      "maxReplicas": {
+        "value": 2
+      },
       "frontEndContainerAppName": {
         "value":"race2frontend"
       },

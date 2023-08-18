@@ -3,31 +3,31 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
       "subscriptionid": {
-        "value": "97ea02ef-73bc-4ee9-b320-b38a6b41b4d7"
+        "value": "9327c8db-cebb-445d-9933-1bca1a76b82e"
       }, 
       "location": {
         "value": "uksouth"
       },
       "resourcegroup": {
-        "value": "DEVRACINFRG1401"
+        "value": "TSTRACINFRG1401"
       },
       "managedidentity": {
-        "value": "DEVRACINFMI1401"
+        "value": "TSTRACINFMI1401"
       },
       "race2appenvName": {
-        "value": "DEVRACINFAE1401"
+        "value": "TSTRACINFAE1401"
       },
       "registryResourceGroup": {
-        "value": "DEVRACINFRG1401"
+        "value": "TSTRACINFRG1401"
       },
       "aspnetCoreEnv": {
         "value": "Production"
       },
       "appConfigURL": {
-        "value": "https://devracinfac1401.azconfig.io/"
+        "value": "https://tstracinfac1401.azconfig.io/"
       },
       "registryName": {
-        "value": "devracinfcr1401"
+        "value": "tstracinfcr1401"
       },
       "azureClientId": {
         "value": "993e8eee-8b30-47e1-bace-acfbed894b5e"
@@ -66,19 +66,19 @@
         "value":"race2webapi"
       },
       "frontendcontainerImage": {
-        "value": "devracinfcr1401.azurecr.io/race2frontend"
+        "value": "tstracinfcr1401.azurecr.io/race2frontend"
       },
       "frontendwebcontainerImage": {
-        "value":"devracinfcr1401.azurecr.io/race2frontendweb"
+        "value":"tstracinfcr1401.azurecr.io/race2frontendweb"
       },
       "frontendwebservercontainerImage": {
-        "value":"devracinfcr1401.azurecr.io/race2frontendwebserver"
+        "value":"tstracinfcr1401.azurecr.io/race2frontendwebserver"
       },
       "securityprovidercontainerImage": {
-        "value": "devracinfcr1401.azurecr.io/race2securityprovider"
+        "value": "tstracinfcr1401.azurecr.io/race2securityprovider"
       },
       "webapicontainerImage": {
-        "value": "devracinfcr1401.azurecr.io/race2webapi"
+        "value": "tstracinfcr1401.azurecr.io/race2webapi"
       }
     }
 }
