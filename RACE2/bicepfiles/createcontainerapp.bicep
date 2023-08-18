@@ -17,7 +17,7 @@ param appConfigURL string
 param aspnetCoreEnv string 
 param azureClientId string
 param tag string
-var tagVal=json(tag)
+var tagVal = json(tag)
 
 resource registry 'Microsoft.ContainerRegistry/registries@2022-12-01' existing = {
   name: registryName
@@ -63,7 +63,7 @@ resource containerWebApiApp 'Microsoft.App/containerApps@2023-05-01' = {
     template: {
       containers: [
         {
-          image: '${containerImage}:${tagVal.tag}' //concat('${webapicontainerImage}',':','${tagVal.tag}')
+          image: '${containerImage}:${tagVal.tag}' //concat('${ontainerImage}',':','${tagVal.tag}')
           name: containerAppName
           probes: useProbes? [
             {
