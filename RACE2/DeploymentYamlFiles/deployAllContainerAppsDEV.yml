@@ -9,25 +9,46 @@ resources:
 - repo: self
 
 variables:
-  repository_securityprovider: 'race2securityprovider'
-  dockerfile_securityprovider: '$(Build.SourcesDirectory)/RACE2/Dockerfile_SecurityProvider'
-  repository_webapi: 'race2webapi'
-  dockerfile_webapi: '$(Build.SourcesDirectory)/RACE2/Dockerfile_WebApi'
-  repository_frontendwebserver: 'race2frontendwebserver'
-  dockerfile_frontendwebserver: '$(Build.SourcesDirectory)/RACE2/Dockerfile_FrontEndWebServer'
-  containerRegistry: 'AZR-RAC-DEV1-DockerRegistry'
-  tag: 'latest'
-  azureServiceConnection: 'AZR-RAC-DEV1'
-  resourceGroupName: 'DEVRACINFRG1401'
-  templateFile: '$(Build.SourcesDirectory)/RACE2/bicepfiles/createAllContainerApps.bicep'
-  parameterfile: '$(Build.SourcesDirectory)/RACE2/DeploymentYamlFiles/deployAllContainerAppsParametersDEV.json'
+ 
+  - name: repository_securityprovider
+    value: 'race2securityprovider'
+  - name: dockerfile_securityprovider
+    value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_SecurityProvider_DEV'
+  - name: repository_webapi
+    value: 'race2webapi'  
+  - name: dockerfile_webapi
+    value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_WebApi_DEV'
+  - name: repository_frontend
+    value: 'race2frontend'
+  - name: dockerfile_frontend
+    value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_FrontEnd_DEV'
+  - name: repository_frontendweb
+    value: 'race2frontendweb'
+  - name: dockerfile_frontendweb
+    value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_FrontEndWeb_DEV'
+  - name: repository_frontendwebserver
+    value: 'race2frontendwebserver'
+  - name: dockerfile_frontendwebserver
+    value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_FrontEndWebServer_DEV'
+  - name: containerRegistry
+    value: 'AZR-RAC-DEV1-DockerRegistry'
+  - name: tag
+    value: '$(Build.BuildId)'
+  - name: azureServiceConnection
+    value: 'AZR-RAC-DEV1'
+  - name: resourceGroupName
+    value: 'DEVRACINFRG1401'
+  - name: templateFile
+    value: '$(Build.SourcesDirectory)/RACE2/bicepfiles/createAllContainerApps.bicep'
+  - name: parameterfile
+    value: '$(Build.SourcesDirectory)/RACE2/DeploymentYamlFiles/deployAllContainerAppsParametersDEV.json'
 
 stages:
-- stage: Build
-  displayName: Build image
+- stage: BuildAndPush
+  displayName: Build and Push images
   jobs:
-  - job: Build
-    displayName: Build
+  - job: BuildAndPush
+    displayName: Build and Push images
     pool:
       vmImage: ubuntu-latest
     steps:
@@ -46,15 +67,32 @@ stages:
         repository: ${{ variables.repository_webapi }}
         dockerfile: ${{ variables.dockerfile_webapi }}
         containerRegistry: ${{ variables.containerRegistry }}
+        tags: ${{ variables.tag }}    
+    - task: Docker@2
+      displayName: Build and push an image - FrontEnd
+      inputs:
+        command: buildAndPush
+        repository: ${{ variables.repository_frontend }}
+        dockerfile: ${{ variables.dockerfile_frontend }}
+        containerRegistry: ${{ variables.containerRegistry }}
+        tags: ${{ variables.tag }}
+    - task: Docker@2
+      displayName: Build and push an image - FrontEndWeb
+      inputs:
+        command: buildAndPush
+        repository: ${{ variables.repository_frontendweb }}
+        dockerfile: ${{ variables.dockerfile_frontendweb }}
+        containerRegistry: ${{ variables.containerRegistry }}
         tags: ${{ variables.tag }}
     - task: Docker@2
       displayName: Build and push an image - FrontEndWebServer
       inputs:
         command: buildAndPush
-        repository: ${{ variables.repository_frontendwebserver }}
-        dockerfile: ${{ variables.dockerfile_frontendwebserver }}
+        repository: ${{ variables.repository_frontendwebServer }}
+        dockerfile: ${{ variables.dockerfile_frontendwebServer }}
         containerRegistry: ${{ variables.containerRegistry }}
         tags: ${{ variables.tag }}
+
 - stage : DeployContainerApps
   displayName: Deploy Container Apps to Azure Portal
   jobs:  
@@ -72,4 +110,4 @@ stages:
         useGlobalConfig: false    
         inlineScript: |
           az --version
-          az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) -p @$(parameterfile)
+          az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) -p @$(parameterfile) tag='{tag:$(tag)}'

@@ -29,7 +29,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         public string ReservoirName { get; set; } = default!;
         string selectedFile = "";
         string selectedFolder = "";
-        Stream seletedFileContent { get; set; }
+        Stream selectedFileContent { get; set; }
         protected override async void OnInitialized()
         {
             AuthenticationState authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
@@ -49,13 +49,13 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         private void OnInputFileChange(InputFileChangeEventArgs e)
         {
             selectedFile = e.File.Name;
-            seletedFileContent = e.File.OpenReadStream();
+            selectedFileContent = e.File.OpenReadStream();
             if (selectedFile == null) return;
             this.StateHasChanged();
         }
         private async void UploadCompletedReport()
         {
-            var s = seletedFileContent;
+            var s = selectedFileContent;
             var blobName = "s12ReportComplete" + "_" + UserName + "_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + ".docx";
             var filename = selectedFile;
 
@@ -63,7 +63,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             {
                 //var result1 = await client.UploadToBlobFromLocalFile.ExecuteAsync(blobName, filename);
                 var fileToUpload = new UploadFileInput();
-                fileToUpload.File = new Upload(seletedFileContent, filename);
+                fileToUpload.File = new Upload(selectedFileContent, filename);
                 fileToUpload.BlobName = blobName;
                 var result1 = await client.UploadFile.ExecuteAsync(fileToUpload);
             }

@@ -1,0 +1,57 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "subscriptionid": {
+        "value": "9327c8db-cebb-445d-9933-1bca1a76b82e"
+      }, 
+      "tenantId": {
+        "value": "770a2450-0227-4c62-90c7-4e38537f1102"
+      }, 
+      "location": {
+        "value": "uksouth"
+      }, 
+      "resourcegroup": {
+        "value": "TSTRACINFRG1401"
+      },
+      "managedidentity": {
+        "value": "TSTRACINFMI1401"
+      }, 
+      "containerregistryName": {
+        "value": "TSTRACINFCR1401"
+      },
+      "serviceBusName": {
+        "value": "TSTRACINFSB1401"
+      },
+      "storageAccountName": {
+        "value": "tstracinfst1401"
+      },
+      "appconfigName": {
+        "value": "TSTRACINFAC1401"
+      },
+      "keyvaultName": {
+        "value": "TSTRACINFVT1401"
+      },
+      "servers_race2sqlserver_name": {
+        "value": "TSTRACINFSS1401"
+      },
+      "administratorLogin": {
+        "value": "race2admin"
+      } ,
+      "administratorLoginPassword": {
+        "value": "Race2Password123!"
+      }, 
+      "servers_race2sqldb_name": {
+        "value": "TSTRACINFDB1401"
+      },
+      "logAnalyticsWorkspaceName": {
+        "value": "TSTRACINFWS1401"
+      },
+      "race2appenvName": {
+        "value": "TSTRACINFAE1401"
+      },
+      "race2appinsightName": {
+        "value": "TSTRACINFAI1401"
+      }
+    }
+}

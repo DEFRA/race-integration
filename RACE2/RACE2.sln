@@ -108,9 +108,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DockerFiles", "DockerFiles", "{1CCBCC8A-C04F-4D81-AA4D-47C5248BA747}"
 	ProjectSection(SolutionItems) = preProject
 		Dockerfile = Dockerfile
-		Dockerfile_FrontEnd = Dockerfile_FrontEnd
 		Dockerfile_FrontEndWebServer_DEV = Dockerfile_FrontEndWebServer_DEV
 		Dockerfile_FrontEndWebServer_POC = Dockerfile_FrontEndWebServer_POC
+		Dockerfile_FrontEnd_DEV = Dockerfile_FrontEnd_DEV
+		Dockerfile_FrontEnd_POC = Dockerfile_FrontEnd_POC
 		Dockerfile_SecurityProvider_DEV = Dockerfile_SecurityProvider_DEV
 		Dockerfile_SecurityProvider_POC = Dockerfile_SecurityProvider_POC
 		Dockerfile_WebApi_DEV = Dockerfile_WebApi_DEV
