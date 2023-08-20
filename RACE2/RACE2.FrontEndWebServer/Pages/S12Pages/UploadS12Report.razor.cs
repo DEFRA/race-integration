@@ -3,13 +3,14 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.JSInterop;
 using RACE2.DataModel;
 using RACE2.Dto;
 using RACE2.FrontEndWebServer.FluxorImplementation.Actions;
 using RACE2.FrontEndWebServer.FluxorImplementation.Stores;
 using RACE2.FrontEndWebServer.RACE2GraphQLSchema;
+using RACE2.Services;
 using StrawberryShake;
-//using RACE2.FrontEnd.RACE2GraphQLSchema;
 
 namespace RACE2.FrontEndWebServer.Pages.S12Pages
 {
@@ -19,17 +20,28 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         public RACE2GraphQLClient client { get; set; } = default!;
         [Inject]
         public NavigationManager NavigationManager { get; set; } = default!;
-
         [Inject]
         public IDispatcher Dispatcher { get; set; } = default!;
+        [Inject]
+        public IBlobStorageService blobStorageService { get; set; } = default!;
+        [Inject]
+        public IJSRuntime jsRuntime { get; set; } = default!;
+
         private int UserId { get; set; } = 0;
         private string UserName { get; set; } = "Unknown";
         private UserDetail UserDetail { get; set; }
         public Reservoir CurrentReservoir { get; set; } = new Reservoir();
         public string ReservoirName { get; set; } = default!;
-        string selectedFile = "";
-        string selectedFolder = "";
-        Stream selectedFileContent { get; set; }
+        private string warningMessage = "";
+        private string displayMessage = "";
+        private List<IBrowserFile> loadedFiles = new();
+        private long maxFileSize = 1024 * 15;
+        private int maxAllowedFiles = 3;
+        private bool fileLoading;
+        string Message = "No file(s) selected";
+        IReadOnlyList<IBrowserFile> selectedFiles;
+        private List<FileUploadViewModel> fileUploadViewModels = new();
+
         protected override async void OnInitialized()
         {
             AuthenticationState authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
@@ -48,25 +60,80 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         }
         private void OnInputFileChange(InputFileChangeEventArgs e)
         {
-            selectedFile = e.File.Name;
-            selectedFileContent = e.File.OpenReadStream();
-            if (selectedFile == null) return;
+            selectedFiles = e.GetMultipleFiles();
+            Message = $"{selectedFiles.Count} file(s) selected";
             this.StateHasChanged();
         }
-        private async void UploadCompletedReport()
+        private async void OnUploadSubmit()
         {
-            var s = selectedFileContent;
-            var blobName = "s12ReportComplete" + "_" + UserName + "_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + ".docx";
-            var filename = selectedFile;
-
-            if (!String.IsNullOrWhiteSpace(filename))
+            fileLoading = true;
+            foreach (var file in selectedFiles)
             {
-                //var result1 = await client.UploadToBlobFromLocalFile.ExecuteAsync(blobName, filename);
-                var fileToUpload = new UploadFileInput();
-                fileToUpload.File = new Upload(selectedFileContent, filename);
-                fileToUpload.BlobName = blobName;
-                var result1 = await client.UploadFile.ExecuteAsync(fileToUpload);
+                try
+                {
+                    var trustedFileNameForFileStorage = file.Name;
+                    var blobUrl = await blobStorageService.UploadFileToBlobAsync(trustedFileNameForFileStorage, file.ContentType, file.OpenReadStream(20971520));
+                    if (blobUrl != null)
+                    {
+                        FileUploadViewModel fileUploadViewModel = new FileUploadViewModel()
+                        {
+                            FileName = trustedFileNameForFileStorage,
+                            FileStorageUrl = blobUrl,
+                            ContentType = file.ContentType,
+                        };
+
+                        fileUploadViewModels.Add(fileUploadViewModel);
+                        displayMessage = trustedFileNameForFileStorage + " Uploaded!!";
+                    }
+                    else
+                        warningMessage = "File Upload failed, Please try again!!";
+
+                }
+                catch (Exception ex)
+                {
+                    warningMessage = "File Upload failed, Please try again!!";
+                }
             }
+
+            fileLoading = false;
+            this.StateHasChanged();
+        }
+
+        private async void OnFileDeleteClick(FileUploadViewModel attachment)
+        {
+            try
+            {
+                var deleteResponse = await blobStorageService.DeleteFileToBlobAsync(attachment.FileName);
+                if (deleteResponse)
+                {
+                    fileUploadViewModels.Remove(attachment);
+                    displayMessage = attachment.FileName + " Deleted!!";
+                }
+
+            }
+            catch (Exception)
+            {
+                warningMessage = "Something went wrong! Please try again.";
+            }
+            this.StateHasChanged();
+        }
+        private async void OnFileViewClick(FileUploadViewModel attachment)
+        {
+            try
+            {
+                var sasToken = await blobStorageService.GetBlobSAsTokenByFile(attachment.FileName);
+                if (sasToken != null)
+                {
+                    string fileUrl = attachment.FileStorageUrl + "?" + sasToken;
+                    await jsRuntime.InvokeAsync<object>("open", fileUrl, "_blank");
+                }
+
+            }
+            catch (Exception)
+            {
+                warningMessage = "Something went wrong! Please try again.";
+            }
+            this.StateHasChanged();
         }
 
         private void goback()

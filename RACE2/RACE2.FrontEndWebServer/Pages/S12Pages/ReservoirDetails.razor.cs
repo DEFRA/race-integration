@@ -65,7 +65,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         {
             var blobName = "s12ReportTemplate" + "_" + UserName + "_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + ".docx";
             var result1 = await client.WriteContentToBlob.ExecuteAsync(blobName, CurrentReservoir.PublicName);
-            var result2 = await client.DownloadBlobToLocalFile.ExecuteAsync(blobName, "c:\\temp\\" + blobName);
+            var result2 = await client.DownloadBlobToLocalFile.ExecuteAsync(blobName, "d:\\temp\\" + blobName);
         }
 
         private async void UploadCompletedReport()
