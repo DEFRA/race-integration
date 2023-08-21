@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.JSInterop;
 using RACE2.DataModel;
 using RACE2.FrontEndWebServer.FluxorImplementation.Stores;
 using RACE2.FrontEndWebServer.FluxorImplementation.Actions;
@@ -9,6 +10,9 @@ using RACE2.FrontEndWebServer.RACE2GraphQLSchema;
 using Microsoft.AspNetCore.Components.Web;
 using RACE2.Dto;
 using Microsoft.AspNetCore.Components.Forms;
+using RACE2.Services;
+using System.IO;
+using System.IO.Pipes;
 
 namespace RACE2.FrontEndWebServer.Pages.S12Pages
 {
@@ -24,6 +28,10 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         public IState<CurrentUserDetailState> CurrentUserDetailState { get; set; } = default!;
         [Inject]
         public IDispatcher Dispatcher { get; set; } = default!;
+        [Inject]
+        public IJSRuntime jsRuntime { get; set; } = default!;
+        [Inject]
+        public IBlobStorageService blobStorageService { get; set; } = default!;
 
         public Reservoir CurrentReservoir { get; set; } = new Reservoir();
         public string ReservoirName { get; set; } = default!;
@@ -63,9 +71,15 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         }
         private async void DownloadReportTemplate()
         {
-            var blobName = "s12ReportTemplate" + "_" + UserName + "_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + ".docx";
+            var userName= UserName.Split('@')[0];
+            //var blobName = "s12ReportTemplate" + "_" + userName + "_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + ".docx";
+            var blobName = "S12ReportTemplate.docx";
             var result1 = await client.WriteContentToBlob.ExecuteAsync(blobName, CurrentReservoir.PublicName);
-            var result2 = await client.DownloadBlobToLocalFile.ExecuteAsync(blobName, "d:\\temp\\" + blobName);
+            //var result2 = await client.DownloadBlobToLocalFile.ExecuteAsync(blobName, "d:\\temp\\" + blobName);
+            var result= await blobStorageService.GetBlobFile(blobName);
+            using var streamRef = new DotNetStreamReference(stream: result.Content);
+            var _module= await jsRuntime.InvokeAsync<IJSObjectReference>("import", "./javascript/downloadFileFromStream.js");
+            await _module.InvokeVoidAsync("downloadFileFromStream", blobName, streamRef);
         }
 
         private async void UploadCompletedReport()

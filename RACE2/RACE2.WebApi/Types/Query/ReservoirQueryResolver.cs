@@ -123,7 +123,7 @@ namespace RACE2.WebApi.Types
                 // create a client with the connection
 
                 BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
-
+                container.CreateIfNotExists();
                 BlobClient blobClient = container.GetBlobClient(blobName);
 
                 ms.Position = 0;

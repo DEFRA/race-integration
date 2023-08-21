@@ -26,7 +26,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         public IBlobStorageService blobStorageService { get; set; } = default!;
         [Inject]
         public IJSRuntime jsRuntime { get; set; } = default!;
-
+        [Inject]
+        public IState<CurrentReservoirState> CurrentReservoirState { get; set; } = default!;
         private int UserId { get; set; } = 0;
         private string UserName { get; set; } = "Unknown";
         private UserDetail UserDetail { get; set; }
@@ -56,6 +57,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 Id = UserId,
                 Email = userDetails!.Data!.UserByEmailID.Email
             };
+            CurrentReservoir = CurrentReservoirState.Value.CurrentReservoir;
             base.OnInitialized();
         }
         private void OnInputFileChange(InputFileChangeEventArgs e)
@@ -71,8 +73,14 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             {
                 try
                 {
-                    var trustedFileNameForFileStorage = file.Name;
-                    var blobUrl = await blobStorageService.UploadFileToBlobAsync(trustedFileNameForFileStorage, file.ContentType, file.OpenReadStream(20971520));
+                    var extn = file.Name.Split('.')[1];
+                    var containerName = UserName.Split("@")[0];
+                    if (containerName.Contains('.'))
+                    {
+                        containerName = containerName.Split('.')[0];
+                    }
+                    var trustedFileNameForFileStorage = "S12Report_"+ CurrentReservoir.PublicName+ "_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + "."+ extn;
+                    var blobUrl = await blobStorageService.UploadFileToBlobAsync(containerName,trustedFileNameForFileStorage, file.ContentType, file.OpenReadStream(20971520));
                     if (blobUrl != null)
                     {
                         FileUploadViewModel fileUploadViewModel = new FileUploadViewModel()
@@ -103,7 +111,12 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         {
             try
             {
-                var deleteResponse = await blobStorageService.DeleteFileToBlobAsync(attachment.FileName);
+                var containerName = UserName.Split("@")[0];
+                if (containerName.Contains('.'))
+                {
+                    containerName = containerName.Split('.')[0];
+                }
+                var deleteResponse = await blobStorageService.DeleteFileToBlobAsync(containerName, attachment.FileName);
                 if (deleteResponse)
                 {
                     fileUploadViewModels.Remove(attachment);
@@ -121,7 +134,12 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         {
             try
             {
-                var sasToken = await blobStorageService.GetBlobSAsTokenByFile(attachment.FileName);
+                var containerName = UserName.Split("@")[0];
+                if (containerName.Contains('.'))
+                {
+                    containerName = containerName.Split('.')[0];
+                }
+                var sasToken = await blobStorageService.GetBlobAsTokenByFile(containerName,attachment.FileName);
                 if (sasToken != null)
                 {
                     string fileUrl = attachment.FileStorageUrl + "?" + sasToken;
