@@ -38,6 +38,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         private int UserId { get; set; } = 0;
         private string UserName { get; set; } = "Unknown";
         private UserDetail UserDetail { get; set; }
+        private IJSObjectReference _module;
 
         protected override async void OnInitialized()
         {
@@ -54,6 +55,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 Email = userDetails!.Data!.UserByEmailID.Email
             };
             CurrentReservoir = CurrentReservoirState.Value.CurrentReservoir;
+            _module = await jsRuntime.InvokeAsync<IJSObjectReference>("import", "./js/downloadFileFromStream.js");
             base.OnInitialized();
         }
 
@@ -71,29 +73,21 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         }
         private async void DownloadReportTemplate()
         {
-            var userName= UserName.Split('@')[0];
-            //var blobName = "s12ReportTemplate" + "_" + userName + "_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + ".docx";
             var blobName = "S12ReportTemplate.docx";
             var result1 = await client.WriteContentToBlob.ExecuteAsync(blobName, CurrentReservoir.PublicName);
             //var result2 = await client.DownloadBlobToLocalFile.ExecuteAsync(blobName, "d:\\temp\\" + blobName);
-            var result= await blobStorageService.GetBlobFile(blobName);
-            using var streamRef = new DotNetStreamReference(stream: result.Content);
-            var _module= await jsRuntime.InvokeAsync<IJSObjectReference>("import", "./javascript/downloadFileFromStream.js");
-            await _module.InvokeVoidAsync("downloadFileFromStream", blobName, streamRef);
+            var response= await blobStorageService.GetBlobFile(blobName);
+            var streamRef = new DotNetStreamReference(stream: response.Content);
+            await _module.InvokeVoidAsync("download", new
+            {
+                ByteArray = streamRef,
+                FileName = blobName,
+                ContentType = response.ContentType //"application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            });
         }
 
         private async void UploadCompletedReport()
         {
-            //    var blobName = "s12ReportComplete" + "_" + CurrentUser.UserName + "_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + ".docx";
-            //    //var filename = "c:\\temp\\s12ReportComplete_kriss.sahoo@capgemini.com_1172023.docx";
-            //    var filename = selectedFolder+selectedFile;
-
-            //    if (!String.IsNullOrWhiteSpace(filename))
-            //    {
-            //        var result1 = await client.UploadToBlobFromLocalFile.ExecuteAsync(blobName, filename);
-            //    }
-
-
             bool forceLoad = false;
             string pagelink = "/upload-s12report";
             //string pagelink = "/upload-multiple-s12reports";
