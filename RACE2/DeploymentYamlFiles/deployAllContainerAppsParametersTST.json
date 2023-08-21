@@ -38,7 +38,7 @@
       "containerPort": {
         "value": 80
       },
-      "revisionMode ": {
+      "revisionMode": {
         "value": "Single"
       },
       "useProbes": {
