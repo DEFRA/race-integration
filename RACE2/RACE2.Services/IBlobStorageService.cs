@@ -1,4 +1,5 @@
-﻿using RACE2.Dto;
+﻿using Azure.Storage.Blobs.Models;
+using RACE2.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace RACE2.Services
         Task<string> GetBlobAsTokenByFile(string fileName);
         Task<string> GetBlobAsTokenByFile(string containerName, string fileName);
         Task<List<BlobDto>> GetBlobFiles();
-        Task<ContentDto> GetBlobFile(string name);        
+        Task<ContentDto> GetBlobFile(string name);
+        Task<Stream> GetBlobFileStream(string name);
     }
 }

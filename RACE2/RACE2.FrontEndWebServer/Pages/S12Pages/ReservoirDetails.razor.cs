@@ -38,7 +38,6 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         private int UserId { get; set; } = 0;
         private string UserName { get; set; } = "Unknown";
         private UserDetail UserDetail { get; set; }
-        private IJSObjectReference _module;
 
         protected override async void OnInitialized()
         {
@@ -55,7 +54,6 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 Email = userDetails!.Data!.UserByEmailID.Email
             };
             CurrentReservoir = CurrentReservoirState.Value.CurrentReservoir;
-            _module = await jsRuntime.InvokeAsync<IJSObjectReference>("import", "./js/downloadFileFromStream.js");
             base.OnInitialized();
         }
 
@@ -74,16 +72,11 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         private async void DownloadReportTemplate()
         {
             var blobName = "S12ReportTemplate.docx";
-            var result1 = await client.WriteContentToBlob.ExecuteAsync(blobName, CurrentReservoir.PublicName);
+            //var result1 = await client.WriteContentToBlob.ExecuteAsync(blobName, CurrentReservoir.PublicName);
             //var result2 = await client.DownloadBlobToLocalFile.ExecuteAsync(blobName, "d:\\temp\\" + blobName);
-            var response= await blobStorageService.GetBlobFile(blobName);
-            var streamRef = new DotNetStreamReference(stream: response.Content);
-            await _module.InvokeVoidAsync("download", new
-            {
-                ByteArray = streamRef,
-                FileName = blobName,
-                ContentType = response.ContentType //"application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-            });
+            var response = await blobStorageService.GetBlobFileStream(blobName);
+            var streamRef = new DotNetStreamReference(stream: response);
+            await jsRuntime.InvokeVoidAsync("downloadFileFromStream", blobName, streamRef);
         }
 
         private async void UploadCompletedReport()

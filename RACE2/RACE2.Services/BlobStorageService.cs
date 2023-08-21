@@ -189,8 +189,21 @@ namespace RACE2.Services
 
             return null;
         }
-        
 
+        public async Task<Stream> GetBlobFileStream(string name)
+        {
+            var container = new BlobContainerClient(blobStorageconnection, blobContainerName);
+            var blob = container.GetBlobClient(name);
+
+            if (await blob.ExistsAsync())
+            {
+                var a = await blob.DownloadAsync();               
+
+                return a.Value.Content;
+            }
+
+            return null;
+        }
     }
 }
 
