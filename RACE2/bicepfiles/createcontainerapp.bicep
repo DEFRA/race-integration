@@ -93,6 +93,10 @@ resource containerWebApiApp 'Microsoft.App/containerApps@2023-05-01' = {
               name: 'AZURE_CLIENT_ID'
               value: azureClientId
             }
+            {
+              name: 'ASPNETCORE_FORWARDEDHEADERS_ENABLED'
+              value: 'true'
+            }
           ] 
         }
       ]
