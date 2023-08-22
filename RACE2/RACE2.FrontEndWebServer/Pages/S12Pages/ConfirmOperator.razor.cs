@@ -11,7 +11,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         [Inject]
         public NavigationManager NavigationManager { get; set; } = default!;
         [Inject]
-        public RACE2GraphQLClient client { get; set; } = default!;
+        private RACE2GraphQLClient client { get; set; } = default!;
         [Inject]
         public IState<CurrentUserDetailState> CurrentUserDetailState { get; set; } = default!;
         [Inject]

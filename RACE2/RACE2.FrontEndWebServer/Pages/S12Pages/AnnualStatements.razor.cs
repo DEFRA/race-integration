@@ -17,7 +17,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
     public partial class AnnualStatements
     {
         [Inject]
-        public RACE2GraphQLClient client { get; set; } = default!;
+        private RACE2GraphQLClient client { get; set; } = default!;
         [Inject]
         public NavigationManager NavigationManager { get; set; } = default!;
         [Inject]
