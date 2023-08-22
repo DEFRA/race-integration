@@ -9,7 +9,7 @@ namespace RACE2.FrontEnd.Pages.S12Pages
     public partial class NewReservoir
     {
         [Inject]
-        public RACE2GraphQLClient client { get; set; } = default!;
+        private RACE2GraphQLClient client { get; set; } = default!;
         [Inject]
         public NavigationManager NavigationManager { get; set; } = default!;
 
