@@ -82,8 +82,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         private async void UploadCompletedReport()
         {
             bool forceLoad = false;
-            string pagelink = "/upload-s12report";
-            //string pagelink = "/upload-multiple-s12reports";
+            //string pagelink = "/upload-s12report";
+            string pagelink = "/upload-multiple-s12reports";
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }
     }
