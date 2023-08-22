@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.JSInterop;
 using RACE2.DataModel;
 using RACE2.FrontEndWebServer.FluxorImplementation.Stores;
 using RACE2.FrontEndWebServer.FluxorImplementation.Actions;
@@ -9,6 +10,9 @@ using RACE2.FrontEndWebServer.RACE2GraphQLSchema;
 using Microsoft.AspNetCore.Components.Web;
 using RACE2.Dto;
 using Microsoft.AspNetCore.Components.Forms;
+using RACE2.Services;
+using System.IO;
+using System.IO.Pipes;
 
 namespace RACE2.FrontEndWebServer.Pages.S12Pages
 {
@@ -24,6 +28,10 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         public IState<CurrentUserDetailState> CurrentUserDetailState { get; set; } = default!;
         [Inject]
         public IDispatcher Dispatcher { get; set; } = default!;
+        [Inject]
+        public IJSRuntime jsRuntime { get; set; } = default!;
+        [Inject]
+        public IBlobStorageService blobStorageService { get; set; } = default!;
 
         public Reservoir CurrentReservoir { get; set; } = new Reservoir();
         public string ReservoirName { get; set; } = default!;
@@ -55,36 +63,24 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             NavigationManager.NavigateTo("/confirm-operator", forceLoad);
         }
 
-        public async void GoToSaveComebackLaterPage()
-        {
-            NavigationManager.NavigateTo("logout");
-        }
-
         private void goback()
         {
             bool forceLoad = false;
-            string pagelink = "/choose-a-reservoir";
+            string pagelink = "/annual-statements";
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }
         private async void DownloadReportTemplate()
         {
-            var blobName = "s12ReportTemplate" + "_" + UserName + "_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + ".docx";
-            var result1 = await client.WriteContentToBlob.ExecuteAsync(blobName, CurrentReservoir.PublicName);
-            var result2 = await client.DownloadBlobToLocalFile.ExecuteAsync(blobName, "c:\\temp\\" + blobName);
+            var blobName = "S12ReportTemplate.docx";
+            //var result1 = await client.WriteContentToBlob.ExecuteAsync(blobName, CurrentReservoir.PublicName);
+            //var result2 = await client.DownloadBlobToLocalFile.ExecuteAsync(blobName, "d:\\temp\\" + blobName);
+            var response = await blobStorageService.GetBlobFileStream(blobName);
+            var streamRef = new DotNetStreamReference(stream: response);
+            await jsRuntime.InvokeVoidAsync("downloadFileFromStream", blobName, streamRef);
         }
 
         private async void UploadCompletedReport()
         {
-            //    var blobName = "s12ReportComplete" + "_" + CurrentUser.UserName + "_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + ".docx";
-            //    //var filename = "c:\\temp\\s12ReportComplete_kriss.sahoo@capgemini.com_1172023.docx";
-            //    var filename = selectedFolder+selectedFile;
-
-            //    if (!String.IsNullOrWhiteSpace(filename))
-            //    {
-            //        var result1 = await client.UploadToBlobFromLocalFile.ExecuteAsync(blobName, filename);
-            //    }
-
-
             bool forceLoad = false;
             //string pagelink = "/upload-s12report";
             string pagelink = "/upload-multiple-s12reports";

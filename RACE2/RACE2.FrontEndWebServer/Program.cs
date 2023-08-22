@@ -6,9 +6,12 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration.AzureAppConfiguration;
+using Microsoft.IdentityModel.Logging;
 using RACE2.DataModel;
+using RACE2.Services;
 using static System.Net.WebRequestMethods;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -69,9 +72,14 @@ builder.Services.AddAuthentication(options =>
         options.Scope.Add("race2WebApi");
     });
 
-
 builder.Services.AddRACE2GraphQLClient()
     .ConfigureHttpClient(client => client.BaseAddress = new Uri(RACE2WebApiURL));
+
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders =
+        ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+});
 
 builder.Services.AddFluxor(o =>
 {
@@ -79,8 +87,10 @@ builder.Services.AddFluxor(o =>
     o.UseReduxDevTools(rdt => { rdt.Name = "RACE2 application"; });
 });
 
-var app = builder.Build();
+builder.Services.AddScoped<IBlobStorageService, BlobStorageService>();
 
+var app = builder.Build();
+app.UseForwardedHeaders();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -99,5 +109,5 @@ app.UseAuthorization();
 
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
-
+IdentityModelEventSource.ShowPII = true;
 app.Run();

@@ -38,7 +38,25 @@
       "containerPort": {
         "value": 80
       },
+      "revisionMode": {
+        "value": "Single"
+      },
+      "useProbes": {
+        "value": true
+      },
+      "minReplicas": {
+        "value": 1
+      },
+      "maxReplicas": {
+        "value": 2
+      },
       "frontEndContainerAppName": {
+        "value":"race2frontend"
+      },
+      "frontEndWebContainerAppName": {
+        "value":"race2frontendweb"
+      },
+      "frontEndWebServerContainerAppName": {
         "value":"race2frontendwebserver"
       },
       "securityProviderContainerAppName": {
@@ -48,7 +66,13 @@
         "value":"race2webapi"
       },
       "frontendcontainerImage": {
-        "value": "devracinfcr1401.azurecr.io/race2frontendwebserver"
+        "value": "devracinfcr1401.azurecr.io/race2frontend"
+      },
+      "frontendwebcontainerImage": {
+        "value":"devracinfcr1401.azurecr.io/race2frontendweb"
+      },
+      "frontendwebservercontainerImage": {
+        "value":"devracinfcr1401.azurecr.io/race2frontendwebserver"
       },
       "securityprovidercontainerImage": {
         "value": "devracinfcr1401.azurecr.io/race2securityprovider"
