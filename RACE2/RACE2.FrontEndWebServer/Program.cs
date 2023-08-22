@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using Microsoft.IdentityModel.Logging;
 using RACE2.DataModel;
+using RACE2.Services;
 using static System.Net.WebRequestMethods;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -85,6 +86,8 @@ builder.Services.AddFluxor(o =>
     o.ScanAssemblies(typeof(Program).Assembly);
     o.UseReduxDevTools(rdt => { rdt.Name = "RACE2 application"; });
 });
+
+builder.Services.AddScoped<IBlobStorageService, BlobStorageService>();
 
 var app = builder.Build();
 app.UseForwardedHeaders();

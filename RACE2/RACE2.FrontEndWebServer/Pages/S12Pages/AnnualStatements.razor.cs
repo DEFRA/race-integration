@@ -9,6 +9,7 @@ using RACE2.FrontEndWebServer.FluxorImplementation.Stores;
 using RACE2.FrontEndWebServer.RACE2GraphQLSchema;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security.Claims;
 
 namespace RACE2.FrontEndWebServer.Pages.S12Pages
@@ -36,7 +37,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         private List<SubmissionStatusDTO> ReservoirStatusLinkedToUserDraft { get; set; } = new List<SubmissionStatusDTO>();
         private IEnumerable<Claim> Claims { get; set; }
 
-        protected override async void OnInitialized()
+        protected async override Task OnInitializedAsync()
         {
             AuthenticationState authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
             UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
@@ -100,7 +101,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             {
                 StateHasChanged();
             });
-            base.OnInitialized();
+            base.OnInitializedAsync();
         }
 
         protected override async void OnAfterRender(bool firstRender)

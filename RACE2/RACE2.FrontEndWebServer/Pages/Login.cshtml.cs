@@ -16,6 +16,7 @@ namespace RACE2.FrontEndWebServer.Pages
             if (string.IsNullOrWhiteSpace(redirectUri))
             {
                 redirectUri = Url.Content("~/annual-statements");
+                //redirectUri = Url.Content("~/choose-a-reservoir");
             }
 
             // If user is already logged in, we can redirect directly...

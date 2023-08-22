@@ -3,37 +3,37 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
       "subscriptionid": {
-        "value": "d9cce027-07b6-4275-a215-dd8d52b9d469"
+        "value": "9327c8db-cebb-445d-9933-1bca1a76b82e"
       }, 
       "tenantId": {
         "value": "770a2450-0227-4c62-90c7-4e38537f1102"
       }, 
       "location": {
-        "value": "westeurope"
+        "value": "uksouth"
       }, 
       "resourcegroup": {
-        "value": "Race2ProjectRG"
+        "value": "TSTRACINFRG1401"
       },
       "managedidentity": {
-        "value": "Race2ManagedIdentity"
+        "value": "TSTRACINFMI1401"
       }, 
       "containerregistryName": {
-        "value": "Race2ACR"
+        "value": "TSTRACINFCR1401"
       },
-      "namespaces_ServiceBus_name": {
-        "value": "Race2ServiceBus"
+      "serviceBusName": {
+        "value": "TSTRACINFSB1401"
       },
       "storageAccountName": {
-        "value": "race2storageaccount"
+        "value": "tstracinfst1401"
       },
       "appconfigName": {
-        "value": "Race2AppConfig"
+        "value": "TSTRACINFAC1401"
       },
       "keyvaultName": {
-        "value": "Race2KeyVault"
+        "value": "TSTRACINFVT1401"
       },
       "servers_race2sqlserver_name": {
-        "value": "race2sqlserver"
+        "value": "TSTRACINFSS1401"
       },
       "administratorLogin": {
         "value": "race2admin"
@@ -42,16 +42,16 @@
         "value": "Race2Password123!"
       }, 
       "servers_race2sqldb_name": {
-        "value": "Race2DB"
+        "value": "TSTRACINFDB1401"
       },
       "logAnalyticsWorkspaceName": {
-        "value": "Race2LAWorkspace"
+        "value": "TSTRACINFWS1401"
       },
       "race2appenvName": {
-        "value": "Race2AppEnv"
+        "value": "TSTRACINFAE1401"
       },
       "race2appinsightName": {
-        "value": "RACE2AppInSights"
+        "value": "TSTRACINFAI1401"
       }
     }
 }

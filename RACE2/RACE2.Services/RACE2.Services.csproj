@@ -6,6 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+    <ItemGroup>
+	    <PackageReference Include="Azure.Storage.Blobs" Version="12.17.0" />
+    </ItemGroup>
+	
   <ItemGroup>
     <ProjectReference Include="..\RACE2.DataAccess\RACE2.DataAccess.csproj" />
     <ProjectReference Include="..\RACE2.Notification\RACE2.Notification.csproj" />

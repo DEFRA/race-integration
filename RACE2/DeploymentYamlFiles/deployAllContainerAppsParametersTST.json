@@ -3,34 +3,34 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
       "subscriptionid": {
-        "value": "d9cce027-07b6-4275-a215-dd8d52b9d469"
+        "value": "9327c8db-cebb-445d-9933-1bca1a76b82e"
       }, 
       "location": {
-        "value": "westeurope"
-      }, 
+        "value": "uksouth"
+      },
       "resourcegroup": {
-        "value": "Race2ProjectRG"
-      },     
+        "value": "TSTRACINFRG1401"
+      },
       "managedidentity": {
-        "value": "Race2ManagedIdentity"
-      }, 
+        "value": "TSTRACINFMI1401"
+      },
       "race2appenvName": {
-        "value": "race2containerappenv"
-      }, 
+        "value": "TSTRACINFAE1401"
+      },
       "registryResourceGroup": {
-        "value": "Race2ProjectRG"
+        "value": "TSTRACINFRG1401"
       },
       "aspnetCoreEnv": {
         "value": "Production"
       },
-      "azureClientId": {
-        "value": "f324da0d-19e1-49df-8901-faab72ed2649"
-      },
       "appConfigURL": {
-        "value": "https://race2appconfig.azconfig.io/"
-      },     
+        "value": "https://tstracinfac1401.azconfig.io/"
+      },
       "registryName": {
-        "value": "race2acr"
+        "value": "tstracinfcr1401"
+      },
+      "azureClientId": {
+        "value": "993e8eee-8b30-47e1-bace-acfbed894b5e"
       },
       "useExternalIngress": {
         "value": true
@@ -66,19 +66,19 @@
         "value":"race2webapi"
       },
       "frontendcontainerImage": {
-        "value":"race2acr.azurecr.io/race2frontend"
+        "value": "tstracinfcr1401.azurecr.io/race2frontend"
       },
       "frontendwebcontainerImage": {
-        "value":"race2acr.azurecr.io/race2frontendweb"
+        "value":"tstracinfcr1401.azurecr.io/race2frontendweb"
       },
       "frontendwebservercontainerImage": {
-        "value":"race2acr.azurecr.io/race2frontendwebserver"
+        "value":"tstracinfcr1401.azurecr.io/race2frontendwebserver"
       },
       "securityprovidercontainerImage": {
-        "value":"race2acr.azurecr.io/race2securityprovider"
+        "value": "tstracinfcr1401.azurecr.io/race2securityprovider"
       },
       "webapicontainerImage": {
-        "value":"race2acr.azurecr.io/race2webapi"
-      } 
+        "value": "tstracinfcr1401.azurecr.io/race2webapi"
+      }
     }
 }

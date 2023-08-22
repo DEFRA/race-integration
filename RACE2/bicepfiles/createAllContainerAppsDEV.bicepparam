@@ -23,4 +23,9 @@ param securityprovidercontainerImage = 'devracinfcr1401.azurecr.io/race2security
 param webapicontainerImage = 'devracinfcr1401.azurecr.io/race2webapi'
 param aspnetCoreEnv = ''
 param tag = ''
+param revisionMode = 'Single'
+param useProbes = true
+param minReplicas = 1
+param maxReplicas = 2
+
 
