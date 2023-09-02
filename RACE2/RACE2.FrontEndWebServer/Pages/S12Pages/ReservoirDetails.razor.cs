@@ -115,6 +115,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 docText = regexText.Replace(docText, CurrentReservoirState.Value.CurrentReservoir.PublicName);
                 Regex regexText1 = new Regex("Supervisory Engineer");
                 docText = regexText1.Replace(docText, UserDetail.UserName);
+                Regex regexText2 = new Regex("Statement Date");
+                docText = regexText2.Replace(docText, DateTime.Now.ToShortDateString());
 
                 using (StreamWriter sw = new StreamWriter(wordDoc.MainDocumentPart.GetStream(FileMode.Create)))
                 {
