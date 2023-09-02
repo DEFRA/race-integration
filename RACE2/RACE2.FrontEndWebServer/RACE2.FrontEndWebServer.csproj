@@ -19,6 +19,7 @@
   </ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="DocumentFormat.OpenXml" Version="2.20.0" />
 		<PackageReference Include="Fluxor" Version="5.9.0" />
 		<PackageReference Include="Fluxor.Blazor.Web" Version="5.9.0" />
 		<PackageReference Include="Fluxor.Blazor.Web.ReduxDevTools" Version="5.9.0" />
@@ -27,7 +28,8 @@
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.21" />
 		<PackageReference Include="Azure.Identity" Version="1.10.0" />
 		<PackageReference Include="Microsoft.Azure.AppConfiguration.AspNetCore" Version="6.1.0" />
-		<PackageReference Include="StrawberryShake.Blazor" Version="13.5.0" />
+		<PackageReference Include="StrawberryShake.Blazor" Version="13.5.1" />
+		<PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
 	</ItemGroup>
 
   <ItemGroup>

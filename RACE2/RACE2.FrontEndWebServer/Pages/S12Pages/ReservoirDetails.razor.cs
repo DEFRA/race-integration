@@ -13,6 +13,10 @@ using Microsoft.AspNetCore.Components.Forms;
 using RACE2.Services;
 using System.IO;
 using System.IO.Pipes;
+using System.Text.RegularExpressions;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Wordprocessing;
+using Microsoft.Extensions.Azure;
 
 namespace RACE2.FrontEndWebServer.Pages.S12Pages
 {
@@ -74,8 +78,11 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             var blobName = "S12ReportTemplate.docx";
             //var result1 = await client.WriteContentToBlob.ExecuteAsync(blobName, CurrentReservoir.PublicName);
             //var result2 = await client.DownloadBlobToLocalFile.ExecuteAsync(blobName, "d:\\temp\\" + blobName);
-            var response = await blobStorageService.GetBlobFileStream(blobName);
-            var streamRef = new DotNetStreamReference(stream: response);
+            Stream response = await blobStorageService.GetBlobFileStream(blobName);
+            MemoryStream  procesedStream = SearchAndReplace(response);
+            procesedStream.Position = 0;
+            var streamRef = new DotNetStreamReference(stream: procesedStream);
+            //var streamRef = new DotNetStreamReference(stream: response);
             await jsRuntime.InvokeVoidAsync("downloadFileFromStream", blobName, streamRef);
         }
 
@@ -85,6 +92,69 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             //string pagelink = "/upload-s12report";
             string pagelink = "/upload-multiple-s12reports";
             NavigationManager.NavigateTo(pagelink, forceLoad);
+        }
+
+        // To search and replace content in a document part.
+        private MemoryStream SearchAndReplace(Stream document)
+        {
+            MemoryStream doc = new MemoryStream();
+            document.CopyTo(doc);
+            doc.Position = 0;
+            string docText = null;
+
+            using (WordprocessingDocument wordDoc = WordprocessingDocument.Open(doc, true))
+            {
+                //string docText = null;
+
+                using (StreamReader sr = new StreamReader(wordDoc.MainDocumentPart.GetStream()))
+                {
+                    docText = sr.ReadToEnd();
+                }
+
+                Regex regexText = new Regex("Reservoir1");
+                docText = regexText.Replace(docText, CurrentReservoirState.Value.CurrentReservoir.PublicName);
+                Regex regexText1 = new Regex("Mahalakshmi Alagarsamy");
+                docText = regexText1.Replace(docText, UserDetail.UserName);
+
+                using (StreamWriter sw = new StreamWriter(wordDoc.MainDocumentPart.GetStream(FileMode.Create)))
+                {
+                    sw.Write(docText);
+                }
+
+                return WordprocessingDocumentToStream(wordDoc);
+            }
+        }
+
+        private static Stream GenerateStreamFromString(string s)
+        {
+            var stream = new MemoryStream();
+            var writer = new StreamWriter(stream);
+            writer.Write(s);
+            writer.Flush();
+            stream.Position = 0;
+            return stream;
+        }
+
+        private MemoryStream WordprocessingDocumentToStream(WordprocessingDocument wordDoc)
+        {
+            MemoryStream mem = new MemoryStream();
+
+            using (var resultDoc = WordprocessingDocument.Create(mem, wordDoc.DocumentType))
+            {
+
+                // copy parts from source document to new document
+                foreach (var part in wordDoc.Parts)
+                {
+                    OpenXmlPart targetPart = resultDoc.AddPart(part.OpenXmlPart, part.RelationshipId); // that's recursive :-)
+                }
+
+                //resultDoc.Dispose();
+            }
+            //resultDoc.Package.Close(); // must do this (or using), or the zip won't get created properly
+
+            mem.Position = 0;
+
+            return mem;            
         }
     }
 }
