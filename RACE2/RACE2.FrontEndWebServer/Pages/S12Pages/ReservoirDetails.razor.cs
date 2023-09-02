@@ -111,9 +111,9 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                     docText = sr.ReadToEnd();
                 }
 
-                Regex regexText = new Regex("Reservoir1");
+                Regex regexText = new Regex("Reservoir Name");
                 docText = regexText.Replace(docText, CurrentReservoirState.Value.CurrentReservoir.PublicName);
-                Regex regexText1 = new Regex("Mahalakshmi Alagarsamy");
+                Regex regexText1 = new Regex("Supervisory Engineer");
                 docText = regexText1.Replace(docText, UserDetail.UserName);
 
                 using (StreamWriter sw = new StreamWriter(wordDoc.MainDocumentPart.GetStream(FileMode.Create)))
