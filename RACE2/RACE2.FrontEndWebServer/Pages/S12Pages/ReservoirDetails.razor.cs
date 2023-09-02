@@ -36,6 +36,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         public IJSRuntime jsRuntime { get; set; } = default!;
         [Inject]
         public IBlobStorageService blobStorageService { get; set; } = default!;
+        [Inject]
+        public IOpenXMLUtilitiesService openXMLUtilitiesService { get; set; } = default!;
 
         public Reservoir CurrentReservoir { get; set; } = new Reservoir();
         public string ReservoirName { get; set; } = default!;
@@ -79,10 +81,10 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             //var result1 = await client.WriteContentToBlob.ExecuteAsync(blobName, CurrentReservoir.PublicName);
             //var result2 = await client.DownloadBlobToLocalFile.ExecuteAsync(blobName, "d:\\temp\\" + blobName);
             Stream response = await blobStorageService.GetBlobFileStream(blobName);
-            MemoryStream  procesedStream = SearchAndReplace(response);
-            procesedStream.Position = 0;
-            var streamRef = new DotNetStreamReference(stream: procesedStream);
             //var streamRef = new DotNetStreamReference(stream: response);
+            MemoryStream processedStream = openXMLUtilitiesService.SearchAndReplace(response, CurrentReservoirState.Value.CurrentReservoir.PublicName, UserDetail.UserName);
+            processedStream.Position = 0;
+            var streamRef = new DotNetStreamReference(stream: processedStream);
             await jsRuntime.InvokeVoidAsync("downloadFileFromStream", blobName, streamRef);
         }
 
@@ -92,71 +94,6 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             //string pagelink = "/upload-s12report";
             string pagelink = "/upload-multiple-s12reports";
             NavigationManager.NavigateTo(pagelink, forceLoad);
-        }
-
-        // To search and replace content in a document part.
-        private MemoryStream SearchAndReplace(Stream document)
-        {
-            MemoryStream doc = new MemoryStream();
-            document.CopyTo(doc);
-            doc.Position = 0;
-            string docText = null;
-
-            using (WordprocessingDocument wordDoc = WordprocessingDocument.Open(doc, true))
-            {
-                //string docText = null;
-
-                using (StreamReader sr = new StreamReader(wordDoc.MainDocumentPart.GetStream()))
-                {
-                    docText = sr.ReadToEnd();
-                }
-
-                Regex regexText = new Regex("Reservoir Name");
-                docText = regexText.Replace(docText, CurrentReservoirState.Value.CurrentReservoir.PublicName);
-                Regex regexText1 = new Regex("Supervisory Engineer");
-                docText = regexText1.Replace(docText, UserDetail.UserName);
-                Regex regexText2 = new Regex("Statement Date");
-                docText = regexText2.Replace(docText, DateTime.Now.ToShortDateString());
-
-                using (StreamWriter sw = new StreamWriter(wordDoc.MainDocumentPart.GetStream(FileMode.Create)))
-                {
-                    sw.Write(docText);
-                }
-
-                return WordprocessingDocumentToStream(wordDoc);
-            }
-        }
-
-        private static Stream GenerateStreamFromString(string s)
-        {
-            var stream = new MemoryStream();
-            var writer = new StreamWriter(stream);
-            writer.Write(s);
-            writer.Flush();
-            stream.Position = 0;
-            return stream;
-        }
-
-        private MemoryStream WordprocessingDocumentToStream(WordprocessingDocument wordDoc)
-        {
-            MemoryStream mem = new MemoryStream();
-
-            using (var resultDoc = WordprocessingDocument.Create(mem, wordDoc.DocumentType))
-            {
-
-                // copy parts from source document to new document
-                foreach (var part in wordDoc.Parts)
-                {
-                    OpenXmlPart targetPart = resultDoc.AddPart(part.OpenXmlPart, part.RelationshipId); // that's recursive :-)
-                }
-
-                //resultDoc.Dispose();
-            }
-            //resultDoc.Package.Close(); // must do this (or using), or the zip won't get created properly
-
-            mem.Position = 0;
-
-            return mem;            
         }
     }
 }

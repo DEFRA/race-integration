@@ -88,6 +88,8 @@ builder.Services.AddFluxor(o =>
 });
 
 builder.Services.AddScoped<IBlobStorageService, BlobStorageService>();
+builder.Services.AddScoped<IOpenXMLUtilitiesService, OpenXMLUtilitiesService>();
+
 
 var app = builder.Build();
 app.UseForwardedHeaders();

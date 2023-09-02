@@ -19,7 +19,6 @@
   </ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="DocumentFormat.OpenXml" Version="2.20.0" />
 		<PackageReference Include="Fluxor" Version="5.9.0" />
 		<PackageReference Include="Fluxor.Blazor.Web" Version="5.9.0" />
 		<PackageReference Include="Fluxor.Blazor.Web.ReduxDevTools" Version="5.9.0" />
