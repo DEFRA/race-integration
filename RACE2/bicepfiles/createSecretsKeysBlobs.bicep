@@ -27,6 +27,9 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-01-01' existing 
   name: storageAccountName
 }
 
+resource serviceBusAccount 'Microsoft.ServiceBus/namespaces@2022-10-01-preview' existing = {
+  name: serviceBusResouceName
+}
 // Store the connection string in KV if specified
 resource storageAccountConnectionString 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
   name: '${keyVault.name}/${storageAccountConnectionStringSecretName}'
@@ -48,10 +51,6 @@ resource sqlServerConnectionString 'Microsoft.KeyVault/vaults/secrets@2023-02-01
   properties: {
     value: sqlServerConnectionStringVal
   }
-}
-
-resource serviceBusAccount 'Microsoft.Storage/storageAccounts@2023-01-01' existing = {
-  name: serviceBusResouceName
 }
 
 var serviceBusEndpoint = '${serviceBusAccount.id}/AuthorizationRules/RootManageSharedAccessKey'
