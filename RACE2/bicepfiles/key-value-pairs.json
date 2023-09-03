@@ -1,0 +1,22 @@
+[
+	{
+		"key": "refreshAll",
+		"value": "1",
+		"contentType": "string",
+        "label": "",
+		"tags": {
+			"environment": "Production",
+			"region": "UK South"
+		}        
+	},
+    {
+		"key": "StorageAccountContainer",
+		"value": "s12reporttemplate",
+		"contentType": "string",
+        "label": "Production",
+		"tags": {
+			"environment": "Production",
+			"region": "UK South"
+        }
+	} 
+]
