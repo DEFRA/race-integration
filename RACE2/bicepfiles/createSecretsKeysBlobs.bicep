@@ -26,10 +26,6 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-01-01' existing 
   name: storageAccountName
 }
 
-resource serviceBus 'Microsoft.ServiceBus/namespaces/authorizationrules@2022-10-01-preview' existing = {
-  name: serviceBusName
-}
-
 // Store the connection string in KV if specified
 resource storageAccountConnectionString 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
   name: '${keyVault.name}/${storageAccountConnectionStringSecretName}'
