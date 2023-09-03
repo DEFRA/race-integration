@@ -27,12 +27,13 @@ resource storageAccountConnectionString 'Microsoft.KeyVault/vaults/secrets@2023-
 }
 
 // to insert Key Value Pairs
-resource configStoreKeyValue 'Microsoft.AppConfiguration/configurationStores/keyValues@2021-10-01-preview' = [for keyValuePair in keyValuePairs: {
+resource configStoreKeyValue 'Microsoft.AppConfiguration/configurationStores/keyValues@2023-03-01' = [for keyValuePair in keyValuePairs: {
   parent: appConfigStore
   name: keyValuePair.key					// key
   properties: {
     value: keyValuePair.value				// value of the key
     contentType: keyValuePair.contentType	// string representing content type of value
     tags: keyValuePair.tags					// object: Dictionary of tags 
+    label: keyValuePair.label
   }
 }]
