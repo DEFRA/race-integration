@@ -54,7 +54,7 @@ resource sqlServerConnectionString 'Microsoft.KeyVault/vaults/secrets@2023-02-01
 }
 
 var serviceBusEndpoint = '${serviceBusAccount.id}/AuthorizationRules/RootManageSharedAccessKey'
-resource ServiceBusConnectionString 'Microsoft.KeyVault/vaults/secrets@2021-11-01-preview' = {
+resource serviceBusConnectionString 'Microsoft.KeyVault/vaults/secrets@2021-11-01-preview' = {
   parent: keyVault
   name: '${serviceBusConnectionStringSecretName}'
   properties: {
@@ -67,7 +67,7 @@ resource configStoreKeyValue 'Microsoft.AppConfiguration/configurationStores/key
   parent: appConfigStore
   name: empty('${keyValuePair.label}') ? '${keyValuePair.key}' :'${keyValuePair.key}$${keyValuePair.label}'					// key
   properties: {
-    value: keyValuePair.contentType == 'string' ? keyValuePair.value : keyValuePair.value == 'SqlServerConnectionStringSecretUrl' ? sqlServerConnectionString.properties.secretUriWithVersion : keyValuePair.value == 'StorageAccountConnectionStringSecretUrl' ? storageAccountConnectionString.properties.secretUriWithVersion : keyValuePair.value=='StorageAccountKeySecretUrl' ? storageAccountKeyString.properties.secretUriWithVersion : keyValuePair.value=='ServiceBusConnectionString' ? ServiceBusConnectionString.properties.secretUriWithVersion :'' // value of the key
+    value: keyValuePair.contentType == 'string' ? keyValuePair.value : keyValuePair.value == 'SqlServerConnectionStringSecretUrl' ? sqlServerConnectionString.properties.secretUri : keyValuePair.value == 'StorageAccountConnectionStringSecretUrl' ? storageAccountConnectionString.properties.secretUri : keyValuePair.value=='StorageAccountKeySecretUrl' ? storageAccountKeyString.properties.secretUri : keyValuePair.value=='ServiceBusConnectionStringSecretUrl' ? serviceBusConnectionString.properties.secretUri :'' // value of the key
     contentType: keyValuePair.contentType	// string representing content type of value
     tags: keyValuePair.tags				        // object: Dictionary of tags 
   }
