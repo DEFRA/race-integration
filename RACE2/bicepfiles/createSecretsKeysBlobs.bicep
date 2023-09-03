@@ -3,10 +3,10 @@ param serviceBusName string
 param sqlServerName string
 param sqlDatabaseName string
 param sqlServerUserName string
+@secure()
 param sqlServerPassword string
 param keyVaultName string
 param appConfigResourceName string
-param serviceBusConnectionStringSecretName string
 param storageAccountConnectionStringSecretName string
 param storageAccountKeySecretName string
 param sqlServerConnectionStringSecretName string
@@ -42,14 +42,6 @@ resource storageAccountKeyString 'Microsoft.KeyVault/vaults/secrets@2023-02-01' 
   name: '${keyVault.name}/${storageAccountKeySecretName}'
   properties: {
     value: '${listKeys(storageAccount.id, storageAccount.apiVersion).keys[0].value}'
-  }
-}
-
-var serviceBusEndpoint = '${serviceBusName}/AuthorizationRules/RootManageSharedAccessKey'
-resource serviceBusConnectionString 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
-  name: '${keyVault.name}/${serviceBusConnectionStringSecretName}'
-  properties: {
-    value: listKeys(serviceBusEndpoint, serviceBus.apiVersion).primaryConnectionString
   }
 }
 
