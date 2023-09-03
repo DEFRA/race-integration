@@ -1,7 +1,15 @@
 param storageAccountName string
+param serviceBusName string
+param sqlServerName string
+param sqlDatabaseName string
+param sqlServerUserName string
+param sqlServerPassword string
 param keyVaultName string
 param appConfigResourceName string
-param connectionStringSecretName string
+param serviceBusConnectionStringSecretName string
+param storageAccountConnectionStringSecretName string
+param storageAccountKeySecretName string
+param sqlServerConnectionStringSecretName string
 
 // Load pairs from file
 var keyValuePairs = loadJsonContent('key-value-pairs.json')
@@ -18,22 +26,48 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-01-01' existing 
   name: storageAccountName
 }
 
+resource serviceBus 'Microsoft.ServiceBus/namespaces/authorizationrules@2022-10-01-preview' existing = {
+  name: serviceBusName
+}
+
 // Store the connection string in KV if specified
 resource storageAccountConnectionString 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
-  name: '${keyVault.name}/${connectionStringSecretName}'
+  name: '${keyVault.name}/${storageAccountConnectionStringSecretName}'
   properties: {
     value: 'DefaultEndpointsProtocol=https;AccountName=${storageAccount.name};AccountKey=${listKeys(storageAccount.id, storageAccount.apiVersion).keys[0].value};EndpointSuffix=${environment().suffixes.storage}'
+  }
+}
+
+resource storageAccountKeyString 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
+  name: '${keyVault.name}/${storageAccountKeySecretName}'
+  properties: {
+    value: '${listKeys(storageAccount.id, storageAccount.apiVersion).keys[0].value}'
+  }
+}
+
+var serviceBusEndpoint = '${serviceBusName}/AuthorizationRules/RootManageSharedAccessKey'
+resource serviceBusConnectionString 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
+  name: '${keyVault.name}/${serviceBusConnectionStringSecretName}'
+  properties: {
+    value: listKeys(serviceBusEndpoint, serviceBus.apiVersion).primaryConnectionString
+  }
+}
+
+var sqlServerConnectionStringVal = 'Server=tcp:${sqlServerName}${environment().suffixes.sqlServerHostname},1433;Initial Catalog=${sqlDatabaseName};Persist Security Info=False;User ID=${sqlServerUserName};Password=${sqlServerPassword};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;'
+resource sqlServerConnectionString 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
+  name: '${keyVault.name}/${sqlServerConnectionStringSecretName}'
+  properties: {
+    value: sqlServerConnectionStringVal
   }
 }
 
 // to insert Key Value Pairs
 resource configStoreKeyValue 'Microsoft.AppConfiguration/configurationStores/keyValues@2023-03-01' = [for keyValuePair in keyValuePairs: {
   parent: appConfigStore
-  name: keyValuePair.key					// key
+  name: empty('${keyValuePair.label}') ? '${keyValuePair.key}' :'${keyValuePair.key}$${keyValuePair.label}'					// key
   properties: {
-    value: keyValuePair.value				// value of the key
+    value: keyValuePair.value				      // value of the key
     contentType: keyValuePair.contentType	// string representing content type of value
-    tags: keyValuePair.tags					// object: Dictionary of tags 
-    label: keyValuePair.label
+    tags: keyValuePair.tags				        // object: Dictionary of tags 
   }
 }]

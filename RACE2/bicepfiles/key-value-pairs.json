@@ -5,7 +5,7 @@
 		"contentType": "string",
         "label": "",
 		"tags": {
-			"environment": "Production",
+			"environment": "",
 			"region": "UK South"
 		}        
 	},
