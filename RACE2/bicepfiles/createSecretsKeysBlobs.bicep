@@ -1,5 +1,4 @@
 param storageAccountName string
-param serviceBusName string
 param sqlServerName string
 param sqlDatabaseName string
 param sqlServerUserName string
