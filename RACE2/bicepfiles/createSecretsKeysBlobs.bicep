@@ -3,10 +3,12 @@ param serviceBusResouceName string
 param sqlServerName string
 param sqlDatabaseName string
 param sqlServerUserName string
+param applicationInsightName string
 @secure()
 param sqlServerPassword string
 param keyVaultName string
 param appConfigResourceName string
+param applicationInsightConnectionStringSecretName string
 param storageAccountConnectionStringSecretName string
 param serviceBusConnectionStringSecretName string
 param storageAccountKeySecretName string
@@ -27,14 +29,25 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-01-01' existing 
   name: storageAccountName
 }
 
+resource applicationInsight 'Microsoft.Insights/components@2020-02-02' existing = {
+  name: applicationInsightName
+}
+
 resource serviceBusAccount 'Microsoft.ServiceBus/namespaces@2022-10-01-preview' existing = {
   name: serviceBusResouceName
 }
-// Store the connection string in KV if specified
+
 resource storageAccountConnectionString 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
   name: '${keyVault.name}/${storageAccountConnectionStringSecretName}'
   properties: {
     value: 'DefaultEndpointsProtocol=https;AccountName=${storageAccount.name};AccountKey=${listKeys(storageAccount.id, storageAccount.apiVersion).keys[0].value};EndpointSuffix=${environment().suffixes.storage}'
+  }
+}
+// Store the connection string in KV if specified
+resource applicationInsightConnectionString 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
+  name: '${keyVault.name}/${applicationInsightConnectionStringSecretName}'
+  properties: {
+    value: 'InstrumentationKey=${applicationInsight.properties.InstrumentationKey}'
   }
 }
 
@@ -67,7 +80,7 @@ resource configStoreKeyValue 'Microsoft.AppConfiguration/configurationStores/key
   parent: appConfigStore
   name: empty('${keyValuePair.label}') ? '${keyValuePair.key}' :'${keyValuePair.key}$${keyValuePair.label}'					// key
   properties: {
-    value: keyValuePair.contentType == 'string' ? keyValuePair.value : keyValuePair.value == 'SqlServerConnectionStringSecretUrl' ? sqlServerConnectionString.properties.secretUri : keyValuePair.value == 'StorageAccountConnectionStringSecretUrl' ? storageAccountConnectionString.properties.secretUri : keyValuePair.value=='StorageAccountKeySecretUrl' ? storageAccountKeyString.properties.secretUri : keyValuePair.value=='ServiceBusConnectionStringSecretUrl' ? serviceBusConnectionString.properties.secretUri :'' // value of the key
+    value: keyValuePair.contentType == 'string' ? keyValuePair.value : keyValuePair.value == 'SqlServerConnectionStringSecretUrl' ? sqlServerConnectionString.properties.secretUri : keyValuePair.value == 'StorageAccountConnectionStringSecretUrl' ? storageAccountConnectionString.properties.secretUri : keyValuePair.value=='StorageAccountKeySecretUrl' ? storageAccountKeyString.properties.secretUri : keyValuePair.value=='ServiceBusConnectionStringSecretUrl' ? serviceBusConnectionString.properties.secretUri : keyValuePair.value=='ApplicationInsightConnectionStringSecretUrl' ? applicationInsightConnectionString.properties.secretUri : '' // value of the key
     contentType: keyValuePair.contentType	// string representing content type of value
     tags: keyValuePair.tags				        // object: Dictionary of tags 
   }
