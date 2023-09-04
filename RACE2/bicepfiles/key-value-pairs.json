@@ -1,0 +1,82 @@
+[
+	{
+		"key": "refreshAll",
+		"value": "1",
+		"contentType": "string",
+        "label": "",
+		"tags": {
+			"environment": "",
+			"region": "UK South"
+		}        
+	},
+    {
+		"key": "StorageAccountContainer",
+		"value": "s12reporttemplate",
+		"contentType": "string",
+        "label": "Production",
+		"tags": {
+			"environment": "Production",
+			"region": "UK South"
+        }
+	} ,
+	{
+		"key": "SqlConnectionString",
+		"value": "SqlServerConnectionStringSecretUrl",
+		"contentType": "application/vnd.microsoft.appconfig.keyvaultref+json;charset=utf-8",
+        "label": "Production",
+		"tags": {
+			"environment": "Production",
+			"region": "UK South"
+        }
+	},
+	{
+		"key": "StorageAccessKey",
+		"value": "StorageAccountKeySecretUrl",
+		"contentType": "application/vnd.microsoft.appconfig.keyvaultref+json;charset=utf-8",
+        "label": "Production",
+		"tags": {
+			"environment": "Production",
+			"region": "UK South"
+        }
+	},
+	{
+		"key": "StorageAccountConnectionString",
+		"value": "StorageAccountConnectionStringSecretUrl",
+		"contentType": "application/vnd.microsoft.appconfig.keyvaultref+json;charset=utf-8",
+        "label": "Production",
+		"tags": {
+			"environment": "Production",
+			"region": "UK South"
+        }
+	},
+	{
+		"key": "StorageAccount",
+		"value": "StorageAccountValue",
+		"contentType": "string",
+        "label": "Production",
+		"tags": {
+			"environment": "Production",
+			"region": "UK South"
+        }
+	},
+	{
+		"key": "ServiceBusConnectionString",
+		"value": "ServiceBusConnectionStringSecretUrl",
+		"contentType": "application/vnd.microsoft.appconfig.keyvaultref+json;charset=utf-8",
+        "label": "Production",
+		"tags": {
+			"environment": "Production",
+			"region": "UK South"
+        }
+	},
+	{
+		"key": "AppInsightsConnectionString",
+		"value": "ApplicationInsightConnectionStringSecretUrl",
+		"contentType": "application/vnd.microsoft.appconfig.keyvaultref+json;charset=utf-8",
+        "label": "Production",
+		"tags": {
+			"environment": "Production",
+			"region": "UK South"
+        }
+	}  
+]

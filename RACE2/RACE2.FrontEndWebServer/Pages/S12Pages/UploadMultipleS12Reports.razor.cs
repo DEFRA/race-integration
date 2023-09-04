@@ -56,7 +56,9 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             {
                 UserName = UserName,
                 Id = UserId,
-                Email = userDetails!.Data!.UserByEmailID.Email
+                Email = userDetails!.Data!.UserByEmailID.Email,
+                c_first_name = userDetails!.Data!.UserByEmailID.C_first_name,
+                c_last_name = userDetails!.Data!.UserByEmailID.C_last_name
             };
             CurrentReservoir = CurrentReservoirState.Value.CurrentReservoir;
 
@@ -76,11 +78,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 try
                 {
                     var extn = file.Name.Split('.')[1];
-                    var containerName = UserName.Split("@")[0];
-                    if (containerName.Contains('.'))
-                    {
-                        containerName = containerName.Split('.')[0];
-                    }
+                    var containerName = UserDetail.c_first_name.ToLower() + UserDetail.c_last_name.ToLower();
                     var trustedFileNameForFileStorage = "S12Report_" + CurrentReservoir.PublicName + "_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + "." + extn;
                     var blobUrl = await blobStorageService.UploadFileToBlobAsync(containerName,trustedFileNameForFileStorage, file.ContentType, file.OpenReadStream(20971520));
                     if (blobUrl != null)
@@ -113,11 +111,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         {
             try
             {
-                var containerName = UserName.Split("@")[0];
-                if (containerName.Contains('.'))
-                {
-                    containerName = containerName.Split('.')[0];
-                }
+                var containerName = UserDetail.c_first_name.ToLower() + UserDetail.c_last_name.ToLower();
                 var deleteResponse = await blobStorageService.DeleteFileToBlobAsync(containerName, attachment.FileName);
                 if (deleteResponse)
                 {
@@ -136,11 +130,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         {
             try
             {
-                var containerName = UserName.Split("@")[0];
-                if (containerName.Contains('.'))
-                {
-                    containerName = containerName.Split('.')[0];
-                }
+                var containerName = UserDetail.c_first_name.ToLower() + UserDetail.c_last_name.ToLower();
                 var sasToken = await blobStorageService.GetBlobAsTokenByFile(containerName, attachment.FileName);
                 if (sasToken != null)
                 {

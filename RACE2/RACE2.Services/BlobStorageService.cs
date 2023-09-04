@@ -197,12 +197,18 @@ namespace RACE2.Services
 
             if (await blob.ExistsAsync())
             {
-                var a = await blob.DownloadAsync();               
+                var response = await blob.DownloadAsync();
+                return response.Value.Content;
 
-                return a.Value.Content;
+                //var response = await blob.DownloadAsync();
+                //using (MemoryStream stream = new MemoryStream())                {
+                //    response.Value.Content.CopyTo(stream);
+                //    return stream;
             }
-
-            return null;
+            else
+            {
+                return null;
+            }
         }
     }
 }

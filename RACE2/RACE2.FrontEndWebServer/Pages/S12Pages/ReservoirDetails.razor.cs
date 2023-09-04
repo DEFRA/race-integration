@@ -13,6 +13,10 @@ using Microsoft.AspNetCore.Components.Forms;
 using RACE2.Services;
 using System.IO;
 using System.IO.Pipes;
+using System.Text.RegularExpressions;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Wordprocessing;
+using Microsoft.Extensions.Azure;
 
 namespace RACE2.FrontEndWebServer.Pages.S12Pages
 {
@@ -32,6 +36,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         public IJSRuntime jsRuntime { get; set; } = default!;
         [Inject]
         public IBlobStorageService blobStorageService { get; set; } = default!;
+        [Inject]
+        public IOpenXMLUtilitiesService openXMLUtilitiesService { get; set; } = default!;
 
         public Reservoir CurrentReservoir { get; set; } = new Reservoir();
         public string ReservoirName { get; set; } = default!;
@@ -51,7 +57,9 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             {
                 UserName = UserName,
                 Id = UserId,
-                Email = userDetails!.Data!.UserByEmailID.Email
+                Email = userDetails!.Data!.UserByEmailID.Email,
+                c_first_name = userDetails!.Data!.UserByEmailID.C_first_name,
+                c_last_name = userDetails!.Data!.UserByEmailID.C_last_name
             };
             CurrentReservoir = CurrentReservoirState.Value.CurrentReservoir;
             base.OnInitialized();
@@ -74,8 +82,11 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             var blobName = "S12ReportTemplate.docx";
             //var result1 = await client.WriteContentToBlob.ExecuteAsync(blobName, CurrentReservoir.PublicName);
             //var result2 = await client.DownloadBlobToLocalFile.ExecuteAsync(blobName, "d:\\temp\\" + blobName);
-            var response = await blobStorageService.GetBlobFileStream(blobName);
-            var streamRef = new DotNetStreamReference(stream: response);
+            Stream response = await blobStorageService.GetBlobFileStream(blobName);
+            //var streamRef = new DotNetStreamReference(stream: response);
+            MemoryStream processedStream = openXMLUtilitiesService.SearchAndReplace(response, CurrentReservoirState.Value.CurrentReservoir.PublicName, UserDetail.c_first_name+" "+ UserDetail.c_last_name);
+            processedStream.Position = 0;
+            var streamRef = new DotNetStreamReference(stream: processedStream);
             await jsRuntime.InvokeVoidAsync("downloadFileFromStream", blobName, streamRef);
         }
 
