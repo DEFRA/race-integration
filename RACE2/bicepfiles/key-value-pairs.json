@@ -50,6 +50,16 @@
         }
 	},
 	{
+		"key": "StorageAccount",
+		"value": "StorageAccountValue",
+		"contentType": "string",
+        "label": "Production",
+		"tags": {
+			"environment": "Production",
+			"region": "UK South"
+        }
+	},
+	{
 		"key": "ServiceBusConnectionString",
 		"value": "ServiceBusConnectionStringSecretUrl",
 		"contentType": "application/vnd.microsoft.appconfig.keyvaultref+json;charset=utf-8",
