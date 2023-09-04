@@ -78,7 +78,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 try
                 {
                     var extn = file.Name.Split('.')[1];
-                    var containerName = UserDetail.c_first_name + " " + UserDetail.c_last_name;
+                    var containerName = UserDetail.c_first_name.ToLower() + UserDetail.c_last_name.ToLower();
                     var trustedFileNameForFileStorage = "S12Report_" + CurrentReservoir.PublicName + "_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + "." + extn;
                     var blobUrl = await blobStorageService.UploadFileToBlobAsync(containerName,trustedFileNameForFileStorage, file.ContentType, file.OpenReadStream(20971520));
                     if (blobUrl != null)
@@ -111,7 +111,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         {
             try
             {
-                var containerName = UserDetail.c_first_name + " " + UserDetail.c_last_name;
+                var containerName = UserDetail.c_first_name.ToLower() + UserDetail.c_last_name.ToLower();
                 var deleteResponse = await blobStorageService.DeleteFileToBlobAsync(containerName, attachment.FileName);
                 if (deleteResponse)
                 {
@@ -130,7 +130,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         {
             try
             {
-                var containerName = UserDetail.c_first_name + " " + UserDetail.c_last_name;
+                var containerName = UserDetail.c_first_name.ToLower() + UserDetail.c_last_name.ToLower();
                 var sasToken = await blobStorageService.GetBlobAsTokenByFile(containerName, attachment.FileName);
                 if (sasToken != null)
                 {
