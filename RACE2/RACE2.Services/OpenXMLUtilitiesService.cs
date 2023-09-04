@@ -1,5 +1,6 @@
 ﻿using DocumentFormat.OpenXml.Packaging;
 using RACE2.DataModel;
+using RACE2.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,10 +29,15 @@ namespace RACE2.Services
                 {
                     docText = sr.ReadToEnd();
                 }
-
+                //var tagList = new S12ReportTemplateTags().Tags;
+                //foreach (var tag in tagList)
+                //{
+                //    Regex regexText = new Regex(tag);
+                //    docText = regexText.Replace(docText, reservoirName);
+                //}
                 Regex regexText = new Regex("Reservoir Name");
                 docText = regexText.Replace(docText, reservoirName);
-                Regex regexText1 = new Regex("Supervisory Engineer");
+                Regex regexText1 = new Regex("Supervising Engineer Name");
                 docText = regexText1.Replace(docText, userName);
                 Regex regexText2 = new Regex("Statement Date");
                 docText = regexText2.Replace(docText, DateTime.Now.ToShortDateString());
