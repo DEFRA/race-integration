@@ -60,7 +60,7 @@
         }
 	},
 	{
-		"key": "AppInsightsConnectionString",
+		"key": "ApplicationInsightConnectionString",
 		"value": "ApplicationInsightConnectionStringSecretUrl",
 		"contentType": "application/vnd.microsoft.appconfig.keyvaultref+json;charset=utf-8",
         "label": "Production",
