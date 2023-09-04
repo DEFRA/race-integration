@@ -29,18 +29,28 @@ namespace RACE2.Services
                 {
                     docText = sr.ReadToEnd();
                 }
-                //var tagList = new S12ReportTemplateTags().Tags;
-                //foreach (var tag in tagList)
-                //{
-                //    Regex regexText = new Regex(tag);
-                //    docText = regexText.Replace(docText, reservoirName);
-                //}
-                Regex regexText = new Regex("Reservoir Name");
-                docText = regexText.Replace(docText, reservoirName);
-                Regex regexText1 = new Regex("Supervising Engineer Name");
-                docText = regexText1.Replace(docText, userName);
-                Regex regexText2 = new Regex("Statement Date");
-                docText = regexText2.Replace(docText, DateTime.Now.ToShortDateString());
+                var tagList = new S12ReportTemplateTags().Tags;
+                foreach (var tag in tagList)
+                {
+                    Regex tagVal = new Regex(tag);
+                    switch (tag)
+                    {
+                        case "Reservoir Name":
+                            docText = tagVal.Replace(docText, reservoirName);
+                            break;
+                        case "Supervising Engineer Name":
+                            docText = tagVal.Replace(docText, userName);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                //Regex regexText = new Regex("Reservoir Name");
+                //docText = regexText.Replace(docText, reservoirName);
+                //Regex regexText1 = new Regex("Supervising Engineer Name");
+                //docText = regexText1.Replace(docText, userName);
+                Regex regexText = new Regex("Statement Date");
+                docText = regexText.Replace(docText, DateTime.Now.ToShortDateString());
 
                 using (StreamWriter sw = new StreamWriter(wordDoc.MainDocumentPart.GetStream(FileMode.Create)))
                 {
