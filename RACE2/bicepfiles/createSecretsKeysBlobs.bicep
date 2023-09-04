@@ -13,6 +13,7 @@ param storageAccountConnectionStringSecretName string
 param serviceBusConnectionStringSecretName string
 param storageAccountKeySecretName string
 param sqlServerConnectionStringSecretName string
+param containerName string
 
 // Load pairs from file
 var keyValuePairs = loadJsonContent('key-value-pairs.json')
@@ -29,6 +30,10 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-01-01' existing 
   name: storageAccountName
 }
 
+resource blobService 'Microsoft.Storage/storageAccounts/blobServices@2021-06-01' existing= {
+  name: '${storageAccount.name}/default'
+}
+
 resource applicationInsight 'Microsoft.Insights/components@2020-02-02' existing = {
   name: applicationInsightName
 }
@@ -43,11 +48,21 @@ resource storageAccountConnectionString 'Microsoft.KeyVault/vaults/secrets@2023-
     value: 'DefaultEndpointsProtocol=https;AccountName=${storageAccount.name};AccountKey=${listKeys(storageAccount.id, storageAccount.apiVersion).keys[0].value};EndpointSuffix=${environment().suffixes.storage}'
   }
 }
+
+resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@2023-01-01' =  {
+  parent: blobService
+  name: '${toLower(containerName)}' 
+  properties: {
+    publicAccess: 'None'
+    metadata: {}
+  }
+}
+
 // Store the connection string in KV if specified
 resource applicationInsightConnectionString 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
   name: '${keyVault.name}/${applicationInsightConnectionStringSecretName}'
   properties: {
-    value: 'InstrumentationKey=${applicationInsight.properties.InstrumentationKey}'
+    value: '${applicationInsight.properties.ConnectionString}'
   }
 }
 
