@@ -43,6 +43,13 @@ var RACE2IDPURL = builder.Configuration["RACE2SecurityProviderURL"];
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
+builder.Services.Configure<CookiePolicyOptions>(options =>
+{
+    options.CheckConsentNeeded = context => true;
+    options.MinimumSameSitePolicy = SameSiteMode.None;
+});
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -53,6 +60,10 @@ builder.Services.AddAuthentication(options =>
     OpenIdConnectDefaults.AuthenticationScheme,
     options =>
     {
+        options.Events.OnTicketReceived = async (Context) =>
+        {
+            Context.Properties.ExpiresUtc = DateTime.UtcNow.AddMinutes(30);
+        };
         options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
         options.SignOutScheme = OpenIdConnectDefaults.AuthenticationScheme;
         options.Authority = RACE2IDPURL;
@@ -63,7 +74,7 @@ builder.Services.AddAuthentication(options =>
         options.ResponseType = "code id_token";
 
         // Save the tokens we receive from the IDP
-        options.SaveTokens = true;
+        options.SaveTokens = false; // true;
 
         // It's recommended to always get claims from the
         // UserInfoEndpoint during the flow.
@@ -103,7 +114,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
-
+app.UseCookiePolicy();
 app.UseRouting();
 
 app.UseAuthentication();
