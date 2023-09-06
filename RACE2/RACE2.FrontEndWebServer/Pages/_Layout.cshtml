@@ -45,7 +45,12 @@
             anchorElement.click();
             anchorElement.remove();
             URL.revokeObjectURL(url);
-        }
+        };
+        window.CookieFunction = {
+            acceptMessage: function (cookieString) {
+                document.cookie = cookieString;
+            }
+        };
     </script>
 </body>
 

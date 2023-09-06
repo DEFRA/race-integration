@@ -46,7 +46,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bicepfiles", "bicepfiles", "{9E4A6273-3717-4549-B159-01B58CAB5C6D}"
 	ProjectSection(SolutionItems) = preProject
 		bicepfiles\createAllContainerApps.bicep = bicepfiles\createAllContainerApps.bicep
+		bicepfiles\createAllContainerAppsDEV.bicepparam = bicepfiles\createAllContainerAppsDEV.bicepparam
 		bicepfiles\createallresources.bicep = bicepfiles\createallresources.bicep
+		bicepfiles\createallresourcesDEV.bicepparam = bicepfiles\createallresourcesDEV.bicepparam
+		bicepfiles\createallresourcesPOC.bicepparam = bicepfiles\createallresourcesPOC.bicepparam
+		bicepfiles\createallresourcesTST.bicepparam = bicepfiles\createallresourcesTST.bicepparam
 		BicepFiles\createappconfig.bicep = BicepFiles\createappconfig.bicep
 		bicepfiles\createappinsight.bicep = bicepfiles\createappinsight.bicep
 		BicepFiles\createappworkspace.bicep = BicepFiles\createappworkspace.bicep
@@ -60,11 +64,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bicepfiles", "bicepfiles", 
 		BicepFiles\createkeyvault.bicep = BicepFiles\createkeyvault.bicep
 		BicepFiles\createmanagedidentity.bicep = BicepFiles\createmanagedidentity.bicep
 		bicepfiles\createresourcegroup.bicep = bicepfiles\createresourcegroup.bicep
+		bicepfiles\createSecretsKeysBlobs.bicep = bicepfiles\createSecretsKeysBlobs.bicep
+		bicepfiles\createSecretsKeysBlobs.bicepparam = bicepfiles\createSecretsKeysBlobs.bicepparam
 		bicepfiles\createsecurityprovidercontainerapp.bicep = bicepfiles\createsecurityprovidercontainerapp.bicep
 		bicepfiles\createservicebus.bicep = bicepfiles\createservicebus.bicep
 		BicepFiles\createsqlserver.bicep = BicepFiles\createsqlserver.bicep
+		bicepfiles\createsqlserver.bicepparam = bicepfiles\createsqlserver.bicepparam
 		BicepFiles\createstorageaccount.bicep = BicepFiles\createstorageaccount.bicep
 		bicepfiles\createwebapicontainerapp.bicep = bicepfiles\createwebapicontainerapp.bicep
+		bicepfiles\key-value-pairs.json = bicepfiles\key-value-pairs.json
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.DatabaseProvider", "RACE2.DatabaseProvider\RACE2.DatabaseProvider.csproj", "{9EDA1C2B-D094-4061-A3EA-E1BAE34E9C8F}"
@@ -78,6 +86,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploymentyamlfiles", "depl
 		DeploymentYamlFiles\deployAllContainerAppsPOC.yml = DeploymentYamlFiles\deployAllContainerAppsPOC.yml
 		DeploymentYamlFiles\deployAllResourcesDEV.yml = DeploymentYamlFiles\deployAllResourcesDEV.yml
 		DeploymentYamlFiles\deployAllResourcesPOC.yml = DeploymentYamlFiles\deployAllResourcesPOC.yml
+		DeploymentYamlFiles\deployAllSecretsKeysBlobsTST.json = DeploymentYamlFiles\deployAllSecretsKeysBlobsTST.json
 		DeploymentYamlFiles\deployAlResourcesParametersDEV.json = DeploymentYamlFiles\deployAlResourcesParametersDEV.json
 		DeploymentYamlFiles\deployAlResourcesParametersPOC.json = DeploymentYamlFiles\deployAlResourcesParametersPOC.json
 		DeploymentYamlFiles\deployAppConfig.yml = DeploymentYamlFiles\deployAppConfig.yml

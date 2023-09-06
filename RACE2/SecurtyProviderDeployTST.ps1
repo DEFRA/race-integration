@@ -1,11 +1,11 @@
-$RESOURCE_GROUP = "race2projectrg"
+$RESOURCE_GROUP = "TSTRACINFRG1401"
 $ENVIRONMENT="Production"
-$MANAGEDIDENTITY="Race2ManagedIdentity"
-$APPCONFIG_URL="https://race2appconfig.azconfig.io/"
-$REGISTRY_SERVER="race2acr.azurecr.io"
-$CONTAINERAPPS_ENVIRONMENT="race2containerappenv"
+$MANAGEDIDENTITY="TSTRACINFMI1401"
+$APPCONFIG_URL="https://tstracinfac1401.azconfig.io/"
+$REGISTRY_SERVER="tstracinfcr1401.azurecr.io"
+$CONTAINERAPPS_ENVIRONMENT="TSTRACINFAE1401"
 $CONTAINERAPPNAME ="race2securityprovider"
-$REMOTE_IMAGENAME="race2acr.azurecr.io/race2securityprovider:351350"
+$REMOTE_IMAGENAME="tstracinfcr1401.azurecr.io/race2securityprovider:351317"
 
 $identityClientId = (az identity show --resource-group $RESOURCE_GROUP --name $MANAGEDIDENTITY --output json --query "clientId")
 $identityResourceId = (az identity show --resource-group $RESOURCE_GROUP --name $MANAGEDIDENTITY --output json --query "id")
