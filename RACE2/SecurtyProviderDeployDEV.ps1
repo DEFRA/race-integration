@@ -5,7 +5,7 @@ $APPCONFIG_URL="https://devracinfac1401.azconfig.io/"
 $REGISTRY_SERVER="devracinfcr1401.azurecr.io"
 $CONTAINERAPPS_ENVIRONMENT="DEVRACINFAE1401"
 $CONTAINERAPPNAME ="race2securityprovider"
-$REMOTE_IMAGENAME="devracinfcr1401.azurecr.io/race2securityprovider:latest"
+$REMOTE_IMAGENAME="devracinfcr1401.azurecr.io/race2securityprovider:351766"
 
 $identityClientId = (az identity show --resource-group $RESOURCE_GROUP --name $MANAGEDIDENTITY --output json --query "clientId")
 $identityResourceId = (az identity show --resource-group $RESOURCE_GROUP --name $MANAGEDIDENTITY --output json --query "id")
