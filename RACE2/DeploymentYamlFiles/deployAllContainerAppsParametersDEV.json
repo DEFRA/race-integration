@@ -50,12 +50,6 @@
       "maxReplicas": {
         "value": 2
       },
-      "frontEndContainerAppName": {
-        "value":"race2frontend"
-      },
-      "frontEndWebContainerAppName": {
-        "value":"race2frontendweb"
-      },
       "frontEndWebServerContainerAppName": {
         "value":"race2frontendwebserver"
       },
@@ -64,12 +58,6 @@
       },
       "webApiContainerAppName": {
         "value":"race2webapi"
-      },
-      "frontendcontainerImage": {
-        "value": "devracinfcr1401.azurecr.io/race2frontend"
-      },
-      "frontendwebcontainerImage": {
-        "value":"devracinfcr1401.azurecr.io/race2frontendweb"
       },
       "frontendwebservercontainerImage": {
         "value":"devracinfcr1401.azurecr.io/race2frontendwebserver"
