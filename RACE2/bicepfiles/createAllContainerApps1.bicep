@@ -48,7 +48,7 @@ module createfrontendwebservercontainerappmodule 'createcontainerapp.bicep' = {
   }
 }
 
-module createsecurityprovidercontainerappmodule 'createsecurityprovidercontainerapp.bicep' = {
+module createsecurityprovidercontainerappmodule 'createcontainerapp.bicep' = {
   scope: resourceGroup(resourcegroup)
   name: 'securityprovidercontainerappdeploy'
   params: {
@@ -67,11 +67,13 @@ module createsecurityprovidercontainerappmodule 'createsecurityprovidercontainer
     aspnetCoreEnv: aspnetCoreEnv
     azureClientId: azureClientId
     tag: tag
+    revisionMode: revisionMode
+    useProbes: useProbes
     minReplicas: minReplicas
     maxReplicas: maxReplicas
   }
 }
-module createwebapicontainerappmodule 'createwebapicontainerapp.bicep' = {
+module createwebapicontainerappmodule 'createcontainerapp.bicep' = {
   scope: resourceGroup(resourcegroup)
   name: 'webapicontainerappdeploy'
   params: {
@@ -90,6 +92,8 @@ module createwebapicontainerappmodule 'createwebapicontainerapp.bicep' = {
     aspnetCoreEnv: aspnetCoreEnv
     azureClientId: azureClientId
     tag: tag
+    revisionMode: revisionMode
+    useProbes: useProbes
     minReplicas: minReplicas
     maxReplicas: maxReplicas
   }
