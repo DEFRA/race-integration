@@ -1,7 +1,7 @@
 Heroku portal login password: re53Rv01r
 
 dotnet new tool-manifest
-dotnet tool install StrawberryShake.Tools --version 13.4.0 --local
+dotnet tool install StrawberryShake.Tools --version 13.5.1 --local
 dotnet graphql init https://localhost:5003/graphql/ -n RACE2GraphQLClient -p ./RACE2GraphQLSchema
 dotnet graphql download https://localhost:5003/graphql -f ./RACE2GraphQLSchema/schema.graphql
 
@@ -47,7 +47,7 @@ az monitor log-analytics workspace create -n $log_analytics_workspace -g $resour
 az monitor log-analytics workspace get-shared-keys -n race2loganalytics -g $resource_group
 
 $LOG_ANALYTICS_WORKSPACE_CLIENT_ID=(az monitor log-analytics workspace show --query customerId -g $RESOURCE_GROUP -n $LOG_ANALYTICS_WORKSPACE --out tsv)
-$LOG_ANALYTICS_WORKSPACE_CLIENT_SECRET=(az monitor log-analytics workspace get-shared-keys --query primarySharedKey -g $RESOURCE_GROUP -n $LOG_ANALYTICS_WORKSPACE --out tsv)
+$LOG_ANALYTICS_WORKSPACE_CLIENT_SECRET=(c)
  
 az containerapp env create `
    --name $CONTAINERAPPS_ENVIRONMENT `
@@ -55,7 +55,9 @@ az containerapp env create `
    --logs-workspace-id $LOG_ANALYTICS_WORKSPACE_CLIENT_ID `
    --logs-workspace-key $LOG_ANALYTICS_WORKSPACE_CLIENT_SECRET `
    --location "$location"
- 
+
+az deployment group create -g race2projectrg --template-file './bicepfiles/createcontainerappenv.bicep' --parameters './bicepfiles/createcontainerappenv.bicepparam'
+
 ------ Write-Host "Creating Container App"
  
 az containerapp create `
