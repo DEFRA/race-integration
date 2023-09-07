@@ -14,6 +14,9 @@ param serviceBusConnectionStringSecretName string
 param storageAccountKeySecretName string
 param sqlServerConnectionStringSecretName string
 param containerName string
+param webserverContainerAppName string
+param securityProviderContainerAppName string
+param webApiContainerAppName string
 
 // Load pairs from file
 var keyValuePairs = loadJsonContent('key-value-pairs.json')
@@ -94,12 +97,24 @@ resource serviceBusConnectionString 'Microsoft.KeyVault/vaults/secrets@2021-11-0
   }
 }
 
+resource webserverContainerApp 'Microsoft.App/containerApps@2023-05-01' existing = {
+  name: webserverContainerAppName
+}
+
+resource securityProviderContainerApp 'Microsoft.App/containerApps@2023-05-01' existing = {
+  name: securityProviderContainerAppName
+}
+
+resource webApiContainerApp 'Microsoft.App/containerApps@2023-05-01' existing = {
+  name: webApiContainerAppName
+}
+
 // to insert Key Value Pairs
 resource configStoreKeyValue 'Microsoft.AppConfiguration/configurationStores/keyValues@2023-03-01' = [for keyValuePair in keyValuePairs: {
   parent: appConfigStore
   name: empty('${keyValuePair.label}') ? '${keyValuePair.key}' :'${keyValuePair.key}$${keyValuePair.label}'					// key
   properties: {
-    value: keyValuePair.contentType == 'string' && keyValuePair.value !='StorageAccountValue' ? keyValuePair.value : keyValuePair.contentType == 'string' && keyValuePair.value =='StorageAccountValue' ? storageAccountName : keyValuePair.value == 'SqlServerConnectionStringSecretUrl' ? concat('{"uri":"',sqlServerConnectionString.properties.secretUri,'"}') : keyValuePair.value == 'StorageAccountConnectionStringSecretUrl' ? concat('{"uri":"',storageAccountConnectionString.properties.secretUri,'"}') : keyValuePair.value=='StorageAccountKeySecretUrl' ? concat('{"uri":"',storageAccountKeyString.properties.secretUri,'"}') : keyValuePair.value=='ServiceBusConnectionStringSecretUrl' ? concat('{"uri":"',serviceBusConnectionString.properties.secretUri,'"}') : keyValuePair.value=='ApplicationInsightConnectionStringSecretUrl' ? concat('{"uri":"',applicationInsightConnectionString.properties.secretUri,'"}') : '' // value of the key
+    value: keyValuePair.contentType == 'string' && keyValuePair.value !='SecurityProviderContainerAppNameValue' ? securityProviderContainerApp.properties.configuration.ingress.fqdn : keyValuePair.contentType == 'string' && keyValuePair.value !='WebApiContainerAppNameValue' ? webApiContainerApp.properties.configuration.ingress.fqdn : keyValuePair.contentType == 'string' && keyValuePair.value !='WebserverContainerAppNameValue' ? webserverContainerApp.properties.configuration.ingress.fqdn : keyValuePair.contentType == 'string' && keyValuePair.value !='StorageAccountValue' ? keyValuePair.value : keyValuePair.contentType == 'string' && keyValuePair.value =='StorageAccountValue' ? storageAccountName : keyValuePair.value == 'SqlServerConnectionStringSecretUrl' ? concat('{"uri":"',sqlServerConnectionString.properties.secretUri,'"}') : keyValuePair.value == 'StorageAccountConnectionStringSecretUrl' ? concat('{"uri":"',storageAccountConnectionString.properties.secretUri,'"}') : keyValuePair.value=='StorageAccountKeySecretUrl' ? concat('{"uri":"',storageAccountKeyString.properties.secretUri,'"}') : keyValuePair.value=='ServiceBusConnectionStringSecretUrl' ? concat('{"uri":"',serviceBusConnectionString.properties.secretUri,'"}') : keyValuePair.value=='ApplicationInsightConnectionStringSecretUrl' ? concat('{"uri":"',applicationInsightConnectionString.properties.secretUri,'"}') : '' // value of the key
     contentType: keyValuePair.contentType	// string representing content type of value
     tags: keyValuePair.tags				        // object: Dictionary of tags 
   }

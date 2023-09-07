@@ -1,12 +1,12 @@
 using './createSecretsKeysBlobs.bicep' /*TODO: Provide a path to a bicep template*/
 
-param storageAccountName = 'tstracinfst1401'
+param storageAccountName = 'devracinfst1401'
 
-param sqlServerName = 'tstracinfss1401'
+param sqlServerName = 'devracinfss1401'
 
-param applicationInsightName = 'TSTRACINFAI1401'
+param applicationInsightName = 'DEVACINFAI1401'
 
-param sqlDatabaseName = 'tstracinfdb1401'
+param sqlDatabaseName = 'devracinfdb1401'
 
 param sqlServerUserName = 'race2admin'
 
@@ -14,11 +14,11 @@ param sqlServerPassword = 'Race2Password123!'
 
 param sqlServerConnectionStringSecretName = 'SqlServerConnString'
 
-param keyVaultName = 'TSTRACINFVT1401'
+param keyVaultName = 'DEVRACINFVT1401'
 
-param appConfigResourceName = 'TSTRACINFAC1401'
+param appConfigResourceName = 'DEVRACINFAC1401'
 
-param serviceBusResouceName = 'TSTRACINFSB1401'
+param serviceBusResouceName = 'DEVRACINFSB1401'
 
 param storageAccountKeySecretName = 'StorageAccessKey'
 
@@ -35,3 +35,4 @@ param webserverContainerAppName = 'race2frontendwebserver'
 param securityProviderContainerAppName = 'race2securityprovider'
 
 param webApiContainerAppName = 'race2webapi'
+
