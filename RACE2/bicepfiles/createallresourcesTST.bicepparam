@@ -1,6 +1,6 @@
 using './createallresources.bicep'
 
-param subscriptionid = '97ea02ef-73bc-4ee9-b320-b38a6b41b4d7'
+param subscriptionid = '9327c8db-cebb-445d-9933-1bca1a76b82e'
 param tenantId = '770a2450-0227-4c62-90c7-4e38537f1102'
 param location = 'uksouth'
 param resourcegroup = 'TSTRACINFRG1401'
