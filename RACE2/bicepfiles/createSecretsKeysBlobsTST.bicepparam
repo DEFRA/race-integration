@@ -1,4 +1,4 @@
-using '' /*TODO: Provide a path to a bicep template*/
+using './createSecretsKeysBlobs.bicep' /*TODO: Provide a path to a bicep template*/
 
 param storageAccountName = 'tstracinfst1401'
 
