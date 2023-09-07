@@ -72,7 +72,7 @@
 		}
 	},
 	{
-		"key": "WebserverContainerAppNameKey",
+		"key": "RACE2FrontEndURL",
 		"value": "WebserverContainerAppNameValue",
 		"contentType": "string",
         "label": "Production",
@@ -81,7 +81,7 @@
 		}
 	} ,
 	{
-		"key": "SecurityProviderContainerAppNameKey",
+		"key": "RACE2SecurityProviderURL",
 		"value": "SecurityProviderContainerAppNameValue",
 		"contentType": "string",
         "label": "Production",
@@ -90,7 +90,7 @@
 		}
 	} ,
 	{
-		"key": "WebApiContainerAppNameKey",
+		"key": "RACE2WebApiURL",
 		"value": "WebApiContainerAppNameValue",
 		"contentType": "string",
         "label": "Production",
