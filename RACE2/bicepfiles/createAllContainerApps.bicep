@@ -48,7 +48,7 @@ module createfrontendwebservercontainerappmodule 'createcontainerapp.bicep' = {
   }
 }
 
-module createsecurityprovidercontainerappmodule 'createcontainerapp.bicep' = {
+module createsecurityprovidercontainerappmodule 'createsecurityprovidercontainerapp.bicep' = {
   scope: resourceGroup(resourcegroup)
   name: 'securityprovidercontainerappdeploy'
   params: {
@@ -73,7 +73,7 @@ module createsecurityprovidercontainerappmodule 'createcontainerapp.bicep' = {
     maxReplicas: maxReplicas
   }
 }
-module createwebapicontainerappmodule 'createcontainerapp.bicep' = {
+module createwebapicontainerappmodule 'createwebapicontainerapp.bicep' = {
   scope: resourceGroup(resourcegroup)
   name: 'webapicontainerappdeploy'
   params: {

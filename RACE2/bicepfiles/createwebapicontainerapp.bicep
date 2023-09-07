@@ -1,4 +1,3 @@
-param webApiContainerAppName string
 param location string
 param race2appenv string
 param registryName string
@@ -6,12 +5,17 @@ param registryResourceGroup string
 param resourcegroup string
 param useExternalIngress bool = false
 param containerPort int
-param webapicontainerImage string
 param managedidentity string
 param subscriptionid string 
 param appConfigURL string
 param aspnetCoreEnv string 
 param azureClientId string
+param containerAppName string
+param containerImage string
+param revisionMode string
+param useProbes bool
+param minReplicas int
+param maxReplicas int
 param tag string
 var tagVal=json(tag)
 
@@ -25,11 +29,12 @@ resource managedEnvironments_race2containerappenv_name_resource 'Microsoft.App/m
 }
 
 resource containerWebApiApp 'Microsoft.App/containerApps@2023-05-01' = {
-  name: webApiContainerAppName
+  name: containerAppName
   location: location
   properties: {
     managedEnvironmentId: managedEnvironments_race2containerappenv_name_resource.id    
-    configuration: {     
+    configuration: {  
+      activeRevisionsMode: revisionMode   
       secrets: [
         {
           name: 'container-registry-password'
@@ -65,13 +70,28 @@ resource containerWebApiApp 'Microsoft.App/containerApps@2023-05-01' = {
               value: azureClientId
             }
           ]
-          image: '${webapicontainerImage}:${tagVal.tag}' //concat('${webapicontainerImage}',':','${tagVal.tag}')
-          name: webApiContainerAppName
+          probes: useProbes? [
+            {
+              type: 'Readiness'
+               httpGet: {
+                 port: 80
+                 path: '/api/health/readiness'
+                  scheme: 'HTTP'
+               }
+              periodSeconds: 240
+               timeoutSeconds: 5
+               initialDelaySeconds: 5
+                successThreshold: 1
+                failureThreshold: 3
+            }
+          ] : null
+          image: '${containerImage}:${tagVal.tag}' //concat('${webapicontainerImage}',':','${tagVal.tag}')
+          name: containerAppName
         }
       ]
       scale: {
-        minReplicas: 1  
-        maxReplicas: 2      
+        minReplicas: minReplicas  
+        maxReplicas: maxReplicas      
       }
     }
   }
