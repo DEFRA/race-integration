@@ -67,8 +67,6 @@ module createsecurityprovidercontainerappmodule 'createsecurityprovidercontainer
     aspnetCoreEnv: aspnetCoreEnv
     azureClientId: azureClientId
     tag: tag
-    revisionMode: revisionMode
-    useProbes: useProbes
     minReplicas: minReplicas
     maxReplicas: maxReplicas
   }
@@ -92,8 +90,6 @@ module createwebapicontainerappmodule 'createwebapicontainerapp.bicep' = {
     aspnetCoreEnv: aspnetCoreEnv
     azureClientId: azureClientId
     tag: tag
-    revisionMode: revisionMode
-    useProbes: useProbes
     minReplicas: minReplicas
     maxReplicas: maxReplicas
   }

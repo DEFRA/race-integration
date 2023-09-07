@@ -12,8 +12,6 @@ param aspnetCoreEnv string
 param azureClientId string
 param containerAppName string
 param containerImage string
-param revisionMode string
-param useProbes bool
 param minReplicas int
 param maxReplicas int
 param tag string
@@ -33,8 +31,7 @@ resource containerSecurityProviderApp 'Microsoft.App/containerApps@2023-05-01' =
   location: location
   properties: {
     managedEnvironmentId: managedEnvironments_race2containerappenv_name_resource.id    
-    configuration: {    
-      activeRevisionsMode: revisionMode  
+    configuration: { 
       secrets: [
         {
           name: 'container-registry-password'
@@ -69,22 +66,7 @@ resource containerSecurityProviderApp 'Microsoft.App/containerApps@2023-05-01' =
               name: 'AZURE_CLIENT_ID'
               value: azureClientId
             }
-          ]
-          probes: useProbes? [
-            {
-              type: 'Readiness'
-               httpGet: {
-                 port: 80
-                 path: '/api/health/readiness'
-                  scheme: 'HTTP'
-               }
-              periodSeconds: 240
-               timeoutSeconds: 5
-               initialDelaySeconds: 5
-                successThreshold: 1
-                failureThreshold: 3
-            }
-          ] : null
+          ]          
           image:'${containerImage}:${tagVal.tag}' //concat('${securityprovidercontainerImage}',':','${tagVal.tag}')
           name: containerAppName
         }
