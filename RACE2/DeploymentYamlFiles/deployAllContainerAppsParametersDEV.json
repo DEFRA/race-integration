@@ -37,7 +37,19 @@
       },
       "containerPort": {
         "value": 80
-      },      
+      },  
+      "revisionMode": {
+        "value": "Single"
+      },
+      "useProbes": {
+        "value": true
+      },
+      "minReplicas": {
+        "value": 1
+      },
+      "maxReplicas": {
+        "value": 2
+      },    
       "frontEndWebServerContainerAppName": {
         "value":"race2frontendwebserver"
       },
