@@ -45,7 +45,7 @@ resource containerSecurityProviderApp 'Microsoft.App/containerApps@2023-05-01' =
         }
       ]
       ingress: {
-        external: false
+        external: true
         targetPort: containerPort
       }
     }
