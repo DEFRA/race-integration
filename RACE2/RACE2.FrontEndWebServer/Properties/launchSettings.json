@@ -5,8 +5,8 @@
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Production",
-        //"AzureAppConfigURL": "https://race2appconfig.azconfig.io/"
-        "AzureAppConfigURL": "https://devracinfac1401.azconfig.io/"
+        "AzureAppConfigURL": "https://race2appconfig.azconfig.io/"
+        //"AzureAppConfigURL": "https://devracinfac1401.azconfig.io/"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:5001"
