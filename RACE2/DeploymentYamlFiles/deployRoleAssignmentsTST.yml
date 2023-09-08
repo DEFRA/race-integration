@@ -8,7 +8,7 @@ variables:
 
   azureServiceConnection: 'AZR-RAC-TST1'
   managedIdentityName: 'TSTRACINFMI1401'
-  templateFileAllResources: './RACE2/bicepfiles/createroleassignments.bicep'
+  templateFileRoleAssignments: './RACE2/bicepfiles/createroleassignments.bicep'
 pool:
   vmImage: $(vmImageName)
 
@@ -21,4 +21,4 @@ steps:
     useGlobalConfig: false    
     inlineScript: |
       az --version
-      az deployment group create --template-file $(templateFileResourceGroup) --parameters managedIdentityName=$(managedIdentityName)
+      az deployment group create --template-file $(templateFileRoleAssignments) --parameters managedIdentityName=$(managedIdentityName)
