@@ -17,16 +17,16 @@ param maxReplicas int
 param tag string
 var tagVal=json(tag)
 
-resource registry 'Microsoft.ContainerRegistry/registries@2023-01-01-preview' existing = {
+resource registry 'Microsoft.ContainerRegistry/registries@2022-12-01' existing = {
   name: registryName
   scope: resourceGroup(registryResourceGroup)
 }
 
-resource managedEnvironments_race2containerappenv_name_resource 'Microsoft.App/managedEnvironments@2022-10-01' existing= {
+resource managedEnvironments_race2containerappenv_name_resource 'Microsoft.App/managedEnvironments@2023-05-01' existing= {
   name: race2appenv 
 }
 
-resource containerFrontEndApp 'Microsoft.App/containerApps@2022-01-01-preview' = {
+resource containerFrontEndApp 'Microsoft.App/containerApps@2023-05-01' = {
   name: containerAppName
   location: location
   properties: {
