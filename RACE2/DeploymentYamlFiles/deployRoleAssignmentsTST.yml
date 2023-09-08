@@ -5,7 +5,7 @@ name: Deploy All Resources
 
 variables:
   vmImageName: 'ubuntu-latest'
-  resourceGroupName: 'AZR-RAC-TST1'
+  resourceGroupName: 'TSTRACINFRG1401'
   azureServiceConnection: 'AZR-RAC-TST1'
   managedIdentityName: 'TSTRACINFMI1401'
   templateFileRoleAssignments: './RACE2/bicepfiles/createroleassignments.bicep'
