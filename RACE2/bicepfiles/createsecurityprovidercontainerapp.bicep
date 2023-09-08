@@ -13,6 +13,7 @@ param containerAppName string
 param containerImage string
 param minReplicas int
 param maxReplicas int
+param useExternalIngress bool
 param tag string
 var tagVal=json(tag)
 
@@ -45,7 +46,7 @@ resource containerSecurityProviderApp 'Microsoft.App/containerApps@2023-05-01' =
         }
       ]
       ingress: {
-        external: true
+        external: useExternalIngress
         targetPort: containerPort
       }
     }
