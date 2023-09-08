@@ -54,6 +54,7 @@ module createsecurityprovidercontainerappmodule 'createsecurityprovidercontainer
     registryName: registryName
     registryResourceGroup: registryResourceGroup
     resourcegroup: resourcegroup
+    useExternalIngress: useExternalIngress
     containerPort: containerPort
     containerImage: securityprovidercontainerImage
     managedidentity: managedidentity
