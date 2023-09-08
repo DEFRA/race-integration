@@ -3,7 +3,6 @@ param race2appenv string
 param registryName string
 param registryResourceGroup string
 param resourcegroup string
-param useExternalIngress bool = false
 param containerPort int
 param managedidentity string
 param subscriptionid string 
@@ -46,7 +45,7 @@ resource containerSecurityProviderApp 'Microsoft.App/containerApps@2023-05-01' =
         }
       ]
       ingress: {
-        external: useExternalIngress
+        external: false
         targetPort: containerPort
       }
     }
