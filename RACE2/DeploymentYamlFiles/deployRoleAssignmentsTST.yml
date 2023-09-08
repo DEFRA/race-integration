@@ -5,7 +5,7 @@ name: Deploy All Resources
 
 variables:
   vmImageName: 'ubuntu-latest'
-
+  resourceGroupName: 'AZR-RAC-TST1'
   azureServiceConnection: 'AZR-RAC-TST1'
   managedIdentityName: 'TSTRACINFMI1401'
   templateFileRoleAssignments: './RACE2/bicepfiles/createroleassignments.bicep'
@@ -21,4 +21,4 @@ steps:
     useGlobalConfig: false    
     inlineScript: |
       az --version
-      az deployment group create --template-file $(templateFileRoleAssignments) --parameters managedIdentityName=$(managedIdentityName)
+      az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFileRoleAssignments) --parameters managedIdentityName=$(managedIdentityName)
