@@ -1,0 +1,24 @@
+trigger:
+- none
+
+name: Deploy All Resources
+
+variables:
+  vmImageName: 'ubuntu-latest'
+
+  azureServiceConnection: 'AZR-RAC-TST1'
+  managedIdentityName: 'TSTRACINFMI1401'
+  templateFileAllResources: './RACE2/bicepfiles/createroleassignments.bicep'
+pool:
+  vmImage: $(vmImageName)
+
+steps:
+- task: AzureCLI@2  
+  inputs:
+    azureSubscription: $(azureServiceConnection)
+    scriptType: bash
+    scriptLocation: inlineScript
+    useGlobalConfig: false    
+    inlineScript: |
+      az --version
+      az deployment group create --template-file $(templateFileResourceGroup) --parameters managedIdentityName=$(managedIdentityName)
