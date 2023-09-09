@@ -1,4 +1,3 @@
-param frontEndWebServerContainerAppName string
 param location string
 param race2appenv string
 param registryName string
@@ -6,26 +5,29 @@ param registryResourceGroup string
 param resourcegroup string
 param useExternalIngress bool = false
 param containerPort int
-param frontendwebservercontainerImage string
 param managedidentity string
 param subscriptionid string 
 param appConfigURL string
 param aspnetCoreEnv string 
 param azureClientId string
+param containerAppName string
+param containerImage string
+param minReplicas int
+param maxReplicas int
 param tag string
 var tagVal=json(tag)
 
-resource registry 'Microsoft.ContainerRegistry/registries@2023-01-01-preview' existing = {
+resource registry 'Microsoft.ContainerRegistry/registries@2022-12-01' existing = {
   name: registryName
   scope: resourceGroup(registryResourceGroup)
 }
 
-resource managedEnvironments_race2containerappenv_name_resource 'Microsoft.App/managedEnvironments@2022-10-01' existing= {
+resource managedEnvironments_race2containerappenv_name_resource 'Microsoft.App/managedEnvironments@2023-05-01' existing= {
   name: race2appenv 
 }
 
-resource containerFrontEndApp 'Microsoft.App/containerApps@2022-01-01-preview' = {
-  name: frontEndWebServerContainerAppName
+resource containerFrontEndApp 'Microsoft.App/containerApps@2023-05-01' = {
+  name: containerAppName
   location: location
   properties: {
     managedEnvironmentId: managedEnvironments_race2containerappenv_name_resource.id    
@@ -69,13 +71,13 @@ resource containerFrontEndApp 'Microsoft.App/containerApps@2022-01-01-preview' =
               value: 'true'
             }
           ]
-          image: '${frontendwebservercontainerImage}:${tagVal.tag}' //concat('${frontendcontainerImage}',':','${tagVal.tag}')
-          name: frontEndWebServerContainerAppName
+          image: '${containerImage}:${tagVal.tag}' //concat('${frontendcontainerImage}',':','${tagVal.tag}')
+          name: containerAppName
         }
       ]
       scale: {
-        minReplicas: 1  
-        maxReplicas: 2      
+        minReplicas: minReplicas  
+        maxReplicas: maxReplicas      
       }
     }
   }

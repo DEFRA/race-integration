@@ -3,7 +3,6 @@ param race2appenv string
 param registryName string
 param registryResourceGroup string
 param resourcegroup string
-param useExternalIngress bool = false
 param containerPort int
 param managedidentity string
 param subscriptionid string 
@@ -14,6 +13,7 @@ param containerAppName string
 param containerImage string
 param minReplicas int
 param maxReplicas int
+param useExternalIngress bool
 param tag string
 var tagVal=json(tag)
 

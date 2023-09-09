@@ -17,12 +17,10 @@ param appConfigURL string
 param aspnetCoreEnv string 
 param azureClientId string
 param tag string
-param revisionMode string
-param useProbes bool
 param minReplicas int
 param maxReplicas int
 
-module createfrontendwebservercontainerappmodule 'createcontainerapp.bicep' = {
+module createfrontendwebservercontainerappmodule 'createfrontendwebservercontainerapp.bicep' = {
   scope: resourceGroup(resourcegroup)
   name: 'frontendcontainerwebserverappdeploy'
   params: {
@@ -41,8 +39,6 @@ module createfrontendwebservercontainerappmodule 'createcontainerapp.bicep' = {
     aspnetCoreEnv: aspnetCoreEnv
     azureClientId: azureClientId
     tag: tag
-    revisionMode: revisionMode
-    useProbes: useProbes
     minReplicas: minReplicas
     maxReplicas: maxReplicas
   }

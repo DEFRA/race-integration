@@ -60,9 +60,14 @@ builder.Services.AddAuthentication(options =>
     OpenIdConnectDefaults.AuthenticationScheme,
     options =>
     {
-        options.Events.OnTicketReceived = async (Context) =>
+        //options.Events.OnTicketReceived = async (Context) =>
+        //{
+        //    Context.Properties.ExpiresUtc = DateTime.UtcNow.AddMinutes(30);
+        //};
+        options.Events.OnRedirectToIdentityProvider = context =>
         {
-            Context.Properties.ExpiresUtc = DateTime.UtcNow.AddMinutes(30);
+            context.ProtocolMessage.Prompt = "login";
+            return Task.CompletedTask;
         };
         options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
         options.SignOutScheme = OpenIdConnectDefaults.AuthenticationScheme;
