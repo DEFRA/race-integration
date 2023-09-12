@@ -67,7 +67,7 @@ resource containerSecurityProviderApp 'Microsoft.App/containerApps@2023-05-01' =
             }
             {
               name: 'AZURE_CLIENT_ID'
-              value: managedIdentity_resource.id
+              value: managedIdentity_resource.properties.clientId
             }
           ]          
           image:'${containerImage}:${tagVal.tag}' //concat('${securityprovidercontainerImage}',':','${tagVal.tag}')
