@@ -1,5 +1,3 @@
-param subscriptionid string 
-param location string = resourceGroup().location
 param resourcegroup string
 param managedidentity string
 param race2appenvName string
@@ -23,7 +21,6 @@ module createfrontendwebservercontainerappmodule 'createfrontendwebservercontain
   scope: resourceGroup(resourcegroup)
   name: 'frontendcontainerwebserverappdeploy'
   params: {
-    location: location
     race2appenv: race2appenvName
     containerAppName: frontEndWebServerContainerAppName
     registryName: registryName
@@ -33,7 +30,6 @@ module createfrontendwebservercontainerappmodule 'createfrontendwebservercontain
     containerPort: containerPort
     containerImage: frontendwebservercontainerImage
     managedidentity: managedidentity
-    subscriptionid: subscriptionid
     appConfigURL: appConfigURL
     aspnetCoreEnv: aspnetCoreEnv
     tag: tag
@@ -46,7 +42,6 @@ module createsecurityprovidercontainerappmodule 'createsecurityprovidercontainer
   scope: resourceGroup(resourcegroup)
   name: 'securityprovidercontainerappdeploy'
   params: {
-    location: location
     race2appenv: race2appenvName
     containerAppName: securityProviderContainerAppName
     registryName: registryName
@@ -56,7 +51,6 @@ module createsecurityprovidercontainerappmodule 'createsecurityprovidercontainer
     containerPort: containerPort
     containerImage: securityprovidercontainerImage
     managedidentity: managedidentity
-    subscriptionid: subscriptionid
     appConfigURL: appConfigURL
     aspnetCoreEnv: aspnetCoreEnv
     tag: tag
@@ -68,7 +62,6 @@ module createwebapicontainerappmodule 'createwebapicontainerapp.bicep' = {
   scope: resourceGroup(resourcegroup)
   name: 'webapicontainerappdeploy'
   params: {
-    location: location
     race2appenv: race2appenvName
     containerAppName: webApiContainerAppName
     registryName: registryName
@@ -78,7 +71,6 @@ module createwebapicontainerappmodule 'createwebapicontainerapp.bicep' = {
     containerPort: containerPort
     containerImage: webapicontainerImage
     managedidentity: managedidentity
-    subscriptionid: subscriptionid
     appConfigURL: appConfigURL
     aspnetCoreEnv: aspnetCoreEnv
     tag: tag

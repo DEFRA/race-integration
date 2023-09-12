@@ -1,11 +1,9 @@
-param location string
 param race2appenv string
 param registryName string
 param registryResourceGroup string
 param resourcegroup string
 param containerPort int
-param managedidentity string
-param subscriptionid string 
+param managedidentity string 
 param appConfigURL string
 param aspnetCoreEnv string 
 param containerAppName string
@@ -15,6 +13,8 @@ param maxReplicas int
 param useExternalIngress bool
 param tag string
 var tagVal=json(tag)
+var subscriptionid = subscription().subscriptionId
+var location = resourceGroup().location
 
 resource registry 'Microsoft.ContainerRegistry/registries@2022-12-01' existing = {
   name: registryName

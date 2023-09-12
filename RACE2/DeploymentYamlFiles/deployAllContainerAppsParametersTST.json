@@ -2,12 +2,6 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-      "subscriptionid": {
-        "value": "9327c8db-cebb-445d-9933-1bca1a76b82e"
-      }, 
-      "location": {
-        "value": "uksouth"
-      },
       "resourcegroup": {
         "value": "TSTRACINFRG1401"
       },
