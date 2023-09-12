@@ -5,6 +5,7 @@
     Layout = "";
 }
 <link href="~/css/govuk-frontend-4.4.1.min.css" rel="stylesheet" />
+<script src="~/js/site.js"></script>
 <header class="govuk-header " role="banner" data-module="govuk-header">
     <div class="govuk-header__container govuk-width-container">
         <div class="govuk-header__logo">
@@ -45,20 +46,27 @@
 
                 <form id="account" method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <label class="govuk-label" for="govGatePasswordConfirm">
-                        Email
+                    <label class="govuk-label" for="govGateUsername">
+                        Username
                     </label>
                     <div class="form-floating">
-                        <input asp-for="Input.Email" class="govuk-input govuk-!-width-three-quarters" autocomplete="username" aria-required="true" aria-describedby="govGateUserId-hint" />
+                        <input asp-for="Input.Email" id="govGateUsername" class="govuk-input govuk-!-width-three-quarters" autocomplete="username" aria-required="true" aria-describedby="govGateUserId-hint" />
                         <span asp-validation-for="Input.Email" class="text-danger"></span>
                     </div>
-                    <br/>
-                    <label class="govuk-label" for="govGatePasswordConfirm">
+                    <br />
+@*                     <div class="gem-c-show-password" data-module="show-password" data-disable-form-submit-check="false" data-show-text="Show" data-hide-text="Hide" data-show-full-text="Show password" data-hide-full-text="Hide password" data-announce-show="Your password is shown" data-announce-hide="Your password is hidden" data-show-password-module-started="true">
+                        <div class="govuk-form-group">
+                            <label for="input-cfca9749" class="gem-c-label govuk-label">Please enter your password</label>
+                            <div class="gem-c-show-password__input-wrapper"><input autocomplete="off" class="gem-c-input govuk-input gem-c-input--with-password" id="input-cfca9749" spellcheck="false" type="password" value="this is my password"><button class="gem-c-show-password__toggle" aria-controls="input-cfca9749" type="button" aria-label="Show password">Show</button><span class="govuk-visually-hidden" aria-live="polite">Your password is hidden</span></div>
+                        </div>
+                    </div> *@
+                   <label class="govuk-label" for="govGatePasswordConfirm">
                         Password
                     </label>
                     <div class="form-floating">
-                        <input asp-for="Input.Password" class="govuk-input govuk-!-width-three-quarters" autocomplete="current-password" aria-required="true" />
-                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                        <input asp-for="Input.Password" id="govGatePasswordConfirm" class="govuk-input govuk-!-width-three-quarters" autocomplete="current-password" aria-required="true">
+                            <button id="passwordbtn" type="button" class="govuk-button" onclick="getButtonText()">Show</button>
+                         <span asp-validation-for="Input.Password" class="text-danger"></span>
                     </div>
                     <br />
                      <div>
@@ -122,5 +130,6 @@
 </footer>
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+    <partial name="_ValidationScriptsPartial" />    
 }
+

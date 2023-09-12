@@ -84,7 +84,12 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             //var result2 = await client.DownloadBlobToLocalFile.ExecuteAsync(blobName, "d:\\temp\\" + blobName);
             Stream response = await blobStorageService.GetBlobFileStream(blobName);
             //var streamRef = new DotNetStreamReference(stream: response);
-            MemoryStream processedStream = openXMLUtilitiesService.SearchAndReplace(response, CurrentReservoirState.Value.CurrentReservoir.PublicName, UserDetail.c_first_name+" "+ UserDetail.c_last_name);
+            S12PrePopulationFields s12PrePopulationFields = new S12PrePopulationFields();
+            s12PrePopulationFields.ReservoirName = CurrentReservoirState.Value.CurrentReservoir.PublicName;
+            s12PrePopulationFields.SupervisingEngineerName = UserDetail.c_first_name + " " + UserDetail.c_last_name;
+            s12PrePopulationFields.ReservoirNearestTown = CurrentReservoirState.Value.CurrentReservoir.NearestTown;
+            s12PrePopulationFields.ReservoirGridRef = CurrentReservoirState.Value.CurrentReservoir.GridReference;
+            MemoryStream processedStream = openXMLUtilitiesService.SearchAndReplace(response, s12PrePopulationFields);
             processedStream.Position = 0;
             var streamRef = new DotNetStreamReference(stream: processedStream);
             await jsRuntime.InvokeVoidAsync("downloadFileFromStream", blobName, streamRef);
