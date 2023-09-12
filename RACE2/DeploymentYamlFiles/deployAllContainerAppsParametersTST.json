@@ -29,9 +29,6 @@
       "registryName": {
         "value": "tstracinfcr1401"
       },
-      "azureClientId": {
-        "value": "a9b6b03e-c198-4880-8b59-65b8d265f4ca"
-      },
       "useExternalIngress": {
         "value": true
       },

@@ -9,7 +9,6 @@ param managedidentity string
 param subscriptionid string 
 param appConfigURL string
 param aspnetCoreEnv string 
-param azureClientId string
 param containerAppName string
 param containerImage string
 param minReplicas int
@@ -24,6 +23,10 @@ resource registry 'Microsoft.ContainerRegistry/registries@2022-12-01' existing =
 
 resource managedEnvironments_race2containerappenv_name_resource 'Microsoft.App/managedEnvironments@2023-05-01' existing= {
   name: race2appenv 
+}
+
+resource managedIdentity_resource 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' existing= {
+  name: managedidentity 
 }
 
 resource containerFrontEndApp 'Microsoft.App/containerApps@2023-05-01' = {
@@ -64,7 +67,7 @@ resource containerFrontEndApp 'Microsoft.App/containerApps@2023-05-01' = {
             }
             {
               name: 'AZURE_CLIENT_ID'
-              value: azureClientId
+              value: managedIdentity_resource.id
             }
             {
               name: 'ASPNETCORE_FORWARDEDHEADERS_ENABLED'

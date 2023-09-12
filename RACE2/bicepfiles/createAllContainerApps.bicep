@@ -15,7 +15,6 @@ param useExternalIngress bool = false
 param containerPort int
 param appConfigURL string
 param aspnetCoreEnv string 
-param azureClientId string
 param tag string
 param minReplicas int
 param maxReplicas int
@@ -37,7 +36,6 @@ module createfrontendwebservercontainerappmodule 'createfrontendwebservercontain
     subscriptionid: subscriptionid
     appConfigURL: appConfigURL
     aspnetCoreEnv: aspnetCoreEnv
-    azureClientId: azureClientId
     tag: tag
     minReplicas: minReplicas
     maxReplicas: maxReplicas
@@ -61,7 +59,6 @@ module createsecurityprovidercontainerappmodule 'createsecurityprovidercontainer
     subscriptionid: subscriptionid
     appConfigURL: appConfigURL
     aspnetCoreEnv: aspnetCoreEnv
-    azureClientId: azureClientId
     tag: tag
     minReplicas: minReplicas
     maxReplicas: maxReplicas
@@ -84,7 +81,6 @@ module createwebapicontainerappmodule 'createwebapicontainerapp.bicep' = {
     subscriptionid: subscriptionid
     appConfigURL: appConfigURL
     aspnetCoreEnv: aspnetCoreEnv
-    azureClientId: azureClientId
     tag: tag
     minReplicas: minReplicas
     maxReplicas: maxReplicas
