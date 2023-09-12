@@ -1,5 +1,3 @@
-param subscriptionid string 
-param location string = resourceGroup().location
 param resourcegroup string
 param managedidentity string
 param race2appenvName string
@@ -15,7 +13,6 @@ param useExternalIngress bool = false
 param containerPort int
 param appConfigURL string
 param aspnetCoreEnv string 
-param azureClientId string
 param tag string
 param minReplicas int
 param maxReplicas int
@@ -24,7 +21,6 @@ module createfrontendwebservercontainerappmodule 'createfrontendwebservercontain
   scope: resourceGroup(resourcegroup)
   name: 'frontendcontainerwebserverappdeploy'
   params: {
-    location: location
     race2appenv: race2appenvName
     containerAppName: frontEndWebServerContainerAppName
     registryName: registryName
@@ -34,10 +30,8 @@ module createfrontendwebservercontainerappmodule 'createfrontendwebservercontain
     containerPort: containerPort
     containerImage: frontendwebservercontainerImage
     managedidentity: managedidentity
-    subscriptionid: subscriptionid
     appConfigURL: appConfigURL
     aspnetCoreEnv: aspnetCoreEnv
-    azureClientId: azureClientId
     tag: tag
     minReplicas: minReplicas
     maxReplicas: maxReplicas
@@ -48,7 +42,6 @@ module createsecurityprovidercontainerappmodule 'createsecurityprovidercontainer
   scope: resourceGroup(resourcegroup)
   name: 'securityprovidercontainerappdeploy'
   params: {
-    location: location
     race2appenv: race2appenvName
     containerAppName: securityProviderContainerAppName
     registryName: registryName
@@ -58,10 +51,8 @@ module createsecurityprovidercontainerappmodule 'createsecurityprovidercontainer
     containerPort: containerPort
     containerImage: securityprovidercontainerImage
     managedidentity: managedidentity
-    subscriptionid: subscriptionid
     appConfigURL: appConfigURL
     aspnetCoreEnv: aspnetCoreEnv
-    azureClientId: azureClientId
     tag: tag
     minReplicas: minReplicas
     maxReplicas: maxReplicas
@@ -71,7 +62,6 @@ module createwebapicontainerappmodule 'createwebapicontainerapp.bicep' = {
   scope: resourceGroup(resourcegroup)
   name: 'webapicontainerappdeploy'
   params: {
-    location: location
     race2appenv: race2appenvName
     containerAppName: webApiContainerAppName
     registryName: registryName
@@ -81,10 +71,8 @@ module createwebapicontainerappmodule 'createwebapicontainerapp.bicep' = {
     containerPort: containerPort
     containerImage: webapicontainerImage
     managedidentity: managedidentity
-    subscriptionid: subscriptionid
     appConfigURL: appConfigURL
     aspnetCoreEnv: aspnetCoreEnv
-    azureClientId: azureClientId
     tag: tag
     minReplicas: minReplicas
     maxReplicas: maxReplicas

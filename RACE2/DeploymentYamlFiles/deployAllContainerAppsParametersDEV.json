@@ -1,13 +1,7 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
-    "parameters": {
-      "subscriptionid": {
-        "value": "97ea02ef-73bc-4ee9-b320-b38a6b41b4d7"
-      }, 
-      "location": {
-        "value": "uksouth"
-      },
+    "parameters": {      
       "resourcegroup": {
         "value": "DEVRACINFRG1401"
       },
@@ -28,9 +22,6 @@
       },
       "registryName": {
         "value": "devracinfcr1401"
-      },
-      "azureClientId": {
-        "value": "993e8eee-8b30-47e1-bace-acfbed894b5e"
       },
       "useExternalIngress": {
         "value": true

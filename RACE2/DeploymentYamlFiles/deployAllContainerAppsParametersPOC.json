@@ -1,13 +1,7 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
-    "parameters": {
-      "subscriptionid": {
-        "value": "d9cce027-07b6-4275-a215-dd8d52b9d469"
-      }, 
-      "location": {
-        "value": "westeurope"
-      }, 
+    "parameters": {      
       "resourcegroup": {
         "value": "Race2ProjectRG"
       },     
@@ -22,9 +16,6 @@
       },
       "aspnetCoreEnv": {
         "value": "Production"
-      },
-      "azureClientId": {
-        "value": "f324da0d-19e1-49df-8901-faab72ed2649"
       },
       "appConfigURL": {
         "value": "https://race2appconfig.azconfig.io/"
