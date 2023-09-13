@@ -1,7 +1,0 @@
-﻿mutation UpdateReservoir($input: UpdateReservoirInput!){
-  updateReservoir(input: $input) {
-        reservoir {
-          publicName
-        }
-  }
-}    

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using Microsoft.IdentityModel.Logging;
+using RACE2.DataAccess.Repository;
 using RACE2.DataModel;
 using RACE2.Services;
 using static System.Net.WebRequestMethods;
@@ -88,9 +89,6 @@ builder.Services.AddAuthentication(options =>
         options.Scope.Add("race2WebApi");
     });
 
-builder.Services.AddRACE2GraphQLClient()
-    .ConfigureHttpClient(client => client.BaseAddress = new Uri(RACE2WebApiURL));
-
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {
     options.ForwardedHeaders =
@@ -103,6 +101,10 @@ builder.Services.AddFluxor(o =>
     o.UseReduxDevTools(rdt => { rdt.Name = "RACE2 application"; });
 });
 
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IReservoirService, ReservoirService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IReservoirRepository, ReservoirRepository>();
 builder.Services.AddScoped<IBlobStorageService, BlobStorageService>();
 builder.Services.AddScoped<IOpenXMLUtilitiesService, OpenXMLUtilitiesService>();
 

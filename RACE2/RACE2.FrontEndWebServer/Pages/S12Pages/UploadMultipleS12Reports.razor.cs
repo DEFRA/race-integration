@@ -8,24 +8,22 @@ using RACE2.DataModel;
 using RACE2.Dto;
 using RACE2.FrontEndWebServer.FluxorImplementation.Actions;
 using RACE2.FrontEndWebServer.FluxorImplementation.Stores;
-using RACE2.FrontEndWebServer.RACE2GraphQLSchema;
 using RACE2.Services;
 using StrawberryShake;
 using System;
-//using RACE2.FrontEnd.RACE2GraphQLSchema;
 
 namespace RACE2.FrontEndWebServer.Pages.S12Pages
 {
     public partial class UploadMultipleS12Reports
     {
         [Inject]
-        private RACE2GraphQLClient client { get; set; } = default!;
-        [Inject]
         public NavigationManager NavigationManager { get; set; } = default!;
         [Inject]
         public IDispatcher Dispatcher { get; set; } = default!;
         [Inject]
         public IBlobStorageService blobStorageService { get; set; } = default!;
+        [Inject]
+        public IUserService userService { get; set; } = default!;
         [Inject]
         public IJSRuntime jsRuntime { get; set; } = default!;
         [Inject]
@@ -48,17 +46,15 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         {
             AuthenticationState authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
             UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
-            //var userDetails = await client.GetUserByEmailID.ExecuteAsync(UserName);
-            //UserId = userDetails!.Data!.UserByEmailID.Id;
-            var userDetails = await client.GetUserByEmailID.ExecuteAsync(UserName);
-            UserId = userDetails!.Data!.UserByEmailID.Id;
+            var userDetails = await userService.GetUserByEmailID(UserName);
+            UserId = userDetails.Id;
             UserDetail = new UserDetail()
             {
                 UserName = UserName,
                 Id = UserId,
-                Email = userDetails!.Data!.UserByEmailID.Email,
-                c_first_name = userDetails!.Data!.UserByEmailID.C_first_name,
-                c_last_name = userDetails!.Data!.UserByEmailID.C_last_name
+                Email = userDetails.Email,
+                c_first_name = userDetails.c_first_name,
+                c_last_name = userDetails.c_last_name
             };
             CurrentReservoir = CurrentReservoirState.Value.CurrentReservoir;
 
