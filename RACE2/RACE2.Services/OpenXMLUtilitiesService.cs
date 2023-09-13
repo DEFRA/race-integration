@@ -35,14 +35,8 @@ namespace RACE2.Services
                     Regex tagVal = new Regex(tag);
                     switch (tag)
                     {
-                        case "{Reservoir name}":
-                            docText = tagVal.Replace(docText, s12PrePopulationFields.ReservoirName);
-                            break;
                         case "{Reservoir Name}":
                             docText = tagVal.Replace(docText, s12PrePopulationFields.ReservoirName);
-                            break;
-                        case "{Supervising Engineer Name}":
-                            docText = tagVal.Replace(docText, s12PrePopulationFields.SupervisingEngineerName);
                             break;
                         case "{Supervising engineer Name}":
                             docText = tagVal.Replace(docText, s12PrePopulationFields.SupervisingEngineerName);
