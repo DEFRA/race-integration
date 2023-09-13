@@ -5,40 +5,22 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
-
+	
   <ItemGroup>
-    <None Remove="RACE2GraphQLSchema\Mutations\User\UpdatePasswordHashForUser.graphql" />
-    <None Remove="RACE2GraphQLSchema\Querries\User\GetAllUsers.graphql" />
-    <None Remove="RACE2GraphQLSchema\Querries\User\GetOperatorsforReservoir.graphql" />
-    <None Remove="RACE2GraphQLSchema\Querries\User\GetReservoirsByUser EmailId.graphql" />
-    <None Remove="RACE2GraphQLSchema\Querries\User\GetReservoirsByUserId.graphql" />
-    <None Remove="RACE2GraphQLSchema\Querries\User\GetUserByEmailID.graphql" />
-    <None Remove="RACE2GraphQLSchema\Querries\User\GetUserById.graphql" />
-    <None Remove="RACE2GraphQLSchema\Querries\User\GetUserWithRoles.graphql" />
-    <None Remove="RACE2GraphQLSchema\Querries\User\MatchUserWithEmailAndPasswordHash.graphql" />
+	<PackageReference Include="Fluxor" Version="5.9.1" />
+	<PackageReference Include="Fluxor.Blazor.Web" Version="5.9.1" />
+	<PackageReference Include="Fluxor.Blazor.Web.ReduxDevTools" Version="5.9.1" />
+	<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
+	<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
+	<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.22" />
+	<PackageReference Include="Azure.Identity" Version="1.10.0" />
+	<PackageReference Include="Microsoft.Azure.AppConfiguration.AspNetCore" Version="6.1.0" />
+	<PackageReference Include="StrawberryShake.Blazor" Version="13.5.1" />
   </ItemGroup>
-
-	<ItemGroup>
-		<PackageReference Include="Fluxor" Version="5.9.0" />
-		<PackageReference Include="Fluxor.Blazor.Web" Version="5.9.0" />
-		<PackageReference Include="Fluxor.Blazor.Web.ReduxDevTools" Version="5.9.0" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
-		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.18.1" />
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.21" />
-		<PackageReference Include="Azure.Identity" Version="1.9.0" />
-		<PackageReference Include="Microsoft.Azure.AppConfiguration.AspNetCore" Version="6.0.1" />
-		<PackageReference Include="StrawberryShake.Blazor" Version="13.4.0" />
-	</ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\RACE2.Dto\RACE2.Dto.csproj" />
     <ProjectReference Include="..\RACE2.Services\RACE2.Services.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Content Update="Shared\MainLayout.razor">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </Content>
-  </ItemGroup>
-
+	
 </Project>

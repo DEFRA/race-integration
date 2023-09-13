@@ -1,13 +1,7 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
-    "parameters": {
-      "subscriptionid": {
-        "value": "d9cce027-07b6-4275-a215-dd8d52b9d469"
-      }, 
-      "location": {
-        "value": "westeurope"
-      }, 
+    "parameters": {      
       "resourcegroup": {
         "value": "Race2ProjectRG"
       },     
@@ -23,9 +17,6 @@
       "aspnetCoreEnv": {
         "value": "Production"
       },
-      "azureClientId": {
-        "value": "f324da0d-19e1-49df-8901-faab72ed2649"
-      },
       "appConfigURL": {
         "value": "https://race2appconfig.azconfig.io/"
       },     
@@ -38,23 +29,11 @@
       "containerPort": {
         "value": 80
       },
-      "revisionMode": {
-        "value": "Single"
-      },
-      "useProbes": {
-        "value": true
-      },
       "minReplicas": {
         "value": 1
       },
       "maxReplicas": {
         "value": 2
-      },
-      "frontEndContainerAppName": {
-        "value":"race2frontend"
-      },
-      "frontEndWebContainerAppName": {
-        "value":"race2frontendweb"
       },
       "frontEndWebServerContainerAppName": {
         "value":"race2frontendwebserver"
@@ -64,12 +43,6 @@
       },
       "webApiContainerAppName": {
         "value":"race2webapi"
-      },
-      "frontendcontainerImage": {
-        "value":"race2acr.azurecr.io/race2frontend"
-      },
-      "frontendwebcontainerImage": {
-        "value":"race2acr.azurecr.io/race2frontendweb"
       },
       "frontendwebservercontainerImage": {
         "value":"race2acr.azurecr.io/race2frontendwebserver"

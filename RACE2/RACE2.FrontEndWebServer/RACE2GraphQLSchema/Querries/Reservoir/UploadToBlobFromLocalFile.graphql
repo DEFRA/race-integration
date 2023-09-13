@@ -1,3 +1,0 @@
-query UploadToBlobFromLocalFile($blobName:String!,$fileName:String!){
-  uploadToBlobFromLocalFile(blobName:$blobName, fileName: $fileName)
-}

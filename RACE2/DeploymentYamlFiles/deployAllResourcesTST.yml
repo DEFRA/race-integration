@@ -9,10 +9,8 @@ variables:
   azureServiceConnection: 'AZR-RAC-TST1'
   resourceGroupName: 'TSTRACINFRG1401'
   location: 'uksouth' 
-  servicePrincipalId: '7de9844e-c995-48d6-8e1c-cafbf7beb9f4'
-  templateFileResourceGroup: './RACE2/bicepfiles/createresourcegroup.bicep'  
   templateFileAllResources: './RACE2/bicepfiles/createallresources.bicep'
-  parameterfileAllResources: './RACE2/DeploymentYamlFiles/deployAlResourcesParametersTST.json'
+  parameterfileAllResources: './RACE2/bicepfiles/createallresourcesTST.bicepparam'
 pool:
   vmImage: $(vmImageName)
 
@@ -26,4 +24,4 @@ steps:
     inlineScript: |
       az --version
       az group create -n $(resourceGroupName) -l $(location)     
-      az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFileAllResources) --parameter @$(parameterfileAllResources)
+      az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFileAllResources) --parameters $(parameterfileAllResources)

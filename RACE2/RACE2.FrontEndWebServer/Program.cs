@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using Microsoft.IdentityModel.Logging;
+using RACE2.DataAccess.Repository;
 using RACE2.DataModel;
 using RACE2.Services;
 using static System.Net.WebRequestMethods;
@@ -43,6 +44,13 @@ var RACE2IDPURL = builder.Configuration["RACE2SecurityProviderURL"];
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
+builder.Services.Configure<CookiePolicyOptions>(options =>
+{
+    options.CheckConsentNeeded = context => true;
+    options.MinimumSameSitePolicy = SameSiteMode.None;
+});
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -53,6 +61,15 @@ builder.Services.AddAuthentication(options =>
     OpenIdConnectDefaults.AuthenticationScheme,
     options =>
     {
+        //options.Events.OnTicketReceived = async (Context) =>
+        //{
+        //    Context.Properties.ExpiresUtc = DateTime.UtcNow.AddMinutes(30);
+        //};
+        options.Events.OnRedirectToIdentityProvider = context =>
+        {
+            context.ProtocolMessage.Prompt = "login";
+            return Task.CompletedTask;
+        };
         options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
         options.SignOutScheme = OpenIdConnectDefaults.AuthenticationScheme;
         options.Authority = RACE2IDPURL;
@@ -63,7 +80,7 @@ builder.Services.AddAuthentication(options =>
         options.ResponseType = "code id_token";
 
         // Save the tokens we receive from the IDP
-        options.SaveTokens = true;
+        options.SaveTokens = false; // true;
 
         // It's recommended to always get claims from the
         // UserInfoEndpoint during the flow.
@@ -71,9 +88,6 @@ builder.Services.AddAuthentication(options =>
 
         options.Scope.Add("race2WebApi");
     });
-
-builder.Services.AddRACE2GraphQLClient()
-    .ConfigureHttpClient(client => client.BaseAddress = new Uri(RACE2WebApiURL));
 
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {
@@ -87,7 +101,13 @@ builder.Services.AddFluxor(o =>
     o.UseReduxDevTools(rdt => { rdt.Name = "RACE2 application"; });
 });
 
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IReservoirService, ReservoirService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IReservoirRepository, ReservoirRepository>();
 builder.Services.AddScoped<IBlobStorageService, BlobStorageService>();
+builder.Services.AddScoped<IOpenXMLUtilitiesService, OpenXMLUtilitiesService>();
+
 
 var app = builder.Build();
 app.UseForwardedHeaders();
@@ -101,7 +121,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
-
+app.UseCookiePolicy();
 app.UseRouting();
 
 app.UseAuthentication();

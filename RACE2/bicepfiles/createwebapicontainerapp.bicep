@@ -1,19 +1,20 @@
-param webApiContainerAppName string
-param location string
 param race2appenv string
 param registryName string
 param registryResourceGroup string
 param resourcegroup string
 param useExternalIngress bool = false
 param containerPort int
-param webapicontainerImage string
 param managedidentity string
-param subscriptionid string 
 param appConfigURL string
 param aspnetCoreEnv string 
-param azureClientId string
+param containerAppName string
+param containerImage string
+param minReplicas int
+param maxReplicas int
 param tag string
 var tagVal=json(tag)
+var subscriptionid = subscription().subscriptionId
+var location = resourceGroup().location
 
 resource registry 'Microsoft.ContainerRegistry/registries@2022-12-01' existing = {
   name: registryName
@@ -24,12 +25,16 @@ resource managedEnvironments_race2containerappenv_name_resource 'Microsoft.App/m
   name: race2appenv 
 }
 
+resource managedIdentity_resource 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' existing= {
+  name: managedidentity 
+}
+
 resource containerWebApiApp 'Microsoft.App/containerApps@2023-05-01' = {
-  name: webApiContainerAppName
+  name: containerAppName
   location: location
   properties: {
     managedEnvironmentId: managedEnvironments_race2containerappenv_name_resource.id    
-    configuration: {     
+    configuration: { 
       secrets: [
         {
           name: 'container-registry-password'
@@ -62,16 +67,16 @@ resource containerWebApiApp 'Microsoft.App/containerApps@2023-05-01' = {
             }
             {
               name: 'AZURE_CLIENT_ID'
-              value: azureClientId
+              value: managedIdentity_resource.properties.clientId
             }
-          ]
-          image: '${webapicontainerImage}:${tagVal.tag}' //concat('${webapicontainerImage}',':','${tagVal.tag}')
-          name: webApiContainerAppName
+          ]          
+          image: '${containerImage}:${tagVal.tag}' //concat('${webapicontainerImage}',':','${tagVal.tag}')
+          name: containerAppName
         }
       ]
       scale: {
-        minReplicas: 1  
-        maxReplicas: 2      
+        minReplicas: minReplicas  
+        maxReplicas: maxReplicas      
       }
     }
   }

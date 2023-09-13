@@ -1,3 +1,0 @@
-query WriteContentToBlob($blobName:String!,$content:String!){
-  writeContentToBlob(blobName:$blobName, content: $content)
-}

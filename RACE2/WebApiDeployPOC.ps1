@@ -5,7 +5,7 @@ $REGISTRY_SERVER="race2acr.azurecr.io"
 $APPCONFIG_URL="https://race2appconfig.azconfig.io/"
 $CONTAINERAPPS_ENVIRONMENT="race2containerappenv"
 $CONTAINERAPPNAME ="race2webapi"
-$REMOTE_IMAGENAME="race2acr.azurecr.io/race2webapi:latest"
+$REMOTE_IMAGENAME="race2acr.azurecr.io/race2webapi:351491"
 
 $identityClientId = (az identity show --resource-group $RESOURCE_GROUP --name $MANAGEDIDENTITY --output json --query "clientId")
 $identityResourceId = (az identity show --resource-group $RESOURCE_GROUP --name $MANAGEDIDENTITY --output json --query "id")

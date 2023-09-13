@@ -2,12 +2,6 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-      "subscriptionid": {
-        "value": "9327c8db-cebb-445d-9933-1bca1a76b82e"
-      }, 
-      "location": {
-        "value": "uksouth"
-      },
       "resourcegroup": {
         "value": "TSTRACINFRG1401"
       },
@@ -29,32 +23,17 @@
       "registryName": {
         "value": "tstracinfcr1401"
       },
-      "azureClientId": {
-        "value": "993e8eee-8b30-47e1-bace-acfbed894b5e"
-      },
       "useExternalIngress": {
         "value": true
       },
       "containerPort": {
         "value": 80
       },
-      "revisionMode": {
-        "value": "Single"
-      },
-      "useProbes": {
-        "value": true
-      },
       "minReplicas": {
         "value": 1
       },
       "maxReplicas": {
         "value": 2
-      },
-      "frontEndContainerAppName": {
-        "value":"race2frontend"
-      },
-      "frontEndWebContainerAppName": {
-        "value":"race2frontendweb"
       },
       "frontEndWebServerContainerAppName": {
         "value":"race2frontendwebserver"
@@ -64,12 +43,6 @@
       },
       "webApiContainerAppName": {
         "value":"race2webapi"
-      },
-      "frontendcontainerImage": {
-        "value": "tstracinfcr1401.azurecr.io/race2frontend"
-      },
-      "frontendwebcontainerImage": {
-        "value":"tstracinfcr1401.azurecr.io/race2frontendweb"
       },
       "frontendwebservercontainerImage": {
         "value":"tstracinfcr1401.azurecr.io/race2frontendwebserver"

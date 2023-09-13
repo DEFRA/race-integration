@@ -1,5 +1,5 @@
 trigger:
-- main
+- none
 
 name: Deploy Container App Env
 

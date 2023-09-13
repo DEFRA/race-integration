@@ -15,8 +15,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.SecurityProvider", "R
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.Dto", "RACE2.Dto\RACE2.Dto.csproj", "{A382D5D0-0CE0-455F-91F0-EB6541900A60}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.FrontEnd", "RACE2.FrontEnd\RACE2.FrontEnd.csproj", "{33EEE586-4C44-4BCC-AE83-83BA98BE97C2}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedFiles", "SharedFiles", "{700FD329-25BD-4C96-8FE6-97DEB5370146}"
 	ProjectSection(SolutionItems) = preProject
 		appsettings.json = appsettings.json
@@ -46,7 +44,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bicepfiles", "bicepfiles", "{9E4A6273-3717-4549-B159-01B58CAB5C6D}"
 	ProjectSection(SolutionItems) = preProject
 		bicepfiles\createAllContainerApps.bicep = bicepfiles\createAllContainerApps.bicep
+		bicepfiles\createAllContainerAppsDEV.bicepparam = bicepfiles\createAllContainerAppsDEV.bicepparam
 		bicepfiles\createallresources.bicep = bicepfiles\createallresources.bicep
+		bicepfiles\createallresourcesDEV.bicepparam = bicepfiles\createallresourcesDEV.bicepparam
+		bicepfiles\createallresourcesPOC.bicepparam = bicepfiles\createallresourcesPOC.bicepparam
+		bicepfiles\createallresourcesTST.bicepparam = bicepfiles\createallresourcesTST.bicepparam
 		BicepFiles\createappconfig.bicep = BicepFiles\createappconfig.bicep
 		bicepfiles\createappinsight.bicep = bicepfiles\createappinsight.bicep
 		BicepFiles\createappworkspace.bicep = BicepFiles\createappworkspace.bicep
@@ -60,11 +62,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bicepfiles", "bicepfiles", 
 		BicepFiles\createkeyvault.bicep = BicepFiles\createkeyvault.bicep
 		BicepFiles\createmanagedidentity.bicep = BicepFiles\createmanagedidentity.bicep
 		bicepfiles\createresourcegroup.bicep = bicepfiles\createresourcegroup.bicep
+		bicepfiles\createSecretsKeysBlobs.bicep = bicepfiles\createSecretsKeysBlobs.bicep
+		bicepfiles\createSecretsKeysBlobs.bicepparam = bicepfiles\createSecretsKeysBlobs.bicepparam
 		bicepfiles\createsecurityprovidercontainerapp.bicep = bicepfiles\createsecurityprovidercontainerapp.bicep
 		bicepfiles\createservicebus.bicep = bicepfiles\createservicebus.bicep
 		BicepFiles\createsqlserver.bicep = BicepFiles\createsqlserver.bicep
+		bicepfiles\createsqlserver.bicepparam = bicepfiles\createsqlserver.bicepparam
 		BicepFiles\createstorageaccount.bicep = BicepFiles\createstorageaccount.bicep
 		bicepfiles\createwebapicontainerapp.bicep = bicepfiles\createwebapicontainerapp.bicep
+		bicepfiles\key-value-pairs.json = bicepfiles\key-value-pairs.json
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.DatabaseProvider", "RACE2.DatabaseProvider\RACE2.DatabaseProvider.csproj", "{9EDA1C2B-D094-4061-A3EA-E1BAE34E9C8F}"
@@ -78,6 +84,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploymentyamlfiles", "depl
 		DeploymentYamlFiles\deployAllContainerAppsPOC.yml = DeploymentYamlFiles\deployAllContainerAppsPOC.yml
 		DeploymentYamlFiles\deployAllResourcesDEV.yml = DeploymentYamlFiles\deployAllResourcesDEV.yml
 		DeploymentYamlFiles\deployAllResourcesPOC.yml = DeploymentYamlFiles\deployAllResourcesPOC.yml
+		DeploymentYamlFiles\deployAllSecretsKeysBlobsTST.json = DeploymentYamlFiles\deployAllSecretsKeysBlobsTST.json
 		DeploymentYamlFiles\deployAlResourcesParametersDEV.json = DeploymentYamlFiles\deployAlResourcesParametersDEV.json
 		DeploymentYamlFiles\deployAlResourcesParametersPOC.json = DeploymentYamlFiles\deployAlResourcesParametersPOC.json
 		DeploymentYamlFiles\deployAppConfig.yml = DeploymentYamlFiles\deployAppConfig.yml
@@ -144,8 +151,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PipelineYamlFiles", "Pipeli
 		..\azure-pipelines-build-push.yml = ..\azure-pipelines-build-push.yml
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.FrontEndWeb", "RACE2.FrontEndWeb\RACE2.FrontEndWeb.csproj", "{27542D7A-99A2-4303-B285-E576804F6CA9}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -176,10 +181,6 @@ Global
 		{A382D5D0-0CE0-455F-91F0-EB6541900A60}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A382D5D0-0CE0-455F-91F0-EB6541900A60}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A382D5D0-0CE0-455F-91F0-EB6541900A60}.Release|Any CPU.Build.0 = Release|Any CPU
-		{33EEE586-4C44-4BCC-AE83-83BA98BE97C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{33EEE586-4C44-4BCC-AE83-83BA98BE97C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{33EEE586-4C44-4BCC-AE83-83BA98BE97C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{33EEE586-4C44-4BCC-AE83-83BA98BE97C2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FCDA91E9-996A-43AD-8864-5E66B0BECF84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FCDA91E9-996A-43AD-8864-5E66B0BECF84}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FCDA91E9-996A-43AD-8864-5E66B0BECF84}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -208,10 +209,6 @@ Global
 		{9C0A89C3-F142-40DA-ADB8-56F012014726}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C0A89C3-F142-40DA-ADB8-56F012014726}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C0A89C3-F142-40DA-ADB8-56F012014726}.Release|Any CPU.Build.0 = Release|Any CPU
-		{27542D7A-99A2-4303-B285-E576804F6CA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{27542D7A-99A2-4303-B285-E576804F6CA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{27542D7A-99A2-4303-B285-E576804F6CA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{27542D7A-99A2-4303-B285-E576804F6CA9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

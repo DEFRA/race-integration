@@ -12,7 +12,7 @@ variables:
   servicePrincipalId: '39ef2527-ca88-4bbc-b474-2d9aecf67f46'
   templateFileResourceGroup: './RACE2/bicepfiles/createresourcegroup.bicep'  
   templateFileAllResources: './RACE2/bicepfiles/createallresources.bicep'
-  parameterfileAllResources: './RACE2/DeploymentYamlFiles/deployAlResourcesParametersPOC.json'
+  c
 pool:
   vmImage: $(vmImageName)
 
