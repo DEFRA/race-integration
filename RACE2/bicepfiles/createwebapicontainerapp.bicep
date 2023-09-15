@@ -38,7 +38,7 @@ resource containerWebApiApp 'Microsoft.App/containerApps@2023-05-01' = {
       registries: [
         {
           server: '${registryName}.azurecr.io'
-          identity: managedIdentity_resource.id
+          identity: managedIdentity_resource.properties.clientId
         }
       ]
       ingress: {
