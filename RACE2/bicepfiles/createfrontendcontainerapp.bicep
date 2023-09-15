@@ -9,6 +9,11 @@ param containerPort int
 param frontendcontainerImage string
 param managedidentity string
 param subscriptionid string 
+param appConfigURL string
+param aspnetCoreEnv string 
+param azureClientId string
+param tag string
+var tagVal=json(tag)
 
 resource registry 'Microsoft.ContainerRegistry/registries@2023-01-01-preview' existing = {
   name: registryName
@@ -19,7 +24,7 @@ resource managedEnvironments_race2containerappenv_name_resource 'Microsoft.App/m
   name: race2appenv 
 }
 
-resource containerFrontEndApp 'Microsoft.App/containerApps@2022-01-01-preview' = {
+resource containerFrontEndApp 'Microsoft.App/containerApps@2022-11-01-preview' = {
   name: frontEndContainerAppName
   location: location
   properties: {
@@ -46,12 +51,30 @@ resource containerFrontEndApp 'Microsoft.App/containerApps@2022-01-01-preview' =
     template: {
       containers: [
         {
-          image: frontendcontainerImage
+          env: [
+            {
+              name: 'ASPNETCORE_ENVIRONMENT'
+              value: aspnetCoreEnv
+            }
+            {
+              name: 'AzureAppConfigURL'
+              value: appConfigURL
+            }
+            {
+              name: 'AZURE_CLIENT_ID'
+              value: azureClientId
+            }
+            {
+              name: 'ASPNETCORE_FORWARDEDHEADERS_ENABLED'
+              value: 'true'
+            }
+          ]
+          image: '${frontendcontainerImage}:${tagVal.tag}' //concat('${frontendcontainerImage}',':','${tagVal.tag}')
           name: frontEndContainerAppName
         }
       ]
       scale: {
-        minReplicas: 0  
+        minReplicas: 1  
         maxReplicas: 2      
       }
     }

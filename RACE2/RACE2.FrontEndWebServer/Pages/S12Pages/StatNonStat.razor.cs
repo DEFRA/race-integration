@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using RACE2.DataModel;
 using RACE2.FrontEndWebServer.FluxorImplementation.Stores;
-using RACE2.FrontEndWebServer.RACE2GraphQLSchema;
 using System.Security.Claims;
 using RACE2.FrontEndWebServer.FluxorImplementation.Actions;
 
@@ -12,8 +11,6 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
 {
     public partial class StatNonStat
     {
-        [Inject]
-        public RACE2GraphQLClient client { get; set; } = default!;
         [Inject]
         public NavigationManager NavigationManager { get; set; } = default!;
         [Inject]

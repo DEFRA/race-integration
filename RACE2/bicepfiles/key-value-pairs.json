@@ -1,0 +1,101 @@
+[
+	{
+		"key": "refreshAll",
+		"value": "1",
+		"contentType": "string",
+        "label": "",
+		"tags": {
+			"environment": "Production"
+		}
+	},
+    {
+		"key": "StorageAccountContainer",
+		"value": "s12reporttemplate",
+		"contentType": "string",
+        "label": "Production",
+		"tags": {
+			"environment": "Production"
+		}
+	} ,
+	{
+		"key": "SqlConnectionString",
+		"value": "SqlServerConnectionStringSecretUrl",
+		"contentType": "application/vnd.microsoft.appconfig.keyvaultref+json;charset=utf-8",
+        "label": "Production",
+		"tags": {
+			"environment": "Production"
+		}
+	},
+	{
+		"key": "StorageAccessKey",
+		"value": "StorageAccountKeySecretUrl",
+		"contentType": "application/vnd.microsoft.appconfig.keyvaultref+json;charset=utf-8",
+        "label": "Production",
+		"tags": {
+			"environment": "Production"
+		}
+	},
+	{
+		"key": "StorageAccountConnectionString",
+		"value": "StorageAccountConnectionStringSecretUrl",
+		"contentType": "application/vnd.microsoft.appconfig.keyvaultref+json;charset=utf-8",
+        "label": "Production",
+		"tags": {
+			"environment": "Production"
+		}
+	},
+	{
+		"key": "StorageAccount",
+		"value": "StorageAccountValue",
+		"contentType": "string",
+        "label": "Production",
+		"tags": {
+			"environment": "Production"
+		}
+	},
+	{
+		"key": "ServiceBusConnectionString",
+		"value": "ServiceBusConnectionStringSecretUrl",
+		"contentType": "application/vnd.microsoft.appconfig.keyvaultref+json;charset=utf-8",
+        "label": "Production",
+		"tags": {
+			"environment": "Production"
+		}
+	},
+	{
+		"key": "AppInsightsConnectionString",
+		"value": "ApplicationInsightConnectionStringSecretUrl",
+		"contentType": "application/vnd.microsoft.appconfig.keyvaultref+json;charset=utf-8",
+        "label": "Production",
+		"tags": {
+			"environment": "Production"
+		}
+	},
+	{
+		"key": "RACE2FrontEndURL",
+		"value": "WebserverContainerAppNameValue",
+		"contentType": "string",
+        "label": "Production",
+		"tags": {
+			"environment": "Production"
+		}
+	} ,
+	{
+		"key": "RACE2SecurityProviderURL",
+		"value": "SecurityProviderContainerAppNameValue",
+		"contentType": "string",
+        "label": "Production",
+		"tags": {
+			"environment": "Production"
+		}
+	} ,
+	{
+		"key": "RACE2WebApiURL",
+		"value": "WebApiContainerAppNameValue",
+		"contentType": "string",
+        "label": "Production",
+		"tags": {
+			"environment": "Production"
+		}
+	}   
+]

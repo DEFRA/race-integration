@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations.Internal;
 using Microsoft.Extensions.Configuration.AzureAppConfiguration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.FeatureManagement;
 using RACE2.DataAccess;
 using RACE2.DatabaseProvider.Data;
@@ -48,7 +49,7 @@ var sqlConnectionString = builder.Configuration["SqlConnectionString"];
 //var blazorClientURL = "https://race2frontendweb.gentlebush-defe7f09.westeurope.azurecontainerapps.io";
 //var webapiURL = "https://race2webapi.gentlebush-defe7f09.westeurope.azurecontainerapps.io/graphql/";
 //var securityProviderURL = "https://race2securityprovider.gentlebush-defe7f09.westeurope.azurecontainerapps.io";
-//var sqlConnectionString = "Server=tcp:race2sqlserver.database.windows.net,1433;Initial Catalog=RACE2Database;Persist Security Info=False;User ID=race2admin;Password=Race2Password123!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+//var sqlConnectionString = "Server=tcp:race2sqlserver.database.windows.net,1433;Initial Catalog=RACE2Database;Persist Security Info=False;User ID=race2admin;Password=D3FraRac3;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 // Add Azure App Configuration and feature management services to the container.
 builder.Services.AddAzureAppConfiguration()
                 .AddFeatureManagement();
@@ -77,6 +78,14 @@ builder.Services.AddIdentityServer()
     })
     .AddDeveloperSigningCredential()
     .AddAspNetIdentity<UserDetail>();
+
+//builder.Services.AddIdentityServer()
+//            .AddInMemoryIdentityResources(ServerConfiguration.IdentityResources)
+//            .AddInMemoryApiResources(ServerConfiguration.ApiResources)
+//            .AddInMemoryApiScopes(ServerConfiguration.ApiScopes)
+//            .AddInMemoryClients(ServerConfiguration.Clients)
+//            .AddAspNetIdentity<UserDetail>()
+//            .AddDeveloperSigningCredential();
 
 builder.Services.Configure<IdentityOptions>(options =>
 {
@@ -115,7 +124,7 @@ app.UseAzureAppConfiguration();
 
 app.UseHttpsRedirection();
 
-//HostingExtensions.InitializeDatabase(app, blazorClientURL, webapiURL);//populate initial data
+HostingExtensions.InitializeDatabase(app);//seed initial data
 
 app.UseCookiePolicy(new CookiePolicyOptions
 {
@@ -126,7 +135,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseIdentityServer();
-app.UseAuthentication();
+//app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();

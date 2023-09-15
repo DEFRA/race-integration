@@ -1,4 +1,15 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿function getButtonText()
+{
+    var button = document.getElementById('passwordbtn');
+    var text = button.innerHTML;
+    var password = document.getElementById('govGatePasswordConfirm');
+    if (text == "Show") {
+        button.innerHTML = "Hide";
+        password.setAttribute("type", "text");
+    }
+    else {
+        button.innerHTML = "Show";
+        password.setAttribute("type", "password");
+    }
+}
 
-// Write your JavaScript code.

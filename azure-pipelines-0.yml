@@ -1,0 +1,62 @@
+# Docker
+# Build a Docker image
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+trigger:
+- none
+
+resources:
+- repo: self
+
+variables:
+ 
+  - name: repository_securityprovider
+    value: 'race2securityprovider'
+  - name: dockerfile_securityprovider
+    value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_SecurityProvider'
+  - name: repository_webapi
+    value: 'race2webapi'
+  - name: dockerfile_webapi
+    value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_WebApi'
+  - name: repository_frontend
+    value: 'race2frontend'
+  - name: dockerfile_frontend
+    value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_FrontEnd'
+  - name: containerRegistry
+    value: 'AZR-RAC-POC1-DockerRegistry'
+  - name: tag
+    value: '$(Build.BuildId)'
+
+stages:
+- stage: Build
+  displayName: Build image
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: Docker@2
+      displayName: Build and push an image - securityProvider
+      inputs:
+        command: buildAndPush
+        repository: ${{ variables.repository_securityprovider }}
+        dockerfile: ${{ variables.dockerfile_securityprovider }}
+        containerRegistry: ${{ variables.containerRegistry }}
+        tags: ${{ variables.tag }}
+    - task: Docker@2
+      displayName: Build and push an image - WebApi
+      inputs:
+        command: buildAndPush
+        repository: ${{ variables.repository_webapi }}
+        dockerfile: ${{ variables.dockerfile_webapi }}
+        containerRegistry: ${{ variables.containerRegistry }}
+        tags: ${{ variables.tag }}
+    - task: Docker@2
+      displayName: Build and push an image - FrontEnd
+      inputs:
+        command: buildAndPush
+        repository: ${{ variables.repository_frontend }}
+        dockerfile: ${{ variables.dockerfile_frontend }}
+        containerRegistry: ${{ variables.containerRegistry }}
+        tags: ${{ variables.tag }}

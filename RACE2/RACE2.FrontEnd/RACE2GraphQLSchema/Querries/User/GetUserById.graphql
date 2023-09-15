@@ -1,7 +1,0 @@
-﻿query GetUserById($newid:Int!)
-{
-  byId(id:$newid) {
-    c_last_name
-    email
-  }   
-}

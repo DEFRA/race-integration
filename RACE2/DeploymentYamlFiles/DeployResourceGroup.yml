@@ -1,12 +1,12 @@
 trigger:
-- main
+- none
 
 name: Deploy ResourceGroup
 
 variables:
   vmImageName: 'ubuntu-latest'
   azureServiceConnection: 'AZR-RAC-POC1'
-  location : 'westeurope'
+  location : 'uksouth'
   resourceGroupName: 'RGPRACE2ALLRESOURCES201'
 pool:
   vmImage: $(vmImageName)

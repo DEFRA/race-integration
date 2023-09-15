@@ -1,0 +1,83 @@
+trigger: none 
+
+pool: DEFRA-COMMON-ubuntu2004-SSV3 
+
+parameters:
+  - name: envToDeploy
+    displayName: Env to deploy to
+    type: string
+    values:
+      - development
+      - qa-dev4
+      - tst
+      - prnnnod
+      - prod
+    default: development
+  - name: imageTag
+    displayName: Enter Tag for the Image
+    default: ''
+    type: string
+
+variables:
+  - template: vars/${{ parameters.envToDeploy }}.yaml
+  - name: env
+    ${{ if eq(parameters.envToDeploy, 'development') }}:
+      value: DEV1
+    ${{ elseif eq(parameters.envToDeploy, 'qa-dev4') }}:
+      value: DEV4
+    ${{ elseif eq(parameters.envToDeploy, 'tst') }}:
+      value: TST1
+    ${{ elseif eq(parameters.envToDeploy, 'prnnnod') }}:
+      value: PRE1
+    ${{ elseif eq(parameters.envToDeploy, 'prod') }}:
+      value: PRD1
+
+resources:
+  repositories:
+    - repository: DeployTemplate
+      name: XXX-CPR-NNN4P-ADO/nnn-webapps-code-deploy-pipelines
+      type: git
+      ref: main
+
+stages:
+- stage: Validate
+  jobs:
+  - deployment: 'DeployAppCode'
+    environment: $(env)
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+            - bash: |
+                echo "Deploying dockerImage --> "$(registryName):${{ parameters.imageTag }} " to env --> "${{ parameters.envToDeploy }}
+              displayName: "Show Env Details"
+            # - ${{ if ne(parameters.envToDeploy, 'development') }}:
+            - ${{ if or(eq(variables['env'], 'TST1'), eq(variables['env'], 'PRE1'), eq(variables['env'], 'PRD1') ) }}:
+             # Obtain Docker Password
+              - task: AzureKeyVault@2
+                displayName: 'Obtain Docker Password'
+                inputs:
+                  azureSubscription: 'AZD-XXX-DEV1'
+                  KeyVaultName: 'DEVXXXINFKV1401'
+                  SecretsFilter: 'DockerPassword'
+                  RunAsPreJob: true
+              # Copy the image from Dev ACR (release candidate) to Target ACR
+              - task: AzureCLI@2
+                displayName: 'Copy Image to ${{ parameters.envToDeploy }}'
+                inputs:
+                  azureSubscription: $(azureSubscription)
+                  scriptType: 'pscore'
+                  scriptLocation: 'inlineScript'
+                  inlineScript: |
+                    az acr login --name $(acrName)
+                    az acr import --name $(acrName) --source devXXXinfac1401.azurecr.io/obligationregistry:${{ parameters.imageTag }} --image obligationregistry:${{ parameters.imageTag }} --username devXXXinfac1401 --password $(DockerPassword) --force
+            - task: AzureRmWebAppDeployment@4
+              displayName: 'Deploy code to $(appServiceName)'
+              inputs:
+                ConnectionType: 'AzureRM'
+                azureSubscription: $(azureSubscription)
+                appType: 'webAppContainer'
+                WebAppName: $(appServiceName)
+                DockerNamespace: '$(acrName).azurecr.io'
+                DockerRepository: $(registryName)
+                DockerImageTag: ${{ parameters.imageTag }}
