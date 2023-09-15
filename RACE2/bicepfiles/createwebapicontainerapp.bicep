@@ -35,17 +35,10 @@ resource containerWebApiApp 'Microsoft.App/containerApps@2023-05-01' = {
   properties: {
     managedEnvironmentId: managedEnvironments_race2containerappenv_name_resource.id    
     configuration: { 
-      secrets: [
-        {
-          name: 'container-registry-password'
-          value: registry.listCredentials().passwords[0].value
-        }
-      ]
       registries: [
         {
           server: '${registryName}.azurecr.io'
-          username: registry.listCredentials().username
-          passwordSecretRef: 'container-registry-password'
+          identity: managedIdentity_resource.id
         }
       ]
       ingress: {
