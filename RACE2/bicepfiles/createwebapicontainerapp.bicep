@@ -32,7 +32,7 @@ resource containerWebApiApp 'Microsoft.App/containerApps@2023-05-01' = {
       registries: [
         {
           server: '${registryName}.azurecr.io'
-          identity: managedIdentity_resource.properties.clientId
+          identity: '/subscriptions/{subscriptionid}/resourcegroups/{resourcegroup}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{managedidentity}'
         }
       ]
       ingress: {
@@ -54,7 +54,7 @@ resource containerWebApiApp 'Microsoft.App/containerApps@2023-05-01' = {
             }
             {
               name: 'AZURE_CLIENT_ID'
-              value: managedIdentity_resource.id
+              value: managedIdentity_resource.properties.clientId
             }
           ]          
           image: '${containerImage}:${tagVal.tag}' //concat('${webapicontainerImage}',':','${tagVal.tag}')
