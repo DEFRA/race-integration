@@ -53,22 +53,22 @@ builder.Services.AddTransient<IRACEIntegrationService, RACEIntegrationService>()
 
 var authority = builder.Configuration["RACE2SecurityProviderURL"];
 
-JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
-builder.Services.AddAuthentication("Bearer")
-            .AddJwtBearer(jwtBearerOptions =>
-            {
-                jwtBearerOptions.Authority = authority;
-                jwtBearerOptions.RequireHttpsMetadata = false;
-                jwtBearerOptions.Audience = "race2WebApi";
-                jwtBearerOptions.TokenValidationParameters =
-                    new TokenValidationParameters
-                    {
-                        RoleClaimType = "role"
-                    };
-                jwtBearerOptions.TokenValidationParameters.ValidateAudience = true;
-                jwtBearerOptions.TokenValidationParameters.ValidateIssuer = true;
-                jwtBearerOptions.TokenValidationParameters.ValidateIssuerSigningKey = true;
-            });
+//JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+//builder.Services.AddAuthentication("Bearer")
+//            .AddJwtBearer(jwtBearerOptions =>
+//            {
+//                jwtBearerOptions.Authority = authority;
+//                jwtBearerOptions.RequireHttpsMetadata = false;
+//                jwtBearerOptions.Audience = "race2WebApi";
+//                jwtBearerOptions.TokenValidationParameters =
+//                    new TokenValidationParameters
+//                    {
+//                        RoleClaimType = "role"
+//                    };
+//                jwtBearerOptions.TokenValidationParameters.ValidateAudience = true;
+//                jwtBearerOptions.TokenValidationParameters.ValidateIssuer = true;
+//                jwtBearerOptions.TokenValidationParameters.ValidateIssuerSigningKey = true;
+//            });
 
 builder.Services.AddCors(options =>
 {
@@ -87,8 +87,8 @@ builder.Services.AddGraphQLServer()
     .RegisterService<IRACEIntegrationService>()
     .AddTypes()
     .AddType<UploadType>()
-    .AddMutationConventions()
-    .AddAuthorization();
+    .AddMutationConventions();
+    //.AddAuthorization();
 
 var app = builder.Build();
 
@@ -107,9 +107,9 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthentication();
+//app.UseAuthentication();
 
-app.UseAuthorization();
+//app.UseAuthorization();
 
 app.MapGraphQL();
 app.UseVoyager("/graphql", "/graphql-voyager");
