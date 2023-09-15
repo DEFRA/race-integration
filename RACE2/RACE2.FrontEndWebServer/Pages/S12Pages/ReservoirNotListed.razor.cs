@@ -4,15 +4,11 @@ using Microsoft.AspNetCore.Identity;
 using RACE2.DataModel;
 using RACE2.Dto;
 using RACE2.FrontEndWebServer.FluxorImplementation.Stores;
-//using RACE2.FrontEnd.RACE2GraphQLSchema;
 
 namespace RACE2.FrontEndWebServer.Pages.S12Pages
 {
     public partial class ReservoirNotListed
     {
-
-        //[Inject]
-        //public RACE2GraphQLClient client { get; set; } = default!;
         [Inject]
         public NavigationManager NavigationManager { get; set; } = default!;
         [Inject]

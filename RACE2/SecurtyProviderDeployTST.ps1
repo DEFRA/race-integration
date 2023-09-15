@@ -5,7 +5,7 @@ $APPCONFIG_URL="https://tstracinfac1401.azconfig.io/"
 $REGISTRY_SERVER="tstracinfcr1401.azurecr.io"
 $CONTAINERAPPS_ENVIRONMENT="TSTRACINFAE1401"
 $CONTAINERAPPNAME ="race2securityprovider"
-$REMOTE_IMAGENAME="tstracinfcr1401.azurecr.io/race2securityprovider:351317"
+$REMOTE_IMAGENAME="tstracinfcr1401.azurecr.io/race2securityprovider:353889"
 
 $identityClientId = (az identity show --resource-group $RESOURCE_GROUP --name $MANAGEDIDENTITY --output json --query "clientId")
 $identityResourceId = (az identity show --resource-group $RESOURCE_GROUP --name $MANAGEDIDENTITY --output json --query "id")

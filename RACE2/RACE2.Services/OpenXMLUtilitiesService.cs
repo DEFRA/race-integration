@@ -14,7 +14,7 @@ namespace RACE2.Services
     {
 
         // To search and replace content in a document part.
-        public MemoryStream SearchAndReplace(Stream document,string reservoirName,string userName)
+        public MemoryStream SearchAndReplace(Stream document, S12PrePopulationFields s12PrePopulationFields)
         {
             MemoryStream doc = new MemoryStream();
             document.CopyTo(doc);
@@ -35,11 +35,17 @@ namespace RACE2.Services
                     Regex tagVal = new Regex(tag);
                     switch (tag)
                     {
-                        case "Reservoir Name":
-                            docText = tagVal.Replace(docText, reservoirName);
+                        case "{Reservoir Name}":
+                            docText = tagVal.Replace(docText, s12PrePopulationFields.ReservoirName);
                             break;
-                        case "Supervising Engineer Name":
-                            docText = tagVal.Replace(docText, userName);
+                        case "{Supervising engineer Name}":
+                            docText = tagVal.Replace(docText, s12PrePopulationFields.SupervisingEngineerName);
+                            break;
+                        case "{Reservoir Nearest town}":
+                            docText = tagVal.Replace(docText, s12PrePopulationFields.ReservoirNearestTown);
+                            break;
+                        case "{Reservoir Grid reference}":
+                            docText = tagVal.Replace(docText, s12PrePopulationFields.ReservoirGridRef);
                             break;
                         default:
                             break;

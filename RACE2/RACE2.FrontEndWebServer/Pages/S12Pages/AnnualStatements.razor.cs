@@ -6,7 +6,7 @@ using RACE2.DataModel;
 using RACE2.Dto;
 using RACE2.FrontEndWebServer.FluxorImplementation.Actions;
 using RACE2.FrontEndWebServer.FluxorImplementation.Stores;
-using RACE2.FrontEndWebServer.RACE2GraphQLSchema;
+using RACE2.Services;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -17,20 +17,18 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
     public partial class AnnualStatements
     {
         [Inject]
-        private RACE2GraphQLClient client { get; set; } = default!;
-        [Inject]
         public NavigationManager NavigationManager { get; set; } = default!;
         [Inject]
         public IState<CurrentUserDetailState> CurrentUserDetailState { get; set; } = default!;
         [Inject]
         public IDispatcher Dispatcher { get; set; } = default!;
-
-        string CurrentUserEmail;
+        [Inject]
+        public IUserService userService { get; set; } = default!;
+        [Inject]
+        public IReservoirService reservoirService { get; set; } = default!;
         bool? IsLoggedIn;
-        private IEnumerable<Claim> UserClaims { get; set; }
-        private int UserId { get; set; } = 0;
         private string UserName { get; set; } = "Unknown";
-        private UserDetail UserDetail { get; set; } 
+        private UserDetail UserDetail { get; set; } = default!;
         private List<Reservoir> ReservoirsLinkedToUser { get; set; } = new List<Reservoir>();
         private List<SubmissionStatusDTO> ReservoirStatusLinkedToUser { get; set; } = new List<SubmissionStatusDTO>();
         private List<SubmissionStatusDTO> ReservoirStatusLinkedToUserSubmitted { get; set; } = new List<SubmissionStatusDTO>();
@@ -41,19 +39,16 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         {
             AuthenticationState authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
             UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
-            //var userDetails = await client.GetUserByEmailID.ExecuteAsync(UserName);
-            //UserId = userDetails!.Data!.UserByEmailID.Id;
-            var userDetails = await client.GetUserByEmailID.ExecuteAsync(UserName);
-            UserId = userDetails!.Data!.UserByEmailID.Id;
+            UserSpecificDto userDetails = await userService.GetUserByEmailID(UserName);
             UserDetail = new UserDetail()
             {
                 UserName = UserName,
-                Id = UserId,
-                Email = userDetails!.Data!.UserByEmailID.Email
+                Id = userDetails.Id,
+                Email = userDetails.Email,
             };
-            var resultsOfReservoirWithStatus = await client.GetReservoirStatusByEmail.ExecuteAsync(UserDetail.Email);
 
-            var reservoirStatusLinkedToUser = resultsOfReservoirWithStatus!.Data!.ReservoirStatusByEmail;
+            var resultsOfReservoirWithStatus = await reservoirService.GetReservoirStatusByEmail(UserDetail.Email);
+            var reservoirStatusLinkedToUser = resultsOfReservoirWithStatus.ToList();
             foreach (var rs in reservoirStatusLinkedToUser)
             {
                 var s = new SubmissionStatusDTO()
@@ -66,9 +61,9 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             }
             ReservoirStatusLinkedToUserSubmitted = ReservoirStatusLinkedToUser.Where(st => st.Status.ToUpper() == "COMPLETE").ToList();
             ReservoirStatusLinkedToUserDraft = ReservoirStatusLinkedToUser.Where(st => st.Status.ToUpper() != "COMPLETE").ToList();
-            var results = await client.GetReservoirsByUserId.ExecuteAsync(UserId);
+            var results = await reservoirService.GetReservoirsByUserId(userDetails.Id);
 
-            var reservoirs = results!.Data!.ReservoirsByUserId;
+            var reservoirs = results.ToList();
 
             foreach (var rn in reservoirs)
             {

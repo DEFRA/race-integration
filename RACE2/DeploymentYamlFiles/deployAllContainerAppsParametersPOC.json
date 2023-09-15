@@ -11,9 +11,6 @@
       "race2appenvName": {
         "value": "race2containerappenv"
       }, 
-      "registryResourceGroup": {
-        "value": "Race2ProjectRG"
-      },
       "aspnetCoreEnv": {
         "value": "Production"
       },

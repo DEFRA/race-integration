@@ -1,6 +1,5 @@
 param race2appenv string
 param registryName string
-param registryResourceGroup string
 param resourcegroup string
 param useExternalIngress bool = false
 param containerPort int
@@ -16,11 +15,6 @@ var tagVal=json(tag)
 var subscriptionid = subscription().subscriptionId
 var location = resourceGroup().location
 
-resource registry 'Microsoft.ContainerRegistry/registries@2022-12-01' existing = {
-  name: registryName
-  scope: resourceGroup(registryResourceGroup)
-}
-
 resource managedEnvironments_race2containerappenv_name_resource 'Microsoft.App/managedEnvironments@2023-05-01' existing= {
   name: race2appenv 
 }
@@ -35,17 +29,10 @@ resource containerWebApiApp 'Microsoft.App/containerApps@2023-05-01' = {
   properties: {
     managedEnvironmentId: managedEnvironments_race2containerappenv_name_resource.id    
     configuration: { 
-      secrets: [
-        {
-          name: 'container-registry-password'
-          value: registry.listCredentials().passwords[0].value
-        }
-      ]
       registries: [
         {
           server: '${registryName}.azurecr.io'
-          username: registry.listCredentials().username
-          passwordSecretRef: 'container-registry-password'
+          identity: '/subscriptions/${subscriptionid}/resourcegroups/${resourcegroup}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/${managedidentity}'
         }
       ]
       ingress: {

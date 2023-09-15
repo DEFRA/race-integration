@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Components;
 using RACE2.FrontEndWebServer.FluxorImplementation.Actions;
 using RACE2.FrontEndWebServer.FluxorImplementation.Stores;
-using RACE2.FrontEndWebServer.RACE2GraphQLSchema;
 
 namespace RACE2.FrontEndWebServer.Pages.S12Pages
 {
@@ -10,8 +9,6 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
     {
         [Inject]
         public NavigationManager NavigationManager { get; set; } = default!;
-        [Inject]
-        private RACE2GraphQLClient client { get; set; } = default!;
         [Inject]
         public IState<CurrentUserDetailState> CurrentUserDetailState { get; set; } = default!;
         [Inject]

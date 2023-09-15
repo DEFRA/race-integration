@@ -4,37 +4,36 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using RACE2.DataModel;
 using RACE2.FrontEndWebServer.FluxorImplementation.Stores;
-using RACE2.FrontEndWebServer.RACE2GraphQLSchema;
 using System.Security.Claims;
 using RACE2.FrontEndWebServer.FluxorImplementation.Actions;
 using System.Collections.Generic;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using RACE2.Services;
 
 namespace RACE2.FrontEndWebServer.Pages.S12Pages
 {
     public partial class ChooseAReservoir
     {
         [Inject]
-        private RACE2GraphQLClient client { get; set; } = default!;
-        [Inject]
         public NavigationManager NavigationManager { get; set; } = default!;
         [Inject]
         public IState<CurrentUserDetailState> CurrentUserDetailState { get; set; } = default!;
         [Inject]
         public IState<CurrentReservoirState> CurrentReservoirState { get; set; } = default!;
-
         [Inject]
-        public IDispatcher Dispatcher { get; set; } = default!;        
-
+        public IDispatcher Dispatcher { get; set; } = default!;
+        [Inject]
+        public IUserService userService { get; set; } = default!;
+        [Inject]
+        public IReservoirService reservoirService { get; set; } = default!;
         public Reservoir CurrentReservoir { get; set; } = new Reservoir();
         string? SelectedReservoirName;
         bool? IsLoggedIn;
         string? filter;
         private string[] filteredReservoirNames;
         private List<Reservoir> ReservoirsLinkedToUser { get; set; } =new List<Reservoir>();
-        private IEnumerable<Claim> UserClaims { get; set; }
         private int UserId { get; set; } = 0;
         private string UserName { get; set; } = "Unknown";
         private UserDetail UserDetail { get; set; }
@@ -44,19 +43,17 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         {
             AuthenticationState authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
             UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
-            //var userDetails = await client.GetUserByEmailID.ExecuteAsync(UserName);
-            //UserId = userDetails!.Data!.UserByEmailID.Id;
-            var userDetails = await client.GetUserByEmailID.ExecuteAsync(UserName);
-            UserId = userDetails!.Data!.UserByEmailID.Id;
+            var userDetails = await userService.GetUserByEmailID(UserName);
+            UserId = userDetails.Id;
             UserDetail = new UserDetail()
             {
                 UserName = UserName,
                 Id = UserId,
-                Email = userDetails!.Data!.UserByEmailID.Email
+                Email = userDetails.Email
             };
-            var results = await client.GetReservoirsByUserId.ExecuteAsync(UserId);
+            var results = await reservoirService.GetReservoirsByUserId(UserId);
             List<string> reservoirNamesList = new List<string>();
-            var reservoirs = results!.Data!.ReservoirsByUserId;
+            var reservoirs = results.ToList();
 
             foreach (var rn in reservoirs)
             {

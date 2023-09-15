@@ -11,9 +11,6 @@
       "race2appenvName": {
         "value": "DEVRACINFAE1401"
       },
-      "registryResourceGroup": {
-        "value": "DEVRACINFRG1401"
-      },
       "aspnetCoreEnv": {
         "value": "Production"
       },

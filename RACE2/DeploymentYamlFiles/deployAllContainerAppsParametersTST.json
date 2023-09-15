@@ -11,9 +11,6 @@
       "race2appenvName": {
         "value": "TSTRACINFAE1401"
       },
-      "registryResourceGroup": {
-        "value": "TSTRACINFRG1401"
-      },
       "aspnetCoreEnv": {
         "value": "Production"
       },
