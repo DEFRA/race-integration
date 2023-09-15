@@ -8,7 +8,6 @@ param webapicontainerImage string
 param frontEndWebServerContainerAppName string
 param frontendwebservercontainerImage string
 param registryName string
-param registryResourceGroup string
 param useExternalIngress bool = false
 param containerPort int
 param appConfigURL string
@@ -24,7 +23,6 @@ module createfrontendwebservercontainerappmodule 'createfrontendwebservercontain
     race2appenv: race2appenvName
     containerAppName: frontEndWebServerContainerAppName
     registryName: registryName
-    registryResourceGroup: registryResourceGroup
     resourcegroup: resourcegroup
     useExternalIngress: useExternalIngress
     containerPort: containerPort
@@ -45,7 +43,6 @@ module createsecurityprovidercontainerappmodule 'createsecurityprovidercontainer
     race2appenv: race2appenvName
     containerAppName: securityProviderContainerAppName
     registryName: registryName
-    registryResourceGroup: registryResourceGroup
     resourcegroup: resourcegroup
     useExternalIngress: useExternalIngress
     containerPort: containerPort
