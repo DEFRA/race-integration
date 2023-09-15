@@ -54,7 +54,7 @@ resource containerWebApiApp 'Microsoft.App/containerApps@2023-05-01' = {
             }
             {
               name: 'AZURE_CLIENT_ID'
-              value: managedIdentity_resource.properties.clientId
+              value: managedIdentity_resource.id
             }
           ]          
           image: '${containerImage}:${tagVal.tag}' //concat('${webapicontainerImage}',':','${tagVal.tag}')
