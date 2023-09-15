@@ -65,7 +65,6 @@ module createwebapicontainerappmodule 'createwebapicontainerapp.bicep' = {
     race2appenv: race2appenvName
     containerAppName: webApiContainerAppName
     registryName: registryName
-    registryResourceGroup: registryResourceGroup
     resourcegroup: resourcegroup
     useExternalIngress: useExternalIngress
     containerPort: containerPort
