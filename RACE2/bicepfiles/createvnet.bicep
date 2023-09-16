@@ -21,7 +21,7 @@ resource subnetcontainerappenvResource 'Microsoft.Network/virtualNetworks/subnet
   name: subnetcontainerappenv
   parent: virtualNetwork
   properties: {
-    addressPrefix: '10.10.0.0/24'
+    addressPrefix: '10.10.0.0/23'
   }  
 }
 output subnetcontainerappenvId string = subnetcontainerappenvResource.id
