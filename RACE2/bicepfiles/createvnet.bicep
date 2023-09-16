@@ -17,25 +17,25 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2021-08-01' = {
       {
         name: subnetcontainerappenv
         properties: {
-          addressPrefix: '10.10.0.0/23'
+          addressPrefix: '10.10.0.0/26'
         }
       }
       {
         name: subnetsqlserver
         properties: {
-          addressPrefix: '10.10.0.0/23'
+          addressPrefix: '10.10.0.0/26'
         }
       }
       {
         name: subnetstorageaccount
         properties: {
-          addressPrefix: '10.10.0.0/23'
+          addressPrefix: '10.10.0.0/26'
         }
       }
       {
         name: subnetservicebus
         properties: {
-          addressPrefix: '10.10.0.0/23'
+          addressPrefix: '10.10.0.0/26'
         }
       }
      ]
