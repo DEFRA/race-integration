@@ -9,8 +9,8 @@ variables:
   azureServiceConnection: 'AZR-RAC-POC1'
   resourceGroupName: 'POCRACINFRG1401'
   location: 'uksouth' 
-  templateFileResourceGroup: './RACE2/bicepfiles/createresourcegroup.bicep'  
-  templateFileAllResources: './RACE2/bicepfiles/createallresourcesPOC.bicepparam'
+  templateFileAllResources: './RACE2/bicepfiles/createallresources.bicep'
+  parameterfileAllResources: './RACE2/bicepfiles/createallresourcesPOC.bicepparam'
 pool:
   vmImage: $(vmImageName)
 
