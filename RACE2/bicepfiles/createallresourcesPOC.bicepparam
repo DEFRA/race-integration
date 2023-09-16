@@ -2,7 +2,7 @@ using './createallresources.bicep'
 
 param subscriptionid = 'd9cce027-07b6-4275-a215-dd8d52b9d469'
 param tenantId = '770a2450-0227-4c62-90c7-4e38537f1102'
-param location = 'westeurope'
+param location = 'uksouth'
 param resourcegroup = 'POCRACINFRG1401'
 param managedidentity = 'POCRACINFMI1401'
 param vnet = 'POCRACINFVN1401'
