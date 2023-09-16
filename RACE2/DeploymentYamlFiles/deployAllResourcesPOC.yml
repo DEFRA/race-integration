@@ -7,12 +7,10 @@ variables:
   vmImageName: 'ubuntu-latest'
 
   azureServiceConnection: 'AZR-RAC-POC1'
-  resourceGroupName: 'Race2ProjectRG'
-  location: 'westeurope' 
-  servicePrincipalId: '39ef2527-ca88-4bbc-b474-2d9aecf67f46'
+  resourceGroupName: 'POCRACINFRG1401'
+  location: 'uksouth' 
   templateFileResourceGroup: './RACE2/bicepfiles/createresourcegroup.bicep'  
-  templateFileAllResources: './RACE2/bicepfiles/createallresources.bicep'
-  c
+  templateFileAllResources: './RACE2/bicepfiles/createallresourcesPOC.bicep'
 pool:
   vmImage: $(vmImageName)
 
@@ -25,6 +23,5 @@ steps:
     useGlobalConfig: false    
     inlineScript: |
       az --version
-      az group create -n $(resourceGroupName) -l $(location)
-      az deployment group create --template-file $(templateFileResourceGroup) --parameters resourceGroupName=$(resourceGroupName) servicePrincipalId=$(servicePrincipalId)
-      az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFileAllResources) --parameter @$(parameterfileAllResources)
+      az group create -n $(resourceGroupName) -l $(location)     
+      az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFileAllResources) --parameters $(parameterfileAllResources)

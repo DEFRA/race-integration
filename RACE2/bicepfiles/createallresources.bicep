@@ -3,6 +3,11 @@ param tenantId string =  subscription().tenantId
 param location string = resourceGroup().location
 param resourcegroup string
 param managedidentity string
+param vnet string
+param subnetcontainerappenv string
+param subnetsqlserver string
+param subnetstorageaccount string
+param subnetservicebus string
 param servers_race2sqlserver_name string
 param servers_race2sqldb_name string
 param containerregistryName string
@@ -23,6 +28,18 @@ module createmanagedidentitymodule 'createmanagedidentity.bicep' = {
   params: {
     location: location
     miname: managedidentity
+  }
+}
+
+module createvnetmodule 'createvnet.bicep' = {
+  scope: resourceGroup(resourcegroup)
+  name: 'managedidentitydeploy'
+  params: {
+    vnet: vnet
+    subnetcontainerappenv: subnetcontainerappenv
+    subnetservicebus: subnetservicebus
+    subnetsqlserver: subnetsqlserver
+    subnetstorageaccount: subnetstorageaccount   
   }
 }
 
