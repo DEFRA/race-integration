@@ -4,7 +4,7 @@ param subnetsqlserver string
 param subnetstorageaccount string
 param subnetservicebus string
 
-resource virtualNetwork 'Microsoft.Network/virtualNetworks@2021-08-01' = {
+resource virtualNetwork 'Microsoft.Network/virtualNetworks@2023-05-01' = {
   name: vnet
   location: resourceGroup().location
   properties: {
@@ -13,31 +13,47 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2021-08-01' = {
         '10.10.0.0/16'
        ]
      }
-     subnets: [
-      {
-        name: subnetcontainerappenv
-        properties: {
-          addressPrefix: '10.10.0.0/26'
-        }
-      }
-      {
-        name: subnetsqlserver
-        properties: {
-          addressPrefix: '10.10.0.0/26'
-        }
-      }
-      {
-        name: subnetstorageaccount
-        properties: {
-          addressPrefix: '10.10.0.0/26'
-        }
-      }
-      {
-        name: subnetservicebus
-        properties: {
-          addressPrefix: '10.10.0.0/26'
-        }
-      }
-     ]
+     subnets: []
   }
+}
+
+resource subnetservicebusResource 'Microsoft.Network/virtualNetworks/subnets@2021-02-01' = {
+  name: subnetservicebus
+  parent: virtualNetwork
+  properties: {
+    addressPrefix: '10.0.1.0/23'
+  }
+}
+
+resource subnetsqlserverResource 'Microsoft.Network/virtualNetworks/subnets@2021-02-01' = {
+  name: subnetsqlserver
+  parent: virtualNetwork
+  properties: {
+    addressPrefix: '10.0.2.0/23'
+  }
+  dependsOn: [
+    subnetservicebusResource
+  ]
+}
+
+resource subnetstorageaccountResource 'Microsoft.Network/virtualNetworks/subnets@2021-02-01' = {
+  name: subnetstorageaccount
+  parent: virtualNetwork
+  properties: {
+    addressPrefix: '10.0.3.0/23'
+  }
+  dependsOn: [
+    subnetsqlserverResource
+  ]
+}
+
+resource subnetcontainerappenvResource 'Microsoft.Network/virtualNetworks/subnets@2021-02-01' = {
+  name: subnetcontainerappenv
+  parent: virtualNetwork
+  properties: {
+    addressPrefix: '10.0.3.0/23'
+  }
+  dependsOn: [
+    subnetstorageaccountResource
+  ]
 }
