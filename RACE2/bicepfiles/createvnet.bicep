@@ -17,43 +17,47 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2023-05-01' = {
   }
 }
 
-resource subnetservicebusResource 'Microsoft.Network/virtualNetworks/subnets@2023-05-01' = {
-  name: subnetservicebus
+resource subnetcontainerappenvResource 'Microsoft.Network/virtualNetworks/subnets@2023-05-01' = {
+  name: subnetcontainerappenv
   parent: virtualNetwork
   properties: {
-    addressPrefix: '10.10.0.0/23'
-  }
-}
-
-resource subnetsqlserverResource 'Microsoft.Network/virtualNetworks/subnets@2023-05-01' = {
-  name: subnetsqlserver
-  parent: virtualNetwork
-  properties: {
-    addressPrefix: '10.10.0.0/23'
-  }
-  dependsOn: [
-    subnetservicebusResource
-  ]
+    addressPrefix: '10.10.0.0/24'
+  }  
 }
 
 resource subnetstorageaccountResource 'Microsoft.Network/virtualNetworks/subnets@2023-05-01' = {
   name: subnetstorageaccount
   parent: virtualNetwork
   properties: {
-    addressPrefix: '10.10.0.0/23'
+    addressPrefix: '10.10.0.0/24'
   }
   dependsOn: [
-    subnetsqlserverResource
+    subnetcontainerappenvResource
   ]
 }
 
-resource subnetcontainerappenvResource 'Microsoft.Network/virtualNetworks/subnets@2023-05-01' = {
-  name: subnetcontainerappenv
+resource subnetservicebusResource 'Microsoft.Network/virtualNetworks/subnets@2023-05-01' = {
+  name: subnetservicebus
   parent: virtualNetwork
   properties: {
-    addressPrefix: '10.10.0.0/23'
+    addressPrefix: '10.10.0.0/24'
   }
   dependsOn: [
     subnetstorageaccountResource
   ]
 }
+
+resource subnetsqlserverResource 'Microsoft.Network/virtualNetworks/subnets@2023-05-01' = {
+  name: subnetsqlserver
+  parent: virtualNetwork
+  properties: {
+    addressPrefix: '10.10.0.0/24'
+  }
+  dependsOn: [
+    subnetservicebusResource
+  ]
+}
+
+
+
+
