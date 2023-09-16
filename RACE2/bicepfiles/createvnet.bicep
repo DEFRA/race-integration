@@ -16,10 +16,6 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2023-05-01' = {
      subnets: []
   }
 }
-output subnetcontainerappenvId string = virtualNetwork.properties.subnets[0].id
-output subnetstorageaccountId string = virtualNetwork.properties.subnets[1].id
-output subnetservicebusId string = virtualNetwork.properties.subnets[2].id
-output subnetsqlserverId string = virtualNetwork.properties.subnets[3].id
 
 resource subnetcontainerappenvResource 'Microsoft.Network/virtualNetworks/subnets@2023-05-01' = {
   name: subnetcontainerappenv
@@ -28,6 +24,7 @@ resource subnetcontainerappenvResource 'Microsoft.Network/virtualNetworks/subnet
     addressPrefix: '10.10.0.0/24'
   }  
 }
+output subnetcontainerappenvId string = subnetcontainerappenvResource.id
 
 resource subnetstorageaccountResource 'Microsoft.Network/virtualNetworks/subnets@2023-05-01' = {
   name: subnetstorageaccount
@@ -39,6 +36,7 @@ resource subnetstorageaccountResource 'Microsoft.Network/virtualNetworks/subnets
     subnetcontainerappenvResource
   ]
 }
+output subnetstorageaccountId string = subnetstorageaccountResource.id
 
 resource subnetservicebusResource 'Microsoft.Network/virtualNetworks/subnets@2023-05-01' = {
   name: subnetservicebus
@@ -50,6 +48,7 @@ resource subnetservicebusResource 'Microsoft.Network/virtualNetworks/subnets@202
     subnetstorageaccountResource
   ]
 }
+output subnetservicebusId string = subnetservicebusResource.id
 
 resource subnetsqlserverResource 'Microsoft.Network/virtualNetworks/subnets@2023-05-01' = {
   name: subnetsqlserver
@@ -61,6 +60,7 @@ resource subnetsqlserverResource 'Microsoft.Network/virtualNetworks/subnets@2023
     subnetservicebusResource
   ]
 }
+output subnetsqlserverId string = subnetsqlserverResource.id
 
 
 
