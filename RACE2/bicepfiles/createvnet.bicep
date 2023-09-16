@@ -21,7 +21,7 @@ resource subnetcontainerappenvResource 'Microsoft.Network/virtualNetworks/subnet
   name: subnetcontainerappenv
   parent: virtualNetwork
   properties: {
-    addressPrefix: '10.10.0.0/24'
+    addressPrefix: '10.10.0.0/23'
   }  
 }
 
@@ -29,7 +29,7 @@ resource subnetstorageaccountResource 'Microsoft.Network/virtualNetworks/subnets
   name: subnetstorageaccount
   parent: virtualNetwork
   properties: {
-    addressPrefix: '10.10.0.0/24'
+    addressPrefix: '10.10.1.0/24'
   }
 }
 
@@ -37,7 +37,7 @@ resource subnetservicebusResource 'Microsoft.Network/virtualNetworks/subnets@202
   name: subnetservicebus
   parent: virtualNetwork
   properties: {
-    addressPrefix: '10.10.0.0/24'
+    addressPrefix: '10.10.2.0/24'
   }
 }
 
@@ -45,7 +45,7 @@ resource subnetsqlserverResource 'Microsoft.Network/virtualNetworks/subnets@2023
   name: subnetsqlserver
   parent: virtualNetwork
   properties: {
-    addressPrefix: '10.10.0.0/24'
+    addressPrefix: '10.10.3.0/24'
   }
 }
 
