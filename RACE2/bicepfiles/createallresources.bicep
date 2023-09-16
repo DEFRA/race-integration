@@ -33,7 +33,7 @@ module createmanagedidentitymodule 'createmanagedidentity.bicep' = {
 
 module createvnetmodule 'createvnet.bicep' = {
   scope: resourceGroup(resourcegroup)
-  name: 'managedidentitydeploy'
+  name: 'vnetdeploy'
   params: {
     vnet: vnet
     subnetcontainerappenv: subnetcontainerappenv
