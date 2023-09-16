@@ -16,6 +16,10 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2023-05-01' = {
      subnets: []
   }
 }
+output subnetcontainerappenvId string = virtualNetwork.properties.subnets[0].id
+output subnetstorageaccountId string = virtualNetwork.properties.subnets[1].id
+output subnetservicebusId string = virtualNetwork.properties.subnets[2].id
+output subnetsqlserverId string = virtualNetwork.properties.subnets[3].id
 
 resource subnetcontainerappenvResource 'Microsoft.Network/virtualNetworks/subnets@2023-05-01' = {
   name: subnetcontainerappenv

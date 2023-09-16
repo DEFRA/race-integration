@@ -156,6 +156,7 @@ module createcontainerappenvmodule 'createcontainerappenv.bicep' = {
     race2appenv: race2appenvName
     lawsCustromerId: createappworkspacemodule.outputs.customerId
     lawsSharedKey: createappworkspacemodule.outputs.sharedKey
+    infrastructureSubnetId: createvnetmodule.outputs.subnetcontainerappenvId
   }
   dependsOn: [
     createappworkspacemodule
