@@ -10,7 +10,7 @@ variables:
   resourceGroupName: 'POCRACINFRG1401'
   location: 'uksouth' 
   templateFileResourceGroup: './RACE2/bicepfiles/createresourcegroup.bicep'  
-  templateFileAllResources: './RACE2/bicepfiles/createallresourcesPOC.bicep'
+  templateFileAllResources: './RACE2/bicepfiles/createallresourcesPOC.bicepparam'
 pool:
   vmImage: $(vmImageName)
 
