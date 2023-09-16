@@ -17,7 +17,7 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2023-05-01' = {
   }
 }
 
-resource subnetservicebusResource 'Microsoft.Network/virtualNetworks/subnets@2021-02-01' = {
+resource subnetservicebusResource 'Microsoft.Network/virtualNetworks/subnets@2023-05-01' = {
   name: subnetservicebus
   parent: virtualNetwork
   properties: {
@@ -25,7 +25,7 @@ resource subnetservicebusResource 'Microsoft.Network/virtualNetworks/subnets@202
   }
 }
 
-resource subnetsqlserverResource 'Microsoft.Network/virtualNetworks/subnets@2021-02-01' = {
+resource subnetsqlserverResource 'Microsoft.Network/virtualNetworks/subnets@2023-05-01' = {
   name: subnetsqlserver
   parent: virtualNetwork
   properties: {
@@ -36,7 +36,7 @@ resource subnetsqlserverResource 'Microsoft.Network/virtualNetworks/subnets@2021
   ]
 }
 
-resource subnetstorageaccountResource 'Microsoft.Network/virtualNetworks/subnets@2021-02-01' = {
+resource subnetstorageaccountResource 'Microsoft.Network/virtualNetworks/subnets@2023-05-01' = {
   name: subnetstorageaccount
   parent: virtualNetwork
   properties: {
@@ -47,7 +47,7 @@ resource subnetstorageaccountResource 'Microsoft.Network/virtualNetworks/subnets
   ]
 }
 
-resource subnetcontainerappenvResource 'Microsoft.Network/virtualNetworks/subnets@2021-02-01' = {
+resource subnetcontainerappenvResource 'Microsoft.Network/virtualNetworks/subnets@2023-05-01' = {
   name: subnetcontainerappenv
   parent: virtualNetwork
   properties: {
