@@ -72,20 +72,6 @@ resource virtualNetworkLinksStorageAcct 'Microsoft.Network/privateDnsZones/virtu
   }
 }
 
-resource privateDnsZoneGroupStorageAcct 'Microsoft.Network/privateEndpoints/privateDnsZoneGroups@2023-04-01' = {
-  name: 'dnsgroupStorageAcct/storageaccount'
-  properties: {
-    privateDnsZoneConfigs: [
-      {
-        name: 'configStorageAcct'
-        properties: {
-          privateDnsZoneId: resourceId('Microsoft.Network/privateDnsZones', privateDnsZonesSqlServer.name)
-        }
-      }
-    ]
-  }
-}
-
 resource privateDnsZonesSqlServer 'Microsoft.Network/privateDnsZones@2018-09-01' = {
   name: 'azureSqlPrivateDnsZone'
   location: 'global'
@@ -106,19 +92,6 @@ resource virtualNetworkLinksSqlServer 'Microsoft.Network/privateDnsZones/virtual
   }
 }
 
-resource privateDnsZoneGroupSqlServer 'Microsoft.Network/privateEndpoints/privateDnsZoneGroups@2023-04-01' = {
-  name: 'dnsgroupSqlServer/sqlserver'
-  properties: {
-    privateDnsZoneConfigs: [
-      {
-        name: 'config'
-        properties: {
-          privateDnsZoneId: resourceId('Microsoft.Network/privateDnsZones', privateDnsZonesSqlServer.name)
-        }
-      }
-    ]
-  }
-}
 
 
 
