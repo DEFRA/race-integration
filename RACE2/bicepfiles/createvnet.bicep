@@ -52,45 +52,6 @@ resource subnetsqlserverResource 'Microsoft.Network/virtualNetworks/subnets@2023
 }
 output subnetsqlserverId string = subnetsqlserverResource.id
 
-resource privateDnsZonesStoageAcct 'Microsoft.Network/privateDnsZones@2018-09-01' = {
-  name: 'azureStgPrivateDnsZone'
-  location: 'global'
-  dependsOn: [
-    virtualNetworkResource
-  ]
-}
-
-resource virtualNetworkLinksStorageAcct 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = {
-  parent: privateDnsZonesStoageAcct
-  location: 'global'
-  name: 'link-to-${virtualNetworkResource.name}'
-  properties: {
-    registrationEnabled: false
-    virtualNetwork: {
-      id: virtualNetworkResource.id
-    }
-  }
-}
-
-resource privateDnsZonesSqlServer 'Microsoft.Network/privateDnsZones@2018-09-01' = {
-  name: 'azureSqlPrivateDnsZone'
-  location: 'global'
-  dependsOn: [
-    virtualNetworkResource
-  ]
-}
-
-resource virtualNetworkLinksSqlServer 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = {
-  parent: privateDnsZonesSqlServer
-  location: 'global'
-  name: 'link-to-${virtualNetworkResource.name}'
-  properties: {
-    registrationEnabled: false
-    virtualNetwork: {
-      id: virtualNetworkResource.id
-    }
-  }
-}
 
 
 
