@@ -32,7 +32,7 @@ resource subnetstorageaccountResource 'Microsoft.Network/virtualNetworks/subnets
   properties: {
     addressPrefix: '10.10.2.0/24'
     privateEndpointNetworkPolicies: 'Disabled'
-    privateLinkServiceNetworkPolicies: 'Enabled'
+    privateLinkServiceNetworkPolicies: 'Disabled'
   }
   dependsOn:[
     subnetcontainerappenvResource
@@ -52,6 +52,73 @@ resource subnetsqlserverResource 'Microsoft.Network/virtualNetworks/subnets@2023
 }
 output subnetsqlserverId string = subnetsqlserverResource.id
 
+resource privateDnsZonesStoageAcct 'Microsoft.Network/privateDnsZones@2018-09-01' = {
+  name: 'azureStgPrivateDnsZone'
+  location: 'global'
+  dependsOn: [
+    virtualNetworkResource
+  ]
+}
+
+resource virtualNetworkLinksStorageAcct 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = {
+  parent: privateDnsZonesStoageAcct
+  location: 'global'
+  name: 'link-to-${virtualNetworkResource.name}'
+  properties: {
+    registrationEnabled: false
+    virtualNetwork: {
+      id: virtualNetworkResource.id
+    }
+  }
+}
+
+resource privateDnsZoneGroupStorageAcct 'Microsoft.Network/privateEndpoints/privateDnsZoneGroups@2023-04-01' = {
+  name: '/dnsgroupStorageAcct'
+  properties: {
+    privateDnsZoneConfigs: [
+      {
+        name: 'configStorageAcct'
+        properties: {
+          privateDnsZoneId: resourceId('Microsoft.Network/privateDnsZones', privateDnsZonesSqlServer.name)
+        }
+      }
+    ]
+  }
+}
+
+resource privateDnsZonesSqlServer 'Microsoft.Network/privateDnsZones@2018-09-01' = {
+  name: 'azureSqlPrivateDnsZone'
+  location: 'global'
+  dependsOn: [
+    virtualNetworkResource
+  ]
+}
+
+resource virtualNetworkLinksSqlServer 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = {
+  parent: privateDnsZonesSqlServer
+  location: 'global'
+  name: 'link-to-${virtualNetworkResource.name}'
+  properties: {
+    registrationEnabled: false
+    virtualNetwork: {
+      id: virtualNetworkResource.id
+    }
+  }
+}
+
+resource privateDnsZoneGroupSqlServer 'Microsoft.Network/privateEndpoints/privateDnsZoneGroups@2023-04-01' = {
+  name: '/dnsgroupSqlServer'
+  properties: {
+    privateDnsZoneConfigs: [
+      {
+        name: 'config'
+        properties: {
+          privateDnsZoneId: resourceId('Microsoft.Network/privateDnsZones', privateDnsZonesSqlServer.name)
+        }
+      }
+    ]
+  }
+}
 
 
 
