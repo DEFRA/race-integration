@@ -122,6 +122,8 @@ module createsqlservermodule 'createsqlserver.bicep' = {
     administratorLogin: administratorLogin
     administratorLoginPassword: administratorLoginPassword
     servers_race2sqldb_name: servers_race2sqldb_name
+    vnet: vnet
+    subnetsqlserver: subnetsqlserver
   }
   dependsOn: [
     createmanagedidentitymodule
