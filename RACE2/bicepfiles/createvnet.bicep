@@ -2,7 +2,7 @@ param vnet string
 param subnetcontainerappenv string
 param subnetsqlserver string
 param subnetstorageaccount string
-param location string = resourceGroup().location
+param location string 
 
 resource virtualNetworkResource 'Microsoft.Network/virtualNetworks@2023-05-01' = {
   name: vnet

@@ -7,7 +7,6 @@ param vnet string
 param subnetcontainerappenv string
 param subnetsqlserver string
 param subnetstorageaccount string
-param subnetservicebus string
 param servers_race2sqlserver_name string
 param servers_race2sqldb_name string
 param containerregistryName string
@@ -22,8 +21,7 @@ param storageAccountName string
 param logAnalyticsWorkspaceName string
 param race2appenvName string
 param race2appinsightName string
-param  string
-param azurestorageaccountPrivateDnsZone string
+
 module createmanagedidentitymodule 'createmanagedidentity.bicep' = {
   scope: resourceGroup(resourcegroup)
   name: 'managedidentitydeploy'
@@ -40,11 +38,8 @@ module createvnetmodule 'createvnet.bicep' = {
     vnet: vnet
     subnetcontainerappenv: subnetcontainerappenv
     subnetsqlserver: subnetsqlserver
-    subnetstorageaccount: subnetstorageaccount
-    var privateDnsZoneNames = [
-      azureSqlPrivateDnsZone
-      azurestorageaccountPrivateDnsZone
-    ]  
+    subnetstorageaccount: subnetstorageaccount 
+    location: location 
   }
 }
 
