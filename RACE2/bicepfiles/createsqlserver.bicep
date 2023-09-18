@@ -64,7 +64,7 @@ resource sqlPrivateEndpoint 'Microsoft.Network/privateEndpoints@2023-05-01' = {
     }
     privateLinkServiceConnections: [
       {
-        name: '${servers_race2sqlserver_name_resource.name}-sql-pe-conn'
+        name: 'PrivateEndpointSqlServer'
         properties: {
           privateLinkServiceId: servers_race2sqlserver_name_resource.id
           groupIds: [
