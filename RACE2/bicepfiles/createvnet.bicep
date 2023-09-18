@@ -73,7 +73,7 @@ resource virtualNetworkLinksStorageAcct 'Microsoft.Network/privateDnsZones/virtu
 }
 
 resource privateDnsZoneGroupStorageAcct 'Microsoft.Network/privateEndpoints/privateDnsZoneGroups@2023-04-01' = {
-  name: 'dnsgroupStorageAcct/'
+  name: 'dnsgroupStorageAcct/storageaccount'
   properties: {
     privateDnsZoneConfigs: [
       {
@@ -107,7 +107,7 @@ resource virtualNetworkLinksSqlServer 'Microsoft.Network/privateDnsZones/virtual
 }
 
 resource privateDnsZoneGroupSqlServer 'Microsoft.Network/privateEndpoints/privateDnsZoneGroups@2023-04-01' = {
-  name: 'dnsgroupSqlServer/'
+  name: 'dnsgroupSqlServer/sqlserver'
   properties: {
     privateDnsZoneConfigs: [
       {
