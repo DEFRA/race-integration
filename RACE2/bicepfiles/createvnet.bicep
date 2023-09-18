@@ -52,7 +52,19 @@ resource subnetsqlserverResource 'Microsoft.Network/virtualNetworks/subnets@2023
 }
 output subnetsqlserverId string = subnetsqlserverResource.id
 
+resource privateDnsZonesStoageAcct 'Microsoft.Network/privateDnsZones@2020-06-01' = {
+  name: 'azureStgPrivateDnsZone'
+  location: 'global'
+  dependsOn: [
+    virtualNetworkResource
+  ]
+}
 
-
-
+resource privateDnsZonesSqlServer 'Microsoft.Network/privateDnsZones@2020-06-01' = {
+  name: 'azureSqlPrivateDnsZone'
+  location: 'global'
+  dependsOn: [
+    virtualNetworkResource
+  ]
+}
 
