@@ -44,27 +44,10 @@ resource subnetsqlserverResource 'Microsoft.Network/virtualNetworks/subnets@2023
   name: subnetsqlserver
   parent: virtualNetworkResource
   properties: {
-    addressPrefix: '10.10.4.0/24'
+    addressPrefix: '10.10.3.0/24'
   }
   dependsOn:[
     subnetstorageaccountResource
   ]
 }
 output subnetsqlserverId string = subnetsqlserverResource.id
-
-resource privateDnsZonesStoageAcct 'Microsoft.Network/privateDnsZones@2020-06-01' = {
-  name: 'azureStgPrivateDnsZone'
-  location: 'global'
-  dependsOn: [
-    virtualNetworkResource
-  ]
-}
-
-resource privateDnsZonesSqlServer 'Microsoft.Network/privateDnsZones@2020-06-01' = {
-  name: 'azureSqlPrivateDnsZone'
-  location: 'global'
-  dependsOn: [
-    virtualNetworkResource
-  ]
-}
-
