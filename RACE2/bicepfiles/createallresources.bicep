@@ -76,6 +76,8 @@ module createstorageaccountmodule 'createstorageaccount.bicep' = {
   params: {
     location: location
     storageAccountname: storageAccountName
+    vnet: vnet
+    subnetstorageaccount: subnetstorageaccount
   }
   dependsOn: [
     createmanagedidentitymodule
