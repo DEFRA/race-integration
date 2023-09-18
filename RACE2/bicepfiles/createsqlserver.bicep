@@ -56,7 +56,7 @@ resource servers_race2sqlserver_name_RACE2DB 'Microsoft.Sql/servers/databases@20
 }
 
 resource sqlPrivateEndpoint 'Microsoft.Network/privateEndpoints@2023-05-01' = {
-  name: '${servers_race2sqlserver_name_resource.name}-sql-pe'
+  name: 'PrivateEndpointSqlServer'
   location: location
   properties: {
     subnet: {
