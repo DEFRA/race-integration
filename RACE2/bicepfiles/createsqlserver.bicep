@@ -60,7 +60,7 @@ resource sqlPrivateEndpoint 'Microsoft.Network/privateEndpoints@2023-05-01' = {
   location: location
   properties: {
     subnet: {
-      id: subnetsqlserverResource.id
+      id: '${virtualNetworkResource.id}/subnets/${subnetsqlserverResource.name}'
     }
     privateLinkServiceConnections: [
       {
