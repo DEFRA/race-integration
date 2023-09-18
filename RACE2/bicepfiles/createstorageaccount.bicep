@@ -75,36 +75,3 @@ resource privateEndpoint 'Microsoft.Network/privateEndpoints@2023-05-01' = {
   }
 }
 
-resource privateDnsZones 'Microsoft.Network/privateDnsZones@2020-06-01' = {
-  name: 'privateDnsZonesStorageAccount'
-  location: 'global'
-  properties: {}
-}
-
-resource privateDnsZoneLink 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = {
-  name: '${privateDnsZones.name}/${privateDnsZones.name}-link'
-  location: 'global'
-  properties: {
-    registrationEnabled: false
-    virtualNetwork: {
-      id: virtualNetworkResource.id
-    }
-  }
-}
-resource privateDnsZoneGroup 'Microsoft.Network/privateEndpoints/privateDnsZoneGroups@2023-05-01' = {
-  name: '${privateEndpoint.name}/dnsgroupname'
-  properties: {
-    privateDnsZoneConfigs: [
-      {
-        name: 'storageaccountconfig'
-        properties: {
-          privateDnsZoneId: privateDnsZones.id
-        }
-      }
-    ]
-  }
-}
-
-
-
-
