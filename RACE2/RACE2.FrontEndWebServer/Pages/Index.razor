@@ -1,9 +1,19 @@
 ﻿@page "/"
 @using System.Security.Claims;
-@using RACE2.FrontEndWebServer.Components;
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject NavigationManager NavigationManager
-<FeedbackSurvey/>
+<div class="govuk-width-container">
+    <div class="govuk-phase-banner">
+        <p class="govuk-phase-banner__content">
+            <strong class="govuk-tag govuk-phase-banner__content__tag">
+                prototype
+            </strong>
+            <span class="govuk-phase-banner__text">
+                This is a new service — your <a class="govuk-link" href="#">feedback</a> will help us to improve it.
+            </span>
+        </p>
+    </div>
+</div>
 <div class="govuk-width-container ">
     <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
         <div class="govuk-grid-row">
