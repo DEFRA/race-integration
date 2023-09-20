@@ -1,8 +1,9 @@
 ﻿@page "/"
 @using System.Security.Claims;
+@* @using RACE2.FrontEndWebServer.Components; *@
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject NavigationManager NavigationManager
-
+@* <FeedbackSurvey/> *@
 <div class="govuk-width-container ">
     <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
         <div class="govuk-grid-row">
@@ -10,7 +11,7 @@
                 <p class="govuk-heading-xl">
                     Service name
                 </p>
-@*                <h1 class="govuk-heading-xl">
+    @*                <h1 class="govuk-heading-xl">
                     Service name
                 </h1>*@
 
@@ -25,7 +26,7 @@
                                 data-module="govuk-button" @onclick="GoToLoginPage">
                             Start now
                             <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19"
-                                 viewBox="0 0 33 40" aria-hidden="true" focusable="false">
+                                    viewBox="0 0 33 40" aria-hidden="true" focusable="false">
                                 <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z"></path>
                             </svg>
                         </button>
@@ -35,7 +36,7 @@
                                 data-module="govuk-button" @onclick="GoToNextPage">
                             Start now
                             <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19"
-                                 viewBox="0 0 33 40" aria-hidden="true" focusable="false">
+                                    viewBox="0 0 33 40" aria-hidden="true" focusable="false">
                                 <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z"></path>
                             </svg>
                         </button>
@@ -48,7 +49,7 @@
 
                 <p class="govuk-body">
                     Read about<a href="https://www.gov.uk/guidance/reservoir-supervising-engineers-written-statements-and-site-visit-reports"
-                                 class="govuk-link govuk-link--no-visited-state">
+                                    class="govuk-link govuk-link--no-visited-state">
                         supervising engineers' written statements
                         and site visit reports
                     </a>
