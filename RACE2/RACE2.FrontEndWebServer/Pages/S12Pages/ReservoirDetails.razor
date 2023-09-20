@@ -1,9 +1,10 @@
 ﻿@page "/reservoir-details"
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
 @using Microsoft.AspNetCore.Authorization;
+@using RACE2.FrontEndWebServer.Components;
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @attribute [Authorize]
-
+<FeedbackSurvey/>
 <div class="govuk-width-container ">
     <a class="govuk-back-link" @onclick="goback">Back</a>
     <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
