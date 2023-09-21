@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using Microsoft.IdentityModel.Logging;
+using MudBlazor.Services;
 using RACE2.DataAccess.Repository;
 using RACE2.DataModel;
 using RACE2.Services;
@@ -107,7 +108,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IReservoirRepository, ReservoirRepository>();
 builder.Services.AddScoped<IBlobStorageService, BlobStorageService>();
 builder.Services.AddScoped<IOpenXMLUtilitiesService, OpenXMLUtilitiesService>();
-
+builder.Services.AddMudServices();
 
 var app = builder.Build();
 app.UseForwardedHeaders();
