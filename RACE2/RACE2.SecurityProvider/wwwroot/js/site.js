@@ -1,6 +1,6 @@
-﻿function getButtonText()
+﻿function getButtonText(btnId)
 {
-    var button = document.getElementById('passwordbtn');
+    var button = document.getElementById(btnId);
     var text = button.innerHTML;
     var password = document.getElementById('govGatePasswordConfirm');
     if (text == "Show") {

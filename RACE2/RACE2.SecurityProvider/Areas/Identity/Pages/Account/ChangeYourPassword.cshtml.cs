@@ -127,7 +127,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             _logger.LogInformation("User changed their password successfully.");
             StatusMessage = "Your password has been changed.";
 
-            string returnUrl = _config["RACE2FrontEndURL"]+ "/my-account";
+            string returnUrl = _config["RACE2FrontEndURL"]+ "/change-password-confirmation";
             return Redirect(returnUrl);
         }
     }
