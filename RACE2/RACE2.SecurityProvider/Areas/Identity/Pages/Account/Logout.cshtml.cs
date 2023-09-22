@@ -26,11 +26,11 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             _config = config;
         }
 
-        public async Task<IActionResult> OnPost(string returnUrl = null)
+        public async Task<IActionResult> OnGet(string returnUrl = null)
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
-            returnUrl=_config["RACE2FrontEndURL"];
+            returnUrl=_config["RACE2FrontEndURL"]+"/login";
             if (returnUrl != null)
             {
                 //return LocalRedirect(returnUrl);
