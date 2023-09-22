@@ -34,7 +34,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         private List<SubmissionStatusDTO> ReservoirStatusLinkedToUserSubmitted { get; set; } = new List<SubmissionStatusDTO>();
         private List<SubmissionStatusDTO> ReservoirStatusLinkedToUserDraft { get; set; } = new List<SubmissionStatusDTO>();
         private IEnumerable<Claim> Claims { get; set; }
-
+    
         protected async override Task OnInitializedAsync()
         {
             AuthenticationState authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
