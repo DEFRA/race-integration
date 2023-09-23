@@ -6,10 +6,33 @@
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @attribute [Authorize]
 
-<ManageAccountLinks />
-
 <div class="govuk-width-container ">
-    <a class="govuk-back-link" @onclick="goback">Back</a>
+@*     <a class="govuk-back-link" @onclick="goback">Back</a> *@
+    <div class="govuk-phase-banner">
+
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds-from-desktop">
+                <p class="govuk-phase-banner__content">
+                    <strong class="govuk-tag govuk-phase-banner__content__tag">
+                        Beta
+                    </strong>
+                    <span class="govuk-phase-banner__text">
+                        This is a new service — your <a href="https://defragroup.eu.qualtrics.com/jfe/form/SV_0wFTSeSWzDuXiRg/"
+                                                        class="govuk-link">feedback</a> will help us to improve it.
+                    </span>
+
+                </p>
+            </div>
+            <div class="govuk-grid-column-one-third-from-desktop float-right">
+                <a href="/Beta/Private/submit-s12/V10/manage-account-details"
+                   class="govuk-link login-nav-2-item govuk-link--no-visited-state profile">Manage account</a>
+
+                <a href="#" class="govuk-link login-nav-2-item govuk-link--no-visited-state">Sign out</a>
+
+            </div>
+        </div>
+
+    </div>
     <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
 
         <div class="govuk-grid-row">
