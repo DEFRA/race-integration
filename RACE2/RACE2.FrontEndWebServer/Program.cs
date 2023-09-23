@@ -88,7 +88,7 @@ builder.Services.AddAuthentication(options =>
         options.GetClaimsFromUserInfoEndpoint = true;
 
         options.Scope.Add("race2WebApi");
-        options.RequireHttpsMetadata = false;
+        //options.RequireHttpsMetadata = false;
     });
 
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
@@ -131,5 +131,5 @@ app.UseAuthorization();
 
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
-IdentityModelEventSource.ShowPII = true;
+//IdentityModelEventSource.ShowPII = true;
 app.Run();
