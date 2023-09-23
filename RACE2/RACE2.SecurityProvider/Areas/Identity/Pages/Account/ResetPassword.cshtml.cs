@@ -18,10 +18,11 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
     public class ResetPasswordModel : PageModel
     {
         private readonly UserManager<UserDetail> _userManager;
-
-        public ResetPasswordModel(UserManager<UserDetail> userManager)
+        private readonly IConfiguration _config;
+        public ResetPasswordModel(UserManager<UserDetail> userManager, IConfiguration config)
         {
             _userManager = userManager;
+            _config = config;
         }
 
         /// <summary>
@@ -99,13 +100,17 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             if (user == null)
             {
                 // Don't reveal that the user does not exist
-                return RedirectToPage("./ResetPasswordConfirmation");
+                //return RedirectToPage("./ResetPasswordConfirmation");
+                string returnUrl = _config["RACE2FrontEndURL"] + "/change-password-confirmation";
+                return Redirect(returnUrl);
             }
 
             var result = await _userManager.ResetPasswordAsync(user, Input.Code, Input.Password);
             if (result.Succeeded)
             {
-                return RedirectToPage("./ResetPasswordConfirmation");
+                //return RedirectToPage("./ResetPasswordConfirmation");
+                string returnUrl = _config["RACE2FrontEndURL"] + "/change-password-confirmation";
+                return Redirect(returnUrl);
             }
 
             foreach (var error in result.Errors)
