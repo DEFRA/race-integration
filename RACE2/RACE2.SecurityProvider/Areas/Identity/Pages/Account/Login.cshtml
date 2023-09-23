@@ -9,7 +9,7 @@
 <header class="govuk-header " role="banner" data-module="govuk-header">
     <div class="govuk-header__container govuk-width-container">
         <div class="govuk-header__logo">
-            <a href="https://gov.uk" target="_blank" class="govuk-header__link govuk-header__link--homepage">
+            <a href="#" class="govuk-header__link govuk-header__link--homepage">
                 <span class="govuk-header__logotype">
                     <!--[if gt IE 8]><!-->
                     <svg aria-hidden="true"
@@ -32,23 +32,31 @@
                 </span>
             </a>
         </div>
-    </div>
-</header>
-<div class="govuk-width-container ">   
-
-    <div class="govuk-width-container">
-        <div class="govuk-phase-banner">
-            <p class="govuk-phase-banner__content">
-                <strong class="govuk-tag govuk-phase-banner__content__tag">
-                    prototype
-                </strong>
-                <span class="govuk-phase-banner__text">
-                    This is a new service — your <a class="govuk-link" href="#">feedback</a> will help us to improve it.
-                </span>
-            </p>
+        <div class="govuk-header__content">
+            <a href="#" class="govuk-header__link govuk-header__service-name">
+                Send a supervising engineer&#39;s annual statement
+            </a>
         </div>
+     </div>
+</header>
+<div class="govuk-width-container ">
 
+    <div class="govuk-phase-banner">
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds-from-desktop">
+                <p class="govuk-phase-banner__content">
+                    <strong class="govuk-tag govuk-phase-banner__content__tag">
+                        Beta
+                    </strong>
+                    <span class="govuk-phase-banner__text">
+                        This is a new service — your <a href="https://defragroup.eu.qualtrics.com/jfe/form/SV_0wFTSeSWzDuXiRg/"
+                                                        class="govuk-link">feedback</a> will help us to improve it.
+                    </span>
+                </p>
+            </div>
+        </div>
     </div>
+
     <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
 
         <div class="govuk-grid-row">
@@ -67,14 +75,6 @@
                         <span asp-validation-for="Input.Email" class="text-danger"></span>
                     </div>
                     <br />
-@*                   <label class="govuk-label" for="govGatePasswordConfirm">
-                        Password
-                    </label>
-                    <div class="form-floating">
-                        <input asp-for="Input.Password" id="govGatePasswordConfirm" class="govuk-input govuk-!-width-three-quarters" autocomplete="current-password" aria-required="true">
-                            <button id="passwordbtn" type="button" class="govuk-button" onclick="getButtonText()">Show</button>
-                         <span asp-validation-for="Input.Password" class="text-danger"></span>
-                    </div> *@
                     <div class="gem-c-show-password" data-module="show-password" data-disable-form-submit-check="false" data-show-text="Show" data-hide-text="Hide" data-show-full-text="Show password" data-hide-full-text="Hide password" data-announce-show="Your password is shown" data-announce-hide="Your password is hidden" data-show-password-module-started="true">
                         <div class="govuk-form-group">
                             <label for="input-cfca9749" class="gem-c-label govuk-label">Please enter your password</label>
