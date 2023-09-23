@@ -79,7 +79,8 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
                 //    Input.Email,
                 //    "Reset Password",
                 //    $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-                await _emailNotificationSender.SendForgotPasswordMail(Input.Email,"User", $"<a href='{HtmlEncoder.Default.Encode(callbackUrl)}'></a>");
+                //await _emailNotificationSender.SendForgotPasswordMail(Input.Email,"User", $"<a href='{HtmlEncoder.Default.Encode(callbackUrl)}'></a>");
+                await _emailNotificationSender.SendForgotPasswordMail(Input.Email, "User", $"{HtmlEncoder.Default.Encode(callbackUrl)}");
                 return RedirectToPage("./ForgotPasswordConfirmation");
             }
 
