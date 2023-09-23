@@ -52,6 +52,7 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
 });
 builder.Services.AddHttpContextAccessor();
 
+bool requireHttpsMetadata = builder.Environment.IsProduction();
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -76,19 +77,14 @@ builder.Services.AddAuthentication(options =>
         options.Authority = RACE2IDPURL;
         options.ClientId = "blazorServer";
         options.ClientSecret = "blazorserver-secret";
-
         // When set to code, the middleware will use PKCE protection
         options.ResponseType = "code id_token";
-
         // Save the tokens we receive from the IDP
-        options.SaveTokens = false; // true;
-
-        // It's recommended to always get claims from the
-        // UserInfoEndpoint during the flow.
+        options.SaveTokens = true; // false;
+        // It's recommended to always get claims from the UserInfoEndpoint during the flow.
         options.GetClaimsFromUserInfoEndpoint = true;
-
         options.Scope.Add("race2WebApi");
-        //options.RequireHttpsMetadata = false;
+        options.RequireHttpsMetadata = requireHttpsMetadata;
     });
 
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
