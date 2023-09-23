@@ -122,7 +122,7 @@ else
 // Use Azure App Configuration middleware for dynamic configuration refresh.
 app.UseAzureAppConfiguration();
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 HostingExtensions.InitializeDatabase(app);//seed initial data
 
