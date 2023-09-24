@@ -66,22 +66,27 @@
                 <h1 class="govuk-heading-xl">Sign in</h1>
 
                 <form id="account" method="post">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <label class="govuk-label" for="govGateUsername">
-                        Username
-                    </label>
-                    <div class="form-floating">
-                        <input asp-for="Input.Email" id="govGateUsername" class="govuk-input govuk-!-width-three-quarters" autocomplete="username" aria-required="true" aria-describedby="govGateUserId-hint" />
-                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+@*                     <div asp-validation-summary="All" class="govuk-error-summary__body govuk-error-message" style="font-weight:500"></div> *@
+                    <div class="govuk-form-group">
+                        <label class="govuk-label" for="govGateUsername">
+                            Username
+                        </label>
+                        <div class="govuk-form-group">
+                            <span asp-validation-for="Input.Email" class="govuk-error-message"></span>
+                        </div>
+                        <input asp-for="Input.Email" class="govuk-input govuk-!-width-three-quarters" autocomplete="username" aria-required="true" aria-describedby="govGateUserId-hint" id="govGateUsername"
+                               name="govGateUsername" type="text">
                     </div>
                     <br />
                     <div class="gem-c-show-password" data-module="show-password" data-disable-form-submit-check="false" data-show-text="Show" data-hide-text="Hide" data-show-full-text="Show password" data-hide-full-text="Hide password" data-announce-show="Your password is shown" data-announce-hide="Your password is hidden" data-show-password-module-started="true">
                         <div class="govuk-form-group">
-                            <label for="input-cfca9749" class="gem-c-label govuk-label">Please enter your password</label>
+                            <label for="govGatePasswordConfirm" class="gem-c-label govuk-label">Please enter your password</label>
+                            <div>
+                                <span asp-validation-for="Input.Password" class="govuk-error-message"></span>
+                            </div>
                             <div class="gem-c-show-password__input-wrapper">
                                 <input asp-for="Input.Password" id="govGatePasswordConfirm" autocomplete="off" class="gem-c-input govuk-input gem-c-input--with-password govuk-!-width-three-quarters" id="input-cfca9749" spellcheck="false" type="password" value="">
                                 <button id="passwordbtn" class="gem-c-show-password__toggle" aria-controls="input-cfca9749" type="button" aria-label="Show password" onclick="getButtonText('passwordbtn','govGatePasswordConfirm')">Show</button>
-                                <span asp-validation-for="Input.Password" class="govuk-visually-hidden" aria-live="polite">Your password is hidden</span>
                             </div>
                         </div>
                     </div>
