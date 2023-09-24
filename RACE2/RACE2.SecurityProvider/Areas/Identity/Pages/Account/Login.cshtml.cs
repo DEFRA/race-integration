@@ -66,7 +66,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Required(ErrorMessage = "Check your email")]
-            [EmailAddress(ErrorMessage = "Check your email format")]
+            //[EmailAddress(ErrorMessage = "Check your email format")]
             //[RegularExpression(@"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$",ErrorMessage = "Check your email address")]
             public string Email { get; set; }
 
