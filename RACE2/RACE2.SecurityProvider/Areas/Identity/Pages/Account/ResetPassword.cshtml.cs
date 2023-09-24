@@ -102,7 +102,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             {
                 // Don't reveal that the user does not exist
                 //return RedirectToPage("./ResetPasswordConfirmation");
-                string returnUrl = _config["RACE2FrontEndURL"] + "/change-password-confirmation";
+                string returnUrl = _config["RACE2FrontEndURL"] + "/login";
                 return Redirect(returnUrl);
             }
 
@@ -110,7 +110,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             if (result.Succeeded)
             {
                 //return RedirectToPage("./ResetPasswordConfirmation");
-                string returnUrl = _config["RACE2FrontEndURL"] + "/change-password-confirmation";
+                string returnUrl = _config["RACE2FrontEndURL"] + "/login";
                 return Redirect(returnUrl);
             }
 
