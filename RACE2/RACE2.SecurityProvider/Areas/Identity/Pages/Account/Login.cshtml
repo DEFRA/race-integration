@@ -71,18 +71,18 @@
                         <label class="govuk-label" for="govGateUsername">
                             Username
                         </label>
-@*                         <div class="govuk-form-group">
+                        <div class="govuk-form-group">
                             <span asp-validation-for="Input.Email" class="govuk-error-message"></span>
-                        </div> *@
+                        </div>
                         <input asp-for="Input.Email" class="govuk-input govuk-!-width-three-quarters" aria-required="true" aria-describedby="govGateUserId-hint" id="govGateUsername">
                     </div>
                     <br />
                     <div class="gem-c-show-password" data-module="show-password" data-disable-form-submit-check="false" data-show-text="Show" data-hide-text="Hide" data-show-full-text="Show password" data-hide-full-text="Hide password" data-announce-show="Your password is shown" data-announce-hide="Your password is hidden" data-show-password-module-started="true">
                         <div class="govuk-form-group">
                             <label for="govGatePasswordConfirm" class="gem-c-label govuk-label">Please enter your password</label>
-@*                             <div>
+                            <div>
                                 <span asp-validation-for="Input.Password" class="govuk-error-message"></span>
-                            </div> *@
+                            </div>
                             <div class="gem-c-show-password__input-wrapper">
                                 <input asp-for="Input.Password" id="govGatePasswordConfirm" autocomplete="off" class="gem-c-input govuk-input gem-c-input--with-password govuk-!-width-three-quarters" id="input-cfca9749" spellcheck="false" type="password" value="">
                                 <button id="passwordbtn" class="gem-c-show-password__toggle" aria-controls="input-cfca9749" type="button" aria-label="Show password" onclick="getButtonText('passwordbtn','govGatePasswordConfirm')">Show</button>
