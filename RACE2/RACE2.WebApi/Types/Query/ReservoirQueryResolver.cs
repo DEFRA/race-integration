@@ -299,5 +299,21 @@ namespace RACE2.WebApi.Types
                 file.Dispose();
             }
             }
+
+
+
+        public async Task<List<UndertakerDTO>> GetUnderTakerforReservoir(IReservoirService _reservoirService, int id)
+        {
+            try
+            {
+                _logger.LogInformation("calling GetUnderTakerforReservoir");
+                return await _reservoirService.GetUndertakerforReservoir(id);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return null;
+            }
         }
+    }
 }

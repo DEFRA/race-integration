@@ -25,5 +25,8 @@ namespace RACE2.Services
         public Task<List<OperatorDTO>> GetOperatorsforReservoir(int reservoirid, string operatortype);
 
         public Task<List<SubmissionStatusDTO>> GetReservoirStatusByEmail(string email);
+
+        public Task<List<UndertakerDTO>> GetUndertakerforReservoir(int id);
+
     }
 }

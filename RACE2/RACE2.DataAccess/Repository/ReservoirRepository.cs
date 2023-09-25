@@ -287,5 +287,40 @@ namespace RACE2.DataAccess.Repository
             }
 
         }
+
+        public async Task<List<UndertakerDTO>> GetUndertakerforReservoir(int id)
+        {
+            _logger.LogInformation("Getting Undertaker details of the reservoirs for the assigned engineer {id} ", id);
+            try
+            {
+
+                using (var conn = Connection)
+                {
+                    var parameters = new DynamicParameters();
+                    parameters.Add("id", id, DbType.Int64);
+                    if (id != 0)
+                    {
+
+                        var operatorlist = await conn.QueryAsync<UndertakerDTO>("sp_GetUndertakerforReservoir", parameters, commandType: CommandType.StoredProcedure);
+
+                        return operatorlist.ToList();
+                    }
+                   else
+                    {
+                        _logger.LogInformation($"The input is not valid {id}",id);
+                        return null;
+                    }
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return null;
+            }
+
+
+        }
     }
 }
