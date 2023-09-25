@@ -5,25 +5,15 @@ using RACE2.FrontEndWebServer.FluxorImplementation.Stores;
 
 namespace RACE2.FrontEndWebServer.Pages.S12Pages
 {
-    public partial class NewReservoir
+    public partial class ConfirmPasswordChange
     {
         [Inject]
         public NavigationManager NavigationManager { get; set; } = default!;
 
-        [Inject]
-        public IState<CurrentUserDetailState> State { get; set; } = default!;
-
-        [Inject]
-        public IDispatcher Dispatcher { get; set; } = default!;
-
-        public CurrentUserDetailState CurrentUserDetailState => State.Value;
-
-        public ReservoirDetailsDTO newReservoir = new ReservoirDetailsDTO();
- 
-        protected override void OnInitialized()
+        protected override async void OnInitialized()
         {
             //newReservoir = CurrentUserDetailState.ReservoirDetailsDTO;
-            base.OnInitialized();
+            base.OnInitializedAsync();
         }
 
         private void goback()

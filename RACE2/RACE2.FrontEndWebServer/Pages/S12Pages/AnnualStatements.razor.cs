@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
+using MudBlazor;
 using RACE2.DataModel;
 using RACE2.Dto;
 using RACE2.FrontEndWebServer.FluxorImplementation.Actions;
@@ -11,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security.Claims;
+using static MudBlazor.CategoryTypes;
 
 namespace RACE2.FrontEndWebServer.Pages.S12Pages
 {
@@ -34,7 +36,11 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         private List<SubmissionStatusDTO> ReservoirStatusLinkedToUserSubmitted { get; set; } = new List<SubmissionStatusDTO>();
         private List<SubmissionStatusDTO> ReservoirStatusLinkedToUserDraft { get; set; } = new List<SubmissionStatusDTO>();
         private IEnumerable<Claim> Claims { get; set; }
-    
+
+        private string _searchString;
+        private bool _sortNameByLength;
+        private List<string> _events = new();
+
         protected async override Task OnInitializedAsync()
         {
             AuthenticationState authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
@@ -103,6 +109,38 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         {
             
         }
+
+        // custom sort by name length
+        private Func<Reservoir, object> _sortBy => x =>
+        {
+            if (_sortNameByLength)
+                return x.PublicName.Length;
+            else
+                return x.PublicName;
+        };
+
+        // quick filter - filter globally across multiple columns with the same input
+        private Func<Reservoir, bool> _quickFilter => x =>
+        {
+            if (string.IsNullOrWhiteSpace(_searchString))
+                return true;
+
+            if (x.PublicName.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+
+            return false;
+        };
+
+        void RowClicked(DataGridRowClickEventArgs<Reservoir> args)
+        {
+            _events.Insert(0, $"Event = RowClick, Index = {args.RowIndex}, Data = {System.Text.Json.JsonSerializer.Serialize(args.Item)}");
+        }
+
+        void SelectedItemsChanged(HashSet<Reservoir> items)
+        {
+            _events.Insert(0, $"Event = SelectedItemsChanged, Data = {System.Text.Json.JsonSerializer.Serialize(items)}");
+        }
+
         public async void GoToNextPage()
         {
             var u = CurrentUserDetailState.Value.CurrentUserDetail;
