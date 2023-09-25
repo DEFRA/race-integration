@@ -17,6 +17,7 @@ using RACE2.Dto;
 using System.Data.SqlClient;
 using Microsoft.Extensions.Logging;
 using RACE2.Common;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 //using RACE2.Logging;
 
 namespace RACE2.DataAccess.Repository
@@ -371,6 +372,37 @@ namespace RACE2.DataAccess.Repository
                 });
 
                 return result.FirstOrDefault();
+            }
+        }
+
+        public async Task<int> UpdateFirstTimeUserLogin(string email)
+        {
+            _logger.LogInformation("Getting UpdateFirstTimeUserLogin for the user {email} ", email);
+
+            try
+            {
+                if (email != null)
+                {
+                    using (var conn = Connection)
+                    {
+
+                        var parameters = new DynamicParameters();
+                        parameters.Add("email", email, DbType.String);
+                        await conn.ExecuteAsync("sp_UpdateFirstTimeUser", parameters);
+                        return 1;
+
+                    }
+                }
+                else
+                {
+                    _logger.LogInformation("The input is not valid");
+                    return 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return 0;
             }
         }
     }
