@@ -67,5 +67,10 @@ namespace RACE2.Services
         {
             return await _reservoirRepository.GetReservoirStatusByEmail(email);
         }
+
+        public async Task<List<UndertakerDTO>> GetUndertakerforReservoir(int id)
+        {
+            return await _reservoirRepository.GetUndertakerforReservoir(id);
+        }
     }
 }
