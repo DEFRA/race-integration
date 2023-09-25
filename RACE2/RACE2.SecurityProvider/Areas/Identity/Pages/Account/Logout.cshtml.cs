@@ -17,20 +17,24 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<UserDetail> _signInManager;
         private readonly ILogger<LogoutModel> _logger;
+        private readonly IConfiguration _config;
 
-        public LogoutModel(SignInManager<UserDetail> signInManager, ILogger<LogoutModel> logger)
+        public LogoutModel(SignInManager<UserDetail> signInManager, ILogger<LogoutModel> logger, IConfiguration config)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _config = config;
         }
 
-        public async Task<IActionResult> OnPost(string returnUrl = null)
+        public async Task<IActionResult> OnGet(string returnUrl = null)
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
+            returnUrl=_config["RACE2FrontEndURL"]+"/login";
             if (returnUrl != null)
             {
-                return LocalRedirect(returnUrl);
+                //return LocalRedirect(returnUrl);
+                return Redirect(returnUrl);
             }
             else
             {

@@ -151,7 +151,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PipelineYamlFiles", "Pipeli
 		..\azure-pipelines-build-push.yml = ..\azure-pipelines-build-push.yml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RACE2.WebApiExternal", "RACE2.WebApiExternal\RACE2.WebApiExternal.csproj", "{7B140715-5017-4539-9051-2B81977F488B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.WebApiExternal", "RACE2.WebApiExternal\RACE2.WebApiExternal.csproj", "{7B140715-5017-4539-9051-2B81977F488B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
