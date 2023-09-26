@@ -43,7 +43,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         private string changePasswordUrl = "";
         protected override async void OnInitialized()
         {
-            changePasswordUrl = _config["RACE2SecurityProviderURL"] + "/Identity/Account/ChangePassword";
+            changePasswordUrl = _config["RACE2SecurityProviderURL"] + "/Identity/Account/ChangeYourPassword";
             AuthenticationState authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
             UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
             UserSpecificDto userDetails = await userService.GetUserByEmailID(UserName);
