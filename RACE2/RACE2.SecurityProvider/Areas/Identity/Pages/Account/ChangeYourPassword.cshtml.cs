@@ -5,6 +5,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -12,6 +13,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using RACE2.DataModel;
+using RACE2.Notification;
+using RACE2.Services;
 
 namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
 {
@@ -21,17 +24,23 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
         private readonly SignInManager<UserDetail> _signInManager;
         private readonly ILogger<ChangeYourPasswordModel> _logger;
         private readonly IConfiguration _config;
+        private readonly IUserService _userService;
+        private readonly INotification _emailNotificationSender;
 
         public ChangeYourPasswordModel(
             UserManager<UserDetail> userManager,
             SignInManager<UserDetail> signInManager,
             ILogger<ChangeYourPasswordModel> logger,
-            IConfiguration config)
+            IConfiguration config,
+            IUserService userService,
+            INotification emailNotificationSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _config = config;
+            _userService = userService;
+            _emailNotificationSender = emailNotificationSender;
         }
 
         /// <summary>
@@ -127,7 +136,11 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             _logger.LogInformation("User changed their password successfully.");
             StatusMessage = "Your password has been changed.";
 
-            string returnUrl = _config["RACE2FrontEndURL"]+ "/login";
+            //await _emailNotificationSender.SendForgotPasswordMail(Input.Email, "User", $"{HtmlEncoder.Default.Encode(callbackUrl)}");
+           
+            await _userService.UpdateFirstTimeUserLogin(user.Email); //reset first time user fileld to false
+
+            string returnUrl = _config["RACE2FrontEndURL"]+ "/confirm-password-change";
             return Redirect(returnUrl);
         }
     }
