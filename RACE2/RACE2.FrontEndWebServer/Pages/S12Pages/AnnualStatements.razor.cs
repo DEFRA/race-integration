@@ -23,6 +23,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
     public partial class AnnualStatements
     {
         [Inject]
+        public IConfiguration _config { get; set; } = default!;
+        [Inject]
         public NavigationManager NavigationManager { get; set; } = default!;
         [Inject]
         public IState<CurrentUserDetailState> CurrentUserDetailState { get; set; } = default!;
@@ -64,9 +66,15 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 Id = userDetails.Id,
                 Email = userDetails.Email,
                 c_first_name = userDetails.c_first_name,
-                c_last_name = userDetails.c_last_name
+                c_last_name = userDetails.c_last_name,
+                c_IsFirstTimeUser = userDetails.c_IsFirstTimeUser
             };
-
+            //if (UserDetail.c_IsFirstTimeUser)
+            //{
+            //    bool forceLoad = true;
+            //    string pagelink = _config["RACE2SecurityProviderURL"] + "/Identity/Account/ChangeYourPassword";
+            //    NavigationManager.ToAbsoluteUri(pagelink);
+            //}
             var resultsOfReservoirWithStatus = await reservoirService.GetReservoirStatusByEmail(UserDetail.Email);
             var reservoirStatusLinkedToUser = resultsOfReservoirWithStatus.ToList();
             foreach (var rs in reservoirStatusLinkedToUser)

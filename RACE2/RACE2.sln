@@ -33,8 +33,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StoredProcedures", "StoredP
 		sp_GetAddressForReservoir.sql = sp_GetAddressForReservoir.sql
 		sp_GetOrganisationAddressbyId.sql = sp_GetOrganisationAddressbyId.sql
 		sp_GetSafetyMeasuresListByReservoirId.sql = sp_GetSafetyMeasuresListByReservoirId.sql
+		sp_GetUndertakerforReservoir.sql = sp_GetUndertakerforReservoir.sql
 		sp_GetUserByEmailID.sql = sp_GetUserByEmailID.sql
 		sp_GetUserWithRoles.sql = sp_GetUserWithRoles.sql
+		sp_UpdateFirstTimeUser.sql = sp_UpdateFirstTimeUser.sql
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.Logging", "RACE2.Logging\RACE2.Logging.csproj", "{FCDA91E9-996A-43AD-8864-5E66B0BECF84}"
