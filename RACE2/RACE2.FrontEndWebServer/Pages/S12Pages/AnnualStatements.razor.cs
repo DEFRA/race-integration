@@ -71,9 +71,10 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             };
             if (UserDetail.c_IsFirstTimeUser)
             {
+                //int result= await userService.UpdateFirstTimeUserLogin(userDetails.Email);
                 bool forceLoad = true;
-                string pagelink = _config["RACE2SecurityProviderURL"] + "/Identity/Account/ChangeYourPassword";
-                NavigationManager.ToAbsoluteUri(pagelink);
+                Uri pagelink = new Uri(_config["RACE2SecurityProviderURL"] + "/Identity/Account/ChangeYourPassword");
+                NavigationManager.NavigateTo(pagelink.ToString());
             }
             var resultsOfReservoirWithStatus = await reservoirService.GetReservoirStatusByEmail(UserDetail.Email);
             var reservoirStatusLinkedToUser = resultsOfReservoirWithStatus.ToList();

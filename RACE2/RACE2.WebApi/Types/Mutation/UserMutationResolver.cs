@@ -25,5 +25,11 @@ namespace RACE2.WebApi.Mutation
             var result = await _userService.UpdatePasswordHashForUser(id, passwordhash);
             return result;
         }
+
+        public async Task<int> UpdateFirstTimeUserLogin(IUserService _userService, String email)
+        {
+            int result = await _userService.UpdateFirstTimeUserLogin(email);
+            return result;
+        }
     }
 }
