@@ -69,12 +69,12 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 c_last_name = userDetails.c_last_name,
                 c_IsFirstTimeUser = userDetails.c_IsFirstTimeUser
             };
-            //if (UserDetail.c_IsFirstTimeUser)
-            //{
-            //    bool forceLoad = true;
-            //    string pagelink = _config["RACE2SecurityProviderURL"] + "/Identity/Account/ChangeYourPassword";
-            //    NavigationManager.ToAbsoluteUri(pagelink);
-            //}
+            if (UserDetail.c_IsFirstTimeUser)
+            {
+                bool forceLoad = true;
+                string pagelink = _config["RACE2SecurityProviderURL"] + "/Identity/Account/ChangeYourPassword";
+                NavigationManager.ToAbsoluteUri(pagelink);
+            }
             var resultsOfReservoirWithStatus = await reservoirService.GetReservoirStatusByEmail(UserDetail.Email);
             var reservoirStatusLinkedToUser = resultsOfReservoirWithStatus.ToList();
             foreach (var rs in reservoirStatusLinkedToUser)
