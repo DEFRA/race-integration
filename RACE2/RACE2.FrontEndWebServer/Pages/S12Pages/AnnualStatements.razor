@@ -199,8 +199,8 @@
                         <TemplateColumn CellClass="d-flex justify-end">
                             <CellTemplate>
                                  <MudStack Row>
-                                     <MudText Color="Color.Primary" Style="text-decoration:underline;cursor:pointer;">Download</MudText>
-                                    @* <MudButton Href="" Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Primary" OnClick="DownloadTemplateFile">Download</MudButton> *@ 
+                                     @* <MudText Color="Color.Primary" Style="text-decoration:underline;cursor:pointer;">Download</MudText> *@
+                                    <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Primary" @onclick="()=>DownloadTemplateFile(context.Item)">Download</MudButton> 
                                    @*  <MudLink Href="/annual-statements" Underline="Underline.Always">Download</MudLink> *@
                                 </MudStack>
                             </CellTemplate>

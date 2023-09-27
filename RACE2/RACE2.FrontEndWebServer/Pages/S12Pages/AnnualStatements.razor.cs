@@ -71,7 +71,6 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             };
             if (UserDetail.c_IsFirstTimeUser)
             {
-                //int result= await userService.UpdateFirstTimeUserLogin(userDetails.Email);
                 bool forceLoad = true;
                 Uri pagelink = new Uri(_config["RACE2SecurityProviderURL"] + "/Identity/Account/ChangeYourPassword");
                 NavigationManager.NavigateTo(pagelink.ToString());
@@ -177,7 +176,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         void RowClicked(DataGridRowClickEventArgs<ReservoirsLinkedToUserForDisplay> args)
         {
             _events.Insert(0, $"Event = RowClick, Index = {args.RowIndex}, Data = {System.Text.Json.JsonSerializer.Serialize(args.Item)}");
-            DownloadReportTemplate(args.Item);
+            //DownloadReportTemplate(args.Item);
         }
 
         void SelectedItemsChanged(HashSet<ReservoirsLinkedToUserForDisplay> items)
@@ -206,8 +205,9 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             await jsRuntime.InvokeVoidAsync("downloadFileFromStream", blobName, streamRef);
         }
 
-        private void DownloadTemplateFile()
+        private void DownloadTemplateFile(ReservoirsLinkedToUserForDisplay Item)
         {
+            DownloadReportTemplate(Item);
         }
         public async void GoToNextPage()
         {

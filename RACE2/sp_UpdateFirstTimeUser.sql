@@ -17,6 +17,6 @@ BEGIN
     -- SET NOCOUNT ON added to prevent extra result sets from
     -- interfering with SELECT statements.
 UPDATE [dbo].[AspNetUsers]
-SET [c_IsFirstTimeUser] = 1
+SET [c_IsFirstTimeUser] = 0
 Where [Email] = @email
 END
