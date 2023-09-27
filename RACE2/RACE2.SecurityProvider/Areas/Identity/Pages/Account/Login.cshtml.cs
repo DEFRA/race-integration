@@ -86,6 +86,8 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             public bool RememberMe { get; set; }
         }
 
+        public bool LoginFailure { get; set; } = false;
+
         public async Task OnGetAsync(string returnUrl = null)
         {
             if (!string.IsNullOrEmpty(ErrorMessage))
@@ -105,6 +107,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
+            LoginFailure = false;
             returnUrl ??= Url.Content("~/");
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
@@ -130,6 +133,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
                 }
                 else
                 {
+                    LoginFailure = true;
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return Page();
                 }
