@@ -1,7 +1,10 @@
-﻿using Fluxor;
+﻿using DocumentFormat.OpenXml.InkML;
+using Fluxor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.JSInterop;
 using MudBlazor;
 using RACE2.DataModel;
 using RACE2.Dto;
@@ -9,6 +12,7 @@ using RACE2.FrontEndWebServer.FluxorImplementation.Actions;
 using RACE2.FrontEndWebServer.FluxorImplementation.Stores;
 using RACE2.Services;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security.Claims;
@@ -19,11 +23,19 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
     public partial class AnnualStatements
     {
         [Inject]
+        public IConfiguration _config { get; set; } = default!;
+        [Inject]
         public NavigationManager NavigationManager { get; set; } = default!;
         [Inject]
         public IState<CurrentUserDetailState> CurrentUserDetailState { get; set; } = default!;
         [Inject]
         public IDispatcher Dispatcher { get; set; } = default!;
+        [Inject]
+        public IJSRuntime jsRuntime { get; set; } = default!;
+        [Inject]
+        public IBlobStorageService blobStorageService { get; set; } = default!;
+        [Inject]
+        public IOpenXMLUtilitiesService openXMLUtilitiesService { get; set; } = default!;
         [Inject]
         public IUserService userService { get; set; } = default!;
         [Inject]
@@ -35,12 +47,14 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         private List<SubmissionStatusDTO> ReservoirStatusLinkedToUser { get; set; } = new List<SubmissionStatusDTO>();
         private List<SubmissionStatusDTO> ReservoirStatusLinkedToUserSubmitted { get; set; } = new List<SubmissionStatusDTO>();
         private List<SubmissionStatusDTO> ReservoirStatusLinkedToUserDraft { get; set; } = new List<SubmissionStatusDTO>();
+        private List<ReservoirsLinkedToUserForDisplay> ReservoirsLinkedToUserForDisplay { get; set; } =new List<ReservoirsLinkedToUserForDisplay>();
         private IEnumerable<Claim> Claims { get; set; }
 
         private string _searchString;
         private bool _sortNameByLength;
         private List<string> _events = new();
-
+        CultureInfo en = CultureInfo.GetCultureInfo("en-US");
+        int selectedReservoirId= 0;
         protected async override Task OnInitializedAsync()
         {
             AuthenticationState authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
@@ -51,8 +65,16 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 UserName = UserName,
                 Id = userDetails.Id,
                 Email = userDetails.Email,
+                c_first_name = userDetails.c_first_name,
+                c_last_name = userDetails.c_last_name,
+                c_IsFirstTimeUser = userDetails.c_IsFirstTimeUser
             };
-
+            if (UserDetail.c_IsFirstTimeUser)
+            {
+                bool forceLoad = true;
+                Uri pagelink = new Uri(_config["RACE2SecurityProviderURL"] + "/Identity/Account/ChangeYourPassword");
+                NavigationManager.NavigateTo(pagelink.ToString());
+            }
             var resultsOfReservoirWithStatus = await reservoirService.GetReservoirStatusByEmail(UserDetail.Email);
             var reservoirStatusLinkedToUser = resultsOfReservoirWithStatus.ToList();
             foreach (var rs in reservoirStatusLinkedToUser)
@@ -61,7 +83,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 {
                     PublicName = rs.PublicName,
                     SubmittedOn = new DateTime(rs.SubmittedOn.Year, rs.SubmittedOn.Month, rs.SubmittedOn.Day),
-                    Status = rs.Status
+                    Status = rs.Status,
+                    DueDate=rs.DueDate
                 };
                 ReservoirStatusLinkedToUser.Add(s);
             }
@@ -97,7 +120,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
 
             var actionReservoirsLinkedToUser = new StoreUserReservoirsAction(ReservoirsLinkedToUser);
             Dispatcher.Dispatch(actionReservoirsLinkedToUser);
-
+            PopulateReservoirsToDisplay(ReservoirsLinkedToUser);
             await InvokeAsync(() =>
             {
                 StateHasChanged();
@@ -105,42 +128,87 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             base.OnInitializedAsync();
         }
 
+        private async void PopulateReservoirsToDisplay(List<Reservoir> reservoirs)
+        {
+            foreach(var reservoir in reservoirs)
+            {
+                ReservoirsLinkedToUserForDisplay reservoirsLinkedToUser=new ReservoirsLinkedToUserForDisplay();
+                reservoirsLinkedToUser.ReservoirName = reservoir.PublicName;
+                var undertakers = await reservoirService.GetUndertakerforReservoir(UserDetail.Id);
+                reservoirsLinkedToUser.UndertakerName = String.IsNullOrEmpty(undertakers[0].OrgName) ? undertakers[0].UndertakerFirstName+""+ undertakers[0].UndertakerLastName : undertakers[0].OrgName;
+                var submisionStatus= ReservoirStatusLinkedToUser.Where(s=>s.PublicName==reservoir.PublicName).FirstOrDefault();
+                reservoirsLinkedToUser.DueDate = submisionStatus.DueDate;
+                reservoirsLinkedToUser.Status = submisionStatus.Status;
+                ReservoirsLinkedToUserForDisplay.Add(reservoirsLinkedToUser);
+            }
+            await InvokeAsync(() =>
+            {
+                StateHasChanged();
+            });
+        }
+
         protected override async void OnAfterRender(bool firstRender)
         {
-            
+
         }
 
         // custom sort by name length
-        private Func<Reservoir, object> _sortBy => x =>
+        private Func<ReservoirsLinkedToUserForDisplay, object> _sortBy => x =>
         {
             if (_sortNameByLength)
-                return x.PublicName.Length;
+                return x.ReservoirName.Length;
             else
-                return x.PublicName;
+                return x.ReservoirName;
         };
 
         // quick filter - filter globally across multiple columns with the same input
-        private Func<Reservoir, bool> _quickFilter => x =>
+        private Func<ReservoirsLinkedToUserForDisplay, bool> _quickFilter => x =>
         {
             if (string.IsNullOrWhiteSpace(_searchString))
                 return true;
 
-            if (x.PublicName.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            if (x.ReservoirName.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
 
             return false;
         };
 
-        void RowClicked(DataGridRowClickEventArgs<Reservoir> args)
+        void RowClicked(DataGridRowClickEventArgs<ReservoirsLinkedToUserForDisplay> args)
         {
             _events.Insert(0, $"Event = RowClick, Index = {args.RowIndex}, Data = {System.Text.Json.JsonSerializer.Serialize(args.Item)}");
+            //DownloadReportTemplate(args.Item);
         }
 
-        void SelectedItemsChanged(HashSet<Reservoir> items)
+        void SelectedItemsChanged(HashSet<ReservoirsLinkedToUserForDisplay> items)
         {
             _events.Insert(0, $"Event = SelectedItemsChanged, Data = {System.Text.Json.JsonSerializer.Serialize(items)}");
         }
+        void SelectedItemChanged(ReservoirsLinkedToUserForDisplay item)
+        {
+            _events.Insert(0, $"Event = SelectedItemsChanged, Data = {System.Text.Json.JsonSerializer.Serialize(item)}");
 
+        }
+
+        private async void DownloadReportTemplate(ReservoirsLinkedToUserForDisplay item)
+        {
+            var reservoir= ReservoirsLinkedToUser.Where(r=>r.PublicName==item.ReservoirName).FirstOrDefault();
+            var blobName = "S12ReportTemplate.docx";
+            Stream response = await blobStorageService.GetBlobFileStream(blobName);
+            S12PrePopulationFields s12PrePopulationFields = new S12PrePopulationFields();
+            s12PrePopulationFields.ReservoirName = reservoir.PublicName;
+            s12PrePopulationFields.SupervisingEngineerName = UserDetail.c_first_name + " " + UserDetail.c_last_name;
+            s12PrePopulationFields.ReservoirNearestTown = reservoir.NearestTown != null ? reservoir.NearestTown : "";
+            s12PrePopulationFields.ReservoirGridRef = reservoir.GridReference != null ? reservoir.GridReference : "";
+            MemoryStream processedStream = openXMLUtilitiesService.SearchAndReplace(response, s12PrePopulationFields);
+            processedStream.Position = 0;
+            var streamRef = new DotNetStreamReference(stream: processedStream);
+            await jsRuntime.InvokeVoidAsync("downloadFileFromStream", blobName, streamRef);
+        }
+
+        private void DownloadTemplateFile(ReservoirsLinkedToUserForDisplay Item)
+        {
+            DownloadReportTemplate(Item);
+        }
         public async void GoToNextPage()
         {
             var u = CurrentUserDetailState.Value.CurrentUserDetail;

@@ -58,7 +58,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required(ErrorMessage = "Check your password")]
+            [Required(ErrorMessage = "Check your old password")]
             [DataType(DataType.Password)]
             [Display(Name = "Current password")]
             public string OldPassword { get; set; }
@@ -67,8 +67,8 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required(ErrorMessage = "Check your password")]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [Required(ErrorMessage = "Check your new password")]
+            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 8)]
             [DataType(DataType.Password)]
             [Display(Name = "New password")]
             public string NewPassword { get; set; }
@@ -127,7 +127,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             _logger.LogInformation("User changed their password successfully.");
             StatusMessage = "Your password has been changed.";
 
-            string returnUrl = _config["RACE2FrontEndURL"]+ "/login";
+            string returnUrl = _config["RACE2FrontEndURL"] + "/confirm-password-change";
             return Redirect(returnUrl);
         }
     }
