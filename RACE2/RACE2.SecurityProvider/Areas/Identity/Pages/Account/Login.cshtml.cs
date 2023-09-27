@@ -86,15 +86,13 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             public bool RememberMe { get; set; }
         }
 
-        public bool LoginFailure { get; set; } = false;
-
         public async Task OnGetAsync(string returnUrl = null)
         {
             if (!string.IsNullOrEmpty(ErrorMessage))
             {
                 ModelState.AddModelError(string.Empty, ErrorMessage);
             }
-
+            
             returnUrl ??= Url.Content("~/");
 
             // Clear the existing external cookie to ensure a clean login process
@@ -107,7 +105,6 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            LoginFailure = false;
             returnUrl ??= Url.Content("~/");
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
@@ -133,7 +130,6 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    LoginFailure = true;
                     //ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     ModelState.AddModelError(string.Empty, "The email address or password you entered is incorrect.");
                     return Page();

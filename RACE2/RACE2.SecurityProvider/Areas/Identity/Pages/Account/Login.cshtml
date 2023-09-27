@@ -67,19 +67,6 @@
 
                 <form id="account" method="post">
 @*                     <div asp-validation-summary="All" class="govuk-error-summary__body govuk-error-message" style="font-weight:500"></div> *@
-@*                     @if (Model.LoginFailure)
-                    {
-                        <div class="govuk-error-summary govuk-!-margin-top-8" data-module="govuk-error-summary">
-                            <div role="alert">
-                                <h2 class="govuk-error-summary__title govuk-error-message">
-                                    There is a problem.
-                                </h2>
-                                <div class="govuk-error-summary__body govuk-error-message">
-                                    The email address or password you entered is incorrect.&nbsp;Try  again.
-                                </div>
-                            </div>
-                        </div>
-                    } *@
                     @if (!ModelState.IsValid)
                     {
                         <div class="govuk-error-summary govuk-!-margin-top-8" data-module="govuk-error-summary">
