@@ -65,7 +65,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required(ErrorMessage = "Check your email")]
+            [Required(ErrorMessage = "Check your email address")]
             //[EmailAddress(ErrorMessage = "Check your email format")]
             [RegularExpression(@"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$",ErrorMessage = "Check your email")]
             public string Email { get; set; }
@@ -92,7 +92,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             {
                 ModelState.AddModelError(string.Empty, ErrorMessage);
             }
-
+            
             returnUrl ??= Url.Content("~/");
 
             // Clear the existing external cookie to ensure a clean login process
@@ -130,7 +130,8 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    //ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "The email address or password you entered is incorrect.");
                     return Page();
                 }
             }

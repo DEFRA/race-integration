@@ -94,7 +94,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             var hasPassword = await _userManager.HasPasswordAsync(user);
             if (!hasPassword)
             {
-                return RedirectToPage("./SetPassword");
+                return RedirectToPage("../Manage/SetPassword");
             }
 
             return Page();
