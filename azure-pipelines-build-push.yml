@@ -4,7 +4,7 @@
 
 trigger:
  - none
-pull:
+pr:
   - none
 
 resources:
