@@ -4,6 +4,8 @@
 
 trigger:
   - none
+pull:
+  - none
   
 resources:
 - repo: self
