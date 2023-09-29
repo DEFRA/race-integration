@@ -49,8 +49,9 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
-            [EmailAddress]
+            [Required(ErrorMessage = "Check your email")]
+            //[EmailAddress(ErrorMessage = "Check your email format")]
+            [RegularExpression(@"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$", ErrorMessage = "Check your email")]
             public string Email { get; set; }
         }
 
@@ -79,7 +80,8 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
                 //    Input.Email,
                 //    "Reset Password",
                 //    $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-                await _emailNotificationSender.SendForgotPasswordMail(Input.Email,"User", $"<a href='{HtmlEncoder.Default.Encode(callbackUrl)}'></a>");
+                //await _emailNotificationSender.SendForgotPasswordMail(Input.Email,"User", $"<a href='{HtmlEncoder.Default.Encode(callbackUrl)}'></a>");
+                await _emailNotificationSender.SendForgotPasswordMail(Input.Email, "User", $"{HtmlEncoder.Default.Encode(callbackUrl)}");
                 return RedirectToPage("./ForgotPasswordConfirmation");
             }
 

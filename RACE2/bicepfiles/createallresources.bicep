@@ -3,6 +3,10 @@ param tenantId string =  subscription().tenantId
 param location string = resourceGroup().location
 param resourcegroup string
 param managedidentity string
+param vnet string
+param subnetcontainerappenv string
+param subnetsqlserver string
+param subnetstorageaccount string
 param servers_race2sqlserver_name string
 param servers_race2sqldb_name string
 param containerregistryName string
@@ -17,12 +21,25 @@ param storageAccountName string
 param logAnalyticsWorkspaceName string
 param race2appenvName string
 param race2appinsightName string
+
 module createmanagedidentitymodule 'createmanagedidentity.bicep' = {
   scope: resourceGroup(resourcegroup)
   name: 'managedidentitydeploy'
   params: {
     location: location
     miname: managedidentity
+  }
+}
+
+module createvnetmodule 'createvnet.bicep' = {
+  scope: resourceGroup(resourcegroup)
+  name: 'vnetdeploy'
+  params: {
+    vnet: vnet
+    subnetcontainerappenv: subnetcontainerappenv
+    subnetsqlserver: subnetsqlserver
+    subnetstorageaccount: subnetstorageaccount 
+    location: location 
   }
 }
 
@@ -59,6 +76,8 @@ module createstorageaccountmodule 'createstorageaccount.bicep' = {
   params: {
     location: location
     storageAccountname: storageAccountName
+    vnet: vnet
+    subnetstorageaccount: subnetstorageaccount
   }
   dependsOn: [
     createmanagedidentitymodule
@@ -103,6 +122,8 @@ module createsqlservermodule 'createsqlserver.bicep' = {
     administratorLogin: administratorLogin
     administratorLoginPassword: administratorLoginPassword
     servers_race2sqldb_name: servers_race2sqldb_name
+    vnet: vnet
+    subnetsqlserver: subnetsqlserver
   }
   dependsOn: [
     createmanagedidentitymodule
@@ -139,6 +160,7 @@ module createcontainerappenvmodule 'createcontainerappenv.bicep' = {
     race2appenv: race2appenvName
     lawsCustromerId: createappworkspacemodule.outputs.customerId
     lawsSharedKey: createappworkspacemodule.outputs.sharedKey
+    infrastructureSubnetId: createvnetmodule.outputs.subnetcontainerappenvId
   }
   dependsOn: [
     createappworkspacemodule

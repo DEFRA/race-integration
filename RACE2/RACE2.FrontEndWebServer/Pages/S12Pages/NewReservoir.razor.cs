@@ -19,7 +19,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         public CurrentUserDetailState CurrentUserDetailState => State.Value;
 
         public ReservoirDetailsDTO newReservoir = new ReservoirDetailsDTO();
-
+ 
         protected override void OnInitialized()
         {
             //newReservoir = CurrentUserDetailState.ReservoirDetailsDTO;

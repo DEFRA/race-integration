@@ -35,6 +35,34 @@ resource readerRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-0
   }
 }
 
+resource dNSZoneContributorRoleDefinition 'Microsoft.Authorization/roleDefinitions@2022-04-01' existing = {
+  scope: resourceGroup()
+  name: 'befefa01-2a29-4197-83a8-272ff33ce314'
+}
+
+resource dNSZoneContributorRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name:  guid(resourceGroup().id, mi.id,dNSZoneContributorRoleDefinition.id)
+  properties: {
+    roleDefinitionId: dNSZoneContributorRoleDefinition.id
+    principalId: mi.properties.principalId
+    principalType: 'ServicePrincipal'
+  }
+}
+
+resource privateDNSZoneContributorRoleDefinition 'Microsoft.Authorization/roleDefinitions@2022-04-01' existing = {
+  scope: resourceGroup()
+  name: 'b12aa53e-6015-4669-85d0-8515ebb3ae7f'
+}
+
+resource privateDNSZoneContributorRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name:  guid(resourceGroup().id, mi.id,privateDNSZoneContributorRoleDefinition.id)
+  properties: {
+    roleDefinitionId: privateDNSZoneContributorRoleDefinition.id
+    principalId: mi.properties.principalId
+    principalType: 'ServicePrincipal'
+  }
+}
+
 resource acrPullRoleDefinition 'Microsoft.Authorization/roleDefinitions@2022-04-01' existing = {
   scope: resourceGroup()
   name: '7f951dda-4ed3-4680-a7ca-43fe172d538d'

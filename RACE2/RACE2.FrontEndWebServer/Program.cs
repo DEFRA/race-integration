@@ -6,10 +6,12 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using Microsoft.IdentityModel.Logging;
+using MudBlazor.Services;
 using RACE2.DataAccess.Repository;
 using RACE2.DataModel;
 using RACE2.Services;
@@ -51,6 +53,7 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
 });
 builder.Services.AddHttpContextAccessor();
 
+bool requireHttpsMetadata = builder.Environment.IsProduction();
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -75,18 +78,14 @@ builder.Services.AddAuthentication(options =>
         options.Authority = RACE2IDPURL;
         options.ClientId = "blazorServer";
         options.ClientSecret = "blazorserver-secret";
-
         // When set to code, the middleware will use PKCE protection
         options.ResponseType = "code id_token";
-
         // Save the tokens we receive from the IDP
-        options.SaveTokens = false; // true;
-
-        // It's recommended to always get claims from the
-        // UserInfoEndpoint during the flow.
+        options.SaveTokens = true; // false;
+        // It's recommended to always get claims from the UserInfoEndpoint during the flow.
         options.GetClaimsFromUserInfoEndpoint = true;
-
         options.Scope.Add("race2WebApi");
+        options.RequireHttpsMetadata = requireHttpsMetadata;
     });
 
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
@@ -107,7 +106,8 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IReservoirRepository, ReservoirRepository>();
 builder.Services.AddScoped<IBlobStorageService, BlobStorageService>();
 builder.Services.AddScoped<IOpenXMLUtilitiesService, OpenXMLUtilitiesService>();
-
+builder.Services.AddMudServices();
+StaticWebAssetsLoader.UseStaticWebAssets(builder.Environment, builder.Configuration);
 
 var app = builder.Build();
 app.UseForwardedHeaders();
@@ -129,5 +129,5 @@ app.UseAuthorization();
 
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
-IdentityModelEventSource.ShowPII = true;
+//IdentityModelEventSource.ShowPII = true;
 app.Run();

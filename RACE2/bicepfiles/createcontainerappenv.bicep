@@ -2,8 +2,9 @@ param race2appenv string
 param location string = resourceGroup().location
 param lawsCustromerId string
 param lawsSharedKey string
+param infrastructureSubnetId string
 
-resource managedEnvironments_race2containerappenv_name_resource 'Microsoft.App/managedEnvironments@2022-10-01' = {
+resource managedEnvironments_race2containerappenv_name_resource 'Microsoft.App/managedEnvironments@2023-05-01' = {
   name: race2appenv
   location: location
   tags: {
@@ -20,7 +21,12 @@ resource managedEnvironments_race2containerappenv_name_resource 'Microsoft.App/m
     zoneRedundant: false
     customDomainConfiguration: {
     }
+    vnetConfiguration: {
+      internal: false
+      infrastructureSubnetId: infrastructureSubnetId
+    }
   }
+
 }
 
 output id string = managedEnvironments_race2containerappenv_name_resource.id

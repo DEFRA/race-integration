@@ -17,6 +17,12 @@ az acr build -r race2acr -t race2acr.azurecr.io/race2webapi:v1 -f Dockerfile_Web
 az acr build -r race2acr -t race2acr.azurecr.io/race2frontend:v1 -f Dockerfile_FrontEnd .
 az acr build -r race2acr -t race2acr.azurecr.io/race2frontendweb:v1 -f Dockerfile_FrontEndWeb .
 
+//sync kris branch with main
+git checkout kris
+git pull origin main
+git merge main
+git push origin
+
 podman build -t race2acr.azurecr.io/race2securityprovider:v1 -f Dockerfile_SecurityProvider .
 podman push race2acr.azurecr.io/race2securityprovider:v1
 

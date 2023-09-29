@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using RACE2.DataModel;
+using RACE2.Notification;
 using RACE2.SecurityProvider.UtilityClasses;
 
 namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
@@ -31,14 +32,15 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<UserDetail> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
-        private IRandomPasswordGeneration _randomPasswordGeneration;
+        private readonly INotification _emailNotificationSender;
 
         public RegisterModel(
             UserManager<UserDetail> userManager,
             IUserStore<UserDetail> userStore,
             SignInManager<UserDetail> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            INotification emailNotificationSender)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -46,7 +48,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
-            _randomPasswordGeneration = new RandomPasswordGeneration();
+            _emailNotificationSender = emailNotificationSender;
         }
 
         /// <summary>
@@ -116,13 +118,11 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                //var randomPassword = _randomPasswordGeneration.GenerateRandomPassword(null);
                 var user = CreateUser();
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
-                //var result = await _userManager.CreateAsync(user, randomPassword);
 
                 if (result.Succeeded)
                 {
@@ -147,6 +147,8 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
                     else
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
+                        //To Do
+                        //await _emailNotificationSender.SendAccountCreatedMail(Input.Email,Input.Password, "User");
                         return LocalRedirect(returnUrl);
                     }
                 }

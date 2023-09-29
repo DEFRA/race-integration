@@ -383,15 +383,24 @@ namespace RACE2.DataAccess.Repository
             {
                 if (email != null)
                 {
-                    using (var conn = Connection)
+                    try
                     {
+                        using (var conn = Connection)
+                        {
 
-                        var parameters = new DynamicParameters();
-                        parameters.Add("email", email, DbType.String);
-                        await conn.ExecuteAsync("sp_UpdateFirstTimeUser", parameters);
-                        return 1;
+                            var parameters = new DynamicParameters();
+                            parameters.Add("@email", email, DbType.String);
+                            await conn.ExecuteAsync("sp_UpdateFirstTimeUser", parameters,commandType:CommandType.StoredProcedure);
+                            //await conn.ExecuteAsync("Update AspNetUsers SET c_IsFirstTimeUser=0 WHERE email=@email",param:new{email=email});
+                            return 1;
 
+                        }
                     }
+                    catch 
+                    {
+                        _logger.LogInformation("Exception thrown");
+                        return 0;
+                    }                    
                 }
                 else
                 {
