@@ -14,6 +14,7 @@ using Azure.Storage.Blobs;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
+using DocumentFormat.OpenXml.Office2010.Excel;
 
 namespace RACE2.WebApi.Types
 {
@@ -86,12 +87,12 @@ namespace RACE2.WebApi.Types
             return result;
         }
 
-        public async Task<List<SubmissionStatusDTO>> GetReservoirStatusByEmail(IReservoirService _reservoirService, string email)
+        public async Task<List<SubmissionStatusDTO>> GetReservoirStatusByUserId(IReservoirService _reservoirService, int id)
         {
             try
             {
-                _logger.LogInformation("calling GetReservoirStatusByEmail");
-                return await _reservoirService.GetReservoirStatusByEmail(email);
+                _logger.LogInformation("calling GetReservoirStatusById");
+                return await _reservoirService.GetReservoirStatusByUserId(id);
             }
             catch (Exception ex)
             {
