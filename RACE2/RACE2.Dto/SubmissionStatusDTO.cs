@@ -18,7 +18,7 @@ namespace RACE2.Dto
         public bool IsLegacySubmission { get; set; }
 
         public DateTime DueDate { get; set; }
-        [Required]
+        
         public string? Status { get; set; }
         [Required]
         public DateTime LastModified { get; set; }
