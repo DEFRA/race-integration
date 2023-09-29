@@ -192,18 +192,16 @@
                     </ToolBarContent>
                     <Columns>
                         @*<SelectColumn T="ReservoirsLinkedToUserForDisplay" /> *@
-                        <PropertyColumn Property="x => x.ReservoirName" Title="Reservoir" Sortable="true" Filterable="false"  />
-                        <PropertyColumn Property="x => x.UndertakerName" Title="Undertaker" Sortable="true" Filterable="false" />
-                        <PropertyColumn Property="x => x.DueDate" Format="MMM dd yyyy" Title="Due Date" Sortable="true" Filterable="false" />
-                        <PropertyColumn Property="x => x.Status" Title="Status" Sortable="true" Filterable="false" />
+                        <PropertyColumn Property="x => x.ReservoirName" Title="Reservoir" Sortable="true" Filterable="false" CellStyle="font-weight:400;font-size:0.9rem;color:#0b0c0c;" HeaderStyle="font-weight:bold;font-size:1rem;color:#1d70b8;" />
+                        <PropertyColumn Property="x => x.UndertakerName" Title="Undertaker" Sortable="true" Filterable="false" CellStyle="font-weight:400;font-size:0.9rem;color:#0b0c0c;" HeaderStyle="font-weight:bold;font-size:1rem;color:#1d70b8;" />
+                        <PropertyColumn Property="x => x.DueDate" Format="dd MMMM yyyy" Title="Due Date" Sortable="false" Filterable="false" CellStyle="font-weight:400;font-size:0.9rem;color:#0b0c0c;" HeaderStyle="font-weight:bold;font-size:1rem;color:#1d70b8;" />
+                        <PropertyColumn Property="x => x.Status" Title="Status" Sortable="true" Filterable="false" CellStyle="font-weight:400;font-size:0.9rem;color:#0b0c0c;" HeaderStyle="font-weight:bold;font-size:1rem;color:#1d70b8;" />
                         <TemplateColumn CellClass="d-flex justify-end">
                             <CellTemplate>
                                  <MudStack Row>
-                                     @* <MudText Color="Color.Primary" Style="text-decoration:underline;cursor:pointer;">Download</MudText> *@
-                                    <MudButton Size="@Size.Small" Variant="@Variant.Text" Color="@Color.Info" Style="text-decoration:underline;cursor:pointer;"
+                                    <MudButton Size="@Size.Small" Variant="@Variant.Text" Color="@Color.Info" Style="text-decoration:underline;cursor:pointer;text-transform:capitalize;font-weight:400;font-size:1rem;"
                                         @onclick="()=>DownloadTemplateFile(context.Item)">Download</MudButton> 
-                                   @*  <MudLink Href="/annual-statements" Underline="Underline.Always">Download</MudLink> *@
-                                </MudStack>
+                                 </MudStack>
                             </CellTemplate>
                         </TemplateColumn>
                     </Columns>

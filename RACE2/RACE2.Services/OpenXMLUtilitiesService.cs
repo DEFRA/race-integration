@@ -38,14 +38,38 @@ namespace RACE2.Services
                         case "{Reservoir Name}":
                             docText = tagVal.Replace(docText, s12PrePopulationFields.ReservoirName);
                             break;
-                        case "{Supervising engineer Name}":
-                            docText = tagVal.Replace(docText, s12PrePopulationFields.SupervisingEngineerName);
-                            break;
                         case "{Reservoir Nearest town}":
                             docText = tagVal.Replace(docText, s12PrePopulationFields.ReservoirNearestTown);
                             break;
                         case "{Reservoir Grid reference}":
                             docText = tagVal.Replace(docText, s12PrePopulationFields.ReservoirGridRef);
+                            break;
+                        case "{Supervising engineer Name}":
+                            docText = tagVal.Replace(docText, s12PrePopulationFields.SupervisingEngineerName);
+                            break;
+                        case "{Supervising engineer Address}":
+                            docText = tagVal.Replace(docText, s12PrePopulationFields.ReservoirName);
+                            break;
+                        case "{Supervising engineer Email}":
+                            docText = tagVal.Replace(docText, s12PrePopulationFields.SupervisingEngineerEmail);
+                            break;
+                        case "{Supervising engineer Phone no.}":
+                            docText = tagVal.Replace(docText, s12PrePopulationFields.SupervisingEngineerPhoneNumber);
+                            break;
+                        case "{Undertaker Name}":
+                            docText = tagVal.Replace(docText, s12PrePopulationFields.SupervisingEngineerName);
+                            break;
+                        case "{Undertaker Address}":
+                            docText = tagVal.Replace(docText, s12PrePopulationFields.ReservoirName);
+                            break;
+                        case "{Undertaker Email}":
+                            docText = tagVal.Replace(docText, s12PrePopulationFields.ReservoirNearestTown);
+                            break;
+                        case "{Undertaker Phone no.}":
+                            docText = tagVal.Replace(docText, s12PrePopulationFields.ReservoirGridRef);
+                            break;
+                        case "{Other undertakers (optional)}":
+                            docText = tagVal.Replace(docText, s12PrePopulationFields.SupervisingEngineerName);
                             break;
                         default:
                             break;

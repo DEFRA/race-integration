@@ -49,6 +49,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         private List<SubmissionStatusDTO> ReservoirStatusLinkedToUserDraft { get; set; } = new List<SubmissionStatusDTO>();
         private List<ReservoirsLinkedToUserForDisplay> ReservoirsLinkedToUserForDisplay { get; set; } =new List<ReservoirsLinkedToUserForDisplay>();
         private IEnumerable<Claim> Claims { get; set; }
+        private List<UndertakerDTO> Undertakers { get; set; }
 
         private string _searchString;
         private bool _sortNameByLength;
@@ -65,6 +66,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 UserName = UserName,
                 Id = userDetails.Id,
                 Email = userDetails.Email,
+                PhoneNumber = userDetails.PhoneNumber,
+                Addresses = userDetails.Addresses,
                 c_first_name = userDetails.c_first_name,
                 c_last_name = userDetails.c_last_name,
                 c_IsFirstTimeUser = userDetails.c_IsFirstTimeUser
@@ -134,11 +137,11 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             {
                 ReservoirsLinkedToUserForDisplay reservoirsLinkedToUser=new ReservoirsLinkedToUserForDisplay();
                 reservoirsLinkedToUser.ReservoirName = reservoir.PublicName;
-                var undertakers = await reservoirService.GetUndertakerforReservoir(UserDetail.Id);
-                reservoirsLinkedToUser.UndertakerName = String.IsNullOrEmpty(undertakers[0].OrgName) ? undertakers[0].UndertakerFirstName+""+ undertakers[0].UndertakerLastName : undertakers[0].OrgName;
-                var submisionStatus= ReservoirStatusLinkedToUser.Where(s=>s.PublicName==reservoir.PublicName).FirstOrDefault();
-                reservoirsLinkedToUser.DueDate = submisionStatus.DueDate;
-                reservoirsLinkedToUser.Status = submisionStatus.Status;
+                Undertakers = await reservoirService.GetUndertakerforReservoir(UserDetail.Id);
+                reservoirsLinkedToUser.UndertakerName = String.IsNullOrEmpty(Undertakers[0].OrgName) ? Undertakers[0].UndertakerFirstName+""+ Undertakers[0].UndertakerLastName : Undertakers[0].OrgName;
+                var submissionStatus= ReservoirStatusLinkedToUser.Where(s=>s.PublicName==reservoir.PublicName).FirstOrDefault();
+                reservoirsLinkedToUser.DueDate = submissionStatus.DueDate;
+                reservoirsLinkedToUser.Status = submissionStatus.Status;
                 ReservoirsLinkedToUserForDisplay.Add(reservoirsLinkedToUser);
             }
             await InvokeAsync(() =>
@@ -192,13 +195,18 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         private async void DownloadReportTemplate(ReservoirsLinkedToUserForDisplay item)
         {
             var reservoir= ReservoirsLinkedToUser.Where(r=>r.PublicName==item.ReservoirName).FirstOrDefault();
+            var undertaker=Undertakers.Where(u=>u.ReservoirId==reservoir.Id).FirstOrDefault();
             var blobName = "S12ReportTemplate.docx";
             Stream response = await blobStorageService.GetBlobFileStream(blobName);
             S12PrePopulationFields s12PrePopulationFields = new S12PrePopulationFields();
             s12PrePopulationFields.ReservoirName = reservoir.PublicName;
-            s12PrePopulationFields.SupervisingEngineerName = UserDetail.c_first_name + " " + UserDetail.c_last_name;
             s12PrePopulationFields.ReservoirNearestTown = reservoir.NearestTown != null ? reservoir.NearestTown : "";
             s12PrePopulationFields.ReservoirGridRef = reservoir.GridReference != null ? reservoir.GridReference : "";
+            s12PrePopulationFields.SupervisingEngineerName = UserDetail.c_first_name + " " + UserDetail.c_last_name;
+            //s12PrePopulationFields.SupervisingEngineerAddress = UserDetail.Addresses[0].Address.AddressLine1;
+            s12PrePopulationFields.SupervisingEngineerEmail = UserDetail.Email;
+            s12PrePopulationFields.SupervisingEngineerPhoneNumber = UserDetail.PhoneNumber != null ? UserDetail.PhoneNumber : "";
+
             MemoryStream processedStream = openXMLUtilitiesService.SearchAndReplace(response, s12PrePopulationFields);
             processedStream.Position = 0;
             var streamRef = new DotNetStreamReference(stream: processedStream);
