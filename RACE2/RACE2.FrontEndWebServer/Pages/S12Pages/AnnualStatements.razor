@@ -187,8 +187,8 @@
                 <MudDataGrid T="ReservoirsLinkedToUserForDisplay" MultiSelection="false" Items="@ReservoirsLinkedToUserForDisplay" SortMode="SortMode.Multiple" QuickFilter="@_quickFilter"
                              Hideable="true" RowClick="@RowClicked" SelectedItemChanged="@SelectedItemChanged">
                     <ToolBarContent>
-                        <MudTextField @bind-Value="_searchString" Placeholder="Search" Adornment="Adornment.Start" Immediate="true"
-                                      AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+                        <MudTextField @bind-Value="_searchString" Placeholder="Search by reservoir name" Adornment="Adornment.Start" Immediate="true"
+                                      AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0" Style="font-weight:400;font-size:0.9rem;color:#0b0c0c;"></MudTextField>
                     </ToolBarContent>
                     <Columns>
                         @*<SelectColumn T="ReservoirsLinkedToUserForDisplay" /> *@
