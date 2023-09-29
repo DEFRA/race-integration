@@ -200,7 +200,8 @@
                             <CellTemplate>
                                  <MudStack Row>
                                      @* <MudText Color="Color.Primary" Style="text-decoration:underline;cursor:pointer;">Download</MudText> *@
-                                    <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Primary" @onclick="()=>DownloadTemplateFile(context.Item)">Download</MudButton> 
+                                    <MudButton Size="@Size.Small" Variant="@Variant.Text" Color="@Color.Info" Style="text-decoration:underline;cursor:pointer;"
+                                        @onclick="()=>DownloadTemplateFile(context.Item)">Download</MudButton> 
                                    @*  <MudLink Href="/annual-statements" Underline="Underline.Always">Download</MudLink> *@
                                 </MudStack>
                             </CellTemplate>

@@ -10,11 +10,11 @@
     URL.revokeObjectURL(url);
 };
 
-window.CookieFunction = {
-    acceptMessage: function (cookieString) {
-        document.cookie = cookieString;
-    }
-};
+//window.CookieFunction = {
+//    acceptMessage: function (cookieString) {
+//        document.cookie = cookieString;
+//    }
+//};
 
 //window.addEventListener('beforeunload', function (e) {
     //document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";

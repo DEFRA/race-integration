@@ -67,6 +67,19 @@
 
                 <form id="account" method="post">
 @*                     <div asp-validation-summary="All" class="govuk-error-summary__body govuk-error-message" style="font-weight:500"></div> *@
+                    @if (!ModelState.IsValid)
+                    {
+                        <div class="govuk-error-summary govuk-!-margin-top-8" data-module="govuk-error-summary">
+                            <div role="alert">
+                                <h2 class="govuk-error-summary__title govuk-error-message">
+                                    There is a problem
+                                </h2>
+                                <div class="govuk-error-summary__body">
+                                    <div asp-validation-summary="All" class="govuk-list govuk-error-summary__list govuk-error-message"></div>
+                                </div>
+                            </div>
+                        </div>
+                    }
                     <div class="govuk-form-group">
                         <label class="govuk-label" for="govGateUsername">
                             Username
