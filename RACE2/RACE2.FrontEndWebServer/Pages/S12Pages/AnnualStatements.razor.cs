@@ -133,13 +133,21 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
 
         private async void PopulateReservoirsToDisplay(List<Reservoir> reservoirs)
         {
-            foreach(var reservoir in reservoirs)
+            foreach (var reservoir in reservoirs)
             {
+                var undertakers = await reservoirService.GetOperatorsforReservoir(reservoir.Id, reservoir.OperatorType);
                 ReservoirsLinkedToUserForDisplay reservoirsLinkedToUser=new ReservoirsLinkedToUserForDisplay();
                 reservoirsLinkedToUser.ReservoirName = reservoir.PublicName;
-                Undertakers = await reservoirService.GetUndertakerforReservoir(UserDetail.Id);
-                reservoirsLinkedToUser.UndertakerName = String.IsNullOrEmpty(Undertakers[0].OrgName) ? Undertakers[0].UndertakerFirstName+""+ Undertakers[0].UndertakerLastName : Undertakers[0].OrgName;
-                var submissionStatus= ReservoirStatusLinkedToUser.Where(s=>s.PublicName==reservoir.PublicName).FirstOrDefault();
+                if (undertakers != null && undertakers.Count() > 0)
+                {
+                    if (!String.IsNullOrEmpty(undertakers[0].OperatorFirstName))
+                        reservoirsLinkedToUser.UndertakerName = undertakers[0].OperatorFirstName + " " + undertakers[0].OperatorLastName;
+                    else if (!String.IsNullOrEmpty(undertakers[0].OrgName))
+                        reservoirsLinkedToUser.UndertakerName = undertakers[0].OrgName;
+                    else
+                        reservoirsLinkedToUser.UndertakerName = "";
+                }                    
+                var submissionStatus = ReservoirStatusLinkedToUser.Where(s => s.PublicName == reservoir.PublicName).FirstOrDefault();
                 reservoirsLinkedToUser.DueDate = submissionStatus.DueDate;
                 reservoirsLinkedToUser.Status = submissionStatus.Status;
                 ReservoirsLinkedToUserForDisplay.Add(reservoirsLinkedToUser);
