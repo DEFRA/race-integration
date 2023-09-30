@@ -44,9 +44,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         private string UserName { get; set; } = "Unknown";
         private UserDetail UserDetail { get; set; } = default!;
         private List<Reservoir> ReservoirsLinkedToUser { get; set; } = new List<Reservoir>();
-        private List<SubmissionStatusDTO> ReservoirStatusLinkedToUser { get; set; } = new List<SubmissionStatusDTO>();
-        private List<SubmissionStatusDTO> ReservoirStatusLinkedToUserSubmitted { get; set; } = new List<SubmissionStatusDTO>();
-        private List<SubmissionStatusDTO> ReservoirStatusLinkedToUserDraft { get; set; } = new List<SubmissionStatusDTO>();
+        private List<ReservoirDetailsDTO> ReservoirDetailsLinkedToUser { get; set; } = new List<ReservoirDetailsDTO>();
         private List<ReservoirsLinkedToUserForDisplay> ReservoirsLinkedToUserForDisplay { get; set; } =new List<ReservoirsLinkedToUserForDisplay>();
         private IEnumerable<Claim> Claims { get; set; }
         private List<UndertakerDTO> Undertakers { get; set; }
@@ -78,26 +76,9 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 Uri pagelink = new Uri(_config["RACE2SecurityProviderURL"] + "/Identity/Account/ChangeYourPassword");
                 NavigationManager.NavigateTo(pagelink.ToString());
             }
-            var resultsOfReservoirWithStatus = await reservoirService.GetReservoirStatusByEmail(UserDetail.Email);
-            var reservoirStatusLinkedToUser = resultsOfReservoirWithStatus.ToList();
-            foreach (var rs in reservoirStatusLinkedToUser)
-            {
-                var s = new SubmissionStatusDTO()
-                {
-                    PublicName = rs.PublicName,
-                    SubmittedOn = new DateTime(rs.SubmittedOn.Year, rs.SubmittedOn.Month, rs.SubmittedOn.Day),
-                    Status = rs.Status,
-                    DueDate=rs.DueDate
-                };
-                ReservoirStatusLinkedToUser.Add(s);
-            }
-            ReservoirStatusLinkedToUserSubmitted = ReservoirStatusLinkedToUser.Where(st => st.Status.ToUpper() == "COMPLETE").ToList();
-            ReservoirStatusLinkedToUserDraft = ReservoirStatusLinkedToUser.Where(st => st.Status.ToUpper() != "COMPLETE").ToList();
-            var results = await reservoirService.GetReservoirsByUserId(userDetails.Id);
+            ReservoirDetailsLinkedToUser = await reservoirService.GetReservoirsByUserId(UserDetail.Id);
 
-            var reservoirs = results.ToList();
-
-            foreach (var rn in reservoirs)
+            foreach (var rn in ReservoirDetailsLinkedToUser)
             {
                 var r = new Reservoir()
                 {
@@ -146,10 +127,11 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                         reservoirsLinkedToUser.UndertakerName = undertakers[0].OrgName;
                     else
                         reservoirsLinkedToUser.UndertakerName = "";
-                }                    
-                var submissionStatus = ReservoirStatusLinkedToUser.Where(s => s.PublicName == reservoir.PublicName).FirstOrDefault();
-                reservoirsLinkedToUser.DueDate = submissionStatus.DueDate;
-                reservoirsLinkedToUser.Status = submissionStatus.Status;
+                }
+                var submissionStatusList = await reservoirService.GetReservoirStatusByUserId(UserDetail.Id);
+                var submisstionStatus = submissionStatusList.Where(s => s.PublicName == reservoir.PublicName).FirstOrDefault();
+                reservoirsLinkedToUser.DueDate = submisstionStatus.DueDate;
+                reservoirsLinkedToUser.Status = submisstionStatus.Status!=null? submisstionStatus.Status:"Not Started";
                 ReservoirsLinkedToUserForDisplay.Add(reservoirsLinkedToUser);
             }
             await InvokeAsync(() =>
