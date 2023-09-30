@@ -12,6 +12,7 @@ using RACE2.FrontEndWebServer.FluxorImplementation.Actions;
 using RACE2.FrontEndWebServer.FluxorImplementation.Stores;
 using RACE2.Services;
 using System.Collections.Generic;
+using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -130,7 +131,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 }
                 var submissionStatusList = await reservoirService.GetReservoirStatusByUserId(UserDetail.Id);
                 var submisstionStatus = submissionStatusList.Where(s => s.PublicName == reservoir.PublicName).FirstOrDefault();
-                reservoirsLinkedToUser.DueDate = submisstionStatus.DueDate;
+                reservoirsLinkedToUser.DueDate = submisstionStatus.DueDate!=DateTime.MinValue? submisstionStatus.DueDate.ToString("dd MMMMM yyyy") :"";
                 reservoirsLinkedToUser.Status = submisstionStatus.Status!=null? submisstionStatus.Status:"Not Started";
                 ReservoirsLinkedToUserForDisplay.Add(reservoirsLinkedToUser);
             }
