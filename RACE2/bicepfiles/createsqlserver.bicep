@@ -27,7 +27,7 @@ resource servers_race2sqlserver_name_resource 'Microsoft.Sql/servers@2023-02-01-
     administratorLoginPassword: administratorLoginPassword
     version: '12.0'
     minimalTlsVersion: '1.2'
-    publicNetworkAccess: 'Enabled'   
+    publicNetworkAccess: 'Disabled'   
     restrictOutboundNetworkAccess: 'Disabled'
   }
 }
