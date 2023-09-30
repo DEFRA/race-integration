@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using RACE2.DataModel;
@@ -105,6 +106,14 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             if (!ModelState.IsValid)
             {
                 return Page();
+            }
+            else
+            {
+                if (Input.OldPassword == Input.NewPassword)
+                {
+                    ModelState.AddModelError(string.Empty, "Old password and new password cannot be same.");
+                    return Page();
+                }
             }
 
             var user = await _userManager.GetUserAsync(User);
