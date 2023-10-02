@@ -10,7 +10,7 @@ namespace RACE2.Dto
     {
         public string ReservoirName { get; set; }
         public string UndertakerName { get; set; }
-        public DateTime DueDate { get; set; }
+        public string DueDate { get; set; }
         public string Status { get; set; }
 
     }

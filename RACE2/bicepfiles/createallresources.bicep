@@ -7,6 +7,11 @@ param vnet string
 param subnetcontainerappenv string
 param subnetsqlserver string
 param subnetstorageaccount string
+param subnetservicebus string
+param subnetappconfig string
+param subnetkeyvault string
+param subnetacr string
+param subnetvm string
 param servers_race2sqlserver_name string
 param servers_race2sqldb_name string
 param containerregistryName string
@@ -39,6 +44,11 @@ module createvnetmodule 'createvnet.bicep' = {
     subnetcontainerappenv: subnetcontainerappenv
     subnetsqlserver: subnetsqlserver
     subnetstorageaccount: subnetstorageaccount 
+    subnetservicebus: subnetservicebus
+    subnetappconfig: subnetappconfig
+    subnetkeyvault: subnetkeyvault
+    subnetacr: subnetacr
+    subnetvm: subnetvm
     location: location 
   }
 }
