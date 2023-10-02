@@ -5,6 +5,7 @@ param subnetstorageaccount string
 param subnetservicebus string
 param subnetappconfig string
 param subnetkeyvault string
+param subnetacr string
 param subnetvm string
 param location string 
 
@@ -92,14 +93,26 @@ resource subnetappconfigResource 'Microsoft.Network/virtualNetworks/subnets@2023
 }
 output subnetappconfig string = subnetappconfigResource.id
 
-resource subnetvmResource 'Microsoft.Network/virtualNetworks/subnets@2023-05-01' = {
-  name: subnetvm
+resource subnetacrResource 'Microsoft.Network/virtualNetworks/subnets@2023-05-01' = {
+  name: subnetacr
   parent: virtualNetworkResource
   properties: {
     addressPrefix: '10.10.7.0/24'
   }
   dependsOn:[
     subnetappconfigResource
+  ]
+}
+output subnetacr string = subnetacrResource.id
+
+resource subnetvmResource 'Microsoft.Network/virtualNetworks/subnets@2023-05-01' = {
+  name: subnetvm
+  parent: virtualNetworkResource
+  properties: {
+    addressPrefix: '10.10.8.0/24'
+  }
+  dependsOn:[
+    subnetacrResource
   ]
 }
 output subnetvm string = subnetvmResource.id
