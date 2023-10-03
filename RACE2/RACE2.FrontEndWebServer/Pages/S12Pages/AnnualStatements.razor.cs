@@ -74,7 +74,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             if (UserDetail.c_IsFirstTimeUser)
             {
                 bool forceLoad = true;
-                Uri pagelink = new Uri(_config["RACE2SecurityProviderURL"] + "/Identity/Account/ChangeYourPassword");
+                Uri pagelink = new Uri(_config["RACE2SecurityProviderURL"] + "/Identity/Account/CreatePassword?userEmail="+ UserName);
                 NavigationManager.NavigateTo(pagelink.ToString());
             }
             ReservoirDetailsLinkedToUser = await reservoirService.GetReservoirsByUserId(UserDetail.Id);
@@ -122,10 +122,10 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 reservoirsLinkedToUser.ReservoirName = reservoir.PublicName;
                 if (undertakers != null && undertakers.Count() > 0)
                 {
-                    if (!String.IsNullOrEmpty(undertakers[0].OperatorFirstName))
-                        reservoirsLinkedToUser.UndertakerName = undertakers[0].OperatorFirstName + " " + undertakers[0].OperatorLastName;
-                    else if (!String.IsNullOrEmpty(undertakers[0].OrgName))
+                    if (!String.IsNullOrEmpty(undertakers[0].OrgName))
                         reservoirsLinkedToUser.UndertakerName = undertakers[0].OrgName;
+                    else if (!String.IsNullOrEmpty(undertakers[0].OperatorFirstName))
+                        reservoirsLinkedToUser.UndertakerName = undertakers[0].OperatorFirstName + " " + undertakers[0].OperatorLastName;
                     else
                         reservoirsLinkedToUser.UndertakerName = "";
                 }
