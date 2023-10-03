@@ -8,7 +8,7 @@ using RACE2.Services;
 
 namespace RACE2.FrontEndWebServer.Pages.S12Pages
 {
-    public partial class ConfirmPasswordChange
+    public partial class ConfirmChangePassword
     {
         [Inject]
         public NavigationManager NavigationManager { get; set; } = default!;
@@ -38,7 +38,12 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
 
             base.OnInitializedAsync();
         }
-
+        public void GoToNextPage()
+        {
+            bool forceLoad = true;
+            string pagelink = "/annual-statements";
+            NavigationManager.NavigateTo(pagelink, forceLoad);
+        }
         private void goback()
         {
             bool forceLoad = false;
