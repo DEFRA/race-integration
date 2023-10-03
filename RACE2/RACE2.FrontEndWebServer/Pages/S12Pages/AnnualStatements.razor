@@ -43,9 +43,7 @@
 </header>
 
 <div class="govuk-width-container ">
-@*     <a class="govuk-back-link" @onclick="goback">Back</a> *@
     <div class="govuk-phase-banner">
-
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-two-thirds-from-desktop">
                 <p class="govuk-phase-banner__content">
@@ -56,18 +54,14 @@
                         This is a new service — your <a href="https://defragroup.eu.qualtrics.com/jfe/form/SV_0wFTSeSWzDuXiRg/"
                                                         class="govuk-link">feedback</a> will help us to improve it.
                     </span>
-
                 </p>
             </div>
-            <div class="govuk-grid-column-one-third-from-desktop float-right">
+            <div class="govuk-grid-column-one-third-from-desktop float-right" style="text-align:right;font-size:1rem;">
                 <a href="/my-account"
                    class="govuk-link login-nav-2-item govuk-link--no-visited-state profile">Manage account</a>
-                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                <a href="/logout" class="govuk-link login-nav-2-item govuk-link--no-visited-state">Sign out</a>
-
+                <a href="/logout" class="govuk-link login-nav-2-item govuk-link--no-visited-state" style="margin-left:25px;margin-right:10px;">Sign out</a>
             </div>
         </div>
-
     </div>
     <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
 
@@ -182,8 +176,29 @@
                         </tr>
 
                     </tbody>
-                </table> *@
+                <div class="search-wrapper govuk-form-group">
+                    <label for="search-applications" class="govuk-label">Search by reservoir name</label>
 
+                    <div class="search-input-wrapper">
+                        <input type="search" value="" id="search-applications" name="search" title="Search" class="govuk-input">
+
+                        <div class="search-input-submit-wrapper">
+                            <button type="button" class="search-submit" @onclick="FilterData">Search</button>
+                        </div>
+                    </div>
+                </div>
+                *@
+@*                 <div class="search-wrapper govuk-form-group govuk-grid-column-two-thirds">
+                    <label for="search-applications" class="govuk-label">Search by reservoir name</label>
+
+                    <div class="search-input-wrapper">
+                        <input type="search" value="" id="search-applications" name="search" title="Search" class="govuk-input">
+
+                        <div class="search-input-submit-wrapper">
+                            <button type="button" class="search-submit" @onClick="FilterData"></button>
+                        </div>
+                    </div>
+                </div> *@
                 <MudDataGrid T="ReservoirsLinkedToUserForDisplay" MultiSelection="false" Items="@ReservoirsLinkedToUserForDisplay" SortMode="SortMode.Single" QuickFilter="@_quickFilter"
                              Hideable="true" RowClick="@RowClicked" SelectedItemChanged="@SelectedItemChanged">
                     <ToolBarContent>
@@ -192,7 +207,7 @@
                     </ToolBarContent>
                     <Columns>
                         @*<SelectColumn T="ReservoirsLinkedToUserForDisplay" /> *@
-                        <PropertyColumn Property="x => x.ReservoirName" Title="Reservoir" Sortable="true" Filterable="false" CellStyle="font-weight:400;font-size:0.9rem;color:#0b0c0c;" HeaderStyle="font-weight:bold;font-size:1rem;color:#1d70b8;" />
+                        <PropertyColumn Property="x => x.ReservoirName" Title="Reservoir" Sortable="true" Filterable="false" CellStyle="font-weight:400;font-size:0.9rem;color:#0b0c0c;" HeaderStyle="font-weight:bold;font-size:1rem;color:#1d70b8;" HeaderClass="icon-sort-button"/>
                         <PropertyColumn Property="x => x.UndertakerName" Title="Undertaker" Sortable="true" Filterable="false" CellStyle="font-weight:400;font-size:0.9rem;color:#0b0c0c;" HeaderStyle="font-weight:bold;font-size:1rem;color:#1d70b8;" />
                         <PropertyColumn Property="x => x.DueDate" Title="Due Date" Sortable="true" Filterable="false" CellStyle="font-weight:400;font-size:0.9rem;color:#0b0c0c;width:200px;" HeaderStyle="font-weight:bold;font-size:1rem;color:#1d70b8;width:200px;" />
                         <PropertyColumn Property="x => x.Status" Title="Status" Sortable="true" Filterable="false" CellStyle="font-weight:400;font-size:0.9rem;color:#0b0c0c;" HeaderStyle="font-weight:bold;font-size:1rem;color:#1d70b8;" />
@@ -208,7 +223,7 @@
 @*                     <PagerContent>
                         <MudDataGridPager T="ReservoirsLinkedToUserForDisplay" />
                     </PagerContent> *@
-                </MudDataGrid>                
+                </MudDataGrid>  
 
             </div>
 

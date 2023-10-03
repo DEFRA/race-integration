@@ -65,15 +65,14 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
 
         public async void GoToNextPage()
         {
-            bool forceLoad = false;
+            bool forceLoad = true;
             NavigationManager.NavigateTo("/annual-statements", forceLoad);
         }
 
         private void goback()
         {
-            bool forceLoad = false;
-            string pagelink = "/annual-statements";
-            NavigationManager.NavigateTo(pagelink, forceLoad);
+            bool forceLoad = true;
+            NavigationManager.NavigateTo("/annual-statements", forceLoad);
         }
     }
 }
