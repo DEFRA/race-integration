@@ -17,7 +17,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.Dto", "RACE2.Dto\RACE
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedFiles", "SharedFiles", "{700FD329-25BD-4C96-8FE6-97DEB5370146}"
 	ProjectSection(SolutionItems) = preProject
-		appsettings.json = appsettings.json
 		azcommands.txt = azcommands.txt
 		databasecreation.txt = databasecreation.txt
 		GetUser.txt = GetUser.txt

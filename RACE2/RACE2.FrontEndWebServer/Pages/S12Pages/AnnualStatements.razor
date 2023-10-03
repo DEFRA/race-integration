@@ -184,7 +184,7 @@
                     </tbody>
                 </table> *@
 
-                <MudDataGrid T="ReservoirsLinkedToUserForDisplay" MultiSelection="false" Items="@ReservoirsLinkedToUserForDisplay" SortMode="SortMode.Multiple" QuickFilter="@_quickFilter"
+                <MudDataGrid T="ReservoirsLinkedToUserForDisplay" MultiSelection="false" Items="@ReservoirsLinkedToUserForDisplay" SortMode="SortMode.Single" QuickFilter="@_quickFilter"
                              Hideable="true" RowClick="@RowClicked" SelectedItemChanged="@SelectedItemChanged">
                     <ToolBarContent>
                         <MudTextField @bind-Value="_searchString" Placeholder="Search by reservoir name" Adornment="Adornment.Start" Immediate="true"
@@ -205,9 +205,9 @@
                             </CellTemplate>
                         </TemplateColumn>
                     </Columns>
-                    <PagerContent>
+@*                     <PagerContent>
                         <MudDataGridPager T="ReservoirsLinkedToUserForDisplay" />
-                    </PagerContent>
+                    </PagerContent> *@
                 </MudDataGrid>                
 
             </div>

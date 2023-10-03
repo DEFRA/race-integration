@@ -17,6 +17,10 @@ resource Race2KeyVault_resource 'Microsoft.KeyVault/vaults@2022-11-01' = {
         family: 'A'
         name: 'standard'
       }
+      networkAcls: {
+        bypass: 'AzureServices'
+        defaultAction: 'Deny'
+      }
     }
 
     resource storageNameSecret 'secrets' = {
