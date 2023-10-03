@@ -74,7 +74,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             if (UserDetail.c_IsFirstTimeUser)
             {
                 bool forceLoad = true;
-                Uri pagelink = new Uri(_config["RACE2SecurityProviderURL"] + "/Identity/Account/ChangeYourPassword");
+                Uri pagelink = new Uri(_config["RACE2SecurityProviderURL"] + "/Identity/Account/CreatePassword?userEmail="+ UserName);
                 NavigationManager.NavigateTo(pagelink.ToString());
             }
             ReservoirDetailsLinkedToUser = await reservoirService.GetReservoirsByUserId(UserDetail.Id);
