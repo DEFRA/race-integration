@@ -76,10 +76,10 @@
  *@
                                     <ul class="govuk-list govuk-error-summary__list">
                                         <li>
-                                        <a id="email-error" rel="noopener" target="_blank" href="email-error">Check your email address</a>
+                                        <a href="#email-error">Check your email address</a>
                                         </li>
                                         <li>
-                                        <a id="password-error" rel="noopener" target="_blank" href="password-error">Check your password</a>
+                                        <a href="#password-error">Check your password</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -92,16 +92,16 @@
                         </label>
                         @if (!ModelState.IsValid)
                         {
-                        <a id="email-error">
                             <div>
                                 <span class="govuk-error-message">Check your email address</span>
                             </div>
-                        </a>
                         }
-                        @*                         <div class="govuk-form-group">
+                        @* <div class="govuk-form-group">
                             <span asp-validation-for="Input.Email" class="govuk-error-message"></span>
                         </div> *@
-                        <input asp-for="Input.Email" class="govuk-input govuk-!-width-three-quarters" aria-required="true" aria-describedby="govGateUserId-hint" id="govGateUsername">
+                        <a id="email-error">
+                            <input asp-for="Input.Email" class="govuk-input govuk-!-width-three-quarters" aria-required="true" aria-describedby="govGateUserId-hint" id="govGateUsername">
+                        </a>
                     </div>
                     <br />
                     <div class="gem-c-show-password" data-module="show-password" data-disable-form-submit-check="false" data-show-text="Show" data-hide-text="Hide" data-show-full-text="Show password" data-hide-full-text="Hide password" data-announce-show="Your password is shown" data-announce-hide="Your password is hidden" data-show-password-module-started="true">
@@ -109,19 +109,21 @@
                             <label for="govGatePasswordConfirm" class="gem-c-label govuk-label">Password</label>
                             @if (!ModelState.IsValid)
                             {
-                                <a id="password-error" >
+                                
                                     <div>
                                         <span class="govuk-error-message">Check your password</span>
                                     </div>
-                                </a>
+                                
                             }
 @*                             <div>
                                 <span asp-validation-for="Input.Password" class="govuk-error-message"></span>
                             </div> *@
+                        <a id="password-error">
                             <div class="gem-c-show-password__input-wrapper">
                                 <input asp-for="Input.Password" id="govGatePasswordConfirm" autocomplete="off" class="gem-c-input govuk-input gem-c-input--with-password govuk-!-width-three-quarters" id="input-cfca9749" spellcheck="false" type="password" value="">
                                 <button id="passwordbtn" class="gem-c-show-password__toggle" aria-controls="input-cfca9749" type="button" aria-label="Show password" onclick="getButtonText('passwordbtn','govGatePasswordConfirm')">Show</button>
                             </div>
+                        </a>
                         </div>
                     </div>
                     <div>
