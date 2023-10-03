@@ -1,0 +1,23 @@
+USE [TSTRACINFDB1401]
+GO
+
+INSERT INTO [dbo].[FeatureFunctions]
+           ([Name]
+           ,[DisplayName]
+           ,[Description]
+           ,[Start_date]
+           ,[End_date])
+     VALUES
+	 ('S12_Submission','S12 Submission Service','S12 Submission Service','2023-02-25','2024-10-10'),
+           ('S12_Submit_Button','S12 Submission Button','S12 Submission Button','2023-02-25','2024-10-10'),
+		   ('S12_Undertaker_Feedback','S12 Undertaker Feedback','S12 Undertaker Feedback','2023-02-25','2024-10-10'),
+		     ('S12_Undertaker_Approved _Button','S12 Undertaker Approved Button','S12 Undertaker Approved Button','2023-02-25','2024-10-10'),
+			   ('S10_Submission','S10 Submission Service','S10 Submission Service','2023-02-25','2024-10-10')
+GO
+
+
+DBCC CHECKIDENT ('FeatureFunctions')
+
+  DELETE FROM FeatureFunctions WHERE Id In(2,3,4,5,6,7)
+
+  DBCC CHECKIDENT ('FeatureFunctions', RESEED, 0)
