@@ -10,6 +10,7 @@ param subnetstorageaccount string
 param subnetservicebus string
 param subnetappconfig string
 param subnetkeyvault string
+param subnetacr string
 param subnetvm string
 param servers_race2sqlserver_name string
 param servers_race2sqldb_name string
@@ -46,6 +47,7 @@ module createvnetmodule 'createvnet.bicep' = {
     subnetservicebus: subnetservicebus
     subnetappconfig: subnetappconfig
     subnetkeyvault: subnetkeyvault
+    subnetacr: subnetacr
     subnetvm: subnetvm
     location: location 
   }
