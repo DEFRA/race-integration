@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.JSInterop;
-using MudBlazor;
 using RACE2.DataModel;
 using RACE2.Dto;
 using RACE2.FrontEndWebServer.FluxorImplementation.Actions;
@@ -18,7 +17,6 @@ using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security.Claims;
-using static MudBlazor.CategoryTypes;
 
 namespace RACE2.FrontEndWebServer.Pages.S12Pages
 {
@@ -155,44 +153,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         {
 
         }
-
-        // custom sort by name length
-        private Func<ReservoirsLinkedToUserForDisplay, object> _sortBy => x =>
-        {
-            if (_sortNameByLength)
-                return x.ReservoirName.Length;
-            else
-                return x.ReservoirName;
-        };
-
-        // quick filter - filter globally across multiple columns with the same input
-        private Func<ReservoirsLinkedToUserForDisplay, bool> _quickFilter => x =>
-        {
-            if (string.IsNullOrWhiteSpace(_searchString))
-                return true;
-
-            if (x.ReservoirName.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
-                return true;
-
-            return false;
-        };
-
-        void RowClicked(DataGridRowClickEventArgs<ReservoirsLinkedToUserForDisplay> args)
-        {
-            _events.Insert(0, $"Event = RowClick, Index = {args.RowIndex}, Data = {System.Text.Json.JsonSerializer.Serialize(args.Item)}");
-            //DownloadReportTemplate(args.Item);
-        }
-
-        void SelectedItemsChanged(HashSet<ReservoirsLinkedToUserForDisplay> items)
-        {
-            _events.Insert(0, $"Event = SelectedItemsChanged, Data = {System.Text.Json.JsonSerializer.Serialize(items)}");
-        }
-        void SelectedItemChanged(ReservoirsLinkedToUserForDisplay item)
-        {
-            _events.Insert(0, $"Event = SelectedItemsChanged, Data = {System.Text.Json.JsonSerializer.Serialize(item)}");
-
-        }
-
+        
         private async void DownloadReportTemplate(ReservoirsLinkedToUserForDisplay item)
         {
             var reservoir= ReservoirsLinkedToUser.Where(r=>r.PublicName==item.ReservoirName).FirstOrDefault();

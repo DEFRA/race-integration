@@ -161,31 +161,6 @@
                         }                   
                     </tbody>
                 </table>
-@*                 <MudDataGrid T="ReservoirsLinkedToUserForDisplay" MultiSelection="false" Items="@ReservoirsLinkedToUserForDisplay" SortMode="SortMode.Single" QuickFilter="@_quickFilter"
-                             Hideable="true" RowClick="@RowClicked" SelectedItemChanged="@SelectedItemChanged">
-                    <ToolBarContent>
-                        <MudTextField @bind-Value="_searchString" Placeholder="Search by reservoir name" Adornment="Adornment.Start" Immediate="true"
-                                      AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0" Style="font-weight:400;font-size:0.9rem;color:#0b0c0c;"></MudTextField>
-                    </ToolBarContent>
-                    <Columns> *@
-                        @*<SelectColumn T="ReservoirsLinkedToUserForDisplay" /> *@
-@*                         <PropertyColumn Property="x => x.ReservoirName" Title="Reservoir" Sortable="true" Filterable="false" CellStyle="font-weight:400;font-size:0.9rem;color:#0b0c0c;" HeaderStyle="font-weight:bold;font-size:1rem;color:#1d70b8;" HeaderClass="icon-sort-button"/>
-                        <PropertyColumn Property="x => x.UndertakerName" Title="Undertaker" Sortable="true" Filterable="false" CellStyle="font-weight:400;font-size:0.9rem;color:#0b0c0c;" HeaderStyle="font-weight:bold;font-size:1rem;color:#1d70b8;" />
-                        <PropertyColumn Property="x => x.DueDate" Title="Due Date" Sortable="true" Filterable="false" CellStyle="font-weight:400;font-size:0.9rem;color:#0b0c0c;width:200px;" HeaderStyle="font-weight:bold;font-size:1rem;color:#1d70b8;width:200px;" />
-                        <PropertyColumn Property="x => x.Status" Title="Status" Sortable="true" Filterable="false" CellStyle="font-weight:400;font-size:0.9rem;color:#0b0c0c;" HeaderStyle="font-weight:bold;font-size:1rem;color:#1d70b8;" />
-                        <TemplateColumn CellClass="d-flex justify-end">
-                            <CellTemplate>
-                                 <MudStack Row>
-                                    <MudButton Size="@Size.Small" Variant="@Variant.Text" Color="@Color.Info" Style="text-decoration:underline;cursor:pointer;text-transform:capitalize;font-weight:400;font-size:1rem;"
-                                        @onclick="()=>DownloadTemplateFile(context.Item)">Download</MudButton> 
-                                 </MudStack>
-                            </CellTemplate>
-                        </TemplateColumn>
-                    </Columns> *@
-@*                     <PagerContent>
-                        <MudDataGridPager T="ReservoirsLinkedToUserForDisplay" />
-                    </PagerContent> *@
-@*                 </MudDataGrid>   *@
 
             </div>
 
