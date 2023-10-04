@@ -15,7 +15,6 @@
 	<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.22" />
 	<PackageReference Include="Azure.Identity" Version="1.10.0" />
 	<PackageReference Include="Microsoft.Azure.AppConfiguration.AspNetCore" Version="6.1.0" />
-	<PackageReference Include="StrawberryShake.Blazor" Version="13.5.1" />
   </ItemGroup>
 
   <ItemGroup>

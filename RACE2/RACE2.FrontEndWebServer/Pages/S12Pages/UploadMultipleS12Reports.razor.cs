@@ -9,7 +9,6 @@ using RACE2.Dto;
 using RACE2.FrontEndWebServer.FluxorImplementation.Actions;
 using RACE2.FrontEndWebServer.FluxorImplementation.Stores;
 using RACE2.Services;
-using StrawberryShake;
 using System;
 
 namespace RACE2.FrontEndWebServer.Pages.S12Pages
