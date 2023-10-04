@@ -1,0 +1,16 @@
+﻿<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="tcp_tstracinfss1401.database.windows.net,1433.TSTRACINFDB1401.race2admin"
+  DTS:DTSID="{DAF99ABE-5BF9-45C1-AFE8-025804449FC3}"
+  DTS:CreationName="OLEDB">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectRetryCount="1"
+      DTS:ConnectRetryInterval="5"
+      DTS:ConnectionString="Data Source=tcp:tstracinfss1401.database.windows.net,1433;User ID=race2admin;Initial Catalog=TSTRACINFDB1401;Provider=SQLNCLI11.1;Application Name=SSIS-RACE2.UploadDatatoDatabase_SSIS-{DAF99ABE-5BF9-45C1-AFE8-025804449FC3}tcp:tstracinfss1401.database.windows.net,1433.TSTRA;Auto Translate=False;">
+      <DTS:Password
+        DTS:Name="Password"
+        Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAEt/W7EOjdkeaH2rJIosbVwAAAAACAAAAAAADZgAAwAAAABAAAABr+2EiJYkY96U2wpPhSQnXAAAAAASAAACgAAAAEAAAAH65DxbFTyj8FCNeZRrkqceAAAAAs48Kd6ohETerF6Hxuhe+49+9cAf8xUJefYQieYQ2G1Zv+RFBu9LUxtccfM0lCB9uCetmUU5rMCNru+b/yz1pRNsUNs5OEBSog2Pzwpx+v9+GRyI+sdzk0vn0hnl9fDEnL/Gum1rjSlqswwtwCj2YCaHHHEV8JdbZ0TVQcpHzrkoUAAAA/AbWjPOcIMf8MySPMf+Ze/gdvn0=</DTS:Password>
+    </DTS:ConnectionManager>
+  </DTS:ObjectData>
+</DTS:ConnectionManager>
