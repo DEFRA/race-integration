@@ -43,9 +43,7 @@
 </header>
 
 <div class="govuk-width-container ">
-@*     <a class="govuk-back-link" @onclick="goback">Back</a> *@
     <div class="govuk-phase-banner">
-
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-two-thirds-from-desktop">
                 <p class="govuk-phase-banner__content">
@@ -56,18 +54,14 @@
                         This is a new service — your <a href="https://defragroup.eu.qualtrics.com/jfe/form/SV_0wFTSeSWzDuXiRg/"
                                                         class="govuk-link">feedback</a> will help us to improve it.
                     </span>
-
                 </p>
             </div>
-            <div class="govuk-grid-column-one-third-from-desktop float-right">
+            <div class="govuk-grid-column-one-third-from-desktop float-right" style="text-align:right;font-size:1rem;">
                 <a href="/my-account"
                    class="govuk-link login-nav-2-item govuk-link--no-visited-state profile">Manage account</a>
-                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                <a href="/logout" class="govuk-link login-nav-2-item govuk-link--no-visited-state">Sign out</a>
-
+                <a href="/logout" class="govuk-link login-nav-2-item govuk-link--no-visited-state" style="margin-left:25px;margin-right:10px;">Sign out</a>
             </div>
         </div>
-
     </div>
     <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
 
@@ -79,26 +73,26 @@
                     Your annual statements
                 </h1>
 
-@*                 <div class="govuk-grid-row">
+                <div class="govuk-grid-row">
                     <div class="govuk-grid-column-full">
                         <div class="govuk-grid-row">
                             <div class="govuk-grid-column-two-thirds">
 
-                                <form method="get" novalidate="">
+                                <EditForm Model="@ReservoirsLinkedToUserForDisplay" method="get" novalidate="">
 
                                     <div class="search-wrapper govuk-form-group">
                                         <label for="search-applications" class="govuk-label">Search by reservoir name</label>
 
                                         <div class="search-input-wrapper">
-                                            <input type="search" value="" id="search-applications" name="search" title="Search" class="govuk-input">
+                                            <InputText @bind-Value="@_searchString" id="search-applications" name="search" style="height:50px;" title="Search" class="govuk-input" />
 
                                             <div class="search-input-submit-wrapper">
-                                                <button type="submit" class="search-submit">Search</button>
+                                                <button type="button" class="search-submit" @onclick=@(args => FilterData(@_searchString))>Search</button>
                                             </div>
                                         </div>
                                     </div>
 
-                                </form>
+                                </EditForm>
                             </div>
                         </div>
                     </div>
@@ -110,28 +104,32 @@
                         <tr class="govuk-table__row govuk-body govuk-!-font-size-16">
 
                             <th scope="col" class="govuk-table__header app-custom-class" aria-sort="">
-                                <button aria-label="Sort by Reservoir" type="button" class="icon-sort-button">
+                                <button aria-label="Sort by Reservoir" type="button" class="icon-sort-button"
+                                        onclick="@(() => SortTable("ReservoirName"))">
                                     Reservoir
                                     <div class="icon-sort"></div>
                                 </button>
                             </th>
 
                             <th scope="col" class="govuk-table__header app-custom-class" aria-sort="">
-                                <button aria-label="Sort by Undertaker" type="button" class="icon-sort-button">
+                                <button aria-label="Sort by Undertaker" type="button" class="icon-sort-button"
+                                        onclick="@(() => SortTable("UndertakerName"))">
                                     Undertaker
                                     <div class="icon-sort"></div>
                                 </button>
                             </th>
 
                             <th scope="col" class="govuk-table__header app-custom-class" aria-sort="">
-                                <button aria-label="Sort by Due date" type="button" class="icon-sort-button">
+                                <button aria-label="Sort by Due date" type="button" class="icon-sort-button"
+                                        onclick="@(() => SortTable("DueDate"))">
                                     Due date
                                     <div class="icon-sort"></div>
                                 </button>
                             </th>
 
                             <th scope="col" class="govuk-table__header app-custom-class" aria-sort="">
-                                <button aria-label="Sort by Status" type="button" class="icon-sort-button">
+                                <button aria-label="Sort by Status" type="button" class="icon-sort-button"
+                                        onclick="@(() => SortTable("Status"))">
                                     Status
                                     <div class="icon-sort"></div>
                                 </button>
@@ -145,70 +143,24 @@
                     </thead>
 
                     <tbody class="govuk-table__body govuk-body govuk-!-font-size-16">
-
-                        <tr class="govuk-table__row">
-                            <td scope="row" class="govuk-table__cell">Eagle Pond</td>
-                            <td class="govuk-table__cell">Sarah Smith</td>
-                            <td class="govuk-table__cell">10 December 2023</td>
-                            <td class="govuk-table__cell">
-                                <strong class="not-started-tag-new">
-                                    Not started
-                                </strong>
-                            </td>
-                            <td class="govuk-table__cell">
-                                <a class="govuk-link govuk-link--no-visited-state" href="#">Download</a>
-                            </td>
-                            <!-- <td class="govuk-table__cell">
-                              <a class="govuk-link govuk-link--no-visited-state" href="#">Send</a>
-                            </td> -->
-                        </tr>
-
-                        <tr class="govuk-table__row">
-                            <td scope="row" class="govuk-table__cell">Rockingham Reservoir</td>
-                            <td class="govuk-table__cell">Jenny Philips</td>
-                            <td class="govuk-table__cell">10 December 2023</td>
-                            <td class="govuk-table__cell">
-                                <strong class="not-started-tag-new">
-                                    Not started
-                                </strong>
-                            </td>
-                            <td class="govuk-table__cell">
-                                <a class="govuk-link govuk-link--no-visited-state" href="/Beta/Private/submit-s12/V10/your-statements-1-in-prog">Download</a>
-                            </td>
-                            <!-- <td class="govuk-table__cell">
-                              <a class="govuk-link govuk-link--no-visited-state"
-                                href="/Beta/Private/submit-s12/V10/send-your-statement">Send</a>
-                            </td> -->
-                        </tr>
-
+                        @foreach (var reservoir in ReservoirsLinkedToUserForDisplay)
+                        {
+                            <tr class="govuk-table__row">
+                                <td scope="row" class="govuk-table__cell">@reservoir.ReservoirName</td>
+                                <td class="govuk-table__cell">@reservoir.UndertakerName</td>
+                                <td class="govuk-table__cell">@reservoir.DueDate</td>
+                                <td class="govuk-table__cell">
+                                    <strong class="not-started-tag-new">
+                                        @reservoir.Status
+                                    </strong>
+                                </td>
+                                <td class="govuk-table__cell">
+                                    <a class="govuk-link govuk-link--no-visited-state" href="annual-statements" @onclick="()=>DownloadTemplateFile(reservoir)">Download</a>
+                                </td>
+                            </tr>
+                        }                   
                     </tbody>
-                </table> *@
-
-                <MudDataGrid T="ReservoirsLinkedToUserForDisplay" MultiSelection="false" Items="@ReservoirsLinkedToUserForDisplay" SortMode="SortMode.Single" QuickFilter="@_quickFilter"
-                             Hideable="true" RowClick="@RowClicked" SelectedItemChanged="@SelectedItemChanged">
-                    <ToolBarContent>
-                        <MudTextField @bind-Value="_searchString" Placeholder="Search by reservoir name" Adornment="Adornment.Start" Immediate="true"
-                                      AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0" Style="font-weight:400;font-size:0.9rem;color:#0b0c0c;"></MudTextField>
-                    </ToolBarContent>
-                    <Columns>
-                        @*<SelectColumn T="ReservoirsLinkedToUserForDisplay" /> *@
-                        <PropertyColumn Property="x => x.ReservoirName" Title="Reservoir" Sortable="true" Filterable="false" CellStyle="font-weight:400;font-size:0.9rem;color:#0b0c0c;" HeaderStyle="font-weight:bold;font-size:1rem;color:#1d70b8;" />
-                        <PropertyColumn Property="x => x.UndertakerName" Title="Undertaker" Sortable="true" Filterable="false" CellStyle="font-weight:400;font-size:0.9rem;color:#0b0c0c;" HeaderStyle="font-weight:bold;font-size:1rem;color:#1d70b8;" />
-                        <PropertyColumn Property="x => x.DueDate" Title="Due Date" Sortable="true" Filterable="false" CellStyle="font-weight:400;font-size:0.9rem;color:#0b0c0c;width:200px;" HeaderStyle="font-weight:bold;font-size:1rem;color:#1d70b8;width:200px;" />
-                        <PropertyColumn Property="x => x.Status" Title="Status" Sortable="true" Filterable="false" CellStyle="font-weight:400;font-size:0.9rem;color:#0b0c0c;" HeaderStyle="font-weight:bold;font-size:1rem;color:#1d70b8;" />
-                        <TemplateColumn CellClass="d-flex justify-end">
-                            <CellTemplate>
-                                 <MudStack Row>
-                                    <MudButton Size="@Size.Small" Variant="@Variant.Text" Color="@Color.Info" Style="text-decoration:underline;cursor:pointer;text-transform:capitalize;font-weight:400;font-size:1rem;"
-                                        @onclick="()=>DownloadTemplateFile(context.Item)">Download</MudButton> 
-                                 </MudStack>
-                            </CellTemplate>
-                        </TemplateColumn>
-                    </Columns>
-@*                     <PagerContent>
-                        <MudDataGridPager T="ReservoirsLinkedToUserForDisplay" />
-                    </PagerContent> *@
-                </MudDataGrid>                
+                </table>
 
             </div>
 
