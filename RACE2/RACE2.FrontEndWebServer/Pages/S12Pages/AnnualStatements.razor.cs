@@ -1,11 +1,11 @@
 ﻿using DocumentFormat.OpenXml.InkML;
+using DocumentFormat.OpenXml.Spreadsheet;
 using Fluxor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.JSInterop;
-using MudBlazor;
 using RACE2.DataModel;
 using RACE2.Dto;
 using RACE2.FrontEndWebServer.FluxorImplementation.Actions;
@@ -17,7 +17,6 @@ using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security.Claims;
-using static MudBlazor.CategoryTypes;
 
 namespace RACE2.FrontEndWebServer.Pages.S12Pages
 {
@@ -47,14 +46,22 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         private List<Reservoir> ReservoirsLinkedToUser { get; set; } = new List<Reservoir>();
         private List<ReservoirDetailsDTO> ReservoirDetailsLinkedToUser { get; set; } = new List<ReservoirDetailsDTO>();
         private List<ReservoirsLinkedToUserForDisplay> ReservoirsLinkedToUserForDisplay { get; set; } =new List<ReservoirsLinkedToUserForDisplay>();
+        private List<ReservoirsLinkedToUserForDisplay> ReservoirsLinkedToUserForDisplayOnStart { get; set; } = new List<ReservoirsLinkedToUserForDisplay>();
         private IEnumerable<Claim> Claims { get; set; }
-        private List<UndertakerDTO> Undertakers { get; set; }
+        private List<OperatorDTO> Undertakers { get; set; }
 
         private string _searchString;
         private bool _sortNameByLength;
         private List<string> _events = new();
         CultureInfo en = CultureInfo.GetCultureInfo("en-US");
         int selectedReservoirId= 0;
+
+        //We need a field to tell us which direction the table is currently sorted by
+        private bool IsSortedAscending;
+
+        //We also need a field to tell us which column the table is sorted by.
+        private string CurrentSortColumn;
+
         protected async override Task OnInitializedAsync()
         {
             AuthenticationState authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
@@ -74,7 +81,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             if (UserDetail.c_IsFirstTimeUser)
             {
                 bool forceLoad = true;
-                Uri pagelink = new Uri(_config["RACE2SecurityProviderURL"] + "/Identity/Account/ChangeYourPassword");
+                Uri pagelink = new Uri(_config["RACE2SecurityProviderURL"] + "/Identity/Account/CreatePassword?userEmail="+ UserName);
                 NavigationManager.NavigateTo(pagelink.ToString());
             }
             ReservoirDetailsLinkedToUser = await reservoirService.GetReservoirsByUserId(UserDetail.Id);
@@ -117,15 +124,15 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         {
             foreach (var reservoir in reservoirs)
             {
-                var undertakers = await reservoirService.GetOperatorsforReservoir(reservoir.Id, reservoir.OperatorType);
+                Undertakers = await reservoirService.GetOperatorsforReservoir(reservoir.Id, reservoir.OperatorType);
                 ReservoirsLinkedToUserForDisplay reservoirsLinkedToUser=new ReservoirsLinkedToUserForDisplay();
                 reservoirsLinkedToUser.ReservoirName = reservoir.PublicName;
-                if (undertakers != null && undertakers.Count() > 0)
+                if (Undertakers != null && Undertakers.Count() > 0)
                 {
-                    if (!String.IsNullOrEmpty(undertakers[0].OrgName))
-                        reservoirsLinkedToUser.UndertakerName = undertakers[0].OrgName;
-                    else if (!String.IsNullOrEmpty(undertakers[0].OperatorFirstName))
-                        reservoirsLinkedToUser.UndertakerName = undertakers[0].OperatorFirstName + " " + undertakers[0].OperatorLastName;
+                    if (!String.IsNullOrEmpty(Undertakers[0].OrgName))
+                        reservoirsLinkedToUser.UndertakerName = Undertakers[0].OrgName;
+                    else if (!String.IsNullOrEmpty(Undertakers[0].OperatorFirstName))
+                        reservoirsLinkedToUser.UndertakerName = Undertakers[0].OperatorFirstName + " " + Undertakers[0].OperatorLastName;
                     else
                         reservoirsLinkedToUser.UndertakerName = "";
                 }
@@ -135,6 +142,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 reservoirsLinkedToUser.Status = submisstionStatus.Status!=null? submisstionStatus.Status:"Not Started";
                 ReservoirsLinkedToUserForDisplay.Add(reservoirsLinkedToUser);
             }
+            ReservoirsLinkedToUserForDisplayOnStart = ReservoirsLinkedToUserForDisplay;
             await InvokeAsync(() =>
             {
                 StateHasChanged();
@@ -145,48 +153,11 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         {
 
         }
-
-        // custom sort by name length
-        private Func<ReservoirsLinkedToUserForDisplay, object> _sortBy => x =>
-        {
-            if (_sortNameByLength)
-                return x.ReservoirName.Length;
-            else
-                return x.ReservoirName;
-        };
-
-        // quick filter - filter globally across multiple columns with the same input
-        private Func<ReservoirsLinkedToUserForDisplay, bool> _quickFilter => x =>
-        {
-            if (string.IsNullOrWhiteSpace(_searchString))
-                return true;
-
-            if (x.ReservoirName.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
-                return true;
-
-            return false;
-        };
-
-        void RowClicked(DataGridRowClickEventArgs<ReservoirsLinkedToUserForDisplay> args)
-        {
-            _events.Insert(0, $"Event = RowClick, Index = {args.RowIndex}, Data = {System.Text.Json.JsonSerializer.Serialize(args.Item)}");
-            //DownloadReportTemplate(args.Item);
-        }
-
-        void SelectedItemsChanged(HashSet<ReservoirsLinkedToUserForDisplay> items)
-        {
-            _events.Insert(0, $"Event = SelectedItemsChanged, Data = {System.Text.Json.JsonSerializer.Serialize(items)}");
-        }
-        void SelectedItemChanged(ReservoirsLinkedToUserForDisplay item)
-        {
-            _events.Insert(0, $"Event = SelectedItemsChanged, Data = {System.Text.Json.JsonSerializer.Serialize(item)}");
-
-        }
-
+        
         private async void DownloadReportTemplate(ReservoirsLinkedToUserForDisplay item)
         {
             var reservoir= ReservoirsLinkedToUser.Where(r=>r.PublicName==item.ReservoirName).FirstOrDefault();
-            var undertaker=Undertakers.Where(u=>u.ReservoirId==reservoir.Id).FirstOrDefault();
+            //var undertaker=Undertakers.Where(u=>u.ReservoirId==reservoir.Id).FirstOrDefault();
             var blobName = "S12ReportTemplate.docx";
             Stream response = await blobStorageService.GetBlobFileStream(blobName);
             S12PrePopulationFields s12PrePopulationFields = new S12PrePopulationFields();
@@ -246,7 +217,65 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             string pagelink = "/s12-statement-confirmation";
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }
-        private void Dispose()
+        
+        private async void FilterData(string searchTerm)
+        {
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                ReservoirsLinkedToUserForDisplay = ReservoirsLinkedToUserForDisplay.Where(r => r.ReservoirName.ToLower().Contains(searchTerm.ToLower())).ToList();
+                await InvokeAsync(() =>
+                {
+                    StateHasChanged();
+                });
+            }
+            else
+            {
+                ReservoirsLinkedToUserForDisplay = ReservoirsLinkedToUserForDisplayOnStart;
+            }
+        }
+
+        private void SortTable(string columnName)
+        {
+            //Sorting against a column that is not currently sorted against.
+            if (columnName != CurrentSortColumn)
+            {
+                //We need to force order by ascending on the new column
+                //This line uses reflection and will probably 
+                //perform inefficiently in a production environment.
+                ReservoirsLinkedToUserForDisplay = ReservoirsLinkedToUserForDisplay.OrderBy(x =>
+                                        x.GetType()
+                                        .GetProperty(columnName)
+                                        .GetValue(x, null))
+                              .ToList();
+                CurrentSortColumn = columnName;
+                IsSortedAscending = true;
+
+            }
+            else //Sorting against same column but in different direction
+            {
+                if (IsSortedAscending)
+                {
+                    ReservoirsLinkedToUserForDisplay = ReservoirsLinkedToUserForDisplay.OrderByDescending(x =>
+                                                      x.GetType()
+                                                       .GetProperty(columnName)
+                                                       .GetValue(x, null))
+                                 .ToList();
+                }
+                else
+                {
+                    ReservoirsLinkedToUserForDisplay = ReservoirsLinkedToUserForDisplay.OrderBy(x =>
+                                            x.GetType()
+                                             .GetProperty(columnName)
+                                             .GetValue(x, null))
+                                             .ToList();
+                }
+
+                //Toggle this boolean
+                IsSortedAscending = !IsSortedAscending;
+            }
+        }
+
+    private void Dispose()
         {
             this.Dispose(true);
         }

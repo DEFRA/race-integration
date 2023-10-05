@@ -22,11 +22,13 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<UserDetail> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly IConfiguration _config;
 
-        public LoginModel(SignInManager<UserDetail> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<UserDetail> signInManager, ILogger<LoginModel> logger,IConfiguration config)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _config = config;
         }
 
         /// <summary>
@@ -47,6 +49,8 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         public string ReturnUrl { get; set; }
+
+        public string WebAppUrl { get; set; }
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -94,7 +98,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             }
             
             returnUrl ??= Url.Content("~/");
-
+            WebAppUrl = _config["RACE2FrontEndURL"];
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
@@ -106,6 +110,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
+            WebAppUrl = _config["RACE2FrontEndURL"];
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
