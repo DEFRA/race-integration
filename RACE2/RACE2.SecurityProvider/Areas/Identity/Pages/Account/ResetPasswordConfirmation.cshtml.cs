@@ -22,13 +22,14 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
         /// </summary>
         /// 
         private readonly IConfiguration _config;
-
+        public string WebAppUrl { get; set; }
         public ResetPasswordConfirmationModel(IConfiguration config)
         {
             _config = config;
         }
         public void OnGet()
         {
+            WebAppUrl = _config["RACE2FrontEndURL"];
             string returnUrl = _config["RACE2FrontEndURL"] + "/confirm-reset-password";
             Redirect(returnUrl);
         }

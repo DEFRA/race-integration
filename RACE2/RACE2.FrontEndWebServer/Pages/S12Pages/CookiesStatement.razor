@@ -1,5 +1,4 @@
 ﻿@page "/cookies-statement"
-@inherits Fluxor.Blazor.Web.Components.FluxorComponent
 @using Microsoft.AspNetCore.Authorization;
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
@@ -41,7 +40,6 @@
     <div class="govuk-width-container ">
 
         <div class="govuk-phase-banner">
-
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-two-thirds-from-desktop">
                     <p class="govuk-phase-banner__content">
@@ -49,18 +47,13 @@
                             Beta
                         </strong>
                         <span class="govuk-phase-banner__text">
-                            This is a new service — your <a href="https://defragroup.eu.qualtrics.com/jfe/form/SV_0wFTSeSWzDuXiRg/"
-                                                            class="govuk-link">feedback</a> will help us to improve it.
+                            This is a new service — your <a href="https://defragroup.eu.qualtrics.com/jfe/form/SV_0wFTSeSWzDuXiRg/" class="govuk-link">feedback</a> will help us to improve it.
                         </span>
-
                     </p>
                 </div>
-                <div class="govuk-grid-column-one-third-from-desktop float-right">
-                    <a href="my-account"
-                       class="govuk-link login-nav-2-item govuk-link--no-visited-state profile">Manage account</a>
-
-                    <a href="logout" class="govuk-link login-nav-2-item govuk-link--no-visited-state">Sign out</a>
-
+                <div class="govuk-grid-column-one-third-from-desktop float-right" style="text-align:right;font-size:1rem;">
+                    <a href="/my-account" class="govuk-link login-nav-2-item govuk-link--no-visited-state profile">Manage account</a>
+                    <a href="/logout" class="govuk-link login-nav-2-item govuk-link--no-visited-state" style="margin-left:25px;margin-right:10px;">Sign out</a>
                 </div>
             </div>
         </div>
@@ -117,8 +110,7 @@ else
 {  
     <div class="govuk-width-container ">
 
-        <div class="govuk-phase-banner" id="beta-banner">
-
+        <div class="govuk-phase-banner">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-two-thirds-from-desktop">
                     <p class="govuk-phase-banner__content">
@@ -126,17 +118,12 @@ else
                             Beta
                         </strong>
                         <span class="govuk-phase-banner__text">
-                            This is a new service — your <a href="https://defragroup.eu.qualtrics.com/jfe/form/SV_0wFTSeSWzDuXiRg/"
-                                                            class="govuk-link">feedback</a> will help us to improve it.
+                            This is a new service — your <a href="https://defragroup.eu.qualtrics.com/jfe/form/SV_0wFTSeSWzDuXiRg/" class="govuk-link">feedback</a> will help us to improve it.
                         </span>
                     </p>
                 </div>
-                <div class="govuk-grid-column-one-third-from-desktop float-right">
-                    <!-- <a href="#"
-                      class="govuk-link login-nav-2-item govuk-link--no-visited-state profile">Manage account</a> -->
-
-                    <a href="login" class="govuk-link login-nav-2-item govuk-link--no-visited-state">Sign in</a>
-
+                <div class="govuk-grid-column-one-third-from-desktop float-right" style="text-align:right;font-size:1rem;">
+                    <a href="/login" class="govuk-link login-nav-2-item govuk-link--no-visited-state" style="margin-left:25px;margin-right:10px;">Sign in</a>
                 </div>
             </div>
 

@@ -22,6 +22,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
         /// </summary>
         /// 
         private readonly IConfiguration _config;
+        public string WebAppUrl { get; set; }
 
         public ChangePasswordConfirmationModel(IConfiguration config)
         {
@@ -29,6 +30,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
         }
         public void OnGet()
         {
+            WebAppUrl = _config["RACE2FrontEndURL"];
             string returnUrl = _config["RACE2FrontEndURL"] + "/login";
             Redirect(returnUrl);
         }

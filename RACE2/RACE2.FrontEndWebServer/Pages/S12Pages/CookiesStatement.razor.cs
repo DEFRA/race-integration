@@ -1,5 +1,4 @@
-﻿using Fluxor;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Components.Web;
@@ -15,13 +14,6 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
 {
     public partial class CookiesStatement
     {
-        [Inject]
-        public IConfiguration _config { get; set; } = default!;
-        [Inject]
-        public NavigationManager NavigationManager { get; set; } = default!;
-        [Inject]
-        public IDispatcher Dispatcher { get; set; } = default!;
-
         protected bool IsLoggedIn { get; set; } = false;
 
         protected override async void OnInitialized()
@@ -31,8 +23,11 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 IsLoggedIn = false;
             else
                 IsLoggedIn = true;
-
-           base.OnInitializedAsync();
+            await InvokeAsync(() =>
+            {
+                StateHasChanged();
+            });
+            base.OnInitializedAsync();
         }
     }
 }

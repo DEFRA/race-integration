@@ -1,11 +1,8 @@
-﻿using Fluxor;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.JSInterop;
 using RACE2.DataModel;
-using RACE2.FrontEndWebServer.FluxorImplementation.Stores;
-using RACE2.FrontEndWebServer.FluxorImplementation.Actions;
 using Microsoft.AspNetCore.Components.Web;
 using RACE2.Dto;
 using Microsoft.AspNetCore.Components.Forms;
@@ -25,14 +22,6 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         public IConfiguration _config { get; set; } = default!;
         [Inject]
         public NavigationManager NavigationManager { get; set; } = default!;
-        [Inject]
-        public IState<CurrentReservoirState> CurrentReservoirState { get; set; } = default!;
-        [Inject]
-        public IState<CurrentUserDetailState> CurrentUserDetailState { get; set; } = default!;
-        [Inject]
-        public IDispatcher Dispatcher { get; set; } = default!;
-        [Inject]
-        public IJSRuntime jsRuntime { get; set; } = default!;
         [Inject]
         public IUserService userService { get; set; } = default!;
         //private int UserId { get; set; } = 0;
