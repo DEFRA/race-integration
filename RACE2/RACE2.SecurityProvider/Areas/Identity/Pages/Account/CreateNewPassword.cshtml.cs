@@ -59,9 +59,12 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
         }
 
+        public string WebAppUrl { get; set; }
+
         public IActionResult OnGet(string userEmail)
         {
-            Input=new InputModel { Email = userEmail };
+            WebAppUrl = _config["RACE2FrontEndURL"];
+            Input =new InputModel { Email = userEmail };
             return Page();
         }
 
@@ -71,6 +74,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             {
                 return Page();
             }
+            WebAppUrl = _config["RACE2FrontEndURL"];
 
             var user = await _userManager.FindByEmailAsync(Input.Email);
             if (user == null)
