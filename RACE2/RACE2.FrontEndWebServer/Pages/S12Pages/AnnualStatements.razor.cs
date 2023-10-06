@@ -17,6 +17,7 @@ using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security.Claims;
+using System.Text;
 
 namespace RACE2.FrontEndWebServer.Pages.S12Pages
 {
@@ -62,18 +63,19 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         //We also need a field to tell us which column the table is sorted by.
         private string CurrentSortColumn;
 
+        UserSpecificDto userDetails { get; set; }
+
         protected async override Task OnInitializedAsync()
         {
             AuthenticationState authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
             UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
-            UserSpecificDto userDetails = await userService.GetUserByEmailID(UserName);
+            userDetails = await userService.GetUserByEmailID(UserName);
             UserDetail = new UserDetail()
             {
                 UserName = UserName,
                 Id = userDetails.Id,
                 Email = userDetails.Email,
                 PhoneNumber = userDetails.PhoneNumber,
-                Addresses = userDetails.Addresses,
                 c_first_name = userDetails.c_first_name,
                 c_last_name = userDetails.c_last_name,
                 c_IsFirstTimeUser = userDetails.c_IsFirstTimeUser
@@ -165,7 +167,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             s12PrePopulationFields.ReservoirNearestTown = reservoir.NearestTown != null ? reservoir.NearestTown : "";
             s12PrePopulationFields.ReservoirGridRef = reservoir.GridReference != null ? reservoir.GridReference : "";
             s12PrePopulationFields.SupervisingEngineerName = UserDetail.c_first_name + " " + UserDetail.c_last_name;
-            //s12PrePopulationFields.SupervisingEngineerAddress = UserDetail.Addresses[0].Address.AddressLine1;
+            Address address = userDetails.addresses.FirstOrDefault();
+            s12PrePopulationFields.SupervisingEngineerAddress = address.AddressLine1+", "+ address.AddressLine2 + ", " + address.Town + ", " + address.County + ", " + address.Postcode;
             s12PrePopulationFields.SupervisingEngineerEmail = UserDetail.Email;
             s12PrePopulationFields.SupervisingEngineerPhoneNumber = UserDetail.PhoneNumber != null ? UserDetail.PhoneNumber : "";
 
@@ -218,6 +221,25 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }
         
+        private async void SearchOnEnter(KeyboardEventArgs e)
+        {
+            if (e.Code == "Enter" ||  e.Code == "NumpadEnter")
+            {
+                FilterData(_searchString);
+                //if (!string.IsNullOrEmpty(_searchString))
+                //{
+                //    ReservoirsLinkedToUserForDisplay = ReservoirsLinkedToUserForDisplay.Where(r => r.ReservoirName.ToLower().Contains(_searchString.ToLower())).ToList();
+                //    await InvokeAsync(() =>
+                //    {
+                //        StateHasChanged();
+                //    });
+                //}
+                //else
+                //{
+                //    ReservoirsLinkedToUserForDisplay = ReservoirsLinkedToUserForDisplayOnStart;
+                //}
+            }           
+        }
         private async void FilterData(string searchTerm)
         {
             if (!string.IsNullOrEmpty(searchTerm))
