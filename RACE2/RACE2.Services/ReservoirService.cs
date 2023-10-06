@@ -150,5 +150,11 @@ namespace RACE2.Services
             }
            
         }
+
+
+        public async Task<SubmissionStatus> UpdateReservoirStatus(int reservoirid, int userid)
+        {
+            return await _reservoirRepository.UpdateReservoirStatus(reservoirid,userid);
+        }
     }
 }

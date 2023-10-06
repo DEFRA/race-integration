@@ -322,5 +322,40 @@ namespace RACE2.DataAccess.Repository
 
 
         }
+
+
+        public async Task<SubmissionStatus> UpdateReservoirStatus(int reservoirid, int userid)
+        {
+            _logger.LogInformation("Updating reservoir status for the reservoir  {reservoirid} by the {userid}  ", reservoirid, userid);
+            try
+            {
+
+                using (var conn = Connection)
+                {
+                    var parameters = new DynamicParameters();
+                    parameters.Add("reservoirid", reservoirid, DbType.Int64);
+                    parameters.Add("userid", userid, DbType.Int64);
+                    if (reservoirid != 0)
+                    {
+
+                        var operatorlist = await conn.QueryAsync<SubmissionStatus>("sp_UpdateReservoirStatus", parameters, commandType: CommandType.StoredProcedure);
+
+                        return operatorlist.FirstOrDefault();
+                    }
+                    else
+                    {
+                        _logger.LogInformation("The input is not valid {reservoirid} by the {userid}  ", reservoirid, userid);
+                        return null;
+                    }
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return null;
+            }
+        }
     }
 }
