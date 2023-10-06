@@ -27,5 +27,8 @@ namespace RACE2.DataAccess.Repository
         public Task<List<SubmissionStatusDTO>> GetReservoirStatusByUserId(int id);
 
         public Task<List<UndertakerDTO>> GetUndertakerforReservoir(int id);
-    }
+
+        public Task<SubmissionStatus> UpdateReservoirStatus(int reservoirid, int userid);
+
+            }
 }
