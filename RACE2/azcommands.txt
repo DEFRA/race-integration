@@ -1,4 +1,4 @@
-Heroku portal login password: re53Rv01r
+Heroku portal login password: Casc8d3
 
 dotnet new tool-manifest
 dotnet tool install StrawberryShake.Tools --version 13.5.1 --local

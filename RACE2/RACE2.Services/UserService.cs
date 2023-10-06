@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
+using Microsoft.AspNetCore.Identity;
 using RACE2.DataAccess.Repository;
 using RACE2.DataModel;
 using RACE2.Dto;
@@ -7,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace RACE2.Services
@@ -20,59 +23,146 @@ namespace RACE2.Services
         }
         public async Task<IEnumerable<UserDetail>> GetUserDetails()
         {
-            return await _userRepository.GetUserDetails();
+            try
+            {
+                return await _userRepository.GetUserDetails();
+            }
+            catch (Exception ex)
+            {
+                return new List<UserDetail>();
+            }
+            
         }
 
         public async Task<UserDetail> GetUserById(int id)
         {
-            return await _userRepository.GetUserById(id);
+            try
+            {
+                return await _userRepository.GetUserById(id);
+            }
+            catch (Exception ex)
+            {
+                return new UserDetail();
+            }
+            
         }
 
         public async Task<UserSpecificDto> GetUserByEmailID(string email)
         {
-            return await _userRepository.GetUserByEmailID(email);
+            try
+            {
+                return await _userRepository.GetUserByEmailID(email);
+            }
+            catch (Exception ex)
+            {
+                return new UserSpecificDto();
+            }
+           
         }
 
         public async Task<UserSpecificDto> GetUserWithRoles(string email)
         {
-            return await _userRepository.GetUserWithRoles(email);
+            try
+            {
+                return await _userRepository.GetUserWithRoles(email);
+            }
+            catch (Exception ex)
+            {
+                return new UserSpecificDto();
+            }
+            
         }
 
         public async Task<UserDetail> CreateUser(UserDetail newuser)
         {
-           return await _userRepository.CreateUser(newuser);
+            try
+            {
+                return await _userRepository.CreateUser(newuser);
+            }
+            catch (Exception ex)
+            {
+                return new UserDetail();
+            }
+            
         }
 
         public async Task<UserDetail> ValidateUser(UserDetail loginuser)
         {
-            return await _userRepository.ValidateUser(loginuser);
+            try
+            {
+                return await _userRepository.ValidateUser(loginuser);
+            }
+            catch (Exception ex)
+            {
+                return new UserDetail();
+            }
+            
         }
 
         public async Task<UserDetail> MatchUserWithEmailAndPasswordHash(string email, string passwordhash)
         {
-            return await _userRepository.MatchUserWithEmailAndPasswordHash(email, passwordhash);
+            try
+            {
+                return await _userRepository.MatchUserWithEmailAndPasswordHash(email, passwordhash);
+            }
+            catch (Exception ex)
+            {
+                return new UserDetail();
+            }
+            
         }
 
         public async Task<UserDetail> UpdatePasswordHashForUser(int id, string passwordhash)
         {
-            return await _userRepository.UpdatePasswordHashForUser(id, passwordhash);
+            try
+            {
+                return await _userRepository.UpdatePasswordHashForUser(id, passwordhash);
+            }
+            catch (Exception ex)
+            {
+                return new UserDetail();
+            }
+            
         }
-
        
 
         public async Task<IEnumerable<FeatureFunction>> GetFeaturePermissionForRole(int roleid)
         {
-            return await _userRepository.GetFeaturePermissionForRole(roleid);
+            try
+            {
+                return await _userRepository.GetFeaturePermissionForRole(roleid);
+            }
+            catch (Exception ex)
+            {
+                return new List<FeatureFunction>();
+            }
+            
         }
 
         public async Task<OrganisationDTO> GetOrganisationAddressbyId(int userId)
         {
-            return await _userRepository.GetOrganisationAddressbyId(userId);
+            try
+            {
+                return await _userRepository.GetOrganisationAddressbyId(userId);
+            }
+            catch (Exception ex)
+            {
+                return new OrganisationDTO();
+            }
+            
         }
 
         public async Task<int> UpdateFirstTimeUserLogin(string email)
         {
-            return await _userRepository.UpdateFirstTimeUserLogin(email);
+            try
+            {
+                return await _userRepository.UpdateFirstTimeUserLogin(email);
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+            
         }
 
     }

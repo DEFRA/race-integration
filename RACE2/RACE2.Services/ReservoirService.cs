@@ -1,4 +1,5 @@
-﻿using RACE2.DataAccess.Repository;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using RACE2.DataAccess.Repository;
 using RACE2.DataModel;
 using RACE2.Dto;
 using System;
@@ -20,11 +21,25 @@ namespace RACE2.Services
         }
         public async Task<Reservoir> GetReservoirById(int id)
         {
-            return await _reservoirRepository.GetReservoirById(id);
+            try
+            {
+                return await _reservoirRepository.GetReservoirById(id);
+            }
+            catch (Exception ex)
+            {
+                return new Reservoir();
+            }
         }
         public async Task<Reservoir> UpdateReservoir(ReservoirUpdateDetailsDTO updatedReservoir)
         {
+            try
+            {
                 return await _reservoirRepository.UpdateReservoir(updatedReservoir);
+            }
+            catch (Exception ex)
+            {
+                return new Reservoir();
+            }            
         }
 
         //public async Task<UserDetail> GetReservoirsByUserId(int id)
@@ -34,49 +49,120 @@ namespace RACE2.Services
 
         public async Task<List<ReservoirDetailsDTO>> GetReservoirsByUserId(int Id)
         {
-            return await _reservoirRepository.GetReservoirsByUserId(Id);
+            try
+            {
+                return await _reservoirRepository.GetReservoirsByUserId(Id);
+            }
+            catch (Exception ex)
+            {
+                return new List<ReservoirDetailsDTO>();
+            }
+            
         }
 
         public async Task<List<ReservoirDetailsDTO>> GetReservoirsByUserEmailId(string emailId)
         {
-            var id = _userRepository.GetUserByEmailID(emailId).Result.Id;
-            return await _reservoirRepository.GetReservoirsByUserId(id);
+            try
+            {
+                var id = _userRepository.GetUserByEmailID(emailId).Result.Id;
+                return await _reservoirRepository.GetReservoirsByUserId(id);
+            }
+            catch (Exception ex)
+            {
+                return new List<ReservoirDetailsDTO>();
+            }
+            
         }
 
         public async Task<List<DataModel.Action>> GetActionsListByReservoirIdAndCategory(int reservoirid, int category)
         {
-            return await _reservoirRepository.GetActionsListByReservoirIdAndCategory(reservoirid, category);
+            try
+            {
+                return await _reservoirRepository.GetActionsListByReservoirIdAndCategory(reservoirid, category);
+            }
+            catch (Exception ex)
+            {
+                return new List<DataModel.Action>();
+            }
         }
 
         public async Task<List<SafetyMeasure>> GetSafetyMeasuresListByReservoirId(int reservoirid)
         {
-            return await _reservoirRepository.GetSafetyMeasuresListByReservoirId(reservoirid);
+            try
+            {
+                return await _reservoirRepository.GetSafetyMeasuresListByReservoirId(reservoirid);
+            }
+            catch (Exception ex)
+            {
+                return new List<SafetyMeasure>();
+            }
+
         }
 
         public async Task<Address> GetAddressByReservoirId(int reservoirid, string operatortype)
         {
-            return await _reservoirRepository.GetAddressByReservoirId(reservoirid, operatortype);
+            try
+            {
+                return await _reservoirRepository.GetAddressByReservoirId(reservoirid, operatortype);
+            }
+            catch (Exception ex)
+            {
+                return new Address();
+            }
+
         }
 
         public async Task<List<OperatorDTO>> GetOperatorsforReservoir(int reservoirid, string operatortype)
         {
-            return await _reservoirRepository.GetOperatorsforReservoir(reservoirid, operatortype);
+            try
+            {
+                return await _reservoirRepository.GetOperatorsforReservoir(reservoirid, operatortype);
+            }
+            catch (Exception ex)
+            {
+                return new List<OperatorDTO>();
+            }
+            
         }
 
         public async Task<List<SubmissionStatusDTO>> GetReservoirStatusByUserId(int id)
         {
-            return await _reservoirRepository.GetReservoirStatusByUserId(id);
+            try
+            {
+                return await _reservoirRepository.GetReservoirStatusByUserId(id);
+            }
+            catch (Exception ex)
+            {
+                return new List<SubmissionStatusDTO>();
+            }
+           
         }
 
         public async Task<List<UndertakerDTO>> GetUndertakerforReservoir(int id)
         {
-            return await _reservoirRepository.GetUndertakerforReservoir(id);
+            try
+            {
+                return await _reservoirRepository.GetUndertakerforReservoir(id);
+            }
+            catch (Exception ex)
+            {
+                return new List<UndertakerDTO>();
+            }
+           
         }
 
 
         public async Task<SubmissionStatus> UpdateReservoirStatus(int reservoirid, int userid)
         {
-            return await _reservoirRepository.UpdateReservoirStatus(reservoirid,userid);
+            try
+            {
+                return await _reservoirRepository.UpdateReservoirStatus(reservoirid, userid);
+            }
+            catch (Exception ex)
+            {
+                return new SubmissionStatus();
+            }
+           
         }
     }
 }

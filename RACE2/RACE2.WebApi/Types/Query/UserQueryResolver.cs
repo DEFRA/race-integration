@@ -19,7 +19,7 @@ namespace RACE2.WebApi.Types
         {
             try
             {
-                _logger.LogInformation("GetUserDetailsReselvor");
+                _logger.LogInformation("GetUserDetailsReservoir");
                 var result = await _userService.GetUserDetails();
                 return result;
             }
