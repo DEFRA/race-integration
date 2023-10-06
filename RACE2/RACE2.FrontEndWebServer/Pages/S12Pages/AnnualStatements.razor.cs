@@ -176,6 +176,13 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             processedStream.Position = 0;
             var streamRef = new DotNetStreamReference(stream: processedStream);
             await jsRuntime.InvokeVoidAsync("downloadFileFromStream", blobName, streamRef);
+            SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(reservoir.Id,UserDetail.Id);
+            var reservoirLinkedToUser = ReservoirsLinkedToUserForDisplay.Where(r => r.ReservoirName == reservoir.PublicName).FirstOrDefault();
+            reservoirLinkedToUser.Status = updatedStatus.Status;
+            await InvokeAsync(() =>
+            {
+                StateHasChanged();
+            });
         }
 
         private void DownloadTemplateFile(ReservoirsLinkedToUserForDisplay Item)
