@@ -58,7 +58,13 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<UserDetail>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<UserDetail>(options => 
+    { 
+        options.SignIn.RequireConfirmedAccount = true;
+        options.Lockout.AllowedForNewUsers = true;
+        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(2);//default 5
+        options.Lockout.MaxFailedAccessAttempts = 3;//default 5
+    })
     .AddRoles<Role>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
