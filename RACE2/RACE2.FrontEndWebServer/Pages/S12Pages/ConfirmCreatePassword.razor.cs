@@ -43,7 +43,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         public void GoToNextPage()
         {
             bool forceLoad = true;
-            string pagelink = "/annual-statements";
+            string pagelink = "/login";
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }
     }

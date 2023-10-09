@@ -109,9 +109,9 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             var result = await _userManager.ResetPasswordAsync(user, Input.Code, Input.Password);
             if (result.Succeeded)
             {
-                //return RedirectToPage("./ResetPasswordConfirmation");
-                string returnUrl = _config["RACE2FrontEndURL"] + "/login";
-                return Redirect(returnUrl);
+                return RedirectToPage("./ResetPasswordConfirmation");
+                //string returnUrl = _config["RACE2FrontEndURL"] + "/login";
+                //return Redirect(returnUrl);
             }
 
             foreach (var error in result.Errors)
