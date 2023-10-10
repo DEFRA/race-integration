@@ -64,8 +64,10 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         private string CurrentSortColumn;
 
         UserSpecificDto userDetails { get; set; }
+        List<SubmissionStatusDTO> SubmissionStatusList { get; set; }
+        SubmissionStatusDTO SubmissionStatus { get; set; }
 
-        protected async override Task OnInitializedAsync()
+    protected async override Task OnInitializedAsync()
         {
             AuthenticationState authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
             UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
@@ -138,10 +140,10 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                     else
                         reservoirsLinkedToUser.UndertakerName = "";
                 }
-                var submissionStatusList = await reservoirService.GetReservoirStatusByUserId(UserDetail.Id);
-                var submisstionStatus = submissionStatusList.Where(s => s.PublicName == reservoir.PublicName).FirstOrDefault();
-                reservoirsLinkedToUser.DueDate = submisstionStatus.DueDate!=DateTime.MinValue? submisstionStatus.DueDate.ToString("dd MMMMM yyyy") :"";
-                reservoirsLinkedToUser.Status = submisstionStatus.Status!=null? submisstionStatus.Status:"Not Started";
+                SubmissionStatusList = await reservoirService.GetReservoirStatusByUserId(UserDetail.Id);
+                SubmissionStatus = SubmissionStatusList.Where(s => s.PublicName == reservoir.PublicName).FirstOrDefault();
+                reservoirsLinkedToUser.DueDate = SubmissionStatus.DueDate!=DateTime.MinValue? SubmissionStatus.DueDate.ToString("dd MMMMM yyyy") :"";
+                reservoirsLinkedToUser.Status = SubmissionStatus.Status!=null? SubmissionStatus.Status:"Not Started";
                 ReservoirsLinkedToUserForDisplay.Add(reservoirsLinkedToUser);
             }
             ReservoirsLinkedToUserForDisplayOnStart = ReservoirsLinkedToUserForDisplay;
@@ -159,8 +161,10 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         private async void DownloadReportTemplate(ReservoirsLinkedToUserForDisplay item)
         {
             var reservoir= ReservoirsLinkedToUser.Where(r=>r.PublicName==item.ReservoirName).FirstOrDefault();
+            SubmissionStatus = SubmissionStatusList.Where(s => s.PublicName == reservoir.PublicName).FirstOrDefault();
             //var undertaker=Undertakers.Where(u=>u.ReservoirId==reservoir.Id).FirstOrDefault();
-            var blobName = "S12ReportTemplate.docx";
+            var blobName = SubmissionStatus.Status;// "S12ReportTemplate.docx";
+            
             Stream response = await blobStorageService.GetBlobFileStream(blobName);
             S12PrePopulationFields s12PrePopulationFields = new S12PrePopulationFields();
             s12PrePopulationFields.ReservoirName = reservoir.PublicName;
