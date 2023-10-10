@@ -34,5 +34,7 @@ namespace RACE2.DataModel
         public DateTime SubmittedOn { get; set; }
         [Required]
         public UserDetail SubmittedBy  { get; set;}  = new UserDetail();
+
+        public string? override_template { get; set; } 
     }
 }
