@@ -4,7 +4,6 @@ param resourcegroup = 'DEVRACINFRG1401'
 param appConfigURL = ''
 param managedidentity = 'DEVRACINFMI1401'
 param race2appenvName = 'DEVRACINFAE1401'
-param registryResourceGroup = 'DEVRACINFRG1401'
 param registryName = 'devracinfcr1401'
 param useExternalIngress = true
 param containerPort = 80
