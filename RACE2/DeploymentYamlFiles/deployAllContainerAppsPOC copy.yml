@@ -30,7 +30,7 @@ variables:
   - name: azureServiceConnection
     value: 'AZR-RAC-POC1'
   - name: resourceGroupName
-    value: 'POCRACINFRG1401'
+    value: 'RACE2ProjectRG'
   - name: templateFile
     value: '$(Build.SourcesDirectory)/RACE2/bicepfiles/createAllContainerApps.bicep'
   - name: parameterfile
