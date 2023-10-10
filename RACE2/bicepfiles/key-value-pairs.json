@@ -97,5 +97,14 @@
 		"tags": {
 			"environment": "Production"
 		}
-	}   
+	} ,
+	{
+		"key": "ClientSecret",
+		"value": "blazorserver-secret",
+		"contentType": "string",
+        "label": "Production",
+		"tags": {
+			"environment": "Production"
+		}
+	}
 ]
