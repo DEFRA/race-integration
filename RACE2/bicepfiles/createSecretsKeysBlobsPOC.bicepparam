@@ -16,6 +16,8 @@ param sqlServerConnectionStringSecretName = 'SqlServerConnString'
 
 param clientSecretName = 'ClientSecret'
 
+param clientSecretValue = 'blazorserver-secret'
+
 param keyVaultName = 'POCRACINFVT1401'
 
 param appConfigResourceName = 'POCRACINFAC1401'

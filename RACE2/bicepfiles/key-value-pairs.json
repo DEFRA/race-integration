@@ -100,7 +100,7 @@
 	} ,
 	{
 		"key": "ClientSecret",
-		"value": "blazorserver-secret",
+		"value": "ClientSecretValue",
 		"contentType": "string",
         "label": "Production",
 		"tags": {
