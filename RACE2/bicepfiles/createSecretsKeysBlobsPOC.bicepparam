@@ -4,7 +4,7 @@ param storageAccountName = 'pocracinfst1401'
 
 param sqlServerName = 'pocracinfss1401'
 
-param applicationInsightName = 'POCACINFAI1401'
+param applicationInsightName = 'POCRACINFAI1401'
 
 param sqlDatabaseName = 'pocracinfdb1401'
 
