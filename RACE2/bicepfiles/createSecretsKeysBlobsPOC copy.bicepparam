@@ -1,12 +1,12 @@
 using './createSecretsKeysBlobs.bicep' /*TODO: Provide a path to a bicep template*/
 
-param storageAccountName = 'pocracinfst1401'
+param storageAccountName = 'race2storageaccount'
 
-param sqlServerName = 'pocracinfss1401'
+param sqlServerName = 'race2sqlserver'
 
-param applicationInsightName = 'POCACINFAI1401'
+param applicationInsightName = 'RACE2AppInSights'
 
-param sqlDatabaseName = 'pocracinfdb1401'
+param sqlDatabaseName = 'RACE2DB'
 
 param sqlServerUserName = 'race2admin'
 
@@ -16,11 +16,11 @@ param sqlServerConnectionStringSecretName = 'SqlServerConnString'
 
 param clientSecretName = 'ClientSecret'
 
-param keyVaultName = 'POCRACINFVT1401'
+param keyVaultName = 'Race2KeyVault'
 
-param appConfigResourceName = 'POCRACINFAC1401'
+param appConfigResourceName = 'Race2AppConfig'
 
-param serviceBusResouceName = 'POCRACINFSB1401'
+param serviceBusResouceName = 'Race2ServiceBus'
 
 param storageAccountKeySecretName = 'StorageAccessKey'
 
@@ -37,4 +37,3 @@ param webserverContainerAppName = 'race2frontendwebserver'
 param securityProviderContainerAppName = 'race2securityprovider'
 
 param webApiContainerAppName = 'race2webapi'
-
