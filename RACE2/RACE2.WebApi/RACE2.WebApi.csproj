@@ -11,7 +11,7 @@
   </ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Azure.Identity" Version="1.10.0" />
+		<PackageReference Include="Azure.Identity" Version="1.10.2" />
 		<PackageReference Include="DocumentFormat.OpenXml" Version="2.20.0" />
 		<PackageReference Include="HotChocolate.AspNetCore" Version="13.5.1" />
 		<PackageReference Include="HotChocolate.Types.Analyzers" Version="13.5.1">
@@ -19,7 +19,7 @@
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
 		<PackageReference Include="HotChocolate.AspNetCore.Voyager" Version="10.5.5" />
-		<PackageReference Include="Azure.Storage.Blobs" Version="12.17.0">
+		<PackageReference Include="Azure.Storage.Blobs" Version="12.18.0">
 			<TreatAsUsed>true</TreatAsUsed>
 		</PackageReference>
 		<PackageReference Include="HotChocolate.AspNetCore.Authorization" Version="13.5.1" />

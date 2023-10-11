@@ -163,8 +163,9 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             var reservoir= ReservoirsLinkedToUser.Where(r=>r.PublicName==item.ReservoirName).FirstOrDefault();
             SubmissionStatus = SubmissionStatusList.Where(s => s.PublicName == reservoir.PublicName).FirstOrDefault();
             //var undertaker=Undertakers.Where(u=>u.ReservoirId==reservoir.Id).FirstOrDefault();
-            var blobName = SubmissionStatus.override_template + ".docx";// "S12ReportTemplate.docx";
-            
+
+            //var blobName = SubmissionStatus.override_template + ".docx";
+            var blobName = "S12ReportTemplate.docx";
             Stream response = await blobStorageService.GetBlobFileStream(blobName);
             S12PrePopulationFields s12PrePopulationFields = new S12PrePopulationFields();
             s12PrePopulationFields.ReservoirName = reservoir.PublicName;
@@ -175,7 +176,22 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             s12PrePopulationFields.SupervisingEngineerAddress = address.AddressLine1+", "+ address.AddressLine2 + ", " + address.Town + ", " + address.County + ", " + address.Postcode;
             s12PrePopulationFields.SupervisingEngineerEmail = UserDetail.Email;
             s12PrePopulationFields.SupervisingEngineerPhoneNumber = UserDetail.PhoneNumber != null ? UserDetail.PhoneNumber : "";
-
+            if (Undertakers != null && Undertakers.Count() > 0)
+            {
+                if (!String.IsNullOrEmpty(Undertakers[0].OrgName))
+                    s12PrePopulationFields.UndertakerName = Undertakers[0].OrgName;
+                else if (!String.IsNullOrEmpty(Undertakers[0].OperatorFirstName))
+                    s12PrePopulationFields.UndertakerName = Undertakers[0].OperatorFirstName + " " + Undertakers[0].OperatorLastName;
+                else
+                    s12PrePopulationFields.UndertakerName = "";
+                s12PrePopulationFields.UndertakerEmail = Undertakers[0].Email;
+                s12PrePopulationFields.UndertakerAddress = Undertakers[0].AddressLine1 + "," +
+                    Undertakers[0].AddressLine2 + "," +
+                    Undertakers[0].AddressLine2 + "," +
+                    Undertakers[0].Town + "," +
+                    Undertakers[0].County + "," +
+                    Undertakers[0].Postcode;
+            }
             MemoryStream processedStream = openXMLUtilitiesService.SearchAndReplace(response, s12PrePopulationFields);
             processedStream.Position = 0;
             var streamRef = new DotNetStreamReference(stream: processedStream);
