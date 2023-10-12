@@ -1,15 +1,12 @@
 ﻿@page "/cookies-statement"
 @using Microsoft.AspNetCore.Authorization;
 @inject AuthenticationStateProvider AuthenticationStateProvider
-
 <HeaderWithBanner />
 
 @if (IsLoggedIn)
 {
     <div class="govuk-width-container ">
-
         <FeedbackBannerWithLinks />
-
         <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
 
             <a class="govuk-back-link govuk-!-margin-top-0 govuk-!-margin-bottom-0" href="javascript:history.back()">Back</a>
@@ -61,26 +58,7 @@
 else
 {  
     <div class="govuk-width-container ">
-
-        <div class="govuk-phase-banner">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-two-thirds-from-desktop">
-                    <p class="govuk-phase-banner__content">
-                        <strong class="govuk-tag govuk-phase-banner__content__tag">
-                            Beta
-                        </strong>
-                        <span class="govuk-phase-banner__text">
-                            This is a new service — your <a href="https://defragroup.eu.qualtrics.com/jfe/form/SV_0wFTSeSWzDuXiRg/" class="govuk-link">feedback</a> will help us to improve it.
-                        </span>
-                    </p>
-                </div>
-                <div class="govuk-grid-column-one-third-from-desktop float-right" style="text-align:right;font-size:1rem;">
-                    <a href="/login" class="govuk-link login-nav-2-item govuk-link--no-visited-state" style="margin-left:25px;margin-right:10px;">Sign in</a>
-                </div>
-            </div>
-
-        </div>
-
+        <FeedbackBanner />
         <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
 
             <a class="govuk-back-link govuk-!-margin-top-0 govuk-!-margin-bottom-0" href="javascript:history.back()">Back</a>
