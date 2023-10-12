@@ -1,5 +1,6 @@
 ﻿@page "/cookies-statement"
-@using Microsoft.AspNetCore.Authorization;
+@using Microsoft.AspNetCore.Authorization
+@using RACE2.FrontEndWebServer.Components
 @inject AuthenticationStateProvider AuthenticationStateProvider
 <HeaderWithBanner />
 
@@ -58,7 +59,7 @@
 else
 {  
     <div class="govuk-width-container ">
-        <FeedbackBannerWithSignIn />
+        <FeedbackBannerSignIn />
         <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
 
             <a class="govuk-back-link govuk-!-margin-top-0 govuk-!-margin-bottom-0" href="javascript:history.back()">Back</a>

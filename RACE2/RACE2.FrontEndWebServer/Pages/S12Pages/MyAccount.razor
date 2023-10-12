@@ -1,5 +1,6 @@
 ﻿@page "/my-account"
-@using Microsoft.AspNetCore.Authorization;
+@using Microsoft.AspNetCore.Authorization
+@using RACE2.FrontEndWebServer.Components
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @attribute [Authorize]
 
@@ -7,7 +8,7 @@
 
 <div class="govuk-width-container ">
 
-    <FeedbackBannerWithSignOut />
+    <FeedbackBannerSignOut />
 
     <a class="govuk-back-link" @onclick="goback">Back</a>
 
