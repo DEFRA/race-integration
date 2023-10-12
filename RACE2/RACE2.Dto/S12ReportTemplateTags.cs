@@ -11,19 +11,17 @@ namespace RACE2.Dto
         public List<String> Tags { get; set; } = new List<string>();
         public S12ReportTemplateTags() {
             Tags.Add("{Reservoir name}");
-            Tags.Add("{Reservoir Name}");
-            Tags.Add("{Reservoir Nearest town}");
-            Tags.Add("{Reservoir Grid reference}");
-            Tags.Add("{Supervising Engineer Name}");
-            Tags.Add("{Supervising engineer Company Name}");
-            Tags.Add("{Supervising engineer Address}");
-            Tags.Add("{Supervising engineer Email}");
-            Tags.Add("{Supervising engineer Phone no.}");
-            Tags.Add("{Undertaker Name}");
-            Tags.Add("{Undertaker Address}");
-            Tags.Add("{Undertaker Email}");
-            Tags.Add("{Undertaker Phone no.}");
-            Tags.Add("{Other undertakers (optional)}");
+            Tags.Add("{Reservoir nearest town}");
+            Tags.Add("{Reservoir grid reference}");
+            Tags.Add("{Supervising engineer name}");
+            Tags.Add("{Supervising engineer company name}");
+            Tags.Add("{Supervising engineer address}");
+            Tags.Add("{Supervising engineer email}");
+            Tags.Add("{Supervising engineer phone number}");
+            Tags.Add("{Undertaker name}");
+            Tags.Add("{Undertaker address}");
+            Tags.Add("{Undertaker email}");
+            Tags.Add("{Undertaker phone number}");
         }
     }
 }

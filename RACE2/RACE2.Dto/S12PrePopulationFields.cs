@@ -12,6 +12,7 @@ namespace RACE2.Dto
         public string ReservoirNearestTown { get; set; }
         public string ReservoirGridRef { get; set; }
         public string SupervisingEngineerName { get; set; }
+        public string SupervisingEngineerCompanyName { get; set; }
         public string SupervisingEngineerAddress { get; set; }
         public string SupervisingEngineerEmail { get; set; }
         public string SupervisingEngineerPhoneNumber { get; set; }
