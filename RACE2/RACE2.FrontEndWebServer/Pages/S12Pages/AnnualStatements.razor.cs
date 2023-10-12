@@ -1,4 +1,4 @@
-﻿using DocumentFormat.OpenXml.InkML;
+using DocumentFormat.OpenXml.InkML;
 using DocumentFormat.OpenXml.Spreadsheet;
 using Fluxor;
 using Microsoft.AspNetCore.Components;

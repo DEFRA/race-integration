@@ -1,4 +1,4 @@
-﻿using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Packaging;
 using RACE2.DataModel;
 using RACE2.Dto;
 using System;
