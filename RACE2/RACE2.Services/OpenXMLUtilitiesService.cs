@@ -1,4 +1,4 @@
-﻿using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Packaging;
 using RACE2.DataModel;
 using RACE2.Dto;
 using System;
@@ -35,41 +35,41 @@ namespace RACE2.Services
                     Regex tagVal = new Regex(tag);
                     switch (tag)
                     {
-                        case "{Reservoir Name}":
+                        case "{Reservoir name}":
                             docText = tagVal.Replace(docText, s12PrePopulationFields.ReservoirName);
                             break;
-                        case "{Reservoir Nearest town}":
+                        case "{Reservoir nearest town}":
                             docText = tagVal.Replace(docText, s12PrePopulationFields.ReservoirNearestTown);
                             break;
-                        case "{Reservoir Grid reference}":
+                        case "{Reservoir grid reference}":
                             docText = tagVal.Replace(docText, s12PrePopulationFields.ReservoirGridRef);
                             break;
-                        case "{Supervising engineer Name}":
+                        case "{Supervising engineer name}":
                             docText = tagVal.Replace(docText, s12PrePopulationFields.SupervisingEngineerName);
                             break;
-                        case "{Supervising engineer Address}":
-                            docText = tagVal.Replace(docText, s12PrePopulationFields.ReservoirName);
+                        case "{Supervising engineer company name}":
+                            docText = tagVal.Replace(docText, s12PrePopulationFields.SupervisingEngineerCompanyName);
                             break;
-                        case "{Supervising engineer Email}":
+                        case "{Supervising engineer address}":
+                            docText = tagVal.Replace(docText, s12PrePopulationFields.SupervisingEngineerAddress);
+                            break;
+                        case "{Supervising engineer email}":
                             docText = tagVal.Replace(docText, s12PrePopulationFields.SupervisingEngineerEmail);
                             break;
-                        case "{Supervising engineer Phone no.}":
+                        case "{Supervising engineer phone number}":
                             docText = tagVal.Replace(docText, s12PrePopulationFields.SupervisingEngineerPhoneNumber);
                             break;
-                        case "{Undertaker Name}":
-                            docText = tagVal.Replace(docText, s12PrePopulationFields.SupervisingEngineerName);
+                        case "{Undertaker name}":
+                            docText = tagVal.Replace(docText, s12PrePopulationFields.UndertakerName);
                             break;
-                        case "{Undertaker Address}":
-                            docText = tagVal.Replace(docText, s12PrePopulationFields.ReservoirName);
+                        case "{Undertaker address}":
+                            docText = tagVal.Replace(docText, s12PrePopulationFields.UndertakerAddress);
                             break;
-                        case "{Undertaker Email}":
-                            docText = tagVal.Replace(docText, s12PrePopulationFields.ReservoirNearestTown);
+                        case "{Undertaker email}":
+                            docText = tagVal.Replace(docText, s12PrePopulationFields.UndertakerEmail);
                             break;
-                        case "{Undertaker Phone no.}":
-                            docText = tagVal.Replace(docText, s12PrePopulationFields.ReservoirGridRef);
-                            break;
-                        case "{Other undertakers (optional)}":
-                            docText = tagVal.Replace(docText, s12PrePopulationFields.SupervisingEngineerName);
+                        case "{Undertaker phone number}":
+                            docText = tagVal.Replace(docText, s12PrePopulationFields.UndertakerPhoneNumber);
                             break;
                         default:
                             break;
