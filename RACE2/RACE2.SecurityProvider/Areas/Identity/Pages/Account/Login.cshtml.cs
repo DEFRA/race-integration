@@ -125,6 +125,10 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }
+                else
+                {
+                    _logger.LogInformation("User logged in failed.");
+                }
                 if (result.RequiresTwoFactor)
                 {
                     return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
