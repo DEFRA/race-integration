@@ -46,7 +46,22 @@
                             Company address
                         </dt>
                         <dd class="govuk-summary-list__value">
-                            @UserAddress.AddressLine1<br>@UserAddress.AddressLine2<br>@UserAddress.Town<br>@UserAddress.County<br>@UserAddress.Postcode
+                            @UserAddress.AddressLine1
+                            @if (!String.IsNullOrEmpty(UserAddress.AddressLine2)){
+                                <br>@UserAddress.AddressLine2
+                            }
+                            @if (!String.IsNullOrEmpty(UserAddress.Town))
+                            {
+                                <br>@UserAddress.Town
+                            }
+                            @if (!String.IsNullOrEmpty(UserAddress.County))
+                            {
+                                <br>@UserAddress.County
+                            }
+                            @if (!String.IsNullOrEmpty(UserAddress.Postcode))
+                            {
+                                <br>@UserAddress.Postcode
+                            }
                         </dd>
                         <dd class="govuk-summary-list__actions">
                             <a class="govuk-link" href="#">
@@ -59,8 +74,20 @@
                             Phone number
                         </dt>
                         <dd class="govuk-summary-list__value">
-                            <p class="govuk-body">@UserDetail.c_mobile</p>
-                        </dd>
+                            <p class="govuk-body">
+                                @if (!String.IsNullOrEmpty(UserDetail.c_mobile))
+                                {
+                                    @UserDetail.c_mobile
+                                }
+                                else if (!String.IsNullOrEmpty(UserDetail.PhoneNumber))
+                                {
+                                    @UserDetail.PhoneNumber
+                                }
+                                else {
+                                    <span>N/A</span>
+                                }
+                            </p>
+                            </dd>
                         <dd class="govuk-summary-list__actions">
                             <a class="govuk-link" href="#">
                                 Change<span class="govuk-visually-hidden"> phone number</span>
