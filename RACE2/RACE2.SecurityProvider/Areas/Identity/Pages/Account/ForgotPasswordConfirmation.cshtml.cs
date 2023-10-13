@@ -34,8 +34,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
         {
             WebAppUrl = _config["RACE2FrontEndURL"];
         }
-
-        public IActionResult ResendEmail()
+        public IActionResult OnPostAsync()
         {
             return RedirectToPage("./ForgotPassword");
         }
