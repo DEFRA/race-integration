@@ -30,7 +30,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
         public void OnGet()
         {
             WebAppUrl = _config["RACE2FrontEndURL"];
-            string returnUrl = _config["RACE2FrontEndURL"] + "/confirm-reset-password";
+            string returnUrl = WebAppUrl + "/confirm-reset-password";
             Redirect(returnUrl);
         }
     }

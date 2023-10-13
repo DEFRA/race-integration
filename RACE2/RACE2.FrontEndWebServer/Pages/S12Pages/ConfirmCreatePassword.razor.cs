@@ -34,16 +34,16 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             };
             if (UserDetail.c_IsFirstTimeUser)
             {
-                userService.UpdateFirstTimeUserLogin(userDetails.Email);
+                await userService.UpdateFirstTimeUserLogin(userDetails.Email);
             }
 
-            base.OnInitializedAsync();
+            await base.OnInitializedAsync();
         }
 
         public void GoToNextPage()
         {
             bool forceLoad = true;
-            string pagelink = "/login";
+            string pagelink = "/annual-statements";
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }
     }
