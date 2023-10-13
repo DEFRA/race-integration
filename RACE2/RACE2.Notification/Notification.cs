@@ -54,7 +54,7 @@ namespace RACE2.Notification
         {
             Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
             {
-                { "full_name", fullName },{"reset_link",resetLink}
+                { "name of user", fullName },{"LINK",resetLink}
             };
             try
             {
