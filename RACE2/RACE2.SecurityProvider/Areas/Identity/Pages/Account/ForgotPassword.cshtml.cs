@@ -23,14 +23,16 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
         private readonly UserManager<UserDetail> _userManager;
         private readonly IEmailSender _emailSender;
         private readonly INotification _emailNotificationSender;
+        private readonly IConfiguration _config;
 
-        public ForgotPasswordModel(UserManager<UserDetail> userManager, IEmailSender emailSender, INotification emailNotificationSender)
+        public ForgotPasswordModel(UserManager<UserDetail> userManager, IEmailSender emailSender, INotification emailNotificationSender,IConfiguration config)
         {
             _userManager = userManager;
             _emailSender = emailSender;
             _emailNotificationSender = emailNotificationSender;
+            _config = config;
         }
-
+        public string WebAppUrl { get; set; }
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -65,7 +67,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
                     // Don't reveal that the user does not exist or is not confirmed
                     return RedirectToPage("./ForgotPasswordConfirmation");
                 }
-
+                WebAppUrl = _config["RACE2FrontEndURL"];
                 // For more information on how to enable account confirmation and password reset please
                 // visit https://go.microsoft.com/fwlink/?LinkID=532713
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);

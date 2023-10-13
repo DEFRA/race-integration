@@ -25,6 +25,8 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             _config = config;
         }
 
+        public string WebAppUrl { get; set; }
+
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
@@ -76,6 +78,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
 
         public IActionResult OnGet(string code = null)
         {
+            WebAppUrl = _config["RACE2FrontEndURL"];
             if (code == null)
             {
                 return BadRequest("A code must be supplied for password reset.");
@@ -96,13 +99,13 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             {
                 return Page();
             }
-
+            WebAppUrl = _config["RACE2FrontEndURL"];
             var user = await _userManager.FindByEmailAsync(Input.Email);
             if (user == null)
             {
                 // Don't reveal that the user does not exist
                 //return RedirectToPage("./ResetPasswordConfirmation");
-                string returnUrl = _config["RACE2FrontEndURL"] + "/login";
+                string returnUrl = WebAppUrl + "/login";
                 return Redirect(returnUrl);
             }
 
