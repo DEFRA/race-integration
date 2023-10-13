@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using RACE2.DataModel;
+using IdentityServer4.Models;
 
 namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
 {
@@ -118,7 +119,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
@@ -131,6 +132,11 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
                 if (result.IsLockedOut)
                 {
                     _logger.LogWarning("User account locked out.");
+                    //var forgotPassLink = Url.Action(nameof(ForgotPassword), "Account", new { }, Request.Scheme);
+                    //var content = string.Format("Your account is locked out, to reset your password, please click this link: {0}", forgotPassLink);
+                    //var message = new Message(new string[] { userModel.Email }, "Locked out account information", content, null);
+                    //await _emailSender.SendEmailAsync(message);
+                    ModelState.AddModelError("", "The account is locked out");
                     return RedirectToPage("./Lockout");
                 }
                 else
