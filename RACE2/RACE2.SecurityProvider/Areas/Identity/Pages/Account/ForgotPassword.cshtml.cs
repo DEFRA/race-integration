@@ -24,9 +24,9 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
         private readonly IEmailSender _emailSender;
         private readonly INotification _emailNotificationSender;
         private readonly IConfiguration _config;
-        private readonly ILogger _logger;
+        private readonly ILogger<ForgotPasswordModel> _logger;
 
-        public ForgotPasswordModel(UserManager<UserDetail> userManager, IEmailSender emailSender, INotification emailNotificationSender,IConfiguration config, ILogger logger)
+        public ForgotPasswordModel(UserManager<UserDetail> userManager, IEmailSender emailSender, INotification emailNotificationSender,IConfiguration config, ILogger<ForgotPasswordModel> logger)
         {
             _userManager = userManager;
             _emailSender = emailSender;
