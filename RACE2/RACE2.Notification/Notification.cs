@@ -26,7 +26,7 @@ namespace RACE2.Notification
         //public string Emailaddress = "mahalakshmi.alagarsamy@capgemini.com" ;
         public string InvitationtemplateId = "8aac094b-9997-41c1-96fe-b35f415eea9f";
         public string CommentTemplateId = "0bbc0b12-aee0-4546-a20b-23e81489111c";
-        public string ForgetPasswordTemplateId = "fc8f043f-b79c-4572-ad03-98641f5785a9";
+        public string ForgetPasswordTemplateId = "950e6a2b-8bbc-4374-9dc1-3a086d01bd3f";
 
         Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>();
             //{
