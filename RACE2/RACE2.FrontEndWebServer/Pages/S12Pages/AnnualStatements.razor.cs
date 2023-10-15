@@ -165,9 +165,9 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             SubmissionStatus = SubmissionStatusList.Where(s => s.PublicName == reservoir.PublicName).FirstOrDefault();
             var Undertakers = await reservoirService.GetOperatorsforReservoir(reservoir.Id, reservoir.OperatorType);
 
-            //var blobName = SubmissionStatus.override_template + ".docx";
+            var blobName = SubmissionStatus.override_template + ".docx";
             //var blobName = "S12ReportTemplate.docx";
-            var blobName = "TestWithTags.docx";
+            //var blobName = "TestWithTags.docx";
             Stream response = await blobStorageService.GetBlobFileStream(blobName);
             S12PrePopulationFields s12PrePopulationFields = new S12PrePopulationFields();
             s12PrePopulationFields.ReservoirName = reservoir.PublicName;
