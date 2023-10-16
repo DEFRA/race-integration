@@ -17,27 +17,27 @@
         <div class="govuk-grid-column-two-thirds">
 
             <form id="account" method="post">
-                <h1 class="govuk-heading-xl govuk-!-margin-top-8">Sign in</h1>
-                    @if (!ModelState.IsValid)
-                    {
-                        <div class="govuk-error-summary govuk-!-margin-top-8" data-module="govuk-error-summary">
-                            <div role="alert">
-                                <h2 class="govuk-error-summary__title govuk-error-message">
-                                    There is a problem
-                                </h2>
-                                <div class="govuk-error-summary__body">
-                                    <ul class="govuk-list govuk-error-summary__list">
-                                        <li>
+                @if (!ModelState.IsValid)
+                {
+                    <div class="govuk-error-summary govuk-!-margin-top-8" data-module="govuk-error-summary">
+                        <div role="alert">
+                            <h2 class="govuk-error-summary__title govuk-error-message" style="color:black">
+                                There is a problem
+                            </h2>
+                            <div class="govuk-error-summary__body">
+                                <ul class="govuk-list govuk-error-summary__list">
+                                    <li>
                                         <a href="#email-error">Check your email address</a>
-                                        </li>
-                                        <li>
+                                    </li>
+                                    <li>
                                         <a href="#password-error">Check your password</a>
-                                        </li>
-                                    </ul>
-                                </div>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
-                    }
+                    </div>
+                }
+                <h1 class="govuk-heading-xl govuk-!-margin-top-8">Sign in</h1>                   
                     @if (ModelState.IsValid)
                     {
                         <div class="govuk-form-group">

@@ -24,13 +24,15 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
         private readonly IEmailSender _emailSender;
         private readonly INotification _emailNotificationSender;
         private readonly IConfiguration _config;
+        private readonly ILogger<ForgotPasswordModel> _logger;
 
-        public ForgotPasswordModel(UserManager<UserDetail> userManager, IEmailSender emailSender, INotification emailNotificationSender,IConfiguration config)
+        public ForgotPasswordModel(UserManager<UserDetail> userManager, IEmailSender emailSender, INotification emailNotificationSender,IConfiguration config, ILogger<ForgotPasswordModel> logger)
         {
             _userManager = userManager;
             _emailSender = emailSender;
             _emailNotificationSender = emailNotificationSender;
             _config = config;
+            _logger = logger;
         }
         public string WebAppUrl { get; set; }
 
@@ -83,7 +85,14 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
                 //    "Reset Password",
                 //    $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
                 //await _emailNotificationSender.SendForgotPasswordMail(Input.Email,"User", $"<a href='{HtmlEncoder.Default.Encode(callbackUrl)}'></a>");
-                await _emailNotificationSender.SendForgotPasswordMail(Input.Email, "User", $"{HtmlEncoder.Default.Encode(callbackUrl)}");
+                try
+                {
+                    await _emailNotificationSender.SendForgotPasswordMail(Input.Email, "User", $"{HtmlEncoder.Default.Encode(callbackUrl)}");
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogCritical(ex.Message);
+                }
                 return RedirectToPage("./ForgotPasswordConfirmation");
             }
 

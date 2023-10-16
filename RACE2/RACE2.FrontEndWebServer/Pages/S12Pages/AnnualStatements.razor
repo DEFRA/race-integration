@@ -102,8 +102,19 @@
                                 <td class="govuk-table__cell">@reservoir.UndertakerName</td>
                                 <td class="govuk-table__cell">@reservoir.DueDate</td>
                                 <td class="govuk-table__cell">
-                                    <strong class="not-started-tag-new">
-                                        @reservoir.Status
+                                    <strong class="not-started-tag-new" style="background-color:white">
+                                        @if (reservoir.Status.ToLower() == "in progress")
+                                        {
+                                            <span style="background-color:lightblue;">
+                                                @reservoir.Status
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span style="background-color:lightgrey;">
+                                                @reservoir.Status
+                                            </span>
+                                        }
                                     </strong>
                                 </td>
                                 <td class="govuk-table__cell">
