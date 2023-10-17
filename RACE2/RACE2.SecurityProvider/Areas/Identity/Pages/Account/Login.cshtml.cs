@@ -141,7 +141,9 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
                     //var message = new Message(new string[] { userModel.Email }, "Locked out account information", content, null);
                     //await _emailSender.SendEmailAsync(message);
                     ModelState.AddModelError("", "The account is locked out");
-                    return RedirectToPage("./Lockout");
+                    //return RedirectToPage("./Lockout");
+                    string returnUrl1 = WebAppUrl + "/user-lockout";
+                    return Redirect(returnUrl1);
                 }
                 else
                 {
