@@ -73,31 +73,31 @@ namespace RACE2.Services
             
         }
 
-        public async Task<UserDetail> CreateUser(UserDetail newuser)
-        {
-            try
-            {
-                return await _userRepository.CreateUser(newuser);
-            }
-            catch (Exception ex)
-            {
-                return new UserDetail();
-            }
+        //public async Task<UserDetail> CreateUser(UserDetail newuser)
+        //{
+        //    try
+        //    {
+        //        return await _userRepository.CreateUser(newuser);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new UserDetail();
+        //    }
             
-        }
+        //}
 
-        public async Task<UserDetail> ValidateUser(UserDetail loginuser)
-        {
-            try
-            {
-                return await _userRepository.ValidateUser(loginuser);
-            }
-            catch (Exception ex)
-            {
-                return new UserDetail();
-            }
+        //public async Task<UserDetail> ValidateUser(UserDetail loginuser)
+        //{
+        //    try
+        //    {
+        //        return await _userRepository.ValidateUser(loginuser);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new UserDetail();
+        //    }
             
-        }
+        //}
 
         public async Task<UserDetail> MatchUserWithEmailAndPasswordHash(string email, string passwordhash)
         {

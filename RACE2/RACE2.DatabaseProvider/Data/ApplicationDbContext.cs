@@ -71,7 +71,7 @@ namespace RACE2.DatabaseProvider.Data
 
 
             modelBuilder.Entity<UserDetail>()
-                .Property(e => e.c_defra_id)
+                .Property(e => e.cDefraId)
                 .HasDefaultValue(" ")
                 .HasMaxLength(64);
 
@@ -79,7 +79,7 @@ namespace RACE2.DatabaseProvider.Data
             //    .Property(e => e.c_parent_userid);
 
             modelBuilder.Entity<UserDetail>()
-                .Property(e => e.c_type)
+                .Property(e => e.cType)
                 .HasDefaultValue(" ")
                 .HasMaxLength(64)
                 .IsRequired(true);
@@ -90,30 +90,27 @@ namespace RACE2.DatabaseProvider.Data
             //    .HasMaxLength(128);
 
             modelBuilder.Entity<UserDetail>()
-                .Property(e => e.c_first_name)
+                .Property(e => e.cFirstName)
                 .HasDefaultValue(" ")
                 .HasMaxLength(64)
                 .IsRequired(true);
 
             modelBuilder.Entity<UserDetail>()
-                .Property(e => e.c_last_name)
+                .Property(e => e.cLastName)
                 .HasDefaultValue(" ")
                 .HasMaxLength(64)
                 .IsRequired(true);
 
-            modelBuilder.Entity<UserDetail>()
-                 .Property(e => e.c_mobile)
-                 .HasDefaultValue(" ")
-                 .HasMaxLength(64);
+            
 
 
             modelBuilder.Entity<UserDetail>()
-                .Property(e => e.c_mobile)
+                .Property(e => e.cMobile)
                 .HasDefaultValue(" ")
                 .HasMaxLength(64);
 
             modelBuilder.Entity<UserDetail>()
-                .Property(e => e.c_emergency_phone)
+                .Property(e => e.cEmergencyPhone)
                 .HasDefaultValue(" ")
                 .HasMaxLength(64);
 
@@ -123,38 +120,38 @@ namespace RACE2.DatabaseProvider.Data
             //    .HasMaxLength(64);
 
             modelBuilder.Entity<UserDetail>()
-                .Property(e => e.c_job_title)
+                .Property(e => e.cJobTitle)
                 .HasDefaultValue(" ")
                 .HasMaxLength(64);
 
             modelBuilder.Entity<UserDetail>()
-                .Property(e => e.c_current_panel)
+                .Property(e => e.cCurrentPanel)
                 .HasDefaultValue(" ")
                 .HasDefaultValue(" ")
                 .HasMaxLength(64);
 
             modelBuilder.Entity<UserDetail>()
-                .Property(e => e.c_paon)
+                .Property(e => e.cPaon)
                 .HasDefaultValue(" ")
                 .HasMaxLength(64);
 
             modelBuilder.Entity<UserDetail>()
-                .Property(e => e.c_saon)
+                .Property(e => e.cSaon)
                 .HasDefaultValue(" ")
                 .HasMaxLength(64);
 
             modelBuilder.Entity<UserDetail>()
-               .Property(e => e.c_status)
+               .Property(e => e.cStatus)
                .HasDefaultValue(" ")
                .HasMaxLength(64)
                .IsRequired(true);
 
             modelBuilder.Entity<UserDetail>()
-                .Property(e => e.c_created_on_date)
+                .Property(e => e.cCreatedOnDate)
                 .HasDefaultValueSql("getdate()");
 
             modelBuilder.Entity<UserDetail>()
-                .Property(e => e.c_last_access_date);
+                .Property(e => e.cLastAccessDate);
 
             //modelBuilder.Entity<UserDetail>()
             //    .Property(e => e.c_password)
@@ -171,29 +168,29 @@ namespace RACE2.DatabaseProvider.Data
             //    .HasDefaultValue(0);
 
             modelBuilder.Entity<Role>()
-                .Property(e => e.c_display_name)
+                .Property(e => e.DisplayName)
                 .HasMaxLength(64);
 
             modelBuilder.Entity<Role>()
-                .Property(e => e.c_description);
+                .Property(e => e.Description);
 
             modelBuilder.Entity<Role>()
-                .Property(e => e.c_parent_roleid);
+                .Property(e => e.ParentId);
 
             modelBuilder.Entity<UserRole>(e =>
             {
-                e.HasKey(e => e.c_Id);
-                e.Property(e => e.c_Id).ValueGeneratedOnAdd();
+                e.HasKey(e => e.cId);
+                e.Property(e => e.cId).ValueGeneratedOnAdd();
             });
 
             modelBuilder.Entity<UserRole>()
-                .Property(e => e.c_start_date);
+                .Property(e => e.cStartDate);
 
             modelBuilder.Entity<UserRole>()
-                .Property(e => e.c_end_date);
+                .Property(e => e.cEndDate);
 
             modelBuilder.Entity<UserRole>()
-                .Property(e => e.c_status);
+                .Property(e => e.cStatus);
 
 
 

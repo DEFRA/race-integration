@@ -11,10 +11,10 @@ namespace RACE2.DataModel
     public class UserRole : IdentityUserRole<int>
     {
         [Key, Required]
-        public int c_Id { get; set; }
-        public string? c_status { get; set; }
-        public DateTime c_start_date { get; set; }
-        public DateTime c_end_date { get; set; }
+        public int cId { get; set; }
+        public string? cStatus { get; set; }
+        public DateTime cStartDate { get; set; }
+        public DateTime cEndDate { get; set; }
         //public virtual UserDetail? User { get; set; }
         //public virtual Role? Role { get; set; }
 
