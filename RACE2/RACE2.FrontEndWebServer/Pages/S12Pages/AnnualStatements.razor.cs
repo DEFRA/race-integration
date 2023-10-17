@@ -206,7 +206,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             if (!String.IsNullOrEmpty(Undertakers[0].mobile))
                 s12PrePopulationFields.UndertakerPhoneNumber = Undertakers[0].mobile;
             else
-                s12PrePopulationFields.UndertakerPhoneNumber = "";
+                s12PrePopulationFields.UndertakerPhoneNumber = "Please provide a contact number";
             MemoryStream processedStream = openXMLUtilitiesService.SearchAndReplace(response, s12PrePopulationFields);
             processedStream.Position = 0;
             var streamRef = new DotNetStreamReference(stream: processedStream);
