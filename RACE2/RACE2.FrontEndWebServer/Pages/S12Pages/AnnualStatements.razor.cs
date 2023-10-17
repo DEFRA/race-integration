@@ -80,7 +80,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 PhoneNumber = userDetails.PhoneNumber,
                 c_first_name = userDetails.c_first_name,
                 c_last_name = userDetails.c_last_name,
-                c_IsFirstTimeUser = userDetails.c_IsFirstTimeUser
+                c_IsFirstTimeUser = userDetails.c_IsFirstTimeUser,
+                c_mobile= userDetails.c_mobile
             };
             if (UserDetail.c_IsFirstTimeUser)
             {
@@ -186,7 +187,10 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             if (!String.IsNullOrEmpty(address.Postcode))
                 s12PrePopulationFields.SupervisingEngineerAddress = s12PrePopulationFields.SupervisingEngineerAddress + ", " + address.Postcode;
             s12PrePopulationFields.SupervisingEngineerEmail = UserDetail.Email;
-            s12PrePopulationFields.SupervisingEngineerPhoneNumber = UserDetail.PhoneNumber != null ? UserDetail.PhoneNumber : "";
+            if (!String.IsNullOrEmpty(UserDetail.c_mobile))
+                s12PrePopulationFields.SupervisingEngineerPhoneNumber = UserDetail.c_mobile;               
+            else
+                s12PrePopulationFields.SupervisingEngineerPhoneNumber = UserDetail.PhoneNumber != null ? UserDetail.PhoneNumber : "";
             Undertakers = await reservoirService.GetOperatorsforReservoir(reservoir.Id, reservoir.OperatorType);
             s12PrePopulationFields.UndertakerName = item.UndertakerName;            
             s12PrePopulationFields.UndertakerEmail = Undertakers[0].Email;
@@ -199,7 +203,10 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 s12PrePopulationFields.UndertakerAddress = s12PrePopulationFields.UndertakerAddress + ", " + Undertakers[0].County;
             if (!String.IsNullOrEmpty(Undertakers[0].Postcode))
                 s12PrePopulationFields.UndertakerAddress = s12PrePopulationFields.UndertakerAddress + ",  " + Undertakers[0].Postcode;
-            s12PrePopulationFields.UndertakerPhoneNumber = " ";
+            if (!String.IsNullOrEmpty(Undertakers[0].mobile))
+                s12PrePopulationFields.UndertakerPhoneNumber = Undertakers[0].mobile;
+            else
+                s12PrePopulationFields.UndertakerPhoneNumber = "";
             MemoryStream processedStream = openXMLUtilitiesService.SearchAndReplace(response, s12PrePopulationFields);
             processedStream.Position = 0;
             var streamRef = new DotNetStreamReference(stream: processedStream);
