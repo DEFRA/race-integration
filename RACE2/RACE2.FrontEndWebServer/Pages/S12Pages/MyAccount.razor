@@ -32,7 +32,7 @@
                             Name
                         </dt>
                         <dd class="govuk-summary-list__value">
-                            @UserDetail.c_first_name @UserDetail.c_last_name
+                            @UserDetail.cFirstName @UserDetail.cLastName
                         </dd>
                         <dd class="govuk-summary-list__actions">
                             <a class="govuk-link" href="#">
@@ -75,9 +75,9 @@
                         </dt>
                         <dd class="govuk-summary-list__value">
                             <p class="govuk-body">
-                                @if (!String.IsNullOrEmpty(UserDetail.c_mobile))
+                                @if (!String.IsNullOrEmpty(UserDetail.cMobile))
                                 {
-                                    @UserDetail.c_mobile
+                                    @UserDetail.cMobile
                                 }
                                 else if (!String.IsNullOrEmpty(UserDetail.PhoneNumber))
                                 {

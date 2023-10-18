@@ -54,8 +54,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 UserName = UserName,
                 Id = userDetails.Id,
                 Email = userDetails.Email,
-                c_first_name = userDetails.c_first_name,
-                c_last_name = userDetails.c_last_name
+                cFirstName = userDetails.cFirstName,
+                cLastName = userDetails.cLastName
             };
             CurrentReservoir = CurrentReservoirState.Value.CurrentReservoir;
             base.OnInitialized();
@@ -79,7 +79,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             Stream response = await blobStorageService.GetBlobFileStream(blobName);
             S12PrePopulationFields s12PrePopulationFields = new S12PrePopulationFields();
             s12PrePopulationFields.ReservoirName = CurrentReservoirState.Value.CurrentReservoir.PublicName;
-            s12PrePopulationFields.SupervisingEngineerName = UserDetail.c_first_name + " " + UserDetail.c_last_name;
+            s12PrePopulationFields.SupervisingEngineerName = UserDetail.cFirstName + " " + UserDetail.cLastName;
             s12PrePopulationFields.ReservoirNearestTown = CurrentReservoirState.Value.CurrentReservoir.NearestTown != null? CurrentReservoirState.Value.CurrentReservoir.NearestTown:"";
             s12PrePopulationFields.ReservoirGridRef = CurrentReservoirState.Value.CurrentReservoir.GridReference != null ? CurrentReservoirState.Value.CurrentReservoir.GridReference : "";
             MemoryStream processedStream = openXMLUtilitiesService.SearchAndReplace(response, s12PrePopulationFields);
