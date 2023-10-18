@@ -62,6 +62,8 @@ module createcontainerregistrymodule 'createcontainerregistry.bicep' = {
     resourcegroup: resourcegroup
     containerregistryname: containerregistryName
     managedidentity: managedidentity
+    vnet: vnet
+    subnetacr: subnetacr
   }
   dependsOn: [
     createmanagedidentitymodule
