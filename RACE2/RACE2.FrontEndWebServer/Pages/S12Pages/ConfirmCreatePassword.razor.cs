@@ -28,11 +28,11 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 UserName = UserName,
                 Id = userDetails.Id,
                 Email = userDetails.Email,
-                c_first_name = userDetails.c_first_name,
-                c_last_name = userDetails.c_last_name,
-                c_IsFirstTimeUser = userDetails.c_IsFirstTimeUser
+                cFirstName = userDetails.cFirstName,
+                cLastName = userDetails.cLastName,
+                cIsFirstTimeUser = userDetails.cIsFirstTimeUser
             };
-            if (UserDetail.c_IsFirstTimeUser)
+            if (UserDetail.cIsFirstTimeUser)
             {
                 await userService.UpdateFirstTimeUserLogin(userDetails.Email);
             }

@@ -78,12 +78,12 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 Id = userDetails.Id,
                 Email = userDetails.Email,
                 PhoneNumber = userDetails.PhoneNumber,
-                c_first_name = userDetails.c_first_name,
-                c_last_name = userDetails.c_last_name,
-                c_IsFirstTimeUser = userDetails.c_IsFirstTimeUser,
-                c_mobile= userDetails.c_mobile
+                cFirstName = userDetails.cFirstName,
+                cLastName = userDetails.cLastName,
+                cIsFirstTimeUser = userDetails.cIsFirstTimeUser,
+                cMobile= userDetails.cMobile
             };
-            if (UserDetail.c_IsFirstTimeUser)
+            if (UserDetail.cIsFirstTimeUser)
             {
                 bool forceLoad = true;
                 Uri pagelink = new Uri(_config["RACE2SecurityProviderURL"] + "/Identity/Account/CreatePassword?userEmail="+ UserName);
@@ -174,7 +174,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             s12PrePopulationFields.ReservoirName = reservoir.PublicName;
             s12PrePopulationFields.ReservoirNearestTown = reservoir.NearestTown != null ? reservoir.NearestTown : "";
             s12PrePopulationFields.ReservoirGridRef = reservoir.GridReference != null ? reservoir.GridReference : "";
-            s12PrePopulationFields.SupervisingEngineerName = UserDetail.c_first_name + " " + UserDetail.c_last_name;
+            s12PrePopulationFields.SupervisingEngineerName = UserDetail.cFirstName + " " + UserDetail.cLastName;
             s12PrePopulationFields.SupervisingEngineerCompanyName = " ";
             Address address = userDetails.addresses.FirstOrDefault();
             s12PrePopulationFields.SupervisingEngineerAddress = address.AddressLine1;
@@ -187,8 +187,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             if (!String.IsNullOrEmpty(address.Postcode))
                 s12PrePopulationFields.SupervisingEngineerAddress = s12PrePopulationFields.SupervisingEngineerAddress + ", " + address.Postcode;
             s12PrePopulationFields.SupervisingEngineerEmail = UserDetail.Email;
-            if (!String.IsNullOrEmpty(UserDetail.c_mobile))
-                s12PrePopulationFields.SupervisingEngineerPhoneNumber = UserDetail.c_mobile;               
+            if (!String.IsNullOrEmpty(UserDetail.cMobile))
+                s12PrePopulationFields.SupervisingEngineerPhoneNumber = UserDetail.cMobile;               
             else
                 s12PrePopulationFields.SupervisingEngineerPhoneNumber = UserDetail.PhoneNumber != null ? UserDetail.PhoneNumber : "";
             Undertakers = await reservoirService.GetOperatorsforReservoir(reservoir.Id, reservoir.OperatorType);
@@ -203,8 +203,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 s12PrePopulationFields.UndertakerAddress = s12PrePopulationFields.UndertakerAddress + ", " + Undertakers[0].County;
             if (!String.IsNullOrEmpty(Undertakers[0].Postcode))
                 s12PrePopulationFields.UndertakerAddress = s12PrePopulationFields.UndertakerAddress + ",  " + Undertakers[0].Postcode;
-            if (!String.IsNullOrEmpty(Undertakers[0].mobile))
-                s12PrePopulationFields.UndertakerPhoneNumber = Undertakers[0].mobile;
+            if (!String.IsNullOrEmpty(Undertakers[0].cMobile))
+                s12PrePopulationFields.UndertakerPhoneNumber = Undertakers[0].cMobile;
             else
                 s12PrePopulationFields.UndertakerPhoneNumber = "Please provide a contact number";
             MemoryStream processedStream = openXMLUtilitiesService.SearchAndReplace(response, s12PrePopulationFields);
