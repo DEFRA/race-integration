@@ -1,0 +1,90 @@
+# Docker
+# Build a Docker image
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+trigger:
+- none
+pr:
+- none
+
+resources:
+- repo: self
+
+variables:
+  - name: repository_securityprovider
+    value: 'race2securityprovider'
+  - name: dockerfile_securityprovider
+    value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_SecurityProvider'
+  - name: repository_webapi
+    value: 'race2webapi'
+  - name: dockerfile_webapi
+    value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_WebApi'  
+  - name: repository_frontendwebserver
+    value: 'race2frontendwebserver'
+  - name: dockerfile_frontendwebserver
+    value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_FrontEndWebServer'
+  - name: containerRegistry
+    value: 'AZR-RAC-POC2-DockerRegistry'
+  - name: tag
+    value: '$(Build.BuildId)'
+  - name: azureServiceConnection
+    value: 'AZR-RAC-POC1'
+  - name: resourceGroupName
+    value: 'POCRACINFRG1401'
+  - name: templateFile
+    value: '$(Build.SourcesDirectory)/RACE2/bicepfiles/createAllContainerApps.bicep'
+  - name: parameterfile
+    value: '$(Build.SourcesDirectory)/RACE2/DeploymentYamlFiles/deployAllContainerAppsParametersPOCNew.json'
+
+stages:
+- stage: BuildAndPush
+  displayName: Build and Push images
+  jobs:
+  - job: BuildAndPush
+    displayName: Build and Push images
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: Docker@2
+      displayName: Build and push an image - securityProvider
+      inputs:
+        command: buildAndPush
+        repository: ${{ variables.repository_securityprovider }}
+        dockerfile: ${{ variables.dockerfile_securityprovider }}
+        containerRegistry: ${{ variables.containerRegistry }}
+        tags: ${{ variables.tag }}
+    - task: Docker@2
+      displayName: Build and push an image - WebApi
+      inputs:
+        command: buildAndPush
+        repository: ${{ variables.repository_webapi }}
+        dockerfile: ${{ variables.dockerfile_webapi }}
+        containerRegistry: ${{ variables.containerRegistry }}
+        tags: ${{ variables.tag }}    
+    - task: Docker@2
+      displayName: Build and push an image - FrontEndWebServer
+      inputs:
+        command: buildAndPush
+        repository: ${{ variables.repository_frontendwebServer }}
+        dockerfile: ${{ variables.dockerfile_frontendwebServer }}
+        containerRegistry: ${{ variables.containerRegistry }}
+        tags: ${{ variables.tag }}
+
+- stage : DeployContainerApps
+  displayName: Deploy Container Apps to Azure Portal
+  jobs:  
+  - job: Deploy
+    displayName: Deploy Container Apps to Azure Portal
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: AzureCLI@2 
+      displayName: 'Deploy Container Apps to Azure Portal' 
+      inputs:
+        azureSubscription: $(azureServiceConnection)
+        scriptType: bash
+        scriptLocation: inlineScript
+        useGlobalConfig: false    
+        inlineScript: |
+          az --version
+          az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) -p @$(parameterfile) tag='{tag:$(tag)}'
