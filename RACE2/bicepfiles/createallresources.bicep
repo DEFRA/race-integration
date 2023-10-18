@@ -117,6 +117,8 @@ module createkeyvaultmodule 'createkeyvault.bicep' = {
     keyvaultName: keyvaultName
     tenantId: tenantId
     appInsightConnectionString: createappinsightmodule.outputs.connectionString
+    vnet: vnet
+    subnetkeyvault: subnetkeyvault
   }
   dependsOn: [
     createmanagedidentitymodule
