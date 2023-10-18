@@ -8,14 +8,16 @@ using System.Threading.Tasks;
 
 namespace RACE2.DataModel
 {
-    [Table("Addresses")]
+    [Table("Address")]
     public class Address
     {
         [Key, Required]
         public int id { get; set; }
         [StringLength(64)]
         public string? RaceAddressKey { get; set; }
+        [Required]
         public string? AddressLine1 { get; set; }
+        
         public string? AddressLine2 { get; set; }
         public string? Town { get; set; }
         public string? County { get; set; }

@@ -41,8 +41,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 UserName = UserName,
                 Id = userDetails.Id,
                 Email = userDetails.Email,
-                c_first_name = userDetails.c_first_name,
-                c_last_name = userDetails.c_last_name
+                cFirstName = userDetails.cFirstName,
+                cLastName = userDetails.cLastName
             };
             UserAddress = userDetails.addresses[0];
             await InvokeAsync(() =>

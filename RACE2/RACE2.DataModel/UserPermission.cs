@@ -8,16 +8,20 @@ using System.Threading.Tasks;
 
 namespace RACE2.DataModel
 {
-    [Table("UserPermissions")]
+    [Table("Permission")]
     public class UserPermission
     {
         [Key, Required]
         public int Id { get; set; }     
         [StringLength(64)]
         [Required]
-        public string? Access_level { get; set; }
-        public DateTime? Start_date { get; set; }
-        public DateTime? End_date { get; set; }
+        public string? AccessLevel { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
+
+       // public FeatureFunction FeatureFunction { get; set; } = new FeatureFunction();
+
+      //  public Role Role { get; set; } = new Role();
 
 
     }
