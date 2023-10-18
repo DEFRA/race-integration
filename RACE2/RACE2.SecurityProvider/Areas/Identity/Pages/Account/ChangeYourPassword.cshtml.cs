@@ -35,6 +35,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             _config = config;
         }
 
+        [BindProperty]
         public string WebAppUrl { get; set; }
 
         /// <summary>
@@ -139,7 +140,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             _logger.LogInformation("User changed their password successfully.");
             StatusMessage = "Your password has been changed.";
 
-            string returnUrl = _config["RACE2FrontEndURL"] + "/confirm-password-change";
+            string returnUrl = WebAppUrl + "/confirm-password-change";
             return Redirect(returnUrl);
         }
     }
