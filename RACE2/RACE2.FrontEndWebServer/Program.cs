@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using Microsoft.IdentityModel.Logging;
 using RACE2.DataAccess.Repository;
 using RACE2.DataModel;
+using RACE2.FrontEndWebServer.ExceptionGlobalErrorHandling;
 using RACE2.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -113,6 +114,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IReservoirRepository, ReservoirRepository>();
 builder.Services.AddScoped<IBlobStorageService, BlobStorageService>();
 builder.Services.AddScoped<IOpenXMLUtilitiesService, OpenXMLUtilitiesService>();
+builder.Services.AddScoped<CustomErrorBoundary>();
 
 var app = builder.Build();
 app.UseForwardedHeaders();
