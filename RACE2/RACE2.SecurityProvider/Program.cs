@@ -46,10 +46,6 @@ var webapiURL = builder.Configuration["RACE2WebApiURL"];
 var securityProviderURL = builder.Configuration["RACE2SecurityProviderURL"];
 var sqlConnectionString = builder.Configuration["SqlConnectionString"];
 
-//var blazorClientURL = "https://race2frontendweb.gentlebush-defe7f09.westeurope.azurecontainerapps.io";
-//var webapiURL = "https://race2webapi.gentlebush-defe7f09.westeurope.azurecontainerapps.io/graphql/";
-//var securityProviderURL = "https://race2securityprovider.gentlebush-defe7f09.westeurope.azurecontainerapps.io";
-//var sqlConnectionString = "Server=tcp:race2sqlserver.database.windows.net,1433;Initial Catalog=RACE2Database;Persist Security Info=False;User ID=race2admin;Password=D3FraRac3;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 // Add Azure App Configuration and feature management services to the container.
 builder.Services.AddAzureAppConfiguration()
                 .AddFeatureManagement();
@@ -85,14 +81,6 @@ builder.Services.AddIdentityServer()
     .AddDeveloperSigningCredential()
     .AddAspNetIdentity<UserDetail>();
 
-//builder.Services.AddIdentityServer()
-//            .AddInMemoryIdentityResources(ServerConfiguration.IdentityResources)
-//            .AddInMemoryApiResources(ServerConfiguration.ApiResources)
-//            .AddInMemoryApiScopes(ServerConfiguration.ApiScopes)
-//            .AddInMemoryClients(ServerConfiguration.Clients)
-//            .AddAspNetIdentity<UserDetail>()
-//            .AddDeveloperSigningCredential();
-
 builder.Services.Configure<IdentityOptions>(options =>
 {
     // Default Password settings.
@@ -118,6 +106,7 @@ app.Use(async (ctx, next) =>
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
+    app.UseDeveloperExceptionPage();
 }
 else
 {
