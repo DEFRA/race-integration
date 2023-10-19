@@ -59,23 +59,23 @@ builder.Services.AddAuthentication(options =>
     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
 })
-//.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
-.AddCookie(options =>
-{  
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
-    options.Cookie.MaxAge = options.ExpireTimeSpan; // optional
-    options.SlidingExpiration = true;
-    options.LoginPath = "/login";
-    options.LogoutPath = "/logout";
-})
+.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
+//.AddCookie(options =>
+//{  
+//    options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+//    options.Cookie.MaxAge = options.ExpireTimeSpan; // optional
+//    options.SlidingExpiration = true;
+//    options.LoginPath = "/login";
+//    options.LogoutPath = "/logout";
+//})
 .AddOpenIdConnect(
     OpenIdConnectDefaults.AuthenticationScheme,
     options =>
     {
-        options.Events.OnTicketReceived = async (Context) =>
-        {
-            Context.Properties.ExpiresUtc = DateTime.UtcNow.AddMinutes(20);
-        };
+        //options.Events.OnTicketReceived = async (Context) =>
+        //{
+        //    Context.Properties.ExpiresUtc = DateTime.UtcNow.AddMinutes(20);
+        //};
         options.Events.OnRedirectToIdentityProvider = context =>
         {
             context.ProtocolMessage.Prompt = "login";

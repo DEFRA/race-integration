@@ -13,22 +13,27 @@
             @Body
         </article>*@
         @Body
-@*         <ErrorBoundary Context="exception" @ref="_errorBoundary">
+@*         <CustomErrorBoundary Context="exception" @ref="_customErrorBoundary">
             <ChildContent>
                 @Body
             </ChildContent>
             <ErrorContent Context="exception">
                 <RACE2.FrontEndWebServer.Pages.ApplicationErrorPage ErrorMessage="@exception.Message" />
             </ErrorContent>
-        </ErrorBoundary>  *@     
+        </CustomErrorBoundary>    *@   
     </main>
 </div>
 
 @code {
-    private ErrorBoundary? _errorBoundary;
+    private CustomErrorBoundary? _customErrorBoundary;
 
-    protected override void OnParametersSet()
+    protected override void OnInitialized()
     {
-        _errorBoundary?.Recover();
+        _customErrorBoundary = new CustomErrorBoundary();
     }
+
+    // protected override void OnParametersSet()
+    // {
+    //     _errorBoundary?.Recover();
+    // }
 }
