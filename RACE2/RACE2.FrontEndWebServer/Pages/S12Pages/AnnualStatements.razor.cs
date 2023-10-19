@@ -74,6 +74,14 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             try
             {
                 userDetails = await userService.GetUserByEmailID(UserName);
+
+                if (userDetails.cIsFirstTimeUser)
+                {
+                    bool forceLoad = true;
+                    Uri pagelink = new Uri(_config["RACE2SecurityProviderURL"] + "/Identity/Account/CreatePassword?userEmail=" + UserName);
+                    NavigationManager.NavigateTo(pagelink.ToString(), forceLoad);
+                }
+
                 UserDetail = new UserDetail()
                 {
                     UserName = UserName,
@@ -85,12 +93,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                     cIsFirstTimeUser = userDetails.cIsFirstTimeUser,
                     cMobile = userDetails.cMobile
                 };
-                if (UserDetail.cIsFirstTimeUser)
-                {
-                    bool forceLoad = true;
-                    Uri pagelink = new Uri(_config["RACE2SecurityProviderURL"] + "/Identity/Account/CreatePassword?userEmail=" + UserName);
-                    NavigationManager.NavigateTo(pagelink.ToString());
-                }
+
                 ReservoirDetailsLinkedToUser = await reservoirService.GetReservoirsByUserId(UserDetail.Id);
 
                 foreach (var rn in ReservoirDetailsLinkedToUser)
