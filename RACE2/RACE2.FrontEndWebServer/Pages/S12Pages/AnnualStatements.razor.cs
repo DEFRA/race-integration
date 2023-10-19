@@ -78,8 +78,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 if (userDetails.cIsFirstTimeUser)
                 {
                     bool forceLoad = true;
-                    Uri pagelink = new Uri(_config["RACE2SecurityProviderURL"] + "/Identity/Account/CreatePassword?userEmail=" + UserName);
-                    NavigationManager.NavigateTo(pagelink.ToString(), forceLoad);
+                    string pagelink = _config["RACE2SecurityProviderURL"] + "/Identity/Account/CreatePassword?userEmail=" + UserName;
+                    NavigationManager.NavigateTo(pagelink, forceLoad);
                 }
 
                 UserDetail = new UserDetail()
@@ -131,7 +131,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("Error loading annual statement data.");
+                //throw new ApplicationException("Error loading annual statement data.");
             };
         }
 
