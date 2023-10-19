@@ -62,6 +62,8 @@ module createcontainerregistrymodule 'createcontainerregistry.bicep' = {
     resourcegroup: resourcegroup
     containerregistryname: containerregistryName
     managedidentity: managedidentity
+    vnet: vnet
+    subnetacr: subnetacr
   }
   dependsOn: [
     createmanagedidentitymodule
@@ -117,6 +119,8 @@ module createkeyvaultmodule 'createkeyvault.bicep' = {
     keyvaultName: keyvaultName
     tenantId: tenantId
     appInsightConnectionString: createappinsightmodule.outputs.connectionString
+    vnet: vnet
+    subnetkeyvault: subnetkeyvault
   }
   dependsOn: [
     createmanagedidentitymodule
