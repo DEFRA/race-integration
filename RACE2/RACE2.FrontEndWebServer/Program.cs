@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using Microsoft.IdentityModel.Logging;
 using RACE2.DataAccess.Repository;
 using RACE2.DataModel;
+using RACE2.FrontEndWebServer.ExceptionGlobalErrorHandling;
 using RACE2.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -60,7 +61,7 @@ builder.Services.AddAuthentication(options =>
 })
 //.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
 .AddCookie(options =>
-{  
+{
     options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
     options.Cookie.MaxAge = options.ExpireTimeSpan; // optional
     options.SlidingExpiration = true;
@@ -71,10 +72,10 @@ builder.Services.AddAuthentication(options =>
     OpenIdConnectDefaults.AuthenticationScheme,
     options =>
     {
-        options.Events.OnTicketReceived = async (Context) =>
-        {
-            Context.Properties.ExpiresUtc = DateTime.UtcNow.AddMinutes(20);
-        };
+        //options.Events.OnTicketReceived = async (Context) =>
+        //{
+        //    Context.Properties.ExpiresUtc = DateTime.UtcNow.AddMinutes(20);
+        //};
         options.Events.OnRedirectToIdentityProvider = context =>
         {
             context.ProtocolMessage.Prompt = "login";
@@ -113,6 +114,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IReservoirRepository, ReservoirRepository>();
 builder.Services.AddScoped<IBlobStorageService, BlobStorageService>();
 builder.Services.AddScoped<IOpenXMLUtilitiesService, OpenXMLUtilitiesService>();
+builder.Services.AddScoped<CustomErrorBoundary>();
 
 var app = builder.Build();
 app.UseForwardedHeaders();
