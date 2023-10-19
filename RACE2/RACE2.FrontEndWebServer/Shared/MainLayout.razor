@@ -1,5 +1,5 @@
 ﻿@inherits LayoutComponentBase
-
+@using RACE2.FrontEndWebServer.Pages
 <PageTitle>RACE2.FrontEndWeb</PageTitle>
 
 @* <Header />  *@
@@ -11,7 +11,23 @@
         <article class="content px-4">
             @Body
         </article>*@
-        @Body
+        <ErrorBoundary Context="exception" @ref="_errorBoundary">
+            <ChildContent>
+                @Body
+            </ChildContent>
+            <ErrorContent Context="exception">
+@*                 <p class="fw-bold text-danger">@exception.Message</p> *@
+                <RACE2.FrontEndWebServer.Pages.ApplicationErrorPage ErrorMessage="@exception.Message" />
+            </ErrorContent>
+        </ErrorBoundary>      
     </main>
 </div>
 
+@code {
+    private ErrorBoundary? _errorBoundary;
+
+    protected override void OnParametersSet()
+    {
+        _errorBoundary?.Recover();
+    }
+}
