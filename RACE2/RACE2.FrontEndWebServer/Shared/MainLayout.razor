@@ -31,8 +31,8 @@
         _customErrorBoundary = new CustomErrorBoundary();
     }
 
-    // protected override void OnParametersSet()
-    // {
-    //     _errorBoundary?.Recover();
-    // }
+    protected override void OnParametersSet()
+    {
+        _customErrorBoundary?.Recover();
+    }
 }

@@ -132,7 +132,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("Error loading annual statement data.");
+                //throw new ApplicationException("Error loading annual statement data.");
             };
         }
 
