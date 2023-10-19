@@ -71,10 +71,10 @@ builder.Services.AddAuthentication(options =>
     OpenIdConnectDefaults.AuthenticationScheme,
     options =>
     {
-        //options.Events.OnTicketReceived = async (Context) =>
-        //{
-        //    Context.Properties.ExpiresUtc = DateTime.UtcNow.AddMinutes(30);
-        //};
+        options.Events.OnTicketReceived = async (Context) =>
+        {
+            Context.Properties.ExpiresUtc = DateTime.UtcNow.AddMinutes(20);
+        };
         options.Events.OnRedirectToIdentityProvider = context =>
         {
             context.ProtocolMessage.Prompt = "login";
