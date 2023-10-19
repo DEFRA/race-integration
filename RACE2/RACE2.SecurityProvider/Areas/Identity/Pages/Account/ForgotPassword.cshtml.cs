@@ -93,9 +93,9 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
                 {
                     _logger.LogCritical(ex.Message);
                 }
-                return RedirectToPage("./ForgotPasswordConfirmation");
-                //string returnUrl = WebAppUrl + "/confirm-forgot-password-email";
-                //return Redirect(returnUrl);
+                //return RedirectToPage("./ForgotPasswordConfirmation");
+                string returnUrl = WebAppUrl + "/confirm-forgot-password-email";
+                return Redirect(returnUrl);
             }
 
             return Page();
