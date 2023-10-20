@@ -134,7 +134,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("Error loading annual statement data.");
+                //throw new ApplicationException("Error loading annual statement data.");
             };
         }
 
@@ -243,7 +243,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("Error downloading S12 Report Template.");
+                throw new ApplicationException("Error downloading S12ReportTemplate for the reservoir.");
             };
         }
 
@@ -253,7 +253,6 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         }
         public async void GoToNextPage()
         {
-            var u = CurrentUserDetailState.Value.CurrentUserDetail;
             bool forceLoad = false;
             string pagelink = "/choose-a-reservoir";
             NavigationManager.NavigateTo(pagelink, forceLoad);
@@ -335,8 +334,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 //perform inefficiently in a production environment.
                 ReservoirsLinkedToUserForDisplay = ReservoirsLinkedToUserForDisplay.OrderBy(x =>
                                         x.GetType()
-                                        .GetProperty(columnName)
-                                        .GetValue(x, null))
+                                         .GetProperty(columnName)
+                                         .GetValue(x, null))
                               .ToList();
                 CurrentSortColumn = columnName;
                 IsSortedAscending = true;
@@ -366,7 +365,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             }
         }
 
-    private void Dispose()
+        private void Dispose()
         {
             this.Dispose(true);
         }
