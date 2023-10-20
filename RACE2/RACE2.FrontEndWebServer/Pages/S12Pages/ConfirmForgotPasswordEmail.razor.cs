@@ -13,7 +13,10 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
     {
         [Inject]
         public NavigationManager NavigationManager { get; set; } = default!;
+        [Inject]
+        public IConfiguration _config { get; set; } = default!;
 
+        private UserDetail UserDetail { get; set; } = new UserDetail();
         protected override async void OnInitialized()
         {
             await base.OnInitializedAsync();
@@ -22,7 +25,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         public void GoToNextPage()
         {
             bool forceLoad = true;
-            string pagelink = "/annual-statements";
+             string pagelink =_config["RACE2SecurityProviderURL"] + "/Identity/Account/ForgotPassword";
+            
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }
     }

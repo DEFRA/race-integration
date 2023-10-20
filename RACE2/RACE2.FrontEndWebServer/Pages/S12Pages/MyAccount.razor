@@ -1,12 +1,11 @@
 ﻿@page "/my-account"
 @using Microsoft.AspNetCore.Authorization
 @using RACE2.FrontEndWebServer.Components
-@inject AuthenticationStateProvider AuthenticationStateProvider
 @attribute [Authorize]
 
 <HeaderWithBanner />
 
-<div class="govuk-width-container ">
+<div class="govuk-width-container" style="min-height: 69vh;">
 
     <FeedbackBannerSignOut />
 

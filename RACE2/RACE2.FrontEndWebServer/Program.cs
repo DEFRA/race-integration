@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using Microsoft.IdentityModel.Logging;
 using RACE2.DataAccess.Repository;
 using RACE2.DataModel;
+using RACE2.FrontEndWebServer.ExceptionGlobalErrorHandling;
 using RACE2.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -38,6 +39,7 @@ builder.Configuration.AddAzureAppConfiguration(options =>
 var blazorClientURL = builder.Configuration["RACE2FrontEndURL"];
 var RACE2WebApiURL = builder.Configuration["RACE2WebApiURL"];
 var RACE2IDPURL = builder.Configuration["RACE2SecurityProviderURL"];
+var clientSecret=builder.Configuration["ClientSecret"];
 //IConfiguration _configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../appsettings.json").Build();
 
 // Add services to the container.
@@ -57,14 +59,22 @@ builder.Services.AddAuthentication(options =>
     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
 })
-.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
+//.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
+.AddCookie(options =>
+{
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+    options.Cookie.MaxAge = options.ExpireTimeSpan; // optional
+    options.SlidingExpiration = true;
+    options.LoginPath = "/login";
+    options.LogoutPath = "/logout";
+})
 .AddOpenIdConnect(
     OpenIdConnectDefaults.AuthenticationScheme,
     options =>
     {
         //options.Events.OnTicketReceived = async (Context) =>
         //{
-        //    Context.Properties.ExpiresUtc = DateTime.UtcNow.AddMinutes(30);
+        //    Context.Properties.ExpiresUtc = DateTime.UtcNow.AddMinutes(20);
         //};
         options.Events.OnRedirectToIdentityProvider = context =>
         {
@@ -75,7 +85,7 @@ builder.Services.AddAuthentication(options =>
         options.SignOutScheme = OpenIdConnectDefaults.AuthenticationScheme;
         options.Authority = RACE2IDPURL;
         options.ClientId = "blazorServer";
-        options.ClientSecret = "blazorserver-secret";
+        options.ClientSecret = clientSecret;
         // When set to code, the middleware will use PKCE protection
         options.ResponseType = "code id_token";
         // Save the tokens we receive from the IDP
@@ -104,6 +114,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IReservoirRepository, ReservoirRepository>();
 builder.Services.AddScoped<IBlobStorageService, BlobStorageService>();
 builder.Services.AddScoped<IOpenXMLUtilitiesService, OpenXMLUtilitiesService>();
+builder.Services.AddScoped<CustomErrorBoundary>();
 
 var app = builder.Build();
 app.UseForwardedHeaders();

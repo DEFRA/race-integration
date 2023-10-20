@@ -5,12 +5,11 @@
 @using RACE2.FrontEndWebServer.Components
 @using RACE2.Dto;
 @using RACE2.DataModel;
-@inject AuthenticationStateProvider AuthenticationStateProvider
 @attribute [Authorize]
 
 <HeaderWithBanner />
 
-<div class="govuk-width-container ">
+<div class="govuk-width-container" style="min-height: 69vh;">
 
      <FeedbackBannerSignOut />
 
@@ -131,4 +130,4 @@
 
     </main>
 </div>
-<FooterBottom />
+<Footer />

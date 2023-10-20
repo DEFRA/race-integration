@@ -1,0 +1,32 @@
+﻿@page "/ApplicationError/{ErrorMessage}"
+@using RACE2.FrontEndWebServer.Components
+
+<Header/>
+
+<div class="govuk-width-container" style="min-height: 69vh;">
+
+    <FeedbackBanner/>
+
+    <div class="govuk-grid-row">
+
+        <div class="govuk-grid-column-two-thirds">
+
+            <h1 class="govuk-heading-xl govuk-!-margin-top-8" style="color:red">
+                Application Error
+            </h1>
+
+                <p class="govuk-body" style="color:red">@ErrorMessage</p>
+
+            </div>
+      </div>
+    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+
+    </main>
+</div>
+
+<Footer />
+
+@code {
+    [Parameter]
+    public string ErrorMessage { get; set; }
+}
