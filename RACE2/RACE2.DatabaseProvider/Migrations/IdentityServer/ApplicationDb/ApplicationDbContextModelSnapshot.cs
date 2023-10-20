@@ -494,6 +494,9 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                     b.Property<int>("ReservoirId")
                         .HasColumnType("int");
 
+                    b.Property<int>("SecondaryContactId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("OrganisationId");
@@ -501,6 +504,8 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                     b.HasIndex("PrimaryContactId");
 
                     b.HasIndex("ReservoirId");
+
+                    b.HasIndex("SecondaryContactId");
 
                     b.ToTable("OrganisationReservoirs");
                 });
@@ -602,6 +607,9 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                     b.Property<DateTime>("LastCertificationDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("LastInspectionByUserId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("LastInspectionDate")
                         .HasColumnType("datetime2");
 
@@ -662,6 +670,8 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                     b.HasKey("Id");
 
                     b.HasIndex("Addressid");
+
+                    b.HasIndex("LastInspectionByUserId");
 
                     b.ToTable("Reservoirs");
                 });
@@ -1449,11 +1459,19 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("RACE2.DataModel.UserDetail", "SecondaryContact")
+                        .WithMany()
+                        .HasForeignKey("SecondaryContactId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Organisation");
 
                     b.Navigation("PrimaryContact");
 
                     b.Navigation("Reservoir");
+
+                    b.Navigation("SecondaryContact");
                 });
 
             modelBuilder.Entity("RACE2.DataModel.Reservoir", b =>
@@ -1462,7 +1480,15 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                         .WithMany()
                         .HasForeignKey("Addressid");
 
+                    b.HasOne("RACE2.DataModel.UserDetail", "LastInspectionByUser")
+                        .WithMany()
+                        .HasForeignKey("LastInspectionByUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Address");
+
+                    b.Navigation("LastInspectionByUser");
                 });
 
             modelBuilder.Entity("RACE2.DataModel.SafetyMeasure", b =>
