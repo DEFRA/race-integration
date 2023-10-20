@@ -38,10 +38,12 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         private string UserName { get; set; } = "Unknown";
         private UserDetail UserDetail { get; set; }
         private string[] reservoirNames = Array.Empty<String>();
+        [CascadingParameter]
+        public Task<AuthenticationState> AuthenticationStateTask { get; set; }
 
         protected override async void OnInitialized()
         {
-            AuthenticationState authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            AuthenticationState authState = await AuthenticationStateTask; // AuthenticationStateProvider.GetAuthenticationStateAsync();
             UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
             var userDetails = await userService.GetUserByEmailID(UserName);
             UserId = userDetails.Id;
