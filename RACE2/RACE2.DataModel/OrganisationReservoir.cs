@@ -18,7 +18,7 @@ namespace RACE2.DataModel
 
         public UserDetail PrimaryContact { get; set; } = new UserDetail();
 
-      //  public UserDetail SecondaryContact { get;set; } = new UserDetail(); 
+       public UserDetail SecondaryContact { get;set; } = new UserDetail(); 
 
         }
 }
