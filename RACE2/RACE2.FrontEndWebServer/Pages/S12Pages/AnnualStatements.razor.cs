@@ -191,8 +191,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(reservoir.Id, UserDetail.Id);
 
                 var blobName = updatedStatus.override_template + ".docx";//SubmissionStatus.override_template + ".docx";
-                                                                         //var blobName = "S12ReportTemplate.docx";
-                                                                         //var blobName = "TestWithTags.docx";
+                //var blobName = "S12ReportTemplate.docx";
+                //var blobName = "TestWithTags.docx";
                 Stream response = await blobStorageService.GetBlobFileStream(blobName);
                 S12PrePopulationFields s12PrePopulationFields = new S12PrePopulationFields();
                 s12PrePopulationFields.ReservoirName = reservoir.PublicName;
@@ -235,7 +235,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 processedStream.Position = 0;
                 var streamRef = new DotNetStreamReference(stream: processedStream);
                 await jsRuntime.InvokeVoidAsync("downloadFileFromStream", blobName, streamRef);
-                //  SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(reservoir.Id,UserDetail.Id);
+                //SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(reservoir.Id,UserDetail.Id);
                 var reservoirLinkedToUser = ReservoirsLinkedToUserForDisplay.Where(r => r.ReservoirName == reservoir.PublicName).FirstOrDefault();
                 reservoirLinkedToUser.Status = updatedStatus.Status;
                 await InvokeAsync(() =>

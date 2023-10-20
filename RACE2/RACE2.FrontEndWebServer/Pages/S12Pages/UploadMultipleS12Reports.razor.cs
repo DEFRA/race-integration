@@ -40,10 +40,11 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         IReadOnlyList<IBrowserFile> selectedFiles;
         private List<FileUploadViewModel> fileUploadViewModels = new();
         public Reservoir CurrentReservoir { get; set; } = new Reservoir();
-
+        [CascadingParameter]
+        public Task<AuthenticationState> AuthenticationStateTask { get; set; }
         protected override async void OnInitialized()
         {
-            AuthenticationState authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            AuthenticationState authState = await AuthenticationStateTask; // AuthenticationStateProvider.GetAuthenticationStateAsync();
             UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
             var userDetails = await userService.GetUserByEmailID(UserName);
             UserId = userDetails.Id;

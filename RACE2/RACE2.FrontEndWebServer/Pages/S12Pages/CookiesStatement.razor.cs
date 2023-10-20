@@ -15,10 +15,11 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
     public partial class CookiesStatement
     {
         protected bool IsLoggedIn { get; set; } = false;
-
+        [CascadingParameter]
+        public Task<AuthenticationState> AuthenticationStateTask { get; set; }
         protected override async void OnInitialized()
         {
-            AuthenticationState authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            AuthenticationState authState = await AuthenticationStateTask; // AuthenticationStateProvider.GetAuthenticationStateAsync();
             if (authState.User.Claims.Count() == 0)
                 IsLoggedIn = false;
             else
