@@ -62,18 +62,20 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
 
         //We also need a field to tell us which column the table is sorted by.
         private string CurrentSortColumn;
-        private AuthenticationState authState { get; set; }
-
         UserSpecificDto userDetails { get; set; }
         List<SubmissionStatusDTO> SubmissionStatusList { get; set; }
         SubmissionStatusDTO SubmissionStatus { get; set; }
 
+        [CascadingParameter]
+        public Task<AuthenticationState> AuthenticationStateTask { get; set; }
+
         protected async override Task OnInitializedAsync()
         {
-            authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-            UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
             try
             {
+                var authState = await AuthenticationStateTask;
+                UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
+
                 userDetails = await userService.GetUserByEmailID(UserName);
 
                 if (userDetails.cIsFirstTimeUser)
@@ -132,7 +134,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             }
             catch (Exception ex)
             {
-                //throw new ApplicationException("Error loading annual statement data.");
+                throw new ApplicationException("Error loading annual statement data.");
             };
         }
 
