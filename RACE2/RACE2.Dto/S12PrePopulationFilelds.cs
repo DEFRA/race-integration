@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,5 +22,11 @@ namespace RACE2.Dto
         public string UndertakerEmail { get; set; }
         public string UndertakerPhoneNumber { get; set; }
         public string OtherUndertakers { get; set; }
+
+        public string NextInspectionDate { get; set; }
+        public string LastCertificationDate { get; set; }
+        public string LastInspectionDate { get; set; }
+        public string LastInspectingEngineerName { get; set; }
+        public string LastInspectingEngineerPhoneNumber { get; set; }
     }
 }

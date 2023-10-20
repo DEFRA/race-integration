@@ -190,7 +190,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
 
                 SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(reservoir.Id, UserDetail.Id);
 
-                var blobName = updatedStatus.override_template + ".docx";//SubmissionStatus.override_template + ".docx";
+                var blobName = updatedStatus.override_template + ".docx";
                 //var blobName = "S12ReportTemplate.docx";
                 //var blobName = "TestWithTags.docx";
                 Stream response = await blobStorageService.GetBlobFileStream(blobName);
@@ -231,11 +231,16 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                     s12PrePopulationFields.UndertakerPhoneNumber = Undertakers[0].cMobile;
                 else
                     s12PrePopulationFields.UndertakerPhoneNumber = "Please provide a contact number";
+                //s12PrePopulationFields.NextInspectionDate = reservoir.NextInspectionDate102.ToString("dd MMM yyyy");
+                //s12PrePopulationFields.LastCertificationDate = reservoir.LastCertificationDate.ToString("dd MMM yyyy");
+                //s12PrePopulationFields.LastInspectionDate = reservoir.LastInspectionDate.ToString("dd MMM yyyy");
+                //int lastInspectingEngineerId=reservoir.LastInspectionByUser.Id;
+                //s12PrePopulationFields.LastInspectingEngineerName = reservoir.LastInspectionEngineerName;
+                //s12PrePopulationFields.LastInspectingEngineerPhoneNumber = reservoir.LastInspectionEngineerPhone;
                 MemoryStream processedStream = openXMLUtilitiesService.SearchAndReplace(response, s12PrePopulationFields);
                 processedStream.Position = 0;
                 var streamRef = new DotNetStreamReference(stream: processedStream);
                 await jsRuntime.InvokeVoidAsync("downloadFileFromStream", blobName, streamRef);
-                //SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(reservoir.Id,UserDetail.Id);
                 var reservoirLinkedToUser = ReservoirsLinkedToUserForDisplay.Where(r => r.ReservoirName == reservoir.PublicName).FirstOrDefault();
                 reservoirLinkedToUser.Status = updatedStatus.Status;
                 await InvokeAsync(() =>
