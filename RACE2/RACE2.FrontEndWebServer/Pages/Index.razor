@@ -1,7 +1,6 @@
 ﻿@page "/"
 @using System.Security.Claims
 @using RACE2.FrontEndWebServer.Components
-@inject AuthenticationStateProvider AuthenticationStateProvider
 @inject NavigationManager NavigationManager
 
 <Header/>
@@ -88,13 +87,16 @@
 
 @code{
 
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthenticationStateTask { get; set; }
+
     private IEnumerable<Claim>? Claims { get; set; }
 
     public string UserName { get; set; } = "Unknown";
 
     protected override async void OnInitialized()
     {
-        AuthenticationState authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        AuthenticationState authState = await AuthenticationStateTask; //AuthenticationStateProvider.GetAuthenticationStateAsync();
 
         //if (authState.User.Claims is not null)
         //{

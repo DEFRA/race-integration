@@ -33,6 +33,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _config = config;
+            WebAppUrl = _config["RACE2FrontEndURL"];
         }
 
         [BindProperty]
@@ -107,6 +108,8 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync()
         {
+            WebAppUrl = _config["RACE2FrontEndURL"];
+
             if (!ModelState.IsValid)
             {
                 return Page();
@@ -119,7 +122,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
                     return Page();
                 }
             }
-            WebAppUrl = _config["RACE2FrontEndURL"];
+
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {

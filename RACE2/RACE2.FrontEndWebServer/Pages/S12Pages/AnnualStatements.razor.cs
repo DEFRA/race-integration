@@ -62,18 +62,20 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
 
         //We also need a field to tell us which column the table is sorted by.
         private string CurrentSortColumn;
-        private AuthenticationState authState { get; set; }
-
         UserSpecificDto userDetails { get; set; }
         List<SubmissionStatusDTO> SubmissionStatusList { get; set; }
         SubmissionStatusDTO SubmissionStatus { get; set; }
 
+        [CascadingParameter]
+        public Task<AuthenticationState> AuthenticationStateTask { get; set; }
+
         protected async override Task OnInitializedAsync()
         {
-            authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-            UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
             try
             {
+                var authState = await AuthenticationStateTask;
+                UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
+
                 userDetails = await userService.GetUserByEmailID(UserName);
 
                 if (userDetails.cIsFirstTimeUser)
@@ -241,7 +243,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("Error downloading S12 Report Template.");
+                throw new ApplicationException("Error downloading S12ReportTemplate for the reservoir.");
             };
         }
 
@@ -251,7 +253,6 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         }
         public async void GoToNextPage()
         {
-            var u = CurrentUserDetailState.Value.CurrentUserDetail;
             bool forceLoad = false;
             string pagelink = "/choose-a-reservoir";
             NavigationManager.NavigateTo(pagelink, forceLoad);
@@ -333,8 +334,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 //perform inefficiently in a production environment.
                 ReservoirsLinkedToUserForDisplay = ReservoirsLinkedToUserForDisplay.OrderBy(x =>
                                         x.GetType()
-                                        .GetProperty(columnName)
-                                        .GetValue(x, null))
+                                         .GetProperty(columnName)
+                                         .GetValue(x, null))
                               .ToList();
                 CurrentSortColumn = columnName;
                 IsSortedAscending = true;
@@ -364,7 +365,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             }
         }
 
-    private void Dispose()
+        private void Dispose()
         {
             this.Dispose(true);
         }
