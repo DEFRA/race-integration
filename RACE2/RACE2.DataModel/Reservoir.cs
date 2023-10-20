@@ -39,7 +39,7 @@ namespace RACE2.DataModel
         public DateTime VerifiedDetailsDate { get; set; }
         public DateTime LastInspectionDate { get; set; }
 
-      //  public UserDetail UserDetail { get; set; } = new UserDetail();
+        public UserDetail LastInspectionByUser { get; set; } = new UserDetail();
         [StringLength(250)]
         public string? LastInspectionEngineerName { get; set; }
         [StringLength(64)]
@@ -50,7 +50,7 @@ namespace RACE2.DataModel
 
         public DateTime NextInspectionDate103 { get; set; }
 
-        // public List<UserDetail> users { get; set; } = new List<UserDetail>();
+      //  public List<UserDetail> LastInspectionByUser { get; set; } = new List<UserDetail>();
 
         public Address? Address { get; set; } = new Address();
         public string? NearestTown { get; set; }

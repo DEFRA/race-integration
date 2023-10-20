@@ -188,6 +188,61 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 SubmissionStatus = SubmissionStatusList.Where(s => s.PublicName == reservoir.PublicName).FirstOrDefault();
                 var Undertakers = await reservoirService.GetOperatorsforReservoir(reservoir.Id, reservoir.OperatorType);
 
+            SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(reservoir.Id, UserDetail.Id);
+
+            var blobName = updatedStatus.override_template + ".docx";//SubmissionStatus.override_template + ".docx";
+            //var blobName = "S12ReportTemplate.docx";
+            //var blobName = "TestWithTags.docx";
+            Stream response = await blobStorageService.GetBlobFileStream(blobName);
+            S12PrePopulationFields s12PrePopulationFields = new S12PrePopulationFields();
+            s12PrePopulationFields.ReservoirName = reservoir.PublicName;
+            s12PrePopulationFields.ReservoirNearestTown = reservoir.NearestTown != null ? reservoir.NearestTown : "";
+            s12PrePopulationFields.ReservoirGridRef = reservoir.GridReference != null ? reservoir.GridReference : "";
+            s12PrePopulationFields.SupervisingEngineerName = UserDetail.cFirstName + " " + UserDetail.cLastName;
+            s12PrePopulationFields.SupervisingEngineerCompanyName = " ";
+            Address address = userDetails.addresses.FirstOrDefault();
+            s12PrePopulationFields.SupervisingEngineerAddress = address.AddressLine1;
+            if (!String.IsNullOrEmpty(address.AddressLine2))
+                s12PrePopulationFields.SupervisingEngineerAddress = s12PrePopulationFields.SupervisingEngineerAddress + ", " + address.AddressLine2;
+            if (!String.IsNullOrEmpty(address.Town))
+                s12PrePopulationFields.SupervisingEngineerAddress = s12PrePopulationFields.SupervisingEngineerAddress + ", " + address.Town;
+            if (!String.IsNullOrEmpty(address.County))
+                s12PrePopulationFields.SupervisingEngineerAddress = s12PrePopulationFields.SupervisingEngineerAddress + ", " + address.County;
+            if (!String.IsNullOrEmpty(address.Postcode))
+                s12PrePopulationFields.SupervisingEngineerAddress = s12PrePopulationFields.SupervisingEngineerAddress + ", " + address.Postcode;
+            s12PrePopulationFields.SupervisingEngineerEmail = UserDetail.Email;
+            if (!String.IsNullOrEmpty(UserDetail.cMobile))
+                s12PrePopulationFields.SupervisingEngineerPhoneNumber = UserDetail.cMobile;               
+            else
+                s12PrePopulationFields.SupervisingEngineerPhoneNumber = UserDetail.PhoneNumber != null ? UserDetail.PhoneNumber : "";
+            Undertakers = await reservoirService.GetOperatorsforReservoir(reservoir.Id, reservoir.OperatorType);
+            s12PrePopulationFields.UndertakerName = item.UndertakerName;            
+            s12PrePopulationFields.UndertakerEmail = Undertakers[0].Email;
+            s12PrePopulationFields.UndertakerAddress = Undertakers[0].AddressLine1;
+            if (!String.IsNullOrEmpty(Undertakers[0].AddressLine2))
+                s12PrePopulationFields.UndertakerAddress = s12PrePopulationFields.UndertakerAddress + ", " + Undertakers[0].AddressLine2;
+            if (!String.IsNullOrEmpty(Undertakers[0].Town))
+                s12PrePopulationFields.UndertakerAddress = s12PrePopulationFields.UndertakerAddress + ", " + Undertakers[0].Town;
+            if (!String.IsNullOrEmpty(Undertakers[0].County))
+                s12PrePopulationFields.UndertakerAddress = s12PrePopulationFields.UndertakerAddress + ", " + Undertakers[0].County;
+            if (!String.IsNullOrEmpty(Undertakers[0].Postcode))
+                s12PrePopulationFields.UndertakerAddress = s12PrePopulationFields.UndertakerAddress + ",  " + Undertakers[0].Postcode;
+            if (!String.IsNullOrEmpty(Undertakers[0].cMobile))
+                s12PrePopulationFields.UndertakerPhoneNumber = Undertakers[0].cMobile;
+            else
+                s12PrePopulationFields.UndertakerPhoneNumber = "Please provide a contact number";
+            MemoryStream processedStream = openXMLUtilitiesService.SearchAndReplace(response, s12PrePopulationFields);
+            processedStream.Position = 0;
+            var streamRef = new DotNetStreamReference(stream: processedStream);
+            await jsRuntime.InvokeVoidAsync("downloadFileFromStream", blobName, streamRef);
+          //  SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(reservoir.Id,UserDetail.Id);
+            var reservoirLinkedToUser = ReservoirsLinkedToUserForDisplay.Where(r => r.ReservoirName == reservoir.PublicName).FirstOrDefault();
+            reservoirLinkedToUser.Status = updatedStatus.Status;
+            await InvokeAsync(() =>
+            {
+                StateHasChanged();
+            });
+        }
                 var blobName = SubmissionStatus.override_template + ".docx";
                 //var blobName = "S12ReportTemplate.docx";
                 //var blobName = "TestWithTags.docx";
