@@ -39,7 +39,7 @@ namespace RACE2.DataModel
         public DateTime VerifiedDetailsDate { get; set; }
         public DateTime LastInspectionDate { get; set; }
 
-        public UserDetail LastInspectionByUser { get; set; } = new UserDetail();
+        public UserDetail? LastInspectionByUser { get; set; }
         [StringLength(250)]
         public string? LastInspectionEngineerName { get; set; }
         [StringLength(64)]
