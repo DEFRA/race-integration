@@ -1,25 +1,25 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
 
 #page-container {
     position: relative;
-    min-height: 70vh;
+    min-height: 100vh;
 }
 
 #content-wrap {
@@ -27,9 +27,8 @@ body {
 }
 
 #footer {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     width: 100%;
-    min-height: 2.5rem; /* Footer height */
+    height: 200px; /* Footer height */
 }
-

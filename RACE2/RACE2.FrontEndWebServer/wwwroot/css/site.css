@@ -12,9 +12,9 @@ a, .btn-link {
     color: #0071c1;
 }
 
-a:hover {
-    cursor: pointer;
-}
+    a:hover {
+        cursor: pointer;
+    }
 
 .btn-primary {
     color: #fff;
@@ -40,7 +40,7 @@ a:hover {
 
 #page-container {
     position: relative;
-    min-height: 200vh;
+    min-height: 100vh;
 }
 
 #content-wrap {
@@ -48,10 +48,10 @@ a:hover {
 }
 
 #footer {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     width: 100%;
-    min-height: 2.5rem; /* Footer height */
+    height: 2.5rem; /* Footer height */
 }
 
 #blazor-error-ui {
@@ -82,6 +82,7 @@ a:hover {
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
+
 .tabs {
     width: 100%;
     background-color: #ffffff;
@@ -149,42 +150,41 @@ a:hover {
     position: relative;
 }
 
-.autocomplete .options {
-    position: absolute;
-    top: 40px;
-    left: 0;
-    background: white;
-    width: 600px;
-    padding: 0;
-    z-index: 10;
-    border: 1px solid #d4d4d4;
-    border-radius: 0rem;
-    box-shadow: 0 30px 25px 8px rgba(0, 0, 0, 0.1);
-}
+    .autocomplete .options {
+        position: absolute;
+        top: 40px;
+        left: 0;
+        background: white;
+        width: 600px;
+        padding: 0;
+        z-index: 10;
+        border: 1px solid #d4d4d4;
+        border-radius: 0rem;
+        box-shadow: 0 30px 25px 8px rgba(0, 0, 0, 0.1);
+    }
 
-.autocomplete .option {
-    display: block;
-    padding: 0.25rem;
-    border-bottom: 1px solid #d4d4d4;
-}
+    .autocomplete .option {
+        display: block;
+        padding: 0.25rem;
+        border-bottom: 1px solid #d4d4d4;
+    }
 
-.autocomplete .option .option-text {
-    padding: 0.25rem 0.5rem;
-    font-size: 18px;
-}
+        .autocomplete .option .option-text {
+            padding: 0.25rem 0.5rem;
+            font-size: 18px;
+        }
 
-.autocomplete .option:hover {
-    background: #1d70b8;
-    color: #ffffff;
-}
+        .autocomplete .option:hover {
+            background: #1d70b8;
+            color: #ffffff;
+        }
 
-.autocomplete .option.disabled {
-    background-color: lightgrey;
-    cursor: not-allowed;
-}
+        .autocomplete .option.disabled {
+            background-color: lightgrey;
+            cursor: not-allowed;
+        }
 
-.autocomplete .option.disabled:hover {
-    background: lightgrey;
-    color: var(--bs-body);
-}
-
+            .autocomplete .option.disabled:hover {
+                background: lightgrey;
+                color: var(--bs-body);
+            }
