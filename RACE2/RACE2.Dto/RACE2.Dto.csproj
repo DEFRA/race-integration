@@ -7,11 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="ReservoirUpdateDetailsDTOcs" />
+    <None Remove="ReservoirUpdateDetailsDTO" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="ReservoirUpdateDetailsDTOcs" />
+    <Compile Include="ReservoirUpdateDetailsDTO" />
   </ItemGroup>
 
   <ItemGroup>
