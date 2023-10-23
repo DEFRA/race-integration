@@ -129,12 +129,15 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 await InvokeAsync(() =>
                 {
                     StateHasChanged();
-                });
-                base.OnInitializedAsync();
+                });                
             }
             catch (Exception ex)
             {
                 //throw new ApplicationException("Error loading annual statement data.");
+            }
+            finally
+            {
+                await base.OnInitializedAsync();
             };
         }
 
