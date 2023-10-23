@@ -231,12 +231,12 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                     s12PrePopulationFields.UndertakerPhoneNumber = Undertakers[0].cMobile;
                 else
                     s12PrePopulationFields.UndertakerPhoneNumber = "Please provide a contact number";
-                //s12PrePopulationFields.NextInspectionDate = reservoir.NextInspectionDate102.ToString("dd MMM yyyy");
-                //s12PrePopulationFields.LastCertificationDate = reservoir.LastCertificationDate.ToString("dd MMM yyyy");
-                //s12PrePopulationFields.LastInspectionDate = reservoir.LastInspectionDate.ToString("dd MMM yyyy");
-                //int lastInspectingEngineerId=reservoir.LastInspectionByUser.Id;
-                //s12PrePopulationFields.LastInspectingEngineerName = reservoir.LastInspectionEngineerName;
-                //s12PrePopulationFields.LastInspectingEngineerPhoneNumber = reservoir.LastInspectionEngineerPhone;
+                s12PrePopulationFields.NextInspectionDate = (reservoir.NextInspectionDate102 != DateTime.MinValue)?reservoir.NextInspectionDate102.ToString("dd MMM yyyy"):" ";
+                s12PrePopulationFields.LastCertificationDate = (reservoir.LastCertificationDate != DateTime.MinValue) ? reservoir.LastCertificationDate.ToString("dd MMM yyyy"): " ";
+                s12PrePopulationFields.LastInspectionDate = (reservoir.LastInspectionDate != DateTime.MinValue) ? reservoir.LastInspectionDate.ToString("dd MMM yyyy"): " ";
+                int lastInspectingEngineerId = reservoir.LastInspectionByUser.Id;
+                s12PrePopulationFields.LastInspectingEngineerName = !String.IsNullOrEmpty(reservoir.LastInspectionEngineerName)?reservoir.LastInspectionEngineerName:" ";
+                s12PrePopulationFields.LastInspectingEngineerPhoneNumber = !String.IsNullOrEmpty(reservoir.LastInspectionEngineerPhone) ? reservoir.LastInspectionEngineerPhone:" ";
                 MemoryStream processedStream = openXMLUtilitiesService.SearchAndReplace(response, s12PrePopulationFields);
                 processedStream.Position = 0;
                 var streamRef = new DotNetStreamReference(stream: processedStream);
