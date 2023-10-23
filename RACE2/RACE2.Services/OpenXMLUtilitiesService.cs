@@ -71,6 +71,21 @@ namespace RACE2.Services
                         case "{Undertaker phone number}":
                             docText = tagVal.Replace(docText, s12PrePopulationFields.UndertakerPhoneNumber);
                             break;
+                        case "{Next inspection date}":
+                            docText = tagVal.Replace(docText, s12PrePopulationFields.NextInspectionDate);
+                            break;
+                        case "{Last certification date}":
+                            docText = tagVal.Replace(docText, s12PrePopulationFields.LastCertificationDate);
+                            break;
+                        case "{Last inspection date}":
+                            docText = tagVal.Replace(docText, s12PrePopulationFields.LastInspectionDate);
+                            break;
+                        case "{Last inspecting engineer name}":
+                            docText = tagVal.Replace(docText, s12PrePopulationFields.LastInspectingEngineerName);
+                            break;
+                        case "{Last inspecting engineer phone number}":
+                            docText = tagVal.Replace(docText, s12PrePopulationFields.LastInspectingEngineerPhoneNumber);
+                            break;
                         default:
                             break;
                     }
