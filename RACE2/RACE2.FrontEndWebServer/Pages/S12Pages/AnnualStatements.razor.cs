@@ -231,7 +231,14 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                     s12PrePopulationFields.UndertakerPhoneNumber = Undertakers[0].cMobile;
                 else
                     s12PrePopulationFields.UndertakerPhoneNumber = "Please provide a contact number";
-                s12PrePopulationFields.NextInspectionDate = (reservoir.NextInspectionDate102 != DateTime.MinValue)?reservoir.NextInspectionDate102.ToString("dd MMM yyyy"):" ";
+                if (reservoir.NextInspectionDate103 != DateTime.MinValue)
+                {
+                    s12PrePopulationFields.NextInspectionDate = (reservoir.NextInspectionDate103 != DateTime.MinValue) ? reservoir.NextInspectionDate102.ToString("dd MMM yyyy") : " ";
+                }
+                else
+                {
+                    s12PrePopulationFields.NextInspectionDate = (reservoir.NextInspectionDate102 != DateTime.MinValue) ? reservoir.NextInspectionDate102.ToString("dd MMM yyyy") : " ";
+                }
                 s12PrePopulationFields.LastCertificationDate = (reservoir.LastCertificationDate != DateTime.MinValue) ? reservoir.LastCertificationDate.ToString("dd MMM yyyy"): " ";
                 s12PrePopulationFields.LastInspectionDate = (reservoir.LastInspectionDate != DateTime.MinValue) ? reservoir.LastInspectionDate.ToString("dd MMM yyyy"): " ";
                 int lastInspectingEngineerId = reservoir.LastInspectionByUser.Id;
