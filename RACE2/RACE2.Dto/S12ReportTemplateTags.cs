@@ -22,6 +22,11 @@ namespace RACE2.Dto
             Tags.Add("{Undertaker address}");
             Tags.Add("{Undertaker email}");
             Tags.Add("{Undertaker phone number}");
+            Tags.Add("{Next inspection date}");
+            Tags.Add("{Last certification date}");
+            Tags.Add("{Last inspection date}");
+            Tags.Add("{Last inspecting engineer name}");
+            Tags.Add("{Last inspecting engineer phone number}");
         }
     }
 }
