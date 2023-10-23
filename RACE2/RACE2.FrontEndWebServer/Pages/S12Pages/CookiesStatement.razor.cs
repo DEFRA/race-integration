@@ -28,7 +28,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             {
                 StateHasChanged();
             });
-            base.OnInitializedAsync();
+            await base.OnInitializedAsync();
         }
     }
 }

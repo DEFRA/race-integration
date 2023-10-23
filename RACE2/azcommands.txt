@@ -17,6 +17,32 @@ az acr build -r race2acr -t race2acr.azurecr.io/race2webapi:v1 -f Dockerfile_Web
 az acr build -r race2acr -t race2acr.azurecr.io/race2frontend:v1 -f Dockerfile_FrontEnd .
 az acr build -r race2acr -t race2acr.azurecr.io/race2frontendweb:v1 -f Dockerfile_FrontEndWeb .
 
+
+//purge images
+az acr run --registry <ACR Name> --cmd 'acr purge --filter <repository name>:.*  --ago 0d --untagged --keep 1 --dry-run' /dev/null
+az acr run --registry Race2ACR --cmd 'acr purge --filter race2securityprovider:.*  --ago 0d --keep 1 --dry-run' /dev/null
+
+az acr run --registry <ACR Name> --cmd 'acr purge --filter <repository name>:.*  --ago 0d --untagged --keep 1' /dev/null
+
+az account set -s 97ea02ef-73bc-4ee9-b320-b38a6b41b4d7
+az acr run --registry Race2ACR --cmd 'acr purge --filter race2securityprovider:.*  --ago 0d --keep 1' /dev/null
+az acr run --registry Race2ACR --cmd 'acr purge --filter race2frontendwebserver:.*  --ago 0d --keep 1' /dev/null
+az acr run --registry Race2ACR --cmd 'acr purge --filter race2webapi:.*  --ago 0d --keep 1' /dev/null
+
+az acr run --registry POCRACINFCR1401 --cmd 'acr purge --filter race2securityprovider:.*  --ago 0d --keep 1' /dev/null
+az acr run --registry POCRACINFCR1401 --cmd 'acr purge --filter race2frontendwebserver:.*  --ago 0d --keep 1' /dev/null
+az acr run --registry POCRACINFCR1401 --cmd 'acr purge --filter race2webapi:.*  --ago 0d --keep 1' /dev/null
+
+az account set -s 97ea02ef-73bc-4ee9-b320-b38a6b41b4d7
+az acr run --registry DEVRACINFCR1401 --cmd 'acr purge --filter race2securityprovider:.*  --ago 0d --keep 1' /dev/null
+az acr run --registry DEVRACINFCR1401 --cmd 'acr purge --filter race2frontendwebserver:.*  --ago 0d --keep 1' /dev/null
+az acr run --registry DEVRACINFCR1401 --cmd 'acr purge --filter race2webapi:.*  --ago 0d --keep 1' /dev/null
+
+az account set -s 9327c8db-cebb-445d-9933-1bca1a76b82e
+az acr run --registry TSTRACINFCR1401 --cmd 'acr purge --filter race2securityprovider:.*  --ago 0d --keep 1' /dev/null
+az acr run --registry TSTRACINFCR1401 --cmd 'acr purge --filter race2frontendwebserver:.*  --ago 0d --keep 1' /dev/null
+az acr run --registry TSTRACINFCR1401 --cmd 'acr purge --filter race2webapi:.*  --ago 0d --keep 1' /dev/null
+
 //sync kris branch with main
 git checkout kris
 git pull origin main
