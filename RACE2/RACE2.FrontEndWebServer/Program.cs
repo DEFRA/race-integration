@@ -14,7 +14,6 @@ using Microsoft.IdentityModel.Logging;
 using RACE2.DataAccess.Repository;
 using RACE2.DataModel;
 using RACE2.FrontEndWebServer.ExceptionGlobalErrorHandling;
-using RACE2.Infrastructure;
 using RACE2.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -109,7 +108,6 @@ builder.Services.AddFluxor(o =>
     o.UseReduxDevTools(rdt => { rdt.Name = "RACE2 application"; });
 });
 
-builder.Services.AddLoggingServices(builder.Configuration);
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IReservoirService, ReservoirService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
