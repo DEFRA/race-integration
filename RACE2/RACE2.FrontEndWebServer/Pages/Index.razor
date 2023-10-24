@@ -2,6 +2,7 @@
 @using System.Security.Claims
 @using RACE2.FrontEndWebServer.Components
 @inject NavigationManager NavigationManager
+@inject ILogger<Index> Logger
 
 <Header />
 
@@ -107,7 +108,7 @@
     protected override async void OnInitialized()
     {
         AuthenticationState authState = await AuthenticationStateTask; //AuthenticationStateProvider.GetAuthenticationStateAsync();
-
+        Logger.LogInformation("User used FrontEndWebServer App");
         //if (authState.User.Claims is not null)
         //{
         //    NavigationManager.NavigateTo("/annual-statements", true);

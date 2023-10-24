@@ -43,11 +43,11 @@ var clientSecret=builder.Configuration["ClientSecret"];
 var appinsigtsConnString= builder.Configuration["AppInsightsConnectionString"];
 //IConfiguration _configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../appsettings.json").Build();
 
-builder.Logging.AddApplicationInsights(
-        configureTelemetryConfiguration: (config) =>
-            config.ConnectionString = builder.Configuration.GetConnectionString(appinsigtsConnString),
-            configureApplicationInsightsLoggerOptions: (options) => { }
-    );
+//builder.Logging.AddApplicationInsights(
+//        configureTelemetryConfiguration: (config) =>
+//            config.ConnectionString = builder.Configuration.GetConnectionString(appinsigtsConnString),
+//            configureApplicationInsightsLoggerOptions: (options) => { }
+//    );
 
 // Add services to the container.
 builder.Services.AddRazorPages();
