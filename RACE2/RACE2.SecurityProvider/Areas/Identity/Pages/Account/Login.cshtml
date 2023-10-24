@@ -1,12 +1,8 @@
 ﻿@page
 @model LoginModel
-
 @{
-    Layout = "";
+    Layout = "_LayoutRace2App";
 }
-<link href="~/css/application.css" rel="stylesheet" />
-<link href="~/css/site.css" rel="stylesheet" />
-<script src="~/js/site.js"></script>
 
 <partial name="_HeaderPartialWithBanner" />
 
@@ -38,75 +34,75 @@
                         </div>
                     </div>
                 }
-                <h1 class="govuk-heading-xl govuk-!-margin-top-8">Sign in</h1>                   
-                    @if (ModelState.IsValid)
-                    {
+                <h1 class="govuk-heading-xl govuk-!-margin-top-8">Sign in</h1>
+                @if (ModelState.IsValid)
+                {
+                    <div class="govuk-form-group">
+                        <label class="govuk-label" for="govGateUsername">
+                            Username
+                        </label>
+                        <a id="email-error" style="text-decoration:none;">
+                            <input asp-for="Input.Email" class="govuk-input govuk-!-width-three-quarters" aria-required="true" aria-describedby="govGateUserId-hint" id="govGateUsername">
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <div class="govuk-form-group govuk-form-group--error">
+                        <label class="govuk-label" for="username-Id-2">
+                            Username
+                        </label>
+                        <p id="national-insurance-number-error" class="govuk-error-message">
+                            <span class="govuk-visually-hidden">Error:</span> Check your email address
+                        </p>
+                        <a id="email-error" style="text-decoration:none;">
+                            <input asp-for="Input.Email" class="govuk-input govuk-!-width-three-quarters govuk-input--error" aria-required="true" aria-describedby="national-insurance-number-hint national-insurance-number-error" id="govGateUsername">
+                        </a>
+                    </div>
+                }
+                @if (ModelState.IsValid)
+                {
+                    <div class="gem-c-show-password" data-module="show-password" data-disable-form-submit-check="false" data-show-text="Show" data-hide-text="Hide" data-show-full-text="Show password" data-hide-full-text="Hide password" data-announce-show="Your password is shown" data-announce-hide="Your password is hidden" data-show-password-module-started="true">
                         <div class="govuk-form-group">
-                            <label class="govuk-label" for="govGateUsername">
-                                Username
-                            </label> 
-                            <a id="email-error" style="text-decoration:none;">
-                                <input asp-for="Input.Email" class="govuk-input govuk-!-width-three-quarters" aria-required="true" aria-describedby="govGateUserId-hint" id="govGateUsername">
-                            </a>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="govuk-form-group govuk-form-group--error">
-                            <label class="govuk-label" for="username-Id-2">
-                                Username
-                            </label>
-                            <p id="national-insurance-number-error" class="govuk-error-message">
-                                <span class="govuk-visually-hidden">Error:</span> Check your email address
-                            </p>
-                            <a id="email-error" style="text-decoration:none;">
-                                <input asp-for="Input.Email" class="govuk-input govuk-!-width-three-quarters govuk-input--error" aria-required="true" aria-describedby="national-insurance-number-hint national-insurance-number-error" id="govGateUsername">
-                            </a>
-                        </div>                    
-                    }
-                    @if (ModelState.IsValid)
-                    {
-                        <div class="gem-c-show-password" data-module="show-password" data-disable-form-submit-check="false" data-show-text="Show" data-hide-text="Hide" data-show-full-text="Show password" data-hide-full-text="Hide password" data-announce-show="Your password is shown" data-announce-hide="Your password is hidden" data-show-password-module-started="true">
-                            <div class="govuk-form-group">
-                                <label for="govGatePasswordConfirm" class="gem-c-label govuk-label">Password</label>
-                                <a id="password-error" style="text-decoration:none;">
-                                    <div class="gem-c-show-password__input-wrapper">
-                                        <input asp-for="Input.Password" id="govGatePasswordConfirm" autocomplete="off" class="gem-c-input govuk-input gem-c-input--with-password govuk-!-width-three-quarters" id="input-cfca9749" spellcheck="false" type="password">
-                                        <button id="passwordbtn" class="gem-c-show-password__toggle" aria-controls="input-cfca9749" type="button" aria-label="Show password" onclick="getButtonText('passwordbtn','govGatePasswordConfirm')">Show</button>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="govuk-form-group govuk-form-group--error">
-                            <label for="password-2" class="gem-c-label govuk-label">Password</label>
-                            <p id="password-error" class="govuk-error-message">
-                                <span class="govuk-visually-hidden">Error:</span> Check your password
-                            </p>
+                            <label for="govGatePasswordConfirm" class="gem-c-label govuk-label">Password</label>
                             <a id="password-error" style="text-decoration:none;">
                                 <div class="gem-c-show-password__input-wrapper">
-                                    <input autocomplete="off" asp-for="Input.Password" class="gem-c-input govuk-input gem-c-input--with-password govuk-input--error" id="govGatePasswordConfirm"
-                                           spellcheck="false" type="password">
+                                    <input asp-for="Input.Password" id="govGatePasswordConfirm" autocomplete="off" class="gem-c-input govuk-input gem-c-input--with-password govuk-!-width-three-quarters" id="input-cfca9749" spellcheck="false" type="password">
                                     <button id="passwordbtn" class="gem-c-show-password__toggle" aria-controls="input-cfca9749" type="button" aria-label="Show password" onclick="getButtonText('passwordbtn','govGatePasswordConfirm')">Show</button>
                                 </div>
                             </a>
                         </div>
-                    }                
-
-                    <div>
-                        <button id="login-submit" type="submit" class="govuk-button govuk-!-margin-top-4">Sign in</button>
                     </div>
+                }
+                else
+                {
+                    <div class="govuk-form-group govuk-form-group--error">
+                        <label for="password-2" class="gem-c-label govuk-label">Password</label>
+                        <p id="password-error" class="govuk-error-message">
+                            <span class="govuk-visually-hidden">Error:</span> Check your password
+                        </p>
+                        <a id="password-error" style="text-decoration:none;">
+                            <div class="gem-c-show-password__input-wrapper">
+                                <input autocomplete="off" asp-for="Input.Password" class="gem-c-input govuk-input gem-c-input--with-password govuk-input--error" id="govGatePasswordConfirm"
+                                       spellcheck="false" type="password">
+                                <button id="passwordbtn" class="gem-c-show-password__toggle" aria-controls="input-cfca9749" type="button" aria-label="Show password" onclick="getButtonText('passwordbtn','govGatePasswordConfirm')">Show</button>
+                            </div>
+                        </a>
+                    </div>
+                }
+
+                <div>
+                    <button id="login-submit" type="submit" class="govuk-button govuk-!-margin-top-4">Sign in</button>
+                </div>
 
                 <div class="govuk-list govuk-!-margin-top-9">
-                        <a class="govuk-link--no-visited-state" id="forgot-password" asp-page="./ForgotPassword">I've forgotten my password</a>
-                    </div>
- 
-                </form>
+                    <a class="govuk-link--no-visited-state" id="forgot-password" asp-page="./ForgotPassword">I've forgotten my password</a>
+                </div>
 
-            </div>
+            </form>
+
         </div>
+    </div>
     <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
 
     </main>
@@ -115,6 +111,6 @@
 <partial name="_FooterPartial" />
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />    
+    <partial name="_ValidationScriptsPartial" />
 }
 

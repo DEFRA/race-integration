@@ -38,7 +38,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 userService.UpdateFirstTimeUserLogin(userDetails.Email);
             }
 
-            base.OnInitializedAsync();
+            await base.OnInitializedAsync();
         }
 
         public void GoToNextPage()
