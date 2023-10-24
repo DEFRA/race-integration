@@ -147,6 +147,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
                 }
                 else
                 {
+                    _logger.LogError("The email address or password you entered is incorrect.");
                     //ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     ModelState.AddModelError(string.Empty, "The email address or password you entered is incorrect.");
                     return Page();
