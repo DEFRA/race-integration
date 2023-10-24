@@ -385,10 +385,10 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             }
         }
 
-        private void Dispose()
-        {
-            this.Dispose(true);
-        }
+        //private void Dispose()
+        //{
+        //    this.Dispose(true);
+        //}
 
         public string text1 = "";
         public string text2 = "";

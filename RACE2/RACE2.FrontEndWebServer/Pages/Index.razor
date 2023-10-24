@@ -1,7 +1,12 @@
 ﻿@page "/"
+
 @using System.Security.Claims
 @using RACE2.FrontEndWebServer.Components
+@using Microsoft.AspNetCore.Components.Authorization
+@using  RACE2.Services
 @inject NavigationManager NavigationManager
+@inject IConfiguration _config
+@inject IUserService userService
 
 <Header/>
 
@@ -112,8 +117,20 @@
 
     private async void GoToNextPage()
     {
-        bool forceLoad = false;
-        NavigationManager.NavigateTo("/annual-statements", forceLoad);
+        var authState = await AuthenticationStateTask;
+        UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
+
+        var userDetails = await userService.GetUserByEmailID(UserName);
+        bool forceLoad = true;
+        if (userDetails.cIsFirstTimeUser)
+        {
+            string pagelink = _config["RACE2SecurityProviderURL"] + "/Identity/Account/CreatePassword?userEmail=" + UserName;
+            NavigationManager.NavigateTo(pagelink, forceLoad);
+        }
+        else
+        {
+            NavigationManager.NavigateTo("/annual-statements", forceLoad);
+        }
         //NavigationManager.NavigateTo("/choose-a-reservoir", forceLoad);
         //if (authState.User.Claims == null)
         //{

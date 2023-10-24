@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RACE2.Dto\RACE2.Dto.csproj" />
+    <ProjectReference Include="..\RACE2.Infrastructure\RACE2.Infrastructure.csproj" />
     <ProjectReference Include="..\RACE2.Services\RACE2.Services.csproj" />
   </ItemGroup>
 

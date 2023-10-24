@@ -11,7 +11,7 @@ using RACE2.DataAccess;
 using RACE2.DatabaseProvider.Data;
 using RACE2.DataModel;
 using RACE2.Dto;
-
+using RACE2.Infrastructure;
 using RACE2.Notification;
 using RACE2.SecurityProvider;
 using RACE2.SecurityProvider.UtilityClasses;
@@ -92,6 +92,7 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequiredUniqueChars = 1;
 });
 
+builder.Services.AddLoggingServices(builder.Configuration);
 builder.Services.AddScoped<IRandomPasswordGeneration, RandomPasswordGeneration>();
 builder.Services.AddScoped<INotification, RaceNotification>();
 var app = builder.Build();
