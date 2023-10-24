@@ -44,7 +44,16 @@ var clientSecret=builder.Configuration["ClientSecret"];
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddServerSideBlazor();
+builder.Services.AddServerSideBlazor().AddHubOptions(options =>
+{
+    options.ClientTimeoutInterval = TimeSpan.FromHours(1); 
+    options.EnableDetailedErrors = true; 
+    options.HandshakeTimeout = TimeSpan.FromSeconds(15); 
+    options.KeepAliveInterval = TimeSpan.FromSeconds(15); 
+    options.MaximumParallelInvocationsPerClient = 5; 
+    options.MaximumReceiveMessageSize = 32 * 1024; 
+    options.StreamBufferCapacity = 10;
+});
 
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {
