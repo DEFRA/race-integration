@@ -40,20 +40,28 @@ var blazorClientURL = builder.Configuration["RACE2FrontEndURL"];
 var RACE2WebApiURL = builder.Configuration["RACE2WebApiURL"];
 var RACE2IDPURL = builder.Configuration["RACE2SecurityProviderURL"];
 var clientSecret=builder.Configuration["ClientSecret"];
+var appinsigtsConnString= builder.Configuration["AppInsightsConnectionString"];
 //IConfiguration _configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../appsettings.json").Build();
+
+builder.Logging.AddApplicationInsights(
+        configureTelemetryConfiguration: (config) =>
+            config.ConnectionString = builder.Configuration.GetConnectionString(appinsigtsConnString),
+            configureApplicationInsightsLoggerOptions: (options) => { }
+    );
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddServerSideBlazor().AddHubOptions(options =>
-{
-    options.ClientTimeoutInterval = TimeSpan.FromSeconds(30); 
-    options.EnableDetailedErrors = true; 
-    options.HandshakeTimeout = TimeSpan.FromSeconds(15); 
-    options.KeepAliveInterval = TimeSpan.FromSeconds(15); 
-    options.MaximumParallelInvocationsPerClient = 5; 
-    options.MaximumReceiveMessageSize = 32 * 1024; 
-    options.StreamBufferCapacity = 10;
-});
+builder.Services.AddServerSideBlazor()
+    .AddHubOptions(options =>
+        {
+            options.ClientTimeoutInterval = TimeSpan.FromMinutes(20);//.FromSeconds(30); 
+            options.EnableDetailedErrors = true;
+            options.HandshakeTimeout = TimeSpan.FromSeconds(15); 
+            options.KeepAliveInterval = TimeSpan.FromMinutes(10);//.FromSeconds(15);  
+            options.MaximumParallelInvocationsPerClient = 1; 
+            options.MaximumReceiveMessageSize = 128 * 1024; //32*1024;
+            options.StreamBufferCapacity = 10;
+        });
 
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {
