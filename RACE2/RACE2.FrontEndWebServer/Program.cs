@@ -55,17 +55,17 @@ builder.Services.AddApplicationInsightsTelemetry(options =>
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddServerSideBlazor()
-    .AddHubOptions(options =>
-        {
-            options.ClientTimeoutInterval = TimeSpan.FromSeconds(60);//.FromSeconds(30); 
-            options.EnableDetailedErrors = true;
-            options.HandshakeTimeout = TimeSpan.FromSeconds(30); //FromSeconds(15); 
-            options.KeepAliveInterval = TimeSpan.FromSeconds(30);//.FromSeconds(15);  
-            options.MaximumParallelInvocationsPerClient = 1; 
-            options.MaximumReceiveMessageSize = 128 * 1024; //32*1024;
-            options.StreamBufferCapacity = 10;
-        });
+builder.Services.AddServerSideBlazor();
+    //.AddHubOptions(options =>
+    //    {
+    //        options.ClientTimeoutInterval = TimeSpan.FromSeconds(60);//.FromSeconds(30); 
+    //        options.EnableDetailedErrors = true;
+    //        options.HandshakeTimeout = TimeSpan.FromSeconds(30); //FromSeconds(15); 
+    //        options.KeepAliveInterval = TimeSpan.FromSeconds(30);//.FromSeconds(15);  
+    //        options.MaximumParallelInvocationsPerClient = 1; 
+    //        options.MaximumReceiveMessageSize = 128 * 1024; //32*1024;
+    //        options.StreamBufferCapacity = 10;
+    //    });
 
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {
@@ -83,7 +83,7 @@ builder.Services.AddAuthentication(options =>
 //.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
 .AddCookie(options =>
 {
-    options.ExpireTimeSpan = TimeSpan.FromHours(1);
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
     options.Cookie.MaxAge = options.ExpireTimeSpan; // optional
     options.SlidingExpiration = true;
     options.LoginPath = "/login";
