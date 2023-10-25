@@ -104,15 +104,11 @@
     private IEnumerable<Claim>? Claims { get; set; }
 
     public string UserName { get; set; } = "Unknown";
+    public AuthenticationState authState  { get; set; }
 
     protected override async void OnInitialized()
     {
-        AuthenticationState authState = await AuthenticationStateTask; //AuthenticationStateProvider.GetAuthenticationStateAsync();
-        Logger.LogInformation("User used FrontEndWebServer App");
-        //if (authState.User.Claims is not null)
-        //{
-        //    NavigationManager.NavigateTo("/annual-statements", true);
-        //}
+        authState = await AuthenticationStateTask; //AuthenticationStateProvider.GetAuthenticationStateAsync();
     }
 
     private async void GoToLoginPage()
@@ -125,22 +121,14 @@
     {
         bool forceLoad = false;
         NavigationManager.NavigateTo("/annual-statements", forceLoad);
-        //NavigationManager.NavigateTo("/choose-a-reservoir", forceLoad);
-        //if (authState.User.Claims == null)
-        //{
-        //    Claims = authState.User.Claims;
-
-        //    Claim? givenNameClaim = authState.User.FindFirst("name");
-        //    if (givenNameClaim is not null)
-        //    {
-        //        UserName = givenNameClaim.Value;
-        //    }
-        //    NavigationManager.NavigateTo("/annual-statements", forceLoad);
-        //}
-        //else
-        //{
-        //    NavigationManager.NavigateTo("/login", forceLoad);
-        //}
+        if (authState.User.Identity.IsAuthenticated)
+        {           
+           NavigationManager.NavigateTo("/annual-statements", forceLoad);
+        }
+        else
+        {
+           NavigationManager.NavigateTo("/login", forceLoad);
+        }
     }
 }
 
