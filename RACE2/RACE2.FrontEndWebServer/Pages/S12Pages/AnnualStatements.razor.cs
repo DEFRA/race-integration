@@ -250,9 +250,16 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 }
                 s12PrePopulationFields.LastCertificationDate = (reservoir.LastCertificationDate != DateTime.MinValue) ? reservoir.LastCertificationDate.ToString("dd MMM yyyy"): " ";
                 s12PrePopulationFields.LastInspectionDate = (reservoir.LastInspectionDate != DateTime.MinValue) ? reservoir.LastInspectionDate.ToString("dd MMM yyyy"): " ";
-                int lastInspectingEngineerId = reservoir.LastInspectionByUser.Id;
-                s12PrePopulationFields.LastInspectingEngineerName = !String.IsNullOrEmpty(reservoir.LastInspectionEngineerName)?reservoir.LastInspectionEngineerName:" ";
-                s12PrePopulationFields.LastInspectingEngineerPhoneNumber = !String.IsNullOrEmpty(reservoir.LastInspectionEngineerPhone) ? reservoir.LastInspectionEngineerPhone:" ";
+                if ((reservoir.LastInspectionByUser.Id != 0) && (reservoir.LastInspectionByUser != null))
+                {
+                    s12PrePopulationFields.LastInspectingEngineerName = !String.IsNullOrEmpty(reservoir.LastInspectionByUser.cFirstName) && !String.IsNullOrEmpty(reservoir.LastInspectionByUser.cLastName) ? reservoir.LastInspectionByUser.cFirstName + " " + reservoir.LastInspectionByUser.cLastName : " ";
+                    s12PrePopulationFields.LastInspectingEngineerPhoneNumber = !String.IsNullOrEmpty(reservoir.LastInspectionByUser.PhoneNumber) ? reservoir.LastInspectionByUser.PhoneNumber: " ";
+                }
+                else
+                {
+                    s12PrePopulationFields.LastInspectingEngineerName = !String.IsNullOrEmpty(reservoir.LastInspectionEngineerName) ? reservoir.LastInspectionEngineerName : " ";
+                    s12PrePopulationFields.LastInspectingEngineerPhoneNumber = !String.IsNullOrEmpty(reservoir.LastInspectionEngineerPhone) ? reservoir.LastInspectionEngineerPhone : " ";
+                }
                 MemoryStream processedStream = openXMLUtilitiesService.SearchAndReplace(response, s12PrePopulationFields);
                 processedStream.Position = 0;
                 var streamRef = new DotNetStreamReference(stream: processedStream);
