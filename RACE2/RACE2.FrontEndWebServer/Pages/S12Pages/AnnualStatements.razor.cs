@@ -111,7 +111,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                         PublicName = rn.PublicName,
                         NearestTown = rn.NearestTown,
                         GridReference = rn.GridReference,
-                        OperatorType = rn.OperatorType
+                        OperatorType = rn.OperatorType,
+                        LastInspectionByUser = rn.UserDetail
                     };
                     r.Address = new Address()
                     {
