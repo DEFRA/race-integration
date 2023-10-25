@@ -58,10 +58,10 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor()
     .AddHubOptions(options =>
         {
-            options.ClientTimeoutInterval = TimeSpan.FromMinutes(20);//.FromSeconds(30); 
+            options.ClientTimeoutInterval = TimeSpan.FromSeconds(60);//.FromSeconds(30); 
             options.EnableDetailedErrors = true;
-            options.HandshakeTimeout = TimeSpan.FromMinutes(10); //FromSeconds(15); 
-            options.KeepAliveInterval = TimeSpan.FromMinutes(10);//.FromSeconds(15);  
+            options.HandshakeTimeout = TimeSpan.FromSeconds(30); //FromSeconds(15); 
+            options.KeepAliveInterval = TimeSpan.FromSeconds(30);//.FromSeconds(15);  
             options.MaximumParallelInvocationsPerClient = 1; 
             options.MaximumReceiveMessageSize = 128 * 1024; //32*1024;
             options.StreamBufferCapacity = 10;
