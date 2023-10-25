@@ -126,7 +126,7 @@ namespace RACE2.DataAccess.Repository
                             reservoir.UserDetail = userdetail;
 
                             return reservoir;
-                        }, parameters, null, true, splitOn: "ReservoirId,id", commandType: CommandType.StoredProcedure);
+                        }, parameters, null, true, splitOn: "ReservoirId,id,id", commandType: CommandType.StoredProcedure);
                         return reservoirs.ToList();
                     }
                 }
