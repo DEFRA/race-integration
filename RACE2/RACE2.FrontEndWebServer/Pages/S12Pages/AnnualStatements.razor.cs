@@ -42,6 +42,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         public IUserService userService { get; set; } = default!;
         [Inject]
         public IReservoirService reservoirService { get; set; } = default!;
+        [Inject]
+        public ILogger<AnnualStatements> Logger { get; set; } = default!;
         bool? IsLoggedIn;
         private string UserName { get; set; } = "Unknown";
         private UserDetail UserDetail { get; set; } = default!;
