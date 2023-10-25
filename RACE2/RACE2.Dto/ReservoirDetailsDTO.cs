@@ -31,5 +31,7 @@ namespace RACE2.Dto
         public string? NearestTown { get; set; }
         public string? OperatorType { get; set; }
 
+        public UserDetail? UserDetail { get; set; } = new UserDetail();
+
     }
 }
