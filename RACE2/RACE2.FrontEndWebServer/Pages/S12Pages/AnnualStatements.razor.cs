@@ -1,5 +1,6 @@
 using DocumentFormat.OpenXml.InkML;
 using DocumentFormat.OpenXml.Spreadsheet;
+using DocumentFormat.OpenXml.Wordprocessing;
 using Fluxor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -133,6 +134,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             }
             catch (Exception ex)
             {
+                Logger.LogCritical("Error getting data from backend services : "+ex.Message);
                 //throw new ApplicationException("Error loading annual statement data.");
             }
             finally
@@ -174,6 +176,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             }
             catch (Exception ex)
             {
+                Logger.LogCritical("Error loading reservoir data : " + ex.Message);
                 throw new ApplicationException("Error loading reservoir data.");
             };
         }
@@ -263,6 +266,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
     
             catch (Exception ex)
             {
+                Logger.LogCritical("Error downloading S12ReportTemplate for the reservoir : " + ex.Message);
                 throw new ApplicationException("Error downloading S12ReportTemplate for the reservoir.");
             };
         }
@@ -385,10 +389,10 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             }
         }
 
-        private void Dispose()
-        {
-            this.Dispose(true);
-        }
+        //private void Dispose()
+        //{
+        //    this.Dispose(true);
+        //}
 
         public string text1 = "";
         public string text2 = "";
