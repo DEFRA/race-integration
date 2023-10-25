@@ -40,11 +40,32 @@ var blazorClientURL = builder.Configuration["RACE2FrontEndURL"];
 var RACE2WebApiURL = builder.Configuration["RACE2WebApiURL"];
 var RACE2IDPURL = builder.Configuration["RACE2SecurityProviderURL"];
 var clientSecret=builder.Configuration["ClientSecret"];
+var appinsightsConnString= builder.Configuration["AppInsightsConnectionString"];
 //IConfiguration _configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../appsettings.json").Build();
+
+//builder.Logging.AddApplicationInsights(
+//        configureTelemetryConfiguration: (config) =>
+//            config.ConnectionString = builder.Configuration.GetConnectionString(appinsigtsConnString),
+//            configureApplicationInsightsLoggerOptions: (options) => { }
+//    );
+builder.Services.AddApplicationInsightsTelemetry(options => 
+{ 
+    options.ConnectionString = appinsightsConnString;
+});
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddServerSideBlazor();
+builder.Services.AddServerSideBlazor()
+    .AddHubOptions(options =>
+        {
+            options.ClientTimeoutInterval = TimeSpan.FromMinutes(20);//.FromSeconds(30); 
+            options.EnableDetailedErrors = true;
+            options.HandshakeTimeout = TimeSpan.FromSeconds(15); 
+            options.KeepAliveInterval = TimeSpan.FromMinutes(10);//.FromSeconds(15);  
+            options.MaximumParallelInvocationsPerClient = 1; 
+            options.MaximumReceiveMessageSize = 128 * 1024; //32*1024;
+            options.StreamBufferCapacity = 10;
+        });
 
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {
@@ -62,7 +83,7 @@ builder.Services.AddAuthentication(options =>
 //.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
 .AddCookie(options =>
 {
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+    options.ExpireTimeSpan = TimeSpan.FromHours(1);
     options.Cookie.MaxAge = options.ExpireTimeSpan; // optional
     options.SlidingExpiration = true;
     options.LoginPath = "/login";
