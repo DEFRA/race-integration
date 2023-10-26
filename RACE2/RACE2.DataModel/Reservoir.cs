@@ -37,12 +37,20 @@ namespace RACE2.DataModel
         public string? KeyFacts { get; set; }
         public DateTime ConstructionStartDate { get; set; }
         public DateTime VerifiedDetailsDate { get; set; }
-
         public DateTime LastInspectionDate { get; set; }
 
-        public DateTime NextInspectionDate { get; set; }
+        public UserDetail LastInspectionByUser { get; set; } = new UserDetail();
+        [StringLength(250)]
+        public string? LastInspectionEngineerName { get; set; }
+        [StringLength(64)]
+        public string? LastInspectionEngineerPhone { get; set; }
+        public DateTime LastCertificationDate { get; set; }
 
-       // public List<UserDetail> users { get; set; } = new List<UserDetail>();
+        public DateTime NextInspectionDate102 { get; set; }
+
+        public DateTime NextInspectionDate103 { get; set; }
+
+      //  public List<UserDetail> LastInspectionByUser { get; set; } = new List<UserDetail>();
 
         public Address? Address { get; set; } = new Address();
         public string? NearestTown { get; set; }

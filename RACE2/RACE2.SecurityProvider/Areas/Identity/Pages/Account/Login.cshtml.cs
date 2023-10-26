@@ -91,7 +91,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             public bool RememberMe { get; set; }
         }
 
-        public async Task OnGetAsync(string returnUrl = null)
+        public async Task OnGetAsync(string returnUrl = null) 
         {
             if (!string.IsNullOrEmpty(ErrorMessage))
             {
@@ -110,41 +110,56 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            returnUrl ??= Url.Content("~/");
-            WebAppUrl = _config["RACE2FrontEndURL"];
+            try
+            {                
+                returnUrl ??= Url.Content("~/");
+                WebAppUrl = _config["RACE2FrontEndURL"];
 
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+                ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
-            if (ModelState.IsValid)
+                if (ModelState.IsValid)
+                {
+                    // This doesn't count login failures towards account lockout
+                    // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+                    var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
+                    if (result.Succeeded)
+                    {
+                        _logger.LogInformation("User logged in." + " : " + Input.Email);
+                        return LocalRedirect(returnUrl);
+                    }
+                    else
+                    {
+                        _logger.LogInformation("User logged in failed." + " : " + Input.Email);
+                    }
+                    if (result.RequiresTwoFactor)
+                    {
+                        return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
+                    }
+                    if (result.IsLockedOut)
+                    {
+                        _logger.LogWarning("User account locked out." + " : " + Input.Email);
+                        //var forgotPassLink = Url.Action(nameof(ForgotPassword), "Account", new { }, Request.Scheme);
+                        //var content = string.Format("Your account is locked out, to reset your password, please click this link: {0}", forgotPassLink);
+                        //var message = new Message(new string[] { userModel.Email }, "Locked out account information", content, null);
+                        //await _emailSender.SendEmailAsync(message);
+                        ModelState.AddModelError("", "The account is locked out");
+                        //return RedirectToPage("./Lockout");
+                        string returnUrl1 = WebAppUrl + "/user-lockout";
+                        return Redirect(returnUrl1);
+                    }
+                    else
+                    {
+                        _logger.LogError("The email address or password you entered is incorrect." + " : " + Input.Email);
+                        //ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                        ModelState.AddModelError(string.Empty, "The email address or password you entered is incorrect.");
+                        return Page();
+                    }
+                }
+            }
+            catch (Exception ex)
             {
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
-                if (result.Succeeded)
-                {
-                    _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
-                }
-                if (result.RequiresTwoFactor)
-                {
-                    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
-                }
-                if (result.IsLockedOut)
-                {
-                    _logger.LogWarning("User account locked out.");
-                    //var forgotPassLink = Url.Action(nameof(ForgotPassword), "Account", new { }, Request.Scheme);
-                    //var content = string.Format("Your account is locked out, to reset your password, please click this link: {0}", forgotPassLink);
-                    //var message = new Message(new string[] { userModel.Email }, "Locked out account information", content, null);
-                    //await _emailSender.SendEmailAsync(message);
-                    ModelState.AddModelError("", "The account is locked out");
-                    return RedirectToPage("./Lockout");
-                }
-                else
-                {
-                    //ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    ModelState.AddModelError(string.Empty, "The email address or password you entered is incorrect.");
-                    return Page();
-                }
+                _logger.LogError("System error!" + " : " + ex.Message);
+                return Redirect("/error");
             }
 
             // If we got this far, something failed, redisplay form

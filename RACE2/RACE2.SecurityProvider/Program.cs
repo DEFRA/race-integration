@@ -11,7 +11,7 @@ using RACE2.DataAccess;
 using RACE2.DatabaseProvider.Data;
 using RACE2.DataModel;
 using RACE2.Dto;
-
+using RACE2.Infrastructure;
 using RACE2.Notification;
 using RACE2.SecurityProvider;
 using RACE2.SecurityProvider.UtilityClasses;
@@ -46,10 +46,6 @@ var webapiURL = builder.Configuration["RACE2WebApiURL"];
 var securityProviderURL = builder.Configuration["RACE2SecurityProviderURL"];
 var sqlConnectionString = builder.Configuration["SqlConnectionString"];
 
-//var blazorClientURL = "https://race2frontendweb.gentlebush-defe7f09.westeurope.azurecontainerapps.io";
-//var webapiURL = "https://race2webapi.gentlebush-defe7f09.westeurope.azurecontainerapps.io/graphql/";
-//var securityProviderURL = "https://race2securityprovider.gentlebush-defe7f09.westeurope.azurecontainerapps.io";
-//var sqlConnectionString = "Server=tcp:race2sqlserver.database.windows.net,1433;Initial Catalog=RACE2Database;Persist Security Info=False;User ID=race2admin;Password=D3FraRac3;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 // Add Azure App Configuration and feature management services to the container.
 builder.Services.AddAzureAppConfiguration()
                 .AddFeatureManagement();
@@ -62,8 +58,8 @@ builder.Services.AddDefaultIdentity<UserDetail>(options =>
     { 
         options.SignIn.RequireConfirmedAccount = true;
         options.Lockout.AllowedForNewUsers = true;
-        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);//default 5
-        options.Lockout.MaxFailedAccessAttempts = 3;//default 5
+        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);//.FromDays(365);//.FromMinutes(10);//default 5
+        options.Lockout.MaxFailedAccessAttempts = 5;//default 5
     })
     .AddRoles<Role>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -85,14 +81,6 @@ builder.Services.AddIdentityServer()
     .AddDeveloperSigningCredential()
     .AddAspNetIdentity<UserDetail>();
 
-//builder.Services.AddIdentityServer()
-//            .AddInMemoryIdentityResources(ServerConfiguration.IdentityResources)
-//            .AddInMemoryApiResources(ServerConfiguration.ApiResources)
-//            .AddInMemoryApiScopes(ServerConfiguration.ApiScopes)
-//            .AddInMemoryClients(ServerConfiguration.Clients)
-//            .AddAspNetIdentity<UserDetail>()
-//            .AddDeveloperSigningCredential();
-
 builder.Services.Configure<IdentityOptions>(options =>
 {
     // Default Password settings.
@@ -104,6 +92,7 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequiredUniqueChars = 1;
 });
 
+builder.Services.AddLoggingServices(builder.Configuration);
 builder.Services.AddScoped<IRandomPasswordGeneration, RandomPasswordGeneration>();
 builder.Services.AddScoped<INotification, RaceNotification>();
 var app = builder.Build();
@@ -118,6 +107,7 @@ app.Use(async (ctx, next) =>
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
+    app.UseDeveloperExceptionPage();
 }
 else
 {

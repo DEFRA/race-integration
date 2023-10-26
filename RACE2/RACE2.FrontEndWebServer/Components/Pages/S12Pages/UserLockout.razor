@@ -1,0 +1,36 @@
+﻿@page "/user-lockout"
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+@using Microsoft.AspNetCore.Authorization;
+@using RACE2.FrontEndWebServer.Components
+@inject NavigationManager NavigationManager
+
+<HeaderWithBanner />
+
+<div class="govuk-width-container" style="min-height: 70vh;">
+
+    <FeedbackBanner />
+    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+                <div class="govuk-panel govuk-panel--confirmation govuk-!-margin-top-9" style="background-color:lightgray;">
+                    <h1 class="govuk-panel__title">
+                        Service Locked
+                    </h1>
+                </div>
+                <br />
+                <p class="govuk-body">You cannot log into the service because you have entered incorrect login details over five times.</p>
+                <p class="govuk-body">To get help, contact the Environment Agency.</p>
+                <p class="govuk-body">Email <a href="#">reservoirs@Environment.agency.gov.uk</a></p>
+            </div>
+        </div>
+    </main>
+</div>
+
+<Footer />
+
+@code {
+    protected override async void OnInitialized()
+    {
+    await base.OnInitializedAsync();
+    }
+}

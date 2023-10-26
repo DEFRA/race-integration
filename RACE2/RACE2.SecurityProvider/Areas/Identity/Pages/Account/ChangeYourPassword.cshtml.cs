@@ -33,8 +33,10 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _config = config;
+            WebAppUrl = _config["RACE2FrontEndURL"];
         }
 
+        [BindProperty]
         public string WebAppUrl { get; set; }
 
         /// <summary>
@@ -106,6 +108,8 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync()
         {
+            WebAppUrl = _config["RACE2FrontEndURL"];
+
             if (!ModelState.IsValid)
             {
                 return Page();
@@ -118,7 +122,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
                     return Page();
                 }
             }
-            WebAppUrl = _config["RACE2FrontEndURL"];
+
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
@@ -139,7 +143,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             _logger.LogInformation("User changed their password successfully.");
             StatusMessage = "Your password has been changed.";
 
-            string returnUrl = _config["RACE2FrontEndURL"] + "/confirm-password-change";
+            string returnUrl = WebAppUrl + "/confirm-change-password";
             return Redirect(returnUrl);
         }
     }

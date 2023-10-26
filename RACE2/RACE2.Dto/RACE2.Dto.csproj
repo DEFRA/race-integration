@@ -7,14 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="ReservoirUpdateDetailsDTOcs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="ReservoirUpdateDetailsDTOcs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 

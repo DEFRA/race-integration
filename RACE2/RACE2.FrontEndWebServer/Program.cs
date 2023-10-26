@@ -14,8 +14,11 @@ using Microsoft.IdentityModel.Logging;
 using RACE2.DataAccess.Repository;
 using RACE2.DataModel;
 using RACE2.Services;
+using RACE2.FrontEndWebServer.Components;
+using RACE2.FrontEndWebServer;
 
 var builder = WebApplication.CreateBuilder(args);
+
 builder.Configuration.AddAzureAppConfiguration(options =>
 {
     //var connectionString = builder.Configuration["AZURE_APPCONFIGURATION_CONNECTIONSTRING"];
@@ -39,11 +42,27 @@ var blazorClientURL = builder.Configuration["RACE2FrontEndURL"];
 var RACE2WebApiURL = builder.Configuration["RACE2WebApiURL"];
 var RACE2IDPURL = builder.Configuration["RACE2SecurityProviderURL"];
 var ClientSecret = builder.Configuration["ClientSecret"];
-//IConfiguration _configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../appsettings.json").Build();
+var appinsightsConnString = builder.Configuration["AppInsightsConnectionString"];
+
+builder.Services.AddApplicationInsightsTelemetry(options =>
+{
+    options.ConnectionString = appinsightsConnString;
+});
 
 // Add services to the container.
+builder.Services.AddRazorComponents()
+    .AddInteractiveServerComponents();
+    //.AddHubOptions(options =>
+    //    {
+    //        options.ClientTimeoutInterval = TimeSpan.FromSeconds(60);//.FromSeconds(30); 
+    //        options.EnableDetailedErrors = true;
+    //        options.HandshakeTimeout = TimeSpan.FromSeconds(30); //FromSeconds(15); 
+    //        options.KeepAliveInterval = TimeSpan.FromSeconds(30);//.FromSeconds(15);  
+    //        options.MaximumParallelInvocationsPerClient = 1; 
+    //        options.MaximumReceiveMessageSize = 128 * 1024; //32*1024;
+    //        options.StreamBufferCapacity = 10;
+    //    });
 builder.Services.AddRazorPages();
-builder.Services.AddServerSideBlazor();
 
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {
@@ -61,7 +80,7 @@ builder.Services.AddAuthentication(options =>
 //.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
 .AddCookie(options =>
 {
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
     options.Cookie.MaxAge = options.ExpireTimeSpan;
     options.SlidingExpiration = true;
     options.EventsType = typeof(CustomCookieAuthenticationEvents);//forcibly expire after a day
@@ -119,7 +138,8 @@ app.UseForwardedHeaders();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Error");
+    app.UseExceptionHandler("/Error", createScopeForErrors: true);
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -127,12 +147,12 @@ app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 app.UseCookiePolicy();
-app.UseRouting();
-
+app.UseAntiforgery();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapBlazorHub();
-app.MapFallbackToPage("/_Host");
-//IdentityModelEventSource.ShowPII = true;
+app.MapRazorComponents<App>()
+    .AddInteractiveServerRenderMode();
+app.MapRazorPages();
+
 app.Run();

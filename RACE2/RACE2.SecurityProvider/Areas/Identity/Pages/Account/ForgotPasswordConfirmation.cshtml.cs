@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using RACE2.DataModel;
 using RACE2.Notification;
+using Microsoft.AspNetCore.Mvc;
 
 namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
 {
@@ -32,6 +33,10 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
         public void OnGet()
         {
             WebAppUrl = _config["RACE2FrontEndURL"];
+        }
+        public IActionResult OnPostAsync()
+        {
+            return RedirectToPage("./ForgotPassword");
         }
     }
 }
