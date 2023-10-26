@@ -417,11 +417,11 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 IsSortedAscending = !IsSortedAscending;
             }
         }
-
-        //private void Dispose()
-        //{
-        //    this.Dispose(true);
-        //}
+        protected override void Dispose(bool disposed)
+        {
+            this.Dispose(true);
+            base.Dispose(disposed);
+        }
 
         public string text1 = "";
         public string text2 = "";
