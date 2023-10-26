@@ -220,25 +220,37 @@
 
             foreach (var rn in ReservoirDetailsLinkedToUser)
             {
-                var r = new Reservoir()
-                    {
-                        Id = rn.Id,
-                        RaceReservoirId = rn.RaceReservoirId,
-                        PublicName = rn.PublicName,
-                        NearestTown = rn.NearestTown,
-                        GridReference = rn.GridReference,
-                        OperatorType = rn.OperatorType,
-                        LastInspectionByUser = rn.UserDetail
-                    };
-                r.Address = new Address()
-                    {
-                        AddressLine1 = rn.Address.AddressLine1,
-                        AddressLine2 = rn.Address.AddressLine2,
-                        Town = rn.Address.Town,
-                        County = rn.Address.County,
-                        Postcode = rn.Address.Postcode
-                    };
-                ReservoirsLinkedToUser.Add(r);
+                try
+                {
+                    var r = new Reservoir()
+                        {
+                            Id = rn.Id,
+                            RaceReservoirId = rn.RaceReservoirId,
+                            PublicName = rn.PublicName,
+                            NearestTown = rn.NearestTown,
+                            GridReference = rn.GridReference,
+                            OperatorType = rn.OperatorType,
+                            LastInspectionByUser = rn.UserDetail,
+                            NextInspectionDate102 = rn.NextInspectionDate102,
+                            NextInspectionDate103 = rn.NextInspectionDate103,
+                            LastInspectionDate = rn.LastInspectionDate,
+                            LastCertificationDate = rn.LastCertificationDate
+
+                        };
+                    r.Address = new Address()
+                        {
+                            AddressLine1 = rn.Address.AddressLine1,
+                            AddressLine2 = rn.Address.AddressLine2,
+                            Town = rn.Address.Town,
+                            County = rn.Address.County,
+                            Postcode = rn.Address.Postcode
+                        };
+                    ReservoirsLinkedToUser.Add(r);
+                }
+                catch (Exception ex)
+                {
+                    Logger.LogCritical("On init for Reservoir :" + rn.Id.ToString() + " Error getting data from backend services : " + ex.Message);
+                }
             }
             var actionUserDetail = new StoreUserDetailAction(UserDetail);
             Dispatcher.Dispatch(actionUserDetail);
@@ -268,24 +280,31 @@
         {
             foreach (var reservoir in reservoirs)
             {
-                Undertakers = await reservoirService.GetOperatorsforReservoir(reservoir.Id, reservoir.OperatorType);
-                ReservoirsLinkedToUserForDisplay reservoirsLinkedToUser = new ReservoirsLinkedToUserForDisplay();
-                reservoirsLinkedToUser.ReservoirName = reservoir.PublicName;
-                if (Undertakers != null && Undertakers.Count() > 0)
+                try
                 {
-                    if (!String.IsNullOrEmpty(Undertakers[0].OrgName))
-                        reservoirsLinkedToUser.UndertakerName = Undertakers[0].OrgName;
-                    else if (!String.IsNullOrEmpty(Undertakers[0].OperatorFirstName))
-                        reservoirsLinkedToUser.UndertakerName = Undertakers[0].OperatorFirstName + " " + Undertakers[0].OperatorLastName;
-                    else
-                        reservoirsLinkedToUser.UndertakerName = "";
-                }
-                SubmissionStatusList = await reservoirService.GetReservoirStatusByUserId(UserDetail.Id);
-                SubmissionStatus = SubmissionStatusList.Where(s => s.PublicName == reservoir.PublicName).FirstOrDefault();
-                reservoirsLinkedToUser.DueDate = SubmissionStatus.DueDate != DateTime.MinValue ? SubmissionStatus.DueDate.ToString("dd MMMMM yyyy") : "";
-                reservoirsLinkedToUser.Status = SubmissionStatus.Status != null ? SubmissionStatus.Status : "Not Started";
+                    Undertakers = await reservoirService.GetOperatorsforReservoir(reservoir.Id, reservoir.OperatorType);
+                    ReservoirsLinkedToUserForDisplay reservoirsLinkedToUser = new ReservoirsLinkedToUserForDisplay();
+                    reservoirsLinkedToUser.ReservoirName = reservoir.PublicName;
+                    if (Undertakers != null && Undertakers.Count() > 0)
+                    {
+                        if (!String.IsNullOrEmpty(Undertakers[0].OrgName))
+                            reservoirsLinkedToUser.UndertakerName = Undertakers[0].OrgName;
+                        else if (!String.IsNullOrEmpty(Undertakers[0].OperatorFirstName))
+                            reservoirsLinkedToUser.UndertakerName = Undertakers[0].OperatorFirstName + " " + Undertakers[0].OperatorLastName;
+                        else
+                            reservoirsLinkedToUser.UndertakerName = "";
+                    }
+                    SubmissionStatusList = await reservoirService.GetReservoirStatusByUserId(UserDetail.Id);
+                    SubmissionStatus = SubmissionStatusList.Where(s => s.PublicName == reservoir.PublicName).FirstOrDefault();
+                    reservoirsLinkedToUser.DueDate = SubmissionStatus.DueDate != DateTime.MinValue ? SubmissionStatus.DueDate.ToString("dd MMMMM yyyy") : "";
+                    reservoirsLinkedToUser.Status = SubmissionStatus.Status != null ? SubmissionStatus.Status : "Not Started";
 
-                ReservoirsLinkedToUserForDisplay.Add(reservoirsLinkedToUser);
+                    ReservoirsLinkedToUserForDisplay.Add(reservoirsLinkedToUser);
+                }
+                catch (Exception ex)
+                {
+                    Logger.LogCritical("On PopulateReservoirsToDisplay for Reservoir :" + reservoir.Id.ToString() + " Error getting data from backend services : " + ex.Message);
+                }
             }
             ReservoirsLinkedToUserForDisplayOnStart = ReservoirsLinkedToUserForDisplay;
             await InvokeAsync(() =>
@@ -515,8 +534,9 @@
         }
     }
 
-    //private void Dispose()
-    //{
-    //    this.Dispose(true);
-    //}    
+    protected override void Dispose(bool disposed)
+    {
+       this.Dispose(true);
+        base.Dispose(disposed);
+    }    
 }
