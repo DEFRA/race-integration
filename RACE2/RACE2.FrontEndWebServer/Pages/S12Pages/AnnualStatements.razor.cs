@@ -112,7 +112,12 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                         NearestTown = rn.NearestTown,
                         GridReference = rn.GridReference,
                         OperatorType = rn.OperatorType,
-                        LastInspectionByUser = rn.UserDetail
+                        LastInspectionByUser = rn.UserDetail,
+                        NextInspectionDate102 = rn.NextInspectionDate102,
+                        NextInspectionDate103 = rn.NextInspectionDate103,
+                        LastInspectionDate = rn.LastInspectionDate,
+                        LastCertificationDate = rn.LastCertificationDate
+                    
                     };
                     r.Address = new Address()
                     {
