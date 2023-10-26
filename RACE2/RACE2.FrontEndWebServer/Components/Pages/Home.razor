@@ -126,22 +126,14 @@
     {
         bool forceLoad = false;
         NavigationManager.NavigateTo("/annual-statements", forceLoad);
-        //NavigationManager.NavigateTo("/choose-a-reservoir", forceLoad);
-        //if (authState.User.Claims == null)
-        //{
-        //    Claims = authState.User.Claims;
-
-        //    Claim? givenNameClaim = authState.User.FindFirst("name");
-        //    if (givenNameClaim is not null)
-        //    {
-        //        UserName = givenNameClaim.Value;
-        //    }
-        //    NavigationManager.NavigateTo("/annual-statements", forceLoad);
-        //}
-        //else
-        //{
-        //    NavigationManager.NavigateTo("/login", forceLoad);
-        //}
+        if (authState.User.Identity.IsAuthenticated)
+        {
+            NavigationManager.NavigateTo("/annual-statements", forceLoad);
+        }
+        else
+        {
+            NavigationManager.NavigateTo("/login", forceLoad);
+        }
     }
 }
 
