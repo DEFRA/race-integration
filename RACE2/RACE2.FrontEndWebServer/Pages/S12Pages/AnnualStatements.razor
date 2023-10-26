@@ -49,7 +49,7 @@
                         </div>
                     </div>
                 </div> *@
-
+                <h5 style="font-weight:bold;">Templates</h5>
                 <table class="govuk-table govuk-!-margin-top-4">
 
                     <thead class="govuk-table__head">
@@ -105,13 +105,13 @@
                                     <strong class="not-started-tag-new" style="background-color:white">
                                         @if (reservoir.Status.ToLower() == "in progress")
                                         {
-                                            <span style="background-color:lightblue;">
+                                            <span style="background-color: #d2e2f1;color:#144e81;padding-top: 5px;Padding-right: 4px;Padding-bottom: 4px;Padding-left: 4px;">
                                                 @reservoir.Status
                                             </span>
                                         }
                                         else
                                         {
-                                            <span style="background-color:lightgrey;">
+                                            <span style="background-color:lightgrey;padding-top: 5px;Padding-right: 4px;Padding-bottom: 4px;Padding-left: 4px;">
                                                 @reservoir.Status
                                             </span>
                                         }
