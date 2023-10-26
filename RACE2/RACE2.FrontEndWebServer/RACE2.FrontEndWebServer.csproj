@@ -15,7 +15,7 @@
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="8.0.0-rc.2.23480.2" />
 		<PackageReference Include="Azure.Identity" Version="1.10.3" />
-		<PackageReference Include="Microsoft.Azure.AppConfiguration.AspNetCore" Version="6.1.0" />
+		<PackageReference Include="Microsoft.Azure.AppConfiguration.AspNetCore" Version="6.1.1" />
 		<PackageReference Include="IdentityModel.AspNetCore" Version="4.3.0" />
 	</ItemGroup>
 
