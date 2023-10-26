@@ -23,6 +23,13 @@ namespace RACE2.Services
 
             using (WordprocessingDocument wordDoc = WordprocessingDocument.Open(doc, true))
             {
+                //foreach (var headerPart in wordDoc.MainDocumentPart.HeaderParts)
+                //{
+                //    foreach (var currentText in headerPart.RootElement.Descendants<DocumentFormat.OpenXml.Wordprocessing.Text>())
+                //    {
+                //        currentText.Text = currentText.Text.Replace("{Reservoir name}", s12PrePopulationFields.ReservoirName);
+                //    }
+                //}
                 //string docText = null;
 
                 using (StreamReader sr = new StreamReader(wordDoc.MainDocumentPart.GetStream()))
