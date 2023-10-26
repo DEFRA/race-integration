@@ -518,7 +518,7 @@
                                                   x.GetType()
                                                    .GetProperty(columnName)
                                                    .GetValue(x, null))
-                             .ToList();
+                                                    .ToList();
             }
             else
             {
@@ -532,11 +532,5 @@
             //Toggle this boolean
             IsSortedAscending = !IsSortedAscending;
         }
-    }
-
-    protected override void Dispose(bool disposed)
-    {
-       this.Dispose(true);
-        base.Dispose(disposed);
-    }    
+    }  
 }
