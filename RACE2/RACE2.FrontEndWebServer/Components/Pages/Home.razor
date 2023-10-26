@@ -124,6 +124,8 @@
 
     private async void GoToNextPage()
     {
+        AuthenticationState authState =
+         await AuthenticationStateProvider.GetAuthenticationStateAsync();
         bool forceLoad = false;
         NavigationManager.NavigateTo("/annual-statements", forceLoad);
         if (authState.User.Identity.IsAuthenticated)
