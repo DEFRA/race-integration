@@ -522,7 +522,7 @@
                                                   x.GetType()
                                                    .GetProperty(columnName)
                                                    .GetValue(x, null))
-                                                    .ToList();
+                             .ToList();
             }
             else
             {
@@ -536,5 +536,5 @@
             //Toggle this boolean
             IsSortedAscending = !IsSortedAscending;
         }
-    }  
+    }
 }
