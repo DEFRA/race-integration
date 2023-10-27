@@ -1,7 +1,7 @@
 using DocumentFormat.OpenXml.InkML;
 using DocumentFormat.OpenXml.Spreadsheet;
 using DocumentFormat.OpenXml.Wordprocessing;
-using Fluxor;
+//using Fluxor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
@@ -9,8 +9,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.JSInterop;
 using RACE2.DataModel;
 using RACE2.Dto;
-using RACE2.FrontEndWebServer.FluxorImplementation.Actions;
-using RACE2.FrontEndWebServer.FluxorImplementation.Stores;
+//using RACE2.FrontEndWebServer.FluxorImplementation.Actions;
+//using RACE2.FrontEndWebServer.FluxorImplementation.Stores;
 using RACE2.Services;
 using System.Collections.Generic;
 using System.Data;
@@ -28,10 +28,10 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         public IConfiguration _config { get; set; } = default!;
         [Inject]
         public NavigationManager NavigationManager { get; set; } = default!;
-        [Inject]
-        public IState<CurrentUserDetailState> CurrentUserDetailState { get; set; } = default!;
-        [Inject]
-        public IDispatcher Dispatcher { get; set; } = default!;
+        //[Inject]
+        //public IState<CurrentUserDetailState> CurrentUserDetailState { get; set; } = default!;
+        //[Inject]
+        //public IDispatcher Dispatcher { get; set; } = default!;
         [Inject]
         public IJSRuntime jsRuntime { get; set; } = default!;
         [Inject]
@@ -136,11 +136,11 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                         Logger.LogCritical("On init for Reservoir :"+rn.Id.ToString()+" Error getting data from backend services : " + ex.Message);
                     }
                 }
-                var actionUserDetail = new StoreUserDetailAction(UserDetail);
-                Dispatcher.Dispatch(actionUserDetail);
+                //var actionUserDetail = new StoreUserDetailAction(UserDetail);
+                //Dispatcher.Dispatch(actionUserDetail);
 
-                var actionReservoirsLinkedToUser = new StoreUserReservoirsAction(ReservoirsLinkedToUser);
-                Dispatcher.Dispatch(actionReservoirsLinkedToUser);
+                //var actionReservoirsLinkedToUser = new StoreUserReservoirsAction(ReservoirsLinkedToUser);
+                //Dispatcher.Dispatch(actionReservoirsLinkedToUser);
                 PopulateReservoirsToDisplay(ReservoirsLinkedToUser);
                 await InvokeAsync(() =>
                 {
@@ -321,8 +321,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         private void gotoPage(SubmissionStatusDTO reservoirStatus)
         {
             var reservoir = ReservoirsLinkedToUser.Where(s => s.PublicName == reservoirStatus.PublicName).FirstOrDefault();
-            var action = new StoreReservoirAction(reservoir);
-            Dispatcher.Dispatch(action);
+            //var action = new StoreReservoirAction(reservoir);
+            //Dispatcher.Dispatch(action);
             bool forceLoad = false;
             string pagelink = "/reservoir-details";
             if (reservoirStatus.Status.ToUpper() == "DRAFT SENT")
@@ -335,8 +335,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         private void gotoSubmissionPage(SubmissionStatusDTO reservoirStatus)
         {
             var reservoir = ReservoirsLinkedToUser.Where(s => s.PublicName == reservoirStatus.PublicName).FirstOrDefault();
-            var action = new StoreReservoirAction(reservoir);
-            Dispatcher.Dispatch(action);
+            //var action = new StoreReservoirAction(reservoir);
+            //Dispatcher.Dispatch(action);
             bool forceLoad = false;
             string pagelink = "/s12-statement-confirmation";
             NavigationManager.NavigateTo(pagelink, forceLoad);

@@ -1,5 +1,4 @@
-﻿using Fluxor;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using RACE2.DataModel;
 using RACE2.Dto;
@@ -12,8 +11,6 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
     {
         [Inject]
         public NavigationManager NavigationManager { get; set; } = default!;
-        [Inject]
-        public IConfiguration _config { get; set; } = default!;
         [Inject]
         public IUserService userService { get; set; } = default!;
         private string UserName { get; set; } = "Unknown";
@@ -29,12 +26,6 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         {
             bool forceLoad = true;
             string pagelink = "/login";
-            NavigationManager.NavigateTo(pagelink, forceLoad);
-        }
-        private void goback()
-        {
-            bool forceLoad = false;
-            string pagelink = "/reservoir-not-listed";
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }
     }
