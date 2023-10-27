@@ -261,7 +261,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                     s12PrePopulationFields.UndertakerPhoneNumber = "Please provide a contact number";
                 if (reservoir.NextInspectionDate103 != DateTime.MinValue)
                 {
-                    s12PrePopulationFields.NextInspectionDate = (reservoir.NextInspectionDate103 != DateTime.MinValue) ? reservoir.NextInspectionDate102.ToString("dd MMM yyyy") : " ";
+                    s12PrePopulationFields.NextInspectionDate = (reservoir.NextInspectionDate103 != DateTime.MinValue) ? reservoir.NextInspectionDate103.ToString("dd MMM yyyy") : " ";
                 }
                 else
                 {
