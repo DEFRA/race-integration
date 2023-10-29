@@ -1,6 +1,7 @@
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using IdentityServer4.Extensions;
+using IdentityServer4.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -96,6 +97,13 @@ builder.Services.Configure<IdentityOptions>(options =>
 builder.Services.AddLoggingServices(builder.Configuration);
 builder.Services.AddScoped<IRandomPasswordGeneration, RandomPasswordGeneration>();
 builder.Services.AddScoped<INotification, RaceNotification>();
+builder.Services.AddSingleton<ICorsPolicyService>((container) => {
+    var logger = container.GetRequiredService<ILogger<DefaultCorsPolicyService>>();
+    return new DefaultCorsPolicyService(logger)
+    {
+        AllowedOrigins = { blazorClientURL, webapiURL }
+    };
+});
 var app = builder.Build();
 app.Use(async (ctx, next) =>
 {
