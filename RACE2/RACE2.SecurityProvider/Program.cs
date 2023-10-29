@@ -97,13 +97,7 @@ builder.Services.Configure<IdentityOptions>(options =>
 builder.Services.AddLoggingServices(builder.Configuration);
 builder.Services.AddScoped<IRandomPasswordGeneration, RandomPasswordGeneration>();
 builder.Services.AddScoped<INotification, RaceNotification>();
-builder.Services.AddSingleton<ICorsPolicyService>((container) => {
-    var logger = container.GetRequiredService<ILogger<DefaultCorsPolicyService>>();
-    return new DefaultCorsPolicyService(logger)
-    {
-        AllowedOrigins = { blazorClientURL, webapiURL }
-    };
-});
+
 var app = builder.Build();
 app.Use(async (ctx, next) =>
 {
