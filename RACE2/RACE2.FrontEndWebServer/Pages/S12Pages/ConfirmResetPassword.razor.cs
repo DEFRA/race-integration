@@ -6,6 +6,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
     public partial class ConfirmResetPassword
     {
         [Inject]
+        public IConfiguration _config { get; set; } = default!;
+        [Inject]
         public NavigationManager NavigationManager { get; set; } = default!;
         [CascadingParameter]
         public Task<AuthenticationState> AuthenticationStateTask { get; set; }
@@ -18,7 +20,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         public void GoToNextPage()
         {
             bool forceLoad = true;
-            string pagelink = "/login";
+            string pagelink = _config["RACE2SecurityProviderURL"] + "/Identity/Account/Login";
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }
     }
