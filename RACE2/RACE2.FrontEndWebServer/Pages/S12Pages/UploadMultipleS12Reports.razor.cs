@@ -1,13 +1,10 @@
-﻿using Fluxor;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.JSInterop;
 using RACE2.DataModel;
 using RACE2.Dto;
-using RACE2.FrontEndWebServer.FluxorImplementation.Actions;
-using RACE2.FrontEndWebServer.FluxorImplementation.Stores;
 using RACE2.Services;
 using System;
 
@@ -18,15 +15,12 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         [Inject]
         public NavigationManager NavigationManager { get; set; } = default!;
         [Inject]
-        public IDispatcher Dispatcher { get; set; } = default!;
-        [Inject]
         public IBlobStorageService blobStorageService { get; set; } = default!;
         [Inject]
         public IUserService userService { get; set; } = default!;
         [Inject]
         public IJSRuntime jsRuntime { get; set; } = default!;
         [Inject]
-        public IState<CurrentReservoirState> CurrentReservoirState { get; set; } = default!;
         private int UserId { get; set; } = 0;
         private string UserName { get; set; } = "Unknown";
         private UserDetail UserDetail { get; set; }
@@ -56,7 +50,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 cFirstName = userDetails.cFirstName,
                 cLastName = userDetails.cLastName
             };
-            CurrentReservoir = CurrentReservoirState.Value.CurrentReservoir;
+            CurrentReservoir = new Reservoir();
 
             base.OnInitialized();
         }
@@ -64,8 +58,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         {
             selectedFiles = e.GetMultipleFiles();
             Message = $"{selectedFiles.Count} file(s) selected";
-            this.StateHasChanged();
-        }
+         }
         private async void OnUploadSubmit()
         {
             fileLoading = true;
@@ -100,7 +93,6 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             }
 
             fileLoading = false;
-            this.StateHasChanged();
         }
 
         private async void OnFileDeleteClick(FileUploadViewModel attachment)
@@ -120,7 +112,6 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             {
                 warninngMessage = "Something went wrong! Please try again.";
             }
-            this.StateHasChanged();
         }
         private async void OnFileViewClick(FileUploadViewModel attachment)
         {
@@ -139,7 +130,6 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             {
                 warninngMessage = "Something went wrong! Please try again.";
             }
-            this.StateHasChanged();
         }
 
     private void goback()

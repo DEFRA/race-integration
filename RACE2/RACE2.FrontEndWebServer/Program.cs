@@ -1,5 +1,4 @@
 using Azure.Identity;
-using Fluxor;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Components;
@@ -121,12 +120,6 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {
     options.ForwardedHeaders =
         ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
-});
-
-builder.Services.AddFluxor(o =>
-{
-    o.ScanAssemblies(typeof(Program).Assembly);
-    o.UseReduxDevTools(rdt => { rdt.Name = "RACE2 application"; });
 });
 
 builder.Services.AddScoped<IUserService, UserService>();

@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using RACE2.DataModel;
-using RACE2.FrontEndWebServer.FluxorImplementation.Actions;
-using RACE2.FrontEndWebServer.FluxorImplementation.Stores;
 
 namespace RACE2.FrontEndWebServer.Pages.S12Pages
 {

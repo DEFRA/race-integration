@@ -1,5 +1,4 @@
 ﻿@page "/reservoir-details"
-@inherits Fluxor.Blazor.Web.Components.FluxorComponent
 @using Microsoft.AspNetCore.Authorization;
 @attribute [Authorize]
 <div class="govuk-width-container ">
@@ -20,7 +19,7 @@
                             </dt>
                             <dd class="govuk-summary-list__value" for="reservoir-name-old" id="reservoir-name-old"
                                 name="reservoir-name-old">
-                                @CurrentReservoirState.Value.CurrentReservoir.PublicName
+                                @CurrentReservoir.PublicName
                             </dd>
                             <dd class="govuk-summary-list__actions">
                                 <a class="govuk-link govuk-link--no-visited-state" href="#">
@@ -34,7 +33,7 @@
                             </dt>
                             <dd class="govuk-summary-list__value" for="reservoir-town-old" id="reservoir-town-old"
                                 name="reservoir-town-old">
-                                @CurrentReservoirState.Value.CurrentReservoir.NearestTown
+                                @CurrentReservoir.NearestTown
                             </dd>
                             <dd class="govuk-summary-list__actions">
                                 <a class="govuk-link govuk-link--no-visited-state" href="#">
@@ -47,7 +46,7 @@
                                 National Grid reference
                             </dt>
                             <dd class="govuk-summary-list__value" for="reservoir-grid-ref-old" id="reservoir-grid-ref-old" name="reservoir-grid-ref-old">
-                                @CurrentReservoirState.Value.CurrentReservoir.GridReference
+                                @CurrentReservoir.GridReference
                             </dd>
                             <dd class="govuk-summary-list__actions">
                                 <a class="govuk-link govuk-link--no-visited-state" href="#">
