@@ -58,6 +58,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
         }
+        [BindProperty]
         public string WebAppUrl { get; set; }
 
         public IActionResult OnGet(string userEmail)
