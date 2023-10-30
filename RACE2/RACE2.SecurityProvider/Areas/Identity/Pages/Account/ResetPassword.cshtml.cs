@@ -15,6 +15,7 @@ using RACE2.DataModel;
 
 namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
 {
+    [IgnoreAntiforgeryToken(Order = 2000)]
     public class ResetPasswordModel : PageModel
     {
         private readonly UserManager<UserDetail> _userManager;

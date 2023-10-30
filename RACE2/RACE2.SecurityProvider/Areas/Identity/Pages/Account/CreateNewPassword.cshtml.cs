@@ -15,6 +15,7 @@ using RACE2.DataModel;
 
 namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
 {
+    [IgnoreAntiforgeryToken(Order = 2000)]
     public class CreateNewPasswordModel : PageModel
     {
         private readonly UserManager<UserDetail> _userManager;
@@ -38,7 +39,6 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
         /// </summary>
         public class InputModel
         {
-
             public string Email { get; set; }
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used

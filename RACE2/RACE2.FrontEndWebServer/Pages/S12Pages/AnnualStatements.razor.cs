@@ -276,11 +276,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 await InvokeAsync(() =>
                 {
                     StateHasChanged();
-                });
-            
-             
-        }
-    
+                });          
+            }    
             catch (Exception ex)
             {
                 Logger.LogCritical("Error downloading S12ReportTemplate for the reservoir : " + ex.Message);
