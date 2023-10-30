@@ -1,11 +1,8 @@
-﻿using Fluxor;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.JSInterop;
 using RACE2.DataModel;
-using RACE2.FrontEndWebServer.FluxorImplementation.Stores;
-using RACE2.FrontEndWebServer.FluxorImplementation.Actions;
 using Microsoft.AspNetCore.Components.Web;
 using RACE2.Dto;
 using Microsoft.AspNetCore.Components.Forms;
@@ -23,12 +20,6 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
     {
         [Inject]
         public NavigationManager NavigationManager { get; set; } = default!;
-        [Inject]
-        public IState<CurrentReservoirState> CurrentReservoirState { get; set; } = default!;
-        [Inject]
-        public IState<CurrentUserDetailState> CurrentUserDetailState { get; set; } = default!;
-        [Inject]
-        public IDispatcher Dispatcher { get; set; } = default!;
         [Inject]
         public IJSRuntime jsRuntime { get; set; } = default!;
         [Inject]
@@ -58,7 +49,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 cFirstName = userDetails.cFirstName,
                 cLastName = userDetails.cLastName
             };
-            CurrentReservoir = CurrentReservoirState.Value.CurrentReservoir;
+            CurrentReservoir = new Reservoir();
             base.OnInitialized();
         }
 
@@ -79,10 +70,10 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             var blobName = "S12ReportTemplate.docx";
             Stream response = await blobStorageService.GetBlobFileStream(blobName);
             S12PrePopulationFields s12PrePopulationFields = new S12PrePopulationFields();
-            s12PrePopulationFields.ReservoirName = CurrentReservoirState.Value.CurrentReservoir.PublicName;
+            s12PrePopulationFields.ReservoirName = CurrentReservoir.PublicName;
             s12PrePopulationFields.SupervisingEngineerName = UserDetail.cFirstName + " " + UserDetail.cLastName;
-            s12PrePopulationFields.ReservoirNearestTown = CurrentReservoirState.Value.CurrentReservoir.NearestTown != null? CurrentReservoirState.Value.CurrentReservoir.NearestTown:"";
-            s12PrePopulationFields.ReservoirGridRef = CurrentReservoirState.Value.CurrentReservoir.GridReference != null ? CurrentReservoirState.Value.CurrentReservoir.GridReference : "";
+            s12PrePopulationFields.ReservoirNearestTown = CurrentReservoir.NearestTown != null? CurrentReservoir.NearestTown:"";
+            s12PrePopulationFields.ReservoirGridRef = CurrentReservoir.GridReference != null ? CurrentReservoir.GridReference : "";
             MemoryStream processedStream = openXMLUtilitiesService.SearchAndReplace(response, s12PrePopulationFields);
             processedStream.Position = 0;
             var streamRef = new DotNetStreamReference(stream: processedStream);

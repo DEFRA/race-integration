@@ -1,5 +1,4 @@
 using Azure.Identity;
-using Fluxor;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Components;
@@ -110,7 +109,7 @@ builder.Services.AddAuthentication(options =>
         // When set to code, the middleware will use PKCE protection
         options.ResponseType = "code id_token";
         // Save the tokens we receive from the IDP
-        options.SaveTokens = true; // false;
+        options.SaveTokens = false; // false;
         // It's recommended to always get claims from the UserInfoEndpoint during the flow.
         options.GetClaimsFromUserInfoEndpoint = true;
         options.Scope.Add("race2WebApi");
@@ -121,12 +120,6 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {
     options.ForwardedHeaders =
         ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
-});
-
-builder.Services.AddFluxor(o =>
-{
-    o.ScanAssemblies(typeof(Program).Assembly);
-    o.UseReduxDevTools(rdt => { rdt.Name = "RACE2 application"; });
 });
 
 builder.Services.AddScoped<IUserService, UserService>();

@@ -1,23 +1,15 @@
-﻿using Fluxor;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
-using RACE2.DataModel;
-using RACE2.Dto;
-using RACE2.FrontEndWebServer.FluxorImplementation.Stores;
-using RACE2.Services;
 
 namespace RACE2.FrontEndWebServer.Pages.S12Pages
 {
     public partial class ConfirmChangePassword
     {
         [Inject]
-        public NavigationManager NavigationManager { get; set; } = default!;
-        [Inject]
         public IConfiguration _config { get; set; } = default!;
         [Inject]
-        public IUserService userService { get; set; } = default!;
-        private string UserName { get; set; } = "Unknown";
-        private UserDetail UserDetail { get; set; } = default!;
+        public NavigationManager NavigationManager { get; set; } = default!;
+
         [CascadingParameter]
         public Task<AuthenticationState> AuthenticationStateTask { get; set; }
         protected override async void OnInitialized()
@@ -28,13 +20,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         public void GoToNextPage()
         {
             bool forceLoad = true;
-            string pagelink = _config["RACE2SecurityProviderURL"] + "/Identity/Account/Login";
-            NavigationManager.NavigateTo(pagelink, forceLoad);
-        }
-        private void goback()
-        {
-            bool forceLoad = false;
-            string pagelink = "/reservoir-not-listed";
+            string pagelink = "/login";
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }
     }

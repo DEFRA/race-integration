@@ -1,7 +1,6 @@
 using DocumentFormat.OpenXml.InkML;
 using DocumentFormat.OpenXml.Spreadsheet;
 using DocumentFormat.OpenXml.Wordprocessing;
-using Fluxor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
@@ -9,8 +8,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.JSInterop;
 using RACE2.DataModel;
 using RACE2.Dto;
-using RACE2.FrontEndWebServer.FluxorImplementation.Actions;
-using RACE2.FrontEndWebServer.FluxorImplementation.Stores;
 using RACE2.Services;
 using System.Collections.Generic;
 using System.Data;
@@ -28,10 +25,6 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         public IConfiguration _config { get; set; } = default!;
         [Inject]
         public NavigationManager NavigationManager { get; set; } = default!;
-        [Inject]
-        public IState<CurrentUserDetailState> CurrentUserDetailState { get; set; } = default!;
-        [Inject]
-        public IDispatcher Dispatcher { get; set; } = default!;
         [Inject]
         public IJSRuntime jsRuntime { get; set; } = default!;
         [Inject]
@@ -104,36 +97,38 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
 
                 foreach (var rn in ReservoirDetailsLinkedToUser)
                 {
-                    var r = new Reservoir()
+                    try
                     {
-                        Id = rn.Id,
-                        RaceReservoirId = rn.RaceReservoirId,
-                        PublicName = rn.PublicName,
-                        NearestTown = rn.NearestTown,
-                        GridReference = rn.GridReference,
-                        OperatorType = rn.OperatorType,
-                        LastInspectionByUser = rn.UserDetail,
-                        NextInspectionDate102 = rn.NextInspectionDate102,
-                        NextInspectionDate103 = rn.NextInspectionDate103,
-                        LastInspectionDate = rn.LastInspectionDate,
-                        LastCertificationDate = rn.LastCertificationDate
-                    
-                    };
-                    r.Address = new Address()
-                    {
-                        AddressLine1 = rn.Address.AddressLine1,
-                        AddressLine2 = rn.Address.AddressLine2,
-                        Town = rn.Address.Town,
-                        County = rn.Address.County,
-                        Postcode = rn.Address.Postcode
-                    };
-                    ReservoirsLinkedToUser.Add(r);
-                }
-                var actionUserDetail = new StoreUserDetailAction(UserDetail);
-                Dispatcher.Dispatch(actionUserDetail);
+                        var r = new Reservoir()
+                        {
+                            Id = rn.Id,
+                            RaceReservoirId = rn.RaceReservoirId,
+                            PublicName = rn.PublicName,
+                            NearestTown = rn.NearestTown,
+                            GridReference = rn.GridReference,
+                            OperatorType = rn.OperatorType,
+                            LastInspectionByUser = rn.UserDetail,
+                            NextInspectionDate102 = rn.NextInspectionDate102,
+                            NextInspectionDate103 = rn.NextInspectionDate103,
+                            LastInspectionDate = rn.LastInspectionDate,
+                            LastCertificationDate = rn.LastCertificationDate
 
-                var actionReservoirsLinkedToUser = new StoreUserReservoirsAction(ReservoirsLinkedToUser);
-                Dispatcher.Dispatch(actionReservoirsLinkedToUser);
+                        };
+                        r.Address = new Address()
+                        {
+                            AddressLine1 = rn.Address.AddressLine1,
+                            AddressLine2 = rn.Address.AddressLine2,
+                            Town = rn.Address.Town,
+                            County = rn.Address.County,
+                            Postcode = rn.Address.Postcode
+                        };
+                        ReservoirsLinkedToUser.Add(r);
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.LogCritical("On init for Reservoir :"+rn.Id.ToString()+" Error getting data from backend services : " + ex.Message);
+                    }
+                }
                 PopulateReservoirsToDisplay(ReservoirsLinkedToUser);
                 await InvokeAsync(() =>
                 {
@@ -157,24 +152,31 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             {
                 foreach (var reservoir in reservoirs)
                 {
-                    Undertakers = await reservoirService.GetOperatorsforReservoir(reservoir.Id, reservoir.OperatorType);
-                    ReservoirsLinkedToUserForDisplay reservoirsLinkedToUser = new ReservoirsLinkedToUserForDisplay();
-                    reservoirsLinkedToUser.ReservoirName = reservoir.PublicName;
-                    if (Undertakers != null && Undertakers.Count() > 0)
+                    try
                     {
-                        if (!String.IsNullOrEmpty(Undertakers[0].OrgName))
-                            reservoirsLinkedToUser.UndertakerName = Undertakers[0].OrgName;
-                        else if (!String.IsNullOrEmpty(Undertakers[0].OperatorFirstName))
-                            reservoirsLinkedToUser.UndertakerName = Undertakers[0].OperatorFirstName + " " + Undertakers[0].OperatorLastName;
-                        else
-                            reservoirsLinkedToUser.UndertakerName = "";
-                    }
-                    SubmissionStatusList = await reservoirService.GetReservoirStatusByUserId(UserDetail.Id);
-                    SubmissionStatus = SubmissionStatusList.Where(s => s.PublicName == reservoir.PublicName).FirstOrDefault();
-                    reservoirsLinkedToUser.DueDate = SubmissionStatus.DueDate != DateTime.MinValue ? SubmissionStatus.DueDate.ToString("dd MMMMM yyyy") : "";
-                    reservoirsLinkedToUser.Status = SubmissionStatus.Status != null ? SubmissionStatus.Status : "Not Started";
+                        Undertakers = await reservoirService.GetOperatorsforReservoir(reservoir.Id, reservoir.OperatorType);
+                        ReservoirsLinkedToUserForDisplay reservoirsLinkedToUser = new ReservoirsLinkedToUserForDisplay();
+                        reservoirsLinkedToUser.ReservoirName = reservoir.PublicName;
+                        if (Undertakers != null && Undertakers.Count() > 0)
+                        {
+                            if (!String.IsNullOrEmpty(Undertakers[0].OrgName))
+                                reservoirsLinkedToUser.UndertakerName = Undertakers[0].OrgName;
+                            else if (!String.IsNullOrEmpty(Undertakers[0].OperatorFirstName))
+                                reservoirsLinkedToUser.UndertakerName = Undertakers[0].OperatorFirstName + " " + Undertakers[0].OperatorLastName;
+                            else
+                                reservoirsLinkedToUser.UndertakerName = "";
+                        }
+                        SubmissionStatusList = await reservoirService.GetReservoirStatusByUserId(UserDetail.Id);
+                        SubmissionStatus = SubmissionStatusList.Where(s => s.PublicName == reservoir.PublicName).FirstOrDefault();
+                        reservoirsLinkedToUser.DueDate = SubmissionStatus.DueDate != DateTime.MinValue ? SubmissionStatus.DueDate.ToString("dd MMMMM yyyy") : "";
+                        reservoirsLinkedToUser.Status = SubmissionStatus.Status != null ? SubmissionStatus.Status : "Not Started";
 
-                    ReservoirsLinkedToUserForDisplay.Add(reservoirsLinkedToUser);
+                        ReservoirsLinkedToUserForDisplay.Add(reservoirsLinkedToUser);
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.LogCritical("On PopulateReservoirsToDisplay for Reservoir :" + reservoir.Id.ToString() + " Error getting data from backend services : " + ex.Message);
+                    }
                 }
                 ReservoirsLinkedToUserForDisplayOnStart = ReservoirsLinkedToUserForDisplay;
                 await InvokeAsync(() =>
@@ -247,7 +249,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                     s12PrePopulationFields.UndertakerPhoneNumber = "Please provide a contact number";
                 if (reservoir.NextInspectionDate103 != DateTime.MinValue)
                 {
-                    s12PrePopulationFields.NextInspectionDate = (reservoir.NextInspectionDate103 != DateTime.MinValue) ? reservoir.NextInspectionDate102.ToString("dd MMM yyyy") : " ";
+                    s12PrePopulationFields.NextInspectionDate = (reservoir.NextInspectionDate103 != DateTime.MinValue) ? reservoir.NextInspectionDate103.ToString("dd MMM yyyy") : " ";
                 }
                 else
                 {
@@ -274,11 +276,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 await InvokeAsync(() =>
                 {
                     StateHasChanged();
-                });
-            
-             
-        }
-    
+                });          
+            }    
             catch (Exception ex)
             {
                 Logger.LogCritical("Error downloading S12ReportTemplate for the reservoir : " + ex.Message);
@@ -307,8 +306,6 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         private void gotoPage(SubmissionStatusDTO reservoirStatus)
         {
             var reservoir = ReservoirsLinkedToUser.Where(s => s.PublicName == reservoirStatus.PublicName).FirstOrDefault();
-            var action = new StoreReservoirAction(reservoir);
-            Dispatcher.Dispatch(action);
             bool forceLoad = false;
             string pagelink = "/reservoir-details";
             if (reservoirStatus.Status.ToUpper() == "DRAFT SENT")
@@ -321,8 +318,6 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         private void gotoSubmissionPage(SubmissionStatusDTO reservoirStatus)
         {
             var reservoir = ReservoirsLinkedToUser.Where(s => s.PublicName == reservoirStatus.PublicName).FirstOrDefault();
-            var action = new StoreReservoirAction(reservoir);
-            Dispatcher.Dispatch(action);
             bool forceLoad = false;
             string pagelink = "/s12-statement-confirmation";
             NavigationManager.NavigateTo(pagelink, forceLoad);
@@ -402,22 +397,6 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 //Toggle this boolean
                 IsSortedAscending = !IsSortedAscending;
             }
-        }
-
-        //private void Dispose()
-        //{
-        //    this.Dispose(true);
-        //}
-
-        public string text1 = "";
-        public string text2 = "";
-
-        public bool IsEnabled = false;
-
-        public async Task OnTabChanged(Tab tab)
-        {
-            text1 = $"Tab value: {tab.Value}";
-            text2 = $"Tab text: {tab.Text}";
-        }        
+        }       
     }
 }

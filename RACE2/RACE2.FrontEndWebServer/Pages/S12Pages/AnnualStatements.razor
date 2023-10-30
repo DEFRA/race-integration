@@ -1,6 +1,4 @@
 @page "/annual-statements"
-@implements IDisposable
-@inherits Fluxor.Blazor.Web.Components.FluxorComponent
 @using Microsoft.AspNetCore.Authorization
 @using RACE2.FrontEndWebServer.Components
 @using RACE2.Dto;
@@ -102,20 +100,24 @@
                                 <td class="govuk-table__cell">@reservoir.UndertakerName</td>
                                 <td class="govuk-table__cell">@reservoir.DueDate</td>
                                 <td class="govuk-table__cell">
-                                    <strong class="not-started-tag-new" style="background-color:white">
                                         @if (reservoir.Status.ToLower() == "in progress")
                                         {
-                                            <span style="background-color: #d2e2f1;color:#144e81;padding-top: 5px;Padding-right: 4px;Padding-bottom: 4px;Padding-left: 4px;">
+                                            <strong class="in-progress-tag-new">
                                                 @reservoir.Status
-                                            </span>
+                                            </strong>
+@*                                             <span style="background-color: #d2e2f1;color:#144e81;padding-top: 5px;Padding-right: 4px;Padding-bottom: 4px;Padding-left: 4px;">
+                                                @reservoir.Status
+                                            </span> *@
                                         }
                                         else
                                         {
-                                            <span style="background-color:lightgrey;padding-top: 5px;Padding-right: 4px;Padding-bottom: 4px;Padding-left: 4px;">
+                                            <strong class="not-started-tag-new">
                                                 @reservoir.Status
-                                            </span>
+                                            </strong>
+@*                                             <span style="background-color:lightgrey;padding-top: 5px;Padding-right: 4px;Padding-bottom: 4px;Padding-left: 4px;">
+                                                @reservoir.Status
+                                            </span> *@
                                         }
-                                    </strong>
                                 </td>
                                 <td class="govuk-table__cell">
                                     <a class="govuk-link govuk-link--no-visited-state" href="annual-statements" @onclick="()=>DownloadTemplateFile(reservoir)">Download</a>

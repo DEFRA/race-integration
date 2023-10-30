@@ -1,11 +1,8 @@
-﻿using Fluxor;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using RACE2.DataModel;
-using RACE2.FrontEndWebServer.FluxorImplementation.Stores;
 using System.Security.Claims;
-using RACE2.FrontEndWebServer.FluxorImplementation.Actions;
 
 namespace RACE2.FrontEndWebServer.Pages.S12Pages
 {
@@ -13,13 +10,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
     {
         [Inject]
         public NavigationManager NavigationManager { get; set; } = default!;
-        [Inject]
-        public IState<CurrentUserDetailState> CurrentUserDetailState { get; set; } = default!;
-        [Inject]
-        public IState<CurrentReservoirState> CurrentReservoirState { get; set; } = default!;
 
-        [Inject]
-        public IDispatcher Dispatcher { get; set; } = default!;
         private StatNonStatClass _statnonstat = new StatNonStatClass();
 
         public void GoToNextPage()
