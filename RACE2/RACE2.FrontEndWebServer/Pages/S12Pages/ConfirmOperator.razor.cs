@@ -1,7 +1,4 @@
-﻿using Fluxor;
-using Microsoft.AspNetCore.Components;
-using RACE2.FrontEndWebServer.FluxorImplementation.Actions;
-using RACE2.FrontEndWebServer.FluxorImplementation.Stores;
+﻿using Microsoft.AspNetCore.Components;
 
 namespace RACE2.FrontEndWebServer.Pages.S12Pages
 {
@@ -9,17 +6,10 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
     {
         [Inject]
         public NavigationManager NavigationManager { get; set; } = default!;
-        [Inject]
-        public IState<CurrentUserDetailState> CurrentUserDetailState { get; set; } = default!;
-        [Inject]
-        public IState<CurrentReservoirState> CurrentReservoirState { get; set; } = default!;
 
-        [Inject]
-        public IDispatcher Dispatcher { get; set; } = default!;
         protected override async void OnInitialized()
         {
-            var currentUser = CurrentUserDetailState.Value.CurrentUserDetail;
-            base.OnInitialized();
+              base.OnInitialized();
         }
 
         public async void GoToNextPage()
