@@ -19,7 +19,7 @@ using IdentityServer4.Models;
 
 namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
 {
-    //[IgnoreAntiforgeryToken(Order = 2000)]
+    [IgnoreAntiforgeryToken(Order = 2000)]
     public class LoginModel : PageModel
     {
         private readonly SignInManager<UserDetail> _signInManager;
