@@ -24,7 +24,7 @@ namespace RACE2.DatabaseProvider.Data
 
         public DbSet<SafetyMeasure> SafetyMeasures { get; set; }
 
-        public DbSet<SupportingDocument> SupportingDocuments { get; set; }
+        public DbSet<SupportingDocument> Document { get; set; }
 
         public DbSet<Comment> Comments { get; set; }
 
@@ -57,6 +57,20 @@ namespace RACE2.DatabaseProvider.Data
         public DbSet<ScreenSequence> ScreenSequences { get; set; }
 
         public DbSet<ScreenSequenceAuditHistory> screenSequenceAuditHistories { get; set; }
+
+        public DbSet<ComplianceSummary> ComplianceSummary { get; set; }
+
+        public DbSet<FloodPlanTesting> FloodPlanTesting { get; set; }
+
+        public DbSet<DocumentReservoir> DocumentReservoir { get; set; }
+
+        public DbSet<DocumentEngineer> DocumentEngineer { get; set; }
+
+        public DbSet<DocumentRelationship> DocumentRelationship { get; set; }
+
+        public DbSet<DocumentSubmission> DocumentSubmission { get; set; }
+
+        public DbSet<StatementDetails> StatementDetails { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

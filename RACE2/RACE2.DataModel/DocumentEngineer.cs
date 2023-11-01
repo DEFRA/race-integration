@@ -8,20 +8,13 @@ using System.Threading.Tasks;
 
 namespace RACE2.DataModel
 {
-    [Table("UserAddress")]
-    public class UserAddress
-     {
+    [Table("DocumentEngineer")]
+    public class DocumentEngineer
+    {
+        [Key]
         public int Id { get; set; }
+        public SupportingDocument Document { get; set; } = new SupportingDocument();
 
-        public string? Type { get; set; }
-        [Required]
-
-        public UserDetail? User { get; set; }
-        [Required]
-        public Address? Address { get; set; }
-
-       
-
-         
+        public UserDetail EngineerUser { get; set; } = new UserDetail();
     }
 }

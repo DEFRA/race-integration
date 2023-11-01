@@ -26,9 +26,9 @@ namespace RACE2.DataModel
         [Required]
         public string? Description { get; set; }
 
-        public DateTime Createddate { get; set; }
+        public DateTime CreatedDate { get; set; }
         [Required]
-        public DateTime Targetdate { get; set;}
+        public DateTime TargetDate { get; set;}
         [Required]
         [StringLength(64)]
         public string? Status { get; set; }

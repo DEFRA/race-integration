@@ -13,6 +13,8 @@ namespace RACE2.DataModel
     {
         [Key,Required]
         public int Id { get; set; }
+        [StringLength(64)]
+        public string? RaceCertificateId { get; set; }
         [Required]
         public DateTime CertificateDate { get; set; }
         [Required,StringLength(64)]
@@ -23,8 +25,9 @@ namespace RACE2.DataModel
         public string RevisionType { get; set; }
         [StringLength(1024)]
         public string RevisionDetails { get; set; }
+        [Required]
 
-        public Reservoir Reservoir { get; set; }
+        public Reservoir Reservoir { get; set; } = new Reservoir();
     }
 
 
