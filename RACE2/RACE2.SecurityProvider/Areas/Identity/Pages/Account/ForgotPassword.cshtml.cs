@@ -34,6 +34,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             _config = config;
             _logger = logger;
         }
+        [BindProperty]
         public string WebAppUrl { get; set; }
 
         /// <summary>

@@ -79,15 +79,15 @@ builder.Services.AddAuthentication(options =>
     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
 })
-//.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
-.AddCookie(options =>
-{
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
-    options.Cookie.MaxAge = options.ExpireTimeSpan; // optional
-    options.SlidingExpiration = true;
-    options.LoginPath = "/login";
-    options.LogoutPath = "/logout";
-})
+.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
+//.AddCookie(options =>
+//{
+//    options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+//    options.Cookie.MaxAge = options.ExpireTimeSpan; // optional
+//    options.SlidingExpiration = true;
+//    options.LoginPath = "/login";
+//    options.LogoutPath = "/logout";
+//})
 .AddOpenIdConnect(
     OpenIdConnectDefaults.AuthenticationScheme,
     options =>
@@ -96,11 +96,11 @@ builder.Services.AddAuthentication(options =>
         //{
         //    Context.Properties.ExpiresUtc = DateTime.UtcNow.AddMinutes(20);
         //};
-        options.Events.OnRedirectToIdentityProvider = context =>
-        {
-            context.ProtocolMessage.Prompt = "login";
-            return Task.CompletedTask;
-        };
+        //options.Events.OnRedirectToIdentityProvider = context =>
+        //{
+        //    context.ProtocolMessage.Prompt = "login";
+        //    return Task.CompletedTask;
+        //};
         options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
         options.SignOutScheme = OpenIdConnectDefaults.AuthenticationScheme;
         options.Authority = RACE2IDPURL;
@@ -109,9 +109,9 @@ builder.Services.AddAuthentication(options =>
         // When set to code, the middleware will use PKCE protection
         options.ResponseType = "code id_token";
         // Save the tokens we receive from the IDP
-        options.SaveTokens = false; // false;
+        options.SaveTokens = true; // default false
         // It's recommended to always get claims from the UserInfoEndpoint during the flow.
-        options.GetClaimsFromUserInfoEndpoint = true;
+        options.GetClaimsFromUserInfoEndpoint = true; 
         options.Scope.Add("race2WebApi");
         options.RequireHttpsMetadata = requireHttpsMetadata;
     });
