@@ -58,6 +58,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
         }
 
+        [BindProperty]
         public string WebAppUrl { get; set; }
 
         public IActionResult OnGet(string userEmail)
