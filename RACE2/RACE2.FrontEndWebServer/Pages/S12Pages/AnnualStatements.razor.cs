@@ -206,7 +206,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
 
                 SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(reservoir.Id, UserDetail.Id);
 
-                var blobName = updatedStatus.override_template + ".docx";
+                var blobName = updatedStatus.OverrideUsedTemplate + ".docx";
                 //var blobName = "S12ReportTemplate.docx";
                 //var blobName = "TestWithTags.docx";
                 Stream response = await blobStorageService.GetBlobFileStream(blobName);
