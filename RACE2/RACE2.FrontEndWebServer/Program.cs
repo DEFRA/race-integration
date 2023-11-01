@@ -109,9 +109,9 @@ builder.Services.AddAuthentication(options =>
         // When set to code, the middleware will use PKCE protection
         options.ResponseType = "code id_token";
         // Save the tokens we receive from the IDP
-        options.SaveTokens = true; // false;
+        options.SaveTokens = true; // default false
         // It's recommended to always get claims from the UserInfoEndpoint during the flow.
-        options.GetClaimsFromUserInfoEndpoint = true;
+        options.GetClaimsFromUserInfoEndpoint = true; 
         options.Scope.Add("race2WebApi");
         options.RequireHttpsMetadata = requireHttpsMetadata;
     });
