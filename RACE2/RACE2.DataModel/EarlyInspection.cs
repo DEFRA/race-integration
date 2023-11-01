@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace RACE2.DataModel
 {
-    [Table("EarlyInspections")]
+    [Table("EarlyInspection")]
     public class EarlyInspection
     {
         [Key, Required]
@@ -24,7 +24,7 @@ namespace RACE2.DataModel
         public string ReasonSummary { get; set; }
         [StringLength(1024),Required]
         public string Description { get; set;}
-
+        [Required]
         public Reservoir Reservoir { get; set; }
 
     }

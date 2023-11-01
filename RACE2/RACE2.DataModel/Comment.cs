@@ -16,19 +16,22 @@ namespace RACE2.DataModel
         [StringLength(64)]
         public string? RaceCommentId { get; set; }
         [StringLength(64)]
+        [Required]
         public string? RelatesToObject { get; set; }
        public int RelatesToRecord { get; set; }
-
+        [Required]
         public UserDetail CreatedBy { get; set; }
-
+        [Required]
         public DateTime CreatedOn { get; set; }
 
         [StringLength(1024)]
+        [Required]
         public string CommentText { get; set; }
 
         public Comment? ParentCommentid { get; set; }
 
         [StringLength(64)]
+        [Required]
         public string Status { get; set; }
 
         public UserDetail? ClosedBy { get; set; }

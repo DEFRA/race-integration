@@ -11,18 +11,20 @@ using System.Xml.Linq;
 
 namespace RACE2.DataModel
 {
-    [Table("SupportingDocuments")]
+    [Table("Document")]
     public class SupportingDocument
     {
         [Key, Required]
         public int Id { get; set; }
-        [Required,StringLength(64)]
-        public string FileName { get; set; }
+        [StringLength(64)]
+        public string RaceDocumentId { get; set; }
+        [Required,StringLength(100)]
+        public string FileName { get; set; }    
         [StringLength(1024)]
         public string FileLocation { get; set; }
         [StringLength(64)]
         public string FileType { get; set; }
-        [Required,StringLength(64)]
+        [Required,StringLength(250)]
         public string DocumentName { get; set; }
         [StringLength(1024)]
         public string DocumentDescription { get; set; }
@@ -35,14 +37,22 @@ namespace RACE2.DataModel
         public string DocumentAuthorName { get; set; }
         [StringLength(64)]
         public string ProtectiveMarking { get; set;}
+
+        [Required]
+        public FeatureFunction SuppliedViaService { get; set; }
+
+        [Required]
+        public UserDetail SuppliedBy { get; set; }
+
         [Required]
         public DateTime DateSent { get; set;}
 
         public DateTime DateReceived { get; set;}
 
-        public UserDetail SuppliedBy { get; set; } = new UserDetail();
+        [StringLength(64)]
+        public string? UsedTemplateEdition { get; set;}
 
-        public List<Reservoir> Reservoir { get; set; } = new List<Reservoir>();
+        public decimal? UsedTemplateVersion { get; set;}
     }
 
 

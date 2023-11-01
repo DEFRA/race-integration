@@ -28,20 +28,23 @@ namespace RACE2.DataModel
         public string Description { get; set; }
         [StringLength(64),Required]
         public string Frequency { get; set; }
+        public bool IsMandatory { get; set; }
         [StringLength(64)]
         public string Priority { get; set; }
         public bool IsComplianceAction { get; set; }
         [StringLength(64),Required]
       //  public UserRole OwnerRole { get; set; }
        
-      //  [Required]
+         
         public DateTime CreatedDate { get; set; }
         [Required]
         public DateTime TargetDate { get; set; }
         [StringLength(1024)]
         public string Notes { get; set; }
 
-        public Reservoir Reservoir { get; set; }
+        public Reservoir? Reservoir { get; set; }
+        [StringLength(64),Required]
+        public string? Status { get; set; }
 
     }
 
