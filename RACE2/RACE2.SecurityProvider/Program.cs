@@ -68,6 +68,7 @@ builder.Services.AddDefaultIdentity<UserDetail>(options =>
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddRazorPages();
+builder.Services.AddAntiforgery(options => { options.SuppressXFrameOptionsHeader = true; });
 
 var migrationsAssembly = typeof(Program).Assembly.GetName().Name;
 builder.Services.AddIdentityServer()
