@@ -1,7 +1,5 @@
 ﻿@page "/upload-s12report"
-@inherits Fluxor.Blazor.Web.Components.FluxorComponent
 @using Microsoft.AspNetCore.Authorization;
-@using Fluxor;
 @using Microsoft.AspNetCore.Components
 @using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.Components.Forms
@@ -9,15 +7,11 @@
 @using Microsoft.JSInterop
 @using RACE2.DataModel
 @using RACE2.Dto
-@using RACE2.FrontEndWebServer.FluxorImplementation.Actions
-@using RACE2.FrontEndWebServer.FluxorImplementation.Stores
 @using RACE2.Services
 @inject NavigationManager NavigationManager
-@inject IDispatcher Dispatcher
 @inject IBlobStorageService blobStorageService
 @inject IUserService userService
 @inject IJSRuntime jsRuntime
-@inject IState<CurrentReservoirState> CurrentReservoirState
 @attribute [Authorize]
 
 <div class="govuk-width-container ">
@@ -126,7 +120,7 @@
                 Id = UserId,
                 Email = userDetails.Email
             };
-        CurrentReservoir = CurrentReservoirState.Value.CurrentReservoir;
+        CurrentReservoir = new Reservoir();
         base.OnInitialized();
     }
     private void OnInputFileChange(InputFileChangeEventArgs e)
