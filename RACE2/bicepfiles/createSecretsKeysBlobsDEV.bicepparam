@@ -14,8 +14,6 @@ param sqlServerPassword = 'Race2Password123!'
 
 param sqlServerConnectionStringSecretName = 'SqlServerConnString'
 
-param clientSecretName = 'ClientSecret'
-
 param keyVaultName = 'DEVRACINFVT1401'
 
 param appConfigResourceName = 'DEVRACINFAC1401'

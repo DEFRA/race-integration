@@ -16,7 +16,7 @@ namespace RACE2.DataModel
         public string? Type { get; set; }
         [Required]
 
-        public UserDetail? UserDetail { get; set; }
+        public UserDetail? User { get; set; }
         [Required]
         public Address? Address { get; set; }
 

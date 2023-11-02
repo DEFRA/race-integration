@@ -24,13 +24,13 @@ variables:
   - name: dockerfile_frontendwebserver
     value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_FrontEndWebServer'
   - name: containerRegistry
-    value: 'AZR-RAC-POC2-DockerRegistry'
+    value: 'AZR-RAC-POC1-DockerRegistry'
   - name: tag
     value: '$(Build.BuildId)'
   - name: azureServiceConnection
     value: 'AZR-RAC-POC1'
   - name: resourceGroupName
-    value: 'POCRACINFRG1401'
+    value: 'RACE2ProjectRG'
   - name: templateFile
     value: '$(Build.SourcesDirectory)/RACE2/bicepfiles/createAllContainerApps.bicep'
   - name: parameterfile

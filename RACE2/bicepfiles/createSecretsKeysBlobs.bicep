@@ -13,9 +13,6 @@ param storageAccountConnectionStringSecretName string
 param serviceBusConnectionStringSecretName string
 param storageAccountKeySecretName string
 param sqlServerConnectionStringSecretName string
-param clientSecretName string
-@secure()
-param clientSecretValue string
 param containerName string
 param webserverContainerAppName string
 param securityProviderContainerAppName string
@@ -53,14 +50,6 @@ resource storageAccountConnectionString 'Microsoft.KeyVault/vaults/secrets@2023-
   name: storageAccountConnectionStringSecretName
   properties: {
     value: 'DefaultEndpointsProtocol=https;AccountName=${storageAccount.name};AccountKey=${listKeys(storageAccount.id, storageAccount.apiVersion).keys[0].value};EndpointSuffix=${environment().suffixes.storage}'
-  }
-}
-
-resource clientSecret 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
-  parent: keyVault
-  name: clientSecretName
-  properties: {
-    value: clientSecretValue
   }
 }
 
@@ -125,7 +114,7 @@ resource configStoreKeyValue 'Microsoft.AppConfiguration/configurationStores/key
   parent: appConfigStore
   name: empty('${keyValuePair.label}') ? '${keyValuePair.key}' :'${keyValuePair.key}$${keyValuePair.label}'					// key
   properties: {
-    value: keyValuePair.contentType == 'string' && keyValuePair.value =='SecurityProviderContainerAppNameValue' ? concat('https://',securityProviderContainerApp.properties.configuration.ingress.fqdn) : keyValuePair.contentType == 'string' && keyValuePair.value =='WebApiContainerAppNameValue' ? concat('https://',concat(webApiContainerApp.properties.configuration.ingress.fqdn,'/graphql')) : keyValuePair.contentType == 'string' && keyValuePair.value =='WebserverContainerAppNameValue' ? concat('https://',webserverContainerApp.properties.configuration.ingress.fqdn) : keyValuePair.contentType == 'string' && keyValuePair.value !='StorageAccountValue' ? keyValuePair.value : keyValuePair.contentType == 'string' && keyValuePair.value =='StorageAccountValue' ? storageAccountName : keyValuePair.value == 'SqlServerConnectionStringSecretUrl' ? concat('{"uri":"',sqlServerConnectionString.properties.secretUri,'"}') : keyValuePair.value == 'StorageAccountConnectionStringSecretUrl' ? concat('{"uri":"',storageAccountConnectionString.properties.secretUri,'"}') : keyValuePair.value=='StorageAccountKeySecretUrl' ? concat('{"uri":"',storageAccountKeyString.properties.secretUri,'"}') : keyValuePair.value=='ServiceBusConnectionStringSecretUrl' ? concat('{"uri":"',serviceBusConnectionString.properties.secretUri,'"}') : keyValuePair.value=='ApplicationInsightConnectionStringSecretUrl' ? concat('{"uri":"',applicationInsightConnectionString.properties.secretUri,'"}') : keyValuePair.value=='ClientSecretValue' ? concat('{"uri":"',concat(keyVault.properties.vaultUri,'secrets/',clientSecretName),'"}') :'' // value of the key
+    value: keyValuePair.contentType == 'string' && keyValuePair.value =='SecurityProviderContainerAppNameValue' ? concat('https://',securityProviderContainerApp.properties.configuration.ingress.fqdn) : keyValuePair.contentType == 'string' && keyValuePair.value =='WebApiContainerAppNameValue' ? concat('https://',concat(webApiContainerApp.properties.configuration.ingress.fqdn,'/graphql')) : keyValuePair.contentType == 'string' && keyValuePair.value =='WebserverContainerAppNameValue' ? concat('https://',webserverContainerApp.properties.configuration.ingress.fqdn) : keyValuePair.contentType == 'string' && keyValuePair.value !='StorageAccountValue' ? keyValuePair.value : keyValuePair.contentType == 'string' && keyValuePair.value =='StorageAccountValue' ? storageAccountName : keyValuePair.value == 'SqlServerConnectionStringSecretUrl' ? concat('{"uri":"',sqlServerConnectionString.properties.secretUri,'"}') : keyValuePair.value == 'StorageAccountConnectionStringSecretUrl' ? concat('{"uri":"',storageAccountConnectionString.properties.secretUri,'"}') : keyValuePair.value=='StorageAccountKeySecretUrl' ? concat('{"uri":"',storageAccountKeyString.properties.secretUri,'"}') : keyValuePair.value=='ServiceBusConnectionStringSecretUrl' ? concat('{"uri":"',serviceBusConnectionString.properties.secretUri,'"}') : keyValuePair.value=='ApplicationInsightConnectionStringSecretUrl' ? concat('{"uri":"',applicationInsightConnectionString.properties.secretUri,'"}') : '' // value of the key
     contentType: keyValuePair.contentType	// string representing content type of value
     tags: keyValuePair.tags				        // object: Dictionary of tags 
   }

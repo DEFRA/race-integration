@@ -51,6 +51,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
         /// </summary>
         public string ReturnUrl { get; set; }
 
+        [BindProperty]
         public string WebAppUrl { get; set; }
 
         /// <summary>

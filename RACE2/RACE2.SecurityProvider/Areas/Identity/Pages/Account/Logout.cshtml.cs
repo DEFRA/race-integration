@@ -31,6 +31,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
             returnUrl=_config["RACE2FrontEndURL"]+"/login";
+            //returnUrl = _config["RACE2FrontEndURL"];
             if (returnUrl != null)
             {
                 //return LocalRedirect(returnUrl);

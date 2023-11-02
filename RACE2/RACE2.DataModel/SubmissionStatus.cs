@@ -13,6 +13,9 @@ namespace RACE2.DataModel
     {
         [Key, Required]
         public int Id { get; set; }
+
+        [Required]
+        public int SubmissionReference {  get; set; }
         [Required]
         public FeatureFunction Service { get; set; } = new FeatureFunction();
         [Required]
@@ -25,16 +28,16 @@ namespace RACE2.DataModel
         [Required]
         public string? Status { get; set; }
         [Required]  
-        public DateTime LastModified { get; set; }
+        public DateTime LastModifiedDateTime { get; set; }
         [Required]
-        public UserDetail ModifiedBy { get; set; } = new UserDetail();
+        public UserDetail LastModifiedBy { get; set; } = new UserDetail();
         [Required]
         public ScreenDefinition LastModifiedScreen { get; set; } = new ScreenDefinition();
         [Required]
-        public DateTime SubmittedOn { get; set; }
+        public DateTime SubmittedDateTime { get; set; }
         [Required]
         public UserDetail SubmittedBy  { get; set;}  = new UserDetail();
 
-        public string? override_template { get; set; } 
+        public string? OverrideUsedTemplate { get; set; } 
     }
 }

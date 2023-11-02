@@ -9,7 +9,7 @@ resource virtualNetworkResource 'Microsoft.Network/virtualNetworks@2023-05-01' e
   name: vnet
 }
 
-resource subnetkeyvaultResource 'Microsoft.Network/virtualNetworks/subnets@2023-05-01' existing= {
+resource subnetsqlserverResource 'Microsoft.Network/virtualNetworks/subnets@2023-05-01' existing= {
   name: subnetkeyvault
 }
 resource Race2KeyVault_resource 'Microsoft.KeyVault/vaults@2022-11-01' = {
@@ -38,25 +38,26 @@ resource Race2KeyVault_resource 'Microsoft.KeyVault/vaults@2022-11-01' = {
       contentType: 'text/plain'
       value: appInsightConnectionString
     }
-  } 
-}
+  }
+} 
 
-resource privateEndpoint 'Microsoft.Network/privateEndpoints@2023-05-01' = {
+resource keyvaultPrivateEndpoint 'Microsoft.Network/privateEndpoints@2023-05-01' = {
   name: 'PrivateEndpointKeyVault'
   location: location
   properties: {
     subnet: {
-      id: '${virtualNetworkResource.id}/subnets/${subnetkeyvaultResource.name}'
+      id: '${virtualNetworkResource.id}/subnets/${subnetsqlserverResource.name}'
     }
     privateLinkServiceConnections: [
       {
+        name: 'PrivateEndpointKeyVault'
         properties: {
           privateLinkServiceId: Race2KeyVault_resource.id
+          groupIds: [
+            'vault'
+          ]
         }
-        name: 'PrivateEndpointKeyVault'
       }
     ]
   }
 }
-
-  

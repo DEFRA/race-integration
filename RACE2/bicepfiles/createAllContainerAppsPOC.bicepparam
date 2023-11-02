@@ -6,6 +6,8 @@ param managedidentity = 'Race2ManagedIdentity'
 
 param race2appenvName = 'race2containerappenv'
 
+param registryResourceGroup = 'Race2ProjectRG'
+
 param aspnetCoreEnv = 'Production'
 
 param appConfigURL = 'https://race2appconfig.azconfig.io/'

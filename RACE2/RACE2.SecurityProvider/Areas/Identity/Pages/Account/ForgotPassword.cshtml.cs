@@ -34,6 +34,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             _config = config;
             _logger = logger;
         }
+        [BindProperty]
         public string WebAppUrl { get; set; }
 
         /// <summary>
@@ -67,7 +68,10 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
                 if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
-                    return RedirectToPage("./ForgotPasswordConfirmation");
+                    //return RedirectToPage("./ForgotPasswordConfirmation");
+                    ModelState.AddModelError("", "Email is not in database.");
+                    _logger.LogWarning(Input.Email + " tried to use forgotpassword function with nonexistent email.");
+                    return Page();
                 }
                 WebAppUrl = _config["RACE2FrontEndURL"];
                 // For more information on how to enable account confirmation and password reset please

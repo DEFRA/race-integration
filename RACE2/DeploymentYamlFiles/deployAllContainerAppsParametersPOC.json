@@ -1,54 +1,54 @@
 {
-  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
-  "contentVersion": "1.0.0.0",
-  "parameters": {      
-    "resourcegroup": {
-      "value": "POCRACINFRG1401"
-    },
-    "managedidentity": {
-      "value": "POCRACINFMI1401"
-    },
-    "race2appenvName": {
-      "value": "POCRACINFAE1401"
-    },
-    "aspnetCoreEnv": {
-      "value": "Production"
-    },
-    "appConfigURL": {
-      "value": "https://pocracinfac1401.azconfig.io/"
-    },
-    "registryName": {
-      "value": "pocracinfcr1401"
-    },
-    "useExternalIngress": {
-      "value": true
-    },
-    "containerPort": {
-      "value": 80
-    },  
-    "minReplicas": {
-      "value": 1
-    },
-    "maxReplicas": {
-      "value": 2
-    },    
-    "frontEndWebServerContainerAppName": {
-      "value":"race2frontendwebserver"
-    },
-    "securityProviderContainerAppName": {
-      "value":"race2securityprovider"
-    },
-    "webApiContainerAppName": {
-      "value":"race2webapi"
-    },
-    "frontendwebservercontainerImage": {
-      "value":"pocracinfcr1401.azurecr.io/race2frontendwebserver"
-    },
-    "securityprovidercontainerImage": {
-      "value": "pocracinfcr1401.azurecr.io/race2securityprovider"
-    },
-    "webapicontainerImage": {
-      "value": "pocracinfcr1401.azurecr.io/race2webapi"
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {      
+      "resourcegroup": {
+        "value": "Race2ProjectRG"
+      },     
+      "managedidentity": {
+        "value": "Race2ManagedIdentity"
+      }, 
+      "race2appenvName": {
+        "value": "race2containerappenv"
+      }, 
+      "aspnetCoreEnv": {
+        "value": "Production"
+      },
+      "appConfigURL": {
+        "value": "https://race2appconfig.azconfig.io/"
+      },     
+      "registryName": {
+        "value": "race2acr"
+      },
+      "useExternalIngress": {
+        "value": true
+      },
+      "containerPort": {
+        "value": 80
+      },
+      "minReplicas": {
+        "value": 1
+      },
+      "maxReplicas": {
+        "value": 2
+      },
+      "frontEndWebServerContainerAppName": {
+        "value":"race2frontendwebserver"
+      },
+      "securityProviderContainerAppName": {
+        "value":"race2securityprovider"
+      },
+      "webApiContainerAppName": {
+        "value":"race2webapi"
+      },
+      "frontendwebservercontainerImage": {
+        "value":"race2acr.azurecr.io/race2frontendwebserver"
+      },
+      "securityprovidercontainerImage": {
+        "value":"race2acr.azurecr.io/race2securityprovider"
+      },
+      "webapicontainerImage": {
+        "value":"race2acr.azurecr.io/race2webapi"
+      } 
     }
-  }
 }

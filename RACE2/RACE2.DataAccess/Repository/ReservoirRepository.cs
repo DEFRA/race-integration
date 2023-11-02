@@ -120,12 +120,13 @@ namespace RACE2.DataAccess.Repository
 
                         var parameters = new DynamicParameters();
                         parameters.Add("id", id, DbType.String);
-                        var reservoirs = await conn.QueryAsync<ReservoirDetailsDTO, Address, ReservoirDetailsDTO>("sp_GetReservoirsbyUserId", (reservoir, address) =>
+                        var reservoirs = await conn.QueryAsync<ReservoirDetailsDTO, Address,UserDetail, ReservoirDetailsDTO>("sp_GetReservoirsbyUserId", (reservoir, address,userdetail) =>
                         {
                             reservoir.Address = address;
+                            reservoir.UserDetail = userdetail;
 
                             return reservoir;
-                        }, parameters, null, true, splitOn: "ReservoirId,id", commandType: CommandType.StoredProcedure);
+                        }, parameters, null, true, splitOn: "ReservoirId,id,id", commandType: CommandType.StoredProcedure);
                         return reservoirs.ToList();
                     }
                 }

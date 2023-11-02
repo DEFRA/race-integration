@@ -16,9 +16,9 @@ namespace RACE2.DataModel
 
         public Reservoir Reservoir { get; set; } = new Reservoir();
 
-        public UserDetail PrimaryContact { get; set; } = new UserDetail();
+        public UserDetail? PrimaryContactUser { get; set; }
 
-       public UserDetail SecondaryContact { get;set; } = new UserDetail(); 
+       public UserDetail? SecondaryContactUser { get;set; } 
 
         }
 }
