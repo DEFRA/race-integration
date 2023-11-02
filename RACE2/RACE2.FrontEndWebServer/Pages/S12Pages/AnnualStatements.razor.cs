@@ -11,6 +11,7 @@ using RACE2.Dto;
 using RACE2.Services;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics.Eventing.Reader;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -245,7 +246,13 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                     s12PrePopulationFields.UndertakerAddress = s12PrePopulationFields.UndertakerAddress + ",  " + Undertakers[0].Postcode;
                 if (!String.IsNullOrEmpty(Undertakers[0].cMobile))
                     s12PrePopulationFields.UndertakerPhoneNumber = Undertakers[0].cMobile;
-                else
+                else if (!String.IsNullOrEmpty(Undertakers[0].cAlternativeMobile))
+                    s12PrePopulationFields.UndertakerPhoneNumber = Undertakers[0].cAlternativeMobile;
+                else if (!String.IsNullOrEmpty(Undertakers[0].cAlternativePhone))
+                    s12PrePopulationFields.UndertakerPhoneNumber = Undertakers[0].cAlternativePhone;
+                else if (!String.IsNullOrEmpty(Undertakers[0].cAlternativeEmergencyPhone))
+                    s12PrePopulationFields.UndertakerPhoneNumber = Undertakers[0].cAlternativeEmergencyPhone;
+                else 
                     s12PrePopulationFields.UndertakerPhoneNumber = "Please provide a contact number";
                 if (reservoir.NextInspectionDate103 != DateTime.MinValue)
                 {
