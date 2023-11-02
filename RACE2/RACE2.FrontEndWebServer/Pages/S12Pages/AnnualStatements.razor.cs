@@ -230,6 +230,12 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 s12PrePopulationFields.SupervisingEngineerEmail = UserDetail.Email;
                 if (!String.IsNullOrEmpty(UserDetail.cMobile))
                     s12PrePopulationFields.SupervisingEngineerPhoneNumber = UserDetail.cMobile;
+                else if (!String.IsNullOrEmpty(UserDetail.cAlternativeMobile))
+                    s12PrePopulationFields.SupervisingEngineerPhoneNumber = UserDetail.cAlternativeMobile;
+                else if (!String.IsNullOrEmpty(UserDetail.cAlternativePhone))
+                    s12PrePopulationFields.SupervisingEngineerPhoneNumber = UserDetail.cAlternativePhone;
+                else if (!String.IsNullOrEmpty(UserDetail.cAlternativeEmergencyPhone))
+                    s12PrePopulationFields.SupervisingEngineerPhoneNumber = UserDetail.cAlternativeEmergencyPhone;
                 else
                     s12PrePopulationFields.SupervisingEngineerPhoneNumber = UserDetail.PhoneNumber != null ? UserDetail.PhoneNumber : "";
                 Undertakers = await reservoirService.GetOperatorsforReservoir(reservoir.Id, reservoir.OperatorType);
