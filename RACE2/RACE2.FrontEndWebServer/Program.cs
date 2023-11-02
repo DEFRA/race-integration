@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using Microsoft.IdentityModel.Logging;
 using RACE2.DataAccess.Repository;
 using RACE2.DataModel;
+using RACE2.FrontEndWebServer.Components;
 using RACE2.FrontEndWebServer.ExceptionGlobalErrorHandling;
 using RACE2.Services;
 
@@ -53,18 +54,19 @@ builder.Services.AddApplicationInsightsTelemetry(options =>
 });
 
 // Add services to the container.
+builder.Services.AddRazorComponents()
+    .AddInteractiveServerComponents();
+//.AddHubOptions(options =>
+//    {
+//        options.ClientTimeoutInterval = TimeSpan.FromSeconds(60);//.FromSeconds(30); 
+//        options.EnableDetailedErrors = true;
+//        options.HandshakeTimeout = TimeSpan.FromSeconds(30); //FromSeconds(15); 
+//        options.KeepAliveInterval = TimeSpan.FromSeconds(30);//.FromSeconds(15);  
+//        options.MaximumParallelInvocationsPerClient = 1; 
+//        options.MaximumReceiveMessageSize = 128 * 1024; //32*1024;
+//        options.StreamBufferCapacity = 10;
+//    });
 builder.Services.AddRazorPages();
-builder.Services.AddServerSideBlazor();
-    //.AddHubOptions(options =>
-    //    {
-    //        options.ClientTimeoutInterval = TimeSpan.FromSeconds(60);//.FromSeconds(30); 
-    //        options.EnableDetailedErrors = true;
-    //        options.HandshakeTimeout = TimeSpan.FromSeconds(30); //FromSeconds(15); 
-    //        options.KeepAliveInterval = TimeSpan.FromSeconds(30);//.FromSeconds(15);  
-    //        options.MaximumParallelInvocationsPerClient = 1; 
-    //        options.MaximumReceiveMessageSize = 128 * 1024; //32*1024;
-    //        options.StreamBufferCapacity = 10;
-    //    });
 
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {
@@ -143,12 +145,12 @@ app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 app.UseCookiePolicy();
-app.UseRouting();
-
+app.UseAntiforgery();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapBlazorHub();
-app.MapFallbackToPage("/_Host");
-//IdentityModelEventSource.ShowPII = true;
+app.MapRazorComponents<App>()
+    .AddInteractiveServerRenderMode();
+app.MapRazorPages();
+
 app.Run();
