@@ -1,0 +1,376 @@
+﻿@page "/privacy"
+@using Microsoft.AspNetCore.Authorization
+@using RACE2.FrontEndWebServer.Components
+<HeaderWithBanner />
+@if (IsLoggedIn)
+{
+    <div class="govuk-width-container" style="min-height: 69vh;">
+        <FeedbackBannerSignOut />
+        <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+ 
+            <a class="govuk-back-link govuk-!-margin-top-0 govuk-!-margin-bottom-0" href="javascript:history.back()">Back</a>
+
+            <div class="govuk-grid-row">
+
+                <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-6">
+
+                    <h1 class="govuk-heading-l govuk-!-margin-top-8 govuk-!-margin-bottom-4">
+                        Privacy notice
+                    </h1>
+
+                    <p class="govuk-body">
+                        The Environment Agency is the enforcement authority for reservoir law in England. We are the
+                        controller of the data collected and processed through our Send a supervising engineer's annual statement service
+                        (digital service) and Word template.
+                    </p>
+
+                    <p class="govuk-body">A data controller decides how and why personal data is processed.</p>
+
+                    <p class="govuk-body">
+                        Our <a href="https://www.gov.uk/government/organisations/environment-agency/about/personal-information-charter"
+                               class="govuk-link govuk-link--no-visited-state"> personal information charter</a> explains your rights and how
+                        we deal with your personal data in general.
+                    </p>
+
+                    <h2 class="govuk-heading-m govuk-!-margin-top-8 govuk-!-margin-bottom-4">
+                        What data we collect
+                    </h2>
+
+                    <p class="govuk-body">
+                        We collect personal data from supervising engineers who create accounts for and use the
+                        digital service and Word template.
+                    </p>
+
+                    <p class="govuk-body">This data includes:</p>
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>your name</li>
+                        <li>
+                            your address, phone number, email address (if you're a sole trader)
+                        </li>
+                        <li>your company name, address, phone number and email address (if you're employed)</li>
+                    </ul>
+
+                    <p class="govuk-body">
+                        The legal basis for processing your personal data is the Environment Agency's legal obligation
+                        as the enforcement authority. This is set out in article 6(1)(e) of the UK General Protection Data Regulation (GDPR).
+                    </p>
+
+
+                    <h3 class="govuk-heading-s govuk-!-margin-top-8 govuk-!-margin-bottom-4">
+                        Your responsibility with other people's personal data
+                    </h3>
+
+                    <p class="govuk-body">
+                        If you've included personal data about other people in your statement, you must tell them.
+                    </p>
+
+                    <p class="govuk-body">
+                        You must provide them with a copy of this privacy notice so that they know how their personal
+                        data will be used.
+                    </p>
+
+                    <h2 class="govuk-heading-m govuk-!-margin-top-8 govuk-!-margin-bottom-4">
+                        Why we need your personal data
+                    </h2>
+
+                    <p class="govuk-body">
+                        As the enforcement authority we need your personal data to make sure that only registered
+                        supervising engineers can access the service and send annual statements, and that you can only do this for the
+                        reservoirs you're legally appointed to.
+                    </p>
+
+                    <p class="govuk-body">We also need to communicate with you about your statements and issues of reservoir safety.</p>
+
+                    <h2 class="govuk-heading-m govuk-!-margin-top-8 govuk-!-margin-bottom-4">
+                        What we do with your personal data
+                    </h2>
+
+                    <p class="govuk-body">We use your personal data to:</p>
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>check that you're allowed to use this service</li>
+                        <li>populate your annual statement template in the future</li>
+                        <li>process your annual statement</li>
+                        <li>check that the details we hold about you are up to date and update them if necessary</li>
+                        <li>contact you if we have questions about your annual statement or the reservoir it relates to</li>
+                        <li>
+                            communicate information about annual statements, using GOV.Notify
+                        </li>
+                        <li>enforce the law</li>
+                    </ul>
+
+                    <p class="govuk-body">
+                        We will share your personal data if we are required to do so by law, for example by court
+                        order, or to prevent fraud or other crime.
+                    </p>
+
+                    <p class="govuk-body">We will not:</p>
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>sell or rent your personal data to third parties</li>
+                        <li>share your personal data with third parties for marketing purposes</li>
+                    </ul>
+
+                    <h3 class="govuk-heading-s govuk-!-margin-top-8 govuk-!-margin-bottom-4">
+                        Giving feedback about the service
+                    </h3>
+
+                    <p class="govuk-body">
+                        You might be asked to provide feedback or take part in research about the digital service and
+                        Word template. We use this feedback to improve our systems.
+                    </p>
+
+                    <p class="govuk-body">The legal basis for processing this data is because you give your consent.</p>
+
+                    <p class="govuk-body">
+                        You can withdraw your consent at any time.
+                    </p>
+
+                    <h2 class="govuk-heading-m govuk-!-margin-top-8 govuk-!-margin-bottom-4">
+                        How long we keep your personal data
+                    </h2>
+
+                    <p class="govuk-body">
+                        We keep any data you enter in the digital service for 2 years.
+                    </p>
+
+                    <p class="govuk-body">
+                        The personal data you send in the annual statement through the digital service and Word template
+                        which is entered into the Reservoir Act Compliance and Enforcement system is kept indefinitely as it forms an
+                        historical record.
+                    </p>
+
+                    <h2 class="govuk-heading-m govuk-!-margin-top-8 govuk-!-margin-bottom-4">
+                        Where your data is processed and stored
+                    </h2>
+
+                    <p class="govuk-body">
+                        We design, build and run our systems to make sure that your data is as safe as possible at any
+                        stage, both while it's processed and when it's stored.
+                    </p>
+
+                    <p class="govuk-body">
+                        Your personal data will be processed and stored in the UK.
+                    </p>
+
+                    <h2 class="govuk-heading-m govuk-!-margin-top-8 govuk-!-margin-bottom-4">
+                        Questions and complaints
+                    </h2>
+
+                    <p class="govuk-body">
+                        Our Data Protection Officer (DPO) is responsible for independent advice and monitoring of the
+                        Environment Agency's use of personal data.
+                    </p>
+
+                    <p class="govuk-body">
+                        If you have any concerns or queries about how we process personal data, or if you would like
+                        to make a complaint or request relating to data protection, contact our DPO using these details:
+                    </p>
+
+                    <p class="govuk-body">
+                        Data Protection Officer<br>
+                        Environment Agency<br>
+                        Horizon House<br>
+                        Deanery Road<br>
+                        Bristol<br>
+                        BS1 5AH
+                    </p>
+
+                    <p class="govuk-body">Email <a href="mailto:dataprotection@environment-agency.gov.uk" class="govuk-link"> dataprotection@environment-agency.gov.uk</a></p>
+
+                    <h2 class="govuk-heading-m govuk-!-margin-top-8 govuk-!-margin-bottom-4">
+                        Changes to this notice
+                    </h2>
+                    <p class="govuk-body">
+                        We might change this privacy notice. In that case, the ‘last updated’ date at the bottom of this page will also change. Any changes to this privacy notice will apply to you and your data immediately.
+                    </p>
+                    <p class="govuk-body">If these changes affect how your personal data is processed the Environment Agency will take reasonable steps to let you know.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+}
+else
+{
+    <div class="govuk-width-container ">
+        <FeedbackBannerSignIn />
+        <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+            <a class="govuk-back-link govuk-!-margin-top-0 govuk-!-margin-bottom-0" href="javascript:history.back()">Back</a>
+
+            <div class="govuk-grid-row">
+
+                <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-6">
+
+                    <h1 class="govuk-heading-l govuk-!-margin-top-8 govuk-!-margin-bottom-4">
+                        Privacy notice
+                    </h1>
+
+                    <p class="govuk-body">
+                        The Environment Agency is the enforcement authority for reservoir law in England. We are the
+                        controller of the data collected and processed through our Send a supervising engineer's annual statement service
+                        (digital service) and Word template.
+                    </p>
+
+                    <p class="govuk-body">A data controller decides how and why personal data is processed.</p>
+
+                    <p class="govuk-body">
+                        Our <a href="https://www.gov.uk/government/organisations/environment-agency/about/personal-information-charter"
+                               class="govuk-link govuk-link--no-visited-state"> personal information charter</a> explains your rights and how
+                        we deal with your personal data in general.
+                    </p>
+
+                    <h2 class="govuk-heading-m govuk-!-margin-top-8 govuk-!-margin-bottom-4">
+                        What data we collect
+                    </h2>
+
+                    <p class="govuk-body">
+                        We collect personal data from supervising engineers who create accounts for and use the
+                        digital service and Word template.
+                    </p>
+
+                    <p class="govuk-body">This data includes:</p>
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>your name</li>
+                        <li>
+                            your address, phone number, email address (if you're a sole trader)
+                        </li>
+                        <li>your company name, address, phone number and email address (if you're employed)</li>
+                    </ul>
+
+                    <p class="govuk-body">
+                        The legal basis for processing your personal data is the Environment Agency's legal obligation
+                        as the enforcement authority. This is set out in article 6(1)(e) of the UK General Protection Data Regulation (GDPR).
+                    </p>
+
+
+                    <h3 class="govuk-heading-s govuk-!-margin-top-8 govuk-!-margin-bottom-4">
+                        Your responsibility with other people's personal data
+                    </h3>
+
+                    <p class="govuk-body">
+                        If you've included personal data about other people in your statement, you must tell them.
+                    </p>
+
+                    <p class="govuk-body">
+                        You must provide them with a copy of this privacy notice so that they know how their personal
+                        data will be used.
+                    </p>
+
+                    <h2 class="govuk-heading-m govuk-!-margin-top-8 govuk-!-margin-bottom-4">
+                        Why we need your personal data
+                    </h2>
+
+                    <p class="govuk-body">
+                        As the enforcement authority we need your personal data to make sure that only registered
+                        supervising engineers can access the service and send annual statements, and that you can only do this for the
+                        reservoirs you're legally appointed to.
+                    </p>
+
+                    <p class="govuk-body">We also need to communicate with you about your statements and issues of reservoir safety.</p>
+
+                    <h2 class="govuk-heading-m govuk-!-margin-top-8 govuk-!-margin-bottom-4">
+                        What we do with your personal data
+                    </h2>
+
+                    <p class="govuk-body">We use your personal data to:</p>
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>check that you're allowed to use this service</li>
+                        <li>populate your annual statement template in the future</li>
+                        <li>process your annual statement</li>
+                        <li>check that the details we hold about you are up to date and update them if necessary</li>
+                        <li>contact you if we have questions about your annual statement or the reservoir it relates to</li>
+                        <li>
+                            communicate information about annual statements, using GOV.Notify
+                        </li>
+                        <li>enforce the law</li>
+                    </ul>
+
+                    <p class="govuk-body">
+                        We will share your personal data if we are required to do so by law, for example by court
+                        order, or to prevent fraud or other crime.
+                    </p>
+
+                    <p class="govuk-body">We will not:</p>
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>sell or rent your personal data to third parties</li>
+                        <li>share your personal data with third parties for marketing purposes</li>
+                    </ul>
+
+                    <h3 class="govuk-heading-s govuk-!-margin-top-8 govuk-!-margin-bottom-4">
+                        Giving feedback about the service
+                    </h3>
+
+                    <p class="govuk-body">
+                        You might be asked to provide feedback or take part in research about the digital service and
+                        Word template. We use this feedback to improve our systems.
+                    </p>
+
+                    <p class="govuk-body">The legal basis for processing this data is because you give your consent.</p>
+
+                    <p class="govuk-body">
+                        You can withdraw your consent at any time.
+                    </p>
+
+                    <h2 class="govuk-heading-m govuk-!-margin-top-8 govuk-!-margin-bottom-4">
+                        How long we keep your personal data
+                    </h2>
+
+                    <p class="govuk-body">
+                        We keep any data you enter in the digital service for 2 years.
+                    </p>
+
+                    <p class="govuk-body">
+                        The personal data you send in the annual statement through the digital service and Word template
+                        which is entered into the Reservoir Act Compliance and Enforcement system is kept indefinitely as it forms an
+                        historical record.
+                    </p>
+
+                    <h2 class="govuk-heading-m govuk-!-margin-top-8 govuk-!-margin-bottom-4">
+                        Where your data is processed and stored
+                    </h2>
+
+                    <p class="govuk-body">
+                        We design, build and run our systems to make sure that your data is as safe as possible at any
+                        stage, both while it's processed and when it's stored.
+                    </p>
+
+                    <p class="govuk-body">
+                        Your personal data will be processed and stored in the UK.
+                    </p>
+
+                    <h2 class="govuk-heading-m govuk-!-margin-top-8 govuk-!-margin-bottom-4">
+                        Questions and complaints
+                    </h2>
+
+                    <p class="govuk-body">
+                        Our Data Protection Officer (DPO) is responsible for independent advice and monitoring of the
+                        Environment Agency's use of personal data.
+                    </p>
+
+                    <p class="govuk-body">
+                        If you have any concerns or queries about how we process personal data, or if you would like
+                        to make a complaint or request relating to data protection, contact our DPO using these details:
+                    </p>
+
+                    <p class="govuk-body">
+                        Data Protection Officer<br>
+                        Environment Agency<br>
+                        Horizon House<br>
+                        Deanery Road<br>
+                        Bristol<br>
+                        BS1 5AH
+                    </p>
+
+                    <p class="govuk-body">Email <a href="mailto:dataprotection@environment-agency.gov.uk" class="govuk-link"> dataprotection@environment-agency.gov.uk</a></p>
+
+                    <h2 class="govuk-heading-m govuk-!-margin-top-8 govuk-!-margin-bottom-4">
+                        Changes to this notice
+                    </h2>
+                    <p class="govuk-body">
+                        We might change this privacy notice. In that case, the ‘last updated’ date at the bottom of this page will also change. Any changes to this privacy notice will apply to you and your data immediately.
+                    </p>
+                    <p class="govuk-body">If these changes affect how your personal data is processed the Environment Agency will take reasonable steps to let you know.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+}
+<Footer />
