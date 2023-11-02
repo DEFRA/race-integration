@@ -1,5 +1,4 @@
 using Azure.Identity;
-using Fluxor;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Components;
@@ -13,12 +12,10 @@ using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using Microsoft.IdentityModel.Logging;
 using RACE2.DataAccess.Repository;
 using RACE2.DataModel;
+using RACE2.FrontEndWebServer.ExceptionGlobalErrorHandling;
 using RACE2.Services;
-using RACE2.FrontEndWebServer.Components;
-using RACE2.FrontEndWebServer;
 
 var builder = WebApplication.CreateBuilder(args);
-
 builder.Configuration.AddAzureAppConfiguration(options =>
 {
     //var connectionString = builder.Configuration["AZURE_APPCONFIGURATION_CONNECTIONSTRING"];
@@ -41,17 +38,23 @@ builder.Configuration.AddAzureAppConfiguration(options =>
 var blazorClientURL = builder.Configuration["RACE2FrontEndURL"];
 var RACE2WebApiURL = builder.Configuration["RACE2WebApiURL"];
 var RACE2IDPURL = builder.Configuration["RACE2SecurityProviderURL"];
-var ClientSecret = builder.Configuration["ClientSecret"];
-var appinsightsConnString = builder.Configuration["AppInsightsConnectionString"];
+var clientSecret=builder.Configuration["ClientSecret"];
+var appinsightsConnString= builder.Configuration["AppInsightsConnectionString"];
+//IConfiguration _configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../appsettings.json").Build();
 
-builder.Services.AddApplicationInsightsTelemetry(options =>
-{
+//builder.Logging.AddApplicationInsights(
+//        configureTelemetryConfiguration: (config) =>
+//            config.ConnectionString = builder.Configuration.GetConnectionString(appinsigtsConnString),
+//            configureApplicationInsightsLoggerOptions: (options) => { }
+//    );
+builder.Services.AddApplicationInsightsTelemetry(options => 
+{ 
     options.ConnectionString = appinsightsConnString;
 });
 
 // Add services to the container.
-builder.Services.AddRazorComponents()
-    .AddInteractiveServerComponents();
+builder.Services.AddRazorPages();
+builder.Services.AddServerSideBlazor();
     //.AddHubOptions(options =>
     //    {
     //        options.ClientTimeoutInterval = TimeSpan.FromSeconds(60);//.FromSeconds(30); 
@@ -62,7 +65,6 @@ builder.Services.AddRazorComponents()
     //        options.MaximumReceiveMessageSize = 128 * 1024; //32*1024;
     //        options.StreamBufferCapacity = 10;
     //    });
-builder.Services.AddRazorPages();
 
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {
@@ -77,38 +79,39 @@ builder.Services.AddAuthentication(options =>
     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
 })
-//.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
-.AddCookie(options =>
-{
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
-    options.Cookie.MaxAge = options.ExpireTimeSpan;
-    options.SlidingExpiration = true;
-    options.EventsType = typeof(CustomCookieAuthenticationEvents);//forcibly expire after a day
-})
+.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
+//.AddCookie(options =>
+//{
+//    options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+//    options.Cookie.MaxAge = options.ExpireTimeSpan; // optional
+//    options.SlidingExpiration = true;
+//    options.LoginPath = "/login";
+//    options.LogoutPath = "/logout";
+//})
 .AddOpenIdConnect(
     OpenIdConnectDefaults.AuthenticationScheme,
     options =>
     {
         //options.Events.OnTicketReceived = async (Context) =>
         //{
-        //    Context.Properties.ExpiresUtc = DateTime.UtcNow.AddMinutes(30);
+        //    Context.Properties.ExpiresUtc = DateTime.UtcNow.AddMinutes(20);
         //};
-        options.Events.OnRedirectToIdentityProvider = context =>
-        {
-            context.ProtocolMessage.Prompt = "login";
-            return Task.CompletedTask;
-        };
+        //options.Events.OnRedirectToIdentityProvider = context =>
+        //{
+        //    context.ProtocolMessage.Prompt = "login";
+        //    return Task.CompletedTask;
+        //};
         options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
         options.SignOutScheme = OpenIdConnectDefaults.AuthenticationScheme;
         options.Authority = RACE2IDPURL;
         options.ClientId = "blazorServer";
-        options.ClientSecret = ClientSecret;
+        options.ClientSecret = clientSecret;
         // When set to code, the middleware will use PKCE protection
         options.ResponseType = "code id_token";
         // Save the tokens we receive from the IDP
-        options.SaveTokens = true; // false;
+        options.SaveTokens = true; // default false
         // It's recommended to always get claims from the UserInfoEndpoint during the flow.
-        options.GetClaimsFromUserInfoEndpoint = true;
+        options.GetClaimsFromUserInfoEndpoint = true; 
         options.Scope.Add("race2WebApi");
         options.RequireHttpsMetadata = requireHttpsMetadata;
     });
@@ -119,27 +122,20 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
         ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
 });
 
-builder.Services.AddFluxor(o =>
-{
-    o.ScanAssemblies(typeof(Program).Assembly);
-    o.UseReduxDevTools(rdt => { rdt.Name = "RACE2 application"; });
-});
-
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IReservoirService, ReservoirService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IReservoirRepository, ReservoirRepository>();
 builder.Services.AddScoped<IBlobStorageService, BlobStorageService>();
 builder.Services.AddScoped<IOpenXMLUtilitiesService, OpenXMLUtilitiesService>();
-builder.Services.AddScoped<CustomCookieAuthenticationEvents>();
+builder.Services.AddScoped<CustomErrorBoundary>();
 
 var app = builder.Build();
 app.UseForwardedHeaders();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Error", createScopeForErrors: true);
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseExceptionHandler("/Error");
     app.UseHsts();
 }
 
@@ -147,12 +143,12 @@ app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 app.UseCookiePolicy();
-app.UseAntiforgery();
+app.UseRouting();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapRazorComponents<App>()
-    .AddInteractiveServerRenderMode();
-app.MapRazorPages();
-
+app.MapBlazorHub();
+app.MapFallbackToPage("/_Host");
+//IdentityModelEventSource.ShowPII = true;
 app.Run();
