@@ -61,7 +61,7 @@ resource containerSecurityProviderApp 'Microsoft.App/containerApps@2023-05-01' =
           name: containerAppName
           resources: {
             cpu: 1
-            memory:'2GB'
+            memory:'2Gi'
           }
         }
       ]
