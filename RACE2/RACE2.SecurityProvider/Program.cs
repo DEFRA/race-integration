@@ -121,7 +121,7 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
-    app.UseExceptionHandler("/Error");
+    app.UseExceptionHandler("/Identity/Account/Error");
     app.UseHsts();
 }
 

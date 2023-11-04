@@ -1,11 +1,15 @@
-﻿@page "/ApplicationError/{ErrorMessage}"
-@using RACE2.FrontEndWebServer.Components
+﻿@page
+@model RACE2.SecurityProvider.Areas.Identity.Pages.ErrorModel
 
-<Header/>
+@{
+    Layout = "_LayoutRace2App";
+}
 
-<div class="govuk-width-container" style="min-height: 69vh;">
+<partial name="_HeaderPartialWithBanner" model=Model />
 
-    <FeedbackBanner/>
+<div class="govuk-width-container">
+
+    <partial name="_FeedbackPartial" />
 
     <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
 
@@ -29,9 +33,7 @@
     </main>
 </div>
 
-<Footer />
+<partial name="_FooterPartial" />
 
-@code {
-    [Parameter]
-    public string ErrorMessage { get; set; }
+@{
 }
