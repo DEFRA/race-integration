@@ -59,6 +59,10 @@ resource containerSecurityProviderApp 'Microsoft.App/containerApps@2023-05-01' =
           ]          
           image:'${containerImage}:${tagVal.tag}' //concat('${securityprovidercontainerImage}',':','${tagVal.tag}')
           name: containerAppName
+          resources: {
+            cpu: 1
+            memory:'2GB'
+          }
         }
       ]
       scale: {
