@@ -30,7 +30,7 @@
         "value": 1
       },
       "maxReplicas": {
-        "value": 2
+        "value": 1
       },    
       "frontEndWebServerContainerAppName": {
         "value":"race2frontendwebserver"

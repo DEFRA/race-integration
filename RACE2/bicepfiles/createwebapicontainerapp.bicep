@@ -59,10 +59,6 @@ resource containerWebApiApp 'Microsoft.App/containerApps@2023-05-01' = {
           ]          
           image: '${containerImage}:${tagVal.tag}' //concat('${webapicontainerImage}',':','${tagVal.tag}')
           name: containerAppName
-          resources: {
-            cpu: 1
-            memory:'2Gi'
-          }
         }
       ]
       scale: {
