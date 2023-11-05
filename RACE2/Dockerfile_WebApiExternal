@@ -6,7 +6,7 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["RACE2.WebApi/RACE2.WebApiExternal.csproj", "RACE2.WebApiExternal/"]
+COPY ["RACE2.WebApiExternal/RACE2.WebApiExternal.csproj", "RACE2.WebApiExternal/"]
 COPY ["RACE2.Common/RACE2.Common.csproj", "RACE2.Common/"]
 COPY ["RACE2.Infrastructure/RACE2.Infrastructure.csproj", "RACE2.Infrastructure/"]
 COPY ["RACE2.DatabaseProvider/RACE2.DatabaseProvider.csproj", "RACE2.DatabaseProvider/"]
