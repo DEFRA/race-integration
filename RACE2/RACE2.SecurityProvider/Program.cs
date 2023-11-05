@@ -14,7 +14,6 @@ using RACE2.DataAccess;
 using RACE2.DatabaseProvider.Data;
 using RACE2.DataModel;
 using RACE2.Dto;
-using RACE2.Infrastructure;
 using RACE2.Notification;
 using RACE2.SecurityProvider;
 using RACE2.SecurityProvider.UtilityClasses;
@@ -48,6 +47,12 @@ var blazorClientURL = builder.Configuration["RACE2FrontEndURL"];
 var webapiURL = builder.Configuration["RACE2WebApiURL"];
 var securityProviderURL = builder.Configuration["RACE2SecurityProviderURL"];
 var sqlConnectionString = builder.Configuration["SqlConnectionString"];
+var appinsightsConnString = builder.Configuration["AppInsightsConnectionString"];
+
+builder.Services.AddApplicationInsightsTelemetry(options =>
+{
+    options.ConnectionString = appinsightsConnString;
+});
 
 // Add Azure App Configuration and feature management services to the container.
 builder.Services.AddAzureAppConfiguration()
@@ -96,7 +101,6 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequiredUniqueChars = 1;
 });
 
-builder.Services.AddLoggingServices(builder.Configuration);
 builder.Services.AddScoped<IRandomPasswordGeneration, RandomPasswordGeneration>();
 builder.Services.AddScoped<INotification, RaceNotification>();
 builder.Services.AddSingleton<ICorsPolicyService>((container) => {
