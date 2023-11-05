@@ -78,7 +78,7 @@ module createwebapicontainerappmodule 'createwebapicontainerapp.bicep' = {
 }
 module createwebapiexternalcontainerappmodule 'createwebapiexternalcontainerapp.bicep' = {
   scope: resourceGroup(resourcegroup)
-  name: 'webapicontainerappdeploy'
+  name: 'webapiexternalcontainerappdeploy'
   params: {
     race2appenv: race2appenvName
     containerAppName: webApiExternalContainerAppName
