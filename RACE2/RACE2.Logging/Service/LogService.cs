@@ -27,7 +27,6 @@ namespace RACE2.Logging.Service
         //IConfiguration _configuration;
         public LogService(Serilog.ILogger logger)
         {
-           // //var connectionString = " DefaultEndpointsProtocol = https; AccountName = race2storageaccount; AccountKey = +voxyaI7i37XXY89mgL3FAg / 1JhvSezh1ENdokcV5GMwCOycBYNfYY15aUak3iD + DMvG0Z4kOc6u + ASt0Rq3ZA ==; EndpointSuffix = core.windows.net";
            // _configuration = configuration;
            // _configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../appsettings.json").Build();
            //// Log.Logger = new LoggerConfiguration()
