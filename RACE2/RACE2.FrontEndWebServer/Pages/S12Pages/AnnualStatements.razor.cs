@@ -9,6 +9,7 @@ using Microsoft.JSInterop;
 using RACE2.DataModel;
 using RACE2.Dto;
 using RACE2.Services;
+using Serilog;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics.Eventing.Reader;
@@ -36,8 +37,6 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         public IUserService userService { get; set; } = default!;
         [Inject]
         public IReservoirService reservoirService { get; set; } = default!;
-        [Inject]
-        public ILogger<AnnualStatements> Logger { get; set; } = default!;
         bool? IsLoggedIn;
         private string UserName { get; set; } = "Unknown";
         private UserDetail UserDetail { get; set; } = default!;
@@ -74,6 +73,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
 
                 userDetails = await userService.GetUserByEmailID(UserName);
+                Log.Logger.Warning(UserName + " accessed S12 template generation.");
 
                 if (userDetails.cIsFirstTimeUser)
                 {
@@ -127,7 +127,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                     }
                     catch (Exception ex)
                     {
-                        Logger.LogCritical("On init for Reservoir :"+rn.Id.ToString()+" Error getting data from backend services : " + ex.Message);
+                        Log.Logger.Fatal("On init for Reservoir :"+rn.Id.ToString()+" Error getting data from backend services : " + ex.Message);
                     }
                 }
                 PopulateReservoirsToDisplay(ReservoirsLinkedToUser);
@@ -138,7 +138,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             }
             catch (Exception ex)
             {
-                Logger.LogCritical("Error getting data from backend services : "+ex.Message);
+                Log.Logger.Fatal("Error getting data from backend services : "+ex.Message);
                 //throw new ApplicationException("Error loading annual statement data.");
             }
             finally
@@ -176,7 +176,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                     }
                     catch (Exception ex)
                     {
-                        Logger.LogCritical("On PopulateReservoirsToDisplay for Reservoir :" + reservoir.Id.ToString() + " Error getting data from backend services : " + ex.Message);
+                        Log.Logger.Fatal("On PopulateReservoirsToDisplay for Reservoir :" + reservoir.Id.ToString() + " Error getting data from backend services : " + ex.Message);
                     }
                 }
                 ReservoirsLinkedToUserForDisplayOnStart = ReservoirsLinkedToUserForDisplay;
@@ -187,7 +187,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             }
             catch (Exception ex)
             {
-                Logger.LogCritical("Error loading reservoir data : " + ex.Message);
+                Log.Logger.Fatal("Error loading reservoir data : " + ex.Message);
                 throw new ApplicationException("Error loading reservoir data.");
             };
         }
@@ -293,7 +293,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             }    
             catch (Exception ex)
             {
-                Logger.LogCritical("Error downloading S12ReportTemplate for the reservoir : " + ex.Message);
+                Log.Logger.Fatal("Error downloading S12ReportTemplate for the reservoir : " + ex.Message);
                 throw new ApplicationException("Error downloading S12ReportTemplate for the reservoir.");
             };
         }
