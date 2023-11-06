@@ -1,4 +1,5 @@
 using Azure.Identity;
+using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Components;
@@ -55,8 +56,9 @@ try
     var tableName = "Logs";
     var columnOptions = new ColumnOptions();
     builder.Host.UseSerilog((ctx, lc) => lc
-        .WriteTo.MSSqlServer(sqlConnectionString, tableName, columnOptions: columnOptions));
-        //.WriteTo.ApplicationInsights());
+        .WriteTo.MSSqlServer(sqlConnectionString, tableName, columnOptions: columnOptions)
+        .WriteTo.ApplicationInsights(new TelemetryConfiguration { ConnectionString = appinsightsConnString }, TelemetryConverter.Traces));
+    Log.Warning("User accessed application");
 
     builder.Services.AddApplicationInsightsTelemetry(options =>
     {

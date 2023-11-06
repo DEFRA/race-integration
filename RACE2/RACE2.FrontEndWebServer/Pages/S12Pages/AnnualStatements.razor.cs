@@ -73,7 +73,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
 
                 userDetails = await userService.GetUserByEmailID(UserName);
-                Log.Logger.Warning(UserName + " accessed S12 template generation.");
+                //Log.Logger.ForContext("User", UserName).ForContext("Application","FrontEndWebServer").ForContext("Method","AnnualStatement").Warning(UserName + " accessed S12 template generation.");
 
                 if (userDetails.cIsFirstTimeUser)
                 {
@@ -138,7 +138,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             }
             catch (Exception ex)
             {
-                Log.Logger.Fatal("Error getting data from backend services : "+ex.Message);
+                //Log.Logger.Fatal("Error getting data from backend services : "+ex.Message);
+                Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement OnInitializedAsync").Fatal("Error getting data from backend services : " + ex.Message);
                 //throw new ApplicationException("Error loading annual statement data.");
             }
             finally
@@ -187,7 +188,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             }
             catch (Exception ex)
             {
-                Log.Logger.Fatal("Error loading reservoir data : " + ex.Message);
+                //Log.Logger.Fatal("Error loading reservoir data : " + ex.Message);
+                Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement PopulateReservoirsToDisplay").Fatal("Error loading reservoir data : " + ex.Message);
                 throw new ApplicationException("Error loading reservoir data.");
             };
         }
@@ -293,7 +295,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             }    
             catch (Exception ex)
             {
-                Log.Logger.Fatal("Error downloading S12ReportTemplate for the reservoir : " + ex.Message);
+                //Log.Logger.Fatal("Error downloading S12ReportTemplate for the reservoir : " + ex.Message);
+                Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement DownloadReportTemplate").Fatal("Error downloading S12ReportTemplate for the reservoir : " + ex.Message);
                 throw new ApplicationException("Error downloading S12ReportTemplate for the reservoir.");
             };
         }
