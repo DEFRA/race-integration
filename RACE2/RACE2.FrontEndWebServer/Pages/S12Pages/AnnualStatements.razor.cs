@@ -127,7 +127,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                     }
                     catch (Exception ex)
                     {
-                        Log.Logger.Fatal("On init for Reservoir :"+rn.Id.ToString()+" Error getting data from backend services : " + ex.Message);
+                        Serilog.Log.Logger.Fatal("On init for Reservoir :"+ rn.Id.ToString()+" Error getting data from backend services : " + ex.Message);
                     }
                 }
                 PopulateReservoirsToDisplay(ReservoirsLinkedToUser);
@@ -139,7 +139,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             catch (Exception ex)
             {
                 //Log.Logger.Fatal("Error getting data from backend services : "+ex.Message);
-                Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement OnInitializedAsync").Fatal("Error getting data from backend services : " + ex.Message);
+                Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement OnInitializedAsync").Fatal("Error getting data from backend services : " + ex.Message);
                 //throw new ApplicationException("Error loading annual statement data.");
             }
             finally
@@ -177,7 +177,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                     }
                     catch (Exception ex)
                     {
-                        Log.Logger.Fatal("On PopulateReservoirsToDisplay for Reservoir :" + reservoir.Id.ToString() + " Error getting data from backend services : " + ex.Message);
+                        Serilog.Log.Logger.Fatal("On PopulateReservoirsToDisplay for Reservoir :" + reservoir.Id.ToString() + " Error getting data from backend services : " + ex.Message);
                     }
                 }
                 ReservoirsLinkedToUserForDisplayOnStart = ReservoirsLinkedToUserForDisplay;
@@ -189,7 +189,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             catch (Exception ex)
             {
                 //Log.Logger.Fatal("Error loading reservoir data : " + ex.Message);
-                Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement PopulateReservoirsToDisplay").Fatal("Error loading reservoir data : " + ex.Message);
+                Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement PopulateReservoirsToDisplay").Fatal("Error loading reservoir data : " + ex.Message);
                 throw new ApplicationException("Error loading reservoir data.");
             };
         }
@@ -296,7 +296,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             catch (Exception ex)
             {
                 //Log.Logger.Fatal("Error downloading S12ReportTemplate for the reservoir : " + ex.Message);
-                Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement DownloadReportTemplate").Fatal("Error downloading S12ReportTemplate for the reservoir : " + ex.Message);
+                Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement DownloadReportTemplate").Fatal("Error downloading S12ReportTemplate for the reservoir : " + ex.Message);
                 throw new ApplicationException("Error downloading S12ReportTemplate for the reservoir.");
             };
         }

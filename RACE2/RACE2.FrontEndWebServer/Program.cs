@@ -18,7 +18,7 @@ using RACE2.Services;
 using Serilog;
 using Serilog.Sinks.MSSqlServer;
 
-Log.Logger = new LoggerConfiguration()
+Serilog.Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Warning()
     .WriteTo.Console()
     .CreateLogger();
@@ -58,7 +58,7 @@ try
     builder.Host.UseSerilog((ctx, lc) => lc
         .WriteTo.MSSqlServer(sqlConnectionString, tableName, columnOptions: columnOptions)
         .WriteTo.ApplicationInsights(new TelemetryConfiguration { ConnectionString = appinsightsConnString }, TelemetryConverter.Traces));
-    Log.Warning("User accessed application");
+    Serilog.Log.Warning("User accessed application");
 
     builder.Services.AddApplicationInsightsTelemetry(options =>
     {
@@ -168,9 +168,9 @@ try
 }
 catch (Exception ex)
 {
-    Log.Fatal(ex, "Host terminated unexpectedly");
+    Serilog.Log.Fatal(ex, "Host terminated unexpectedly");
 }
 finally
 {
-    Log.CloseAndFlush();
+    Serilog.Log.CloseAndFlush();
 }
