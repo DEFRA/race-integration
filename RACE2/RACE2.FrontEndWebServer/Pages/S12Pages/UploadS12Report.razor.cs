@@ -33,6 +33,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         string Message = "No file(s) selected";
         IReadOnlyList<IBrowserFile> selectedFiles;
         private List<FileUploadViewModel> fileUploadViewModels = new();
+        [Parameter]
+        public string ReservoirId { get; set; }
         [CascadingParameter]
         public Task<AuthenticationState> AuthenticationStateTask { get; set; }
         protected override async void OnInitialized()
