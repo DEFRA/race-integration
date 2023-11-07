@@ -47,10 +47,12 @@ try
     var tableName = "Logs";
     var columnOptions = new ColumnOptions();
     builder.Host.UseSerilog((ctx, lc) => lc
-        .MinimumLevel.Information()
-        .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-        .WriteTo.MSSqlServer(sqlConnectionString, tableName, columnOptions: columnOptions)
-        .Enrich.FromLogContext());
+         .MinimumLevel.Information()
+         .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+         .Enrich.FromLogContext()
+         .WriteTo.Console()
+         .WriteTo.MSSqlServer(sqlConnectionString, tableName, columnOptions: columnOptions)
+         .WriteTo.ApplicationInsights(new TelemetryConfiguration { ConnectionString = appinsightsConnString }, TelemetryConverter.Traces));
 
     // Add services to the container.
 
