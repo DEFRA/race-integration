@@ -19,7 +19,7 @@ using Serilog;
 using Serilog.Sinks.MSSqlServer;
 
 Serilog.Log.Logger = new LoggerConfiguration()
-    .MinimumLevel.Warning()
+    .MinimumLevel.Information()
     .WriteTo.Console()
     .CreateLogger();
 try
@@ -56,10 +56,11 @@ try
     var tableName = "Logs";
     var columnOptions = new ColumnOptions();
     builder.Host.UseSerilog((ctx, lc) => lc
+        .MinimumLevel.Information()
+        //.MinimumLevel.Override(Microsoft.AspNetCore,
         .WriteTo.MSSqlServer(sqlConnectionString, tableName, columnOptions: columnOptions)
         .WriteTo.ApplicationInsights(new TelemetryConfiguration { ConnectionString = appinsightsConnString }, TelemetryConverter.Traces));
-    Serilog.Log.Warning("User accessed application");
-
+    
     builder.Services.AddApplicationInsightsTelemetry(options =>
     {
         options.ConnectionString = appinsightsConnString;
