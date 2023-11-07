@@ -19,16 +19,22 @@
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
 	<PackageReference Include="Azure.Identity" Version="1.10.3" />
 	<PackageReference Include="Microsoft.Azure.AppConfiguration.AspNetCore" Version="6.1.1" />
+	<PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
+	<PackageReference Include="Serilog.Sinks.ApplicationInsights" Version="4.0.0" />
+	<PackageReference Include="Serilog.Sinks.MSSqlServer" Version="6.3.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\RACE2.DatabaseProvider\RACE2.DatabaseProvider.csproj" />
-    <ProjectReference Include="..\RACE2.Infrastructure\RACE2.Infrastructure.csproj" />
     <ProjectReference Include="..\RACE2.Services\RACE2.Services.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Update="Areas\Identity\Pages\Account\_FooterPartialFixed.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Areas\Identity\Pages\Account\Error.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
