@@ -140,7 +140,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             {
                 //Log.Logger.Fatal("Error getting data from backend services : "+ex.Message);
                 Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement OnInitializedAsync").Fatal("Error getting data from backend services : " + ex.Message);
-                //throw new ApplicationException("Error loading annual statement data.");
+                throw new ApplicationException("Error loading annual statement data.");
             }
             finally
             {
