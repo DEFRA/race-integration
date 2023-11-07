@@ -46,8 +46,10 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                     UserName = UserName,
                     Id = userDetails.Id,
                     Email = userDetails.Email,
+                    PhoneNumber = userDetails.PhoneNumber,
                     cFirstName = userDetails.cFirstName,
-                    cLastName = userDetails.cLastName
+                    cLastName = userDetails.cLastName,
+                    cMobile = userDetails.cMobile
                 };
                 UserAddress = userDetails.addresses[0];
                 await InvokeAsync(() =>
@@ -57,6 +59,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             }
             catch (Exception ex)
             {
+                Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "MyAccount OnInitializedAsync").Fatal("Error getting data from backend services : " + ex.Message);
                 throw new ApplicationException("Error loading my account page.");
             }
             finally

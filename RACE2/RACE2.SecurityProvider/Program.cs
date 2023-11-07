@@ -21,14 +21,18 @@ using RACE2.SecurityProvider.UtilityClasses;
 using RACE2.SecurityProvider.UtilityClasses.CompanyEmployees.OAuth.Extensions;
 using RACE2.Services;
 using Serilog;
+using Serilog.Events;
 using Serilog.Sinks.MSSqlServer;
 using System.Configuration;
 using System.Data.SqlClient;
 
 Serilog.Log.Logger = new LoggerConfiguration()
-    .MinimumLevel.Information()
-    .WriteTo.Console()
-    .CreateLogger();
+            .MinimumLevel.Information()
+            .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+            .Enrich.FromLogContext()
+            .WriteTo.Console()
+            .CreateBootstrapLogger();
+
 try
 {
     var builder = WebApplication.CreateBuilder(args);
@@ -62,9 +66,12 @@ try
     var tableName = "Logs";
     var columnOptions = new ColumnOptions();
     builder.Host.UseSerilog((ctx, lc) => lc
+        .MinimumLevel.Information()
+        .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+        .Enrich.FromLogContext()
+        .WriteTo.Console()
         .WriteTo.MSSqlServer(sqlConnectionString, tableName, columnOptions: columnOptions)
-        .WriteTo.ApplicationInsights(new TelemetryConfiguration { ConnectionString = appinsightsConnString}, TelemetryConverter.Traces));
-    Serilog.Log.Warning("User accessed application");
+        .WriteTo.ApplicationInsights(new TelemetryConfiguration { ConnectionString = appinsightsConnString }, TelemetryConverter.Traces));
 
     builder.Services.AddApplicationInsightsTelemetry(options =>
     {
@@ -146,6 +153,11 @@ try
         app.UseExceptionHandler("/Identity/Account/Error");
         app.UseHsts();
     }
+
+    app.UseSerilogRequestLogging(configure =>
+    {
+        configure.MessageTemplate = "HTTP {RequestMethod} {RequestPath} ({UserId}) responded {StatusCode} in {Elapsed:0.0000}ms";
+    }); // We want to log all HTTP requests
 
     // Use Azure App Configuration middleware for dynamic configuration refresh.
     app.UseAzureAppConfiguration();
