@@ -73,7 +73,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
 
                 userDetails = await userService.GetUserByEmailID(UserName);
-                //Log.Logger.ForContext("User", UserName).ForContext("Application","FrontEndWebServer").ForContext("Method","AnnualStatement").Warning(UserName + " accessed S12 template generation.");
+                Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application","FrontEndWebServer").ForContext("Method","AnnualStatement").Warning(UserName + " accessed S12 template generation.");
 
                 if (userDetails.cIsFirstTimeUser)
                 {

@@ -26,7 +26,7 @@ using System.Configuration;
 using System.Data.SqlClient;
 
 Serilog.Log.Logger = new LoggerConfiguration()
-    .MinimumLevel.Warning()
+    .MinimumLevel.Information()
     .WriteTo.Console()
     .CreateLogger();
 try
@@ -63,7 +63,7 @@ try
     var columnOptions = new ColumnOptions();
     builder.Host.UseSerilog((ctx, lc) => lc
         .WriteTo.MSSqlServer(sqlConnectionString, tableName, columnOptions: columnOptions)
-        .WriteTo.ApplicationInsights(new TelemetryConfiguration { ConnectionString = appinsightsConnString }, TelemetryConverter.Traces));
+        .WriteTo.ApplicationInsights(new TelemetryConfiguration { ConnectionString = appinsightsConnString}, TelemetryConverter.Traces));
     Serilog.Log.Warning("User accessed application");
 
     builder.Services.AddApplicationInsightsTelemetry(options =>
