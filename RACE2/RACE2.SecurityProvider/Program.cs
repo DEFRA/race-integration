@@ -134,6 +134,7 @@ try
             AllowedOrigins = { blazorClientURL, webapiURL }
         };
     });
+
     var app = builder.Build();
     app.Use(async (ctx, next) =>
     {
