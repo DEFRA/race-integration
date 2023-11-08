@@ -78,9 +78,21 @@
                                 {
                                     @UserDetail.cMobile
                                 }
+                                @if (!String.IsNullOrEmpty(UserDetail.cAlternativeMobile))
+                                {
+                                    @UserDetail.cAlternativeMobile
+                                }
                                 else if (!String.IsNullOrEmpty(UserDetail.PhoneNumber))
                                 {
                                     @UserDetail.PhoneNumber
+                                }
+                                else if (!String.IsNullOrEmpty(UserDetail.cAlternativePhone))
+                                {
+                                    @UserDetail.cAlternativePhone
+                                }
+                                else if (!String.IsNullOrEmpty(UserDetail.cEmergencyPhone))
+                                {
+                                    @UserDetail.cEmergencyPhone
                                 }
                                 else {
                                     <span>N/A</span>
