@@ -92,7 +92,10 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                     cFirstName = userDetails.cFirstName,
                     cLastName = userDetails.cLastName,
                     cIsFirstTimeUser = userDetails.cIsFirstTimeUser,
-                    cMobile = userDetails.cMobile
+                    cMobile = userDetails.cMobile,
+                    cAlternativePhone = userDetails.cAlternativePhone,
+                    cAlternativeMobile = userDetails.cAlternativeMobile,
+                    cAlternativeEmergencyPhone = userDetails.cAlternativeEmergencyPhone
                 };
 
                 ReservoirDetailsLinkedToUser = await reservoirService.GetReservoirsByUserId(UserDetail.Id);

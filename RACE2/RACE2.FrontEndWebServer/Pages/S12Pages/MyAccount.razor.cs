@@ -41,6 +41,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 AuthenticationState authState = await AuthenticationStateTask; //AuthenticationStateProvider.GetAuthenticationStateAsync();
                 UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
                 UserSpecificDto userDetails = await userService.GetUserByEmailID(UserName);
+                UserAddress = userDetails.addresses[0];
                 UserDetail = new UserDetail()
                 {
                     UserName = UserName,
@@ -49,9 +50,11 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                     PhoneNumber = userDetails.PhoneNumber,
                     cFirstName = userDetails.cFirstName,
                     cLastName = userDetails.cLastName,
-                    cMobile = userDetails.cMobile
+                    cMobile = userDetails.cMobile,
+                    cAlternativePhone = userDetails.cAlternativePhone,
+                    cAlternativeMobile = userDetails.cAlternativeMobile,
+                    cAlternativeEmergencyPhone = userDetails.cAlternativeEmergencyPhone
                 };
-                UserAddress = userDetails.addresses[0];
                 await InvokeAsync(() =>
                 {
                     StateHasChanged();
