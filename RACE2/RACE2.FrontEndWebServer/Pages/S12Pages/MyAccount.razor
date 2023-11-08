@@ -78,7 +78,7 @@
                                 {
                                     @UserDetail.cMobile
                                 }
-                                @if (!String.IsNullOrEmpty(UserDetail.cAlternativeMobile))
+                                else if (!String.IsNullOrEmpty(UserDetail.cAlternativeMobile))
                                 {
                                     @UserDetail.cAlternativeMobile
                                 }
