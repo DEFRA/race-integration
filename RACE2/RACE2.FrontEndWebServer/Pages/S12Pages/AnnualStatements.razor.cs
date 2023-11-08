@@ -115,14 +115,14 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                             LastCertificationDate = rn.LastCertificationDate
 
                         };
-                        r.Address = new Address()
-                        {
-                            AddressLine1 = rn.Address.AddressLine1,
-                            AddressLine2 = rn.Address.AddressLine2,
-                            Town = rn.Address.Town,
-                            County = rn.Address.County,
-                            Postcode = rn.Address.Postcode
-                        };
+                        //r.Address = new Address()
+                        //{
+                        //    AddressLine1 = rn.Address.AddressLine1,
+                        //    AddressLine2 = rn.Address.AddressLine2,
+                        //    Town = rn.Address.Town,
+                        //    County = rn.Address.County,
+                        //    Postcode = rn.Address.Postcode
+                        //};
                         ReservoirsLinkedToUser.Add(r);
                     }
                     catch (Exception ex)

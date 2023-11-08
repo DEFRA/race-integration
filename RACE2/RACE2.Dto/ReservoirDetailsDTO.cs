@@ -31,7 +31,7 @@ namespace RACE2.Dto
         public DateTime NextInspectionDate103 { get; set; }
 
         public DateTime LastCertificationDate { get; set; }
-        public Address? Address { get; set; } = new Address();
+     //   public Address? Address { get; set; } = new Address();
         public string? NearestTown { get; set; }
         public string? OperatorType { get; set; }
 
