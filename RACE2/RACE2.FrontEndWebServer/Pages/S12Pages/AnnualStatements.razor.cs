@@ -286,7 +286,16 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 if ((reservoir.LastInspectionByUser.Id != 0) && (reservoir.LastInspectionByUser != null))
                 {
                     s12PrePopulationFields.LastInspectingEngineerName = !String.IsNullOrEmpty(reservoir.LastInspectionByUser.cFirstName) && !String.IsNullOrEmpty(reservoir.LastInspectionByUser.cLastName) ? reservoir.LastInspectionByUser.cFirstName + " " + reservoir.LastInspectionByUser.cLastName : " ";
-                    s12PrePopulationFields.LastInspectingEngineerPhoneNumber = !String.IsNullOrEmpty(reservoir.LastInspectionByUser.PhoneNumber) ? reservoir.LastInspectionByUser.PhoneNumber: " ";
+                    if (!String.IsNullOrEmpty(reservoir.LastInspectionByUser.cMobile))
+                        s12PrePopulationFields.LastInspectingEngineerPhoneNumber = reservoir.LastInspectionByUser.cMobile;
+                    else if (!String.IsNullOrEmpty(reservoir.LastInspectionByUser.cAlternativeMobile))
+                        s12PrePopulationFields.LastInspectingEngineerPhoneNumber = reservoir.LastInspectionByUser.cAlternativeMobile;
+                    else if (!String.IsNullOrEmpty(reservoir.LastInspectionByUser.cAlternativePhone))
+                        s12PrePopulationFields.LastInspectingEngineerPhoneNumber = reservoir.LastInspectionByUser.cAlternativePhone;
+                    else if (!String.IsNullOrEmpty(reservoir.LastInspectionByUser.cAlternativeEmergencyPhone))
+                        s12PrePopulationFields.LastInspectingEngineerPhoneNumber = reservoir.LastInspectionByUser.cAlternativeEmergencyPhone;
+                    else
+                        s12PrePopulationFields.LastInspectingEngineerPhoneNumber = "Please provide a contact number";
                 }
                 else
                 {
