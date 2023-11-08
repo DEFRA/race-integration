@@ -158,11 +158,11 @@ try
         app.UseExceptionHandler("/Error");
         app.UseHsts();
     }
-    app.UseSerilogRequestLogging(configure =>
-    {
-        configure.MessageTemplate = "HTTP {RequestMethod} {RequestPath} ({UserId}) responded {StatusCode} in {Elapsed:0.0000}ms";
-    }); // We want to log all HTTP requests
-
+    //app.UseSerilogRequestLogging(configure =>
+    //{
+    //    configure.MessageTemplate = "HTTP {RequestMethod} {RequestPath} ({UserId}) responded {StatusCode} in {Elapsed:0.0000}ms";
+    //}); // We want to log all HTTP requests
+    app.UseSerilogRequestLogging();
     app.UseHttpsRedirection();
 
     app.UseStaticFiles();
