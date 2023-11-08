@@ -4,6 +4,7 @@ using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.JSInterop;
 using RACE2.DataModel;
@@ -91,7 +92,10 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                     cFirstName = userDetails.cFirstName,
                     cLastName = userDetails.cLastName,
                     cIsFirstTimeUser = userDetails.cIsFirstTimeUser,
-                    cMobile = userDetails.cMobile
+                    cMobile = userDetails.cMobile,
+                    cAlternativePhone = userDetails.cAlternativePhone,
+                    cAlternativeMobile = userDetails.cAlternativeMobile,
+                    cAlternativeEmergencyPhone = userDetails.cAlternativeEmergencyPhone
                 };
 
                 ReservoirDetailsLinkedToUser = await reservoirService.GetReservoirsByUserId(UserDetail.Id);
@@ -105,6 +109,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                             Id = rn.Id,
                             RaceReservoirId = rn.RaceReservoirId,
                             PublicName = rn.PublicName,
+                            RegisteredName = rn.RegisteredName,
                             NearestTown = rn.NearestTown,
                             GridReference = rn.GridReference,
                             OperatorType = rn.OperatorType,
@@ -140,7 +145,10 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             {
                 //Log.Logger.Fatal("Error getting data from backend services : "+ex.Message);
                 Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement OnInitializedAsync").Fatal("Error getting data from backend services : " + ex.Message);
-                throw new ApplicationException("Error loading annual statement data.");
+                //throw new ApplicationException("Error loading annual statement data.");
+                bool forceLoad = false;
+                string pagelink = "/ApplicationError";
+                NavigationManager.NavigateTo(pagelink, forceLoad);
             }
             finally
             {
@@ -190,7 +198,10 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             {
                 //Log.Logger.Fatal("Error loading reservoir data : " + ex.Message);
                 Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement PopulateReservoirsToDisplay").Fatal("Error loading reservoir data : " + ex.Message);
-                throw new ApplicationException("Error loading reservoir data.");
+                //throw new ApplicationException("Error loading reservoir data.");
+                bool forceLoad = false;
+                string pagelink = "/ApplicationError";
+                NavigationManager.NavigateTo(pagelink, forceLoad);
             };
         }
 
@@ -214,7 +225,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 //var blobName = "TestWithTags.docx";
                 Stream response = await blobStorageService.GetBlobFileStream(blobName);
                 S12PrePopulationFields s12PrePopulationFields = new S12PrePopulationFields();
-                s12PrePopulationFields.ReservoirName = reservoir.PublicName;
+                s12PrePopulationFields.ReservoirName = reservoir.RegisteredName;
                 s12PrePopulationFields.ReservoirNearestTown = reservoir.NearestTown != null ? reservoir.NearestTown : "";
                 s12PrePopulationFields.ReservoirGridRef = reservoir.GridReference != null ? reservoir.GridReference : "";
                 s12PrePopulationFields.SupervisingEngineerName = UserDetail.cFirstName + " " + UserDetail.cLastName;
@@ -264,18 +275,27 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                     s12PrePopulationFields.UndertakerPhoneNumber = "Please provide a contact number";
                 if (reservoir.NextInspectionDate103 != DateTime.MinValue)
                 {
-                    s12PrePopulationFields.NextInspectionDate = (reservoir.NextInspectionDate103 != DateTime.MinValue) ? reservoir.NextInspectionDate103.ToString("dd MMM yyyy") : " ";
+                    s12PrePopulationFields.NextInspectionDate = (reservoir.NextInspectionDate103 != DateTime.MinValue) ? reservoir.NextInspectionDate103.ToString("dd MMMM yyyy") : " ";
                 }
                 else
                 {
-                    s12PrePopulationFields.NextInspectionDate = (reservoir.NextInspectionDate102 != DateTime.MinValue) ? reservoir.NextInspectionDate102.ToString("dd MMM yyyy") : " ";
+                    s12PrePopulationFields.NextInspectionDate = (reservoir.NextInspectionDate102 != DateTime.MinValue) ? reservoir.NextInspectionDate102.ToString("dd MMMM yyyy") : " ";
                 }
-                s12PrePopulationFields.LastCertificationDate = (reservoir.LastCertificationDate != DateTime.MinValue) ? reservoir.LastCertificationDate.ToString("dd MMM yyyy"): " ";
-                s12PrePopulationFields.LastInspectionDate = (reservoir.LastInspectionDate != DateTime.MinValue) ? reservoir.LastInspectionDate.ToString("dd MMM yyyy"): " ";
+                s12PrePopulationFields.LastCertificationDate = (reservoir.LastCertificationDate != DateTime.MinValue) ? reservoir.LastCertificationDate.ToString("dd MMMM yyyy"): " ";
+                s12PrePopulationFields.LastInspectionDate = (reservoir.LastInspectionDate != DateTime.MinValue) ? reservoir.LastInspectionDate.ToString("dd MMMM yyyy"): " ";
                 if ((reservoir.LastInspectionByUser.Id != 0) && (reservoir.LastInspectionByUser != null))
                 {
                     s12PrePopulationFields.LastInspectingEngineerName = !String.IsNullOrEmpty(reservoir.LastInspectionByUser.cFirstName) && !String.IsNullOrEmpty(reservoir.LastInspectionByUser.cLastName) ? reservoir.LastInspectionByUser.cFirstName + " " + reservoir.LastInspectionByUser.cLastName : " ";
-                    s12PrePopulationFields.LastInspectingEngineerPhoneNumber = !String.IsNullOrEmpty(reservoir.LastInspectionByUser.PhoneNumber) ? reservoir.LastInspectionByUser.PhoneNumber: " ";
+                    if (!String.IsNullOrEmpty(reservoir.LastInspectionByUser.cMobile))
+                        s12PrePopulationFields.LastInspectingEngineerPhoneNumber = reservoir.LastInspectionByUser.cMobile;
+                    else if (!String.IsNullOrEmpty(reservoir.LastInspectionByUser.cAlternativeMobile))
+                        s12PrePopulationFields.LastInspectingEngineerPhoneNumber = reservoir.LastInspectionByUser.cAlternativeMobile;
+                    else if (!String.IsNullOrEmpty(reservoir.LastInspectionByUser.cAlternativePhone))
+                        s12PrePopulationFields.LastInspectingEngineerPhoneNumber = reservoir.LastInspectionByUser.cAlternativePhone;
+                    else if (!String.IsNullOrEmpty(reservoir.LastInspectionByUser.cAlternativeEmergencyPhone))
+                        s12PrePopulationFields.LastInspectingEngineerPhoneNumber = reservoir.LastInspectionByUser.cAlternativeEmergencyPhone;
+                    else
+                        s12PrePopulationFields.LastInspectingEngineerPhoneNumber = "Please provide a contact number";
                 }
                 else
                 {
@@ -297,7 +317,10 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             {
                 //Log.Logger.Fatal("Error downloading S12ReportTemplate for the reservoir : " + ex.Message);
                 Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement DownloadReportTemplate").Fatal("Error downloading S12ReportTemplate for the reservoir : " + ex.Message);
-                throw new ApplicationException("Error downloading S12ReportTemplate for the reservoir.");
+                //throw new ApplicationException("Error downloading S12ReportTemplate for the reservoir.");
+                bool forceLoad = false;
+                string pagelink = "/ApplicationError";
+                NavigationManager.NavigateTo(pagelink, forceLoad);
             };
         }
 
