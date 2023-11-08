@@ -13,5 +13,7 @@ namespace RACE2.Dto
         public List<Role> roles { get; set; }  = new List<Role>();
         public List<Reservoir> reservoir { get; set;} = new List<Reservoir>();
         public List<Address> addresses { get; set; } = new List<Address>();
+
+        public string? OrganisationName { get; set; } 
     }
 }
