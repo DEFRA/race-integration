@@ -166,7 +166,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                     {
                         Undertakers = await reservoirService.GetOperatorsforReservoir(reservoir.Id, reservoir.OperatorType);
                         ReservoirsLinkedToUserForDisplay reservoirsLinkedToUser = new ReservoirsLinkedToUserForDisplay();
-                        reservoirsLinkedToUser.ReservoirName = reservoir.PublicName;
+                        reservoirsLinkedToUser.ReservoirName = reservoir.RegisteredName;
                         if (Undertakers != null && Undertakers.Count() > 0)
                         {
                             if (!String.IsNullOrEmpty(Undertakers[0].OrgName))
@@ -177,7 +177,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                                 reservoirsLinkedToUser.UndertakerName = "";
                         }
                         SubmissionStatusList = await reservoirService.GetReservoirStatusByUserId(UserDetail.Id);
-                        SubmissionStatus = SubmissionStatusList.Where(s => s.PublicName == reservoir.PublicName).FirstOrDefault();
+                        SubmissionStatus = SubmissionStatusList.Where(s => s.RegisteredName == reservoir.RegisteredName).FirstOrDefault();
                         reservoirsLinkedToUser.DueDate = SubmissionStatus.DueDate != DateTime.MinValue ? SubmissionStatus.DueDate.ToString("dd MMMMM yyyy") : "";
                         reservoirsLinkedToUser.Status = SubmissionStatus.Status != null ? SubmissionStatus.Status : "Not Started";
 
@@ -214,8 +214,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         {
             try
             {
-                var reservoir = ReservoirsLinkedToUser.Where(r => r.PublicName == item.ReservoirName).FirstOrDefault();
-                SubmissionStatus = SubmissionStatusList.Where(s => s.PublicName == reservoir.PublicName).FirstOrDefault();
+                var reservoir = ReservoirsLinkedToUser.Where(r => r.RegisteredName == item.ReservoirName).FirstOrDefault();
+                SubmissionStatus = SubmissionStatusList.Where(s => s.RegisteredName == reservoir.RegisteredName).FirstOrDefault();
                 var Undertakers = await reservoirService.GetOperatorsforReservoir(reservoir.Id, reservoir.OperatorType);
 
                 SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(reservoir.Id, UserDetail.Id);
@@ -306,7 +306,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 processedStream.Position = 0;
                 var streamRef = new DotNetStreamReference(stream: processedStream);
                 await jsRuntime.InvokeVoidAsync("downloadFileFromStream", blobName, streamRef);
-                var reservoirLinkedToUser = ReservoirsLinkedToUserForDisplay.Where(r => r.ReservoirName == reservoir.PublicName).FirstOrDefault();
+                var reservoirLinkedToUser = ReservoirsLinkedToUserForDisplay.Where(r => r.ReservoirName == reservoir.RegisteredName).FirstOrDefault();
                 reservoirLinkedToUser.Status = updatedStatus.Status;
                 await InvokeAsync(() =>
                 {
@@ -344,7 +344,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
 
         private void gotoPage(SubmissionStatusDTO reservoirStatus)
         {
-            var reservoir = ReservoirsLinkedToUser.Where(s => s.PublicName == reservoirStatus.PublicName).FirstOrDefault();
+            var reservoir = ReservoirsLinkedToUser.Where(s => s.RegisteredName == reservoirStatus.RegisteredName).FirstOrDefault();
             bool forceLoad = false;
             string pagelink = "/reservoir-details";
             if (reservoirStatus.Status.ToUpper() == "DRAFT SENT")
@@ -356,7 +356,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
 
         private void gotoSubmissionPage(SubmissionStatusDTO reservoirStatus)
         {
-            var reservoir = ReservoirsLinkedToUser.Where(s => s.PublicName == reservoirStatus.PublicName).FirstOrDefault();
+            var reservoir = ReservoirsLinkedToUser.Where(s => s.RegisteredName == reservoirStatus.RegisteredName).FirstOrDefault();
             bool forceLoad = false;
             string pagelink = "/s12-statement-confirmation";
             NavigationManager.NavigateTo(pagelink, forceLoad);
