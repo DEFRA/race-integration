@@ -309,7 +309,6 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 bool forceLoad = false;
                 string pagelink = "/ApplicationError";
                 NavigationManager.NavigateTo(pagelink, forceLoad);
-                //NavigationManager.NavigateTo("/ApplicationError/xyz", forceLoad);
             };
         }
 

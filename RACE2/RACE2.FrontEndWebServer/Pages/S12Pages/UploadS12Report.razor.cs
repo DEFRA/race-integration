@@ -35,6 +35,9 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         private List<FileUploadViewModel> fileUploadViewModels = new();
         [Parameter]
         public string ReservoirId { get; set; }
+        [Parameter]
+        public string ReservoirRegName { get; set; }
+        
         [CascadingParameter]
         public Task<AuthenticationState> AuthenticationStateTask { get; set; }
         protected override async void OnInitialized()
@@ -50,6 +53,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 Email = userDetails.Email
             };
             CurrentReservoir = new Reservoir();
+            var rid = ReservoirId;
+            var rname= ReservoirRegName;
             base.OnInitialized();
         }
         private void OnInputFileChange(InputFileChangeEventArgs e)
