@@ -78,7 +78,7 @@ namespace RACE2.DataAccess.Repository
                        
                         return user;
 
-                    }, parameters,null,true,splitOn: "Addressid,id", commandType: CommandType.StoredProcedure);
+                    }, parameters,null,true,splitOn: "Id,Addressid", commandType: CommandType.StoredProcedure);
                     var result = user.GroupBy(u => u.Id).Select(g =>
                     {
                         var groupedUser = g.First();
