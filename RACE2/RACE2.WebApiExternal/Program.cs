@@ -54,6 +54,11 @@ try
          .WriteTo.MSSqlServer(sqlConnectionString, tableName, columnOptions: columnOptions)
          .WriteTo.ApplicationInsights(new TelemetryConfiguration { ConnectionString = appinsightsConnString }, TelemetryConverter.Traces));
 
+    builder.Services.AddApplicationInsightsTelemetry(options =>
+    {
+        options.ConnectionString = appinsightsConnString;
+    });
+
     // Add services to the container.
 
     builder.Services.AddControllers();
