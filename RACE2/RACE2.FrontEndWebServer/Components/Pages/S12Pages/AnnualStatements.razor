@@ -192,6 +192,7 @@
             UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
 
             userDetails = await userService.GetUserByEmailID(UserName);
+            Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement").Warning(UserName + " accessed S12 template generation.");
 
             if (userDetails.cIsFirstTimeUser)
             {
@@ -209,7 +210,10 @@
                     cFirstName = userDetails.cFirstName,
                     cLastName = userDetails.cLastName,
                     cIsFirstTimeUser = userDetails.cIsFirstTimeUser,
-                    cMobile = userDetails.cMobile
+                    cMobile = userDetails.cMobile,
+                    cAlternativePhone = userDetails.cAlternativePhone,
+                    cAlternativeMobile = userDetails.cAlternativeMobile,
+                    cAlternativeEmergencyPhone = userDetails.cAlternativeEmergencyPhone
                 };
 
             ReservoirDetailsLinkedToUser = await reservoirService.GetReservoirsByUserId(UserDetail.Id);
@@ -223,6 +227,7 @@
                             Id = rn.Id,
                             RaceReservoirId = rn.RaceReservoirId,
                             PublicName = rn.PublicName,
+                            RegisteredName = rn.RegisteredName,
                             NearestTown = rn.NearestTown,
                             GridReference = rn.GridReference,
                             OperatorType = rn.OperatorType,
@@ -233,19 +238,19 @@
                             LastCertificationDate = rn.LastCertificationDate
 
                         };
-                    r.Address = new Address()
-                        {
-                            AddressLine1 = rn.Address.AddressLine1,
-                            AddressLine2 = rn.Address.AddressLine2,
-                            Town = rn.Address.Town,
-                            County = rn.Address.County,
-                            Postcode = rn.Address.Postcode
-                        };
+                    //r.Address = new Address()
+                    //{
+                    //    AddressLine1 = rn.Address.AddressLine1,
+                    //    AddressLine2 = rn.Address.AddressLine2,
+                    //    Town = rn.Address.Town,
+                    //    County = rn.Address.County,
+                    //    Postcode = rn.Address.Postcode
+                    //};
                     ReservoirsLinkedToUser.Add(r);
                 }
                 catch (Exception ex)
                 {
-                    Logger.LogCritical("On init for Reservoir :" + rn.Id.ToString() + " Error getting data from backend services : " + ex.Message);
+                    Serilog.Log.Logger.Fatal("On init for Reservoir :" + rn.Id.ToString() + " Error getting data from backend services : " + ex.Message);
                 }
             }
             PopulateReservoirsToDisplay(ReservoirsLinkedToUser);
@@ -256,8 +261,12 @@
         }
         catch (Exception ex)
         {
-            Logger.LogCritical("Error getting data from backend services : " + ex.Message);
+            //Log.Logger.Fatal("Error getting data from backend services : "+ex.Message);
+            Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement OnInitializedAsync").Fatal("Error getting data from backend services : " + ex.Message);
             //throw new ApplicationException("Error loading annual statement data.");
+            bool forceLoad = false;
+            string pagelink = "/ApplicationError";
+            NavigationManager.NavigateTo(pagelink, forceLoad);
         }
         finally
         {
@@ -275,7 +284,7 @@
                 {
                     Undertakers = await reservoirService.GetOperatorsforReservoir(reservoir.Id, reservoir.OperatorType);
                     ReservoirsLinkedToUserForDisplay reservoirsLinkedToUser = new ReservoirsLinkedToUserForDisplay();
-                    reservoirsLinkedToUser.ReservoirName = reservoir.PublicName;
+                    reservoirsLinkedToUser.ReservoirName = reservoir.RegisteredName;
                     if (Undertakers != null && Undertakers.Count() > 0)
                     {
                         if (!String.IsNullOrEmpty(Undertakers[0].OrgName))
@@ -286,7 +295,7 @@
                             reservoirsLinkedToUser.UndertakerName = "";
                     }
                     SubmissionStatusList = await reservoirService.GetReservoirStatusByUserId(UserDetail.Id);
-                    SubmissionStatus = SubmissionStatusList.Where(s => s.PublicName == reservoir.PublicName).FirstOrDefault();
+                    SubmissionStatus = SubmissionStatusList.Where(s => s.RegisteredName == reservoir.RegisteredName).FirstOrDefault();
                     reservoirsLinkedToUser.DueDate = SubmissionStatus.DueDate != DateTime.MinValue ? SubmissionStatus.DueDate.ToString("dd MMMMM yyyy") : "";
                     reservoirsLinkedToUser.Status = SubmissionStatus.Status != null ? SubmissionStatus.Status : "Not Started";
 
@@ -294,7 +303,7 @@
                 }
                 catch (Exception ex)
                 {
-                    Logger.LogCritical("On PopulateReservoirsToDisplay for Reservoir :" + reservoir.Id.ToString() + " Error getting data from backend services : " + ex.Message);
+                    Serilog.Log.Logger.Fatal("On PopulateReservoirsToDisplay for Reservoir :" + reservoir.Id.ToString() + " Error getting data from backend services : " + ex.Message);
                 }
             }
             ReservoirsLinkedToUserForDisplayOnStart = ReservoirsLinkedToUserForDisplay;
@@ -305,8 +314,12 @@
         }
         catch (Exception ex)
         {
-            Logger.LogCritical("Error loading reservoir data : " + ex.Message);
-            throw new ApplicationException("Error loading reservoir data.");
+            //Log.Logger.Fatal("Error loading reservoir data : " + ex.Message);
+            Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement PopulateReservoirsToDisplay").Fatal("Error loading reservoir data : " + ex.Message);
+            //throw new ApplicationException("Error loading reservoir data.");
+            bool forceLoad = false;
+            string pagelink = "/ApplicationError";
+            NavigationManager.NavigateTo(pagelink, forceLoad);
         };
     }
 
@@ -319,8 +332,8 @@
     {
         try
         {
-            var reservoir = ReservoirsLinkedToUser.Where(r => r.PublicName == item.ReservoirName).FirstOrDefault();
-            SubmissionStatus = SubmissionStatusList.Where(s => s.PublicName == reservoir.PublicName).FirstOrDefault();
+            var reservoir = ReservoirsLinkedToUser.Where(r => r.RegisteredName == item.ReservoirName).FirstOrDefault();
+            SubmissionStatus = SubmissionStatusList.Where(s => s.RegisteredName == reservoir.RegisteredName).FirstOrDefault();
             var Undertakers = await reservoirService.GetOperatorsforReservoir(reservoir.Id, reservoir.OperatorType);
 
             SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(reservoir.Id, UserDetail.Id);
@@ -330,7 +343,7 @@
             //var blobName = "TestWithTags.docx";
             Stream response = await blobStorageService.GetBlobFileStream(blobName);
             S12PrePopulationFields s12PrePopulationFields = new S12PrePopulationFields();
-            s12PrePopulationFields.ReservoirName = reservoir.PublicName;
+            s12PrePopulationFields.ReservoirName = reservoir.RegisteredName;
             s12PrePopulationFields.ReservoirNearestTown = reservoir.NearestTown != null ? reservoir.NearestTown : "";
             s12PrePopulationFields.ReservoirGridRef = reservoir.GridReference != null ? reservoir.GridReference : "";
             s12PrePopulationFields.SupervisingEngineerName = UserDetail.cFirstName + " " + UserDetail.cLastName;
@@ -380,18 +393,27 @@
                 s12PrePopulationFields.UndertakerPhoneNumber = "Please provide a contact number";
             if (reservoir.NextInspectionDate103 != DateTime.MinValue)
             {
-                s12PrePopulationFields.NextInspectionDate = (reservoir.NextInspectionDate103 != DateTime.MinValue) ? reservoir.NextInspectionDate103.ToString("dd MMM yyyy") : " ";
+                s12PrePopulationFields.NextInspectionDate = (reservoir.NextInspectionDate103 != DateTime.MinValue) ? reservoir.NextInspectionDate103.ToString("dd MMMM yyyy") : " ";
             }
             else
             {
-                s12PrePopulationFields.NextInspectionDate = (reservoir.NextInspectionDate102 != DateTime.MinValue) ? reservoir.NextInspectionDate102.ToString("dd MMM yyyy") : " ";
+                s12PrePopulationFields.NextInspectionDate = (reservoir.NextInspectionDate102 != DateTime.MinValue) ? reservoir.NextInspectionDate102.ToString("dd MMMM yyyy") : " ";
             }
-            s12PrePopulationFields.LastCertificationDate = (reservoir.LastCertificationDate != DateTime.MinValue) ? reservoir.LastCertificationDate.ToString("dd MMM yyyy") : " ";
-            s12PrePopulationFields.LastInspectionDate = (reservoir.LastInspectionDate != DateTime.MinValue) ? reservoir.LastInspectionDate.ToString("dd MMM yyyy") : " ";
+            s12PrePopulationFields.LastCertificationDate = (reservoir.LastCertificationDate != DateTime.MinValue) ? reservoir.LastCertificationDate.ToString("dd MMMM yyyy") : " ";
+            s12PrePopulationFields.LastInspectionDate = (reservoir.LastInspectionDate != DateTime.MinValue) ? reservoir.LastInspectionDate.ToString("dd MMMM yyyy") : " ";
             if ((reservoir.LastInspectionByUser.Id != 0) && (reservoir.LastInspectionByUser != null))
             {
                 s12PrePopulationFields.LastInspectingEngineerName = !String.IsNullOrEmpty(reservoir.LastInspectionByUser.cFirstName) && !String.IsNullOrEmpty(reservoir.LastInspectionByUser.cLastName) ? reservoir.LastInspectionByUser.cFirstName + " " + reservoir.LastInspectionByUser.cLastName : " ";
-                s12PrePopulationFields.LastInspectingEngineerPhoneNumber = !String.IsNullOrEmpty(reservoir.LastInspectionByUser.PhoneNumber) ? reservoir.LastInspectionByUser.PhoneNumber : " ";
+                if (!String.IsNullOrEmpty(reservoir.LastInspectionByUser.cMobile))
+                    s12PrePopulationFields.LastInspectingEngineerPhoneNumber = reservoir.LastInspectionByUser.cMobile;
+                else if (!String.IsNullOrEmpty(reservoir.LastInspectionByUser.cAlternativeMobile))
+                    s12PrePopulationFields.LastInspectingEngineerPhoneNumber = reservoir.LastInspectionByUser.cAlternativeMobile;
+                else if (!String.IsNullOrEmpty(reservoir.LastInspectionByUser.cAlternativePhone))
+                    s12PrePopulationFields.LastInspectingEngineerPhoneNumber = reservoir.LastInspectionByUser.cAlternativePhone;
+                else if (!String.IsNullOrEmpty(reservoir.LastInspectionByUser.cAlternativeEmergencyPhone))
+                    s12PrePopulationFields.LastInspectingEngineerPhoneNumber = reservoir.LastInspectionByUser.cAlternativeEmergencyPhone;
+                else
+                    s12PrePopulationFields.LastInspectingEngineerPhoneNumber = "Please provide a contact number";
             }
             else
             {
@@ -402,7 +424,7 @@
             processedStream.Position = 0;
             var streamRef = new DotNetStreamReference(stream: processedStream);
             await jsRuntime.InvokeVoidAsync("downloadFileFromStream", blobName, streamRef);
-            var reservoirLinkedToUser = ReservoirsLinkedToUserForDisplay.Where(r => r.ReservoirName == reservoir.PublicName).FirstOrDefault();
+            var reservoirLinkedToUser = ReservoirsLinkedToUserForDisplay.Where(r => r.ReservoirName == reservoir.RegisteredName).FirstOrDefault();
             reservoirLinkedToUser.Status = updatedStatus.Status;
             await InvokeAsync(() =>
             {
@@ -411,8 +433,12 @@
         }
         catch (Exception ex)
         {
-            Logger.LogCritical("Error downloading S12ReportTemplate for the reservoir : " + ex.Message);
-            throw new ApplicationException("Error downloading S12ReportTemplate for the reservoir.");
+            //Log.Logger.Fatal("Error downloading S12ReportTemplate for the reservoir : " + ex.Message);
+            Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement DownloadReportTemplate").Fatal("Error downloading S12ReportTemplate for the reservoir : " + ex.Message);
+            //throw new ApplicationException("Error downloading S12ReportTemplate for the reservoir.");
+            bool forceLoad = false;
+            string pagelink = "/ApplicationError";
+            NavigationManager.NavigateTo(pagelink, forceLoad);
         };
     }
 
@@ -436,7 +462,7 @@
 
     private void gotoPage(SubmissionStatusDTO reservoirStatus)
     {
-        var reservoir = ReservoirsLinkedToUser.Where(s => s.PublicName == reservoirStatus.PublicName).FirstOrDefault();
+        var reservoir = ReservoirsLinkedToUser.Where(s => s.RegisteredName == reservoirStatus.RegisteredName).FirstOrDefault();
         bool forceLoad = false;
         string pagelink = "/reservoir-details";
         if (reservoirStatus.Status.ToUpper() == "DRAFT SENT")
@@ -448,7 +474,7 @@
 
     private void gotoSubmissionPage(SubmissionStatusDTO reservoirStatus)
     {
-        var reservoir = ReservoirsLinkedToUser.Where(s => s.PublicName == reservoirStatus.PublicName).FirstOrDefault();
+        var reservoir = ReservoirsLinkedToUser.Where(s => s.RegisteredName == reservoirStatus.RegisteredName).FirstOrDefault();
         bool forceLoad = false;
         string pagelink = "/s12-statement-confirmation";
         NavigationManager.NavigateTo(pagelink, forceLoad);
@@ -529,4 +555,5 @@
             IsSortedAscending = !IsSortedAscending;
         }
     }
+}
 }

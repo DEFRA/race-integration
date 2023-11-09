@@ -19,7 +19,7 @@ namespace RACE2.DataModel
         public string? RaceReservoirId { get; set; }
         [StringLength(200)]
         public string? PublicName { get; set; }
-        [StringLength(200)]
+        [StringLength(200),Required]
         public string? RegisteredName { get;set; }
         [StringLength(8)]
         public string? ReferenceNumber { get; set; }
@@ -29,10 +29,10 @@ namespace RACE2.DataModel
         public string? RegisteredCategory { get;set; }
         [StringLength(12)]
         public string? GridReference { get; set; }       
-        public int Capacity { get; set; }
-        public int SurfaceArea { get; set; }
-        public decimal TopWaterLevel { get; set; }
-        public bool HasMultipleDams { get; set; }
+        public int? Capacity { get; set; }
+        public int? SurfaceArea { get; set; }
+        public decimal? TopWaterLevel { get; set; }
+        public bool? HasMultipleDams { get; set; }
         [StringLength(512)]
         public string? KeyFacts { get; set; }
         public DateTime ConstructionStartDate { get; set; }
@@ -52,7 +52,7 @@ namespace RACE2.DataModel
 
       //  public List<UserDetail> LastInspectionByUser { get; set; } = new List<UserDetail>();
 
-        public Address? Address { get; set; } = new Address();
+       // public Address? Address { get; set; } = new Address();
         public string? NearestTown { get; set; }
        
        public List<UserReservoir> UserReservoirs { get; set; } = new List<UserReservoir>();

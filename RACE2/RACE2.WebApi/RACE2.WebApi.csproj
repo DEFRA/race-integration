@@ -19,7 +19,7 @@
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
 		<PackageReference Include="HotChocolate.AspNetCore.Voyager" Version="10.5.5" />
-		<PackageReference Include="Azure.Storage.Blobs" Version="12.18.0">
+		<PackageReference Include="Azure.Storage.Blobs" Version="12.19.0">
 			<TreatAsUsed>true</TreatAsUsed>
 		</PackageReference>
 		<PackageReference Include="HotChocolate.AspNetCore.Authorization" Version="13.7.0" />
