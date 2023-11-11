@@ -87,12 +87,12 @@ try
     builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
     builder.Services.AddDefaultIdentity<UserDetail>(options =>
-        {
-            options.SignIn.RequireConfirmedAccount = true;
-            options.Lockout.AllowedForNewUsers = true;
-            options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);//.FromDays(365);//.FromMinutes(10);//default 5
-            options.Lockout.MaxFailedAccessAttempts = 5;//default 5
-        })
+    {
+        options.SignIn.RequireConfirmedAccount = true;
+        options.Lockout.AllowedForNewUsers = true;
+        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);//.FromDays(365);//.FromMinutes(10);//default 5
+        options.Lockout.MaxFailedAccessAttempts = 5;//default 5
+    })
         .AddRoles<Role>()
         .AddEntityFrameworkStores<ApplicationDbContext>();
 
