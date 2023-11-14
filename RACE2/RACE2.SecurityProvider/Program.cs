@@ -4,6 +4,9 @@ using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 using IdentityServer4.Extensions;
 using IdentityServer4.Services;
 using Microsoft.ApplicationInsights.Extensibility;
+using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel;
+using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -87,12 +90,12 @@ try
     builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
     builder.Services.AddDefaultIdentity<UserDetail>(options =>
-        {
-            options.SignIn.RequireConfirmedAccount = true;
-            options.Lockout.AllowedForNewUsers = true;
-            options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);//.FromDays(365);//.FromMinutes(10);//default 5
-            options.Lockout.MaxFailedAccessAttempts = 5;//default 5
-        })
+    {
+        options.SignIn.RequireConfirmedAccount = true;
+        options.Lockout.AllowedForNewUsers = true;
+        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);//.FromDays(365);//.FromMinutes(10);//default 5
+        options.Lockout.MaxFailedAccessAttempts = 5;//default 5
+    })
         .AddRoles<Role>()
         .AddEntityFrameworkStores<ApplicationDbContext>();
 
@@ -134,6 +137,14 @@ try
             AllowedOrigins = { blazorClientURL, webapiURL }
         };
     });
+
+    builder.Services.AddDataProtection()
+        .UseCryptographicAlgorithms(new AuthenticatedEncryptorConfiguration
+        {
+            EncryptionAlgorithm = EncryptionAlgorithm.AES_256_CBC,
+            ValidationAlgorithm = ValidationAlgorithm.HMACSHA256
+        });
+
     var app = builder.Build();
     app.Use(async (ctx, next) =>
     {
