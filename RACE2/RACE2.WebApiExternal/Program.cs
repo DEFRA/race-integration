@@ -2,6 +2,9 @@ using Azure.Identity;
 using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.ApplicationInsights.Extensibility;
+using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel;
+using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
@@ -54,6 +57,11 @@ try
          .WriteTo.MSSqlServer(sqlConnectionString, tableName, columnOptions: columnOptions)
          .WriteTo.ApplicationInsights(new TelemetryConfiguration { ConnectionString = appinsightsConnString }, TelemetryConverter.Traces));
 
+    builder.Services.AddApplicationInsightsTelemetry(options =>
+    {
+        options.ConnectionString = appinsightsConnString;
+    });
+
     // Add services to the container.
 
     builder.Services.AddControllers();
@@ -89,6 +97,14 @@ try
                 .AllowAnyHeader();
             });
     });
+
+    builder.Services.AddDataProtection()
+        .UseCryptographicAlgorithms(new AuthenticatedEncryptorConfiguration
+        {
+            EncryptionAlgorithm = EncryptionAlgorithm.AES_256_CBC,
+            ValidationAlgorithm = ValidationAlgorithm.HMACSHA256
+        });
+
     var app = builder.Build();
 
     // Configure the HTTP request pipeline.

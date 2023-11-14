@@ -1,6 +1,3 @@
-using DocumentFormat.OpenXml.InkML;
-using DocumentFormat.OpenXml.Spreadsheet;
-using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
@@ -74,7 +71,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
 
                 userDetails = await userService.GetUserByEmailID(UserName);
-                Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application","FrontEndWebServer").ForContext("Method","AnnualStatement").Warning(UserName + " accessed S12 template generation.");
+                Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application","FrontEndWebServer").ForContext("Method","AnnualStatement").Information(UserName + " accessed S12 template generation.");
 
                 if (userDetails.cIsFirstTimeUser)
                 {

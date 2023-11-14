@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel;
+using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
@@ -149,6 +152,12 @@ try
     builder.Services.AddScoped<IBlobStorageService, BlobStorageService>();
     builder.Services.AddScoped<IOpenXMLUtilitiesService, OpenXMLUtilitiesService>();
     builder.Services.AddScoped<CustomErrorBoundary>();
+    builder.Services.AddDataProtection()
+        .UseCryptographicAlgorithms(new AuthenticatedEncryptorConfiguration
+        {
+            EncryptionAlgorithm = EncryptionAlgorithm.AES_256_CBC,
+            ValidationAlgorithm = ValidationAlgorithm.HMACSHA256
+        });
 
     var app = builder.Build();
     app.UseForwardedHeaders();
