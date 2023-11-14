@@ -1,0 +1,117 @@
+﻿@page "/send-your-statement"
+@using Microsoft.AspNetCore.Authorization
+@using RACE2.FrontEndWebServer.Components
+@attribute [Authorize]
+
+<HeaderWithBanner />
+
+<div class="govuk-width-container" style="min-height: 69vh;">
+
+    <FeedbackBannerSignOut />
+
+    <a class="govuk-back-link" @onclick="GoToPrevPage" style="color:black">Back</a>
+
+    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+          
+        <div class="govuk-grid-row">
+
+            <div class="govuk-grid-column-two-thirds">
+
+
+                <div class="govuk-form-group">
+
+
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+
+                        <h1 class="govuk-fieldset__heading">
+                            Who the statement will go to
+                        </h1>
+
+                    </legend>
+
+
+                    <p class="govuk-body govuk-!-padding-top-4">
+                        The statement will go to the Environment Agency but you can use this service to send it to the undertaker too.
+                    </p>
+                    <p class="govuk-body">
+                        These are the details we hold for the undertaker.</p>
+
+                    <dl class="govuk-summary-list govuk-!-margin-top-4">
+
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                                Reservoir 
+                            </dt>
+                            <dd class="govuk-summary-list__value govuk-!-padding-left-9" for="reservoir-named-undertaker"
+                                id="reservoir-named-undertaker" name="reservoir-named-undertaker">
+                                Rockingham Reservoir
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                                Undertaker
+                            </dt>
+                            <dd class="govuk-summary-list__value govuk-!-padding-left-9" for="reservoir-named-undertaker"
+                                id="reservoir-named-undertaker" name="reservoir-named-undertaker">
+                                Jenny Philips
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                                Email
+                            </dt>
+                            <dd class="govuk-summary-list__value govuk-!-padding-left-9" for="reservoir-named-undertaker"
+                                id="reservoir-named-undertaker" name="reservoir-named-undertaker">
+                                jenny.philips@engineers.com
+                            </dd>
+                        </div>
+
+                    </dl>
+
+
+                    <form action="/Beta/Private/submit-s12/V11/upload-your-template" method="post">
+
+
+                        <div class="govuk-form-group govuk-!-margin-top-6 govuk-!-padding-top-8 govuk-!-margin-bottom-4">
+                            <fieldset class="govuk-fieldset" aria-describedby="send-to-undertaker">
+                                <legend id="send-to-undertaker" class="govuk-fieldset__legend govuk-fieldset__legend govuk-fieldset__legend--m">
+                                    Do you want to send the statement to the undertaker too?
+                                </legend>
+
+                                <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="send-to-undertaker-yes" name="send-to-undertaker"
+                                            type="radio" value="Yes">
+                                        <label class="govuk-label govuk-radios__label" for="send-to-undertaker-yes">
+                                            Yes
+                                        </label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="send-to-undertaker-no" name="send-to-undertaker"
+                                            type="radio" value="No">
+                                        <label class="govuk-label govuk-radios__label" for="send-to-undertaker-no">
+                                            No
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </fieldset>
+                        </div>
+
+                        <button role="button" draggable="false"
+                            class="govuk-button govuk-!-margin-top-3 govuk-!-margin-bottom-6 govuk-!-margin-right-4"
+                            data-module="govuk-button">
+                            Continue
+                        </button>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+ </div>
+
+<Footer />

@@ -18,6 +18,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         [Inject]
         public IUserService userService { get; set; } = default!;
         [Inject]
+        public IReservoirService reservoirService { get; set; } = default!;
+        [Inject]
         public IJSRuntime jsRuntime { get; set; } = default!;
         private int UserId { get; set; } = 0;
         private string UserName { get; set; } = "Unknown";
@@ -52,7 +54,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 Id = UserId,
                 Email = userDetails.Email
             };
-            CurrentReservoir = new Reservoir();
+            CurrentReservoir = await reservoirService.GetReservoirById(Int32.Parse(ReservoirId));
             var rid = ReservoirId;
             var rname= ReservoirRegName;
             base.OnInitialized();
@@ -75,7 +77,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                     {
                         containerName = containerName.Split('.')[0];
                     }
-                    var trustedFileNameForFileStorage = "S12Report_"+ CurrentReservoir.PublicName+ "_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + "."+ extn;
+                    var trustedFileNameForFileStorage = CurrentReservoir.RegisteredName+ "_S12_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + "."+ extn;
                     var blobUrl = await blobStorageService.UploadFileToBlobAsync(containerName,trustedFileNameForFileStorage, file.ContentType, file.OpenReadStream(20971520));
                     if (blobUrl != null)
                     {

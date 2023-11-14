@@ -1,4 +1,4 @@
-﻿@page "/upload-s12report/{ReservoirId}/{ReservoirRegName}"
+﻿@page "/upload-your-template"
 @using Microsoft.AspNetCore.Authorization;
 @attribute [Authorize]
 
@@ -21,7 +21,7 @@
                         </label>
 @*                        <InputText id="FileName" class="govuk-input" @bind-Value="@selectedFolder" />*@
                         <br /><br />
-                        <InputFile OnChange="OnInputFileChange" accept=".docx,.dotx,.pdf,.png,.jpg,.jpeg" single/>
+                        <InputFile OnChange="OnInputFileChange" accept=".docx,.pdf" single/>
                         @if (fileLoading)
                         {
                             <i class="fa fa-refresh"></i> <span>Loading...</span>
