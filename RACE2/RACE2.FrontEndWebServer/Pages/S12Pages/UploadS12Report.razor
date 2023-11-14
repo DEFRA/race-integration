@@ -26,7 +26,7 @@
                         </label>
 @*                        <InputText id="FileName" class="govuk-input" @bind-Value="@selectedFolder" />*@
                         <br /><br />
-                        <InputFile OnChange="OnInputFileChange" accept=".docx,.pdf" single/>
+                        <InputFile OnChange="OnInputFileChange" accept=".docx,.pdf" />
                         @if (fileLoading)
                         {
                             <i class="fa fa-refresh"></i> <span>Loading...</span>
