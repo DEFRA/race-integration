@@ -39,7 +39,13 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         public string ReservoirId { get; set; }
         [Parameter]
         public string ReservoirRegName { get; set; }
-        
+        [Parameter]
+        public string UndertakerName { get; set; }
+        [Parameter]
+        public string UndertakerEmail { get; set; }
+        [Parameter]
+        public string YesNoValue { get; set; }
+
         [CascadingParameter]
         public Task<AuthenticationState> AuthenticationStateTask { get; set; }
         protected override async void OnInitialized()

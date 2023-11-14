@@ -1,4 +1,4 @@
-﻿@page "/send-your-statement"
+﻿@page "/send-your-statement/{ReservoirId}/{ReservoirRegName}/{UndertakerName}/{UndertakerEmail}"
 @using Microsoft.AspNetCore.Authorization
 @using RACE2.FrontEndWebServer.Components
 @attribute [Authorize]
@@ -17,9 +17,7 @@
 
             <div class="govuk-grid-column-two-thirds">
 
-
                 <div class="govuk-form-group">
-
 
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
 
@@ -28,7 +26,6 @@
                         </h1>
 
                     </legend>
-
 
                     <p class="govuk-body govuk-!-padding-top-4">
                         The statement will go to the Environment Agency but you can use this service to send it to the undertaker too.
@@ -44,7 +41,7 @@
                             </dt>
                             <dd class="govuk-summary-list__value govuk-!-padding-left-9" for="reservoir-named-undertaker"
                                 id="reservoir-named-undertaker" name="reservoir-named-undertaker">
-                                Rockingham Reservoir
+                                @ReservoirRegName
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row">
@@ -53,7 +50,7 @@
                             </dt>
                             <dd class="govuk-summary-list__value govuk-!-padding-left-9" for="reservoir-named-undertaker"
                                 id="reservoir-named-undertaker" name="reservoir-named-undertaker">
-                                Jenny Philips
+                                @UndertakerName
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row">
@@ -62,15 +59,13 @@
                             </dt>
                             <dd class="govuk-summary-list__value govuk-!-padding-left-9" for="reservoir-named-undertaker"
                                 id="reservoir-named-undertaker" name="reservoir-named-undertaker">
-                                jenny.philips@engineers.com
+                                @UndertakerEmail
                             </dd>
                         </div>
 
                     </dl>
-
-
+@* 
                     <form action="/Beta/Private/submit-s12/V11/upload-your-template" method="post">
-
 
                         <div class="govuk-form-group govuk-!-margin-top-6 govuk-!-padding-top-8 govuk-!-margin-bottom-4">
                             <fieldset class="govuk-fieldset" aria-describedby="send-to-undertaker">
@@ -104,7 +99,27 @@
                             Continue
                         </button>
 
-                    </form>
+                    </form> *@
+
+                    <EditForm Model="@_yesno" OnSubmit="GoToNextPage">
+                        <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
+                            <InputRadioGroup Name="yesno" @bind-Value="_yesno.YesNoOptions">
+                                @foreach (Enum value in Enum.GetValues(typeof(YesNoClass.YesNoEnum)))
+                                {
+                                    <div class="govuk-radios__item">
+                                        <InputRadio Value="@value" class="govuk-radios__input" />
+                                        <span class="govuk-label govuk-radios__label">@value</span>
+                                    </div>
+                                }
+                                
+                            </InputRadioGroup>
+                        </div>
+                        <button role="button" draggable="false"
+                                class="govuk-button govuk-!-margin-top-3 govuk-!-margin-bottom-6 govuk-!-margin-right-4"
+                                data-module="govuk-button">
+                            Continue
+                        </button>
+                    </EditForm>
 
                 </div>
             </div>

@@ -44,7 +44,6 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         private List<ReservoirsLinkedToUserForDisplay> ReservoirsLinkedToUserForDisplayOnStart { get; set; } = new List<ReservoirsLinkedToUserForDisplay>();
         private IEnumerable<Claim> Claims { get; set; }
         private List<OperatorDTO> Undertakers { get; set; }
-
         private string _searchString;
         private bool _sortNameByLength;
         private List<string> _events = new();
@@ -163,6 +162,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                     {
                         Undertakers = await reservoirService.GetOperatorsforReservoir(reservoir.Id, reservoir.OperatorType);
                         ReservoirsLinkedToUserForDisplay reservoirsLinkedToUser = new ReservoirsLinkedToUserForDisplay();
+                        reservoirsLinkedToUser.ReservoirID = reservoir.Id;
                         reservoirsLinkedToUser.ReservoirName = reservoir.RegisteredName;
                         if (Undertakers != null && Undertakers.Count() > 0)
                         {
@@ -172,11 +172,19 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                                 reservoirsLinkedToUser.UndertakerName = Undertakers[0].OperatorFirstName + " " + Undertakers[0].OperatorLastName;
                             else
                                 reservoirsLinkedToUser.UndertakerName = "";
-                        }
+                            if (!String.IsNullOrEmpty(Undertakers[0].Email))
+                            {
+                                reservoirsLinkedToUser.UndertakerEmail = Undertakers[0].Email;
+                            }
+                            else
+                            {
+                                reservoirsLinkedToUser.UndertakerEmail = "";
+                            }
+    }
                         SubmissionStatusList = await reservoirService.GetReservoirStatusByUserId(UserDetail.Id);
                         SubmissionStatus = SubmissionStatusList.Where(s => s.RegisteredName == reservoir.RegisteredName).FirstOrDefault();
                         reservoirsLinkedToUser.DueDate = SubmissionStatus.DueDate != DateTime.MinValue ? SubmissionStatus.DueDate.ToString("dd MMMMM yyyy") : "";
-                        reservoirsLinkedToUser.Status = SubmissionStatus.Status != null ? SubmissionStatus.Status : "Not Started";
+                        reservoirsLinkedToUser.Status = SubmissionStatus.Status != null ? SubmissionStatus.Status : "Not started";
 
                         ReservoirsLinkedToUserForDisplay.Add(reservoirsLinkedToUser);
                     }
@@ -353,9 +361,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
 
         private void gotoSubmissionPage(ReservoirsLinkedToUserForDisplay Item)
         {
-            var reservoir = ReservoirsLinkedToUser.Where(s => s.RegisteredName == Item.ReservoirName).FirstOrDefault();
             bool forceLoad = false;
-            string pagelink = $"/send-your-statement/{reservoir.Id}/{reservoir.RegisteredName}";
+            string pagelink = $"/send-your-statement/{Item.ReservoirID}/{Item.ReservoirName}/{Item.UndertakerName}/{Item.UndertakerEmail}";
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }
         
