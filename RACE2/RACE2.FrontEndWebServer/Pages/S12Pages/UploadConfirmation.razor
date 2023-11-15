@@ -1,0 +1,47 @@
+﻿@page "/upload-confirmation/{ReservoirId}/{ReservoirRegName}/{UndertakerName}/{UndertakerEmail}/{YesNoValue}"
+@using Microsoft.AspNetCore.Authorization
+@using RACE2.FrontEndWebServer.Components
+@attribute [Authorize]
+
+<HeaderWithBanner />
+
+<div class="govuk-width-container" style="min-height: 69vh;">
+
+    <FeedbackBannerSignOut />
+    <a class="govuk-back-link" @onclick="GoToPrevPage" style="color:black">Back</a>
+    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">       
+
+    <div class="govuk-grid-row">
+
+      <div class="govuk-grid-column-two-thirds">
+
+        <div class="govuk-panel govuk-panel--confirmation">
+          <h1 class="govuk-panel__title">
+            Statement for Rockingham Reservoir sent
+          </h1>
+        </div>
+      <br>
+        <p class="govuk-body">We have sent you a confirmation email.</p>
+
+        <h2 class="govuk-heading-m govuk-!-padding-top-6">What happens next</h2>
+
+        <p class="govuk-body">The Environment Agency might contact you for more information.
+        </p>
+
+        <p class="govuk-body">
+            You can go back to <a class="govuk-link govuk-link--no-visited-state" @onclick="GoToAnnualStatementsPage">your annual statements</a> or go to your <a class="govuk-link govuk-link--no-visited-state" @onclick="GoToMyAccountPage">account</a> to manage your information.
+        </p>
+
+        <p class="govuk-!-margin-top-8">
+            <a href="#" class="govuk-link govuk-link--no-visited-state">
+                What did you think of this service?
+            </a> (takes 30 seconds)
+         </p>
+
+      </div>
+    </div>
+    </main>
+
+ </div>
+
+<Footer />

@@ -18,29 +18,38 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         [Inject]
         public IUserService userService { get; set; } = default!;
         [Inject]
+        public IReservoirService reservoirService { get; set; } = default!;
+        [Inject]
         public IJSRuntime jsRuntime { get; set; } = default!;
         private int UserId { get; set; } = 0;
         private string UserName { get; set; } = "Unknown";
         private UserDetail UserDetail { get; set; }
         public Reservoir CurrentReservoir { get; set; } = new Reservoir();
         public string ReservoirName { get; set; } = default!;
-        private string warningMessage = "";
-        private string displayMessage = "";
-        private List<IBrowserFile> loadedFiles = new();
-        private long maxFileSize = 1024 * 15;
-        private int maxAllowedFiles = 3;
+        private IBrowserFile loadedFile;
+        private long maxFileSize = 1024 * 30;
         private bool fileLoading;
         string Message = "No file(s) selected";
-        IReadOnlyList<IBrowserFile> selectedFiles;
+        IBrowserFile selectedFile;
         private List<FileUploadViewModel> fileUploadViewModels = new();
         [Parameter]
         public string ReservoirId { get; set; }
         [Parameter]
         public string ReservoirRegName { get; set; }
-        
+        [Parameter]
+        public string UndertakerName { get; set; }
+        [Parameter]
+        public string UndertakerEmail { get; set; }
+        [Parameter]
+        public string YesNoValue { get; set; }
+
+        public string displayMessage { get; set; }
+
+        public string warningMessage { get; set; }
+
         [CascadingParameter]
         public Task<AuthenticationState> AuthenticationStateTask { get; set; }
-        protected override async void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
             AuthenticationState authState = await AuthenticationStateTask; // AuthenticationStateProvider.GetAuthenticationStateAsync();
             UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
@@ -52,106 +61,78 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 Id = UserId,
                 Email = userDetails.Email
             };
-            CurrentReservoir = new Reservoir();
+            CurrentReservoir = await reservoirService.GetReservoirById(Int32.Parse(ReservoirId));
             var rid = ReservoirId;
             var rname= ReservoirRegName;
-            base.OnInitialized();
+            await InvokeAsync(() =>
+            {
+                StateHasChanged();
+            });
+            await base.OnInitializedAsync();
         }
-        private void OnInputFileChange(InputFileChangeEventArgs e)
+        private async Task OnInputFileChange(InputFileChangeEventArgs e)
         {
-            selectedFiles = e.GetMultipleFiles();
-            Message = $"{selectedFiles.Count} file(s) selected";
+            selectedFile = e.File;
+            Message = $"{selectedFile} selected";
+            await InvokeAsync(() =>
+            {
+                StateHasChanged();
+            });
         }
-        private async void OnUploadSubmit()
+        private async Task OnUploadSubmit()
         {
             fileLoading = true;
-            foreach (var file in selectedFiles)
+            try
             {
-                try
+                var extn = selectedFile.Name.Split('.')[1];
+                var containerName = UserName.Split("@")[0];
+                if (containerName.Contains('.'))
                 {
-                    var extn = file.Name.Split('.')[1];
-                    var containerName = UserName.Split("@")[0];
-                    if (containerName.Contains('.'))
-                    {
-                        containerName = containerName.Split('.')[0];
-                    }
-                    var trustedFileNameForFileStorage = "S12Report_"+ CurrentReservoir.PublicName+ "_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + "."+ extn;
-                    var blobUrl = await blobStorageService.UploadFileToBlobAsync(containerName,trustedFileNameForFileStorage, file.ContentType, file.OpenReadStream(20971520));
-                    if (blobUrl != null)
-                    {
-                        FileUploadViewModel fileUploadViewModel = new FileUploadViewModel()
-                        {
-                            FileName = trustedFileNameForFileStorage,
-                            FileStorageUrl = blobUrl,
-                            ContentType = file.ContentType,
-                        };
-
-                        fileUploadViewModels.Add(fileUploadViewModel);
-                        displayMessage = trustedFileNameForFileStorage + " Uploaded!!";
-                    }
-                    else
-                        warningMessage = "File Upload failed, Please try again!!";
-
+                    containerName = containerName.Split('.')[0];
                 }
-                catch (Exception ex)
+                var trustedFileNameForFileStorage = CurrentReservoir.RegisteredName+ "_S12_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + "."+ extn;
+                var blobUrl = await blobStorageService.UploadFileToBlobAsync(containerName,trustedFileNameForFileStorage, selectedFile.ContentType, selectedFile.OpenReadStream(512000));
+                if (blobUrl != null)
                 {
+                    FileUploadViewModel fileUploadViewModel = new FileUploadViewModel()
+                    {
+                        FileName = trustedFileNameForFileStorage,
+                        FileStorageUrl = blobUrl,
+                        ContentType = selectedFile.ContentType,
+                    };
+
+                    fileUploadViewModels.Add(fileUploadViewModel);
+                    displayMessage = trustedFileNameForFileStorage + " Uploaded!!";
+                    SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(Int32.Parse(ReservoirId), UserDetail.Id, "Sent");
+                    goToNextPage();
+                }
+                else
                     warningMessage = "File Upload failed, Please try again!!";
-                }
+
+            }
+            catch (Exception ex)
+            {
+                warningMessage = "File Upload failed, Please try again!!";
             }
 
             fileLoading = false;
-        }
-
-        private async void OnFileDeleteClick(FileUploadViewModel attachment)
-        {
-            try
+            await InvokeAsync(() =>
             {
-                var containerName = UserName.Split("@")[0];
-                if (containerName.Contains('.'))
-                {
-                    containerName = containerName.Split('.')[0];
-                }
-                var deleteResponse = await blobStorageService.DeleteFileToBlobAsync(containerName, attachment.FileName);
-                if (deleteResponse)
-                {
-                    fileUploadViewModels.Remove(attachment);
-                    displayMessage = attachment.FileName + " Deleted!!";
-                }
-
-            }
-            catch (Exception)
-            {
-                warningMessage = "Something went wrong! Please try again.";
-            }
-        }
-        private async void OnFileViewClick(FileUploadViewModel attachment)
-        {
-            try
-            {
-                var containerName = UserName.Split("@")[0];
-                if (containerName.Contains('.'))
-                {
-                    containerName = containerName.Split('.')[0];
-                }
-                var sasToken = await blobStorageService.GetBlobAsTokenByFile(containerName,attachment.FileName);
-                if (sasToken != null)
-                {
-                    string fileUrl = attachment.FileStorageUrl + "?" + sasToken;
-                    await jsRuntime.InvokeAsync<object>("open", fileUrl, "_blank");
-                }
-
-            }
-            catch (Exception)
-            {
-                warningMessage = "Something went wrong! Please try again.";
-            }
+                StateHasChanged();
+            });
         }
 
         private void goback()
         {
             bool forceLoad = false;
-            string pagelink = "/reservoir-details";
+            string pagelink = "/annual-statements";
             NavigationManager.NavigateTo(pagelink, forceLoad);
-        }        
+        }
+        private void goToNextPage()
+        {
+            bool forceLoad = false;
+            string pagelink = $"/upload-confirmation/{ReservoirId}/{ReservoirRegName}/{UndertakerName}/{UndertakerEmail}/{YesNoValue}";
+            NavigationManager.NavigateTo(pagelink, forceLoad);
+        }
     }
 }

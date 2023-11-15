@@ -95,6 +95,8 @@
                     <tbody class="govuk-table__body govuk-body govuk-!-font-size-16">
                         @foreach (var reservoir in ReservoirsLinkedToUserForDisplay)
                         {
+                            <input type="hidden" value="@reservoir.ReservoirID" />
+                            <input type="hidden" value="@reservoir.UndertakerEmail" />
                             <tr class="govuk-table__row">
                                 <td scope="row" class="govuk-table__cell">@reservoir.ReservoirName</td>
                                 <td class="govuk-table__cell">@reservoir.UndertakerName</td>
@@ -122,6 +124,13 @@
                                 <td class="govuk-table__cell">
                                     <a class="govuk-link govuk-link--no-visited-state" href="annual-statements" @onclick="()=>DownloadTemplateFile(reservoir)">Download</a>
                                 </td>
+                                @if(reservoir.Status.ToLower() == "in progress")
+                                {
+                                    <td class="govuk-table__cell">
+                                        <a class="govuk-link govuk-link--no-visited-state" href="annual-statements" @onclick="()=>gotoSubmissionPage(reservoir)">Send</a>
+                                    </td>
+                                }
+
                             </tr>
                         }                   
                     </tbody>

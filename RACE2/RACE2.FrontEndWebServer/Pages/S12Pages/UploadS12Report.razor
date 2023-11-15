@@ -1,80 +1,45 @@
-﻿@page "/upload-s12report/{ReservoirId}/{ReservoirRegName}"
+﻿@page "/upload-your-template/{ReservoirId}/{ReservoirRegName}/{UndertakerName}/{UndertakerEmail}/{YesNoValue}"
 @using Microsoft.AspNetCore.Authorization;
+@using RACE2.FrontEndWebServer.Components
 @attribute [Authorize]
 
-<div class="govuk-width-container ">
+<HeaderWithBanner />
 
-    <a class="govuk-back-link" @onclick="goback">Back</a>
+<div class="govuk-width-container" style="min-height: 69vh;">
+    
+    <FeedbackBannerSignOut />
+
+    <a class="govuk-back-link" @onclick="goback" style="color:black">Back</a>
 
     <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
 
         <div class="govuk-grid-row">
-            <div class="govuk-grid-column-two-thirds">
-
-                <h1 class="govuk-heading-xl">What is the new reservoir name?</h1>
-
+            <div class="govuk-grid-column-three-quarters">
                 <EditForm Model="@CurrentReservoir" OnSubmit="OnUploadSubmit">
-
                     <div class="govuk-form-group">
-                        <label class="govuk-label govuk-label--m" for="FileName">
-                            Enter folder of file to upload
+                        <label class="govuk-label" for="file-upload-1">
+                            <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">Upload your statement</h1>
                         </label>
-@*                        <InputText id="FileName" class="govuk-input" @bind-Value="@selectedFolder" />*@
-                        <br /><br />
-                        <InputFile OnChange="OnInputFileChange" accept=".docx,.dotx,.pdf,.png,.jpg,.jpeg" single/>
-                        @if (fileLoading)
+                        <div id="file-upload-hint" class="govuk-hint">
+                            You can upload your statement as a PDF or Word document. It can be up to 30MB.
+                        </div>
+                         <br />
+                        <InputFile class="govuk-file-upload" OnChange="OnInputFileChange" accept=".docx,.pdf" />
+@*                         @if (fileLoading)
                         {
                             <i class="fa fa-refresh"></i> <span>Loading...</span>
-                        }
+                        } *@
                     </div>
-
-                    <button class="govuk-button govuk-!-margin-top-6 govuk-!-margin-bottom-6" data-module="govuk-button" type="submit">Upload File</button>
-
+                    <button type="submit" draggable="false"
+                            class="govuk-button govuk-!-margin-top-6 govuk-!-margin-bottom-6 govuk-!-margin-right-4"
+                            data-module="govuk-button">
+                        Send statement
+                    </button>
                 </EditForm>
 
             </div>
         </div>
-        @if (displayMessage.Length > 0)
-        {
-            <div class="alert alert-success">
-                <strong>Success!</strong> @displayMessage.
-            </div>
-        }
-        <br />
-        <div class="row">
-            @if (fileUploadViewModels.Count > 0)
-            {
-                <table class="table table-responsive table-bordered">
-                    <thead class="text-primary">
-                        <tr>
-                            <th>File</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var attachment in fileUploadViewModels)
-                        {
-
-                            <tr>
-                                <td>
-                                    <a class="text-primary"><i class="fa-solid fa-paperclip"></i> @attachment.FileName</a>
-                                </td>
-
-                                <td>
-                                    <span class="oi oi-delete" aria-hidden="true" @onclick="() => OnFileDeleteClick(attachment)"></span>
-                                    <span class="oi oi-eye" aria-hidden="true" @onclick="() => OnFileViewClick(attachment)"></span>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            }
-            else
-            {
-                <div class="alert alert-info">
-                    <strong>No Files!</strong>
-                </div>
-            }
-        </div>
     </main>
 </div>
+
+<Footer />
