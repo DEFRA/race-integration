@@ -130,7 +130,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         private void goToNextPage()
         {
             bool forceLoad = false;
-            string pagelink = "/upload-confirmation";
+            string pagelink = $"/upload-confirmation/{ReservoirId}/{ReservoirRegName}/{UndertakerName}/{UndertakerEmail}/{YesNoValue}";
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }
     }

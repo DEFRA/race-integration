@@ -9,7 +9,16 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         public IConfiguration _config { get; set; } = default!;
         [Inject]
         public NavigationManager NavigationManager { get; set; } = default!;
-
+        [Parameter]
+        public string ReservoirId { get; set; }
+        [Parameter]
+        public string ReservoirRegName { get; set; }
+        [Parameter]
+        public string UndertakerName { get; set; }
+        [Parameter]
+        public string UndertakerEmail { get; set; }
+        [Parameter]
+        public string YesNoValue { get; set; }
         [CascadingParameter]
         public Task<AuthenticationState> AuthenticationStateTask { get; set; }
         protected override async void OnInitialized()
@@ -32,7 +41,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         public void GoToPrevPage()
         {
             bool forceLoad = true;
-            string pagelink = "/upload-your-template";
+            string pagelink = $"/upload-your-template/{ReservoirId}/{ReservoirRegName}/{UndertakerName}/{UndertakerEmail}/{YesNoValue}";
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }
         public void GoToAnnualStatementsPage()
