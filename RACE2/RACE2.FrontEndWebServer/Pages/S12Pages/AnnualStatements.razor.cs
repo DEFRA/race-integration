@@ -223,7 +223,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 SubmissionStatus = SubmissionStatusList.Where(s => s.RegisteredName == reservoir.RegisteredName).FirstOrDefault();
                 var Undertakers = await reservoirService.GetOperatorsforReservoir(reservoir.Id, reservoir.OperatorType);
 
-                SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(reservoir.Id, UserDetail.Id);
+                SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(reservoir.Id, UserDetail.Id, "In progress");
 
                 var blobName = updatedStatus.OverrideUsedTemplate + ".docx";
                 //var blobName = "S12ReportTemplate.docx";

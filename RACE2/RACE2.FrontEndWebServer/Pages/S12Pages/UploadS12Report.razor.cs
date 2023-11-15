@@ -103,6 +103,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
 
                     fileUploadViewModels.Add(fileUploadViewModel);
                     displayMessage = trustedFileNameForFileStorage + " Uploaded!!";
+                    SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(Int32.Parse(ReservoirId), UserDetail.Id, "Sent");
                     goToNextPage();
                 }
                 else
