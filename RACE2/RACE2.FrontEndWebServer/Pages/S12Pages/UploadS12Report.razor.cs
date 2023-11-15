@@ -24,13 +24,10 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         private int UserId { get; set; } = 0;
         private string UserName { get; set; } = "Unknown";
         private UserDetail UserDetail { get; set; }
-        public Reservoir CurrentReservoir { get; set; } = new Reservoir();
         public string ReservoirName { get; set; } = default!;
         private IBrowserFile loadedFile;
-        private long maxFileSize = 1024 * 30;
-        private bool fileLoading;
-        string Message = "No file(s) selected";
         IBrowserFile selectedFile;
+        private UploadFileData UploadFileData { get; set; }=new UploadFileData();
         private List<FileUploadViewModel> fileUploadViewModels = new();
         [Parameter]
         public string ReservoirId { get; set; }
@@ -61,7 +58,6 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 Id = UserId,
                 Email = userDetails.Email
             };
-            CurrentReservoir = await reservoirService.GetReservoirById(Int32.Parse(ReservoirId));
             var rid = ReservoirId;
             var rname= ReservoirRegName;
             await InvokeAsync(() =>
@@ -73,7 +69,14 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         private async Task OnInputFileChange(InputFileChangeEventArgs e)
         {
             selectedFile = e.File;
-            Message = $"{selectedFile} selected";
+            if (selectedFile.Size > UploadFileData.MaxFileSize)
+            {
+                UploadFileData.MaxFileSizeExceeded = true;
+            }
+            else
+            {
+                UploadFileData.MaxFileSizeExceeded = false;
+            }
             await InvokeAsync(() =>
             {
                 StateHasChanged();
@@ -81,7 +84,6 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         }
         private async Task OnUploadSubmit()
         {
-            fileLoading = true;
             try
             {
                 var extn = selectedFile.Name.Split('.')[1];
@@ -90,8 +92,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 {
                     containerName = containerName.Split('.')[0];
                 }
-                var trustedFileNameForFileStorage = CurrentReservoir.RegisteredName+ "_S12_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + "."+ extn;
-                var blobUrl = await blobStorageService.UploadFileToBlobAsync(containerName,trustedFileNameForFileStorage, selectedFile.ContentType, selectedFile.OpenReadStream(512000));
+                var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + "."+ extn;
+                var blobUrl = await blobStorageService.UploadFileToBlobAsync(containerName,trustedFileNameForFileStorage, selectedFile.ContentType, selectedFile.OpenReadStream(UploadFileData.MaxFileSize));
                 if (blobUrl != null)
                 {
                     FileUploadViewModel fileUploadViewModel = new FileUploadViewModel()
@@ -115,7 +117,6 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 warningMessage = "File Upload failed, Please try again!!";
             }
 
-            fileLoading = false;
             await InvokeAsync(() =>
             {
                 StateHasChanged();
@@ -134,5 +135,16 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             string pagelink = $"/upload-confirmation/{ReservoirId}/{ReservoirRegName}/{UndertakerName}/{UndertakerEmail}/{YesNoValue}";
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }
+    }
+}
+
+public class UploadFileData
+{
+    public long MaxFileSize { get; set; }
+    public bool MaxFileSizeExceeded { get; set; }
+    public bool noFileSelected { get; set; }
+    public UploadFileData()
+    {
+        MaxFileSize = 30 * 1024 * 1024;
     }
 }
