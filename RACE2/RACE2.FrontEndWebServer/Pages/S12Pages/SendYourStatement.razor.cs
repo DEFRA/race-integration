@@ -25,6 +25,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             await base.OnInitializedAsync();
         }
         private YesNoClass _yesno = new YesNoClass();
+        private bool YesNoError { get; set; }=false;
 
         public void GoToNextPage()
         {
@@ -36,9 +37,18 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         }
         public void GoToMyAccountPage()
         {
-            bool forceLoad = true;
-            string pagelink = "/my-account";
-            NavigationManager.NavigateTo(pagelink, forceLoad);
+            if (_yesno.YesNoOptions == 0)
+            {
+                YesNoError = true;
+                StateHasChanged();
+            }
+            else
+            {
+                YesNoError = false;
+                bool forceLoad = true;
+                string pagelink = "/my-account";
+                NavigationManager.NavigateTo(pagelink, forceLoad);
+            }
         }
         public void GoToPrevPage()
         {
