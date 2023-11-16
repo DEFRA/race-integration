@@ -51,8 +51,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         public void GoToPrevPage()
         {
             bool forceLoad = true;
-            //string pagelink = "/annual-statements";
-            string pagelink = $"/send-your-statement/{ReservoirId}/{ReservoirRegName}/{UndertakerName}/{UndertakerEmail}";
+            string pagelink = "/annual-statements";
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }
         public void GoToAnnualStatementsPage()
