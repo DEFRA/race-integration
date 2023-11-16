@@ -25,14 +25,22 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             await base.OnInitializedAsync();
         }
         private YesNoClass _yesno = new YesNoClass();
+        private bool YesNoError { get; set; }=false;
 
         public void GoToNextPage()
         {
-            var YesNoValue = _yesno.YesNoOptions.ToString();
-
-            bool forceLoad = false;
-
-            NavigationManager.NavigateTo($"/upload-your-template/{ReservoirId}/{ReservoirRegName}/{UndertakerName}/{UndertakerEmail}/{YesNoValue}", forceLoad);
+            if (_yesno.YesNoOptions == 0)
+            {
+                YesNoError = true;
+                StateHasChanged();
+            }
+            else
+            {
+                YesNoError = false;
+                var YesNoValue = _yesno.YesNoOptions.ToString();
+                bool forceLoad = false;
+                NavigationManager.NavigateTo($"/upload-your-template/{ReservoirId}/{ReservoirRegName}/{UndertakerName}/{UndertakerEmail}/{YesNoValue}", forceLoad);
+            }
         }
         public void GoToMyAccountPage()
         {
@@ -51,7 +59,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         {
             bool forceLoad = true;
             string pagelink = "/annual-statements";
-            NavigationManager.NavigateTo(pagelink, forceLoad);
+            NavigationManager.NavigateTo(pagelink, forceLoad);       
         }
     }
 
