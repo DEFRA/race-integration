@@ -24,7 +24,7 @@ az acr run --registry Race2ACR --cmd 'acr purge --filter race2securityprovider:.
 
 az acr run --registry <ACR Name> --cmd 'acr purge --filter <repository name>:.*  --ago 0d --untagged --keep 1' /dev/null
 
-az account set -s d9cce027-07b6-4275-a215-dd8d52b9d469
+az account set -s 97ea02ef-73bc-4ee9-b320-b38a6b41b4d7
 az acr run --registry Race2ACR --cmd 'acr purge --filter race2securityprovider:.*  --ago 0d --keep 1' /dev/null
 az acr run --registry Race2ACR --cmd 'acr purge --filter race2frontendwebserver:.*  --ago 0d --keep 1' /dev/null
 az acr run --registry Race2ACR --cmd 'acr purge --filter race2webapi:.*  --ago 0d --keep 1' /dev/null
@@ -222,3 +222,19 @@ App Configuration Data Owner: 5ae67dd6-50cb-40e7-96ff-dc2bfa4b606b
 For SqlServer:
 Reader: acdd72a7-3385-48ef-bd42-f606fba81ae7
 
+CREATE TABLE [dbo].[Logs](  
+    [Id] [int] IDENTITY(1,1) NOT NULL,  
+    [Message] [nvarchar](max) NULL,  
+    [MessageTemplate] [nvarchar](max) NULL,  
+    [Level] [nvarchar](128) NULL,  
+    [TimeStamp] [datetimeoffset](7) NOT NULL,  
+    [Exception] [nvarchar](max) NULL,  
+    [Properties] [xml] NULL,  
+    [LogEvent] [nvarchar](max) NULL,  
+    [UserName] [nvarchar](200) NULL,  
+    [IP] [varchar](200) NULL,  
+ CONSTRAINT [PK_Log] PRIMARY KEY CLUSTERED   
+(  
+    [Id] ASC  
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]  
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY] 

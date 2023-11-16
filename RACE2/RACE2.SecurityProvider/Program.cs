@@ -3,6 +3,10 @@ using Azure.Security.KeyVault.Secrets;
 using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 using IdentityServer4.Extensions;
 using IdentityServer4.Services;
+using Microsoft.ApplicationInsights.Extensibility;
+using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel;
+using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -19,14 +23,11 @@ using RACE2.SecurityProvider;
 using RACE2.SecurityProvider.UtilityClasses;
 using RACE2.SecurityProvider.UtilityClasses.CompanyEmployees.OAuth.Extensions;
 using RACE2.Services;
-using System.Configuration;
-using System.Data.SqlClient;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.MSSqlServer;
 using System.Configuration;
 using System.Data.SqlClient;
-using Microsoft.ApplicationInsights.Extensibility;
 
 Serilog.Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Information()
@@ -34,6 +35,7 @@ Serilog.Log.Logger = new LoggerConfiguration()
             .Enrich.FromLogContext()
             .WriteTo.Console()
             .CreateBootstrapLogger();
+
 try
 {
     var builder = WebApplication.CreateBuilder(args);
@@ -87,18 +89,17 @@ try
 
     builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-    builder.Services.AddDefaultIdentity<UserDetail>(options => 
-        { 
-            options.SignIn.RequireConfirmedAccount = true;
-            options.Lockout.AllowedForNewUsers = true;
-            options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);//.FromDays(365);//.FromMinutes(10);//default 5
-            options.Lockout.MaxFailedAccessAttempts = 5;//default 5
-        })
+    builder.Services.AddDefaultIdentity<UserDetail>(options =>
+    {
+        options.SignIn.RequireConfirmedAccount = true;
+        options.Lockout.AllowedForNewUsers = true;
+        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);//.FromDays(365);//.FromMinutes(10);//default 5
+        options.Lockout.MaxFailedAccessAttempts = 5;//default 5
+    })
         .AddRoles<Role>()
         .AddEntityFrameworkStores<ApplicationDbContext>();
 
     builder.Services.AddRazorPages();
-    //builder.Services.AddAntiforgery(options => { options.SuppressXFrameOptionsHeader = true; });
 
     var migrationsAssembly = typeof(Program).Assembly.GetName().Name;
     builder.Services.AddIdentityServer()
@@ -128,13 +129,22 @@ try
 
     builder.Services.AddScoped<IRandomPasswordGeneration, RandomPasswordGeneration>();
     builder.Services.AddScoped<INotification, RaceNotification>();
-    builder.Services.AddSingleton<ICorsPolicyService>((container) => {
+    builder.Services.AddSingleton<ICorsPolicyService>((container) =>
+    {
         var logger = container.GetRequiredService<ILogger<DefaultCorsPolicyService>>();
         return new DefaultCorsPolicyService(logger)
         {
             AllowedOrigins = { blazorClientURL, webapiURL }
         };
     });
+
+    builder.Services.AddDataProtection()
+        .UseCryptographicAlgorithms(new AuthenticatedEncryptorConfiguration
+        {
+            EncryptionAlgorithm = EncryptionAlgorithm.AES_256_CBC,
+            ValidationAlgorithm = ValidationAlgorithm.HMACSHA256
+        });
+
     var app = builder.Build();
     app.Use(async (ctx, next) =>
     {
@@ -151,9 +161,14 @@ try
     }
     else
     {
-        app.UseExceptionHandler("/Error");
+        app.UseExceptionHandler("/Identity/Account/Error");
         app.UseHsts();
     }
+
+    //app.UseSerilogRequestLogging(configure =>
+    //{
+    //    configure.MessageTemplate = "HTTP {RequestMethod} {RequestPath} ({UserId}) responded {StatusCode} in {Elapsed:0.0000}ms";
+    //}); // We want to log all HTTP requests
     app.UseSerilogRequestLogging();
     // Use Azure App Configuration middleware for dynamic configuration refresh.
     app.UseAzureAppConfiguration();
