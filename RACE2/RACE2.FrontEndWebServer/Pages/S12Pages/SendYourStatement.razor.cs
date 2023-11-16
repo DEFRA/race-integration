@@ -29,14 +29,6 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
 
         public void GoToNextPage()
         {
-            var YesNoValue = _yesno.YesNoOptions.ToString();
-
-            bool forceLoad = false;
-
-            NavigationManager.NavigateTo($"/upload-your-template/{ReservoirId}/{ReservoirRegName}/{UndertakerName}/{UndertakerEmail}/{YesNoValue}", forceLoad);
-        }
-        public void GoToMyAccountPage()
-        {
             if (_yesno.YesNoOptions == 0)
             {
                 YesNoError = true;
@@ -45,10 +37,16 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             else
             {
                 YesNoError = false;
-                bool forceLoad = true;
-                string pagelink = "/my-account";
-                NavigationManager.NavigateTo(pagelink, forceLoad);
+                var YesNoValue = _yesno.YesNoOptions.ToString();
+                bool forceLoad = false;
+                NavigationManager.NavigateTo($"/upload-your-template/{ReservoirId}/{ReservoirRegName}/{UndertakerName}/{UndertakerEmail}/{YesNoValue}", forceLoad);
             }
+        }
+        public void GoToMyAccountPage()
+        {
+            bool forceLoad = true;
+            string pagelink = "/my-account";
+            NavigationManager.NavigateTo(pagelink, forceLoad);
         }
         public void GoToPrevPage()
         {
@@ -61,7 +59,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         {
             bool forceLoad = true;
             string pagelink = "/annual-statements";
-            NavigationManager.NavigateTo(pagelink, forceLoad);
+            NavigationManager.NavigateTo(pagelink, forceLoad);       
         }
     }
 
