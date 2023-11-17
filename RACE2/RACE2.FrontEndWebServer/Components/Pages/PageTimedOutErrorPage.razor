@@ -1,0 +1,51 @@
+﻿@page "/PageTimedOut"
+@page "/PageTimedOut/{ErrorMessage}"
+@using RACE2.FrontEndWebServer.Components
+@inject NavigationManager NavigationManager
+
+<Header/>
+
+<div class="govuk-width-container" style="min-height: 69vh;">
+
+    <FeedbackBanner/>
+
+    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+
+        <div class="govuk-grid-column-two-thirds">
+
+            <div class="govuk-panel govuk-panel-dropout govuk-!-margin-top-4 govuk-!-margin-bottom-9">
+                <h1 class="govuk-panel__title">
+                    You have been signed out
+                </h1>
+            </div>
+
+            <p class="govuk-body govuk-!-margin-top-6">
+                You have been signed out because you did not do anything for 20 minutes.
+            </p>
+            <p class="govuk-body">
+                This is to protect your information.
+            </p>
+
+            <div>
+                <button role="button" draggable="false"
+                        class="govuk-button govuk-!-margin-top-6 govuk-!-margin-bottom-6 govuk-!-margin-right-4"
+                        data-module="govuk-button" @onclick="GotoLoginPage">
+                    Sign in again
+                </button>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<Footer />
+
+@code {
+    [Parameter]
+    public string ErrorMessage { get; set; }
+
+    private void GotoLoginPage()
+    {
+        NavigationManager.NavigateTo("/Login", true);
+    }
+}

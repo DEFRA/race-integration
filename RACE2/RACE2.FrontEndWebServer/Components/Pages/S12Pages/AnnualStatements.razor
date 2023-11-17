@@ -207,7 +207,14 @@
             {
                 bool forceLoad = true;
                 string pagelink = _config["RACE2SecurityProviderURL"] + "/Identity/Account/CreatePassword?userEmail=" + UserName;
-                NavigationManager.NavigateTo(pagelink, forceLoad);
+                try
+                {
+                    NavigationManager.NavigateTo(pagelink, forceLoad);
+                }
+                catch (NavigationException navigationException)
+                {
+                    NavigationManager.NavigateTo("/PageNotFound", forceLoad);
+                }
             }
 
             UserDetail = new UserDetail()
@@ -275,8 +282,15 @@
             //throw new ApplicationException("Error loading annual statement data.");
             bool forceLoad = false;
             string pagelink = "/ApplicationError";
-            NavigationManager.NavigateTo(pagelink, forceLoad);
-        }
+            try
+            {
+                NavigationManager.NavigateTo(pagelink, forceLoad);
+            }
+            catch (NavigationException navigationException)
+            {
+                NavigationManager.NavigateTo("/PageNotFound", forceLoad);
+            }
+    }
         finally
         {
             await base.OnInitializedAsync();
@@ -337,7 +351,14 @@
             //throw new ApplicationException("Error loading reservoir data.");
             bool forceLoad = false;
             string pagelink = "/ApplicationError";
-            NavigationManager.NavigateTo(pagelink, forceLoad);
+            try
+            {
+                NavigationManager.NavigateTo(pagelink, forceLoad);
+            }
+            catch (NavigationException navigationException)
+            {
+                NavigationManager.NavigateTo("/PageNotFound", forceLoad);
+            }
         };
     }
 
@@ -458,7 +479,14 @@
             //throw new ApplicationException("Error downloading S12ReportTemplate for the reservoir.");
             bool forceLoad = false;
             string pagelink = "/ApplicationError";
-            NavigationManager.NavigateTo(pagelink, forceLoad);
+            try
+            {
+                NavigationManager.NavigateTo(pagelink, forceLoad);
+            }
+            catch (NavigationException navigationException)
+            {
+                NavigationManager.NavigateTo("/PageNotFound", forceLoad);
+            }
         };
     }
 
@@ -471,13 +499,28 @@
         bool forceLoad = false;
         string pagelink = "/choose-a-reservoir";
         NavigationManager.NavigateTo(pagelink, forceLoad);
+        try
+        {
+            NavigationManager.NavigateTo(pagelink, forceLoad);
+        }
+        catch (NavigationException navigationException)
+        {
+            NavigationManager.NavigateTo("/PageNotFound", forceLoad);
+        }
     }
 
     private void goback()
     {
         bool forceLoad = false;
         string pagelink = "/";
-        NavigationManager.NavigateTo(pagelink, forceLoad);
+        try
+        {
+            NavigationManager.NavigateTo(pagelink, forceLoad);
+        }
+        catch (NavigationException navigationException)
+        {
+            NavigationManager.NavigateTo("/PageNotFound", forceLoad);
+        }
     }
 
     private void gotoPage(SubmissionStatusDTO reservoirStatus)
@@ -489,14 +532,28 @@
         {
             pagelink = "/s12-statement-confirmation-draft-sent";
         }
-        NavigationManager.NavigateTo(pagelink, forceLoad);
+        try
+        {
+            NavigationManager.NavigateTo(pagelink, forceLoad);
+        }
+        catch (NavigationException navigationException)
+        {
+            NavigationManager.NavigateTo("/PageNotFound", forceLoad);
+        }
     }
 
     private void gotoSubmissionPage(ReservoirsLinkedToUserForDisplay Item)
     {
         bool forceLoad = false;
         string pagelink = $"/send-your-statement/{Item.ReservoirID}/{Item.ReservoirName}/{Item.UndertakerName}/{Item.UndertakerEmail}";
-        NavigationManager.NavigateTo(pagelink, forceLoad);
+        try
+        {
+            NavigationManager.NavigateTo(pagelink, forceLoad);
+        }
+        catch (NavigationException navigationException)
+        {
+            NavigationManager.NavigateTo("/PageNotFound", forceLoad);
+        }
     }
 
     private async void SearchOnEnter(KeyboardEventArgs e)
