@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RACE2.DatabaseProvider.Data;
 
@@ -11,9 +12,10 @@ using RACE2.DatabaseProvider.Data;
 namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231106133347_CreateLogsTable")]
+    partial class CreateLogsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -814,7 +816,10 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("Capacity")
+                    b.Property<int?>("Addressid")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Capacity")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("ConstructionStartDate")
@@ -824,7 +829,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                         .HasMaxLength(12)
                         .HasColumnType("nvarchar(12)");
 
-                    b.Property<bool?>("HasMultipleDams")
+                    b.Property<bool>("HasMultipleDams")
                         .HasColumnType("bit");
 
                     b.Property<string>("KeyFacts")
@@ -882,20 +887,21 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                         .HasColumnType("nvarchar(64)");
 
                     b.Property<string>("RegisteredName")
-                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<int?>("SurfaceArea")
+                    b.Property<int>("SurfaceArea")
                         .HasColumnType("int");
 
-                    b.Property<decimal?>("TopWaterLevel")
+                    b.Property<decimal>("TopWaterLevel")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("VerifiedDetailsDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Addressid");
 
                     b.HasIndex("LastInspectionByUserId");
 
@@ -1834,9 +1840,15 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
             modelBuilder.Entity("RACE2.DataModel.Reservoir", b =>
                 {
+                    b.HasOne("RACE2.DataModel.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("Addressid");
+
                     b.HasOne("RACE2.DataModel.UserDetail", "LastInspectionByUser")
                         .WithMany()
                         .HasForeignKey("LastInspectionByUserId");
+
+                    b.Navigation("Address");
 
                     b.Navigation("LastInspectionByUser");
                 });

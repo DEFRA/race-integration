@@ -71,6 +71,7 @@ namespace RACE2.DatabaseProvider.Data
         public DbSet<DocumentSubmission> DocumentSubmission { get; set; }
 
         public DbSet<StatementDetails> StatementDetails { get; set; }
+        public DbSet<Log> Logs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

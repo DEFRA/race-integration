@@ -72,12 +72,13 @@ namespace RACE2.DataAccess.Repository
                     DynamicParameters parameters = new DynamicParameters();
                     parameters.Add("Email", email, DbType.String);
 
-                    var user = await conn.QueryAsync<UserSpecificDto,UserAddress,Address,UserSpecificDto>("sp_GetUserByEmailID", (user,useraddress,address) =>
+                    var user = await conn.QueryAsync<UserSpecificDto,Address,UserSpecificDto>("sp_GetUserByEmailID", (user,address) =>
                     {
                         user.addresses.Add(address);
+                       
                         return user;
 
-                    }, parameters,null,true,splitOn: "Addressid,id", commandType: CommandType.StoredProcedure);
+                    }, parameters,null,true,splitOn: "Id,Addressid", commandType: CommandType.StoredProcedure);
                     var result = user.GroupBy(u => u.Id).Select(g =>
                     {
                         var groupedUser = g.First();

@@ -120,13 +120,13 @@ namespace RACE2.DataAccess.Repository
 
                         var parameters = new DynamicParameters();
                         parameters.Add("id", id, DbType.String);
-                        var reservoirs = await conn.QueryAsync<ReservoirDetailsDTO, Address,UserDetail, ReservoirDetailsDTO>("sp_GetReservoirsbyUserId", (reservoir, address,userdetail) =>
+                        var reservoirs = await conn.QueryAsync<ReservoirDetailsDTO,UserDetail, ReservoirDetailsDTO>("sp_GetReservoirsbyUserId", (reservoir,userdetail) =>
                         {
-                            reservoir.Address = address;
+                           // reservoir.Address = address;
                             reservoir.UserDetail = userdetail;
 
                             return reservoir;
-                        }, parameters, null, true, splitOn: "ReservoirId,id,id", commandType: CommandType.StoredProcedure);
+                        }, parameters, null, true, splitOn: "ReservoirId", commandType: CommandType.StoredProcedure);
                         return reservoirs.ToList();
                     }
                 }
@@ -325,7 +325,7 @@ namespace RACE2.DataAccess.Repository
         }
 
 
-        public async Task<SubmissionStatus> UpdateReservoirStatus(int reservoirid, int userid)
+        public async Task<SubmissionStatus> UpdateReservoirStatus(int reservoirid, int userid, string reportStatus)
         {
             _logger.LogInformation("Updating reservoir status for the reservoir  {reservoirid} by the {userid}  ", reservoirid, userid);
             try
@@ -336,6 +336,7 @@ namespace RACE2.DataAccess.Repository
                     var parameters = new DynamicParameters();
                     parameters.Add("reservoirid", reservoirid, DbType.Int64);
                     parameters.Add("userid", userid, DbType.Int64);
+                    parameters.Add("reportStatus", reportStatus, DbType.String);
                     if (reservoirid != 0)
                     {
 
