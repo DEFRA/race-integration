@@ -1,6 +1,7 @@
 ﻿@page "/PageTimedOut"
 @page "/PageTimedOut/{ErrorMessage}"
 @using RACE2.FrontEndWebServer.Components
+@inject NavigationManager NavigationManager
 
 <Header/>
 
@@ -45,6 +46,6 @@
 
     private void GotoLoginPage()
     {
-        NavigationManager.NavigateTo("/Login", forceLoad);
+        NavigationManager.NavigateTo("/Login", true);
     }
 }
