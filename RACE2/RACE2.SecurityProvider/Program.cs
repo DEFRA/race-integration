@@ -144,6 +144,7 @@ try
             EncryptionAlgorithm = EncryptionAlgorithm.AES_256_CBC,
             ValidationAlgorithm = ValidationAlgorithm.HMACSHA256
         });
+    builder.Services.AddAntiforgery();
 
     var app = builder.Build();
     app.Use(async (ctx, next) =>
@@ -179,8 +180,9 @@ try
 
     app.UseCookiePolicy(new CookiePolicyOptions
     {
-        MinimumSameSitePolicy = SameSiteMode.Lax
+        MinimumSameSitePolicy = SameSiteMode.None
     });
+    app.UseAntiforgery();
     app.UseStaticFiles();
 
     app.UseRouting();

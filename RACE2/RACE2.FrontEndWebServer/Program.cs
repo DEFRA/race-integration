@@ -149,6 +149,7 @@ try {
     builder.Services.AddScoped<IBlobStorageService, BlobStorageService>();
     builder.Services.AddScoped<IOpenXMLUtilitiesService, OpenXMLUtilitiesService>();
     builder.Services.AddScoped<CustomErrorBoundary>();
+    builder.Services.AddAntiforgery();
 
     var app = builder.Build();
     app.UseForwardedHeaders();
@@ -165,8 +166,13 @@ try {
     app.UseSerilogRequestLogging();
     app.UseHttpsRedirection();
 
+    app.UseCookiePolicy(new CookiePolicyOptions
+    {
+        MinimumSameSitePolicy = SameSiteMode.None
+    });
+
     app.UseStaticFiles();
-    app.UseCookiePolicy();
+
     app.UseAntiforgery();
     app.UseAuthentication();
     app.UseAuthorization();
