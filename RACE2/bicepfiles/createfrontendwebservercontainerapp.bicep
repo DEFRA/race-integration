@@ -65,7 +65,7 @@ resource containerFrontEndApp 'Microsoft.App/containerApps@2023-05-01' = {
           name: containerAppName
           resources: {
             cpu: '0.75'
-            memory: '1.25Gi'
+            memory: '1.5Gi'
           }   
         }
       ]
