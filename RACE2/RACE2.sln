@@ -71,6 +71,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bicepfiles", "bicepfiles", 
 		bicepfiles\createsqlserver.bicepparam = bicepfiles\createsqlserver.bicepparam
 		BicepFiles\createstorageaccount.bicep = BicepFiles\createstorageaccount.bicep
 		bicepfiles\createwebapicontainerapp.bicep = bicepfiles\createwebapicontainerapp.bicep
+		bicepfiles\createwebapiexternalcontainerapp.bicep = bicepfiles\createwebapiexternalcontainerapp.bicep
 		bicepfiles\key-value-pairs.json = bicepfiles\key-value-pairs.json
 	EndProjectSection
 EndProject
