@@ -310,7 +310,9 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 MemoryStream processedStream = openXMLUtilitiesService.SearchAndReplace(response, s12PrePopulationFields);
                 processedStream.Position = 0;
                 var streamRef = new DotNetStreamReference(stream: processedStream);
-                await jsRuntime.InvokeVoidAsync("downloadFileFromStream", blobName, streamRef);
+                //await jsRuntime.InvokeVoidAsync("downloadFileFromStream", blobName, streamRef);
+                string downloadedFileName = reservoir.RegisteredName + " S12.docx";
+                await jsRuntime.InvokeVoidAsync("downloadFileFromStream", downloadedFileName, streamRef);
                 var reservoirLinkedToUser = ReservoirsLinkedToUserForDisplay.Where(r => r.ReservoirName == reservoir.RegisteredName).FirstOrDefault();
                 reservoirLinkedToUser.Status = updatedStatus.Status;
                 await InvokeAsync(() =>
