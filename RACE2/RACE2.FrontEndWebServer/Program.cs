@@ -149,7 +149,6 @@ try {
     builder.Services.AddScoped<IBlobStorageService, BlobStorageService>();
     builder.Services.AddScoped<IOpenXMLUtilitiesService, OpenXMLUtilitiesService>();
     builder.Services.AddScoped<CustomErrorBoundary>();
-    builder.Services.AddAntiforgery();
 
     var app = builder.Build();
     app.UseForwardedHeaders();
