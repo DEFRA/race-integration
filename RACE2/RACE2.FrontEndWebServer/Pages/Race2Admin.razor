@@ -1,0 +1,26 @@
+﻿@page "/race2-admin"
+@using RACE2.FrontEndWebServer.Components
+
+<HeaderWithBanner />
+<div class="govuk-width-container ">
+    <FeedbackBannerSignOutOnly />
+    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+                
+                <h1>Race2 Admin Page</h1>
+                @if (IsAdmin)
+                {
+                    <h3>You are admin user</h3>
+                }
+                else
+                {
+                    <h3>You are non-admin user</h3>
+                }
+            </div>
+        </div>
+
+    </main>
+</div>
+<Footer />
