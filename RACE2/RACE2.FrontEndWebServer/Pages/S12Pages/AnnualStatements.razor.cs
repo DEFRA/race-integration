@@ -35,7 +35,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         public IUserService userService { get; set; } = default!;
         [Inject]
         public IReservoirService reservoirService { get; set; } = default!;
-        bool IsAdmin;
+        bool IsAdmin=false;
+        bool IsFirstTimeUser=false;
         private string UserName { get; set; } = "Unknown";
         private List<Reservoir> ReservoirsLinkedToUser { get; set; } = new List<Reservoir>();
         private List<ReservoirDetailsDTO> ReservoirDetailsLinkedToUser { get; set; } = new List<ReservoirDetailsDTO>();
@@ -61,6 +62,10 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         [CascadingParameter]
         public Task<AuthenticationState> AuthenticationStateTask { get; set; }
 
+        protected override bool ShouldRender()
+        {
+            return !IsAdmin && !IsFirstTimeUser;
+        }
         protected async override Task OnInitializedAsync()
         {
             try
@@ -84,6 +89,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
 
                 if (userDetails.cIsFirstTimeUser)
                 {
+                    IsFirstTimeUser = true;
                     bool forceLoad = true;
                     string pagelink = _config["RACE2SecurityProviderURL"] + "/Identity/Account/CreatePassword?userEmail=" + UserName;
                     NavigationManager.NavigateTo(pagelink, forceLoad);
