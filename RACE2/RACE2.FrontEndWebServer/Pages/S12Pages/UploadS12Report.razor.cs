@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.JSInterop;
 using RACE2.DataModel;
 using RACE2.Dto;
+using RACE2.Notification;
 using RACE2.Services;
 
 namespace RACE2.FrontEndWebServer.Pages.S12Pages
@@ -21,6 +22,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         public IReservoirService reservoirService { get; set; } = default!;
         [Inject]
         public IJSRuntime jsRuntime { get; set; } = default!;
+        [Inject]
+        public INotification _notificationService { get; set; } = default!;
         private int UserId { get; set; } = 0;
         private string UserName { get; set; } = "Unknown";
         private UserDetail UserDetail { get; set; }
@@ -106,6 +109,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                     fileUploadViewModels.Add(fileUploadViewModel);
                     displayMessage = trustedFileNameForFileStorage + " Uploaded!!";
                     SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(Int32.Parse(ReservoirId), UserDetail.Id, "Sent");
+                    //await _notificationService.SendEmailTestWithPersonalisation(@"kriss.sahoo@capgemini.com");
                     goToNextPage();
                 }
                 else
