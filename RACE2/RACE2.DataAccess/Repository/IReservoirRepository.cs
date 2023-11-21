@@ -30,5 +30,7 @@ namespace RACE2.DataAccess.Repository
 
         public Task<SubmissionStatus> UpdateReservoirStatus(int reservoirid, int userid, string reportStatus);
 
+        public Task<int> InsertUploadDocumentDetails(DocumentDTO document);
+
             }
 }

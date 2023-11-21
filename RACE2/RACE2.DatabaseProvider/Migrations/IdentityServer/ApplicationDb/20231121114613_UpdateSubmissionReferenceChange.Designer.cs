@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RACE2.DatabaseProvider.Data;
 
@@ -11,9 +12,10 @@ using RACE2.DatabaseProvider.Data;
 namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231121114613_UpdateSubmissionReferenceChange")]
+    partial class UpdateSubmissionReferenceChange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1150,8 +1152,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                     b.Property<DateTime>("LastModifiedDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("LastModifiedScreen")
-                        .IsRequired()
+                    b.Property<int>("LastModifiedScreen")
                         .HasColumnType("int");
 
                     b.Property<string>("OverrideUsedTemplate")
@@ -1169,8 +1170,8 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     b.Property<string>("SubmissionReference")
                         .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("varchar(64)");
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
 
                     b.Property<int>("SubmittedById")
                         .HasColumnType("int");
@@ -1199,7 +1200,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime?>("DateReceived")
+                    b.Property<DateTime>("DateReceived")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DateSent")
@@ -1209,7 +1210,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
-                    b.Property<DateTime?>("DocumentDate")
+                    b.Property<DateTime>("DocumentDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DocumentDescription")
@@ -1217,6 +1218,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                         .HasColumnType("nvarchar(1024)");
 
                     b.Property<string>("DocumentName")
+                        .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
