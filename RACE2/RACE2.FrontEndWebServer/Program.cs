@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel;
+using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
@@ -18,6 +21,7 @@ using RACE2.Services;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.MSSqlServer;
+using RACE2.Notification;
 
 Serilog.Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Information()
@@ -149,6 +153,13 @@ try
     builder.Services.AddScoped<IBlobStorageService, BlobStorageService>();
     builder.Services.AddScoped<IOpenXMLUtilitiesService, OpenXMLUtilitiesService>();
     builder.Services.AddScoped<CustomErrorBoundary>();
+    builder.Services.AddDataProtection()
+        .UseCryptographicAlgorithms(new AuthenticatedEncryptorConfiguration
+        {
+            EncryptionAlgorithm = EncryptionAlgorithm.AES_256_CBC,
+            ValidationAlgorithm = ValidationAlgorithm.HMACSHA256
+        });
+    builder.Services.AddScoped<INotification, RaceNotification>();
 
     var app = builder.Build();
     app.UseForwardedHeaders();

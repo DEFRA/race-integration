@@ -325,7 +325,7 @@ namespace RACE2.DataAccess.Repository
         }
 
 
-        public async Task<SubmissionStatus> UpdateReservoirStatus(int reservoirid, int userid)
+        public async Task<SubmissionStatus> UpdateReservoirStatus(int reservoirid, int userid, string reportStatus)
         {
             _logger.LogInformation("Updating reservoir status for the reservoir  {reservoirid} by the {userid}  ", reservoirid, userid);
             try
@@ -336,6 +336,7 @@ namespace RACE2.DataAccess.Repository
                     var parameters = new DynamicParameters();
                     parameters.Add("reservoirid", reservoirid, DbType.Int64);
                     parameters.Add("userid", userid, DbType.Int64);
+                    parameters.Add("reportStatus", reportStatus, DbType.String);
                     if (reservoirid != 0)
                     {
 

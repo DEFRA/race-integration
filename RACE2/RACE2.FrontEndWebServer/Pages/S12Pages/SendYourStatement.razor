@@ -1,0 +1,195 @@
+﻿@page "/send-your-statement/{ReservoirId}/{ReservoirRegName}/{UndertakerName}/{UndertakerEmail}"
+@using Microsoft.AspNetCore.Authorization
+@using RACE2.FrontEndWebServer.Components
+@attribute [Authorize]
+
+<HeaderWithBanner />
+
+<div class="govuk-width-container" style="min-height: 69vh;">
+
+    <FeedbackBannerSignOut />
+
+    <a class="govuk-back-link" @onclick="GoToPrevPage" style="color:black">Back</a>
+
+    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+          
+        <div class="govuk-grid-row">
+
+            <div class="govuk-grid-column-two-thirds">
+                @if (!YesNoError)
+                {
+                    <div class="govuk-form-group">
+
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+
+                            <h1 class="govuk-fieldset__heading">
+                                Who the statement will go to
+                            </h1>
+
+                        </legend>
+
+                        <p class="govuk-body govuk-!-padding-top-4">
+                            The statement will go to the Environment Agency but you can use this service to send it to the undertaker too.
+                        </p>
+                        <p class="govuk-body">
+                            These are the details we hold for the undertaker.
+                        </p>
+
+                        <dl class="govuk-summary-list govuk-!-margin-top-4">
+
+                            <div class="govuk-summary-list__row">
+                                <dt class="govuk-summary-list__key">
+                                    Reservoir
+                                </dt>
+                                <dd class="govuk-summary-list__value govuk-!-padding-left-9" for="reservoir-named-undertaker"
+                                    id="reservoir-named-undertaker" name="reservoir-named-undertaker">
+                                    @ReservoirRegName
+                                </dd>
+                            </div>
+                            <div class="govuk-summary-list__row">
+                                <dt class="govuk-summary-list__key">
+                                    Undertaker
+                                </dt>
+                                <dd class="govuk-summary-list__value govuk-!-padding-left-9" for="reservoir-named-undertaker"
+                                    id="reservoir-named-undertaker" name="reservoir-named-undertaker">
+                                    @UndertakerName
+                                </dd>
+                            </div>
+                            <div class="govuk-summary-list__row">
+                                <dt class="govuk-summary-list__key">
+                                    Email
+                                </dt>
+                                <dd class="govuk-summary-list__value govuk-!-padding-left-9" for="reservoir-named-undertaker"
+                                    id="reservoir-named-undertaker" name="reservoir-named-undertaker">
+                                    @UndertakerEmail
+                                </dd>
+                            </div>
+
+                        </dl>
+
+                        <EditForm Model="@_yesno" OnSubmit="GoToNextPage">
+                            <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
+                                <InputRadioGroup Name="yesno" @bind-Value="_yesno.YesNoOptions">
+                                    @foreach (Enum value in Enum.GetValues(typeof(YesNoClass.YesNoEnum)))
+                                    {
+                                        <div class="govuk-radios__item">
+                                            <InputRadio Value="@value" class="govuk-radios__input" />
+                                            <span class="govuk-label govuk-radios__label">@value</span>
+                                        </div>
+                                    }
+
+                                </InputRadioGroup>
+                            </div>
+                            <button type="submit" draggable="false"
+                                    class="govuk-button govuk-!-margin-top-3 govuk-!-margin-bottom-6 govuk-!-margin-right-4"
+                                    data-module="govuk-button">
+                                Continue
+                            </button>
+                        </EditForm>
+
+                    </div>
+                }
+                else
+                {
+                <div class="govuk-error-summary" data-module="govuk-error-summary">
+                    <div role="alert">
+                        <h2 class="govuk-error-summary__title">
+                            There is a problem
+                        </h2>
+                        <div class="govuk-error-summary__body">
+                            <ul class="govuk-list govuk-error-summary__list">
+                                <li>
+                                    <a href="#">Select yes if you want to send the statement to the undertaker too</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+
+                    <h1 class="govuk-fieldset__heading">
+                        Who the statement will go to
+                    </h1>
+
+                </legend>
+
+                <p class="govuk-body govuk-!-padding-top-4">
+                    The statement will go to the Environment Agency but you can use this service to send it to the
+                    undertaker too.
+                </p>
+                <p class="govuk-body">
+                    These are the details we hold for the undertaker.</p>
+
+                <div class="govuk-!-margin-top-4 govuk-!-margin-bottom-8 govuk-!-padding-bottom-2">
+                    <dl class="govuk-summary-list">
+
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                                Reservoir
+                            </dt>
+                            <dd class="govuk-summary-list__value govuk-!-padding-left-9" for="reservoir-named-undertaker"
+                                id="reservoir-named-undertaker" name="reservoir-named-undertaker">
+                                    @ReservoirRegName
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                                Undertaker
+                            </dt>
+                            <dd class="govuk-summary-list__value govuk-!-padding-left-9" for="reservoir-named-undertaker"
+                                id="reservoir-named-undertaker" name="reservoir-named-undertaker">
+                                    @UndertakerName
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                                Email
+                            </dt>
+                            <dd class="govuk-summary-list__value govuk-!-padding-left-9" for="reservoir-named-undertaker"
+                                id="reservoir-named-undertaker" name="reservoir-named-undertaker">
+                                    @UndertakerEmail
+                            </dd>
+                        </div>
+                    </dl>
+                </div>
+                    <EditForm Model="@_yesno" OnSubmit="GoToNextPage">
+                        <div class="govuk-form-group govuk-form-group--error govuk-!-margin-top-8 govuk-!-margin-bottom-4">
+                            <fieldset class="govuk-fieldset" aria-describedby="where-do-you-live-error">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                                    <h1 class="govuk-fieldset__heading">
+                                        Do you want to send the statement to the undertaker too?
+                                    </h1>
+                                </legend>
+                                <p id="where-do-you-live-error" class="govuk-error-message">
+                                    <span class="govuk-visually-hidden">Error:</span>Select yes if you want to send the
+                                    statement to the undertaker too
+                                </p>
+
+                                <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
+                                    <InputRadioGroup Name="yesno" @bind-Value="_yesno.YesNoOptions">
+                                        @foreach (Enum value in Enum.GetValues(typeof(YesNoClass.YesNoEnum)))
+                                        {
+                                            <div class="govuk-radios__item">
+                                                <InputRadio Value="@value" class="govuk-radios__input" />
+                                                <span class="govuk-label govuk-radios__label">@value</span>
+                                            </div>
+                                        }
+
+                                    </InputRadioGroup>
+                                </div>
+                                </fieldset>
+                            </div>
+                            <button type="submit" draggable="false"
+                                    class="govuk-button govuk-!-margin-top-3 govuk-!-margin-bottom-6 govuk-!-margin-right-4"
+                                    data-module="govuk-button">
+                                Continue
+                            </button>
+                    </EditForm>
+                }
+            </div>
+        </div>
+    </main>
+ </div>
+
+<Footer />
