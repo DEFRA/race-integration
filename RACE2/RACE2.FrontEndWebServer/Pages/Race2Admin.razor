@@ -1,24 +1,36 @@
 ﻿@page "/race2-admin"
 @using RACE2.FrontEndWebServer.Components
+@attribute [Authorize]
 
-<HeaderWithBanner />
+<Header />
 <div class="govuk-width-container" style="min-height: 69vh;">
-    <FeedbackBannerSignOutOnly />
     <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
 
-        <div class="govuk-grid-row">
-            <div class="govuk-grid-column-two-thirds">
-                
-                <h1>Race2 Admin Page</h1>
+        <div class="govuk-grid-row" style="flex-flow">
+            <div class="govuk-grid-column-one-thirds">
+                <nav>
+                    <NavLink class="nav-link" @onclick="goToRegPage">
+                        New User Registration
+                    </NavLink>
+                    <NavLink class="nav-link" @onclick="goToChangePWPage">
+                        Change User Password 
+                    </NavLink>
+                    <NavLink class="nav-link" @onclick="goToLogoutPage">
+                        Sign Out
+                    </NavLink>
+                </nav>
+            </div>
+@*             <div class="govuk-grid-column-two-thirds">              
+               
                 @if (IsAdmin)
                 {
-                    <h3>You are admin user</h3>
+                    <div>You are admin use</div>
                 }
                 else
                 {
-                    <h3>You are non-admin user</h3>
+                    <div>You are non-admin user</div>
                 }
-            </div>
+            </div> *@
         </div>
 
     </main>

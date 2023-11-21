@@ -10,6 +10,8 @@ namespace RACE2.FrontEndWebServer.Pages
     public partial class Race2Admin
     {
         [Inject]
+        public IConfiguration _config { get; set; } = default!;
+        [Inject]
         public NavigationManager NavigationManager { get; set; } = default!;
         [Inject]
         public IUserService userService { get; set; } = default!;
@@ -37,15 +39,24 @@ namespace RACE2.FrontEndWebServer.Pages
         }
 
         bool forceLoad = false;
-        public void GoToNextPage()
+        public void goToRegPage()
         {
-            NavigationManager.NavigateTo("/new-reservoir", forceLoad);
+            bool forceLoad = true;
+            string pagelink = _config["RACE2SecurityProviderURL"] + "/Identity/Account/Register";
+            NavigationManager.NavigateTo(pagelink, forceLoad);
         }
 
-        private void goback()
+        private void goToChangePWPage()
         {
-            bool forceLoad = false;
-            string pagelink = "/choose-a-reservoir";
+            bool forceLoad = true;
+            string pagelink = _config["RACE2SecurityProviderURL"] + "/Identity/Account/ChangeExistingUserPassword";
+            NavigationManager.NavigateTo(pagelink, forceLoad);
+        }
+
+        private void goToLogoutPage()
+        {
+            bool forceLoad = true;
+            string pagelink = "/Logout";
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }
     }
