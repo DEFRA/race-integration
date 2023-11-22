@@ -184,7 +184,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     b.HasIndex("ReservoirId");
 
-                    b.ToTable("Actions");
+                    b.ToTable("Actions", (string)null);
                 });
 
             modelBuilder.Entity("RACE2.DataModel.Address", b =>
@@ -217,7 +217,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     b.HasKey("id");
 
-                    b.ToTable("Address");
+                    b.ToTable("Address", (string)null);
                 });
 
             modelBuilder.Entity("RACE2.DataModel.AuditTable", b =>
@@ -253,7 +253,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     b.HasKey("id");
 
-                    b.ToTable("AuditTables");
+                    b.ToTable("AuditTables", (string)null);
                 });
 
             modelBuilder.Entity("RACE2.DataModel.Comment", b =>
@@ -309,7 +309,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     b.HasIndex("ParentCommentidId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("RACE2.DataModel.ComplianceSummary", b =>
@@ -361,7 +361,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     b.HasIndex("ReservoirId");
 
-                    b.ToTable("ComplianceSummary");
+                    b.ToTable("ComplianceSummary", (string)null);
                 });
 
             modelBuilder.Entity("RACE2.DataModel.DocumentEngineer", b =>
@@ -384,7 +384,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     b.HasIndex("EngineerUserId");
 
-                    b.ToTable("DocumentEngineer");
+                    b.ToTable("DocumentEngineer", (string)null);
                 });
 
             modelBuilder.Entity("RACE2.DataModel.DocumentRelationship", b =>
@@ -412,7 +412,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     b.HasIndex("RelatedDocumentId");
 
-                    b.ToTable("DocumentRelationship");
+                    b.ToTable("DocumentRelationship", (string)null);
                 });
 
             modelBuilder.Entity("RACE2.DataModel.DocumentReservoir", b =>
@@ -435,7 +435,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     b.HasIndex("ReservoirId");
 
-                    b.ToTable("DocumentReservoir");
+                    b.ToTable("DocumentReservoir", (string)null);
                 });
 
             modelBuilder.Entity("RACE2.DataModel.DocumentSubmission", b =>
@@ -458,7 +458,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     b.HasIndex("SubmissionId");
 
-                    b.ToTable("DocumentSubmission");
+                    b.ToTable("DocumentSubmission", (string)null);
                 });
 
             modelBuilder.Entity("RACE2.DataModel.EarlyInspection", b =>
@@ -499,7 +499,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     b.HasIndex("ReservoirId");
 
-                    b.ToTable("EarlyInspection");
+                    b.ToTable("EarlyInspection", (string)null);
                 });
 
             modelBuilder.Entity("RACE2.DataModel.FeatureFunction", b =>
@@ -531,7 +531,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("FeatureFunction");
+                    b.ToTable("FeatureFunction", (string)null);
                 });
 
             modelBuilder.Entity("RACE2.DataModel.FloodPlan", b =>
@@ -574,7 +574,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     b.HasIndex("ReservoirId");
 
-                    b.ToTable("FloodPlans");
+                    b.ToTable("FloodPlans", (string)null);
                 });
 
             modelBuilder.Entity("RACE2.DataModel.FloodPlanTesting", b =>
@@ -603,7 +603,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("FloodPlanTesting");
+                    b.ToTable("FloodPlanTesting", (string)null);
                 });
 
             modelBuilder.Entity("RACE2.DataModel.Log", b =>
@@ -643,7 +643,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("Logs");
+                    b.ToTable("Logs", (string)null);
                 });
 
             modelBuilder.Entity("RACE2.DataModel.Organisation", b =>
@@ -670,7 +670,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("Organisation");
+                    b.ToTable("Organisation", (string)null);
                 });
 
             modelBuilder.Entity("RACE2.DataModel.OrganisationAddress", b =>
@@ -697,7 +697,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     b.HasIndex("OrganisationId");
 
-                    b.ToTable("OrganisationAddress");
+                    b.ToTable("OrganisationAddress", (string)null);
                 });
 
             modelBuilder.Entity("RACE2.DataModel.OrganisationReservoir", b =>
@@ -730,7 +730,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     b.HasIndex("SecondaryContactUserId");
 
-                    b.ToTable("OrganisationReservoirs");
+                    b.ToTable("OrganisationReservoirs", (string)null);
                 });
 
             modelBuilder.Entity("RACE2.DataModel.PicklistDefinition", b =>
@@ -775,7 +775,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("PicklistDefinitions");
+                    b.ToTable("PicklistDefinitions", (string)null);
                 });
 
             modelBuilder.Entity("RACE2.DataModel.PicklistMapping", b =>
@@ -796,7 +796,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("PicklistMappings");
+                    b.ToTable("PicklistMappings", (string)null);
                 });
 
             modelBuilder.Entity("RACE2.DataModel.Reservoir", b =>
@@ -892,7 +892,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     b.HasIndex("LastInspectionByUserId");
 
-                    b.ToTable("Reservoirs");
+                    b.ToTable("Reservoirs", (string)null);
                 });
 
             modelBuilder.Entity("RACE2.DataModel.Role", b =>
@@ -993,7 +993,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     b.HasIndex("ReservoirId");
 
-                    b.ToTable("SafetyMeasures");
+                    b.ToTable("SafetyMeasures", (string)null);
                 });
 
             modelBuilder.Entity("RACE2.DataModel.ScreenDefinition", b =>
@@ -1027,7 +1027,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     b.HasIndex("ModifiedById");
 
-                    b.ToTable("ScreenDefinition");
+                    b.ToTable("ScreenDefinition", (string)null);
                 });
 
             modelBuilder.Entity("RACE2.DataModel.ScreenSequence", b =>
@@ -1053,7 +1053,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     b.HasIndex("ServiceId");
 
-                    b.ToTable("ScreenSequences");
+                    b.ToTable("ScreenSequences", (string)null);
                 });
 
             modelBuilder.Entity("RACE2.DataModel.ScreenSequenceAuditHistory", b =>
@@ -1089,7 +1089,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     b.HasIndex("ServiceId");
 
-                    b.ToTable("ScreenSequenceAuditHistories");
+                    b.ToTable("ScreenSequenceAuditHistories", (string)null);
                 });
 
             modelBuilder.Entity("RACE2.DataModel.StatementDetails", b =>
@@ -1124,7 +1124,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     b.HasIndex("DocumentId");
 
-                    b.ToTable("StatementDetails");
+                    b.ToTable("StatementDetails", (string)null);
                 });
 
             modelBuilder.Entity("RACE2.DataModel.SubmissionStatus", b =>
@@ -1188,7 +1188,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     b.HasIndex("SubmittedById");
 
-                    b.ToTable("SubmissionStatus");
+                    b.ToTable("SubmissionStatus", (string)null);
                 });
 
             modelBuilder.Entity("RACE2.DataModel.SupportingDocument", b =>
@@ -1274,7 +1274,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     b.HasIndex("SuppliedViaServiceId");
 
-                    b.ToTable("Document");
+                    b.ToTable("Document", (string)null);
                 });
 
             modelBuilder.Entity("RACE2.DataModel.UserAddress", b =>
@@ -1300,7 +1300,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserAddress");
+                    b.ToTable("UserAddress", (string)null);
                 });
 
             modelBuilder.Entity("RACE2.DataModel.UserDetail", b =>
@@ -1514,7 +1514,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("Permission");
+                    b.ToTable("Permission", (string)null);
                 });
 
             modelBuilder.Entity("RACE2.DataModel.UserReservoir", b =>
@@ -1550,7 +1550,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserReservoir");
+                    b.ToTable("UserReservoir", (string)null);
                 });
 
             modelBuilder.Entity("RACE2.DataModel.UserRole", b =>
