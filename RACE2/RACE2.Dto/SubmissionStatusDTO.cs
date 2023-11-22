@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,5 +33,7 @@ namespace RACE2.Dto
         public UserDetail SubmittedBy { get; set; } = new UserDetail();
 
         public string? override_template { get; set; }
+
+        public string SubmissionReference { get; set; }
     }
 }
