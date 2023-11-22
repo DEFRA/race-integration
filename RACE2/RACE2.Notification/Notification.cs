@@ -80,12 +80,12 @@ namespace RACE2.Notification
 
 
 
-       public async Task SendConfirmationMailWithAttachment(byte[] file, string undertakerEmailaddress, string reservoirName, string submissionDate)
+       public async Task SendConfirmationMailWithAttachment(byte[] file, string undertakerEmailaddress, string reservoirName)
         {
             Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
                 {
-                    { "reservoir name", "reservoirName" },
-                    { "date of submission", "submissionDate" },
+                    { "name of reservoir", reservoirName },
+                    
                     { "link_to_file", NotificationClient.PrepareUpload(file)}
                 
                 };
