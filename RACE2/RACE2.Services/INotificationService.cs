@@ -12,6 +12,6 @@ namespace RACE2.Services
         Task SendForgotPasswordMail(string emailAddress, string fullName, string resetLink);
         Task SendEmailTestWithPersonalisation(string Emailaddress);
 
-        Task SendConfirmationMailWithAttachment(byte[] file, string undertakerEmailaddress, string reservoirName, string submissionDate);
+        Task SendConfirmationMailWithAttachment(byte[] file, string undertakerEmailaddress, string reservoirName);
     }
 }

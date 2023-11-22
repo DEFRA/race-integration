@@ -38,7 +38,7 @@ namespace RACE2.WebApi.Types
 
         public async Task<UserSpecificDto> GetUserByEmailID(IUserService _userService, string email)
         {
-            RaceNotification raceNotification = new RaceNotification();
+            //RaceNotification raceNotification = new RaceNotification();
             //await raceNotification.SendForgotPasswordMail("mahalakshmi.alagarsamy@capgemini.com", "Maha", "https://race2securityprovider.gentlebush-defe7f09.westeurope.azurecontainerapps.io/Identity/Account/ForgotPassword");
             //await raceNotification.SendMail(email);
             //await raceNotification.SendEmailTestWithPersonalisation(email);
