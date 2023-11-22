@@ -15,7 +15,9 @@ namespace RACE2.DataModel
         public int Id { get; set; }
 
         [Required]
-        public int SubmissionReference {  get; set; }
+        [Column(TypeName = "varchar")]
+        [MaxLength(64)]
+        public string SubmissionReference {  get; set; }
         [Required]
         public FeatureFunction Service { get; set; } = new FeatureFunction();
         [Required]
@@ -32,7 +34,7 @@ namespace RACE2.DataModel
         [Required]
         public UserDetail LastModifiedBy { get; set; } = new UserDetail();
         [Required]
-        public ScreenDefinition LastModifiedScreen { get; set; } = new ScreenDefinition();
+        public int? LastModifiedScreen { get; set; }
         [Required]
         public DateTime SubmittedDateTime { get; set; }
         [Required]

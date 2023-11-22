@@ -11,6 +11,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
@@ -347,6 +348,49 @@ namespace RACE2.DataAccess.Repository
                     else
                     {
                         _logger.LogInformation("The input is not valid {reservoirid} by the {userid}  ", reservoirid, userid);
+                        return null;
+                    }
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return null;
+            }
+        }
+
+
+        public Task<int> InsertUploadDocumentDetails(DocumentDTO document)
+        {
+            int result = 0;
+            _logger.LogInformation("Inserting uploaded document details for the reservoir" );
+            try
+            {
+
+                using (var conn = Connection)
+                {
+                    var parameters = new DynamicParameters();
+                    parameters.Add("filename", document.FileName, DbType.String);
+                    parameters.Add("filelocation", document.FileLocation, DbType.String);
+                    parameters.Add("filetype", document.FileType, DbType.String);
+                    parameters.Add("documenttype", document.DocumentType, DbType.String);
+                    parameters.Add("suppliedby", document.SuppliedBy, DbType.Int64);
+                    parameters.Add("suppliedviaservice", document.SuppliedViaService, DbType.Int64);
+                    parameters.Add("datesent", document.DateSent, DbType.DateTime);
+                    parameters.Add("reservoirid", document.ReservoirId, DbType.Int64);
+                    parameters.Add("submissionid", document.SubmissionId, DbType.Int64);
+                    if (document != null)
+                    {
+
+                        var result1  = conn.ExecuteAsync("sp_InsertDocumentUpload", parameters, commandType: CommandType.StoredProcedure);
+
+                        return result1;
+                    }
+                    else
+                    {
+                        _logger.LogInformation("The input is not valid ");
                         return null;
                     }
 

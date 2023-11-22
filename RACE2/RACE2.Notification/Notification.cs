@@ -27,6 +27,8 @@ namespace RACE2.Notification
         public string InvitationtemplateId = "8aac094b-9997-41c1-96fe-b35f415eea9f";
         public string CommentTemplateId = "0bbc0b12-aee0-4546-a20b-23e81489111c";
         public string ForgetPasswordTemplateId = "950e6a2b-8bbc-4374-9dc1-3a086d01bd3f";
+        public string ConfirmSubmissiontoOperator = "76c2562e-8bb6-4f98-830d-a76b30c7d4e5";
+        public string ConfirmSubmissiontoSE = "4f801102-36f4-4ce9-b59c-baf5c2488bcc";
 
         Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>();
             //{
