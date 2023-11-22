@@ -17,6 +17,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         public string UndertakerName { get; set; }
         [Parameter]
         public string UndertakerEmail { get; set; }
+        [Parameter]
+        public string SubmissionReference { get; set; }
         [CascadingParameter]
         public Task<AuthenticationState> AuthenticationStateTask { get; set; }
         protected override async void OnInitialized()
@@ -39,7 +41,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 YesNoError = false;
                 var YesNoValue = _yesno.YesNoOptions.ToString();
                 bool forceLoad = false;
-                NavigationManager.NavigateTo($"/upload-your-template/{ReservoirId}/{ReservoirRegName}/{UndertakerName}/{UndertakerEmail}/{YesNoValue}", forceLoad);
+                NavigationManager.NavigateTo($"/upload-your-template/{ReservoirId}/{ReservoirRegName}/{UndertakerName}/{UndertakerEmail}/{SubmissionReference}/{YesNoValue}", forceLoad);
             }
         }
         public void GoToMyAccountPage()

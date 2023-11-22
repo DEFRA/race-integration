@@ -10,6 +10,7 @@ namespace RACE2.Dto
     {
         public int ReservoirID { get; set; }
         public string ReservoirName { get; set; }
+        public string SubmissionReference { get; set; }
         public string UndertakerName { get; set; }
         public string UndertakerEmail { get; set; }
         public string DueDate { get; set; }

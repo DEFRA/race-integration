@@ -62,10 +62,6 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         [CascadingParameter]
         public Task<AuthenticationState> AuthenticationStateTask { get; set; }
 
-        protected override bool ShouldRender()
-        {
-            return !IsAdmin && !IsFirstTimeUser;
-        }
         protected async override Task OnInitializedAsync()
         {
             try
@@ -186,6 +182,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
     }
                         SubmissionStatusList = await reservoirService.GetReservoirStatusByUserId(userDetails.Id);
                         SubmissionStatus = SubmissionStatusList.Where(s => s.RegisteredName == reservoir.RegisteredName).FirstOrDefault();
+                        reservoirsLinkedToUser.SubmissionReference = SubmissionStatus.SubmissionReference;
                         reservoirsLinkedToUser.DueDate = SubmissionStatus.DueDate != DateTime.MinValue ? SubmissionStatus.DueDate.ToString("dd MMMMM yyyy") : "";
                         reservoirsLinkedToUser.Status = SubmissionStatus.Status != null ? SubmissionStatus.Status : "Not started";
 
@@ -211,11 +208,6 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 string pagelink = "/ApplicationError";
                 NavigationManager.NavigateTo(pagelink, forceLoad);
             };
-        }
-
-        protected override async void OnAfterRender(bool firstRender)
-        {
-
         }
 
         private async void DownloadReportTemplate(ReservoirsLinkedToUserForDisplay item)
@@ -367,10 +359,11 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         private void gotoSubmissionPage(ReservoirsLinkedToUserForDisplay Item)
         {
             bool forceLoad = false;
-            string pagelink = $"/send-your-statement/{Item.ReservoirID}/{Item.ReservoirName}/{Item.UndertakerName}/{Item.UndertakerEmail}";
+            string pagelink = $"/send-your-statement/{Item.ReservoirID}/{Item.ReservoirName}/{Item.UndertakerName}/{Item.UndertakerEmail}/{Item.SubmissionReference}";
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }
-        
+
+
         private async void SearchOnEnter(KeyboardEventArgs e)
         {
             if (e.Code == "Enter" ||  e.Code == "NumpadEnter")
