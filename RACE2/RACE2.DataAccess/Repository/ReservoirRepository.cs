@@ -362,7 +362,7 @@ namespace RACE2.DataAccess.Repository
         }
 
 
-        public Task<int> InsertUploadDocumentDetails(DocumentDTO document)
+        public async Task<int> InsertUploadDocumentDetails(DocumentDTO document)
         {
             int result = 0;
             _logger.LogInformation("Inserting uploaded document details for the reservoir" );
@@ -384,14 +384,14 @@ namespace RACE2.DataAccess.Repository
                     if (document != null)
                     {
 
-                        var result1  = conn.ExecuteAsync("sp_InsertDocumentUpload", parameters, commandType: CommandType.StoredProcedure);
+                        var result1  = await conn.ExecuteAsync("sp_InsertDocumentUpload", parameters, commandType: CommandType.StoredProcedure);
 
-                        return result1;
+                        return result;
                     }
                     else
                     {
                         _logger.LogInformation("The input is not valid ");
-                        return null;
+                        return result;
                     }
 
 
@@ -400,7 +400,7 @@ namespace RACE2.DataAccess.Repository
             catch (Exception ex)
             {
                 _logger.LogError(ex, ex.Message);
-                return null;
+                return 1;
             }
         }
     }

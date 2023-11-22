@@ -99,11 +99,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                     containerName = containerName.Split('.')[0];
                 }
                 //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + "."+ extn;
-                var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + SubmissionReference + "." + extn;
-               
-                documentDTO.FileName = selectedFile.Name.Split('.')[0];
-                documentDTO.FileType = extn;
-                documentDTO.DateSent=DateTime.Now;
+                var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + SubmissionReference + "." + extn;               
 
                 var blobUrl = await blobStorageService.UploadFileToBlobAsync(containerName,trustedFileNameForFileStorage, selectedFile.ContentType, selectedFile.OpenReadStream(UploadFileData.MaxFileSize));
                 if (blobUrl != null)
@@ -119,6 +115,17 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                     displayMessage = trustedFileNameForFileStorage + " Uploaded!!";
                     SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(Int32.Parse(ReservoirId), UserDetail.Id, "Sent");
                     //await _notificationService.SendEmailTestWithPersonalisation(@"kriss.sahoo@capgemini.com");
+
+                    //Store the uploaded document information
+                    documentDTO.FileName = selectedFile.Name.Split('.')[0];
+                    documentDTO.FileType = extn;
+                    documentDTO.DateSent = DateTime.Now;
+                    documentDTO.FileLocation = selectedFile.Name;
+                    documentDTO.ReservoirId = Int32.Parse(ReservoirId);
+                    documentDTO.SuppliedViaService = 1;
+                    documentDTO.SubmissionId = updatedStatus.Id;
+                    documentDTO.DocumentType = "S12";
+                    documentDTO.SuppliedBy = UserId;
                     await reservoirService.InsertUploadDocumentDetails(documentDTO);
                     goToNextPage();
                 }
