@@ -32,6 +32,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         IBrowserFile selectedFile;
         private UploadFileData UploadFileData { get; set; }=new UploadFileData();
         private List<FileUploadViewModel> fileUploadViewModels = new();
+        DocumentDTO documentDTO = new DocumentDTO();
         [Parameter]
         public string ReservoirId { get; set; }
         [Parameter]
@@ -40,6 +41,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         public string UndertakerName { get; set; }
         [Parameter]
         public string UndertakerEmail { get; set; }
+        [Parameter]
+        public string SubmissionReference { get; set; }
         [Parameter]
         public string YesNoValue { get; set; }
 
@@ -95,7 +98,13 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 {
                     containerName = containerName.Split('.')[0];
                 }
-                var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + "."+ extn;
+                //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + "."+ extn;
+                var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + SubmissionReference + "." + extn;
+               
+                documentDTO.FileName = selectedFile.Name.Split('.')[0];
+                documentDTO.FileType = extn;
+                documentDTO.DateSent=DateTime.Now;
+
                 var blobUrl = await blobStorageService.UploadFileToBlobAsync(containerName,trustedFileNameForFileStorage, selectedFile.ContentType, selectedFile.OpenReadStream(UploadFileData.MaxFileSize));
                 if (blobUrl != null)
                 {
@@ -110,6 +119,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                     displayMessage = trustedFileNameForFileStorage + " Uploaded!!";
                     SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(Int32.Parse(ReservoirId), UserDetail.Id, "Sent");
                     //await _notificationService.SendEmailTestWithPersonalisation(@"kriss.sahoo@capgemini.com");
+                    await reservoirService.InsertUploadDocumentDetails(documentDTO);
                     goToNextPage();
                 }
                 else
@@ -136,7 +146,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         private void goToNextPage()
         {
             bool forceLoad = false;
-            string pagelink = $"/upload-confirmation/{ReservoirId}/{ReservoirRegName}/{UndertakerName}/{UndertakerEmail}/{YesNoValue}";
+            string pagelink = $"/upload-confirmation/{ReservoirId}/{ReservoirRegName}/{UndertakerName}/{UndertakerEmail}/{SubmissionReference}/{YesNoValue}";
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }
     }

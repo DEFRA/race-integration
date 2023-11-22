@@ -18,6 +18,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         [Parameter]
         public string UndertakerEmail { get; set; }
         [Parameter]
+        public string SubmissionReference { get; set; }
+        [Parameter]
         public string YesNoValue { get; set; }
         [CascadingParameter]
         public Task<AuthenticationState> AuthenticationStateTask { get; set; }
@@ -41,7 +43,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         public void GoToPrevPage()
         {
             bool forceLoad = true;
-            string pagelink = $"/upload-your-template/{ReservoirId}/{ReservoirRegName}/{UndertakerName}/{UndertakerEmail}/{YesNoValue}";
+            string pagelink = $"/upload-your-template/{ReservoirId}/{ReservoirRegName}/{UndertakerName}/{UndertakerEmail}/{SubmissionReference}/{YesNoValue}";
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }
         public void GoToAnnualStatementsPage()
