@@ -26,7 +26,7 @@ namespace RACE2.Dto
         [Required]
         public UserDetail ModifiedBy { get; set; } = new UserDetail();
         [Required]
-        public ScreenDefinition LastModifiedScreen { get; set; } = new ScreenDefinition();
+        public int LastModifiedScreen { get; set; }
         [Required]
         public DateTime SubmittedOn { get; set; }
         [Required]
