@@ -14,8 +14,6 @@ namespace RACE2.Dto
         public FeatureFunction Service { get; set; } = new FeatureFunction();
         [Required]
         public string? RegisteredName { get; set; }
-        [Required]
-        public string SubmissionReference { get; set; }
 
         public bool IsCurrent { get; set; }
         public bool IsLegacySubmission { get; set; }

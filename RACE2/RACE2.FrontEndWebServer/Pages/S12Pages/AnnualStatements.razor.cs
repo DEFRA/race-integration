@@ -183,8 +183,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                         SubmissionStatusList = await reservoirService.GetReservoirStatusByUserId(userDetails.Id);
                         SubmissionStatus = SubmissionStatusList.Where(s => s.RegisteredName == reservoir.RegisteredName).FirstOrDefault();
                         reservoirsLinkedToUser.SubmissionReference = SubmissionStatus.SubmissionReference;
-                        reservoirsLinkedToUser.DueDate = SubmissionStatus.DueDate != DateTime.MinValue ? SubmissionStatus.DueDate.ToString("dd MMMMM yyyy") : "";
-                        reservoirsLinkedToUser.Status = SubmissionStatus.Status != null ? SubmissionStatus.Status : "Not started";
+                        reservoirsLinkedToUser.DueDate = SubmissionStatus.DueDate != DateTime.MinValue ? SubmissionStatus.DueDate.ToString("dd MMMMM yyyy") : String.Empty;
+                        reservoirsLinkedToUser.Status = SubmissionStatus.Status != null ? SubmissionStatus.Status : String.Empty;
 
                         ReservoirsLinkedToUserForDisplay.Add(reservoirsLinkedToUser);
                     }
