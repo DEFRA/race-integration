@@ -56,6 +56,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         //We also need a field to tell us which column the table is sorted by.
         private string CurrentSortColumn;
         UserSpecificDto userDetails { get; set; }
+        UserSpecificDto userDetailsWithRoles { get; set; }
         List<SubmissionStatusDTO> SubmissionStatusList { get; set; }
         SubmissionStatusDTO SubmissionStatus { get; set; }
 
@@ -68,9 +69,9 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             {
                 var authState = await AuthenticationStateTask;
                 UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
-                //userDetails = await userService.GetUserByEmailID(UserName);
-                userDetails = await userService.GetUserWithRoles(UserName);
-                foreach (var role in userDetails.roles)
+                userDetails = await userService.GetUserByEmailID(UserName);
+                userDetailsWithRoles = await userService.GetUserWithRoles(UserName);
+                foreach (var role in userDetailsWithRoles.roles)
                 {
                     if (role.Name == "System Administrator")
                     {
