@@ -18,6 +18,7 @@ namespace RACE2.FrontEndWebServer.Pages
         private string UserName { get; set; } = "Unknown";
         private UserDetail UserDetail { get; set; } = default!;
         UserSpecificDto userDetails { get; set; }
+        public string UserEmail;
         bool IsAdmin =false;
         [CascadingParameter]
         public Task<AuthenticationState> AuthenticationStateTask { get; set; }
@@ -50,6 +51,17 @@ namespace RACE2.FrontEndWebServer.Pages
         {
             bool forceLoad = true;
             string pagelink = _config["RACE2SecurityProviderURL"] + "/Identity/Account/ChangeExistingUserPassword";
+            NavigationManager.NavigateTo(pagelink, forceLoad);
+        }
+        private void goToFirstTimeUserPage()
+        {
+            userService.UpdateFirstTimeUserLogin("kris.sahoo@defra.gov.uk");
+        }
+
+        private void goToResetUserLockoutPage()
+        {
+            bool forceLoad = true;
+            string pagelink = "/Logout";
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }
 
