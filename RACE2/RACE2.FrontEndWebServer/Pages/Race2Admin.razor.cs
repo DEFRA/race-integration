@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using DocumentFormat.OpenXml.Wordprocessing;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using RACE2.DataModel;
@@ -19,11 +20,14 @@ namespace RACE2.FrontEndWebServer.Pages
         private UserDetail UserDetail { get; set; } = default!;
         UserSpecificDto userDetails { get; set; }
         public string UserEmail;
-        bool IsAdmin =false;
+        private bool IsAdmin =false;
+        private string enabled = "hidden";
         [CascadingParameter]
         public Task<AuthenticationState> AuthenticationStateTask { get; set; }
         protected async override Task OnInitializedAsync()
         {
+            UserEmail = "kriss.sahoo@capgemini.com";
+            enabled = "visible";
             var authState = await AuthenticationStateTask;
             UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
 
@@ -55,14 +59,18 @@ namespace RACE2.FrontEndWebServer.Pages
         }
         private void goToFirstTimeUserPage()
         {
-            userService.UpdateFirstTimeUserLogin("kris.sahoo@defra.gov.uk");
+            enabled = "visible";
+            StateHasChanged();
+            userService.UpdateFirstTimeUserLogin(UserEmail);
         }
 
         private void goToResetUserLockoutPage()
         {
-            bool forceLoad = true;
-            string pagelink = "/Logout";
-            NavigationManager.NavigateTo(pagelink, forceLoad);
+            enabled = "visible";
+            StateHasChanged();
+            userService.UpdateFirstTimeUserLogin(UserEmail);
+            enabled = "hidden";
+            StateHasChanged();
         }
 
         private void goToLogoutPage()

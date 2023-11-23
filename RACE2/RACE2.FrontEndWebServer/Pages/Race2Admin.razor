@@ -26,17 +26,17 @@
                     </NavLink>
                 </nav>
             </div>
-@*             <div class="govuk-grid-column-two-thirds">              
-               
-                @if (IsAdmin)
-                {
-                    <div>You are admin use</div>
-                }
-                else
-                {
-                    <div>You are non-admin user</div>
-                }
-            </div> *@
+@*             @if (enabled == "visible")
+            { *@
+                <div class="govuk-grid-column-two-thirds">
+                    <div class="govuk-form-group">
+                        <label class="govuk-label" for="file-upload">
+                        <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">Enter User Email</h1>
+                        </label>
+                        <InputText id="UserEmail" name="UserEmail" class="govuk-file-upload" value="@UserEmail" />
+                    </div>      
+                </div>
+@*             } *@
         </div>
 
     </main>
