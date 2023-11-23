@@ -31,6 +31,7 @@ namespace RACE2.Notification
         public string ForgetPasswordTemplateId = "950e6a2b-8bbc-4374-9dc1-3a086d01bd3f";
         public string ConfirmSubmissiontoOperator = "76c2562e-8bb6-4f98-830d-a76b30c7d4e5";
         public string ConfirmSubmissiontoSE = "4f801102-36f4-4ce9-b59c-baf5c2488bcc";
+        public string StatementToRST = "f4f9218f-9e7e-4aaa-84ea-3a1bd61afef5";
 
         Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>();
             //{
@@ -124,7 +125,8 @@ namespace RACE2.Notification
         {
             Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
                 {
-                    { "name of reservoir", reservoirName }                   
+                    { "name of reservoir", reservoirName }
+                    
 
                 };
 
@@ -132,6 +134,28 @@ namespace RACE2.Notification
             {
                 var client = new NotificationClient(API_KEY);
                 EmailNotificationResponse response = await client.SendEmailAsync(SEEmailAddress, ConfirmSubmissiontoSE, personalisation, reference, emailReplyToId);
+            }
+            catch (NotifyClientException ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task SendConfirmationMailtoRST(string RSTMailAddress, string reservoirName, byte[] file, string SEName, string UndertakerName)
+        {
+            Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
+                {
+                    { "name of reservoir", reservoirName },
+                    { "link_to_file", NotificationClient.PrepareUpload(file)},
+                {"name of supervising engineer",SEName}, 
+                {"name of undertaker",UndertakerName}
+
+                };
+
+            try
+            {
+                var client = new NotificationClient(API_KEY);
+                EmailNotificationResponse response = await client.SendEmailAsync(RSTMailAddress,StatementToRST, personalisation, reference, emailReplyToId);
             }
             catch (NotifyClientException ex)
             {
