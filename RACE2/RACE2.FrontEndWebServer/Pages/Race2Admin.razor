@@ -15,22 +15,32 @@
                     <NavLink class="nav-link" @onclick="goToChangePWPage" style="cursor:pointer">
                         Change User Password 
                     </NavLink>
+                    <NavLink class="nav-link" @onclick="goToResetUserLockoutPage" style="cursor:pointer">
+                        Reset User Lockout
+                    </NavLink>
+                    <NavLink class="nav-link" @onclick="goToFirstTimeUserPage" style="cursor:pointer">
+                        Set User As First Time User
+                    </NavLink>
                     <NavLink class="nav-link" @onclick="goToLogoutPage" style="cursor:pointer">
                         Sign Out
                     </NavLink>
                 </nav>
             </div>
-@*             <div class="govuk-grid-column-two-thirds">              
-               
-                @if (IsAdmin)
-                {
-                    <div>You are admin use</div>
-                }
-                else
-                {
-                    <div>You are non-admin user</div>
-                }
-            </div> *@
+            <EditForm Model="@UserEmail" OnValidSubmit="@OnValidSubmit">
+                <div class="govuk-grid-column-two-thirds"> 
+                    <div class="govuk-form-group">
+                        <label class="govuk-label" for="govGateUsername">
+                            Email address
+                        </label>
+                        <a id="email-error" style="text-decoration:none;">
+                            <InputText @bind-Value="@UserEmail" class="govuk-input govuk-!-width-three-quarters" aria-required="true" aria-describedby="govGateUserId-hint" id="govGateUsername" />
+                        </a>
+                    </div>
+                    <button type="submit" class="btn btn-success">
+                        Continue
+                    </button>
+                </div>
+            </EditForm>
         </div>
 
     </main>

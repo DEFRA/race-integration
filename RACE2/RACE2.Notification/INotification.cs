@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 namespace RACE2.Notification
 {
     public interface INotification
-    {
-        
+    {        
         Task SendForgotPasswordMail(string emailAddress, string fullName, string resetLink);
        
         Task SendConfirmationMailWithAttachment(byte[] file, string undertakerEmailaddress, string reservoirName);
