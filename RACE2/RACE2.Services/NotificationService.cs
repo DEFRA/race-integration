@@ -38,5 +38,10 @@ namespace RACE2.Services
         {
             await _notificationService.SendConfirmationMailtoSE(SEEmailAddress, reservoirName);
         }
+
+        public async Task SendConfirmationMailtoRST(string RSTMailAddress, string reservoirName, byte[] file, string SEName, string UndertakerName)
+        {
+            await _notificationService.SendConfirmationMailtoRST(RSTMailAddress, reservoirName,file,SEName,UndertakerName);
+        }
     }
 }
