@@ -23,7 +23,7 @@ namespace RACE2.Notification
         public string GET_ALL_TEMPLATES_URL = "v2/templates";
         public string TYPE_PARAM = "?type=";
         public string VERSION_PARAM = "/version/";
-        //private readonly ILogger _logger;
+        private readonly ILogger<RaceNotification> _logger;
 
         //public string Emailaddress = "mahalakshmi.alagarsamy@capgemini.com" ;
         public string InvitationtemplateId = "8aac094b-9997-41c1-96fe-b35f415eea9f";
@@ -40,10 +40,10 @@ namespace RACE2.Notification
         public string reference = null;
         public string emailReplyToId = null;
 
-        //public RaceNotification(ILogger logger)
-        //{
-        //    _logger = logger;
-        //}
+        public RaceNotification(ILogger<RaceNotification> logger)
+        {
+            _logger = logger;
+        }
 
 
         public async Task SendMail(string Emailaddress)
@@ -62,7 +62,7 @@ namespace RACE2.Notification
 
         public async Task SendForgotPasswordMail(string emailAddress, string fullName, string resetLink)
         {
-            //_logger.LogInformation("Sending Forgot mail to the user {fullName} ", fullName);
+            _logger.LogInformation("Sending Forgot mail to the user {fullName} ", fullName);
             Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
             {
                 { "name of user", fullName },{"LINK",resetLink}

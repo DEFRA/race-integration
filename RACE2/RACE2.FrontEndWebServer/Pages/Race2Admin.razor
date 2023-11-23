@@ -26,8 +26,6 @@
                     </NavLink>
                 </nav>
             </div>
-            @if (enabled == "visible")
-            {
             <EditForm Model="@UserEmail" OnValidSubmit="@OnValidSubmit">
                 <div class="govuk-grid-column-two-thirds"> 
                     <div class="govuk-form-group">
@@ -43,7 +41,6 @@
                     </button>
                 </div>
             </EditForm>
-            }
         </div>
 
     </main>
