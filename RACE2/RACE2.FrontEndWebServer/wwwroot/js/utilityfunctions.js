@@ -9,6 +9,10 @@
     anchorElement.remove();
     URL.revokeObjectURL(url);
 };
+function getFileName() {
+    var fileName = document.getElementById("file-upload").value;
+    return fileName;
+}
 
 //window.CookieFunction = {
 //    acceptMessage: function (cookieString) {
