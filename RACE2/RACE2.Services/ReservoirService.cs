@@ -165,15 +165,15 @@ namespace RACE2.Services
            
         }
 
-        public  Task<int> InsertUploadDocumentDetails(DocumentDTO document)
+        public  async Task<int> InsertUploadDocumentDetails(DocumentDTO document)
         {
             try
             {
-                return  _reservoirRepository.InsertUploadDocumentDetails(document);
+                return  await _reservoirRepository.InsertUploadDocumentDetails(document);
             }
             catch (Exception ex)
             {
-                return  null;
+                return  1;
             }
         }
     }

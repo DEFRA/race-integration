@@ -72,15 +72,6 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required(ErrorMessage = "Check user old password")]
-            [DataType(DataType.Password)]
-            [Display(Name = "Current password")]
-            public string OldPassword { get; set; }
-
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
             [Required(ErrorMessage = "Check user new password")]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 8)]
             [DataType(DataType.Password)]
@@ -122,23 +113,20 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             if (!ModelState.IsValid)
             {
                 return Page();
-            }
-            else
-            {
-                if (Input.OldPassword == Input.NewPassword)
-                {
-                    ModelState.AddModelError(string.Empty, "Old password and new password cannot be same.");
-                    return Page();
-                }
-            }
+            }            
 
             var user = await _userManager.FindByEmailAsync(Input.Email);
             if (user == null)
             {
                 return NotFound($"Unable to load user with Email '{Input.Email}'.");
             }
+            var hasPassword = await _userManager.HasPasswordAsync(user);
 
-            var changePasswordResult = await _userManager.ChangePasswordAsync(user, Input.OldPassword, Input.NewPassword);
+            if (hasPassword)
+            {
+                await _userManager.RemovePasswordAsync(user);
+            }
+            var changePasswordResult = await _userManager.AddPasswordAsync(user, Input.NewPassword);
             if (!changePasswordResult.Succeeded)
             {
                 foreach (var error in changePasswordResult.Errors)
@@ -152,7 +140,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             _logger.LogInformation("The user password changed successfully.");
             StatusMessage = "User password has been changed.";
 
-            string returnUrl = WebAppUrl + "/confirm-change-password";
+            string returnUrl = WebAppUrl + "/confirm-create-password";
             return Redirect(returnUrl);
         }
     }

@@ -35,7 +35,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         public IUserService userService { get; set; } = default!;
         [Inject]
         public IReservoirService reservoirService { get; set; } = default!;
-        bool IsAdmin;
+        bool IsAdmin=false;
+        bool IsFirstTimeUser=false;
         private string UserName { get; set; } = "Unknown";
         private List<Reservoir> ReservoirsLinkedToUser { get; set; } = new List<Reservoir>();
         private List<ReservoirDetailsDTO> ReservoirDetailsLinkedToUser { get; set; } = new List<ReservoirDetailsDTO>();
@@ -55,6 +56,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         //We also need a field to tell us which column the table is sorted by.
         private string CurrentSortColumn;
         UserSpecificDto userDetails { get; set; }
+        UserSpecificDto userDetailsWithRoles { get; set; }
         List<SubmissionStatusDTO> SubmissionStatusList { get; set; }
         SubmissionStatusDTO SubmissionStatus { get; set; }
 
@@ -67,9 +69,9 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             {
                 var authState = await AuthenticationStateTask;
                 UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
-                //userDetails = await userService.GetUserByEmailID(UserName);
-                userDetails = await userService.GetUserWithRoles(UserName);
-                foreach (var role in userDetails.roles)
+                userDetails = await userService.GetUserByEmailID(UserName);
+                userDetailsWithRoles = await userService.GetUserWithRoles(UserName);
+                foreach (var role in userDetailsWithRoles.roles)
                 {
                     if (role.Name == "System Administrator")
                     {
@@ -84,6 +86,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
 
                 if (userDetails.cIsFirstTimeUser)
                 {
+                    IsFirstTimeUser = true;
                     bool forceLoad = true;
                     string pagelink = _config["RACE2SecurityProviderURL"] + "/Identity/Account/CreatePassword?userEmail=" + UserName;
                     NavigationManager.NavigateTo(pagelink, forceLoad);
@@ -180,8 +183,9 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
     }
                         SubmissionStatusList = await reservoirService.GetReservoirStatusByUserId(userDetails.Id);
                         SubmissionStatus = SubmissionStatusList.Where(s => s.RegisteredName == reservoir.RegisteredName).FirstOrDefault();
-                        reservoirsLinkedToUser.DueDate = SubmissionStatus.DueDate != DateTime.MinValue ? SubmissionStatus.DueDate.ToString("dd MMMMM yyyy") : "";
-                        reservoirsLinkedToUser.Status = SubmissionStatus.Status != null ? SubmissionStatus.Status : "Not started";
+                        reservoirsLinkedToUser.SubmissionReference = SubmissionStatus.SubmissionReference;
+                        reservoirsLinkedToUser.DueDate = SubmissionStatus.DueDate != DateTime.MinValue ? SubmissionStatus.DueDate.ToString("dd MMMMM yyyy") : String.Empty;
+                        reservoirsLinkedToUser.Status = SubmissionStatus.Status != null ? SubmissionStatus.Status : String.Empty;
 
                         ReservoirsLinkedToUserForDisplay.Add(reservoirsLinkedToUser);
                     }
@@ -205,11 +209,6 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 string pagelink = "/ApplicationError";
                 NavigationManager.NavigateTo(pagelink, forceLoad);
             };
-        }
-
-        protected override async void OnAfterRender(bool firstRender)
-        {
-
         }
 
         private async void DownloadReportTemplate(ReservoirsLinkedToUserForDisplay item)
@@ -307,7 +306,6 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 MemoryStream processedStream = openXMLUtilitiesService.SearchAndReplace(response, s12PrePopulationFields);
                 processedStream.Position = 0;
                 var streamRef = new DotNetStreamReference(stream: processedStream);
-                //await jsRuntime.InvokeVoidAsync("downloadFileFromStream", blobName, streamRef);
                 string downloadedFileName = reservoir.RegisteredName + " S12.docx";
                 await jsRuntime.InvokeVoidAsync("downloadFileFromStream", downloadedFileName, streamRef);
                 var reservoirLinkedToUser = ReservoirsLinkedToUserForDisplay.Where(r => r.ReservoirName == reservoir.RegisteredName).FirstOrDefault();
@@ -361,10 +359,11 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         private void gotoSubmissionPage(ReservoirsLinkedToUserForDisplay Item)
         {
             bool forceLoad = false;
-            string pagelink = $"/send-your-statement/{Item.ReservoirID}/{Item.ReservoirName}/{Item.UndertakerName}/{Item.UndertakerEmail}";
+            string pagelink = $"/send-your-statement/{Item.ReservoirID}/{Item.ReservoirName}/{Item.UndertakerName}/{Item.UndertakerEmail}/{Item.SubmissionReference}";
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }
-        
+
+
         private async void SearchOnEnter(KeyboardEventArgs e)
         {
             if (e.Code == "Enter" ||  e.Code == "NumpadEnter")

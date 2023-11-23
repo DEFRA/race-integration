@@ -7,6 +7,7 @@ using RACE2.DataModel;
 using RACE2.Dto;
 using RACE2.Notification;
 using RACE2.Services;
+using System;
 
 namespace RACE2.FrontEndWebServer.Pages.S12Pages
 {
@@ -24,6 +25,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         public IJSRuntime jsRuntime { get; set; } = default!;
         [Inject]
         public INotification _notificationService { get; set; } = default!;
+
+        private string _fileNameResult;
         private int UserId { get; set; } = 0;
         private string UserName { get; set; } = "Unknown";
         private UserDetail UserDetail { get; set; }
@@ -32,6 +35,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         IBrowserFile selectedFile;
         private UploadFileData UploadFileData { get; set; }=new UploadFileData();
         private List<FileUploadViewModel> fileUploadViewModels = new();
+        DocumentDTO documentDTO = new DocumentDTO();
         [Parameter]
         public string ReservoirId { get; set; }
         [Parameter]
@@ -40,6 +44,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         public string UndertakerName { get; set; }
         [Parameter]
         public string UndertakerEmail { get; set; }
+        [Parameter]
+        public string SubmissionReference { get; set; }
         [Parameter]
         public string YesNoValue { get; set; }
 
@@ -95,7 +101,9 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 {
                     containerName = containerName.Split('.')[0];
                 }
-                var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + "."+ extn;
+                //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + "."+ extn;
+                var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + SubmissionReference + "." + extn;               
+
                 var blobUrl = await blobStorageService.UploadFileToBlobAsync(containerName,trustedFileNameForFileStorage, selectedFile.ContentType, selectedFile.OpenReadStream(UploadFileData.MaxFileSize));
                 if (blobUrl != null)
                 {
@@ -109,7 +117,25 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                     fileUploadViewModels.Add(fileUploadViewModel);
                     displayMessage = trustedFileNameForFileStorage + " Uploaded!!";
                     SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(Int32.Parse(ReservoirId), UserDetail.Id, "Sent");
-                    //await _notificationService.SendEmailTestWithPersonalisation(@"kriss.sahoo@capgemini.com");
+                    //_fileNameResult=await jsRuntime.InvokeAsync<string>("getFileName");
+                    if (YesNoValue == "Yes")
+                    {
+                        //var bytes = new byte[selectedFile.Size];
+                        //await selectedFile.OpenReadStream(selectedFile.Size).ReadAsync(bytes);
+                        var bytes = await blobStorageService.GetBlobAsByteArray(containerName, trustedFileNameForFileStorage);
+                        await _notificationService.SendConfirmationMailWithAttachment(bytes, UndertakerEmail, ReservoirRegName);
+                    }
+                    //Store the uploaded document information
+                    documentDTO.FileName = selectedFile.Name.Split('.')[0];
+                    documentDTO.FileType = extn;
+                    documentDTO.DateSent = DateTime.Now;
+                    documentDTO.FileLocation = selectedFile.Name;
+                    documentDTO.ReservoirId = Int32.Parse(ReservoirId);
+                    documentDTO.SuppliedViaService = 1;
+                    documentDTO.SubmissionId = updatedStatus.Id;
+                    documentDTO.DocumentType = "S12";
+                    documentDTO.SuppliedBy = UserId;
+                    await reservoirService.InsertUploadDocumentDetails(documentDTO);
                     goToNextPage();
                 }
                 else
@@ -136,7 +162,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         private void goToNextPage()
         {
             bool forceLoad = false;
-            string pagelink = $"/upload-confirmation/{ReservoirId}/{ReservoirRegName}/{UndertakerName}/{UndertakerEmail}/{YesNoValue}";
+            string pagelink = $"/upload-confirmation/{ReservoirId}/{ReservoirRegName}/{UndertakerName}/{UndertakerEmail}/{SubmissionReference}/{YesNoValue}";
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }
     }
