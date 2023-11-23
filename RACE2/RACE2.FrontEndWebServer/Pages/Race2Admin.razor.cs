@@ -21,6 +21,8 @@ namespace RACE2.FrontEndWebServer.Pages
         UserSpecificDto userDetails { get; set; }
         public string UserEmail;
         private bool IsAdmin =false;
+        private bool IsFirstTimeUser = false;
+        private bool IsUserLockedOut = false;
         private string enabled = "hidden";
         [CascadingParameter]
         public Task<AuthenticationState> AuthenticationStateTask { get; set; }
@@ -59,18 +61,32 @@ namespace RACE2.FrontEndWebServer.Pages
         }
         private void goToFirstTimeUserPage()
         {
+            IsUserLockedOut = false;
+            IsFirstTimeUser = true;
             enabled = "visible";
             StateHasChanged();
-            userService.UpdateFirstTimeUserLogin(UserEmail);
         }
 
         private void goToResetUserLockoutPage()
         {
+            IsUserLockedOut = true;
+            IsFirstTimeUser = false;
             enabled = "visible";
             StateHasChanged();
-            userService.UpdateFirstTimeUserLogin(UserEmail);
-            enabled = "hidden";
-            StateHasChanged();
+        }
+
+        private void OnValidSubmit()
+        {      
+            if (IsFirstTimeUser)
+            {
+                userService.UpdateFirstTimeUserLogin(UserEmail);
+                IsFirstTimeUser = false;
+            }
+            if (IsUserLockedOut)
+            {
+                userService.UpdateFirstTimeUserLogin(UserEmail);
+                IsUserLockedOut = false;
+            }
         }
 
         private void goToLogoutPage()

@@ -26,17 +26,24 @@
                     </NavLink>
                 </nav>
             </div>
-@*             @if (enabled == "visible")
-            { *@
-                <div class="govuk-grid-column-two-thirds">
+            @if (enabled == "visible")
+            {
+            <EditForm Model="@UserEmail" OnValidSubmit="@OnValidSubmit">
+                <div class="govuk-grid-column-two-thirds"> 
                     <div class="govuk-form-group">
-                        <label class="govuk-label" for="file-upload">
-                        <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">Enter User Email</h1>
+                        <label class="govuk-label" for="govGateUsername">
+                            Email address
                         </label>
-                        <InputText id="UserEmail" name="UserEmail" class="govuk-file-upload" value="@UserEmail" />
-                    </div>      
+                        <a id="email-error" style="text-decoration:none;">
+                            <InputText @bind-Value="@UserEmail" class="govuk-input govuk-!-width-three-quarters" aria-required="true" aria-describedby="govGateUserId-hint" id="govGateUsername" />
+                        </a>
+                    </div>
+                    <button type="submit" class="btn btn-success">
+                        Continue
+                    </button>
                 </div>
-@*             } *@
+            </EditForm>
+            }
         </div>
 
     </main>
