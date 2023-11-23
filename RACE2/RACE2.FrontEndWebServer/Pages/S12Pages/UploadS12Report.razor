@@ -33,7 +33,7 @@
                             </div>
                         </div>
                         <div class="govuk-form-group govuk-form-group--error">
-                            <label class="govuk-label" for="file-upload-2">
+                            <label class="govuk-label" for="file-upload">
                               <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">Upload your statement
                               </h1>
                             </label>
@@ -41,24 +41,24 @@
                               You can upload your statement as a PDF or Word document. It can be up to 30MB.
                             </div>
                             <br/>      
-                            <p id="file-upload-2-error" class="govuk-error-message">
+                            <p id="file-upload-error" class="govuk-error-message">
                                 <span class="govuk-visually-hidden">Error:</span>The selected file must be smaller than 30MB
                             </p>
-                            <InputFile class="govuk-file-upload govuk-file-upload--error" id="file-upload-2" name="fileUpload2" type="file"
-                                aria-describedby="file-upload-1-error" OnChange="OnInputFileChange" accept=".docx,.pdf" />
+                            <InputFile class="govuk-file-upload govuk-file-upload--error" id="file-upload" name="fileUpload" type="file"
+                                aria-describedby="file-upload-error" OnChange="OnInputFileChange" accept=".docx,.pdf" />
                         </div>
                     }
                     else
                     {                       
                         <div class="govuk-form-group">
-                            <label class="govuk-label" for="file-upload-1">
+                            <label class="govuk-label" for="file-upload">
                                 <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">Upload your statement</h1>
                             </label>
                             <div id="file-upload-hint" class="govuk-hint">
                                 You can upload your statement as a PDF or Word document. It can be up to 30MB.
                             </div>
                              <br />
-                            <InputFile id="file-upload-1" class="govuk-file-upload" OnChange="OnInputFileChange" accept=".docx,.pdf" />
+                            <InputFile id="file-upload" name="file-upload" class="govuk-file-upload" OnChange="OnInputFileChange" accept=".docx,.pdf" />
                         </div>
                     }
                     <button type="submit" draggable="false"

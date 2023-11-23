@@ -159,7 +159,7 @@ try
             EncryptionAlgorithm = EncryptionAlgorithm.AES_256_CBC,
             ValidationAlgorithm = ValidationAlgorithm.HMACSHA256
         });
-    builder.Services.AddScoped<INotification, RaceNotification>();
+    builder.Services.AddSingleton<INotification, RaceNotification>();
 
     var app = builder.Build();
     app.UseForwardedHeaders();
