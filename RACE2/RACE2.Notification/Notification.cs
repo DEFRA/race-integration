@@ -147,9 +147,8 @@ namespace RACE2.Notification
                 {
                     { "name of reservoir", reservoirName },
                     { "link_to_file", NotificationClient.PrepareUpload(file)},
-                {"name of supervising engineer",SEName}, 
-                {"name of undertaker",UndertakerName}
-
+                    {"name of supervising engineer",SEName}, 
+                    {"name of undertaker",UndertakerName}
                 };
 
             try

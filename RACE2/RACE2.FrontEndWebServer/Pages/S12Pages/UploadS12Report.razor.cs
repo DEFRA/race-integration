@@ -119,12 +119,13 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                     displayMessage = trustedFileNameForFileStorage + " Uploaded!!";
                     SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(Int32.Parse(ReservoirId), UserDetail.Id, "Sent");
                     //_fileNameResult=await jsRuntime.InvokeAsync<string>("getFileName");
+                    var bytes = await blobStorageService.GetBlobAsByteArray(containerName, trustedFileNameForFileStorage);
+                    //var bytes = new byte[selectedFile.Size];
                     await _notificationService.SendConfirmationMailtoSE(UserDetail.Email, ReservoirRegName);
+                    await _notificationService.SendConfirmationMailtoRST(UserDetail.Email, ReservoirRegName, bytes, UserDetail.cFirstName + " " + UserDetail.cLastName, UndertakerName);
                     if (YesNoValue == "Yes")
                     {
-                        //var bytes = new byte[selectedFile.Size];
-                        //await selectedFile.OpenReadStream(selectedFile.Size).ReadAsync(bytes);
-                        var bytes = await blobStorageService.GetBlobAsByteArray(containerName, trustedFileNameForFileStorage);
+                        //await selectedFile.OpenReadStream(selectedFile.Size).ReadAsync(bytes);                        
                         await _notificationService.SendConfirmationMailWithAttachment(bytes, UndertakerEmail, ReservoirRegName);
                     }
                     //Store the uploaded document information
