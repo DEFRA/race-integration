@@ -33,5 +33,10 @@ namespace RACE2.Services
         {
             await _notificationService.SendConfirmationMailWithAttachment(file,undertakerEmailaddress,reservoirName);
         }
+
+        public async Task SendConfirmationMailtoSE(string SEEmailAddress, string reservoirName)
+        {
+            await _notificationService.SendConfirmationMailtoSE(SEEmailAddress, reservoirName);
+        }
     }
 }

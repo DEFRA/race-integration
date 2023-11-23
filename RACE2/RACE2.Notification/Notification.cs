@@ -120,6 +120,25 @@ namespace RACE2.Notification
            // Assert.AreEqual(response.content.subject, TEST_EMAIL_SUBJECT);
         }
 
+        public async Task SendConfirmationMailtoSE(string SEEmailAddress, string reservoirName)
+        {
+            Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
+                {
+                    { "name of reservoir", reservoirName }                   
+
+                };
+
+            try
+            {
+                var client = new NotificationClient(API_KEY);
+                EmailNotificationResponse response = await client.SendEmailAsync(SEEmailAddress, ConfirmSubmissiontoSE, personalisation, reference, emailReplyToId);
+            }
+            catch (NotifyClientException ex)
+            {
+                throw ex;
+            }
+        }
+
 
     }
   
