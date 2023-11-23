@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using DocumentFormat.OpenXml.ExtendedProperties;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Identity;
@@ -118,6 +119,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                     displayMessage = trustedFileNameForFileStorage + " Uploaded!!";
                     SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(Int32.Parse(ReservoirId), UserDetail.Id, "Sent");
                     //_fileNameResult=await jsRuntime.InvokeAsync<string>("getFileName");
+                    await _notificationService.SendConfirmationMailtoSE(UserDetail.Email, ReservoirRegName);
                     if (YesNoValue == "Yes")
                     {
                         //var bytes = new byte[selectedFile.Size];
