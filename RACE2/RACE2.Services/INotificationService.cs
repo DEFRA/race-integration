@@ -13,5 +13,7 @@ namespace RACE2.Services
         Task SendEmailTestWithPersonalisation(string Emailaddress);
 
         Task SendConfirmationMailWithAttachment(byte[] file, string undertakerEmailaddress, string reservoirName);
+
+        Task SendConfirmationMailtoSE(string SEEmailAddress, string reservoirName);
     }
 }
