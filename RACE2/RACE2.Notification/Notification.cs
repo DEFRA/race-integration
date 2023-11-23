@@ -9,10 +9,11 @@ using Microsoft.Extensions.Configuration;
 
 namespace RACE2.Notification
 {
-    public class RaceNotification: INotification
+    public class RaceNotification : INotification
     {
-      //  public string NOTIFY_API_URL = Environment.GetEnvironmentVariable("NOTIFY_API_URL");
-        public string API_KEY = "race2frontend-34699fe1-7b6c-49b7-a562-358f403f75f1-921e2564-534c-4b0a-b705-b9ef5047dd45";
+        private readonly ILogger<RaceNotification> _logger;
+        private readonly IConfiguration _config;
+
         public string GET_RECEIVED_TEXTS_URL = "v2/received-text-messages";
         public string GET_NOTIFICATION_URL = "v2/notifications/";
         public string GET_PDF_FOR_LETTER_URL = "v2/notifications/{0}/pdf";
@@ -24,96 +25,124 @@ namespace RACE2.Notification
         public string GET_ALL_TEMPLATES_URL = "v2/templates";
         public string TYPE_PARAM = "?type=";
         public string VERSION_PARAM = "/version/";
-        private readonly ILogger<RaceNotification> _logger;
-        private readonly IConfiguration _configuration;
 
-        //public string Emailaddress = "mahalakshmi.alagarsamy@capgemini.com" ;
-        public string InvitationtemplateId = "8aac094b-9997-41c1-96fe-b35f415eea9f";
-        public string CommentTemplateId = "0bbc0b12-aee0-4546-a20b-23e81489111c";
-        public string ForgetPasswordTemplateId = "950e6a2b-8bbc-4374-9dc1-3a086d01bd3f";
-        public string ConfirmSubmissiontoOperatorTemplateId = "76c2562e-8bb6-4f98-830d-a76b30c7d4e5";
-        public string ConfirmSubmissiontoSETemplateId = "4f801102-36f4-4ce9-b59c-baf5c2488bcc";
-        public string StatementToRSTTemplateId = "f4f9218f-9e7e-4aaa-84ea-3a1bd61afef5";
+        private readonly string API_KEY = String.Empty;
+        private readonly string InvitationtemplateId = String.Empty;
+        private readonly string CommentTemplateId = String.Empty;
+        private readonly string ForgetPasswordTemplateId = String.Empty;
+        private readonly string ConfirmSubmissiontoOperator = String.Empty;
+        private readonly string ConfirmSubmissiontoSE = String.Empty;
+        private readonly string StatementToRST = String.Empty;
 
         Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>();
-            //{
-            //    { "name", "someone" }
-            //};
+        //{
+        //    { "name", "someone" }
+        //};
         public string reference = null;
         public string emailReplyToId = null;
 
-        public RaceNotification(ILogger<RaceNotification> logger, IConfiguration configuration)
+        public RaceNotification(ILogger<RaceNotification> logger, IConfiguration config)
         {
             _logger = logger;
-            _configuration = configuration;
-           
+            _config = config;
+            API_KEY = _config["NotifyAPIKEY"];
+            //InvitationtemplateId = _config[""];
+            //CommentTemplateId = _config[""];
+            ForgetPasswordTemplateId = _config["ForgetPasswordTemplateId"];
+            ConfirmSubmissiontoOperator = _config["ConfirmSubmissiontoOperatorTemplateId"];
+            ConfirmSubmissiontoSE = _config["ConfirmSubmissiontoSETemplateId"];
+            StatementToRST = _config["StatementToRSTTemplateId"];
         }
 
 
+        public async Task SendMail(string Emailaddress)
+        {
+            try
+            {
+                var client = new NotificationClient(API_KEY);
+                EmailNotificationResponse response = await client.SendEmailAsync(Emailaddress, InvitationtemplateId, personalisation, reference, emailReplyToId);
+            }
+            catch (NotifyClientException ex)
+            {
+                throw ex;
+            }
+
+        }
 
         public async Task SendForgotPasswordMail(string emailAddress, string fullName, string resetLink)
         {
-            _logger.LogInformation("Sending Forgot mail to the user {fullName} ", fullName);
+            //_logger.LogInformation("Sending Forgot mail to the user {fullName} ", fullName);
             Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
             {
                 { "name of user", fullName },{"LINK",resetLink}
             };
             try
             {
-                var client = new NotificationClient(_configuration["NotifyAPIKEY"]);
-                EmailNotificationResponse response = await client.SendEmailAsync(emailAddress, _configuration["ForgetPasswordTemplateId"], personalisation, reference, emailReplyToId);
+                var client = new NotificationClient(API_KEY);
+                EmailNotificationResponse response = await client.SendEmailAsync(emailAddress, ForgetPasswordTemplateId, personalisation, reference, emailReplyToId);
             }
             catch (NotifyClientException ex)
             {
-                _logger.LogError(ex,ex.Message);
-                
+                throw ex;
             }
 
         }
 
-
-
-       public async Task SendConfirmationMailWithAttachment(byte[] file, string undertakerEmailaddress, string reservoirName)
+        public async Task SendConfirmationMailWithAttachment(byte[] file, string undertakerEmailaddress, string reservoirName)
         {
             Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
                 {
                     { "name of reservoir", reservoirName },
-                    
+
                     { "link_to_file", NotificationClient.PrepareUpload(file)}
-                
+
                 };
 
             try
             {
-                var client = new NotificationClient(_configuration["NotifyAPIKEY"]);
-                EmailNotificationResponse response = await client.SendEmailAsync(undertakerEmailaddress, _configuration["ConfirmSubmissiontoOperatorTemplateId"], personalisation, reference, emailReplyToId);
+                var client = new NotificationClient(API_KEY);
+                EmailNotificationResponse response = await client.SendEmailAsync(undertakerEmailaddress, ConfirmSubmissiontoOperator, personalisation, reference, emailReplyToId);
             }
             catch (NotifyClientException ex)
             {
-                _logger.LogError(ex, ex.Message);
+                throw ex;
             }
         }
 
+        public async Task SendEmailTestWithPersonalisation(string Emailaddress)
+        {
+            Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
+            {
+                { "name", "Maha" },{"name of reservoir","Nottingam"}
+            };
+            var client = new NotificationClient("race2frontend-34699fe1-7b6c-49b7-a562-358f403f75f1-921e2564-534c-4b0a-b705-b9ef5047dd45");
 
+            EmailNotificationResponse response =
+                await client.SendEmailAsync(Emailaddress, CommentTemplateId, personalisation);
+            // this.emailNotificationId = response.id;
 
-       
+            //Assert.IsNotNull(response);
+            //Assert.AreEqual(response.content.body, TEST_EMAIL_BODY);
+            // Assert.AreEqual(response.content.subject, TEST_EMAIL_SUBJECT);
+        }
+
         public async Task SendConfirmationMailtoSE(string SEEmailAddress, string reservoirName)
         {
             Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
                 {
                     { "name of reservoir", reservoirName }
-                    
+
 
                 };
 
             try
             {
-                var client = new NotificationClient(_configuration["NotifyAPIKEY"]);
-                EmailNotificationResponse response = await client.SendEmailAsync(SEEmailAddress, _configuration["ConfirmSubmissiontoSETemplateId"], personalisation, reference, emailReplyToId);
+                var client = new NotificationClient(API_KEY);
+                EmailNotificationResponse response = await client.SendEmailAsync(SEEmailAddress, ConfirmSubmissiontoSE, personalisation, reference, emailReplyToId);
             }
             catch (NotifyClientException ex)
             {
-                _logger.LogError(ex, ex.Message);
+                throw ex;
             }
         }
 
@@ -123,26 +152,20 @@ namespace RACE2.Notification
                 {
                     { "name of reservoir", reservoirName },
                     { "link_to_file", NotificationClient.PrepareUpload(file)},
-                {"name of supervising engineer",SEName}, 
-                {"name of undertaker",UndertakerName}
+                    { "name of supervising engineer", SEName},
+                    { "name of undertaker", UndertakerName}
 
                 };
 
             try
             {
-                var client = new NotificationClient(_configuration["NotifyAPIKEY"]);
-                EmailNotificationResponse response = await client.SendEmailAsync(RSTMailAddress, _configuration["StatementToRSTTemplateId"], personalisation, reference, emailReplyToId);
+                var client = new NotificationClient(API_KEY);
+                EmailNotificationResponse response = await client.SendEmailAsync(RSTMailAddress, StatementToRST, personalisation, reference, emailReplyToId);
             }
             catch (NotifyClientException ex)
             {
-                _logger.LogError(ex, ex.Message);
+                throw ex;
             }
         }
-
-
     }
-  
-       
-        
-    
 }
