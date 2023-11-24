@@ -152,17 +152,30 @@ namespace RACE2.Services
             
         }
 
-        public async Task<int> UpdateFirstTimeUserLogin(string email)
+        public async Task<int> UpdateFirstTimeUserLogin(string email, bool val)
         {
             try
             {
-                return await _userRepository.UpdateFirstTimeUserLogin(email);
+                return await _userRepository.UpdateFirstTimeUserLogin(email,val);
             }
             catch (Exception ex)
             {
                 return 0;
             }
             
+        }
+
+        public async Task<int> ResetUserLockout(string email)
+        {
+            try
+            {
+                return await _userRepository.ResetUserLockout(email);
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+
         }
 
     }

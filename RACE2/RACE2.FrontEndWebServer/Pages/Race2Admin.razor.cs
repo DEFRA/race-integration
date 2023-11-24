@@ -68,7 +68,7 @@ namespace RACE2.FrontEndWebServer.Pages
         {
             IsUserLockedOut = false;
             IsFirstTimeUser = true;
-            userService.UpdateFirstTimeUserLogin(UserEmail);
+            userService.UpdateFirstTimeUserLogin(UserEmail,true);
             IsFirstTimeUser = false;
             enabled = "visible";
             StateHasChanged();
@@ -78,22 +78,10 @@ namespace RACE2.FrontEndWebServer.Pages
         {
             IsUserLockedOut = true;
             IsFirstTimeUser = false;
+            userService.ResetUserLockout(UserEmail);
+            IsUserLockedOut = false;
             enabled = "visible";
             StateHasChanged();
-        }
-
-        private void OnValidSubmit()
-        {      
-            if (IsFirstTimeUser)
-            {
-                userService.UpdateFirstTimeUserLogin(UserEmail);
-                IsFirstTimeUser = false;
-            }
-            if (IsUserLockedOut)
-            {
-                userService.UpdateFirstTimeUserLogin(UserEmail);
-                IsUserLockedOut = false;
-            }
         }
 
         private void goToLogoutPage()
