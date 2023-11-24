@@ -30,7 +30,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         private string _fileNameResult;
         private int UserId { get; set; } = 0;
         private string UserName { get; set; } = "Unknown";
-        private UserDetail UserDetail { get; set; }
+        private UserSpecificDto userDetails { get; set; }
         public string ReservoirName { get; set; } = default!;
         private IBrowserFile loadedFile;
         IBrowserFile selectedFile;
@@ -60,14 +60,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         {
             AuthenticationState authState = await AuthenticationStateTask; // AuthenticationStateProvider.GetAuthenticationStateAsync();
             UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
-            var userDetails = await userService.GetUserByEmailID(UserName);
-            UserId = userDetails.Id;
-            UserDetail = new UserDetail()
-            {
-                UserName = UserName,
-                Id = UserId,
-                Email = userDetails.Email
-            };
+            userDetails = await userService.GetUserByEmailID(UserName);
             var rid = ReservoirId;
             var rname= ReservoirRegName;
             await InvokeAsync(() =>
@@ -117,12 +110,12 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
 
                     fileUploadViewModels.Add(fileUploadViewModel);
                     displayMessage = trustedFileNameForFileStorage + " Uploaded!!";
-                    SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(Int32.Parse(ReservoirId), UserDetail.Id, "Sent");
+                    SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(Int32.Parse(ReservoirId), userDetails.Id, "Sent");
                     //_fileNameResult=await jsRuntime.InvokeAsync<string>("getFileName");
                     var bytes = await blobStorageService.GetBlobAsByteArray(containerName, trustedFileNameForFileStorage);
                     //var bytes = new byte[selectedFile.Size];
-                    await _notificationService.SendConfirmationMailtoSE(UserDetail.Email, ReservoirRegName);
-                    await _notificationService.SendConfirmationMailtoRST(UserDetail.Email, ReservoirRegName, bytes, UserDetail.cFirstName + " " + UserDetail.cLastName, UndertakerName);
+                    await _notificationService.SendConfirmationMailtoSE(userDetails.Email, ReservoirRegName);
+                    await _notificationService.SendConfirmationMailtoRST(userDetails.Email, ReservoirRegName, bytes, userDetails.cFirstName + " " + userDetails.cLastName, UndertakerName);
                     if (YesNoValue == "Yes")
                     {
                         //await selectedFile.OpenReadStream(selectedFile.Size).ReadAsync(bytes);                        
