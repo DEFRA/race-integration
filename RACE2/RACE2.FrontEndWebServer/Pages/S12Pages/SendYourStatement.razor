@@ -69,16 +69,10 @@
 
                         <EditForm Model="@_yesno" OnSubmit="GoToNextPage">
                             <div class="govuk-form-group govuk-form-group--error govuk-!-margin-top-8 govuk-!-margin-bottom-4">
-                                <fieldset class="govuk-fieldset" aria-describedby="where-do-you-live-error">
-                                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                                        <h1 class="govuk-fieldset__heading">
-                                            Do you want to send the statement to the undertaker too?
-                                        </h1>
+                                <fieldset class="govuk-fieldset" aria-describedby="send-to-undertaker">
+                                    <legend id="send-to-undertaker" class="govuk-fieldset__legend govuk-fieldset__legend govuk-fieldset__legend--m">
+                                        Do you want to send the statement to the undertaker too?
                                     </legend>
-                                    <p id="where-do-you-live-error" class="govuk-error-message">
-                                        <span class="govuk-visually-hidden">Error:</span>Select yes if you want to send the
-                                        statement to the undertaker too
-                                    </p>
 
                                     <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
                                         <InputRadioGroup Name="yesno" @bind-Value="_yesno.YesNoOptions">
