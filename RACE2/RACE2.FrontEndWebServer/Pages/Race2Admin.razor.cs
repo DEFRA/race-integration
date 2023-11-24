@@ -20,11 +20,7 @@ namespace RACE2.FrontEndWebServer.Pages
         private string UserName { get; set; } = "Unknown";
         private UserDetail UserDetail { get; set; } = default!;
         UserSpecificDto userDetails { get; set; }
-
-        [Required]
-        [RegularExpression(@"^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$")]
-        public string UserEmail { get; set; }
-
+        EmailModel emailModel { get; set; }
         private bool IsAdmin =false;
         private bool IsFirstTimeUser = false;
         private bool IsUserLockedOut = false;
@@ -33,7 +29,8 @@ namespace RACE2.FrontEndWebServer.Pages
         public Task<AuthenticationState> AuthenticationStateTask { get; set; }
         protected async override Task OnInitializedAsync()
         {
-            UserEmail = "kriss.sahoo@capgemini.com";
+            emailModel=new EmailModel();
+            emailModel.UserEmail = "kriss.sahoo@capgemini.com";
             enabled = "visible";
             var authState = await AuthenticationStateTask;
             UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
@@ -68,7 +65,7 @@ namespace RACE2.FrontEndWebServer.Pages
         {
             IsUserLockedOut = false;
             IsFirstTimeUser = true;
-            userService.UpdateFirstTimeUserLogin(UserEmail,true);
+            userService.UpdateFirstTimeUserLogin(emailModel.UserEmail, true);
             IsFirstTimeUser = false;
             enabled = "visible";
             StateHasChanged();
@@ -78,7 +75,8 @@ namespace RACE2.FrontEndWebServer.Pages
         {
             IsUserLockedOut = true;
             IsFirstTimeUser = false;
-            userService.ResetUserLockout(UserEmail);
+            userService.UpdateFirstTimeUserLogin(emailModel.UserEmail, true);
+            userService.ResetUserLockout(emailModel.UserEmail);
             IsUserLockedOut = false;
             enabled = "visible";
             StateHasChanged();
@@ -90,5 +88,12 @@ namespace RACE2.FrontEndWebServer.Pages
             string pagelink = "/Logout";
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }
+    }
+
+    public class EmailModel
+    {
+        [Required]
+        [EmailAddress]
+        public string UserEmail { get; set; }
     }
 }
