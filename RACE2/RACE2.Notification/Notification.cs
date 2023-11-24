@@ -34,7 +34,7 @@ namespace RACE2.Notification
 
         public async Task SendForgotPasswordMail(string emailAddress, string fullName, string resetLink)
         {
-            //_logger.LogInformation("Sending Forgot mail to the user {fullName} ", fullName);
+            _logger.LogInformation("Sending Forgot mail to the user  ");
             Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
             {
                 { "name of user", fullName },{"LINK",resetLink}
@@ -46,13 +46,15 @@ namespace RACE2.Notification
             }
             catch (NotifyClientException ex)
             {
-                throw ex;
+                _logger.LogError(ex, ex.Message);
             }
 
         }
 
         public async Task SendConfirmationMailWithAttachment(byte[] file, string undertakerEmailaddress, string reservoirName)
         {
+
+            _logger.LogInformation("Sending confirmation mail to the undertaker");
             Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
                 {
                     { "name of reservoir", reservoirName },
@@ -68,13 +70,14 @@ namespace RACE2.Notification
             }
             catch (NotifyClientException ex)
             {
-                throw ex;
+                _logger.LogError(ex, ex.Message);
             }
         }
 
 
         public async Task SendConfirmationMailtoSE(string SEEmailAddress, string reservoirName)
         {
+            _logger.LogInformation("Sending confirmation mail to the SE");
             Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
                 {
                     { "name of reservoir", reservoirName }
@@ -89,12 +92,13 @@ namespace RACE2.Notification
             }
             catch (NotifyClientException ex)
             {
-                throw ex;
+                _logger.LogError(ex, ex.Message);
             }
         }
 
         public async Task SendConfirmationMailtoRST(string RSTMailAddress, string reservoirName, byte[] file, string SEName, string UndertakerName)
         {
+            _logger.LogInformation("Sending confirmation mail to the RST");
             Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
                 {
                     { "name of reservoir", reservoirName },
@@ -111,7 +115,7 @@ namespace RACE2.Notification
             }
             catch (NotifyClientException ex)
             {
-                throw ex;
+                _logger.LogError(ex, ex.Message);
             }
         }
     }
