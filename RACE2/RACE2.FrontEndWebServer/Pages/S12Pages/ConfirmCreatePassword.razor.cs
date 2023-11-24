@@ -32,7 +32,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             };
             if (UserDetail.cIsFirstTimeUser)
             {
-                await userService.UpdateFirstTimeUserLogin(userDetails.Email);
+                await userService.UpdateFirstTimeUserLogin(userDetails.Email,false);
             }
 
             await base.OnInitializedAsync();

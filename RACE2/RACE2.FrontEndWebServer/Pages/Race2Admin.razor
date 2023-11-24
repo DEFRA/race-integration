@@ -22,16 +22,16 @@
                     </NavLink>
                     <NavLink class="nav-link">
                         3. Reset User Lockout<br />
-                        <EditForm Model="@UserEmail" OnValidSubmit="@OnValidSubmitUnlockUser" style="margin-left:20px;">
+                        <EditForm Model="emailModel" OnValidSubmit="@OnValidSubmitUnlockUser" style="margin-left:20px;">
                             <DataAnnotationsValidator />
                             <ValidationSummary />
                             <div class="govuk-form-group">
                                 <label class="govuk-label" for="govGateUsername">
                                     Email address
                                 </label>
-                                <ValidationMessage For="() => UserEmail" />
+                                <ValidationMessage For="() => emailModel.UserEmail" />
                                 <a id="email-error" style="text-decoration:none;">
-                                    <InputText @bind-Value="@UserEmail" class="govuk-input govuk-!-width-three-quarters" aria-required="true" aria-describedby="govGateUserId-hint" id="govGateUsername" />
+                                    <InputText @bind-Value="emailModel.UserEmail" class="govuk-input govuk-!-width-three-quarters" aria-required="true" aria-describedby="govGateUserId-hint" id="govGateUsername" />
                                 </a>
                             </div>
                             <button type="submit" class="btn btn-success">
@@ -41,16 +41,16 @@
                     </NavLink>
                     <NavLink class="nav-link" style="cursor:pointer">
                         4. Set User As First Time User<br />
-                        <EditForm Model="@UserEmail" OnValidSubmit="@OnValidSubmitFirstTimeUser" style="margin-left:20px;">
+                        <EditForm Model="emailModel" OnValidSubmit="@OnValidSubmitFirstTimeUser" style="margin-left:20px;">
                             <DataAnnotationsValidator />
                             <ValidationSummary />
                             <div class="govuk-form-group">
                                 <label class="govuk-label" for="govGateUsername">
                                     Email address
                                 </label>
-                                <ValidationMessage For="() => UserEmail" />
+                                <ValidationMessage For="() => emailModel.UserEmail" />
                                 <a id="email-error" style="text-decoration:none;">
-                                    <InputText @bind-Value="@UserEmail" class="govuk-input govuk-!-width-three-quarters" aria-required="true" aria-describedby="govGateUserId-hint" id="govGateUsername" />
+                                    <InputText @bind-Value="emailModel.UserEmail" class="govuk-input govuk-!-width-three-quarters" aria-required="true" aria-describedby="govGateUserId-hint" id="govGateUsername" />
                                 </a>
                             </div>
                             <button type="submit" class="btn btn-success">
