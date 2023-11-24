@@ -8,40 +8,62 @@
 
         <div class="govuk-grid-row" style="flex-flow">
             <div class="govuk-grid-column-one-thirds">
+                <div>
+                    <span class="govuk-heading-xl">
+                        Choose an action from the list below
+                    </span>
+                </div>
                 <nav>
                     <NavLink class="nav-link" @onclick="goToRegPage" style="cursor:pointer">
-                        New User Registration
+                        1. New User Registration
                     </NavLink>
                     <NavLink class="nav-link" @onclick="goToChangePWPage" style="cursor:pointer">
-                        Change User Password 
+                        2. Change User Password 
                     </NavLink>
-                    <NavLink class="nav-link" @onclick="goToResetUserLockoutPage" style="cursor:pointer">
-                        Reset User Lockout
+                    <NavLink class="nav-link">
+                        3. Reset User Lockout<br />
+                        <EditForm Model="@UserEmail" OnValidSubmit="@OnValidSubmitUnlockUser" style="margin-left:20px;">
+                            <DataAnnotationsValidator />
+                            <ValidationSummary />
+                            <div class="govuk-form-group">
+                                <label class="govuk-label" for="govGateUsername">
+                                    Email address
+                                </label>
+                                <ValidationMessage For="() => UserEmail" />
+                                <a id="email-error" style="text-decoration:none;">
+                                    <InputText @bind-Value="@UserEmail" class="govuk-input govuk-!-width-three-quarters" aria-required="true" aria-describedby="govGateUserId-hint" id="govGateUsername" />
+                                </a>
+                            </div>
+                            <button type="submit" class="btn btn-success">
+                                Continue
+                            </button>
+                        </EditForm>
                     </NavLink>
-                    <NavLink class="nav-link" @onclick="goToFirstTimeUserPage" style="cursor:pointer">
-                        Set User As First Time User
+                    <NavLink class="nav-link" style="cursor:pointer">
+                        4. Set User As First Time User<br />
+                        <EditForm Model="@UserEmail" OnValidSubmit="@OnValidSubmitFirstTimeUser" style="margin-left:20px;">
+                            <DataAnnotationsValidator />
+                            <ValidationSummary />
+                            <div class="govuk-form-group">
+                                <label class="govuk-label" for="govGateUsername">
+                                    Email address
+                                </label>
+                                <ValidationMessage For="() => UserEmail" />
+                                <a id="email-error" style="text-decoration:none;">
+                                    <InputText @bind-Value="@UserEmail" class="govuk-input govuk-!-width-three-quarters" aria-required="true" aria-describedby="govGateUserId-hint" id="govGateUsername" />
+                                </a>
+                            </div>
+                            <button type="submit" class="btn btn-success">
+                                Continue
+                            </button>
+                        </EditForm>
                     </NavLink>
                     <NavLink class="nav-link" @onclick="goToLogoutPage" style="cursor:pointer">
-                        Sign Out
+                        5. Sign Out
                     </NavLink>
                 </nav>
             </div>
-            <EditForm Model="@UserEmail" OnValidSubmit="@OnValidSubmit">
-                <div class="govuk-grid-column-two-thirds"> 
-                    <div class="govuk-form-group">
-                        <label class="govuk-label" for="govGateUsername">
-                            Email address
-                        </label>
-                        <a id="email-error" style="text-decoration:none;">
-                            <InputText @bind-Value="@UserEmail" class="govuk-input govuk-!-width-three-quarters" aria-required="true" aria-describedby="govGateUserId-hint" id="govGateUsername" />
-                        </a>
-                    </div>
-                    <button type="submit" class="btn btn-success">
-                        Continue
-                    </button>
-                </div>
-            </EditForm>
-        </div>
+         </div>
 
     </main>
 </div>

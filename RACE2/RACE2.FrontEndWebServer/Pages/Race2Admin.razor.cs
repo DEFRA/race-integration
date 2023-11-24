@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using RACE2.DataModel;
 using RACE2.Dto;
 using RACE2.Services;
+using System.ComponentModel.DataAnnotations;
 
 namespace RACE2.FrontEndWebServer.Pages
 {
@@ -19,7 +20,11 @@ namespace RACE2.FrontEndWebServer.Pages
         private string UserName { get; set; } = "Unknown";
         private UserDetail UserDetail { get; set; } = default!;
         UserSpecificDto userDetails { get; set; }
-        public string UserEmail;
+
+        [Required]
+        [RegularExpression(@"^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$")]
+        public string UserEmail { get; set; }
+
         private bool IsAdmin =false;
         private bool IsFirstTimeUser = false;
         private bool IsUserLockedOut = false;
@@ -59,15 +64,17 @@ namespace RACE2.FrontEndWebServer.Pages
             string pagelink = _config["RACE2SecurityProviderURL"] + "/Identity/Account/ChangeExistingUserPassword";
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }
-        private void goToFirstTimeUserPage()
+        private void OnValidSubmitFirstTimeUser()
         {
             IsUserLockedOut = false;
             IsFirstTimeUser = true;
+            userService.UpdateFirstTimeUserLogin(UserEmail);
+            IsFirstTimeUser = false;
             enabled = "visible";
             StateHasChanged();
         }
 
-        private void goToResetUserLockoutPage()
+        private void OnValidSubmitUnlockUser()
         {
             IsUserLockedOut = true;
             IsFirstTimeUser = false;
