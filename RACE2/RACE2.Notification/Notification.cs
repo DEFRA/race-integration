@@ -18,8 +18,8 @@ namespace RACE2.Notification
         private readonly string ConfirmSubmissiontoOperator = String.Empty;
         private readonly string ConfirmSubmissiontoSE = String.Empty;
         private readonly string StatementToRST = String.Empty;
-        public string reference = String.Empty;
-        public string emailReplyToId = String.Empty;
+        public string reference = null;
+        public string emailReplyToId = null;
 
         public RaceNotification(ILogger<RaceNotification> logger, IConfiguration config)
         {
