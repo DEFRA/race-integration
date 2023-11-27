@@ -108,27 +108,21 @@
                                             <strong class="in-progress-tag-new">
                                                 @reservoir.Status
                                             </strong>
-@*                                             <span style="background-color: #d2e2f1;color:#144e81;padding-top: 5px;Padding-right: 4px;Padding-bottom: 4px;Padding-left: 4px;">
-                                                @reservoir.Status
-                                            </span> *@
                                         }
                                         else
                                         {
-                                            <strong class="not-started-tag-new">
+                                            <strong class="sent-tag-new">
                                                 @reservoir.Status
                                             </strong>
-@*                                             <span style="background-color:lightgrey;padding-top: 5px;Padding-right: 4px;Padding-bottom: 4px;Padding-left: 4px;">
-                                                @reservoir.Status
-                                            </span> *@
                                         }
                                 </td>
                                 <td class="govuk-table__cell">
-                                    <a class="govuk-link govuk-link--no-visited-state" @onclick="()=>DownloadTemplateFile(reservoir)">Download</a>
+                                    <a class="govuk-link govuk-link--no-visited-state" @onclick="()=>DownloadTemplateFile(reservoir)" style="cursor:pointer;">Download</a>
                                 </td>
                                 @if(reservoir.Status.ToLower() == "in progress")
                                 {
-                                    <td class="govuk-table__cell">
-                                        <a class="govuk-link govuk-link--no-visited-state" @onclick="()=>gotoSubmissionPage(reservoir)">Send</a>
+                                    <td class="govuk-table__cell" style="text-align:right;">
+                                        <a class="govuk-link govuk-link--no-visited-state" @onclick="()=>gotoSubmissionPage(reservoir)" style="cursor:pointer;">Send</a>
                                     </td>
                                 }
                                 else
