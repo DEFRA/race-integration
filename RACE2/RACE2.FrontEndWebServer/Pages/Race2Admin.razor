@@ -15,23 +15,23 @@
                 </div>
                 <nav>
                     <NavLink class="nav-link" @onclick="goToRegPage" style="cursor:pointer">
-                        1. New User Registration
+                        <span class="govuk-body">1. New User Registration</span>
                     </NavLink>
                     <NavLink class="nav-link" @onclick="goToChangePWPage" style="cursor:pointer">
-                        2. Change User Password 
+                        <span class="govuk-body">2. Change User Password</span>
                     </NavLink>
-                    <NavLink class="nav-link">
-                        3. Reset User Lockout<br />
+                    <NavLink class="nav-link" style="cursor:none">
+                        <span class="govuk-body">3. Reset User Lockout</span><br />
                         <EditForm Model="emailModel" OnValidSubmit="@OnValidSubmitUnlockUser" style="margin-left:20px;">
                             <DataAnnotationsValidator />
-                            <ValidationSummary />
+                            @* <ValidationSummary /> *@
                             <div class="govuk-form-group">
-                                <label class="govuk-label" for="govGateUsername">
+                                <label class="govuk-label" for="govGateUserEmail">
                                     Email address
                                 </label>
                                 <ValidationMessage For="() => emailModel.UserEmail" />
                                 <a id="email-error" style="text-decoration:none;">
-                                    <InputText @bind-Value="emailModel.UserEmail" class="govuk-input govuk-!-width-three-quarters" aria-required="true" aria-describedby="govGateUserId-hint" id="govGateUsername" />
+                                    <InputText @bind-Value="emailModel.UserEmail" class="govuk-input govuk-!-width-three-quarters" aria-required="true" aria-describedby="govGateUserId-hint" id="govGateUserEmail" name="govGateUserEmail"/>
                                 </a>
                             </div>
                             <button type="submit" class="btn btn-success">
@@ -39,18 +39,18 @@
                             </button>
                         </EditForm>
                     </NavLink>
-                    <NavLink class="nav-link" style="cursor:pointer">
-                        4. Set User As First Time User<br />
+                    <NavLink class="nav-link" style="cursor:none">
+                        <span class="govuk-body">4. Set User As First Time User</span><br />
                         <EditForm Model="emailModel" OnValidSubmit="@OnValidSubmitFirstTimeUser" style="margin-left:20px;">
                             <DataAnnotationsValidator />
-                            <ValidationSummary />
+                            @* <ValidationSummary /> *@
                             <div class="govuk-form-group">
                                 <label class="govuk-label" for="govGateUsername">
                                     Email address
                                 </label>
                                 <ValidationMessage For="() => emailModel.UserEmail" />
                                 <a id="email-error" style="text-decoration:none;">
-                                    <InputText @bind-Value="emailModel.UserEmail" class="govuk-input govuk-!-width-three-quarters" aria-required="true" aria-describedby="govGateUserId-hint" id="govGateUsername" />
+                                    <InputText @bind-Value="emailModel.UserEmail" class="govuk-input govuk-!-width-three-quarters" aria-required="true" aria-describedby="govGateUserId-hint" id="govGateUsername" name="govGateUsername"/>
                                 </a>
                             </div>
                             <button type="submit" class="btn btn-success">
@@ -59,7 +59,7 @@
                         </EditForm>
                     </NavLink>
                     <NavLink class="nav-link" @onclick="goToLogoutPage" style="cursor:pointer">
-                        5. Sign Out
+                        <span class="govuk-body">5. Sign Out</span>
                     </NavLink>
                 </nav>
             </div>
