@@ -28,7 +28,6 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         public INotification _notificationService { get; set; } = default!;
 
         private string _fileNameResult;
-        private int UserId { get; set; } = 0;
         private string UserName { get; set; } = "Unknown";
         private UserSpecificDto userDetails { get; set; }
         public string ReservoirName { get; set; } = default!;
@@ -61,8 +60,6 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             AuthenticationState authState = await AuthenticationStateTask; // AuthenticationStateProvider.GetAuthenticationStateAsync();
             UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
             userDetails = await userService.GetUserByEmailID(UserName);
-            var rid = ReservoirId;
-            var rname= ReservoirRegName;
             await InvokeAsync(() =>
             {
                 StateHasChanged();
@@ -130,7 +127,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                     documentDTO.SuppliedViaService = 1;
                     documentDTO.SubmissionId = updatedStatus.Id;
                     documentDTO.DocumentType = "S12";
-                    documentDTO.SuppliedBy = UserId;
+                    documentDTO.SuppliedBy = userDetails.Id;
                     await reservoirService.InsertUploadDocumentDetails(documentDTO);
                     goToNextPage();
                 }
