@@ -12,7 +12,7 @@ using System;
 
 namespace RACE2.FrontEndWebServer.Pages.S12Pages
 {
-    public partial class UploadS12Report
+    public partial class UploadSingleS12Report
     {
         [Inject]
         public NavigationManager NavigationManager { get; set; } = default!;
@@ -33,7 +33,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         public string ReservoirName { get; set; } = default!;
         private IBrowserFile loadedFile;
         IBrowserFile selectedFile;
-        private UploadFileData UploadFileData { get; set; }=new UploadFileData();
+        private UploadSingleFileData UploadFileData { get; set; }=new UploadSingleFileData();
         private List<FileUploadViewModel> fileUploadViewModels = new();
         DocumentDTO documentDTO = new DocumentDTO();
         [Parameter]
@@ -68,37 +68,14 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         }
         private async Task OnInputFileChange(InputFileChangeEventArgs e)
         {
-            var selectedFiles = e.GetMultipleFiles();
-            UploadFileData.NoFileSelected = false;
-            UploadFileData.MoreThanOneFileSelected = false;
-            UploadFileData.WrongExtensionSelected = false;
-            UploadFileData.MaxFileSizeExceeded = false;
-            UploadFileData.FileContainsVirus = false;
-            UploadFileData.FileIncorrectTemplate = false;
-            UploadFileData.FilePasswordProtected = false;
-            UploadFileData.FileIsEmpty = false;
-            UploadFileData.FileUploadFailed = false;
-            UploadFileData.FileInfectedWithVirus = false;
-            if (selectedFiles.Count() == 0)
+            selectedFile = e.File;
+            if (selectedFile.Size > UploadFileData.MaxFileSize)
             {
-                UploadFileData.NoFileSelected = true;
-            }
-            else if (selectedFiles.Count() > 1)
-            {
-                UploadFileData.MoreThanOneFileSelected = true;
+                UploadFileData.MaxFileSizeExceeded = true;
             }
             else
             {
-                selectedFile = selectedFiles[0];
-                var fileExtn = selectedFile.Name.Split('.')[1];
-                if (fileExtn != "docx" || fileExtn != "pdf")
-                {
-                    UploadFileData.WrongExtensionSelected = true; 
-                }
-                else if (selectedFile.Size > UploadFileData.MaxFileSize)
-                {
-                    UploadFileData.MaxFileSizeExceeded = true;
-                }
+                UploadFileData.MaxFileSizeExceeded = false;
             }
             await InvokeAsync(() =>
             {
@@ -107,7 +84,6 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         }
         private async Task OnUploadSubmit()
         {
-            UploadFileData.FileUploadFailed = false;
             try
             {
                 var extn = selectedFile.Name.Split('.')[1];
@@ -156,23 +132,12 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                     goToNextPage();
                 }
                 else
-                {
                     warningMessage = "File Upload failed, Please try again!!";
-                    UploadFileData.FileUploadFailed = true;
-                }
 
             }
             catch (Exception ex)
             {
                 warningMessage = "File Upload failed, Please try again!!";
-                UploadFileData.FileUploadFailed = true;
-            }
-            finally
-            {
-                await InvokeAsync(() =>
-                {
-                    StateHasChanged();
-                });
             }
 
             await InvokeAsync(() =>
@@ -196,20 +161,12 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
     }
 }
 
-public class UploadFileData
+public class UploadSingleFileData
 {
     public long MaxFileSize { get; set; }
     public bool MaxFileSizeExceeded { get; set; }
-    public bool NoFileSelected { get; set; }
-    public bool MoreThanOneFileSelected { get; set; }
-    public bool WrongExtensionSelected { get; set; }
-    public bool FileIsEmpty { get; set; }
-    public bool FileContainsVirus { get; set; }
-    public bool FilePasswordProtected { get; set; }
-    public bool FileIncorrectTemplate { get; set; }
-    public bool FileUploadFailed { get; set; }
-    public bool FileInfectedWithVirus { get; set; }
-    public UploadFileData()
+    public bool noFileSelected { get; set; }
+    public UploadSingleFileData()
     {
         MaxFileSize = 30 * 1024 * 1024;
     }
