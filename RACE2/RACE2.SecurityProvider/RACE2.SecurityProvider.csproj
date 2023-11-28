@@ -19,7 +19,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
 	<PackageReference Include="Azure.Identity" Version="1.10.4" />
 	<PackageReference Include="Microsoft.Azure.AppConfiguration.AspNetCore" Version="6.1.1" />
-	<PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
+	<PackageReference Include="Serilog.AspNetCore" Version="8.0.0" />
 	<PackageReference Include="Serilog.Sinks.ApplicationInsights" Version="4.0.0" />
 	<PackageReference Include="Serilog.Sinks.MSSqlServer" Version="6.3.0" />
   </ItemGroup>
@@ -30,6 +30,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Areas\Identity\Pages\Account\ChangeExistingUserPassword.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
     <Content Update="Areas\Identity\Pages\Account\_FooterPartialFixed.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>

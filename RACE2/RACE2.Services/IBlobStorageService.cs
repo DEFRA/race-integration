@@ -10,8 +10,8 @@ namespace RACE2.Services
 {
     public interface IBlobStorageService
     {
-        Task<string> UploadFileToBlobAsync(string strFileName, string contecntType, Stream fileStream);
-        Task<string> UploadFileToBlobAsync(string containerName, string strFileName, string contecntType, Stream fileStream);
+        Task<string> UploadFileToBlobAsync(string strFileName, string contentType, Stream fileStream);
+        Task<string> UploadFileToBlobAsync(string containerName, string strFileName, string contentType, Stream fileStream);
         Task<bool> DeleteFileToBlobAsync(string strFileName);
         Task<bool> DeleteFileToBlobAsync(string containerName, string strFileName);
         Task<string> GetBlobAsTokenByFile(string fileName);
@@ -19,5 +19,6 @@ namespace RACE2.Services
         Task<List<BlobDto>> GetBlobFiles();
         Task<ContentDto> GetBlobFile(string name);
         Task<Stream> GetBlobFileStream(string name);
+        Task<Byte[]> GetBlobAsByteArray(string containerName, string blobName);
     }
 }

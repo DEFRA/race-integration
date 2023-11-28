@@ -109,8 +109,8 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
             ReturnUrl = returnUrl;
         }
 
-        //[ValidateAntiForgeryToken]
-        [IgnoreAntiforgeryToken]
+        [ValidateAntiForgeryToken]
+        //[IgnoreAntiforgeryToken]
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             try

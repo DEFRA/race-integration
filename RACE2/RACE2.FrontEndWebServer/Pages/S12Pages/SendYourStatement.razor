@@ -1,4 +1,4 @@
-﻿@page "/send-your-statement/{ReservoirId}/{ReservoirRegName}/{UndertakerName}/{UndertakerEmail}"
+﻿@page "/send-your-statement/{ReservoirId}/{ReservoirRegName}/{UndertakerName}/{UndertakerEmail}/{SubmissionReference}"
 @using Microsoft.AspNetCore.Authorization
 @using RACE2.FrontEndWebServer.Components
 @attribute [Authorize]
@@ -68,17 +68,25 @@
                         </dl>
 
                         <EditForm Model="@_yesno" OnSubmit="GoToNextPage">
-                            <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
-                                <InputRadioGroup Name="yesno" @bind-Value="_yesno.YesNoOptions">
-                                    @foreach (Enum value in Enum.GetValues(typeof(YesNoClass.YesNoEnum)))
-                                    {
-                                        <div class="govuk-radios__item">
-                                            <InputRadio Value="@value" class="govuk-radios__input" />
-                                            <span class="govuk-label govuk-radios__label">@value</span>
-                                        </div>
-                                    }
+                            <div class="govuk-form-group govuk-!-margin-top-6 govuk-!-padding-top-8 govuk-!-margin-bottom-4">
+                                <fieldset class="govuk-fieldset" aria-describedby="send-to-undertaker">
+                                    <legend id="send-to-undertaker" class="govuk-fieldset__legend govuk-fieldset__legend govuk-fieldset__legend--m">
+                                        Do you want to send the statement to the undertaker too?
+                                    </legend>
 
-                                </InputRadioGroup>
+                                    <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
+                                        <InputRadioGroup Name="yesno" @bind-Value="_yesno.YesNoOptions">
+                                            @foreach (Enum value in Enum.GetValues(typeof(YesNoClass.YesNoEnum)))
+                                            {
+                                                <div class="govuk-radios__item">
+                                                    <InputRadio Value="@value" class="govuk-radios__input" />
+                                                    <span class="govuk-label govuk-radios__label">@value</span>
+                                                </div>
+                                            }
+
+                                        </InputRadioGroup>
+                                    </div>
+                                </fieldset>
                             </div>
                             <button type="submit" draggable="false"
                                     class="govuk-button govuk-!-margin-top-3 govuk-!-margin-bottom-6 govuk-!-margin-right-4"
@@ -192,4 +200,4 @@
     </main>
  </div>
 
-<Footer />
+<Footer />Sa
