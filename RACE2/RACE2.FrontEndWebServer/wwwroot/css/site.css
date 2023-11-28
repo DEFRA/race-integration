@@ -16,6 +16,14 @@ a:hover {
     cursor: pointer;
 }
 
+a:link {
+    color: #1d70b8;
+}
+
+a:visited {
+    color: #4c2c92;
+}
+
 .btn-primary {
     color: #fff;
     background-color: #1b6ec2;
