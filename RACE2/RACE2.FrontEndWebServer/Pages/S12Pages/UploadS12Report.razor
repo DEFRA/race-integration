@@ -16,7 +16,139 @@
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-three-quarters">
                 <EditForm Model="@UploadFileData" OnSubmit="OnUploadSubmit">
-                    @if (UploadFileData.MaxFileSizeExceeded)
+                    @if (UploadFileData.FileUploadFailed)
+                    {
+                        <div class="govuk-error-summary" data-module="govuk-error-summary">
+                            <div role="alert">
+                                <h2 class="govuk-error-summary__title">
+                                    There is a problem
+                                </h2>
+                                <div class="govuk-error-summary__body">
+                                    <ul class="govuk-list govuk-error-summary__list">
+                                        <li>
+                                            <a href="#"> The selected file could not be uploaded - try again</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <label class="govuk-label" for="file-upload">
+                                <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">
+                                    Upload your statement
+                                </h1>
+                            </label>
+                            <div id="file-upload-hint" class="govuk-hint">
+                                You can upload your statement as a PDF or Word document. It can be up to 30MB.
+                            </div>
+                            <br />
+                            <p id="file-upload-error" class="govuk-error-message">
+                                <span class="govuk-visually-hidden">Error:</span> The selected file could not be uploaded - try again
+                            </p>
+                            <InputFile class="govuk-file-upload govuk-file-upload--error" id="file-upload" name="fileUpload" type="file"
+                                       aria-describedby="file-upload-error" OnChange="OnInputFileChange" multiple />
+                        </div>
+                    }
+                    else if (UploadFileData.NoFileSelected)
+                    {
+                        <div class="govuk-error-summary" data-module="govuk-error-summary">
+                            <div role="alert">
+                                <h2 class="govuk-error-summary__title">
+                                    There is a problem
+                                </h2>
+                                <div class="govuk-error-summary__body">
+                                    <ul class="govuk-list govuk-error-summary__list">
+                                        <li>
+                                            <a href="#"> Select a file</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <label class="govuk-label" for="file-upload">
+                                <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">
+                                    Upload your statement
+                                </h1>
+                            </label>
+                            <div id="file-upload-hint" class="govuk-hint">
+                                You can upload your statement as a PDF or Word document. It can be up to 30MB.
+                            </div>
+                            <br />
+                            <p id="file-upload-error" class="govuk-error-message">
+                                <span class="govuk-visually-hidden">Error:</span> Select a file
+                            </p>
+                            <InputFile class="govuk-file-upload govuk-file-upload--error" id="file-upload" name="fileUpload" type="file"
+                                       aria-describedby="file-upload-error" OnChange="OnInputFileChange" multiple />
+                        </div>
+                    }
+                    else if (UploadFileData.MoreThanOneFileSelected)
+                    {
+                        <div class="govuk-error-summary" data-module="govuk-error-summary">
+                            <div role="alert">
+                                <h2 class="govuk-error-summary__title">
+                                    There is a problem
+                                </h2>
+                                <div class="govuk-error-summary__body">
+                                    <ul class="govuk-list govuk-error-summary__list">
+                                        <li>
+                                            <a href="#">You can only select up to 1 file at the same time</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <label class="govuk-label" for="file-upload">
+                                <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">
+                                    Upload your statement
+                                </h1>
+                            </label>
+                            <div id="file-upload-hint" class="govuk-hint">
+                                You can upload your statement as a PDF or Word document. It can be up to 30MB.
+                            </div>
+                            <br />
+                            <p id="file-upload-error" class="govuk-error-message">
+                                <span class="govuk-visually-hidden">Error:</span> You can only select up to 1 file at the same time
+                            </p>
+                            <InputFile class="govuk-file-upload govuk-file-upload--error" id="file-upload" name="fileUpload" type="file"
+                                       aria-describedby="file-upload-error" OnChange="OnInputFileChange" multiple />
+                        </div>
+                    }
+                    else if (UploadFileData.WrongExtensionSelected)
+                    {
+                        <div class="govuk-error-summary" data-module="govuk-error-summary">
+                            <div role="alert">
+                                <h2 class="govuk-error-summary__title">
+                                    There is a problem
+                                </h2>
+                                <div class="govuk-error-summary__body">
+                                    <ul class="govuk-list govuk-error-summary__list">
+                                        <li>
+                                            <a href="#"> The selected file must be a PDF or a Word document</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <label class="govuk-label" for="file-upload">
+                                <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">
+                                    Upload your statement
+                                </h1>
+                            </label>
+                            <div id="file-upload-hint" class="govuk-hint">
+                                You can upload your statement as a PDF or Word document. It can be up to 30MB.
+                            </div>
+                            <br />
+                            <p id="file-upload-error" class="govuk-error-message">
+                                <span class="govuk-visually-hidden">Error:</span> The selected file must be a PDF or a Word document
+                            </p>
+                            <InputFile class="govuk-file-upload govuk-file-upload--error" id="file-upload" name="fileUpload" type="file"
+                                       aria-describedby="file-upload-error" OnChange="OnInputFileChange" multiple />
+                        </div>
+                    }
+                    else if (UploadFileData.MaxFileSizeExceeded)
                     {
                         <div class="govuk-error-summary" data-module="govuk-error-summary">
                             <div role="alert">
@@ -45,7 +177,7 @@
                                 <span class="govuk-visually-hidden">Error:</span>The selected file must be smaller than 30MB
                             </p>
                             <InputFile class="govuk-file-upload govuk-file-upload--error" id="file-upload" name="fileUpload" type="file"
-                                aria-describedby="file-upload-error" OnChange="OnInputFileChange" accept=".docx,.pdf" />
+                                aria-describedby="file-upload-error" OnChange="OnInputFileChange" multiple />
                         </div>
                     }
                     else
@@ -58,7 +190,7 @@
                                 You can upload your statement as a PDF or Word document. It can be up to 30MB.
                             </div>
                              <br />
-                            <InputFile id="file-upload" name="file-upload" class="govuk-file-upload" OnChange="OnInputFileChange" accept=".docx,.pdf" />
+                            <InputFile id="file-upload" name="file-upload" class="govuk-file-upload" OnChange="OnInputFileChange" multiple />
                         </div>
                     }
                     <button type="submit" draggable="false"
