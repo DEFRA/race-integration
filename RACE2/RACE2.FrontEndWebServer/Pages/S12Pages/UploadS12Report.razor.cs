@@ -33,6 +33,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         public string ReservoirName { get; set; } = default!;
         private IBrowserFile loadedFile;
         IBrowserFile selectedFile;
+        List<IBrowserFile> selectedFiles;
         private UploadFileData UploadFileData { get; set; }=new UploadFileData();
         private List<FileUploadViewModel> fileUploadViewModels = new();
         DocumentDTO documentDTO = new DocumentDTO();
@@ -68,7 +69,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         }
         private async Task OnInputFileChange(InputFileChangeEventArgs e)
         {
-            var selectedFiles = e.GetMultipleFiles();
+            selectedFiles = e.GetMultipleFiles().ToList();
             UploadFileData.NoFileSelected = false;
             UploadFileData.MoreThanOneFileSelected = false;
             UploadFileData.WrongExtensionSelected = false;
@@ -79,7 +80,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             UploadFileData.FileIsEmpty = false;
             UploadFileData.FileUploadFailed = false;
             UploadFileData.FileInfectedWithVirus = false;
-            if (selectedFiles.Count() == 0)
+            if (selectedFiles == null && selectedFiles.Count() == 0)
             {
                 UploadFileData.NoFileSelected = true;
             }
@@ -91,7 +92,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             {
                 selectedFile = selectedFiles[0];
                 var fileExtn = selectedFile.Name.Split('.')[1];
-                if (fileExtn != "docx" || fileExtn != "pdf")
+                if (!(fileExtn == "docx" || fileExtn == "pdf"))
                 {
                     UploadFileData.WrongExtensionSelected = true; 
                 }
@@ -107,79 +108,74 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         }
         private async Task OnUploadSubmit()
         {
-            UploadFileData.FileUploadFailed = false;
-            try
-            {
-                var extn = selectedFile.Name.Split('.')[1];
-                var containerName = UserName.Split("@")[0];
-                if (containerName.Contains('.'))
+                UploadFileData.FileUploadFailed = false;
+                try
                 {
-                    containerName = containerName.Split('.')[0];
-                }
-                //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + "."+ extn;
-                var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + SubmissionReference + "." + extn;               
-
-                var blobUrl = await blobStorageService.UploadFileToBlobAsync(containerName,trustedFileNameForFileStorage, selectedFile.ContentType, selectedFile.OpenReadStream(UploadFileData.MaxFileSize));
-                if (blobUrl != null)
-                {
-                    FileUploadViewModel fileUploadViewModel = new FileUploadViewModel()
+                    var extn = selectedFile.Name.Split('.')[1];
+                    var containerName = UserName.Split("@")[0];
+                    if (containerName.Contains('.'))
                     {
-                        FileName = trustedFileNameForFileStorage,
-                        FileStorageUrl = blobUrl,
-                        ContentType = selectedFile.ContentType,
-                    };
-
-                    fileUploadViewModels.Add(fileUploadViewModel);
-                    displayMessage = trustedFileNameForFileStorage + " Uploaded!!";
-                    SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(Int32.Parse(ReservoirId), userDetails.Id, "Sent");
-                    //_fileNameResult=await jsRuntime.InvokeAsync<string>("getFileName");
-                    var bytes = await blobStorageService.GetBlobAsByteArray(containerName, trustedFileNameForFileStorage);
-                    //var bytes = new byte[selectedFile.Size];
-                    await _notificationService.SendConfirmationMailtoSE(userDetails.Email, ReservoirRegName);
-                    await _notificationService.SendConfirmationMailtoRST(userDetails.Email, ReservoirRegName, bytes, userDetails.cFirstName + " " + userDetails.cLastName, UndertakerName);
-                    if (YesNoValue == "Yes")
-                    {
-                        //await selectedFile.OpenReadStream(selectedFile.Size).ReadAsync(bytes);                        
-                        await _notificationService.SendConfirmationMailWithAttachment(bytes, UndertakerEmail, ReservoirRegName);
+                        containerName = containerName.Split('.')[0];
                     }
-                    //Store the uploaded document information
-                    documentDTO.FileName = selectedFile.Name.Split('.')[0];
-                    documentDTO.FileType = extn;
-                    documentDTO.DateSent = DateTime.Now;
-                    documentDTO.FileLocation = selectedFile.Name;
-                    documentDTO.ReservoirId = Int32.Parse(ReservoirId);
-                    documentDTO.SuppliedViaService = 1;
-                    documentDTO.SubmissionId = updatedStatus.Id;
-                    documentDTO.DocumentType = "S12";
-                    documentDTO.SuppliedBy = userDetails.Id;
-                    await reservoirService.InsertUploadDocumentDetails(documentDTO);
-                    goToNextPage();
+                    //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + "."+ extn;
+                    var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + SubmissionReference + "." + extn;
+
+                    var blobUrl = await blobStorageService.UploadFileToBlobAsync(containerName, trustedFileNameForFileStorage, selectedFile.ContentType, selectedFile.OpenReadStream(UploadFileData.MaxFileSize));
+                    if (blobUrl != null)
+                    {
+                        FileUploadViewModel fileUploadViewModel = new FileUploadViewModel()
+                        {
+                            FileName = trustedFileNameForFileStorage,
+                            FileStorageUrl = blobUrl,
+                            ContentType = selectedFile.ContentType,
+                        };
+
+                        fileUploadViewModels.Add(fileUploadViewModel);
+                        displayMessage = trustedFileNameForFileStorage + " Uploaded!!";
+                        SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(Int32.Parse(ReservoirId), userDetails.Id, "Sent");
+                        //_fileNameResult=await jsRuntime.InvokeAsync<string>("getFileName");
+                        var bytes = await blobStorageService.GetBlobAsByteArray(containerName, trustedFileNameForFileStorage);
+                        //var bytes = new byte[selectedFile.Size];
+                        await _notificationService.SendConfirmationMailtoSE(userDetails.Email, ReservoirRegName);
+                        await _notificationService.SendConfirmationMailtoRST(userDetails.Email, ReservoirRegName, bytes, userDetails.cFirstName + " " + userDetails.cLastName, UndertakerName);
+                        if (YesNoValue == "Yes")
+                        {
+                            //await selectedFile.OpenReadStream(selectedFile.Size).ReadAsync(bytes);                        
+                            await _notificationService.SendConfirmationMailWithAttachment(bytes, UndertakerEmail, ReservoirRegName);
+                        }
+                        //Store the uploaded document information
+                        documentDTO.FileName = selectedFile.Name.Split('.')[0];
+                        documentDTO.FileType = extn;
+                        documentDTO.DateSent = DateTime.Now;
+                        documentDTO.FileLocation = selectedFile.Name;
+                        documentDTO.ReservoirId = Int32.Parse(ReservoirId);
+                        documentDTO.SuppliedViaService = 1;
+                        documentDTO.SubmissionId = updatedStatus.Id;
+                        documentDTO.DocumentType = "S12";
+                        documentDTO.SuppliedBy = userDetails.Id;
+                        await reservoirService.InsertUploadDocumentDetails(documentDTO);
+                        goToNextPage();
+                    }
+                    else
+                    {
+                        warningMessage = "File Upload failed, Please try again!!";
+                        UploadFileData.FileUploadFailed = true;
+                    }
+
                 }
-                else
+                catch (Exception ex)
                 {
                     warningMessage = "File Upload failed, Please try again!!";
                     UploadFileData.FileUploadFailed = true;
                 }
-
-            }
-            catch (Exception ex)
-            {
-                warningMessage = "File Upload failed, Please try again!!";
-                UploadFileData.FileUploadFailed = true;
-            }
-            finally
-            {
-                await InvokeAsync(() =>
+                finally
                 {
-                    StateHasChanged();
-                });
+                    await InvokeAsync(() =>
+                    {
+                        StateHasChanged();
+                    });
+                }
             }
-
-            await InvokeAsync(() =>
-            {
-                StateHasChanged();
-            });
-        }
 
         private void goback()
         {
