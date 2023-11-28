@@ -139,21 +139,21 @@ namespace RACE2.DatabaseProvider.Data
                 .HasDefaultValue(" ")
                 .HasMaxLength(64);
 
-            modelBuilder.Entity<UserDetail>()
-                .Property(e => e.cCurrentPanel)
-                .HasDefaultValue(" ")
-                .HasDefaultValue(" ")
-                .HasMaxLength(64);
+            //modelBuilder.Entity<UserDetail>()
+            //    .Property(e => e.cCurrentPanel)
+            //    .HasDefaultValue(" ")
+            //    .HasDefaultValue(" ")
+            //    .HasMaxLength(64);
 
-            modelBuilder.Entity<UserDetail>()
-                .Property(e => e.cPaon)
-                .HasDefaultValue(" ")
-                .HasMaxLength(64);
+            //modelBuilder.Entity<UserDetail>()
+            //    .Property(e => e.cPaon)
+            //    .HasDefaultValue(" ")
+            //    .HasMaxLength(64);
 
-            modelBuilder.Entity<UserDetail>()
-                .Property(e => e.cSaon)
-                .HasDefaultValue(" ")
-                .HasMaxLength(64);
+            //modelBuilder.Entity<UserDetail>()
+            //    .Property(e => e.cSaon)
+            //    .HasDefaultValue(" ")
+            //    .HasMaxLength(64);
 
             modelBuilder.Entity<UserDetail>()
                .Property(e => e.cStatus)
