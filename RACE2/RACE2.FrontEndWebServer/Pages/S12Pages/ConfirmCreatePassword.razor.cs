@@ -30,7 +30,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 cLastName = userDetails.cLastName,
                 cIsFirstTimeUser = userDetails.cIsFirstTimeUser
             };
-            if (UserDetail.cIsFirstTimeUser)
+            if ((bool)UserDetail.cIsFirstTimeUser)
             {
                 await userService.UpdateFirstTimeUserLogin(userDetails.Email);
             }

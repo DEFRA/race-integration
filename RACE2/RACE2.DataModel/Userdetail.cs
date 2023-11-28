@@ -50,19 +50,19 @@ namespace RACE2.DataModel
 
            public string? cJobTitle { get; set; }
           
-            public string? cCurrentPanel { get; set; }
+            //public string? cCurrentPanel { get; set; }
           
-            public string? cPaon { get; set; }
+            //public string? cPaon { get; set; }
            
-            public string? cSaon { get; set; }
-            
-            public string? cStatus { get; set; }
+            //public string? cSaon { get; set; }
+        [Required]
+            public string cStatus { get; set; }
          
             public DateTime cCreatedOnDate { get; set; }
 
-            public DateTime cLastAccessDate { get; set; }
+            public DateTime? cLastAccessDate { get; set; }
 
-            public bool cIsFirstTimeUser { get; set; }
+            public bool? cIsFirstTimeUser { get; set; }
 
           // public List<UserRole> Roles { get; set; } =new List<UserRole>();
 

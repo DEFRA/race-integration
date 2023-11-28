@@ -72,7 +72,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 userDetails = await userService.GetUserByEmailID(UserName);
                 Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application","FrontEndWebServer").ForContext("Method","AnnualStatement").Information(UserName + " accessed S12 template generation.");
 
-                if (userDetails.cIsFirstTimeUser)
+                if ((bool)userDetails.cIsFirstTimeUser)
                 {
                     bool forceLoad = true;
                     string pagelink = _config["RACE2SecurityProviderURL"] + "/Identity/Account/CreatePassword?userEmail=" + UserName;
@@ -280,14 +280,14 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                     s12PrePopulationFields.UndertakerPhoneNumber = "Please provide a contact number";
                 if (reservoir.NextInspectionDate103 != DateTime.MinValue)
                 {
-                    s12PrePopulationFields.NextInspectionDate = (reservoir.NextInspectionDate103 != DateTime.MinValue) ? reservoir.NextInspectionDate103.ToString("dd MMMM yyyy") : " ";
+                    s12PrePopulationFields.NextInspectionDate = (reservoir.NextInspectionDate103 != DateTime.MinValue) && (reservoir.LastCertificationDate.HasValue) ? reservoir.NextInspectionDate103.Value.ToString("dd MMMM yyyy") : " ";
                 }
                 else
                 {
-                    s12PrePopulationFields.NextInspectionDate = (reservoir.NextInspectionDate102 != DateTime.MinValue) ? reservoir.NextInspectionDate102.ToString("dd MMMM yyyy") : " ";
+                    s12PrePopulationFields.NextInspectionDate = (reservoir.NextInspectionDate102 != DateTime.MinValue) && (reservoir.LastCertificationDate.HasValue) ? reservoir.NextInspectionDate102.Value.ToString("dd MMMM yyyy") : " ";
                 }
-                s12PrePopulationFields.LastCertificationDate = (reservoir.LastCertificationDate != DateTime.MinValue) ? reservoir.LastCertificationDate.ToString("dd MMMM yyyy"): " ";
-                s12PrePopulationFields.LastInspectionDate = (reservoir.LastInspectionDate != DateTime.MinValue) ? reservoir.LastInspectionDate.ToString("dd MMMM yyyy"): " ";
+                s12PrePopulationFields.LastCertificationDate = (reservoir.LastCertificationDate != DateTime.MinValue) && (reservoir.LastCertificationDate.HasValue) ? reservoir.LastCertificationDate.Value.ToString("dd MMMM yyyy"): " ";
+                s12PrePopulationFields.LastInspectionDate = (reservoir.LastInspectionDate != DateTime.MinValue) && (reservoir.LastInspectionDate.HasValue) ? reservoir.LastInspectionDate.Value.ToString("dd MMMM yyyy"): " ";
                 if ((reservoir.LastInspectionByUser.Id != 0) && (reservoir.LastInspectionByUser != null))
                 {
                     s12PrePopulationFields.LastInspectingEngineerName = !String.IsNullOrEmpty(reservoir.LastInspectionByUser.cFirstName) && !String.IsNullOrEmpty(reservoir.LastInspectionByUser.cLastName) ? reservoir.LastInspectionByUser.cFirstName + " " + reservoir.LastInspectionByUser.cLastName : " ";
