@@ -20,9 +20,9 @@ namespace RACE2.DataModel
 
         public string? AppointmentType { get; set; }
 
-        public DateTime AppointmentStartDate { get; set; }
+        public DateTime? AppointmentStartDate { get; set; }
 
-        public DateTime AppointmentEndDate { get; set; }
+        public DateTime? AppointmentEndDate { get; set; }
 
      
     }
