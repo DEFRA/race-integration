@@ -50,49 +50,49 @@
                 <h5 class="govuk-table__caption govuk-table__caption--m">Templates</h5>
                 <table class="govuk-table govuk-!-margin-top-4">
 @*                     <caption class="govuk-table__caption govuk-table__caption--m">Templates</caption>
- *@                    <thead class="govuk-table__head">
+ *@                    <thead class="govuk-table__head" style="width:100%;">
                         <tr class="govuk-table__row govuk-body govuk-!-font-size-16">
-                            <th scope="col" class="govuk-table__header app-custom-class">
+                            <th scope="col" class="govuk-table__header app-custom-class" width="25%">
                                 <button aria-label="Sort by Reservoir" type="button" class="icon-sort-button"
                                         onclick="@(() => SortTable("ReservoirName"))">
                                     Reservoir
                                     <div class="icon-sort"></div>
                                 </button>
                             </th>
-                            <th scope="col" class="govuk-table__header app-custom-class">
+                            <th scope="col" class="govuk-table__header app-custom-class" width="25%">
                                 <button aria-label="Sort by Undertaker" type="button" class="icon-sort-button"
                                         onclick="@(() => SortTable("UndertakerName"))">
                                     Undertaker
                                     <div class="icon-sort"></div>
                                 </button>
                             </th>
-                            <th scope="col" class="govuk-table__header app-custom-class">
+                            <th scope="col" class="govuk-table__header app-custom-class" width="20%">
                                 <button aria-label="Sort by Due date" type="button" class="icon-sort-button"
                                         onclick="@(() => SortTable("DueDate"))">
                                     Due date
                                     <div class="icon-sort"></div>
                                 </button>
                             </th>
-                            <th scope="col" class="govuk-table__header app-custom-class">
+                            <th scope="col" class="govuk-table__header app-custom-class" width="15%">
                                 <button aria-label="Sort by Status" type="button" class="icon-sort-button"
                                         onclick="@(() => SortTable("Status"))">
                                     Status
                                     <div class="icon-sort"></div>
                                 </button>
                             </th>
-                            <th scope="col" class="govuk-table__header app-custom-class"></th>
-                            <th scope="col" class="govuk-table__header app-custom-class"></th>
+                            <th scope="col" class="govuk-table__header app-custom-class" width="10%"></th>
+                            <th scope="col" class="govuk-table__header app-custom-class" width="10%"></th>
                         </tr>
                     </thead>
 
-                    <tbody class="govuk-table__body govuk-body govuk-!-font-size-16">
+                    <tbody class="govuk-table__body govuk-body govuk-!-font-size-16" style="width:100%;">
                         @foreach (var reservoir in ReservoirsLinkedToUserForDisplay)
                         {
                             <tr class="govuk-table__row">
-                                <td scope="row" class="govuk-table__cell">@reservoir.ReservoirName</td>
-                                <td class="govuk-table__cell">@reservoir.UndertakerName</td>
-                                <td class="govuk-table__cell">@reservoir.DueDate</td>
-                                <td class="govuk-table__cell">
+                                <td scope="row" class="govuk-table__cell" width="25%">@reservoir.ReservoirName</td>
+                                <td class="govuk-table__cell" width="25%">@reservoir.UndertakerName</td>
+                                <td class="govuk-table__cell" width="20%">@reservoir.DueDate</td>
+                                <td class="govuk-table__cell" width="15%">
                                     @if (reservoir.Status.ToLower() == "in progress")
                                     {
                                         <strong class="in-progress-tag-new">
@@ -112,18 +112,18 @@
                                         </strong>
                                     }
                                 </td>
-                                <td class="govuk-table__cell">
+                                <td class="govuk-table__cell" width="10%" style="text-align:center;">
                                     <a class="govuk-link govuk-link--no-visited-state" @onclick="()=>DownloadTemplateFile(reservoir)">Download</a>
                                 </td>
                                 @if (reservoir.Status.ToLower() == "in progress")
                                 {
-                                    <td class="govuk-table__cell">
+                                    <td class="govuk-table__cell" width="10%" style="text-align:right;">
                                         <a class="govuk-link govuk-link--no-visited-state" @onclick="()=>gotoSubmissionPage(reservoir)">Send</a>
                                     </td>
                                 }
                                 else
                                 {
-                                    <td class="govuk-table__cell" style="text-align:right;">&nbsp;</td>
+                                    <td class="govuk-table__cell" width="10%" style="text-align:right;">&nbsp;</td>
                                 }
                             </tr>
                             <input type="hidden" value="@reservoir.ReservoirID" />
