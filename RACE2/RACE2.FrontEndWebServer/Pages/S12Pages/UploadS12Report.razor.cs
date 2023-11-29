@@ -197,10 +197,12 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                         documentDTO.DocumentType = "S12";
                         documentDTO.SuppliedBy = userDetails.Id;
                         await reservoirService.InsertUploadDocumentDetails(documentDTO);
+                        Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Information("File upload succeeded.");
                         goToNextPage();
                     }
                     else
                     {
+                        Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File upload failed.");
                         warningMessage = "File Upload failed, Please try again!!";
                         UploadFileData.FileUploadFailed = true;
                         UploadFileData.NoFileSelected = false;
@@ -216,6 +218,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 }
                 catch (Exception ex)
                 {
+                    Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File upload failed : " + ex.Message);
                     warningMessage = "File Upload failed, Please try again!!";
                     UploadFileData.FileUploadFailed = true;
                     UploadFileData.NoFileSelected = false;
