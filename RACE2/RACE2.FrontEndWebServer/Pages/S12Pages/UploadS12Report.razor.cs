@@ -203,13 +203,30 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                     {
                         warningMessage = "File Upload failed, Please try again!!";
                         UploadFileData.FileUploadFailed = true;
+                        UploadFileData.NoFileSelected = false;
+                        UploadFileData.FileIsEmpty = false;
+                        UploadFileData.MaxFileSizeExceeded = false;
+                        UploadFileData.MoreThanOneFileSelected = false;
+                        UploadFileData.WrongExtensionSelected = false;
+                        UploadFileData.FileContainsVirus = false;
+                        UploadFileData.FileIncorrectTemplate = false;
+                        UploadFileData.FilePasswordProtected = false;
+                        UploadFileData.FileInfectedWithVirus = false;
                     }
-
                 }
                 catch (Exception ex)
                 {
                     warningMessage = "File Upload failed, Please try again!!";
                     UploadFileData.FileUploadFailed = true;
+                    UploadFileData.NoFileSelected = false;
+                    UploadFileData.FileIsEmpty = false;
+                    UploadFileData.MaxFileSizeExceeded = false;
+                    UploadFileData.MoreThanOneFileSelected = false;
+                    UploadFileData.WrongExtensionSelected = false;
+                    UploadFileData.FileContainsVirus = false;
+                    UploadFileData.FileIncorrectTemplate = false;
+                    UploadFileData.FilePasswordProtected = false;
+                    UploadFileData.FileInfectedWithVirus = false;
                 }
                 finally
                 {
