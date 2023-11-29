@@ -65,11 +65,6 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             {
                 StateHasChanged();
             });
-            await base.OnInitializedAsync();
-        }
-        private async Task OnInputFileChange(InputFileChangeEventArgs e)
-        {
-            selectedFiles = e.GetMultipleFiles().ToList();
             UploadFileData.NoFileSelected = false;
             UploadFileData.MoreThanOneFileSelected = false;
             UploadFileData.WrongExtensionSelected = false;
@@ -80,13 +75,29 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             UploadFileData.FileIsEmpty = false;
             UploadFileData.FileUploadFailed = false;
             UploadFileData.FileInfectedWithVirus = false;
-            if (selectedFiles == null && selectedFiles.Count() == 0)
-            {
-                UploadFileData.NoFileSelected = true;
-            }
-            else if (selectedFiles.Count() > 1)
+
+            await base.OnInitializedAsync();
+        }
+        private async Task OnInputFileChange(InputFileChangeEventArgs e)
+        {
+            selectedFiles = e.GetMultipleFiles().ToList();
+
+            if (selectedFiles.Count() > 1)
             {
                 UploadFileData.MoreThanOneFileSelected = true;
+                UploadFileData.NoFileSelected = false;
+                UploadFileData.WrongExtensionSelected = false;
+                UploadFileData.MaxFileSizeExceeded = false;
+                UploadFileData.FileContainsVirus = false;
+                UploadFileData.FileIncorrectTemplate = false;
+                UploadFileData.FilePasswordProtected = false;
+                UploadFileData.FileIsEmpty = false;
+                UploadFileData.FileUploadFailed = false;
+                UploadFileData.FileInfectedWithVirus = false;
+                await InvokeAsync(() =>
+                {
+                    StateHasChanged();
+                });
             }
             else
             {
@@ -94,21 +105,53 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 var fileExtn = selectedFile.Name.Split('.')[1];
                 if (!(fileExtn == "docx" || fileExtn == "pdf"))
                 {
-                    UploadFileData.WrongExtensionSelected = true; 
+                    UploadFileData.WrongExtensionSelected = true;
+                    UploadFileData.MaxFileSizeExceeded = false;
+                    UploadFileData.MoreThanOneFileSelected = false;
+                    UploadFileData.NoFileSelected = false;
+                    UploadFileData.FileContainsVirus = false;
+                    UploadFileData.FileIncorrectTemplate = false;
+                    UploadFileData.FilePasswordProtected = false;
+                    UploadFileData.FileIsEmpty = false;
+                    UploadFileData.FileUploadFailed = false;
+                    UploadFileData.FileInfectedWithVirus = false;
                 }
                 else if (selectedFile.Size > UploadFileData.MaxFileSize)
                 {
                     UploadFileData.MaxFileSizeExceeded = true;
+                    UploadFileData.MoreThanOneFileSelected = false;
+                    UploadFileData.NoFileSelected = false;
+                    UploadFileData.WrongExtensionSelected = false;
+                    UploadFileData.FileContainsVirus = false;
+                    UploadFileData.FileIncorrectTemplate = false;
+                    UploadFileData.FilePasswordProtected = false;
+                    UploadFileData.FileIsEmpty = false;
+                    UploadFileData.FileUploadFailed = false;
+                    UploadFileData.FileInfectedWithVirus = false;
                 }
+                else if (selectedFile.Size < UploadFileData.EmptyFileSize)
+                {
+                    UploadFileData.FileIsEmpty = true;
+                    UploadFileData.MaxFileSizeExceeded = false;
+                    UploadFileData.MoreThanOneFileSelected = false;
+                    UploadFileData.NoFileSelected = false;
+                    UploadFileData.WrongExtensionSelected = false;
+                    UploadFileData.FileContainsVirus = false;
+                    UploadFileData.FileIncorrectTemplate = false;
+                    UploadFileData.FilePasswordProtected = false;
+                    UploadFileData.FileUploadFailed = false;
+                    UploadFileData.FileInfectedWithVirus = false;
+                }
+                await InvokeAsync(() =>
+                {
+                    StateHasChanged();
+                });
             }
-            await InvokeAsync(() =>
-            {
-                StateHasChanged();
-            });
         }
         private async Task OnUploadSubmit()
         {
-                UploadFileData.FileUploadFailed = false;
+            if (selectedFiles != null)
+            {
                 try
                 {
                     var extn = selectedFile.Name.Split('.')[1];
@@ -176,6 +219,24 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                     });
                 }
             }
+            else
+            {
+                UploadFileData.NoFileSelected = true;
+                UploadFileData.FileIsEmpty = false;
+                UploadFileData.MaxFileSizeExceeded = false;
+                UploadFileData.MoreThanOneFileSelected = false;
+                UploadFileData.WrongExtensionSelected = false;
+                UploadFileData.FileContainsVirus = false;
+                UploadFileData.FileIncorrectTemplate = false;
+                UploadFileData.FilePasswordProtected = false;
+                UploadFileData.FileUploadFailed = false;
+                UploadFileData.FileInfectedWithVirus = false;
+                await InvokeAsync(() =>
+                {
+                    StateHasChanged();
+                });
+            }
+        }
 
         private void goback()
         {
@@ -195,6 +256,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
 public class UploadFileData
 {
     public long MaxFileSize { get; set; }
+    public long EmptyFileSize { get; set; }
     public bool MaxFileSizeExceeded { get; set; }
     public bool NoFileSelected { get; set; }
     public bool MoreThanOneFileSelected { get; set; }
@@ -208,5 +270,6 @@ public class UploadFileData
     public UploadFileData()
     {
         MaxFileSize = 30 * 1024 * 1024;
+        EmptyFileSize = 12 * 1024;
     }
 }
