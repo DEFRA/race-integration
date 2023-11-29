@@ -1,5 +1,6 @@
 {
   "profiles": {
+    "CLAMAV_SERVER_PORT": "3310",
     "RACE2.SecurityAzureFunction": {
       "commandName": "Project",
       "commandLineArgs": "--port 7056"
