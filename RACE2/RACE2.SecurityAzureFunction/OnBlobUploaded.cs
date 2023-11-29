@@ -6,11 +6,11 @@ using Microsoft.Azure.WebJobs.Extensions.EventGrid;
 using Microsoft.Extensions.Logging;
 using Azure.Messaging.EventGrid;
 
-namespace RACE2.SecurityAzureFunction
+namespace RACE2
 {
-    public static class SecurityAzureFunction
+    public static class OnBlobUploaded
     {
-        [FunctionName("SecurityAzureFunction")]
+        [FunctionName("OnBlobUploaded")]
         public static void Run([EventGridTrigger]EventGridEvent eventGridEvent, ILogger log)
         {
             log.LogInformation(eventGridEvent.Data.ToString());
