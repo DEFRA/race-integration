@@ -261,7 +261,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         private void FileUploadFailed()
         {
             clearAllUploadFileSettings();
-            UploadFileData.FileIncorrectTemplate = true;
+            UploadFileData.FileUploadFailed = true;
         }
     }
 }
