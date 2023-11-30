@@ -64,36 +64,19 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             await InvokeAsync(() =>
             {
                 StateHasChanged();
-            });
-            UploadFileData.NoFileSelected = false;
-            UploadFileData.MoreThanOneFileSelected = false;
-            UploadFileData.WrongExtensionSelected = false;
-            UploadFileData.MaxFileSizeExceeded = false;
-            UploadFileData.FileContainsVirus = false;
-            UploadFileData.FileIncorrectTemplate = false;
-            UploadFileData.FilePasswordProtected = false;
-            UploadFileData.FileIsEmpty = false;
-            UploadFileData.FileUploadFailed = false;
-            UploadFileData.FileInfectedWithVirus = false;
+            });            
 
             await base.OnInitializedAsync();
         }
         private async Task OnInputFileChange(InputFileChangeEventArgs e)
         {
+            clearAllUploadFileSettings();
+
             selectedFiles = e.GetMultipleFiles().ToList();
 
             if (selectedFiles.Count() > 1)
             {
-                UploadFileData.MoreThanOneFileSelected = true;
-                UploadFileData.NoFileSelected = false;
-                UploadFileData.WrongExtensionSelected = false;
-                UploadFileData.MaxFileSizeExceeded = false;
-                UploadFileData.FileContainsVirus = false;
-                UploadFileData.FileIncorrectTemplate = false;
-                UploadFileData.FilePasswordProtected = false;
-                UploadFileData.FileIsEmpty = false;
-                UploadFileData.FileUploadFailed = false;
-                UploadFileData.FileInfectedWithVirus = false;
+                MoreThanOneFileSelected();                
                 await InvokeAsync(() =>
                 {
                     StateHasChanged();
@@ -105,51 +88,33 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 var fileExtn = selectedFile.Name.Split('.')[1];
                 if (!(fileExtn == "docx" || fileExtn == "pdf"))
                 {
-                    UploadFileData.WrongExtensionSelected = true;
-                    UploadFileData.MaxFileSizeExceeded = false;
-                    UploadFileData.MoreThanOneFileSelected = false;
-                    UploadFileData.NoFileSelected = false;
-                    UploadFileData.FileContainsVirus = false;
-                    UploadFileData.FileIncorrectTemplate = false;
-                    UploadFileData.FilePasswordProtected = false;
-                    UploadFileData.FileIsEmpty = false;
-                    UploadFileData.FileUploadFailed = false;
-                    UploadFileData.FileInfectedWithVirus = false;
+                    WrongExtensionSelected();                    
+                    await InvokeAsync(() =>
+                    {
+                        StateHasChanged();
+                    });
                 }
                 else if (selectedFile.Size > UploadFileData.MaxFileSize)
                 {
-                    UploadFileData.MaxFileSizeExceeded = true;
-                    UploadFileData.MoreThanOneFileSelected = false;
-                    UploadFileData.NoFileSelected = false;
-                    UploadFileData.WrongExtensionSelected = false;
-                    UploadFileData.FileContainsVirus = false;
-                    UploadFileData.FileIncorrectTemplate = false;
-                    UploadFileData.FilePasswordProtected = false;
-                    UploadFileData.FileIsEmpty = false;
-                    UploadFileData.FileUploadFailed = false;
-                    UploadFileData.FileInfectedWithVirus = false;
+                    MaxFileSizeExceeded();                   
+                    await InvokeAsync(() =>
+                    {
+                        StateHasChanged();
+                    });
                 }
                 else if (selectedFile.Size < UploadFileData.EmptyFileSize)
                 {
-                    UploadFileData.FileIsEmpty = true;
-                    UploadFileData.MaxFileSizeExceeded = false;
-                    UploadFileData.MoreThanOneFileSelected = false;
-                    UploadFileData.NoFileSelected = false;
-                    UploadFileData.WrongExtensionSelected = false;
-                    UploadFileData.FileContainsVirus = false;
-                    UploadFileData.FileIncorrectTemplate = false;
-                    UploadFileData.FilePasswordProtected = false;
-                    UploadFileData.FileUploadFailed = false;
-                    UploadFileData.FileInfectedWithVirus = false;
-                }
-                await InvokeAsync(() =>
-                {
-                    StateHasChanged();
-                });
+                    FileIsEmpty();                    
+                    await InvokeAsync(() =>
+                    {
+                        StateHasChanged();
+                    });
+                }               
             }
         }
         private async Task OnUploadSubmit()
         {
+            clearAllUploadFileSettings();
             if (selectedFiles != null)
             {
                 try
@@ -204,32 +169,14 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                     {
                         Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File upload failed.");
                         warningMessage = "File Upload failed, Please try again!!";
-                        UploadFileData.FileUploadFailed = true;
-                        UploadFileData.NoFileSelected = false;
-                        UploadFileData.FileIsEmpty = false;
-                        UploadFileData.MaxFileSizeExceeded = false;
-                        UploadFileData.MoreThanOneFileSelected = false;
-                        UploadFileData.WrongExtensionSelected = false;
-                        UploadFileData.FileContainsVirus = false;
-                        UploadFileData.FileIncorrectTemplate = false;
-                        UploadFileData.FilePasswordProtected = false;
-                        UploadFileData.FileInfectedWithVirus = false;
+                        FileUploadFailed();
                     }
                 }
                 catch (Exception ex)
                 {
                     Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File upload failed : " + ex.Message);
                     warningMessage = "File Upload failed, Please try again!!";
-                    UploadFileData.FileUploadFailed = true;
-                    UploadFileData.NoFileSelected = false;
-                    UploadFileData.FileIsEmpty = false;
-                    UploadFileData.MaxFileSizeExceeded = false;
-                    UploadFileData.MoreThanOneFileSelected = false;
-                    UploadFileData.WrongExtensionSelected = false;
-                    UploadFileData.FileContainsVirus = false;
-                    UploadFileData.FileIncorrectTemplate = false;
-                    UploadFileData.FilePasswordProtected = false;
-                    UploadFileData.FileInfectedWithVirus = false;
+                    FileUploadFailed();                   
                 }
                 finally
                 {
@@ -241,16 +188,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             }
             else
             {
-                UploadFileData.NoFileSelected = true;
-                UploadFileData.FileIsEmpty = false;
-                UploadFileData.MaxFileSizeExceeded = false;
-                UploadFileData.MoreThanOneFileSelected = false;
-                UploadFileData.WrongExtensionSelected = false;
-                UploadFileData.FileContainsVirus = false;
-                UploadFileData.FileIncorrectTemplate = false;
-                UploadFileData.FilePasswordProtected = false;
-                UploadFileData.FileUploadFailed = false;
-                UploadFileData.FileInfectedWithVirus = false;
+                FileIsEmpty();
                 await InvokeAsync(() =>
                 {
                     StateHasChanged();
@@ -270,6 +208,64 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             string pagelink = $"/upload-confirmation/{ReservoirId}/{ReservoirRegName}/{UndertakerName}/{UndertakerEmail}/{SubmissionReference}/{YesNoValue}";
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }
+
+        private void clearAllUploadFileSettings()
+        {
+            UploadFileData.NoFileSelected = false;
+            UploadFileData.FileIsEmpty = false;
+            UploadFileData.MaxFileSizeExceeded = false;
+            UploadFileData.MoreThanOneFileSelected = false;
+            UploadFileData.WrongExtensionSelected = false;
+            UploadFileData.FileContainsVirus = false;
+            UploadFileData.FileIncorrectTemplate = false;
+            UploadFileData.FilePasswordProtected = false;
+            UploadFileData.FileUploadFailed = false;     
+        }
+        private void MaxFileSizeExceeded()
+        {
+            clearAllUploadFileSettings();
+            UploadFileData.MaxFileSizeExceeded = true;
+        }
+        private void NoFileSelected()
+        {
+            clearAllUploadFileSettings();
+            UploadFileData.NoFileSelected = true;
+        }
+        private void MoreThanOneFileSelected()
+        {
+            clearAllUploadFileSettings();
+            UploadFileData.MoreThanOneFileSelected = true;
+        }
+        private void WrongExtensionSelected()
+        {
+            clearAllUploadFileSettings();
+            UploadFileData.WrongExtensionSelected = true;
+        }
+        private void FileIsEmpty()
+        {
+            clearAllUploadFileSettings();
+            UploadFileData.FileIsEmpty = true;
+        }
+        private void FileContainsVirus()
+        {
+            clearAllUploadFileSettings();
+            UploadFileData.FileContainsVirus = true;
+        }
+        private void FilePasswordProtected()
+        {
+            clearAllUploadFileSettings();
+            UploadFileData.FilePasswordProtected = true;
+        }
+        private void FileIncorrectTemplate()
+        {
+            clearAllUploadFileSettings();
+            UploadFileData.FileIncorrectTemplate = true;
+        }
+        private void FileUploadFailed()
+        {
+            clearAllUploadFileSettings();
+            UploadFileData.FileIncorrectTemplate = true;
+        }
     }
 }
 
@@ -286,7 +282,6 @@ public class UploadFileData
     public bool FilePasswordProtected { get; set; }
     public bool FileIncorrectTemplate { get; set; }
     public bool FileUploadFailed { get; set; }
-    public bool FileInfectedWithVirus { get; set; }
     public UploadFileData()
     {
         MaxFileSize = 30 * 1024 * 1024;
