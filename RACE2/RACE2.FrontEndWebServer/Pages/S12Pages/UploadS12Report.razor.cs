@@ -51,10 +51,6 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         [Parameter]
         public string YesNoValue { get; set; }
 
-        public string displayMessage { get; set; }
-
-        public string warningMessage { get; set; }
-
         [CascadingParameter]
         public Task<AuthenticationState> AuthenticationStateTask { get; set; }
         protected override async Task OnInitializedAsync()
@@ -69,7 +65,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             clearAllUploadFileSettings();
             await base.OnInitializedAsync();
         }
-        private async Task OnInputFileChange(InputFileChangeEventArgs e)
+        private void OnInputFileChange(InputFileChangeEventArgs e)
         {
             selectedFiles = e.GetMultipleFiles().ToList();
         }
@@ -143,16 +139,13 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                             };
 
                             fileUploadViewModels.Add(fileUploadViewModel);
-                            displayMessage = trustedFileNameForFileStorage + " Uploaded!!";
                             SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(Int32.Parse(ReservoirId), userDetails.Id, "Sent");
                             //_fileNameResult=await jsRuntime.InvokeAsync<string>("getFileName");
                             var bytes = await blobStorageService.GetBlobAsByteArray(containerName, trustedFileNameForFileStorage);
-                            //var bytes = new byte[selectedFile.Size];
                             await _notificationService.SendConfirmationMailtoSE(userDetails.Email, ReservoirRegName);
                             await _notificationService.SendConfirmationMailtoRST(userDetails.Email, ReservoirRegName, bytes, userDetails.cFirstName + " " + userDetails.cLastName, UndertakerName);
                             if (YesNoValue == "Yes")
-                            {
-                                //await selectedFile.OpenReadStream(selectedFile.Size).ReadAsync(bytes);                        
+                            {                     
                                 await _notificationService.SendConfirmationMailWithAttachment(bytes, UndertakerEmail, ReservoirRegName);
                             }
                             //Store the uploaded document information
@@ -172,22 +165,24 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                         else
                         {
                             Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File upload failed.");
-                            warningMessage = "File Upload failed, Please try again!!";
                             FileUploadFailed();
+                            await InvokeAsync(() =>
+                            {
+                                StateHasChanged();
+                            });
                         }
                     }
                     catch (Exception ex)
                     {
                         Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File upload failed : " + ex.Message);
-                        warningMessage = "File Upload failed, Please try again!!";
                         FileUploadFailed();
-                    }
-                    finally
-                    {
                         await InvokeAsync(() =>
                         {
                             StateHasChanged();
                         });
+                    }
+                    finally
+                    {                        
                     }
                 }
             }
