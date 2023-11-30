@@ -23,9 +23,9 @@ public static class RunAvOnFileUploaded
     //public static string ClamAVServerUrl = Environment.GetEnvironmentVariable("CLAMAV_SERVER_URL", EnvironmentVariableTarget.Process) ?? throw new Exception("Connection string missing");
 
     public static int ClamAVServerPort = 3310;
-    public static string ConnectionString = "DefaultEndpointsProtocol=https;AccountName=race2storageaccount;AccountKey=sLMSrJGU2n6c1WLW3sfZryNhFGjKYHR07YaOLEjFFmyQdBoW6Ss0tU3JIw2RgMpuo8gL8kOH6EKH+AStcMKteA==;EndpointSuffix=core.windows.net";
+    public static string ConnectionString = "DefaultEndpointsProtocol=https;AccountName=pocacinfst1401;AccountKey=M3CuH8gcrjr03wsUXsPcLvV9OWyHxhuCdUxF4iuMbqjqnLSpaCZLOkfkWlNMjHtxhAVvDmdWNb+0+AStOQ04Nw==;EndpointSuffix=core.windows.net";
     //public static string ClamAVServerUrl = "http://20.50.147.7";
-    public static string ClamAVServerUrl = "https://securityfunctionapp.gentleocean-395cd6c9.westeurope.azurecontainerapps.io";
+    public static string ClamAVServerUrl = "https://clamav.orangedesert-f440d294.uksouth.azurecontainerapps.io";
     const string CREATED_EVENT_URL = "url";
 
     private static bool TryGetFileNameAndContainerFromUrl(string url, [NotNullWhen(true)] out string? fileName, [NotNullWhen(true)] out string? container)

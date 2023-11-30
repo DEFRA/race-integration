@@ -120,7 +120,6 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 {
                     try
                     {
-                        fileExtn = selectedFile.Name.Split('.')[1];
                         var containerName = UserName.Split("@")[0];
                         if (containerName.Contains('.'))
                         {
