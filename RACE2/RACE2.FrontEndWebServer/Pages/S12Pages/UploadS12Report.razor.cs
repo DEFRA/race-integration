@@ -29,6 +29,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         public INotification _notificationService { get; set; } = default!;
 
         private string _fileNameResult;
+        public string fileExtn = String.Empty;
         private string UserName { get; set; } = "Unknown";
         private UserSpecificDto userDetails { get; set; }
         public string ReservoirName { get; set; } = default!;
@@ -90,7 +91,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             else
             {
                 selectedFile = selectedFiles[0];
-                var fileExtn = selectedFile.Name.Split('.')[1];
+                fileExtn = selectedFile.Name.Split('.')[1];
                 if (!(fileExtn == "docx" || fileExtn == "pdf"))
                 {
                     WrongExtensionSelected();
@@ -119,14 +120,14 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 {
                     try
                     {
-                        var extn = selectedFile.Name.Split('.')[1];
+                        fileExtn = selectedFile.Name.Split('.')[1];
                         var containerName = UserName.Split("@")[0];
                         if (containerName.Contains('.'))
                         {
                             containerName = containerName.Split('.')[0];
                         }
                         //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + "."+ extn;
-                        var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + SubmissionReference + "." + extn;
+                        var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + SubmissionReference + "." + fileExtn;
 
                         var blobUrl = await blobStorageService.UploadFileToBlobAsync(containerName, trustedFileNameForFileStorage, selectedFile.ContentType, selectedFile.OpenReadStream(UploadFileData.MaxFileSize));
                         if (blobUrl != null)
@@ -150,7 +151,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                             }
                             //Store the uploaded document information
                             documentDTO.FileName = selectedFile.Name.Split('.')[0];
-                            documentDTO.FileType = extn;
+                            documentDTO.FileType = fileExtn;
                             documentDTO.DateSent = DateTime.Now;
                             documentDTO.FileLocation = selectedFile.Name;
                             documentDTO.ReservoirId = Int32.Parse(ReservoirId);
