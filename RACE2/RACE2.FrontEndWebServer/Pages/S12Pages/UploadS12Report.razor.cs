@@ -1,4 +1,5 @@
-﻿using DocumentFormat.OpenXml.ExtendedProperties;
+﻿using DocumentFormat.OpenXml.Drawing.Diagrams;
+using DocumentFormat.OpenXml.ExtendedProperties;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Forms;
@@ -64,19 +65,27 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             await InvokeAsync(() =>
             {
                 StateHasChanged();
-            });            
-
+            });
+            clearAllUploadFileSettings();
             await base.OnInitializedAsync();
         }
         private async Task OnInputFileChange(InputFileChangeEventArgs e)
         {
-            clearAllUploadFileSettings();
-
             selectedFiles = e.GetMultipleFiles().ToList();
-
-            if (selectedFiles.Count() > 1)
+        }
+        private async Task OnUploadSubmit()
+        {
+            if (selectedFiles == null)
             {
-                MoreThanOneFileSelected();                
+                FileIsEmpty();
+                await InvokeAsync(() =>
+                {
+                    StateHasChanged();
+                });
+            }
+            else if (selectedFiles.Count() > 1)
+            {
+                MoreThanOneFileSelected();
                 await InvokeAsync(() =>
                 {
                     StateHasChanged();
@@ -88,7 +97,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 var fileExtn = selectedFile.Name.Split('.')[1];
                 if (!(fileExtn == "docx" || fileExtn == "pdf"))
                 {
-                    WrongExtensionSelected();                    
+                    WrongExtensionSelected();
                     await InvokeAsync(() =>
                     {
                         StateHasChanged();
@@ -96,7 +105,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 }
                 else if (selectedFile.Size > UploadFileData.MaxFileSize)
                 {
-                    MaxFileSizeExceeded();                   
+                    MaxFileSizeExceeded();
                     await InvokeAsync(() =>
                     {
                         StateHasChanged();
@@ -104,95 +113,83 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 }
                 else if (selectedFile.Size < UploadFileData.EmptyFileSize)
                 {
-                    FileIsEmpty();                    
+                    FileIsEmpty();
                     await InvokeAsync(() =>
                     {
                         StateHasChanged();
                     });
-                }               
-            }
-        }
-        private async Task OnUploadSubmit()
-        {
-            clearAllUploadFileSettings();
-            if (selectedFiles != null)
-            {
-                try
+                }
+                else
                 {
-                    var extn = selectedFile.Name.Split('.')[1];
-                    var containerName = UserName.Split("@")[0];
-                    if (containerName.Contains('.'))
+                    try
                     {
-                        containerName = containerName.Split('.')[0];
-                    }
-                    //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + "."+ extn;
-                    var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + SubmissionReference + "." + extn;
-
-                    var blobUrl = await blobStorageService.UploadFileToBlobAsync(containerName, trustedFileNameForFileStorage, selectedFile.ContentType, selectedFile.OpenReadStream(UploadFileData.MaxFileSize));
-                    if (blobUrl != null)
-                    {
-                        FileUploadViewModel fileUploadViewModel = new FileUploadViewModel()
+                        var extn = selectedFile.Name.Split('.')[1];
+                        var containerName = UserName.Split("@")[0];
+                        if (containerName.Contains('.'))
                         {
-                            FileName = trustedFileNameForFileStorage,
-                            FileStorageUrl = blobUrl,
-                            ContentType = selectedFile.ContentType,
-                        };
-
-                        fileUploadViewModels.Add(fileUploadViewModel);
-                        displayMessage = trustedFileNameForFileStorage + " Uploaded!!";
-                        SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(Int32.Parse(ReservoirId), userDetails.Id, "Sent");
-                        //_fileNameResult=await jsRuntime.InvokeAsync<string>("getFileName");
-                        var bytes = await blobStorageService.GetBlobAsByteArray(containerName, trustedFileNameForFileStorage);
-                        //var bytes = new byte[selectedFile.Size];
-                        await _notificationService.SendConfirmationMailtoSE(userDetails.Email, ReservoirRegName);
-                        await _notificationService.SendConfirmationMailtoRST(userDetails.Email, ReservoirRegName, bytes, userDetails.cFirstName + " " + userDetails.cLastName, UndertakerName);
-                        if (YesNoValue == "Yes")
-                        {
-                            //await selectedFile.OpenReadStream(selectedFile.Size).ReadAsync(bytes);                        
-                            await _notificationService.SendConfirmationMailWithAttachment(bytes, UndertakerEmail, ReservoirRegName);
+                            containerName = containerName.Split('.')[0];
                         }
-                        //Store the uploaded document information
-                        documentDTO.FileName = selectedFile.Name.Split('.')[0];
-                        documentDTO.FileType = extn;
-                        documentDTO.DateSent = DateTime.Now;
-                        documentDTO.FileLocation = selectedFile.Name;
-                        documentDTO.ReservoirId = Int32.Parse(ReservoirId);
-                        documentDTO.SuppliedViaService = 1;
-                        documentDTO.SubmissionId = updatedStatus.Id;
-                        documentDTO.DocumentType = "S12";
-                        documentDTO.SuppliedBy = userDetails.Id;
-                        await reservoirService.InsertUploadDocumentDetails(documentDTO);
-                        Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Information("File upload succeeded.");
-                        goToNextPage();
+                        //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + "."+ extn;
+                        var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + SubmissionReference + "." + extn;
+
+                        var blobUrl = await blobStorageService.UploadFileToBlobAsync(containerName, trustedFileNameForFileStorage, selectedFile.ContentType, selectedFile.OpenReadStream(UploadFileData.MaxFileSize));
+                        if (blobUrl != null)
+                        {
+                            FileUploadViewModel fileUploadViewModel = new FileUploadViewModel()
+                            {
+                                FileName = trustedFileNameForFileStorage,
+                                FileStorageUrl = blobUrl,
+                                ContentType = selectedFile.ContentType,
+                            };
+
+                            fileUploadViewModels.Add(fileUploadViewModel);
+                            displayMessage = trustedFileNameForFileStorage + " Uploaded!!";
+                            SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(Int32.Parse(ReservoirId), userDetails.Id, "Sent");
+                            //_fileNameResult=await jsRuntime.InvokeAsync<string>("getFileName");
+                            var bytes = await blobStorageService.GetBlobAsByteArray(containerName, trustedFileNameForFileStorage);
+                            //var bytes = new byte[selectedFile.Size];
+                            await _notificationService.SendConfirmationMailtoSE(userDetails.Email, ReservoirRegName);
+                            await _notificationService.SendConfirmationMailtoRST(userDetails.Email, ReservoirRegName, bytes, userDetails.cFirstName + " " + userDetails.cLastName, UndertakerName);
+                            if (YesNoValue == "Yes")
+                            {
+                                //await selectedFile.OpenReadStream(selectedFile.Size).ReadAsync(bytes);                        
+                                await _notificationService.SendConfirmationMailWithAttachment(bytes, UndertakerEmail, ReservoirRegName);
+                            }
+                            //Store the uploaded document information
+                            documentDTO.FileName = selectedFile.Name.Split('.')[0];
+                            documentDTO.FileType = extn;
+                            documentDTO.DateSent = DateTime.Now;
+                            documentDTO.FileLocation = selectedFile.Name;
+                            documentDTO.ReservoirId = Int32.Parse(ReservoirId);
+                            documentDTO.SuppliedViaService = 1;
+                            documentDTO.SubmissionId = updatedStatus.Id;
+                            documentDTO.DocumentType = "S12";
+                            documentDTO.SuppliedBy = userDetails.Id;
+                            await reservoirService.InsertUploadDocumentDetails(documentDTO);
+                            Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Information("File upload succeeded.");
+                            goToNextPage();
+                        }
+                        else
+                        {
+                            Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File upload failed.");
+                            warningMessage = "File Upload failed, Please try again!!";
+                            FileUploadFailed();
+                        }
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File upload failed.");
+                        Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File upload failed : " + ex.Message);
                         warningMessage = "File Upload failed, Please try again!!";
                         FileUploadFailed();
                     }
-                }
-                catch (Exception ex)
-                {
-                    Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File upload failed : " + ex.Message);
-                    warningMessage = "File Upload failed, Please try again!!";
-                    FileUploadFailed();                   
-                }
-                finally
-                {
-                    await InvokeAsync(() =>
+                    finally
                     {
-                        StateHasChanged();
-                    });
+                        await InvokeAsync(() =>
+                        {
+                            StateHasChanged();
+                        });
+                    }
                 }
-            }
-            else
-            {
-                FileIsEmpty();
-                await InvokeAsync(() =>
-                {
-                    StateHasChanged();
-                });
             }
         }
 
