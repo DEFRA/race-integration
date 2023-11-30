@@ -70,8 +70,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 var authState = await AuthenticationStateTask;
                 UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
                 userDetails = await userService.GetUserByEmailID(UserName);
-                userDetailsWithRoles = await userService.GetUserWithRoles(UserName);
-                foreach (var role in userDetailsWithRoles.roles)
+                //userDetailsWithRoles = await userService.GetUserWithRoles(UserName);
+                foreach (var role in userDetails.roles)
                 {
                     if (role.Name == "System Administrator")
                     {

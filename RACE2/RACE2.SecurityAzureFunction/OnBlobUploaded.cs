@@ -24,7 +24,8 @@ public static class RunAvOnFileUploaded
 
     public static int ClamAVServerPort = 3310;
     public static string ConnectionString = "DefaultEndpointsProtocol=https;AccountName=race2storageaccount;AccountKey=sLMSrJGU2n6c1WLW3sfZryNhFGjKYHR07YaOLEjFFmyQdBoW6Ss0tU3JIw2RgMpuo8gL8kOH6EKH+AStcMKteA==;EndpointSuffix=core.windows.net";
-    public static string ClamAVServerUrl = "http://20.50.147.7";
+    //public static string ClamAVServerUrl = "http://20.50.147.7";
+    public static string ClamAVServerUrl = "https://securityfunctionapp.gentleocean-395cd6c9.westeurope.azurecontainerapps.io";
     const string CREATED_EVENT_URL = "url";
 
     private static bool TryGetFileNameAndContainerFromUrl(string url, [NotNullWhen(true)] out string? fileName, [NotNullWhen(true)] out string? container)

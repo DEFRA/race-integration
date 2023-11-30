@@ -1,4 +1,5 @@
-﻿using DocumentFormat.OpenXml.ExtendedProperties;
+﻿using DocumentFormat.OpenXml.Drawing.Diagrams;
+using DocumentFormat.OpenXml.ExtendedProperties;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Forms;
@@ -28,6 +29,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         public INotification _notificationService { get; set; } = default!;
 
         private string _fileNameResult;
+        public string fileExtn = String.Empty;
         private string UserName { get; set; } = "Unknown";
         private UserSpecificDto userDetails { get; set; }
         public string ReservoirName { get; set; } = default!;
@@ -50,10 +52,6 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         [Parameter]
         public string YesNoValue { get; set; }
 
-        public string displayMessage { get; set; }
-
-        public string warningMessage { get; set; }
-
         [CascadingParameter]
         public Task<AuthenticationState> AuthenticationStateTask { get; set; }
         protected override async Task OnInitializedAsync()
@@ -65,35 +63,26 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             {
                 StateHasChanged();
             });
-            UploadFileData.NoFileSelected = false;
-            UploadFileData.MoreThanOneFileSelected = false;
-            UploadFileData.WrongExtensionSelected = false;
-            UploadFileData.MaxFileSizeExceeded = false;
-            UploadFileData.FileContainsVirus = false;
-            UploadFileData.FileIncorrectTemplate = false;
-            UploadFileData.FilePasswordProtected = false;
-            UploadFileData.FileIsEmpty = false;
-            UploadFileData.FileUploadFailed = false;
-            UploadFileData.FileInfectedWithVirus = false;
-
+            clearAllUploadFileSettings();
             await base.OnInitializedAsync();
         }
-        private async Task OnInputFileChange(InputFileChangeEventArgs e)
+        private void OnInputFileChange(InputFileChangeEventArgs e)
         {
             selectedFiles = e.GetMultipleFiles().ToList();
-
-            if (selectedFiles.Count() > 1)
+        }
+        private async Task OnUploadSubmit()
+        {
+            if (selectedFiles == null)
             {
-                UploadFileData.MoreThanOneFileSelected = true;
-                UploadFileData.NoFileSelected = false;
-                UploadFileData.WrongExtensionSelected = false;
-                UploadFileData.MaxFileSizeExceeded = false;
-                UploadFileData.FileContainsVirus = false;
-                UploadFileData.FileIncorrectTemplate = false;
-                UploadFileData.FilePasswordProtected = false;
-                UploadFileData.FileIsEmpty = false;
-                UploadFileData.FileUploadFailed = false;
-                UploadFileData.FileInfectedWithVirus = false;
+                NoFileSelected();
+                await InvokeAsync(() =>
+                {
+                    StateHasChanged();
+                });
+            }
+            else if (selectedFiles.Count() > 1)
+            {
+                MoreThanOneFileSelected();
                 await InvokeAsync(() =>
                 {
                     StateHasChanged();
@@ -102,159 +91,101 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             else
             {
                 selectedFile = selectedFiles[0];
-                var fileExtn = selectedFile.Name.Split('.')[1];
+                fileExtn = selectedFile.Name.Split('.')[1];
                 if (!(fileExtn == "docx" || fileExtn == "pdf"))
                 {
-                    UploadFileData.WrongExtensionSelected = true;
-                    UploadFileData.MaxFileSizeExceeded = false;
-                    UploadFileData.MoreThanOneFileSelected = false;
-                    UploadFileData.NoFileSelected = false;
-                    UploadFileData.FileContainsVirus = false;
-                    UploadFileData.FileIncorrectTemplate = false;
-                    UploadFileData.FilePasswordProtected = false;
-                    UploadFileData.FileIsEmpty = false;
-                    UploadFileData.FileUploadFailed = false;
-                    UploadFileData.FileInfectedWithVirus = false;
-                }
-                else if (selectedFile.Size > UploadFileData.MaxFileSize)
-                {
-                    UploadFileData.MaxFileSizeExceeded = true;
-                    UploadFileData.MoreThanOneFileSelected = false;
-                    UploadFileData.NoFileSelected = false;
-                    UploadFileData.WrongExtensionSelected = false;
-                    UploadFileData.FileContainsVirus = false;
-                    UploadFileData.FileIncorrectTemplate = false;
-                    UploadFileData.FilePasswordProtected = false;
-                    UploadFileData.FileIsEmpty = false;
-                    UploadFileData.FileUploadFailed = false;
-                    UploadFileData.FileInfectedWithVirus = false;
-                }
-                else if (selectedFile.Size < UploadFileData.EmptyFileSize)
-                {
-                    UploadFileData.FileIsEmpty = true;
-                    UploadFileData.MaxFileSizeExceeded = false;
-                    UploadFileData.MoreThanOneFileSelected = false;
-                    UploadFileData.NoFileSelected = false;
-                    UploadFileData.WrongExtensionSelected = false;
-                    UploadFileData.FileContainsVirus = false;
-                    UploadFileData.FileIncorrectTemplate = false;
-                    UploadFileData.FilePasswordProtected = false;
-                    UploadFileData.FileUploadFailed = false;
-                    UploadFileData.FileInfectedWithVirus = false;
-                }
-                await InvokeAsync(() =>
-                {
-                    StateHasChanged();
-                });
-            }
-        }
-        private async Task OnUploadSubmit()
-        {
-            if (selectedFiles != null)
-            {
-                try
-                {
-                    var extn = selectedFile.Name.Split('.')[1];
-                    var containerName = UserName.Split("@")[0];
-                    if (containerName.Contains('.'))
-                    {
-                        containerName = containerName.Split('.')[0];
-                    }
-                    //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + "."+ extn;
-                    var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + SubmissionReference + "." + extn;
-
-                    var blobUrl = await blobStorageService.UploadFileToBlobAsync(containerName, trustedFileNameForFileStorage, selectedFile.ContentType, selectedFile.OpenReadStream(UploadFileData.MaxFileSize));
-                    if (blobUrl != null)
-                    {
-                        FileUploadViewModel fileUploadViewModel = new FileUploadViewModel()
-                        {
-                            FileName = trustedFileNameForFileStorage,
-                            FileStorageUrl = blobUrl,
-                            ContentType = selectedFile.ContentType,
-                        };
-
-                        fileUploadViewModels.Add(fileUploadViewModel);
-                        displayMessage = trustedFileNameForFileStorage + " Uploaded!!";
-                        SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(Int32.Parse(ReservoirId), userDetails.Id, "Sent");
-                        //_fileNameResult=await jsRuntime.InvokeAsync<string>("getFileName");
-                        var bytes = await blobStorageService.GetBlobAsByteArray(containerName, trustedFileNameForFileStorage);
-                        //var bytes = new byte[selectedFile.Size];
-                        await _notificationService.SendConfirmationMailtoSE(userDetails.Email, ReservoirRegName);
-                        await _notificationService.SendConfirmationMailtoRST(userDetails.Email, ReservoirRegName, bytes, userDetails.cFirstName + " " + userDetails.cLastName, UndertakerName);
-                        if (YesNoValue == "Yes")
-                        {
-                            //await selectedFile.OpenReadStream(selectedFile.Size).ReadAsync(bytes);                        
-                            await _notificationService.SendConfirmationMailWithAttachment(bytes, UndertakerEmail, ReservoirRegName);
-                        }
-                        //Store the uploaded document information
-                        documentDTO.FileName = selectedFile.Name.Split('.')[0];
-                        documentDTO.FileType = extn;
-                        documentDTO.DateSent = DateTime.Now;
-                        documentDTO.FileLocation = selectedFile.Name;
-                        documentDTO.ReservoirId = Int32.Parse(ReservoirId);
-                        documentDTO.SuppliedViaService = 1;
-                        documentDTO.SubmissionId = updatedStatus.Id;
-                        documentDTO.DocumentType = "S12";
-                        documentDTO.SuppliedBy = userDetails.Id;
-                        await reservoirService.InsertUploadDocumentDetails(documentDTO);
-                        Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Information("File upload succeeded.");
-                        goToNextPage();
-                    }
-                    else
-                    {
-                        Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File upload failed.");
-                        warningMessage = "File Upload failed, Please try again!!";
-                        UploadFileData.FileUploadFailed = true;
-                        UploadFileData.NoFileSelected = false;
-                        UploadFileData.FileIsEmpty = false;
-                        UploadFileData.MaxFileSizeExceeded = false;
-                        UploadFileData.MoreThanOneFileSelected = false;
-                        UploadFileData.WrongExtensionSelected = false;
-                        UploadFileData.FileContainsVirus = false;
-                        UploadFileData.FileIncorrectTemplate = false;
-                        UploadFileData.FilePasswordProtected = false;
-                        UploadFileData.FileInfectedWithVirus = false;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File upload failed : " + ex.Message);
-                    warningMessage = "File Upload failed, Please try again!!";
-                    UploadFileData.FileUploadFailed = true;
-                    UploadFileData.NoFileSelected = false;
-                    UploadFileData.FileIsEmpty = false;
-                    UploadFileData.MaxFileSizeExceeded = false;
-                    UploadFileData.MoreThanOneFileSelected = false;
-                    UploadFileData.WrongExtensionSelected = false;
-                    UploadFileData.FileContainsVirus = false;
-                    UploadFileData.FileIncorrectTemplate = false;
-                    UploadFileData.FilePasswordProtected = false;
-                    UploadFileData.FileInfectedWithVirus = false;
-                }
-                finally
-                {
+                    WrongExtensionSelected();
                     await InvokeAsync(() =>
                     {
                         StateHasChanged();
                     });
                 }
-            }
-            else
-            {
-                UploadFileData.NoFileSelected = true;
-                UploadFileData.FileIsEmpty = false;
-                UploadFileData.MaxFileSizeExceeded = false;
-                UploadFileData.MoreThanOneFileSelected = false;
-                UploadFileData.WrongExtensionSelected = false;
-                UploadFileData.FileContainsVirus = false;
-                UploadFileData.FileIncorrectTemplate = false;
-                UploadFileData.FilePasswordProtected = false;
-                UploadFileData.FileUploadFailed = false;
-                UploadFileData.FileInfectedWithVirus = false;
-                await InvokeAsync(() =>
+                else if (selectedFile.Size > UploadFileData.MaxFileSize)
                 {
-                    StateHasChanged();
-                });
+                    MaxFileSizeExceeded();
+                    await InvokeAsync(() =>
+                    {
+                        StateHasChanged();
+                    });
+                }
+                else if (selectedFile.Size < UploadFileData.EmptyFileSize)
+                {
+                    FileIsEmpty();
+                    await InvokeAsync(() =>
+                    {
+                        StateHasChanged();
+                    });
+                }
+                else
+                {
+                    try
+                    {
+                        fileExtn = selectedFile.Name.Split('.')[1];
+                        var containerName = UserName.Split("@")[0];
+                        if (containerName.Contains('.'))
+                        {
+                            containerName = containerName.Split('.')[0];
+                        }
+                        //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + "."+ extn;
+                        var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + SubmissionReference + "." + fileExtn;
+
+                        var blobUrl = await blobStorageService.UploadFileToBlobAsync(containerName, trustedFileNameForFileStorage, selectedFile.ContentType, selectedFile.OpenReadStream(UploadFileData.MaxFileSize));
+                        if (blobUrl != null)
+                        {
+                            FileUploadViewModel fileUploadViewModel = new FileUploadViewModel()
+                            {
+                                FileName = trustedFileNameForFileStorage,
+                                FileStorageUrl = blobUrl,
+                                ContentType = selectedFile.ContentType,
+                            };
+
+                            fileUploadViewModels.Add(fileUploadViewModel);
+                            SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(Int32.Parse(ReservoirId), userDetails.Id, "Sent");
+                            //_fileNameResult=await jsRuntime.InvokeAsync<string>("getFileName");
+                            var bytes = await blobStorageService.GetBlobAsByteArray(containerName, trustedFileNameForFileStorage);
+                            await _notificationService.SendConfirmationMailtoSE(userDetails.Email, ReservoirRegName);
+                            await _notificationService.SendConfirmationMailtoRST(userDetails.Email, ReservoirRegName, bytes, userDetails.cFirstName + " " + userDetails.cLastName, UndertakerName);
+                            if (YesNoValue == "Yes")
+                            {                     
+                                await _notificationService.SendConfirmationMailWithAttachment(bytes, UndertakerEmail, ReservoirRegName);
+                            }
+                            //Store the uploaded document information
+                            documentDTO.FileName = selectedFile.Name.Split('.')[0];
+                            documentDTO.FileType = fileExtn;
+                            documentDTO.DateSent = DateTime.Now;
+                            documentDTO.FileLocation = selectedFile.Name;
+                            documentDTO.ReservoirId = Int32.Parse(ReservoirId);
+                            documentDTO.SuppliedViaService = 1;
+                            documentDTO.SubmissionId = updatedStatus.Id;
+                            documentDTO.DocumentType = "S12";
+                            documentDTO.SuppliedBy = userDetails.Id;
+                            await reservoirService.InsertUploadDocumentDetails(documentDTO);
+                            Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Information("File upload succeeded.");
+                            goToNextPage();
+                        }
+                        else
+                        {
+                            Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File upload failed.");
+                            FileUploadFailed();
+                            await InvokeAsync(() =>
+                            {
+                                StateHasChanged();
+                            });
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File upload failed : " + ex.Message);
+                        FileUploadFailed();
+                        await InvokeAsync(() =>
+                        {
+                            StateHasChanged();
+                        });
+                    }
+                    finally
+                    {                        
+                    }
+                }
             }
         }
 
@@ -269,6 +200,64 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             bool forceLoad = false;
             string pagelink = $"/upload-confirmation/{ReservoirId}/{ReservoirRegName}/{UndertakerName}/{UndertakerEmail}/{SubmissionReference}/{YesNoValue}";
             NavigationManager.NavigateTo(pagelink, forceLoad);
+        }
+
+        private void clearAllUploadFileSettings()
+        {
+            UploadFileData.NoFileSelected = false;
+            UploadFileData.FileIsEmpty = false;
+            UploadFileData.MaxFileSizeExceeded = false;
+            UploadFileData.MoreThanOneFileSelected = false;
+            UploadFileData.WrongExtensionSelected = false;
+            UploadFileData.FileContainsVirus = false;
+            UploadFileData.FileIncorrectTemplate = false;
+            UploadFileData.FilePasswordProtected = false;
+            UploadFileData.FileUploadFailed = false;     
+        }
+        private void MaxFileSizeExceeded()
+        {
+            clearAllUploadFileSettings();
+            UploadFileData.MaxFileSizeExceeded = true;
+        }
+        private void NoFileSelected()
+        {
+            clearAllUploadFileSettings();
+            UploadFileData.NoFileSelected = true;
+        }
+        private void MoreThanOneFileSelected()
+        {
+            clearAllUploadFileSettings();
+            UploadFileData.MoreThanOneFileSelected = true;
+        }
+        private void WrongExtensionSelected()
+        {
+            clearAllUploadFileSettings();
+            UploadFileData.WrongExtensionSelected = true;
+        }
+        private void FileIsEmpty()
+        {
+            clearAllUploadFileSettings();
+            UploadFileData.FileIsEmpty = true;
+        }
+        private void FileContainsVirus()
+        {
+            clearAllUploadFileSettings();
+            UploadFileData.FileContainsVirus = true;
+        }
+        private void FilePasswordProtected()
+        {
+            clearAllUploadFileSettings();
+            UploadFileData.FilePasswordProtected = true;
+        }
+        private void FileIncorrectTemplate()
+        {
+            clearAllUploadFileSettings();
+            UploadFileData.FileIncorrectTemplate = true;
+        }
+        private void FileUploadFailed()
+        {
+            clearAllUploadFileSettings();
+            UploadFileData.FileUploadFailed = true;
         }
     }
 }
@@ -286,7 +275,6 @@ public class UploadFileData
     public bool FilePasswordProtected { get; set; }
     public bool FileIncorrectTemplate { get; set; }
     public bool FileUploadFailed { get; set; }
-    public bool FileInfectedWithVirus { get; set; }
     public UploadFileData()
     {
         MaxFileSize = 30 * 1024 * 1024;
