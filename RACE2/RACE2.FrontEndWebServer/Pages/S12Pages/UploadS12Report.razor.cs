@@ -77,7 +77,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         {
             if (selectedFiles == null)
             {
-                FileIsEmpty();
+                NoFileSelected();
                 await InvokeAsync(() =>
                 {
                     StateHasChanged();
