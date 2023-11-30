@@ -63,7 +63,7 @@ namespace RACE2.DataAccess.Repository
         public async Task<UserSpecificDto> GetUserByEmailID(string email)
         {
 
-           // _logService.Write("Repository");
+            // _logService.Write("Repository");
             try
             {
                 using (var conn = Connection)
@@ -72,13 +72,14 @@ namespace RACE2.DataAccess.Repository
                     DynamicParameters parameters = new DynamicParameters();
                     parameters.Add("Email", email, DbType.String);
 
-                    var user = await conn.QueryAsync<UserSpecificDto,Address,UserSpecificDto>("sp_GetUserByEmailID", (user,address) =>
+                    var user = await conn.QueryAsync<UserSpecificDto, Address, Role, UserSpecificDto>("sp_GetUserByEmailID", (user, address, role) =>
                     {
                         user.addresses.Add(address);
-                       
+                        user.roles.Add(role);
+
                         return user;
 
-                    }, parameters,null,true,splitOn: "Id,Addressid", commandType: CommandType.StoredProcedure);
+                    }, parameters, null, true, splitOn: "Id,Addressid,Id", commandType: CommandType.StoredProcedure);
                     var result = user.GroupBy(u => u.Id).Select(g =>
                     {
                         var groupedUser = g.First();
@@ -93,7 +94,6 @@ namespace RACE2.DataAccess.Repository
             {
                 return null;
             }
-
         }
 
         public async Task<UserSpecificDto> GetUserWithRoles(string email)
