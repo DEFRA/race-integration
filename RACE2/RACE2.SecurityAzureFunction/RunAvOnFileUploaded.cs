@@ -13,15 +13,25 @@ using System.Diagnostics.CodeAnalysis;
 using Azure.Messaging.EventGrid;
 using Azure;
 using Azure.Storage.Blobs.Models;
+using Microsoft.Extensions.Configuration;
+using RACE2.SecurityAzureFunction;
+using RACE2.Services;
 
 namespace RACE2;
 
 public class RunAvOnFileUploaded
 {
+    private IConfiguration _config;
+    private ILogger<RunAvOnFileUploaded> _logger;
+    private IReservoirService _reservoirService;
+    private IUserService _userService;
 
-    public RunAvOnFileUploaded()
+    public RunAvOnFileUploaded(IConfiguration config, ILogger<RunAvOnFileUploaded> logger, IUserService userService, IReservoirService reservoirService)
     {
-
+        _config = config;
+        _logger = logger;
+        _userService = userService;
+        _reservoirService = reservoirService;
     }
 
     //public int ClamAVServerPort = int.Parse(Environment.GetEnvironmentVariable("CLAMAV_SERVER_PORT", EnvironmentVariableTarget.Process) ?? throw new Exception("Port must be configured"));
