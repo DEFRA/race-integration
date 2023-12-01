@@ -72,6 +72,7 @@ namespace RACE2.DataAccess.Repository
                     DynamicParameters parameters = new DynamicParameters();
                     parameters.Add("Email", email, DbType.String);
 
+
                     var user = await conn.QueryAsync<UserSpecificDto, Address, Role, UserSpecificDto>("sp_GetUserByEmailID", (user, address, role) =>
                     {
                         user.addresses.Add(address);

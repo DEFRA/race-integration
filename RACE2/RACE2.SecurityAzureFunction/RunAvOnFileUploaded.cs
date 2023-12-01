@@ -16,19 +16,25 @@ using Azure.Storage.Blobs.Models;
 
 namespace RACE2;
 
-public static class RunAvOnFileUploaded
+public class RunAvOnFileUploaded
 {
-    //public static int ClamAVServerPort = int.Parse(Environment.GetEnvironmentVariable("CLAMAV_SERVER_PORT", EnvironmentVariableTarget.Process) ?? throw new Exception("Port must be configured"));
-    //public static string ConnectionString = Environment.GetEnvironmentVariable("ATTACHMENT_STORAGE_CONNSTRING", EnvironmentVariableTarget.Process) ?? throw new Exception("Connection string missing");
-    //public static string ClamAVServerUrl = Environment.GetEnvironmentVariable("CLAMAV_SERVER_URL", EnvironmentVariableTarget.Process) ?? throw new Exception("Connection string missing");
 
-    public static int ClamAVServerPort = 3310;
-    public static string ConnectionString = "DefaultEndpointsProtocol=https;AccountName=race2storageaccount;AccountKey=sLMSrJGU2n6c1WLW3sfZryNhFGjKYHR07YaOLEjFFmyQdBoW6Ss0tU3JIw2RgMpuo8gL8kOH6EKH+AStcMKteA==;EndpointSuffix=core.windows.net";
-    //public static string ClamAVServerUrl = "http://20.50.147.7";
-    public static string ClamAVServerUrl = "https://securityfunctionapp.gentleocean-395cd6c9.westeurope.azurecontainerapps.io";
-    const string CREATED_EVENT_URL = "url";
+    public RunAvOnFileUploaded()
+    {
 
-    private static bool TryGetFileNameAndContainerFromUrl(string url, [NotNullWhen(true)] out string? fileName, [NotNullWhen(true)] out string? container)
+    }
+
+    //public int ClamAVServerPort = int.Parse(Environment.GetEnvironmentVariable("CLAMAV_SERVER_PORT", EnvironmentVariableTarget.Process) ?? throw new Exception("Port must be configured"));
+    //public string ConnectionString = Environment.GetEnvironmentVariable("ATTACHMENT_STORAGE_CONNSTRING", EnvironmentVariableTarget.Process) ?? throw new Exception("Connection string missing");
+    //public string ClamAVServerUrl = Environment.GetEnvironmentVariable("CLAMAV_SERVER_URL", EnvironmentVariableTarget.Process) ?? throw new Exception("Connection string missing");
+
+    public int ClamAVServerPort = 3310;
+    public string ConnectionString = "DefaultEndpointsProtocol=https;AccountName=pocacinfst1401;AccountKey=M3CuH8gcrjr03wsUXsPcLvV9OWyHxhuCdUxF4iuMbqjqnLSpaCZLOkfkWlNMjHtxhAVvDmdWNb+0+AStOQ04Nw==;EndpointSuffix=core.windows.net";
+    //public string ClamAVServerUrl = "http://20.50.147.7";
+    public string ClamAVServerUrl = "https://clamav.orangedesert-f440d294.uksouth.azurecontainerapps.io";
+    public const string CREATED_EVENT_URL = "url";
+
+    private bool TryGetFileNameAndContainerFromUrl(string url, [NotNullWhen(true)] out string? fileName, [NotNullWhen(true)] out string? container)
     {
         var urlParts = url.Split('/');
         var urlFileName = urlParts.Last();
@@ -51,7 +57,7 @@ public static class RunAvOnFileUploaded
 
 
     [FunctionName("RunAvOnFileUploaded")]
-    public static async Task Run([EventGridTrigger] Microsoft.Azure.EventGrid.Models.EventGridEvent eventGridEvent, ILogger log)
+    public async Task Run([EventGridTrigger] Microsoft.Azure.EventGrid.Models.EventGridEvent eventGridEvent, ILogger log)
     {
         // ##### READ EVENT GRID EVENT FROM REQUEST #####
         log.LogInformation("Begin handling request. {EventGridEvent}", eventGridEvent.Data);
