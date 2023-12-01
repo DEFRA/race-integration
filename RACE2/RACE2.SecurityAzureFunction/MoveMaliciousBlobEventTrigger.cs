@@ -10,6 +10,8 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Messaging.EventGrid;
 using Azure.Identity;
+using Microsoft.Extensions.Configuration;
+using RACE2.Services;
 
 namespace RACE2.SecurityAzureFunction
 {
@@ -22,10 +24,19 @@ namespace RACE2.SecurityAzureFunction
         private const string CleanContainer = "cleanfiles";
         private const string InterestedContainer = "unscannedcontent";
 
-        public MoveMaliciousBlobEventTrigger()
-        {
+        private readonly IConfiguration _configuration;
+        //private readonly ILogger<MoveMaliciousBlobEventTrigger> _logger;
+        //private readonly IReservoirService _reservoirService;
+        //private readonly IUserService _userService;
 
+        public MoveMaliciousBlobEventTrigger(IConfiguration configuration)
+        {
+            _configuration = configuration;
+            //_logger = logger;
+            //_userService = userService;
+            //_reservoirService = reservoirService;
         }
+
 
         [FunctionName("MoveMaliciousBlobEventTrigger")]
         public async Task RunAsync([EventGridTrigger] EventGridEvent eventGridEvent, ILogger log)
@@ -35,6 +46,7 @@ namespace RACE2.SecurityAzureFunction
                 log.LogInformation("Event type is not an {0} event, event type:{1}", AntimalwareScanEventType, eventGridEvent.EventType);
                 return;
             }
+          //  string message = _configuration[keyName];
 
             var storageAccountName = eventGridEvent?.Subject?.Split("/")[^1];
             log.LogInformation("Received new scan result for storage {0}", storageAccountName);

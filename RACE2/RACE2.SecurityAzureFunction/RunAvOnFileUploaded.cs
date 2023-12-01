@@ -44,7 +44,7 @@ public class RunAvOnFileUploaded
         return isValid;
     }
 
-    private static bool TryGetEventData<T>(Microsoft.Azure.EventGrid.Models.EventGridEvent eventGridEvent, string property, [NotNullWhen(true)] out T? value)
+    private bool TryGetEventData<T>(Microsoft.Azure.EventGrid.Models.EventGridEvent eventGridEvent, string property, [NotNullWhen(true)] out T? value)
     {
         value = default(T);
         var eventData = eventGridEvent.Data.ToString();
