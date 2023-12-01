@@ -1,7 +1,5 @@
 {
-    "IsEncrypted": false,
-    "Values": {
-        "AzureWebJobsStorage": "AzureWebJobsStorageConnectionStringValue",
-        "FUNCTIONS_WORKER_RUNTIME": "dotnet"
-    }
+  "IsEncryoted": false,
+  "Values": {
+  }
 }

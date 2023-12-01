@@ -10,6 +10,8 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Messaging.EventGrid;
 using Azure.Identity;
+using Microsoft.Extensions.Configuration;
+using RACE2.Services;
 
 namespace RACE2.SecurityAzureFunction
 {
@@ -21,10 +23,17 @@ namespace RACE2.SecurityAzureFunction
         private const string MalwareContainer = "maliciousfiles";
         private const string CleanContainer = "cleanfiles";
         private const string InterestedContainer = "unscannedcontent";
+        private IConfiguration _config;
+        private ILogger<MoveMaliciousBlobEventTrigger> _logger;
+        private IReservoirService _reservoirService;
+        private IUserService _userService;
 
-        public MoveMaliciousBlobEventTrigger()
+        public MoveMaliciousBlobEventTrigger(IConfiguration config, ILogger<MoveMaliciousBlobEventTrigger> logger, IUserService userService, IReservoirService reservoirService)
         {
-
+            _config = config;
+            _logger = logger;
+            _userService = userService;
+            _reservoirService = reservoirService;
         }
 
         [FunctionName("MoveMaliciousBlobEventTrigger")]
