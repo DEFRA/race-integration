@@ -41,6 +41,9 @@
     "webApiContainerAppName": {
       "value":"race2webapi"
     },
+    "webApiExternalContainerAppName": {
+      "value":"race2webapiexternal"
+    },
     "frontendwebservercontainerImage": {
       "value":"pocracinfcr1401.azurecr.io/race2frontendwebserver"
     },
@@ -51,7 +54,7 @@
       "value": "pocracinfcr1401.azurecr.io/race2webapi"
     },
     "webapiexternalcontainerImage": {
-      "value":"race2acr.azurecr.io/race2webapiexternal"
+      "value":"pocracinfcr1401.azurecr.io/race2webapiexternal"
     } 
   }
 }
