@@ -10,6 +10,9 @@ using Microsoft.Extensions.Configuration;
 using RACE2.SecurityAzureFunction;
 using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using Azure.Identity;
+using Microsoft.Extensions.DependencyInjection;
+using RACE2.DataAccess.Repository;
+using RACE2.Services;
 
 [assembly: WebJobsStartup(typeof(StartUp))]
 
@@ -46,5 +49,10 @@ public class StartUp : IWebJobsStartup
         var securityProviderURL = config["RACE2SecurityProviderURL"];
         var sqlConnectionString = config["SqlConnectionString"];
         var appinsightsConnString = config["AppInsightsConnectionString"];
+
+        builder.Services.AddScoped<IUserService, UserService>();
+        builder.Services.AddScoped<IReservoirService, ReservoirService>();
+        builder.Services.AddScoped<IUserRepository, UserRepository>();
+        builder.Services.AddScoped<IReservoirRepository, ReservoirRepository>();
     }
 }
