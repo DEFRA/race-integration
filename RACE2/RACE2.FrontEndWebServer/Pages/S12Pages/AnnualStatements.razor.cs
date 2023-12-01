@@ -273,7 +273,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 else if (!String.IsNullOrEmpty(Undertakers[0].cAlternativeEmergencyPhone))
                     s12PrePopulationFields.UndertakerPhoneNumber = Undertakers[0].cAlternativeEmergencyPhone;
                 else 
-                    s12PrePopulationFields.UndertakerPhoneNumber = "Please provide a contact number";
+                    s12PrePopulationFields.UndertakerPhoneNumber = "";
                 if (reservoir.NextInspectionDate103 != DateTime.MinValue)
                 {
                     s12PrePopulationFields.NextInspectionDate = (reservoir.NextInspectionDate103 != DateTime.MinValue) && (reservoir.LastCertificationDate.HasValue) ? reservoir.NextInspectionDate103.Value.ToString("dd MMMM yyyy") : " ";
@@ -296,7 +296,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                     else if (!String.IsNullOrEmpty(reservoir.LastInspectionByUser.cAlternativeEmergencyPhone))
                         s12PrePopulationFields.LastInspectingEngineerPhoneNumber = reservoir.LastInspectionByUser.cAlternativeEmergencyPhone;
                     else
-                        s12PrePopulationFields.LastInspectingEngineerPhoneNumber = "Please provide a contact number";
+                        s12PrePopulationFields.LastInspectingEngineerPhoneNumber = "";
                 }
                 else
                 {
