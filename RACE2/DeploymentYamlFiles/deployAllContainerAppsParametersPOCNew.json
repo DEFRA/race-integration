@@ -49,6 +49,9 @@
     },
     "webapicontainerImage": {
       "value": "pocracinfcr1401.azurecr.io/race2webapi"
-    }
+    },
+    "webapiexternalcontainerImage": {
+      "value":"race2acr.azurecr.io/race2webapiexternal"
+    } 
   }
 }
