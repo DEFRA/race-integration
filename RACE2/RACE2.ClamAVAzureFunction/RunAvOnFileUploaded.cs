@@ -18,14 +18,10 @@ namespace RACE2.ClamAVAzureFunction;
 
 public static class RunAvOnFileUploaded
 {
-    //public static int ClamAVServerPort = int.Parse(Environment.GetEnvironmentVariable("CLAMAV_SERVER_PORT", EnvironmentVariableTarget.Process) ?? throw new Exception("Port must be configured"));
-    //public static string ConnectionString = Environment.GetEnvironmentVariable("ATTACHMENT_STORAGE_CONNSTRING", EnvironmentVariableTarget.Process) ?? throw new Exception("Connection string missing");
-    //public static string ClamAVServerUrl = Environment.GetEnvironmentVariable("CLAMAV_SERVER_URL", EnvironmentVariableTarget.Process) ?? throw new Exception("Connection string missing");
-    public static int ClamAVServerPort = 3310;
-    public static string ConnectionString = "DefaultEndpointsProtocol=https;AccountName=pocacinfst1401;AccountKey=M3CuH8gcrjr03wsUXsPcLvV9OWyHxhuCdUxF4iuMbqjqnLSpaCZLOkfkWlNMjHtxhAVvDmdWNb+0+AStOQ04Nw==;EndpointSuffix=core.windows.net";
-    public static string ClamAVServerUrl = "20.254.13.122";//"clamav.bbgsd9bxb8gzfjaq.uksouth.azurecontainer.io";
-    //public static string ClamAVServerUrl = "https://clamav.orangedesert-f440d294.uksouth.azurecontainerapps.io";
-
+    public static int ClamAVServerPort = int.Parse(Environment.GetEnvironmentVariable("CLAMAV_SERVER_PORT", EnvironmentVariableTarget.Process) ?? throw new Exception("Port must be configured"));
+    public static string ConnectionString = Environment.GetEnvironmentVariable("ATTACHMENT_STORAGE_CONNSTRING", EnvironmentVariableTarget.Process) ?? throw new Exception("Connection string missing");
+    public static string ClamAVServerUrl = Environment.GetEnvironmentVariable("CLAMAV_SERVER_URL", EnvironmentVariableTarget.Process) ?? throw new Exception("Connection string missing");
+    
     const string CREATED_EVENT_URL = "url";
 
     private static bool TryGetFileNameAndContainerFromUrl(string url, [NotNullWhen(true)] out string? fileName, [NotNullWhen(true)] out string? container)
