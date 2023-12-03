@@ -1,8 +1,9 @@
 {
-  "IsEncryoted": false,
+  "IsEncrypted": false,
   "Values": {
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
     "AzureWebJobsDashboard": "UseDevelopmentStorage=true",
     "AzureAppConfigURL": "https://pocracinfac1401.azconfig.io/"
-  }
+  },
+  "ConnectionStrings": {}
 }

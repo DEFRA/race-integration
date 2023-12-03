@@ -156,7 +156,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.WebApiExternal", "RAC
 EndProject
 Project("{C9674DCB-5085-4A16-B785-4C70DD1589BD}") = "RACE2.UploadDatatoDatabase_SSIS", "RACE2.UploadDatatoDatabase_SSIS\RACE2.UploadDatatoDatabase_SSIS.dtproj", "{F3D7755D-8199-4854-9FE3-440A71C66EA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RACE2.SecurityAzureFunction", "RACE2.SecurityAzureFunction\RACE2.SecurityAzureFunction.csproj", "{3D83FA69-9162-4013-BD74-21196B8951E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.SecurityAzureFunction", "RACE2.SecurityAzureFunction\RACE2.SecurityAzureFunction.csproj", "{3D83FA69-9162-4013-BD74-21196B8951E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RACE2.ClamAVAzureFunction", "RACE2.ClamAVAzureFunction\RACE2.ClamAVAzureFunction.csproj", "{75D59104-E1D6-4C79-966C-B18FC9C10F8A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -261,6 +263,12 @@ Global
 		{3D83FA69-9162-4013-BD74-21196B8951E7}.Development|Any CPU.Build.0 = Debug|Any CPU
 		{3D83FA69-9162-4013-BD74-21196B8951E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D83FA69-9162-4013-BD74-21196B8951E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75D59104-E1D6-4C79-966C-B18FC9C10F8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75D59104-E1D6-4C79-966C-B18FC9C10F8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75D59104-E1D6-4C79-966C-B18FC9C10F8A}.Development|Any CPU.ActiveCfg = Debug|Any CPU
+		{75D59104-E1D6-4C79-966C-B18FC9C10F8A}.Development|Any CPU.Build.0 = Debug|Any CPU
+		{75D59104-E1D6-4C79-966C-B18FC9C10F8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75D59104-E1D6-4C79-966C-B18FC9C10F8A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,7 +1,7 @@
 ﻿using Azure.Storage.Blobs;
 using Microsoft.Azure.WebJobs.Extensions.EventGrid;
 using Microsoft.Azure.WebJobs;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +12,7 @@ using Azure.Messaging.EventGrid;
 using Azure.Identity;
 using Microsoft.Extensions.Configuration;
 using RACE2.Services;
+using Microsoft.Extensions.Logging;
 
 namespace RACE2.SecurityAzureFunction
 {
@@ -24,14 +25,13 @@ namespace RACE2.SecurityAzureFunction
         private const string CleanContainer = "cleanfiles";
         private const string InterestedContainer = "unscannedcontent";
         private IConfiguration _config;
-        private ILogger<MoveMaliciousBlobEventTrigger> _logger;
         private IReservoirService _reservoirService;
         private IUserService _userService;
 
-        public MoveMaliciousBlobEventTrigger(IConfiguration config, ILogger<MoveMaliciousBlobEventTrigger> logger, IUserService userService, IReservoirService reservoirService)
+        public MoveMaliciousBlobEventTrigger(IConfiguration config, IUserService userService, IReservoirService reservoirService)
         {
             _config = config;
-            _logger = logger;
+
             _userService = userService;
             _reservoirService = reservoirService;
         }
@@ -126,7 +126,7 @@ namespace RACE2.SecurityAzureFunction
             log.LogInformation("MoveBlob: blob moved successfully");
         }
 
-        private static async Task MoveCleanBlobAsync(Uri blobUri, ILogger log)
+        private async Task MoveCleanBlobAsync(Uri blobUri, ILogger log)
         {
             var blobUriBuilder = new BlobUriBuilder(blobUri);
             if (blobUriBuilder.BlobContainerName == CleanContainer)
