@@ -8,7 +8,6 @@ using System;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-
 namespace FunctionEventTrigger
 {
     public static class MoveMaliciousBlobEventTrigger
@@ -29,7 +28,6 @@ namespace FunctionEventTrigger
                 log.LogInformation("Event type is not an {0} event, event type:{1}", AntimalwareScanEventType, eventGridEvent.EventType);
                 return;
             }
-          //  string message = _configuration[keyName];
 
             var storageAccountName = eventGridEvent?.Subject?.Split("/")[^1];
             log.LogInformation("Received new scan result for storage {0}", storageAccountName);
