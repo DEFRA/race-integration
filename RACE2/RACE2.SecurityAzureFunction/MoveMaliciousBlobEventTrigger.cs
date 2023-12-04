@@ -1,21 +1,16 @@
-﻿using Azure.Storage.Blobs;
-using Microsoft.Azure.WebJobs.Extensions.EventGrid;
+using Azure.Identity;
+using Azure.Messaging.EventGrid;
+using Azure.Storage.Blobs;
 using Microsoft.Azure.WebJobs;
+using Microsoft.Azure.WebJobs.Extensions.EventGrid;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.Messaging.EventGrid;
-using Azure.Identity;
-using Microsoft.Extensions.Configuration;
-using RACE2.Services;
 
-namespace RACE2.SecurityAzureFunction
+namespace FunctionEventTrigger
 {
-    public class MoveMaliciousBlobEventTrigger
+    public static class MoveMaliciousBlobEventTrigger
     {
         private const string AntimalwareScanEventType = "Microsoft.Security.MalwareScanningResult";
         private const string MaliciousVerdict = "Malicious";
@@ -23,21 +18,10 @@ namespace RACE2.SecurityAzureFunction
         private const string MalwareContainer = "maliciousfiles";
         private const string CleanContainer = "cleanfiles";
         private const string InterestedContainer = "unscannedcontent";
-        private IConfiguration _config;
-        private ILogger<MoveMaliciousBlobEventTrigger> _logger;
-        private IReservoirService _reservoirService;
-        private IUserService _userService;
 
-        public MoveMaliciousBlobEventTrigger(IConfiguration config, ILogger<MoveMaliciousBlobEventTrigger> logger, IUserService userService, IReservoirService reservoirService)
-        {
-            _config = config;
-            _logger = logger;
-            _userService = userService;
-            _reservoirService = reservoirService;
-        }
 
         [FunctionName("MoveMaliciousBlobEventTrigger")]
-        public async Task RunAsync([EventGridTrigger] EventGridEvent eventGridEvent, ILogger log)
+        public static async Task RunAsync([EventGridTrigger] EventGridEvent eventGridEvent, ILogger log)
         {
             if (eventGridEvent.EventType != AntimalwareScanEventType)
             {
@@ -95,7 +79,7 @@ namespace RACE2.SecurityAzureFunction
             }
         }
 
-        private async Task MoveMaliciousBlobAsync(Uri blobUri, ILogger log)
+        private static async Task MoveMaliciousBlobAsync(Uri blobUri, ILogger log)
 
         {
             var blobUriBuilder = new BlobUriBuilder(blobUri);

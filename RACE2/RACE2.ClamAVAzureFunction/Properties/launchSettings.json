@@ -1,8 +1,8 @@
 {
   "profiles": {
-    "RACE2.SecurityAzureFunction": {
+    "RACE2.ClamAVAzureFunction": {
       "commandName": "Project",
-      "commandLineArgs": "--port 7232",
+      "commandLineArgs": "--port 7275",
       "launchBrowser": false
     }
   }
