@@ -50,6 +50,8 @@ namespace FunctionEventTrigger
             var blobUriString = eventData.GetProperty("blobUri").GetString();
             var blobUri = new Uri(blobUriString);
             var blobUriBuilder = new BlobUriBuilder(blobUri);
+            //var sqlServerConnString = Environment.GetEnvironmentVariable("ConnectionStrings:SqlServerConnString");
+            var sqlServerConnString = Environment.GetEnvironmentVariable("SqlServerConnString");
 
             // Filter events from interested containers
             if (blobUriBuilder.BlobContainerName != InterestedContainer)

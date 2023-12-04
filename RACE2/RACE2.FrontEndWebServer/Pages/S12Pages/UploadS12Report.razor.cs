@@ -92,7 +92,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             {
                 selectedFile = selectedFiles[0];
                 fileExtn = selectedFile.Name.Split('.')[1];
-                if (!(fileExtn == "docx" || fileExtn == "pdf"))
+                if (!(fileExtn == "docx" || fileExtn == "doc" || fileExtn == "pdf"))
                 {
                     WrongExtensionSelected();
                     await InvokeAsync(() =>
