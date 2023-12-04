@@ -1,16 +1,21 @@
 using Azure.Identity;
 using Azure.Messaging.EventGrid;
 using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.EventGrid;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+
 using System;
+using System.Data;
+using System.Data.SqlClient;
 using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace FunctionEventTrigger
 {
-    public static class MoveMaliciousBlobEventTrigger
+    public class MoveMaliciousBlobEventTrigger
     {
         private const string AntimalwareScanEventType = "Microsoft.Security.MalwareScanningResult";
         private const string MaliciousVerdict = "Malicious";
@@ -19,10 +24,19 @@ namespace FunctionEventTrigger
         private const string CleanContainer = "cleanfiles";
         private const string InterestedContainer = "unscannedcontent";
 
+        private readonly IConfiguration _configuration;
+      //  private readonly IUserService _userService;
+        public MoveMaliciousBlobEventTrigger(IConfiguration configuration)
+        {
+            _configuration = configuration;
+           // _userService = userService;
+        }
 
         [FunctionName("MoveMaliciousBlobEventTrigger")]
-        public static async Task RunAsync([EventGridTrigger] EventGridEvent eventGridEvent, ILogger log)
+        public async Task RunAsync([EventGridTrigger] EventGridEvent eventGridEvent, ILogger log)
         {
+            
+            string SqlConnectionString = _configuration["SqlConnectionString"];
             if (eventGridEvent.EventType != AntimalwareScanEventType)
             {
                 log.LogInformation("Event type is not an {0} event, event type:{1}", AntimalwareScanEventType, eventGridEvent.EventType);
@@ -58,6 +72,7 @@ namespace FunctionEventTrigger
                 try
                 {
                     await MoveMaliciousBlobAsync(blobUri, log);
+                    UpdateScannedfilesinDB(SqlConnectionString,false, log);
                 }
                 catch (Exception e)
                 {
@@ -72,6 +87,7 @@ namespace FunctionEventTrigger
                 try
                 {
                     await MoveCleanBlobAsync(blobUri, log);
+                    UpdateScannedfilesinDB(SqlConnectionString, true, log);
                 }
                 catch (Exception e)
                 {
@@ -140,6 +156,24 @@ namespace FunctionEventTrigger
             log.LogInformation("MoveBlob: Deleting source blob {0}", srcBlobClient.Uri);
             await srcBlobClient.DeleteAsync();
             log.LogInformation("MoveBlob: blob moved successfully");
+        }
+
+        private void UpdateScannedfilesinDB(string SqlConnectionString, bool IsCleanFile ,ILogger log)
+        {
+            using (SqlConnection con = new SqlConnection(SqlConnectionString))
+            using (SqlCommand cmd = new SqlCommand(" ", con))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                // fill the parameters - avoiding "AddWithValue"
+                cmd.Parameters.Add("@ORAID", SqlDbType.Int).Value = IsCleanFile;
+              //  cmd.Parameters.Add("@FullTitle", SqlDbType.NVarChar, 250).Value = TextBox_FullTitle.Text;
+
+                con.Open();
+                // you need to **EXECUTE** the command !
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
         }
     }
 }
