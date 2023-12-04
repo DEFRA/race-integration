@@ -4,9 +4,7 @@
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
     "AzureWebJobsDashboard": "UseDevelopmentStorage=true",
     "AzureAppConfigURL": "https://pocracinfac1401.azconfig.io/",
-    "CLAMAV_SERVER_PORT": "3310",
-    "ATTACHMENT_STORAGE_CONNSTRING": "DefaultEndpointsProtocol=https;AccountName=pocacinfst1401;AccountKey=M3CuH8gcrjr03wsUXsPcLvV9OWyHxhuCdUxF4iuMbqjqnLSpaCZLOkfkWlNMjHtxhAVvDmdWNb+0+AStOQ04Nw==;EndpointSuffix=core.windows.net",
-    "CLAMAV_SERVER_URL": "20.254.13.122"
+    "ASPNETCORE_ENVIRONMENT":  "Production"
   },
   "ConnectionStrings": {}
 }

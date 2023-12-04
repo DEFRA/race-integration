@@ -3,12 +3,6 @@
     "RACE2.SecurityAzureFunction": {
       "commandName": "Project",
       "commandLineArgs": "--port 7056 --csharp"
-    },
-    "Docker": {
-      "commandName": "Docker",
-      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
-      "httpPort": 32093,
-      "useSSL": false
     }
   }
 }
