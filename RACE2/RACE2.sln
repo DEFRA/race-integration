@@ -38,8 +38,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StoredProcedures", "StoredP
 		sp_UpdateFirstTimeUser.sql = sp_UpdateFirstTimeUser.sql
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.Logging", "RACE2.Logging\RACE2.Logging.csproj", "{FCDA91E9-996A-43AD-8864-5E66B0BECF84}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.Notification", "RACE2.Notification\RACE2.Notification.csproj", "{7E46BD48-2360-4CB2-B456-C558C661D2B4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bicepfiles", "bicepfiles", "{9E4A6273-3717-4549-B159-01B58CAB5C6D}"
@@ -203,12 +201,6 @@ Global
 		{A382D5D0-0CE0-455F-91F0-EB6541900A60}.Development|Any CPU.Build.0 = Debug|Any CPU
 		{A382D5D0-0CE0-455F-91F0-EB6541900A60}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A382D5D0-0CE0-455F-91F0-EB6541900A60}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FCDA91E9-996A-43AD-8864-5E66B0BECF84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FCDA91E9-996A-43AD-8864-5E66B0BECF84}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FCDA91E9-996A-43AD-8864-5E66B0BECF84}.Development|Any CPU.ActiveCfg = Debug|Any CPU
-		{FCDA91E9-996A-43AD-8864-5E66B0BECF84}.Development|Any CPU.Build.0 = Debug|Any CPU
-		{FCDA91E9-996A-43AD-8864-5E66B0BECF84}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FCDA91E9-996A-43AD-8864-5E66B0BECF84}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7E46BD48-2360-4CB2-B456-C558C661D2B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7E46BD48-2360-4CB2-B456-C558C661D2B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E46BD48-2360-4CB2-B456-C558C661D2B4}.Development|Any CPU.ActiveCfg = Debug|Any CPU
