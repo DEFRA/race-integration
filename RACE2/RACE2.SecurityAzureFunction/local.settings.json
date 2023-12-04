@@ -1,7 +1,11 @@
 {
-    "IsEncrypted": false,
+  "IsEncrypted": false,
   "Values": {
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
-    "FUNCTIONS_WORKER_RUNTIME": "dotnet"
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+    "SqlServerConnString": "Server=tcp:pocracinfss1401.database.windows.net,1433;Initial Catalog=pocracinfdb1401;Persist Security Info=False;User ID=race2admin;Password=Race2Password123!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+  },
+  "ConnectionStrings": {
+    "SqlServerConnString": "Server=tcp:pocracinfss1401.database.windows.net,1433;Initial Catalog=pocracinfdb1401;Persist Security Info=False;User ID=race2admin;Password=Race2Password123!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
   }
 }
