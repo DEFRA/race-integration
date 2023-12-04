@@ -1,32 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Hosting;
-using Microsoft.Extensions.Configuration;
-using RACE2.SecurityAzureFunction;
-using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using Azure.Identity;
+using Microsoft.Azure.Functions.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using Microsoft.Extensions.DependencyInjection;
 using RACE2.DataAccess.Repository;
 using RACE2.Services;
 
-[assembly: WebJobsStartup(typeof(StartUp))]
+[assembly: FunctionsStartup(typeof(RACE2.Startup))]
 
-public class StartUp : IWebJobsStartup
+namespace RACE2
 {
-    public void Configure(IWebJobsBuilder builder)
+    public class Startup : FunctionsStartup
     {
-        IConfiguration config = new ConfigurationBuilder()
-            .AddEnvironmentVariables()
-            .AddJsonFile("local.settings.json", optional: true, reloadOnChange: true)
-            .AddAzureAppConfiguration(options =>
+        public override void ConfigureAppConfiguration(IFunctionsConfigurationBuilder builder)
+        {
+            // string cs = Environment.GetEnvironmentVariable("ConnectionString");
+            builder.ConfigurationBuilder.AddAzureAppConfiguration(options =>
             {
-                //var connectionString = builder.Configuration["AzureAppConfigURL"];
-                var azureAppConfigUrl = "https://pocracinfac1401.azconfig.io/"; // builder.Configuration["AzureAppConfigURL"];
+                //var connectionString = builder.Configuration["AZURE_APPCONFIGURATION_CONNECTIONSTRING"];
+                var azureAppConfigUrl = Environment.GetEnvironmentVariable("AzureAppConfigURL");
                 var credential = new DefaultAzureCredential();
 
                 //options.Connect(connectionString)      
@@ -41,18 +34,15 @@ public class StartUp : IWebJobsStartup
                 // Override with any configuration values specific to current hosting env
                 .Select(KeyFilter.Any, Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"))
                 .UseFeatureFlags();
-                })
-            .Build();
+            });
+        }
 
-        var blazorClientURL = config["RACE2FrontEndURL"];
-        var webapiURL = config["RACE2WebApiURL"];
-        var securityProviderURL = config["RACE2SecurityProviderURL"];
-        var sqlConnectionString = config["SqlConnectionString"];
-        var appinsightsConnString = config["AppInsightsConnectionString"];
-
-        builder.Services.AddScoped<IUserService, UserService>();
-        builder.Services.AddScoped<IReservoirService, ReservoirService>();
-        builder.Services.AddScoped<IUserRepository, UserRepository>();
-        builder.Services.AddScoped<IReservoirRepository, ReservoirRepository>();
+        public override void Configure(IFunctionsHostBuilder builder)
+        {
+            builder.Services.AddSingleton<IUserService, UserService>();
+            builder.Services.AddSingleton<IReservoirService, ReservoirService>();
+            builder.Services.AddSingleton<IUserRepository, UserRepository>();
+            builder.Services.AddSingleton<IReservoirRepository, ReservoirRepository>();
+        }
     }
 }
