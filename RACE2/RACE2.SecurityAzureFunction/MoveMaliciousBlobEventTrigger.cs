@@ -36,9 +36,8 @@ namespace FunctionEventTrigger
 
         [FunctionName("MoveMaliciousBlobEventTrigger")]
         public async Task RunAsync([EventGridTrigger] EventGridEvent eventGridEvent, ILogger log)
-        {
-            
-            string SqlConnectionString = _configuration["SqlConnectionString"];
+        {           
+
             if (eventGridEvent.EventType != AntimalwareScanEventType)
             {
                 log.LogInformation("Event type is not an {0} event, event type:{1}", AntimalwareScanEventType, eventGridEvent.EventType);
@@ -53,7 +52,8 @@ namespace FunctionEventTrigger
             var blobUri = new Uri(blobUriString);
             var blobUriBuilder = new BlobUriBuilder(blobUri);
             //var sqlServerConnString = Environment.GetEnvironmentVariable("ConnectionStrings:SqlServerConnString");
-            var sqlServerConnString = Environment.GetEnvironmentVariable("SqlServerConnString");
+            //var sqlServerConnString = Environment.GetEnvironmentVariable("SqlServerConnString");
+            string SqlConnectionString = _configuration["SqlConnectionString"];
 
             // Filter events from interested containers
             if (blobUriBuilder.BlobContainerName != InterestedContainer)
