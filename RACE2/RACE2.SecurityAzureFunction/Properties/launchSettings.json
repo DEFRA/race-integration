@@ -5,9 +5,9 @@
       "commandLineArgs": "--port 7232",
       "launchBrowser": false,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Production",
+        //"ASPNETCORE_ENVIRONMENT": "Production",
         //"AzureAppConfigURL": "https://race2appconfig.azconfig.io/"
-        "AzureAppConfigURL": "https://pocracinfac1401.azconfig.io/"
+        //"AzureAppConfigURL": "https://pocracinfac1401.azconfig.io/"
         //"AzureAppConfigURL": "https://devracinfac1401.azconfig.io/"
         //"AzureAppConfigURL": "https://tstracinfac1401.azconfig.io/"
       }

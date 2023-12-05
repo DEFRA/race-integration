@@ -18,14 +18,14 @@ namespace RACE2.SecurityAzureFunction
     {
         public override void ConfigureAppConfiguration(IFunctionsConfigurationBuilder builder)
         {
-            // string cs = Environment.GetEnvironmentVariable("ConnectionString");
+            string cs = Environment.GetEnvironmentVariable("AzureAppConfigURL");
                         
             builder.ConfigurationBuilder.AddAzureAppConfiguration(options =>
             {
                 // var context = builder.GetContext();
                 //  var azureAppConfigUrl = context.Configuration["AzureAppConfigUrl"];
                 //var connectionString = builder.Configuration["AZURE_APPCONFIGURATION_CONNECTIONSTRING"];
-                var azureAppConfigUrl = Environment.GetEnvironmentVariable("AzureAppConfigURL");
+                var azureAppConfigUrl = cs; // Environment.GetEnvironmentVariable("AzureAppConfigURL");
                 var credential = new DefaultAzureCredential();
 
                 //options.Connect(connectionString)      
