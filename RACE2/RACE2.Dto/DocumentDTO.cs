@@ -19,5 +19,7 @@ namespace RACE2.Dto
 
         public int ReservoirId { get; set; }
         public int SubmissionId { get; set; }
+
+        public string DocumentName { get; set; }
     }
 }

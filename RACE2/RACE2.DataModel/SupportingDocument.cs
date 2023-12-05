@@ -53,6 +53,13 @@ namespace RACE2.DataModel
         public string? UsedTemplateEdition { get; set;}
 
         public decimal? UsedTemplateVersion { get; set;}
+
+        public DateTime AVScanDate { get; set;}
+
+        public bool IsClean { get; set;}
+
+        [StringLength(1024)]
+        public string? CleanFileStorageLink { get; set;}
     }
 
 
