@@ -6,7 +6,7 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.EventGrid;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-
+using RACE2.Services;
 using System;
 using System.Data;
 using System.Data.SqlClient;
@@ -25,18 +25,19 @@ namespace FunctionEventTrigger
         private const string InterestedContainer = "unscannedcontent";
 
         private readonly IConfiguration _configuration;
-      //  private readonly IUserService _userService;
-        public MoveMaliciousBlobEventTrigger(IConfiguration configuration)
+        private readonly IUserService _userService;
+        private readonly IReservoirService _reservoirService;
+        public MoveMaliciousBlobEventTrigger(IConfiguration configuration,IUserService userService, IReservoirService reservoirService)
         {
             _configuration = configuration;
-           // _userService = userService;
+            _userService = userService;
+            _reservoirService = reservoirService;
         }
 
         [FunctionName("MoveMaliciousBlobEventTrigger")]
         public async Task RunAsync([EventGridTrigger] EventGridEvent eventGridEvent, ILogger log)
-        {
-            
-            string SqlConnectionString = _configuration["SqlConnectionString"];
+        {           
+
             if (eventGridEvent.EventType != AntimalwareScanEventType)
             {
                 log.LogInformation("Event type is not an {0} event, event type:{1}", AntimalwareScanEventType, eventGridEvent.EventType);
@@ -51,7 +52,8 @@ namespace FunctionEventTrigger
             var blobUri = new Uri(blobUriString);
             var blobUriBuilder = new BlobUriBuilder(blobUri);
             //var sqlServerConnString = Environment.GetEnvironmentVariable("ConnectionStrings:SqlServerConnString");
-            var sqlServerConnString = Environment.GetEnvironmentVariable("SqlServerConnString");
+            //var sqlServerConnString = Environment.GetEnvironmentVariable("SqlServerConnString");
+            string SqlConnectionString = _configuration["SqlConnectionString"];
 
             // Filter events from interested containers
             if (blobUriBuilder.BlobContainerName != InterestedContainer)
@@ -167,7 +169,7 @@ namespace FunctionEventTrigger
 
                 // fill the parameters - avoiding "AddWithValue"
                 cmd.Parameters.Add("@ORAID", SqlDbType.Int).Value = IsCleanFile;
-              //  cmd.Parameters.Add("@FullTitle", SqlDbType.NVarChar, 250).Value = TextBox_FullTitle.Text;
+                // cmd.Parameters.Add("@FullTitle", SqlDbType.NVarChar, 250).Value = TextBox_FullTitle.Text;
 
                 con.Open();
                 // you need to **EXECUTE** the command !
