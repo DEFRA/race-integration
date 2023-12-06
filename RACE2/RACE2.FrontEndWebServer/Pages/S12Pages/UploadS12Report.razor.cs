@@ -174,28 +174,44 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                                 {
                                     await _notificationService.SendConfirmationMailWithAttachment(bytes, UndertakerEmail, ReservoirRegName);
                                 }
-                                ////Store the uploaded document information
-                                //documentDTO.FileName = selectedFile.Name.Split('.')[0];
-                                //documentDTO.FileType = fileExtn;
-                                //documentDTO.DateSent = DateTime.Now;
-                                //documentDTO.FileLocation = selectedFile.Name;
-                                //documentDTO.ReservoirId = Int32.Parse(ReservoirId);
-                                //documentDTO.SuppliedViaService = 1;
-                                //documentDTO.SubmissionId = updatedStatus.Id;
-                                //documentDTO.DocumentType = "S12";
-                                //documentDTO.SuppliedBy = userDetails.Id;
-                                //await reservoirService.InsertUploadDocumentDetails(documentDTO);
+                                //Store the uploaded document information
+                                documentDTO.SubmissionId = updatedStatus.Id;   
+                                await reservoirService.InsertDocumentRelatedTable(Int32.Parse(ReservoirId), updatedStatus.Id,docID);
                                 Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Information("File upload succeeded.");
                                 goToNextPage();
                             }
                             else 
                             {
-                                Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File scan failed.");
-                                FileVirusScanFailed();
-                                await InvokeAsync(() =>
+                                var scanResult = await reservoirService.GetScannedResultbyDocId(docID);
+                                bool virusClean = true;
+                                bool notScanned = true;
+                                if (scanResult.AVScanDate == DateTime.MinValue)
                                 {
-                                    StateHasChanged();
-                                });
+                                    notScanned = true;
+                                }
+                                else if (scanResult.AVScanDate != DateTime.MinValue && scanResult.CleanFileStorageLink == null && !scanResult.IsClean)
+                                {
+                                    notScanned = false;
+                                    virusClean = false;
+                                }
+                                if (notScanned)
+                                {
+                                    Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File not scanned for virus.");
+                                    FileUploadFailed();
+                                    await InvokeAsync(() =>
+                                    {
+                                        StateHasChanged();
+                                    });
+                                }
+                                else if (!virusClean)
+                                {
+                                    Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File infected by virus.");
+                                    FileVirusScanFailed();
+                                    await InvokeAsync(() =>
+                                    {
+                                        StateHasChanged();
+                                    });
+                                }
                             }
                         }
                         else
