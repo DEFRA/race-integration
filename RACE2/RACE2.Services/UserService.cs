@@ -178,6 +178,18 @@ namespace RACE2.Services
 
         }
 
+        public async Task<OrganisationDTO> GetCompanyNameByUserId(int userId)
+        {
+            try
+            {
+                return await _userRepository.GetCompanyNameByUserId(userId);
+            }
+            catch (Exception ex)
+            {
+                return new OrganisationDTO();
+            }
+        }
+
     }
 
 }

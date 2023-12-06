@@ -12,8 +12,13 @@ namespace RACE2.Dto
     {
         public int Id { get; set; }
         public string? OrgName { get; set; }        
-        public string? BusinessType { get; set; }
+       
+        public string? cRaceOganisationId { get; set; }
 
-        public List<Address> Addresses { get; set; } = new List<Address>();
+        public string? cBusinessType { get; set; }
+
+        [StringLength(64)]
+        public string? cBranch { get; set; }
+         public List<Address> Addresses { get; set; } = new List<Address>();
     }
 }

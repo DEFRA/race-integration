@@ -456,5 +456,29 @@ namespace RACE2.DataAccess.Repository
                 return 0;
             }
         }
+
+        public async Task<OrganisationDTO> GetCompanyNameByUserId(int userId)
+        {
+            try
+            {
+                using (var conn = Connection)
+                {
+
+                    DynamicParameters parameters = new DynamicParameters();
+                    parameters.Add("userid", userId, DbType.String);
+
+
+                    var user = await conn.QueryAsync<OrganisationDTO>("sp_GetCompanyNameByUserId",parameters, commandType: CommandType.StoredProcedure);
+                   
+                    return user.FirstOrDefault();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
+        }
     }
 }

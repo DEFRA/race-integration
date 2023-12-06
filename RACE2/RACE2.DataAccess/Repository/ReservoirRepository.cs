@@ -381,10 +381,11 @@ namespace RACE2.DataAccess.Repository
                     parameters.Add("datesent", document.DateSent, DbType.DateTime);
                     parameters.Add("reservoirid", document.ReservoirId, DbType.Int64);
                     parameters.Add("submissionid", document.SubmissionId, DbType.Int64);
+                    parameters.Add("documentName",document.DocumentName,DbType.String);
                     if (document != null)
                     {
 
-                        var result1  = await conn.ExecuteAsync("sp_InsertDocumentUpload", parameters, commandType: CommandType.StoredProcedure);
+                        result  = await conn.ExecuteAsync("sp_InsertDocumentUpload", parameters, commandType: CommandType.StoredProcedure);
 
                         return result;
                     }
@@ -403,5 +404,114 @@ namespace RACE2.DataAccess.Repository
                 return 1;
             }
         }
+
+
+        public async Task<int> UpdateScannedDocumentResult(DateTime scanneddatetime, bool isClean, string uploadblobpath , string blobStorageFileName)
+        {
+            _logger.LogInformation("Updating scan result for the reservoir  {documentName}  ", blobStorageFileName);
+            try
+            {
+
+                using (var conn = Connection)
+                {
+                    var parameters = new DynamicParameters();
+                    parameters.Add("scannedtime", scanneddatetime, DbType.DateTime);
+                    parameters.Add("isClean", isClean, DbType.Boolean);
+                    parameters.Add("uploadBlobpath", uploadblobpath, DbType.String);
+                    parameters.Add("documentName", blobStorageFileName, DbType.String);
+                    if (blobStorageFileName != null)
+                    {
+
+                         await conn.ExecuteAsync("sp_UpdateScannedDocumentResult", parameters, commandType: CommandType.StoredProcedure);
+
+                        return 1;
+                    }
+                    else
+                    {
+                        _logger.LogInformation("The input is not valid {documentName}", blobStorageFileName);
+                        return 0;
+                    }
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return 0;
+            }
+        }
+
+
+        public async Task<DocumentDTO> GetScannedResultbyDocId(int id)
+        {
+            _logger.LogInformation("Get scan result for the document  {id}  ", id);
+            try
+            {
+
+                using (var conn = Connection)
+                {
+                    var parameters = new DynamicParameters();
+                    parameters.Add("docid",id, DbType.Int64);
+                    
+                    if (id != 0)
+                    {
+
+                        var result = await conn.QueryAsync<DocumentDTO>("sp_GetScannedResultByDocId", parameters, commandType: CommandType.StoredProcedure);
+
+                        return result.FirstOrDefault();
+                    }
+                    else
+                    {
+                        _logger.LogInformation("The input is not valid {id}", id);
+                        return null;
+                    }
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return null;
+            }
+        }
+
+        public async Task<int> InsertDocumentRelatedTable(int reservoirid, int submissionid, int documentid)
+        {
+            _logger.LogInformation("Insert document related table for the document  {id}  ", documentid);
+            try
+            {
+
+                using (var conn = Connection)
+                {
+                    var parameters = new DynamicParameters();
+                    parameters.Add("documentid", documentid, DbType.Int64);
+                    parameters.Add("submissionid", submissionid, DbType.Int64);
+                    parameters.Add("reservoirid", documentid, DbType.Int64);
+
+                    if (documentid != 0)
+                    {
+
+                        var result = await conn.ExecuteAsync("sp_InsertDocumentRelatedTable", parameters, commandType: CommandType.StoredProcedure);
+
+                        return 1;
+                    }
+                    else
+                    {
+                        _logger.LogInformation("The input is not valid {id}", documentid);
+                        return 0;
+                    }
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return 0;
+            }
+        }
+
     }
 }
