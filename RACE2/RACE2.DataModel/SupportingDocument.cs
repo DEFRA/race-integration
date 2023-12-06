@@ -60,6 +60,9 @@ namespace RACE2.DataModel
 
         [StringLength(1024)]
         public string? CleanFileStorageLink { get; set;}
+
+        [StringLength(64)]
+        public string? BlobStorageFileName { get; set;}
     }
 
 
