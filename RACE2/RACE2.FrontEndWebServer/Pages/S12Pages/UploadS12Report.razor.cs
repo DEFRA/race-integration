@@ -92,7 +92,9 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             else
             {
                 selectedFile = selectedFiles[0];
-                fileExtn = selectedFile.Name.Split('.')[1];
+                var fileExtns = selectedFile.Name.Split('.');
+                int totalExtns= fileExtns.Length;
+                fileExtn = selectedFile.Name.Split('.')[totalExtns-1];
                 if (!(fileExtn == "docx" || fileExtn == "doc" || fileExtn == "pdf"))
                 {
                     WrongExtensionSelected();
@@ -137,7 +139,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                         documentDTO.FileLocation = selectedFile.Name;
                         documentDTO.ReservoirId = Int32.Parse(ReservoirId);
                         documentDTO.SuppliedViaService = 1;
-                        //documentDTO.SubmissionId = updatedStatus.Id;
+                        documentDTO.BlobStorageFileName = trustedFileNameForFileStorage;
                         documentDTO.DocumentType = "S12";
                         documentDTO.SuppliedBy = userDetails.Id;
                         var docID = await reservoirService.InsertUploadDocumentDetails(documentDTO);
