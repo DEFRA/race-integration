@@ -10,6 +10,7 @@ using RACE2.Dto;
 using RACE2.Notification;
 using RACE2.Services;
 using System;
+using System.Data;
 
 namespace RACE2.FrontEndWebServer.Pages.S12Pages
 {
@@ -120,13 +121,26 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 {
                     try
                     {
-                        var containerName = UserName.Split("@")[0];
-                        if (containerName.Contains('.'))
-                        {
-                            containerName = containerName.Split('.')[0];
-                        }
+                        //var containerName = UserName.Split("@")[0];
+                        //if (containerName.Contains('.'))
+                        //{
+                        //    containerName = containerName.Split('.')[0];
+                        //}
+                        var containerName = "unscannedcontent";
                         //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + "."+ extn;
                         var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + SubmissionReference + "." + fileExtn;
+                        
+                        //Store the uploaded document information
+                        documentDTO.FileName = selectedFile.Name.Split('.')[0];
+                        documentDTO.FileType = fileExtn;
+                        documentDTO.DateSent = DateTime.Now;
+                        documentDTO.FileLocation = selectedFile.Name;
+                        documentDTO.ReservoirId = Int32.Parse(ReservoirId);
+                        documentDTO.SuppliedViaService = 1;
+                        //documentDTO.SubmissionId = updatedStatus.Id;
+                        documentDTO.DocumentType = "S12";
+                        documentDTO.SuppliedBy = userDetails.Id;
+                        await reservoirService.InsertUploadDocumentDetails(documentDTO);
 
                         var blobUrl = await blobStorageService.UploadFileToBlobAsync(containerName, trustedFileNameForFileStorage, selectedFile.ContentType, selectedFile.OpenReadStream(UploadFileData.MaxFileSize));
                         if (blobUrl != null)
@@ -148,17 +162,17 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                             {                     
                                 await _notificationService.SendConfirmationMailWithAttachment(bytes, UndertakerEmail, ReservoirRegName);
                             }
-                            //Store the uploaded document information
-                            documentDTO.FileName = selectedFile.Name.Split('.')[0];
-                            documentDTO.FileType = fileExtn;
-                            documentDTO.DateSent = DateTime.Now;
-                            documentDTO.FileLocation = selectedFile.Name;
-                            documentDTO.ReservoirId = Int32.Parse(ReservoirId);
-                            documentDTO.SuppliedViaService = 1;
-                            documentDTO.SubmissionId = updatedStatus.Id;
-                            documentDTO.DocumentType = "S12";
-                            documentDTO.SuppliedBy = userDetails.Id;
-                            await reservoirService.InsertUploadDocumentDetails(documentDTO);
+                            ////Store the uploaded document information
+                            //documentDTO.FileName = selectedFile.Name.Split('.')[0];
+                            //documentDTO.FileType = fileExtn;
+                            //documentDTO.DateSent = DateTime.Now;
+                            //documentDTO.FileLocation = selectedFile.Name;
+                            //documentDTO.ReservoirId = Int32.Parse(ReservoirId);
+                            //documentDTO.SuppliedViaService = 1;
+                            //documentDTO.SubmissionId = updatedStatus.Id;
+                            //documentDTO.DocumentType = "S12";
+                            //documentDTO.SuppliedBy = userDetails.Id;
+                            //await reservoirService.InsertUploadDocumentDetails(documentDTO);
                             Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Information("File upload succeeded.");
                             goToNextPage();
                         }
