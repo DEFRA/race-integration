@@ -184,13 +184,28 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                             {
                                 var scanResult = await reservoirService.GetScannedResultbyDocId(docID);
                                 bool virusClean = true;
-                                if (scanResult.AVScanDate != DateTime.MinValue && scanResult.CleanFileStorageLink != null && !scanResult.IsClean)
+                                bool notScanned = true;
+                                if (scanResult.AVScanDate == DateTime.MinValue)
                                 {
+                                    notScanned = true;
+                                }
+                                else if (scanResult.AVScanDate != DateTime.MinValue && scanResult.CleanFileStorageLink == null && !scanResult.IsClean)
+                                {
+                                    notScanned = false;
                                     virusClean = false;
                                 }
-                                if (!virusClean)
+                                if (notScanned)
                                 {
-                                    Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File scan failed.");
+                                    Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File not scanned for virus.");
+                                    FileUploadFailed();
+                                    await InvokeAsync(() =>
+                                    {
+                                        StateHasChanged();
+                                    });
+                                }
+                                else if (!virusClean)
+                                {
+                                    Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File infected by virus.");
                                     FileVirusScanFailed();
                                     await InvokeAsync(() =>
                                     {
