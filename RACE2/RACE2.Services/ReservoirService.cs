@@ -176,5 +176,43 @@ namespace RACE2.Services
                 return  1;
             }
         }
+
+
+
+        public async Task<int> UpdateScannedDocumentResult(DateTime scanneddatetime, bool isClean, string uploadblobpath, string blobStorageFileName)
+        {
+            try
+            {
+                return await _reservoirRepository.UpdateScannedDocumentResult(scanneddatetime,isClean,uploadblobpath, blobStorageFileName);
+            }
+            catch (Exception ex)
+            {
+                return 1;
+            }
+        }
+
+        public async Task<DocumentDTO> GetScannedResultbyDocId(int id)
+        {
+            try
+            {
+                return await _reservoirRepository.GetScannedResultbyDocId(id);
+            }
+            catch (Exception ex)
+            {
+                return new DocumentDTO();
+            }
+        }
+
+        public async Task<int> InsertDocumentRelatedTable(int reservoirid, int submissionid, int documentid)
+        {
+            try
+            {
+                return await _reservoirRepository.InsertDocumentRelatedTable(reservoirid, submissionid, documentid);
+            }
+            catch (Exception ex)
+            {
+                return 1;
+            }
+        }
     }
 }
