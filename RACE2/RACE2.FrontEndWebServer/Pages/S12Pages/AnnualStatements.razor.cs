@@ -230,7 +230,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 s12PrePopulationFields.ReservoirNearestTown = reservoir.NearestTown != null ? reservoir.NearestTown : "";
                 s12PrePopulationFields.ReservoirGridRef = reservoir.GridReference != null ? reservoir.GridReference : "";
                 s12PrePopulationFields.SupervisingEngineerName = userDetails.cFirstName + " " + userDetails.cLastName;
-                s12PrePopulationFields.SupervisingEngineerCompanyName = " ";
+                var companyDetails= await userService.GetCompanyNameByUserId(userDetails.Id);
+                s12PrePopulationFields.SupervisingEngineerCompanyName = companyDetails.OrgName==null?" ":companyDetails.OrgName;
                 Address address = userDetails.addresses.FirstOrDefault();
                 s12PrePopulationFields.SupervisingEngineerAddress = address.AddressLine1;
                 if (!String.IsNullOrEmpty(address.AddressLine2))
