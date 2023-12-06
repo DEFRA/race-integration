@@ -128,8 +128,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                         //}
                         var containerNameToUplodTo = "unscannedcontent";
                         //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + "."+ extn;
-                        var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + SubmissionReference + "." + fileExtn;
-                        
+                        //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + SubmissionReference + "." + fileExtn;
+                        var trustedFileNameForFileStorage = SubmissionReference +"_" + DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day+ DateTime.Now.Hour + DateTime.Now.Minute + DateTime.Now.Second + "." + fileExtn;
                         //Store the uploaded document information
                         documentDTO.FileName = selectedFile.Name.Split('.')[0];
                         documentDTO.FileType = fileExtn;
@@ -140,7 +140,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                         //documentDTO.SubmissionId = updatedStatus.Id;
                         documentDTO.DocumentType = "S12";
                         documentDTO.SuppliedBy = userDetails.Id;
-                        await reservoirService.InsertUploadDocumentDetails(documentDTO);
+                        var docID = await reservoirService.InsertUploadDocumentDetails(documentDTO);
 
                         var blobUrl = await blobStorageService.UploadFileToBlobAsync(containerNameToUplodTo, trustedFileNameForFileStorage, selectedFile.ContentType, selectedFile.OpenReadStream(UploadFileData.MaxFileSize));
                         if (blobUrl != null)
@@ -155,6 +155,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                             fileUploadViewModels.Add(fileUploadViewModel);
                             SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(Int32.Parse(ReservoirId), userDetails.Id, "Sent");
                             //_fileNameResult=await jsRuntime.InvokeAsync<string>("getFileName");
+                            
+                            System.Threading.Thread.Sleep(5000);//wait for 5 seconds
                             var containerNameToDownloadFrom = "cleanfiles";
                             var bytes = await blobStorageService.GetBlobAsByteArray(containerNameToDownloadFrom, trustedFileNameForFileStorage);
                             if (bytes != null)
@@ -181,7 +183,12 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                             }
                             else 
                             {
-                                throw new Exception("File does not exist in cleanfiles container");
+                                Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File scan failed.");
+                                FileVirusScanFailed();
+                                await InvokeAsync(() =>
+                                {
+                                    StateHasChanged();
+                                });
                             }
                         }
                         else
@@ -279,6 +286,12 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         {
             clearAllUploadFileSettings();
             UploadFileData.FileUploadFailed = true;
+        }
+
+        private void FileVirusScanFailed()
+        {
+            clearAllUploadFileSettings();
+            UploadFileData.FileContainsVirus = true;
         }
     }
 }
