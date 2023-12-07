@@ -380,14 +380,16 @@ namespace RACE2.DataAccess.Repository
                     parameters.Add("suppliedviaservice", document.SuppliedViaService, DbType.Int64);
                     parameters.Add("datesent", document.DateSent, DbType.DateTime);
                     parameters.Add("reservoirid", document.ReservoirId, DbType.Int64);
-                    parameters.Add("submissionid", document.SubmissionId, DbType.Int64);
+                    //parameters.Add("submissionid", document.SubmissionId, DbType.Int64);
                     parameters.Add("documentName",document.DocumentName,DbType.String);
+                    parameters.Add("blobStorageFileName",document.BlobStorageFileName, DbType.String);
+                    parameters.Add("newid", dbType: DbType.Int32, direction: ParameterDirection.Output);
                     if (document != null)
                     {
 
                         result  = await conn.ExecuteAsync("sp_InsertDocumentUpload", parameters, commandType: CommandType.StoredProcedure);
-
-                        return result;
+                        var id = parameters.Get<int>("newid");
+                        return id;
                     }
                     else
                     {
@@ -401,7 +403,7 @@ namespace RACE2.DataAccess.Repository
             catch (Exception ex)
             {
                 _logger.LogError(ex, ex.Message);
-                return 1;
+                return 0;
             }
         }
 

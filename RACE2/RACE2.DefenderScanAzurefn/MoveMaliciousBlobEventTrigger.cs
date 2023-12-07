@@ -1,10 +1,12 @@
-using Azure.Identity;
+﻿using Azure.Identity;
 using Azure.Messaging.EventGrid;
 using Azure.Storage.Blobs;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.EventGrid;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Data;
+using System.Data.SqlClient;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -23,6 +25,8 @@ namespace FunctionEventTrigger
         [FunctionName("MoveMaliciousBlobEventTrigger")]
         public static async Task RunAsync([EventGridTrigger] EventGridEvent eventGridEvent, ILogger log)
         {
+            string connString = Environment.GetEnvironmentVariable("SqlConnectionString", EnvironmentVariableTarget.Process);
+
             if (eventGridEvent.EventType != AntimalwareScanEventType)
             {
                 log.LogInformation("Event type is not an {0} event, event type:{1}", AntimalwareScanEventType, eventGridEvent.EventType);
@@ -36,6 +40,11 @@ namespace FunctionEventTrigger
             var blobUriString = eventData.GetProperty("blobUri").GetString();
             var blobUri = new Uri(blobUriString);
             var blobUriBuilder = new BlobUriBuilder(blobUri);
+            var scannedTime = eventData.GetProperty("scanFinishedTimeUtc").GetString();
+           // DateTime scannedDataTime = new DateTime(scannedTime);
+            bool isclean = true;
+            //string blobpath;
+            string documentName = string.Empty;
 
             // Filter events from interested containers
             if (blobUriBuilder.BlobContainerName != InterestedContainer)
@@ -55,7 +64,7 @@ namespace FunctionEventTrigger
                 log.LogInformation("blob {0} is malicious, moving it to {1} container", blobUri, MalwareContainer);
                 try
                 {
-                    await MoveMaliciousBlobAsync(blobUri, log);
+                    await MoveMaliciousBlobAsync(blobUri, log,false, Convert.ToDateTime(scannedTime),connString);
                 }
                 catch (Exception e)
                 {
@@ -69,7 +78,8 @@ namespace FunctionEventTrigger
                 log.LogInformation("blob {0} is malicious, moving it to {1} container", blobUri, CleanContainer);
                 try
                 {
-                    await MoveCleanBlobAsync(blobUri, log);
+                    await MoveCleanBlobAsync(blobUri, log,isclean,Convert.ToDateTime(scannedTime),connString);
+                   
                 }
                 catch (Exception e)
                 {
@@ -79,7 +89,7 @@ namespace FunctionEventTrigger
             }
         }
 
-        private static async Task MoveMaliciousBlobAsync(Uri blobUri, ILogger log)
+        private static async Task MoveMaliciousBlobAsync(Uri blobUri, ILogger log, bool IsClean, DateTime scannedTime, string connString)
 
         {
             var blobUriBuilder = new BlobUriBuilder(blobUri);
@@ -108,9 +118,16 @@ namespace FunctionEventTrigger
             log.LogInformation("MoveBlob: Deleting source blob {0}", srcBlobClient.Uri);
             await srcBlobClient.DeleteAsync();
             log.LogInformation("MoveBlob: blob moved successfully");
+            log.LogInformation("Updating the database");
+            log.LogInformation("{0}", destBlobClient.Uri);
+            log.LogInformation("{0}", blobUriBuilder.BlobName);
+            log.LogInformation("{0}", connString);
+            log.LogInformation("{0}", scannedTime);
+            UpdateScanResulttoDB(connString, scannedTime, IsClean, null, blobUriBuilder.BlobName);
+            log.LogInformation("Database updated successfully");
         }
 
-        private static async Task MoveCleanBlobAsync(Uri blobUri, ILogger log)
+        private static async Task MoveCleanBlobAsync(Uri blobUri, ILogger log,bool IsClean,DateTime scannedTime,string connString)
         {
             var blobUriBuilder = new BlobUriBuilder(blobUri);
             if (blobUriBuilder.BlobContainerName == CleanContainer)
@@ -138,6 +155,37 @@ namespace FunctionEventTrigger
             log.LogInformation("MoveBlob: Deleting source blob {0}", srcBlobClient.Uri);
             await srcBlobClient.DeleteAsync();
             log.LogInformation("MoveBlob: blob moved successfully");
+            log.LogInformation("Updating the database");
+            log.LogInformation("{0}", destBlobClient.Uri);
+            log.LogInformation("{0}", blobUriBuilder.BlobName);
+            log.LogInformation("{0}", connString);
+            log.LogInformation("{0}", scannedTime);
+            UpdateScanResulttoDB(connString, scannedTime, IsClean, Convert.ToString(destBlobClient.Uri), blobUriBuilder.BlobName);
+            log.LogInformation("Database updated successfully");
+        }
+
+        private static void UpdateScanResulttoDB(string connString, DateTime scannedTime, bool isclean,string blobpath,string documentName)
+        {
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                conn.Open();
+
+                // 1.  create a command object identifying the stored procedure
+                SqlCommand cmd = new SqlCommand("sp_UpdateScannedDocumentResult", conn);
+
+                // 2. set the command object so it knows to execute a stored procedure
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                // 3. add parameter to command, which will be passed to the stored procedure
+                cmd.Parameters.Add(new SqlParameter("@scannedtime", scannedTime));
+                cmd.Parameters.Add(new SqlParameter("@isClean", isclean));
+                cmd.Parameters.Add(new SqlParameter("@uploadBlobpath", blobpath));
+                cmd.Parameters.Add(new SqlParameter("@documentName", documentName));
+
+              cmd.ExecuteNonQuery();
+                conn.Close();
+               
+            }
         }
     }
 }

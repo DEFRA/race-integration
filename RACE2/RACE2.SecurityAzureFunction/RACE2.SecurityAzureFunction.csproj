@@ -23,6 +23,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<Folder Include="Properties\PublishProfiles\" />
+		<Folder Include="Properties\ServiceDependencies\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\RACE2.Services\RACE2.Services.csproj" />

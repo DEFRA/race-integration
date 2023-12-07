@@ -10,6 +10,7 @@ using RACE2.Dto;
 using RACE2.Notification;
 using RACE2.Services;
 using System;
+using System.Data;
 
 namespace RACE2.FrontEndWebServer.Pages.S12Pages
 {
@@ -91,7 +92,9 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             else
             {
                 selectedFile = selectedFiles[0];
-                fileExtn = selectedFile.Name.Split('.')[1];
+                var fileExtns = selectedFile.Name.Split('.');
+                int totalExtns= fileExtns.Length;
+                fileExtn = selectedFile.Name.Split('.')[totalExtns-1];
                 if (!(fileExtn == "docx" || fileExtn == "doc" || fileExtn == "pdf"))
                 {
                     WrongExtensionSelected();
@@ -120,15 +123,28 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 {
                     try
                     {
-                        var containerName = UserName.Split("@")[0];
-                        if (containerName.Contains('.'))
-                        {
-                            containerName = containerName.Split('.')[0];
-                        }
+                        //var containerName = UserName.Split("@")[0];
+                        //if (containerName.Contains('.'))
+                        //{
+                        //    containerName = containerName.Split('.')[0];
+                        //}
+                        var containerNameToUplodTo = "unscannedcontent";
                         //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + "."+ extn;
-                        var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + SubmissionReference + "." + fileExtn;
+                        //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + SubmissionReference + "." + fileExtn;
+                        var trustedFileNameForFileStorage = SubmissionReference +"_" + DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day+ DateTime.Now.Hour + DateTime.Now.Minute + DateTime.Now.Second + "." + fileExtn;
+                        //Store the uploaded document information
+                        documentDTO.FileName = selectedFile.Name.Split('.')[0];
+                        documentDTO.FileType = fileExtn;
+                        documentDTO.DateSent = DateTime.Now;
+                        documentDTO.FileLocation = selectedFile.Name;
+                        documentDTO.ReservoirId = Int32.Parse(ReservoirId);
+                        documentDTO.SuppliedViaService = 1;
+                        documentDTO.BlobStorageFileName = trustedFileNameForFileStorage;
+                        documentDTO.DocumentType = "S12";
+                        documentDTO.SuppliedBy = userDetails.Id;
+                        var docID = await reservoirService.InsertUploadDocumentDetails(documentDTO);
 
-                        var blobUrl = await blobStorageService.UploadFileToBlobAsync(containerName, trustedFileNameForFileStorage, selectedFile.ContentType, selectedFile.OpenReadStream(UploadFileData.MaxFileSize));
+                        var blobUrl = await blobStorageService.UploadFileToBlobAsync(containerNameToUplodTo, trustedFileNameForFileStorage, selectedFile.ContentType, selectedFile.OpenReadStream(UploadFileData.MaxFileSize));
                         if (blobUrl != null)
                         {
                             FileUploadViewModel fileUploadViewModel = new FileUploadViewModel()
@@ -141,26 +157,62 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                             fileUploadViewModels.Add(fileUploadViewModel);
                             SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(Int32.Parse(ReservoirId), userDetails.Id, "Sent");
                             //_fileNameResult=await jsRuntime.InvokeAsync<string>("getFileName");
-                            var bytes = await blobStorageService.GetBlobAsByteArray(containerName, trustedFileNameForFileStorage);
-                            await _notificationService.SendConfirmationMailtoSE(userDetails.Email, ReservoirRegName);
-                            await _notificationService.SendConfirmationMailtoRST(userDetails.Email, ReservoirRegName, bytes, userDetails.cFirstName + " " + userDetails.cLastName, UndertakerName);
-                            if (YesNoValue == "Yes")
-                            {                     
-                                await _notificationService.SendConfirmationMailWithAttachment(bytes, UndertakerEmail, ReservoirRegName);
+                            
+                            System.Threading.Thread.Sleep(5000);//wait for 5 seconds
+                            var containerNameToDownloadFrom = "cleanfiles";
+                            var bytes = await blobStorageService.GetBlobAsByteArray(containerNameToDownloadFrom, trustedFileNameForFileStorage);
+                            if (bytes == null)
+                            {
+                                System.Threading.Thread.Sleep(5000);//wait for 5 more seconds
+                                bytes = await blobStorageService.GetBlobAsByteArray(containerNameToDownloadFrom, trustedFileNameForFileStorage);
                             }
-                            //Store the uploaded document information
-                            documentDTO.FileName = selectedFile.Name.Split('.')[0];
-                            documentDTO.FileType = fileExtn;
-                            documentDTO.DateSent = DateTime.Now;
-                            documentDTO.FileLocation = selectedFile.Name;
-                            documentDTO.ReservoirId = Int32.Parse(ReservoirId);
-                            documentDTO.SuppliedViaService = 1;
-                            documentDTO.SubmissionId = updatedStatus.Id;
-                            documentDTO.DocumentType = "S12";
-                            documentDTO.SuppliedBy = userDetails.Id;
-                            await reservoirService.InsertUploadDocumentDetails(documentDTO);
-                            Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Information("File upload succeeded.");
-                            goToNextPage();
+                            if (bytes != null)
+                            {
+                                await _notificationService.SendConfirmationMailtoSE(userDetails.Email, ReservoirRegName);
+                                await _notificationService.SendConfirmationMailtoRST(userDetails.Email, ReservoirRegName, bytes, userDetails.cFirstName + " " + userDetails.cLastName, UndertakerName);
+                                if (YesNoValue == "Yes")
+                                {
+                                    await _notificationService.SendConfirmationMailWithAttachment(bytes, UndertakerEmail, ReservoirRegName);
+                                }
+                                //Store the uploaded document information
+                                documentDTO.SubmissionId = updatedStatus.Id;   
+                                await reservoirService.InsertDocumentRelatedTable(Int32.Parse(ReservoirId), updatedStatus.Id,docID);
+                                Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Information("File upload succeeded.");
+                                goToNextPage();
+                            }
+                            else 
+                            {
+                                var scanResult = await reservoirService.GetScannedResultbyDocId(docID);
+                                bool virusClean = true;
+                                bool notScanned = true;
+                                if (scanResult.AVScanDate == DateTime.MinValue)
+                                {
+                                    notScanned = true;
+                                }
+                                else if (scanResult.AVScanDate != DateTime.MinValue && scanResult.CleanFileStorageLink == null && !scanResult.IsClean)
+                                {
+                                    notScanned = false;
+                                    virusClean = false;
+                                }
+                                if (notScanned)
+                                {
+                                    Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File not scanned for virus.");
+                                    FileUploadFailed();
+                                    await InvokeAsync(() =>
+                                    {
+                                        StateHasChanged();
+                                    });
+                                }
+                                else if (!virusClean)
+                                {
+                                    Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File infected by virus.");
+                                    FileVirusScanFailed();
+                                    await InvokeAsync(() =>
+                                    {
+                                        StateHasChanged();
+                                    });
+                                }
+                            }
                         }
                         else
                         {
@@ -257,6 +309,12 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         {
             clearAllUploadFileSettings();
             UploadFileData.FileUploadFailed = true;
+        }
+
+        private void FileVirusScanFailed()
+        {
+            clearAllUploadFileSettings();
+            UploadFileData.FileContainsVirus = true;
         }
     }
 }
