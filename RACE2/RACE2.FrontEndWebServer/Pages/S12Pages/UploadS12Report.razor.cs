@@ -158,12 +158,12 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                             SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(Int32.Parse(ReservoirId), userDetails.Id, "Sent");
                             //_fileNameResult=await jsRuntime.InvokeAsync<string>("getFileName");
                             
-                            System.Threading.Thread.Sleep(5000);//wait for 5 seconds
+                            System.Threading.Thread.Sleep(10000);//wait for 5 seconds
                             var containerNameToDownloadFrom = "cleanfiles";
                             var bytes = await blobStorageService.GetBlobAsByteArray(containerNameToDownloadFrom, trustedFileNameForFileStorage);
                             if (bytes == null)
                             {
-                                System.Threading.Thread.Sleep(5000);//wait for 5 more seconds
+                                System.Threading.Thread.Sleep(10000);//wait for 5 more seconds
                                 bytes = await blobStorageService.GetBlobAsByteArray(containerNameToDownloadFrom, trustedFileNameForFileStorage);
                             }
                             if (bytes != null)
