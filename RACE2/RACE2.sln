@@ -156,7 +156,9 @@ Project("{C9674DCB-5085-4A16-B785-4C70DD1589BD}") = "RACE2.UploadDatatoDatabase_
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.ClamAVAzureFunction", "RACE2.ClamAVAzureFunction\RACE2.ClamAVAzureFunction.csproj", "{75D59104-E1D6-4C79-966C-B18FC9C10F8A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RACE2.SecurityAzureFunction", "RACE2.SecurityAzureFunction\RACE2.SecurityAzureFunction.csproj", "{1D981384-8524-472C-8F37-90B58F72C46D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.SecurityAzureFunction", "RACE2.SecurityAzureFunction\RACE2.SecurityAzureFunction.csproj", "{1D981384-8524-472C-8F37-90B58F72C46D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RACE2.DefenderScanAzurefn", "RACE2.DefenderScanAzurefn\RACE2.DefenderScanAzurefn.csproj", "{CF4E5CBA-48AA-4307-BD23-8C355D62BBCC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -261,6 +263,12 @@ Global
 		{1D981384-8524-472C-8F37-90B58F72C46D}.Development|Any CPU.Build.0 = Debug|Any CPU
 		{1D981384-8524-472C-8F37-90B58F72C46D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D981384-8524-472C-8F37-90B58F72C46D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF4E5CBA-48AA-4307-BD23-8C355D62BBCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF4E5CBA-48AA-4307-BD23-8C355D62BBCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF4E5CBA-48AA-4307-BD23-8C355D62BBCC}.Development|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF4E5CBA-48AA-4307-BD23-8C355D62BBCC}.Development|Any CPU.Build.0 = Debug|Any CPU
+		{CF4E5CBA-48AA-4307-BD23-8C355D62BBCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF4E5CBA-48AA-4307-BD23-8C355D62BBCC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

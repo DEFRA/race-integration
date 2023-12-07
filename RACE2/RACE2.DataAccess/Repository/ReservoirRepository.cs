@@ -380,8 +380,9 @@ namespace RACE2.DataAccess.Repository
                     parameters.Add("suppliedviaservice", document.SuppliedViaService, DbType.Int64);
                     parameters.Add("datesent", document.DateSent, DbType.DateTime);
                     parameters.Add("reservoirid", document.ReservoirId, DbType.Int64);
-                    parameters.Add("submissionid", document.SubmissionId, DbType.Int64);
+                    //parameters.Add("submissionid", document.SubmissionId, DbType.Int64);
                     parameters.Add("documentName",document.DocumentName,DbType.String);
+                    parameters.Add("blobStorageFileName",document.BlobStorageFileName, DbType.String);
                     if (document != null)
                     {
 
