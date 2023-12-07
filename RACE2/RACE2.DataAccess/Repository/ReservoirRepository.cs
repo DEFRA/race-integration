@@ -390,6 +390,7 @@ namespace RACE2.DataAccess.Repository
                         result  = await conn.ExecuteAsync("sp_InsertDocumentUpload", parameters, commandType: CommandType.StoredProcedure);
                         var id = parameters.Get<int>("newid");
                         return id;
+
                     }
                     else
                     {
