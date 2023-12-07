@@ -163,7 +163,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                             var bytes = await blobStorageService.GetBlobAsByteArray(containerNameToDownloadFrom, trustedFileNameForFileStorage);
                             if (bytes == null)
                             {
-                                System.Threading.Thread.Sleep(10000);//wait for 5 more seconds
+                                System.Threading.Thread.Sleep(5000);//wait for 5 more seconds
                                 bytes = await blobStorageService.GetBlobAsByteArray(containerNameToDownloadFrom, trustedFileNameForFileStorage);
                             }
                             if (bytes != null)
