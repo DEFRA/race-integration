@@ -169,11 +169,19 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                             if (bytes != null)
                             {
                                 await _notificationService.SendConfirmationMailtoSE(userDetails.Email, ReservoirRegName);
-                                await _notificationService.SendConfirmationMailtoRST(userDetails.Email, ReservoirRegName, bytes, userDetails.cFirstName + " " + userDetails.cLastName, UndertakerName);
-                                if (YesNoValue == "Yes")
+                                if (selectedFile.Size < UploadFileData.NotifyServiceFileAttachmentLimit)
                                 {
-                                    await _notificationService.SendConfirmationMailWithAttachment(bytes, UndertakerEmail, ReservoirRegName);
+                                    await _notificationService.SendConfirmationMailtoRST(userDetails.Email, ReservoirRegName, bytes, userDetails.cFirstName + " " + userDetails.cLastName, UndertakerName);
+                                    if (YesNoValue == "Yes")
+                                    {
+                                        await _notificationService.SendConfirmationMailWithAttachment(bytes, UndertakerEmail, ReservoirRegName);
+                                    }
                                 }
+                                else
+                                {
+                                    // alternate email
+                                }
+
                                 //Store the uploaded document information
                                 documentDTO.SubmissionId = updatedStatus.Id;   
                                 await reservoirService.InsertDocumentRelatedTable(Int32.Parse(ReservoirId), updatedStatus.Id,docID);
@@ -183,16 +191,16 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                             else 
                             {
                                 var scanResult = await reservoirService.GetScannedResultbyDocId(docID);
-                                bool virusClean = true;
+                                bool cleanFile = false;
                                 bool notScanned = true;
                                 if (scanResult.AVScanDate == DateTime.MinValue)
                                 {
                                     notScanned = true;
                                 }
-                                else if (scanResult.AVScanDate != DateTime.MinValue && scanResult.CleanFileStorageLink == null && !scanResult.IsClean)
+                                else if (scanResult.AVScanDate != DateTime.MinValue && scanResult.CleanFileStorageLink != null && scanResult.IsClean)
                                 {
                                     notScanned = false;
-                                    virusClean = false;
+                                    cleanFile = true;
                                 }
                                 if (notScanned)
                                 {
@@ -203,7 +211,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                                         StateHasChanged();
                                     });
                                 }
-                                else if (!virusClean)
+                                else if (!cleanFile)
                                 {
                                     Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File infected by virus.");
                                     FileVirusScanFailed();
@@ -322,6 +330,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
 public class UploadFileData
 {
     public long MaxFileSize { get; set; }
+    public long NotifyServiceFileAttachmentLimit { get; set; }
     public long EmptyFileSize { get; set; }
     public bool MaxFileSizeExceeded { get; set; }
     public bool NoFileSelected { get; set; }
@@ -336,5 +345,6 @@ public class UploadFileData
     {
         MaxFileSize = 30 * 1024 * 1024;
         EmptyFileSize = 12 * 1024;
+        NotifyServiceFileAttachmentLimit = 2 * 1024 * 1024;
     }
 }

@@ -1,19 +1,19 @@
-using Azure.Identity;
-using Azure.Messaging.EventGrid;
-using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Models;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.EventGrid;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using RACE2.Services;
+// Default URL for triggering event grid function in the local environment.
+// http://localhost:7071/runtime/webhooks/EventGrid?functionName={functionname}
+
 using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Text.Json;
-using System.Threading.Tasks;
+using Azure.Identity;
+using Azure.Messaging;
+using Azure.Messaging.EventGrid;
+using Azure.Storage.Blobs;
+using Microsoft.Azure.Functions.Worker;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
-namespace FunctionEventTrigger
+namespace RACE2.AzureDefenderFunctionApp
 {
     public class MoveMaliciousBlobEventTrigger
     {
@@ -24,19 +24,18 @@ namespace FunctionEventTrigger
         private const string CleanContainer = "cleanfiles";
         private const string InterestedContainer = "unscannedcontent";
 
+        private readonly ILogger<MoveMaliciousBlobEventTrigger> _logger;
         private readonly IConfiguration _configuration;
-        private readonly IUserService _userService;
-        private readonly IReservoirService _reservoirService;
-        public MoveMaliciousBlobEventTrigger(IConfiguration configuration,IUserService userService, IReservoirService reservoirService)
+
+        public MoveMaliciousBlobEventTrigger(ILogger<MoveMaliciousBlobEventTrigger> logger, IConfiguration configuration)
         {
+            _logger = logger;
             _configuration = configuration;
-            _userService = userService;
-            _reservoirService = reservoirService;
         }
 
-        [FunctionName("MoveMaliciousBlobEventTrigger")]
+        [Function(nameof(MoveMaliciousBlobEventTrigger))]
         public async Task RunAsync([EventGridTrigger] EventGridEvent eventGridEvent, ILogger log)
-        {           
+        {
 
             if (eventGridEvent.EventType != AntimalwareScanEventType)
             {
@@ -74,7 +73,7 @@ namespace FunctionEventTrigger
                 try
                 {
                     await MoveMaliciousBlobAsync(blobUri, log);
-                    UpdateScannedfilesinDB(SqlConnectionString,false, log);
+                    UpdateScannedfilesinDB(SqlConnectionString, false, log);
                 }
                 catch (Exception e)
                 {
@@ -160,7 +159,7 @@ namespace FunctionEventTrigger
             log.LogInformation("MoveBlob: blob moved successfully");
         }
 
-        private void UpdateScannedfilesinDB(string SqlConnectionString, bool IsCleanFile ,ILogger log)
+        private void UpdateScannedfilesinDB(string SqlConnectionString, bool IsCleanFile, ILogger log)
         {
             using (SqlConnection con = new SqlConnection(SqlConnectionString))
             using (SqlCommand cmd = new SqlCommand(" ", con))
@@ -179,3 +178,4 @@ namespace FunctionEventTrigger
         }
     }
 }
+
