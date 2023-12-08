@@ -121,7 +121,7 @@ namespace FunctionEventTrigger
             log.LogInformation("Updating the database");
             log.LogInformation("{0}", destBlobClient.Uri);
             log.LogInformation("{0}", blobUriBuilder.BlobName);
-            log.LogInformation("{0}", connString);
+           // log.LogInformation("{0}", connString);
             log.LogInformation("{0}", scannedTime);
             UpdateScanResulttoDB(connString, scannedTime, IsClean, null, blobUriBuilder.BlobName);
             log.LogInformation("Database updated successfully");
@@ -158,7 +158,7 @@ namespace FunctionEventTrigger
             log.LogInformation("Updating the database");
             log.LogInformation("{0}", destBlobClient.Uri);
             log.LogInformation("{0}", blobUriBuilder.BlobName);
-            log.LogInformation("{0}", connString);
+           // log.LogInformation("{0}", connString);
             log.LogInformation("{0}", scannedTime);
             UpdateScanResulttoDB(connString, scannedTime, IsClean, Convert.ToString(destBlobClient.Uri), blobUriBuilder.BlobName);
             log.LogInformation("Database updated successfully");
