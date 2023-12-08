@@ -1,9 +1,0 @@
-{
-  "profiles": {
-    "RACE2.AzureDefenderFunctionApp": {
-      "commandName": "Project",
-      "commandLineArgs": "--port 7250",
-      "launchBrowser": false
-    }
-  }
-}
