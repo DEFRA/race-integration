@@ -17,6 +17,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
     public partial class UploadS12Report
     {
         [Inject]
+        public IConfiguration _config { get; set; } = default!;
+        [Inject]
         public NavigationManager NavigationManager { get; set; } = default!;
         [Inject]
         public IBlobStorageService blobStorageService { get; set; } = default!;
@@ -157,8 +159,10 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                             fileUploadViewModels.Add(fileUploadViewModel);
                             SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(Int32.Parse(ReservoirId), userDetails.Id, "Sent");
                             //_fileNameResult=await jsRuntime.InvokeAsync<string>("getFileName");
-                            
-                            System.Threading.Thread.Sleep(20000);//wait for 10 seconds
+
+                            //System.Threading.Thread.Sleep(20000);//wait for 10 seconds
+                            var timeToWait = Int32.Parse(_config["TimeToWaitForUpload"]);
+                            System.Threading.Thread.Sleep(timeToWait); ;//wait for 10 seconds
                             var containerNameToDownloadFrom = "cleanfiles";
                             var bytes = await blobStorageService.GetBlobAsByteArray(containerNameToDownloadFrom, trustedFileNameForFileStorage);
                             if (bytes == null)
@@ -179,7 +183,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                                 }
                                 else
                                 {
-                                    // alternate email
+                                    var internalEmail = _config["InternalEmailAddress"];
+                                    await _notificationService.SendInternalMail(internalEmail, ReservoirRegName, UndertakerEmail, YesNoValue);
                                 }
 
                                 //Store the uploaded document information
