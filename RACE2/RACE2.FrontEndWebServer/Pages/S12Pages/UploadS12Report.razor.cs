@@ -162,7 +162,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
 
                             //System.Threading.Thread.Sleep(20000);//wait for 10 seconds
                             var timeToWait = Int32.Parse(_config["TimeToWaitForUpload"]);
-                            System.Threading.Thread.Sleep(timeToWait); ;//wait for 10 seconds
+                            System.Threading.Thread.Sleep(timeToWait); //wait for 10 seconds
                             var containerNameToDownloadFrom = _config["CleanContainer"]; //"cleanfiles";
                             var bytes = await blobStorageService.GetBlobAsByteArray(containerNameToDownloadFrom, trustedFileNameForFileStorage);
                             if (bytes == null)
