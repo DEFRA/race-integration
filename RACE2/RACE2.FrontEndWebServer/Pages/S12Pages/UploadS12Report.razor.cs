@@ -130,7 +130,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                         //{
                         //    containerName = containerName.Split('.')[0];
                         //}
-                        var containerNameToUplodTo = "unscannedcontent";
+                        var containerNameToUplodTo = _config["UnscannedContainer"];//"unscannedcontent";
                         //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + "."+ extn;
                         //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + SubmissionReference + "." + fileExtn;
                         var trustedFileNameForFileStorage = SubmissionReference +"_" + DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day+ DateTime.Now.Hour + DateTime.Now.Minute + DateTime.Now.Second + "." + fileExtn;
@@ -162,8 +162,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
 
                             //System.Threading.Thread.Sleep(20000);//wait for 10 seconds
                             var timeToWait = Int32.Parse(_config["TimeToWaitForUpload"]);
-                            System.Threading.Thread.Sleep(timeToWait); ;//wait for 10 seconds
-                            var containerNameToDownloadFrom = "cleanfiles";
+                            System.Threading.Thread.Sleep(timeToWait); //wait for 10 seconds
+                            var containerNameToDownloadFrom = _config["CleanContainer"]; //"cleanfiles";
                             var bytes = await blobStorageService.GetBlobAsByteArray(containerNameToDownloadFrom, trustedFileNameForFileStorage);
                             if (bytes == null)
                             {
