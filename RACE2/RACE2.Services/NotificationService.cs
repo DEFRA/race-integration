@@ -35,5 +35,9 @@ namespace RACE2.Services
         {
             await _notificationService.SendConfirmationMailtoRST(RSTMailAddress, reservoirName,file,SEName,UndertakerName);
         }
+        public async Task SendInternalMail(string EmailAddress, string reservoirName, string UndertakerEmail, string isSendtoUndertaker)
+        {
+            await _notificationService.SendInternalMail(EmailAddress, reservoirName, UndertakerEmail, isSendtoUndertaker);
+        }
     }
 }

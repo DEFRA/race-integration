@@ -183,7 +183,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                                 }
                                 else
                                 {
-                                    // alternate email
+                                    var internalEmail = _config["InternalEmailAddress"];
+                                    await _notificationService.SendInternalMail(internalEmail, ReservoirRegName, UndertakerEmail, YesNoValue);
                                 }
 
                                 //Store the uploaded document information
