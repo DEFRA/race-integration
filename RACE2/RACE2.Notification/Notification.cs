@@ -136,7 +136,7 @@ namespace RACE2.Notification
             try
             {
                 var client = new NotificationClient(API_KEY);
-                EmailNotificationResponse response = await client.SendEmailAsync(EmailAddress, StatementToRST, personalisation, reference, emailReplyToId);
+                EmailNotificationResponse response = await client.SendEmailAsync(EmailAddress, InternalEmail, personalisation, reference, emailReplyToId);
             }
             catch (NotifyClientException ex)
             {
