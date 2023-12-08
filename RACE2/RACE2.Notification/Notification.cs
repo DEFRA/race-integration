@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using Notify.Exceptions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
+using System.Xml.Linq;
 
 namespace RACE2.Notification
 {
@@ -18,6 +19,7 @@ namespace RACE2.Notification
         private readonly string ConfirmSubmissiontoOperator = String.Empty;
         private readonly string ConfirmSubmissiontoSE = String.Empty;
         private readonly string StatementToRST = String.Empty;
+        private readonly string InternalEmail = String.Empty;        
         public string reference = null;
         public string emailReplyToId = null;
 
@@ -30,6 +32,7 @@ namespace RACE2.Notification
             ConfirmSubmissiontoOperator = _config["ConfirmSubmissiontoOperatorTemplateId"];
             ConfirmSubmissiontoSE = _config["ConfirmSubmissiontoSETemplateId"];
             StatementToRST = _config["StatementToRSTTemplateId"];
+            InternalEmail = _config["InternalEmailTemplateId"];
         }
 
         public async Task SendForgotPasswordMail(string emailAddress, string fullName, string resetLink)
@@ -112,6 +115,28 @@ namespace RACE2.Notification
             {
                 var client = new NotificationClient(API_KEY);
                 EmailNotificationResponse response = await client.SendEmailAsync(RSTMailAddress, StatementToRST, personalisation, reference, emailReplyToId);
+            }
+            catch (NotifyClientException ex)
+            {
+                _logger.LogError(ex, ex.Message);
+            }
+        }
+
+        public async Task SendInternalMail(string EmailAddress, string reservoirName, string UndertakerEmail, string isSendtoUndertaker)
+        {
+            _logger.LogInformation("Sending Internal mail to the S12mailbox");
+            Dictionary<String, dynamic> personalisation = new Dictionary<String, dynamic>
+                {
+                    { "name of reservoir", reservoirName },
+                    { "owner/operator email",UndertakerEmail },
+                    { "is send to undertaker", isSendtoUndertaker}
+                   
+                };
+
+            try
+            {
+                var client = new NotificationClient(API_KEY);
+                EmailNotificationResponse response = await client.SendEmailAsync(EmailAddress, StatementToRST, personalisation, reference, emailReplyToId);
             }
             catch (NotifyClientException ex)
             {

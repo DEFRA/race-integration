@@ -15,5 +15,7 @@ namespace RACE2.Notification
         Task SendConfirmationMailtoSE(string SEEmailAddress, string reservoirName);
 
         Task SendConfirmationMailtoRST(string RSTMailAddress, string reservoirName, byte[] file, string SEName, string UndertakerName);
+
+        Task SendInternalMail(string EmailAddress, string reservoirName, string UndertakerEmail, string isSendtoUndertaker);
     }
 }
