@@ -75,6 +75,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         }
         private async Task OnUploadSubmit()
         {
+            UploadFileData.EmptyFileSize = long.Parse(_config["EmptyFileSizeLimit"]);
             if (selectedFiles == null)
             {
                 NoFileSelected();
@@ -97,7 +98,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 var fileExtns = selectedFile.Name.Split('.');
                 int totalExtns= fileExtns.Length;
                 fileExtn = selectedFile.Name.Split('.')[totalExtns-1];
-                if (!(fileExtn == "docx" || fileExtn == "doc" || fileExtn == "pdf"))
+                if (!_config["SupportedUploadFileExtensions"].Split(';').Contains(fileExtn))
+                   // if (!(fileExtn == "docx" || fileExtn == "doc" || fileExtn == "pdf"))
                 {
                     WrongExtensionSelected();
                     await InvokeAsync(() =>
@@ -349,7 +351,7 @@ public class UploadFileData
     public UploadFileData()
     {
         MaxFileSize = 30 * 1024 * 1024;
-        EmptyFileSize = 12 * 1024;
+       // EmptyFileSize = 12 * 1024;
         NotifyServiceFileAttachmentLimit = 2 * 1024 * 1024;
     }
 }
