@@ -200,9 +200,12 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                                // bool cleanFile = false;
                                 bool notScanned = false;
                                 var containerNameforMaliciousFile = _config["MaliciousContainer"]; //"maliciousfiles";
+                                System.Threading.Thread.Sleep(5000);
                                 var malicioubytes = await blobStorageService.GetBlobAsByteArray(containerNameforMaliciousFile, trustedFileNameForFileStorage);
+
                                 if (malicioubytes == null)
                                 {
+
                                     notScanned = true;
                                     
                                     
