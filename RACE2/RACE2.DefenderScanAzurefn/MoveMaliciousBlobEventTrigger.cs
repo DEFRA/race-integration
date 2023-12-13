@@ -123,7 +123,7 @@ namespace FunctionEventTrigger
             log.LogInformation("{0}", blobUriBuilder.BlobName);
            // log.LogInformation("{0}", connString);
             log.LogInformation("{0}", scannedTime);
-            UpdateScanResulttoDB(connString, scannedTime, IsClean, null, blobUriBuilder.BlobName);
+            UpdateScanResulttoDB(connString, scannedTime, IsClean, Convert.ToString(destBlobClient.Uri), blobUriBuilder.BlobName);
             log.LogInformation("Database updated successfully");
         }
 

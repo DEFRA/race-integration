@@ -197,17 +197,35 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                             }
                             else 
                             {
-                                var scanResult = await reservoirService.GetScannedResultbyDocId(docID);
-                                bool cleanFile = false;
-                                bool notScanned = true;
-                                if (scanResult.AVScanDate == DateTime.MinValue)
+                               // bool cleanFile = false;
+                                bool notScanned = false;
+                                var containerNameforMaliciousFile = _config["maliciousfiles"]; //"maliciousfiles";
+                                var malicioubytes = await blobStorageService.GetBlobAsByteArray(containerNameforMaliciousFile, trustedFileNameForFileStorage);
+                                if (malicioubytes == null)
                                 {
                                     notScanned = true;
+                                    
+                                    
                                 }
-                                else if (scanResult.AVScanDate != DateTime.MinValue && scanResult.CleanFileStorageLink != null && scanResult.IsClean)
+                                if (malicioubytes != null)
                                 {
-                                    notScanned = false;
-                                    cleanFile = true;
+
+                                    Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File infected by virus.");
+                                    FileVirusScanFailed();
+                                    await InvokeAsync(() =>
+                                    {
+                                        StateHasChanged();
+                                    });
+                                    //var scanResult = await reservoirService.GetScannedResultbyDocId(docID);
+                                    //if (scanResult.AVScanDate == DateTime.MinValue)
+                                    //{
+                                    //    notScanned = true;
+                                    //}
+                                    //else if (scanResult.AVScanDate != DateTime.MinValue && scanResult.CleanFileStorageLink != null && scanResult.IsClean)
+                                    //{
+                                    //    notScanned = false;
+                                    //    cleanFile = true;
+                                    //}
                                 }
                                 if (notScanned)
                                 {
@@ -218,15 +236,16 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                                         StateHasChanged();
                                     });
                                 }
-                                else if (!cleanFile)
-                                {
-                                    Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File infected by virus.");
-                                    FileVirusScanFailed();
-                                    await InvokeAsync(() =>
-                                    {
-                                        StateHasChanged();
-                                    });
-                                }
+                                //else if (!cleanFile)
+                                //{
+                                //    Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File infected by virus.");
+                                //    FileVirusScanFailed();
+                                //    await InvokeAsync(() =>
+                                //    {
+                                //        StateHasChanged();
+                                //    });
+                                //}
+
                             }
                         }
                         else
