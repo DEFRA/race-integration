@@ -199,7 +199,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                             {
                                // bool cleanFile = false;
                                 bool notScanned = false;
-                                var containerNameforMaliciousFile = _config["maliciousfiles"]; //"maliciousfiles";
+                                var containerNameforMaliciousFile = _config["MaliciousContainer"]; //"maliciousfiles";
                                 var malicioubytes = await blobStorageService.GetBlobAsByteArray(containerNameforMaliciousFile, trustedFileNameForFileStorage);
                                 if (malicioubytes == null)
                                 {
