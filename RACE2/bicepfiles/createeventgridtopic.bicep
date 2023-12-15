@@ -1,9 +1,10 @@
-param topics_DefenderEventGridTopic_name string = 'DefenderEventGridTopic'
+param location string
+param eventgridtopicName string = 'DefenderEventGridTopic'
 param sites_RACE2DefenderScanAzurefn_externalid string = '/subscriptions/d9cce027-07b6-4275-a215-dd8d52b9d469/resourceGroups/POCRACINFRG1401/providers/Microsoft.Web/sites/RACE2DefenderScanAzurefn'
 
 resource topics_DefenderEventGridTopic_name_resource 'Microsoft.EventGrid/topics@2023-12-15-preview' = {
-  name: topics_DefenderEventGridTopic_name
-  location: 'uksouth'
+  name: eventgridtopicName
+  location: location
   tags: {
     ServiceCode: 'RAC'
   }
@@ -26,7 +27,7 @@ resource topics_DefenderEventGridTopic_name_resource 'Microsoft.EventGrid/topics
 
 resource topics_DefenderEventGridTopic_name_topics_DefenderEventGridTopic_name_Subscription 'Microsoft.EventGrid/topics/eventSubscriptions@2023-12-15-preview' = {
   parent: topics_DefenderEventGridTopic_name_resource
-  name: '${topics_DefenderEventGridTopic_name}Subscription'
+  name: '${eventgridtopicName}Subscription'
   properties: {
     destination: {
       properties: {
