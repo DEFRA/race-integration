@@ -58,6 +58,36 @@
       },
       "functionappName": {
         "value": "PRDRACINFAF1401"
+      },
+      "vnet":{
+        "value" : "PRDRACINFRG1401"
+      },
+      "subnetacr":{
+        "value" : "subnetacr"
+      },
+      "subnetappconfig":{
+        "value" : "subnetappconfig"
+      },
+      "subnetcontainerappenv":{
+        "value" : "subnetcontainerappenv"
+      },
+      "subnetefgridtopic":{
+        "value" : "subnetefgridtopic"
+      },
+      "subnetfunctionapp":{
+        "value" : "subnetfunctionapp"
+      },
+      "subnetkeyvault":{
+        "value" : "subnetkeyvault"
+      },
+      "subnetsqlserver":{
+        "value" : "subnetsqlserver"
+      },
+      "subnetstorageaccount":{
+        "value" : "subnetstorageaccount"
+      },
+      "subnetvm":{
+        "value" : "subnetvm"
       }
     }
 }
