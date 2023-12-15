@@ -21,8 +21,8 @@ resource race2acrresource 'Microsoft.ContainerRegistry/registries@2023-01-01-pre
     ServiceCode: 'RAC'
   }
   sku: {
-    name: 'Standard'
-    tier: 'Standard'
+    name: 'Premium'
+    tier: 'Premium'
   }
   identity: {
     type: 'UserAssigned'
