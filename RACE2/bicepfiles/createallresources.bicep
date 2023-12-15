@@ -84,7 +84,7 @@ module createappserviceplanmodule 'createappserviceplan.bicep' = {
 
 module createfunctionappmodule 'createfunctionapp.bicep' = {
   scope: resourceGroup(resourcegroup)
-  name: 'eventgridtopicdeploy'
+  name: 'createfunctionappdeploy'
   params: {
     location: location
     functionappName: functionappName
