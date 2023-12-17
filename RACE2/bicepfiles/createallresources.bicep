@@ -88,6 +88,9 @@ module createfunctionappmodule 'createfunctionapp.bicep' = {
   params: {
     location: location
     functionappName: functionappName
+    race2appinsightName: race2appinsightName
+    appserviceplanName: appserviceplanName
+    storageAccountName: storageAccountName
   }
   dependsOn: [
     createmanagedidentitymodule
