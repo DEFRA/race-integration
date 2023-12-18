@@ -1,49 +1,72 @@
-param topics_DefenderEventGridTopic_name string = 'DefenderEventGridTopic'
-param sites_RACE2DefenderScanAzurefn_externalid string = '/subscriptions/d9cce027-07b6-4275-a215-dd8d52b9d469/resourceGroups/POCRACINFRG1401/providers/Microsoft.Web/sites/RACE2DefenderScanAzurefn'
+param virtualNetworks_PRDRACINFRG1401_name string = 'PRDRACINFRG1401'
 
-resource topics_DefenderEventGridTopic_name_resource 'Microsoft.EventGrid/topics@2023-12-15-preview' = {
-  name: topics_DefenderEventGridTopic_name
+resource virtualNetworks_PRDRACINFRG1401_name_resource 'Microsoft.Network/virtualNetworks@2023-06-01' = {
+  name: virtualNetworks_PRDRACINFRG1401_name
   location: 'uksouth'
   tags: {
     ServiceCode: 'RAC'
   }
-  sku: {
-    name: 'Basic'
-  }
-  kind: 'Azure'
-  identity: {
-    type: 'None'
-  }
   properties: {
-    minimumTlsVersionAllowed: '1.0'
-    inputSchema: 'EventGridSchema'
-    publicNetworkAccess: 'Enabled'
-    inboundIpRules: []
-    disableLocalAuth: false
-    dataResidencyBoundary: 'WithinGeopair'
+    addressSpace: {
+      addressPrefixes: [
+        '10.10.0.0/16'
+      ]
+    }
+    encryption: {
+      enabled: false
+      enforcement: 'AllowUnencrypted'
+    }
+    subnets: [
+      {
+        name: 'prdsubnet'
+        id: virtualNetworks_PRDRACINFRG1401_name_prdsubnet.id
+        properties: {
+          addressPrefixes: [
+            '10.10.2.0/24'
+          ]
+          serviceEndpoints: [
+            {
+              service: 'Microsoft.Storage'
+              locations: [
+                'uksouth'
+                'ukwest'
+              ]
+            }
+          ]
+          delegations: []
+          privateEndpointNetworkPolicies: 'Disabled'
+          privateLinkServiceNetworkPolicies: 'Enabled'
+          defaultOutboundAccess: true
+        }
+        type: 'Microsoft.Network/virtualNetworks/subnets'
+      }
+    ]
+    virtualNetworkPeerings: []
+    enableDdosProtection: false
   }
 }
 
-resource topics_DefenderEventGridTopic_name_topics_DefenderEventGridTopic_name_Subscription 'Microsoft.EventGrid/topics/eventSubscriptions@2023-12-15-preview' = {
-  parent: topics_DefenderEventGridTopic_name_resource
-  name: '${topics_DefenderEventGridTopic_name}Subscription'
+resource virtualNetworks_PRDRACINFRG1401_name_prdsubnet 'Microsoft.Network/virtualNetworks/subnets@2023-06-01' = {
+  name: '${virtualNetworks_PRDRACINFRG1401_name}/prdsubnet'
   properties: {
-    destination: {
-      properties: {
-        resourceId: '${sites_RACE2DefenderScanAzurefn_externalid}/functions/MoveMaliciousBlobEventTrigger'
-        maxEventsPerBatch: 1
-        preferredBatchSizeInKilobytes: 64
+    addressPrefixes: [
+      '10.10.2.0/24'
+    ]
+    serviceEndpoints: [
+      {
+        service: 'Microsoft.Storage'
+        locations: [
+          'uksouth'
+          'ukwest'
+        ]
       }
-      endpointType: 'AzureFunction'
-    }
-    filter: {
-      enableAdvancedFilteringOnArrays: true
-    }
-    labels: []
-    eventDeliverySchema: 'EventGridSchema'
-    retryPolicy: {
-      maxDeliveryAttempts: 30
-      eventTimeToLiveInMinutes: 1440
-    }
+    ]
+    delegations: []
+    privateEndpointNetworkPolicies: 'Disabled'
+    privateLinkServiceNetworkPolicies: 'Enabled'
+    defaultOutboundAccess: true
   }
+  dependsOn: [
+    virtualNetworks_PRDRACINFRG1401_name_resource
+  ]
 }

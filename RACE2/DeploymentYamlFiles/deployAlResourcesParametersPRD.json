@@ -30,7 +30,7 @@
         "value": "PRDRACINFVT1401"
       },
       "servers_race2sqlserver_name": {
-        "value": "PRDRACINFSS1401"
+        "value": "prdracinfss1401"
       },
       "administratorLogin": {
         "value": "race2admin"

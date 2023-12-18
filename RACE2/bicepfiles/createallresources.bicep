@@ -82,21 +82,6 @@ module createappserviceplanmodule 'createappserviceplan.bicep' = {
   ]
 }
 
-module createfunctionappmodule 'createfunctionapp.bicep' = {
-  scope: resourceGroup(resourcegroup)
-  name: 'createfunctionappdeploy'
-  params: {
-    location: location
-    functionappName: functionappName
-    race2appinsightName: race2appinsightName
-    appserviceplanName: appserviceplanName
-    storageAccountName: storageAccountName
-  }
-  dependsOn: [
-    createmanagedidentitymodule
-  ]
-}
-
 module createeventgridtopicmodule 'createeventgridtopic.bicep' = {
   scope: resourceGroup(resourcegroup)
   name: 'eventgridtopicdeploy'
@@ -212,4 +197,20 @@ module createcontainerappenvmodule 'createcontainerappenv.bicep' = {
   ]
 }
 
+module createfunctionappmodule 'createfunctionapp.bicep' = {
+  scope: resourceGroup(resourcegroup)
+  name: 'createfunctionappdeploy'
+  params: {
+    location: location
+    functionappName: functionappName
+    race2appinsightName: race2appinsightName
+    appserviceplanName: appserviceplanName
+    storageAccountName: storageAccountName
+  }
+  dependsOn: [
+    createappserviceplanmodule
+    createappinsightmodule
+    createstorageaccountmodule
+  ]
+}
 

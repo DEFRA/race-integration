@@ -28,20 +28,20 @@ resource functionApp 'Microsoft.Web/sites@2023-01-01' = {
     siteConfig: {
       appSettings: [
         {
-          'name': 'APPINSIGHTS_INSTRUMENTATIONKEY'
-          'value': appInsightResource.properties.InstrumentationKey
+          name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
+          value: appInsightResource.properties.InstrumentationKey
         }
         {
           name: 'AzureWebJobsStorage'
           value: 'DefaultEndpointsProtocol=https;AccountName=${storageAccountResource.name};EndpointSuffix=${environment().suffixes.storage};AccountKey=${listKeys(storageAccountResource.id, storageAccountResource.apiVersion).keys[0].value}'
         }
         {
-          'name': 'FUNCTIONS_EXTENSION_VERSION'
-          'value': '~4'
+          name: 'FUNCTIONS_EXTENSION_VERSION'
+          value: '~4'
         }
         {
-          'name': 'FUNCTIONS_WORKER_RUNTIME'
-          'value': 'dotnet isolated'
+          name: 'FUNCTIONS_WORKER_RUNTIME'
+          value: 'dotnet isolated'
         }
         {
           name: 'WEBSITE_CONTENTAZUREFILECONNECTIONSTRING'
