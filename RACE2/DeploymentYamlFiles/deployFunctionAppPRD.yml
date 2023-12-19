@@ -11,7 +11,7 @@ variables:
   azureServiceConnection: 'AZR-RAC-POC1'
   resourceGroupName: 'PRDRACINFRG1401' 
   templateFile: './RACE2/bicepfiles/createfunctionapp.bicep'
-  parameterFile: './RACE2/bicepfiles/createfunctionapp.bicepparam'
+  parameterFile: './RACE2/bicepfiles/createfunctionapp_prd.bicepparam'
 
 pool:
   vmImage: $(vmImageName)
