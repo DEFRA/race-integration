@@ -75,7 +75,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         }
         private async Task OnUploadSubmit()
         {
-           // UploadFileData.EmptyFileSize = long.Parse(_config["EmptyFileSizeLimit"]);
+           UploadFileData.EmptyFileSize = long.Parse(_config["EmptyFileSizeLimit"]);
             if (selectedFiles == null)
             {
                 NoFileSelected();
@@ -373,7 +373,7 @@ public class UploadFileData
     public UploadFileData()
     {
         MaxFileSize = 30 * 1024 * 1024;
-        EmptyFileSize = 12 * 1024;
+        //EmptyFileSize = 12 * 1024;
         NotifyServiceFileAttachmentLimit = 2 * 1024 * 1024;
     }
 }
