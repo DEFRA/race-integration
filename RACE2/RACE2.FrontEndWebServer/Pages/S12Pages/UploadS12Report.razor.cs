@@ -280,7 +280,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         private void goback()
         {
             bool forceLoad = false;
-            string pagelink = $"/send-your-statement/{ReservoirId}/{ReservoirRegName}/{UndertakerName}/{UndertakerEmail}";
+            string pagelink = $"/send-your-statement/{ReservoirId}/{ReservoirRegName}/{UndertakerName}/{UndertakerEmail}/{SubmissionReference}";
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }
         private void goToNextPage()
