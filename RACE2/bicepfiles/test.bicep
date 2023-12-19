@@ -1,72 +1,29 @@
-param virtualNetworks_PRDRACINFRG1401_name string = 'PRDRACINFRG1401'
+param serverfarms_PRDRACINFAP1401_name string = 'PRDRACINFAP1401'
 
-resource virtualNetworks_PRDRACINFRG1401_name_resource 'Microsoft.Network/virtualNetworks@2023-06-01' = {
-  name: virtualNetworks_PRDRACINFRG1401_name
-  location: 'uksouth'
+resource serverfarms_PRDRACINFAP1401_name_resource 'Microsoft.Web/serverfarms@2023-01-01' = {
+  name: serverfarms_PRDRACINFAP1401_name
+  location: 'UK South'
   tags: {
     ServiceCode: 'RAC'
   }
-  properties: {
-    addressSpace: {
-      addressPrefixes: [
-        '10.10.0.0/16'
-      ]
-    }
-    encryption: {
-      enabled: false
-      enforcement: 'AllowUnencrypted'
-    }
-    subnets: [
-      {
-        name: 'prdsubnet'
-        id: virtualNetworks_PRDRACINFRG1401_name_prdsubnet.id
-        properties: {
-          addressPrefixes: [
-            '10.10.2.0/24'
-          ]
-          serviceEndpoints: [
-            {
-              service: 'Microsoft.Storage'
-              locations: [
-                'uksouth'
-                'ukwest'
-              ]
-            }
-          ]
-          delegations: []
-          privateEndpointNetworkPolicies: 'Disabled'
-          privateLinkServiceNetworkPolicies: 'Enabled'
-          defaultOutboundAccess: true
-        }
-        type: 'Microsoft.Network/virtualNetworks/subnets'
-      }
-    ]
-    virtualNetworkPeerings: []
-    enableDdosProtection: false
+  sku: {
+    name: 'S1'
+    tier: 'Standard'
+    size: 'S1'
+    family: 'S'
+    capacity: 1
   }
-}
-
-resource virtualNetworks_PRDRACINFRG1401_name_prdsubnet 'Microsoft.Network/virtualNetworks/subnets@2023-06-01' = {
-  name: '${virtualNetworks_PRDRACINFRG1401_name}/prdsubnet'
+  kind: 'app'
   properties: {
-    addressPrefixes: [
-      '10.10.2.0/24'
-    ]
-    serviceEndpoints: [
-      {
-        service: 'Microsoft.Storage'
-        locations: [
-          'uksouth'
-          'ukwest'
-        ]
-      }
-    ]
-    delegations: []
-    privateEndpointNetworkPolicies: 'Disabled'
-    privateLinkServiceNetworkPolicies: 'Enabled'
-    defaultOutboundAccess: true
+    perSiteScaling: false
+    elasticScaleEnabled: false
+    maximumElasticWorkerCount: 1
+    isSpot: false
+    reserved: false
+    isXenon: false
+    hyperV: false
+    targetWorkerCount: 0
+    targetWorkerSizeId: 0
+    zoneRedundant: false
   }
-  dependsOn: [
-    virtualNetworks_PRDRACINFRG1401_name_resource
-  ]
 }

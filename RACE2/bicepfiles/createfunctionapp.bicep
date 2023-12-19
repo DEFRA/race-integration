@@ -41,7 +41,7 @@ resource functionApp 'Microsoft.Web/sites@2023-01-01' = {
         }
         {
           name: 'FUNCTIONS_WORKER_RUNTIME'
-          value: 'dotnet isolated'
+          value: 'dotnet-isolated'
         }
         {
           name: 'WEBSITE_CONTENTAZUREFILECONNECTIONSTRING'
