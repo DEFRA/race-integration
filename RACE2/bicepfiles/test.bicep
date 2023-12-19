@@ -7,7 +7,7 @@ resource storageAccounts_prdracinfst1401_name_resource 'Microsoft.Storage/storag
     ServiceCode: 'RAC'
   }
   sku: {
-    name: 'Standard_ZRS'
+    name: 'Standard_RAGRS'
     tier: 'Standard'
   }
   kind: 'StorageV2'
@@ -15,13 +15,12 @@ resource storageAccounts_prdracinfst1401_name_resource 'Microsoft.Storage/storag
     dnsEndpointType: 'Standard'
     defaultToOAuthAuthentication: false
     publicNetworkAccess: 'Enabled'
-    allowCrossTenantReplication: true
+    allowCrossTenantReplication: false
     minimumTlsVersion: 'TLS1_2'
-    allowBlobPublicAccess: true
+    allowBlobPublicAccess: false
     allowSharedKeyAccess: true
     networkAcls: {
-      resourceAccessRules: []
-      bypass: 'None'
+      bypass: 'AzureServices'
       virtualNetworkRules: []
       ipRules: []
       defaultAction: 'Allow'
@@ -49,7 +48,7 @@ resource storageAccounts_prdracinfst1401_name_default 'Microsoft.Storage/storage
   parent: storageAccounts_prdracinfst1401_name_resource
   name: 'default'
   sku: {
-    name: 'Standard_ZRS'
+    name: 'Standard_RAGRS'
     tier: 'Standard'
   }
   properties: {
@@ -58,7 +57,19 @@ resource storageAccounts_prdracinfst1401_name_default 'Microsoft.Storage/storage
     }
     deleteRetentionPolicy: {
       allowPermanentDelete: false
+      enabled: true
+      days: 7
+    }
+    isVersioningEnabled: false
+    changeFeed: {
       enabled: false
+    }
+    restorePolicy: {
+      enabled: false
+    }
+    containerDeleteRetentionPolicy: {
+      enabled: true
+      days: 7
     }
   }
 }
@@ -67,7 +78,7 @@ resource Microsoft_Storage_storageAccounts_fileServices_storageAccounts_prdracin
   parent: storageAccounts_prdracinfst1401_name_resource
   name: 'default'
   sku: {
-    name: 'Standard_ZRS'
+    name: 'Standard_RAGRS'
     tier: 'Standard'
   }
   properties: {
@@ -80,20 +91,6 @@ resource Microsoft_Storage_storageAccounts_fileServices_storageAccounts_prdracin
     shareDeleteRetentionPolicy: {
       enabled: true
       days: 7
-    }
-  }
-}
-
-resource storageAccounts_prdracinfst1401_name_storageAccounts_prdracinfst1401_name_11266c55_3e01_4596_847a_d0af14a3d16d 'Microsoft.Storage/storageAccounts/privateEndpointConnections@2023-01-01' = {
-  parent: storageAccounts_prdracinfst1401_name_resource
-  name: '${storageAccounts_prdracinfst1401_name}.11266c55-3e01-4596-847a-d0af14a3d16d'
-  properties: {
-    provisioningState: 'Succeeded'
-    privateEndpoint: {}
-    privateLinkServiceConnectionState: {
-      status: 'Approved'
-      description: 'Auto-Approved'
-      actionRequired: 'None'
     }
   }
 }
