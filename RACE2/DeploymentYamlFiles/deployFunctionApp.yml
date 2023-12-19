@@ -1,0 +1,28 @@
+trigger:
+- none
+pr:
+- none
+
+name: Deploy FunctionApp
+
+variables:
+  vmImageName: 'ubuntu-latest'
+
+  azureServiceConnection: 'AZR-RAC-POC1'
+  resourceGroupName: 'PRDRACINFRG1401' 
+  templateFile: './RACE2/bicepfiles/createfunctionapp.bicep'
+  parameterFile: './RACE2/bicepfiles/createfunctionapp.bicepparam'
+
+pool:
+  vmImage: $(vmImageName)
+
+steps:
+- task: AzureCLI@2  
+  inputs:
+    azureSubscription: $(azureServiceConnection)
+    scriptType: bash
+    scriptLocation: inlineScript
+    useGlobalConfig: false    
+    inlineScript: |
+      az --version
+      az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) --parameter @$(parameterFile)
