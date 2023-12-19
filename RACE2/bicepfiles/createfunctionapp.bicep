@@ -21,6 +21,9 @@ resource functionApp 'Microsoft.Web/sites@2023-01-01' = {
   name: functionappName
   location: location
   kind: 'functionapp'
+  identity: {
+    type: 'SystemAssigned'
+  }
   properties: {
     httpsOnly: true
     serverFarmId: appServicePlanResource.id
