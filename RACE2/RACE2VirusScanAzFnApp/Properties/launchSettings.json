@@ -2,7 +2,7 @@
   "profiles": {
     "RACE2VirusScanAzFnApp": {
       "commandName": "Project",
-      "commandLineArgs": "--port 7214",
+      "commandLineArgs": "--port 7071",
       "launchBrowser": false
     }
   }
