@@ -1,0 +1,63 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "subscriptionid": {
+        "value": "d9cce027-07b6-4275-a215-dd8d52b9d469"
+      }, 
+      "tenantId": {
+        "value": "770a2450-0227-4c62-90c7-4e38537f1102"
+      },  
+      "location": {
+        "value": "uksouth"
+      }, 
+      "resourcegroup": {
+        "value": "PRDRACINFRG1401"
+      },
+      "managedidentity": {
+        "value": "PRDRACINFMI1401"
+      }, 
+      "containerregistryName": {
+        "value": "PRDRACINFCR1401"
+      },
+      "storageAccountName": {
+        "value": "prdracinfst1401"
+      },
+      "appconfigName": {
+        "value": "PRDRACINFAC1401"
+      },
+      "keyvaultName": {
+        "value": "PRDRACINFVT1401"
+      },
+      "servers_race2sqlserver_name": {
+        "value": "PRDRACINFSS1401"
+      },
+      "administratorLogin": {
+        "value": "race2admin"
+      } ,
+      "administratorLoginPassword": {
+        "value": "Race2Password123!"
+      }, 
+      "servers_race2sqldb_name": {
+        "value": "PRDRACINFDB1401"
+      },
+      "logAnalyticsWorkspaceName": {
+        "value": "PRDRACINFWS1401"
+      },
+      "race2appenvName": {
+        "value": "PRDRACINFAE1401"
+      },
+      "race2appinsightName": {
+        "value": "PRDRACINFAI1401"
+      },
+      "appserviceplanName": {
+        "value": "PRDRACINFAS1401"
+      },
+      "eventgridtopicName": {
+        "value": "PRDRACINFEG1401"
+      },
+      "functionappName": {
+        "value": "PRDRACINFAF1401"
+      }
+    }
+}
