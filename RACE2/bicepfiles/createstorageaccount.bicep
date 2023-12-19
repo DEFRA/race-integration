@@ -28,12 +28,13 @@ resource storageAccountname_resource 'Microsoft.Storage/storageAccounts@2022-09-
     allowCrossTenantReplication: true
     minimumTlsVersion: 'TLS1_2'
     allowBlobPublicAccess: true
-    allowSharedKeyAccess: true
+    allowSharedKeyAccess: false
     networkAcls: {
+      resourceAccessRules: []
       bypass: 'None'
       virtualNetworkRules: []
       ipRules: []
-      defaultAction: 'Deny'
+      defaultAction: 'Allow'
     }
     supportsHttpsTrafficOnly: true
     encryption: {

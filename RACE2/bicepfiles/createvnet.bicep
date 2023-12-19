@@ -111,12 +111,48 @@ resource subnetfunctionappResource 'Microsoft.Network/virtualNetworks/subnets@20
   parent: virtualNetworkResource
   properties: {
     addressPrefix: '10.10.8.0/24'
+    serviceEndpoints: [
+      {
+        service: 'Microsoft.ContainerRegistry'
+        locations: [
+          '*'
+        ]
+      }
+      {
+        service: 'Microsoft.KeyVault'
+        locations: [
+          '*'
+        ]
+      }
+      {
+        service: 'Microsoft.Sql'
+        locations: [
+          'uksouth'
+        ]
+      }
+      {
+        service: 'Microsoft.Storage'
+        locations: [
+          'uksouth'
+          'ukwest'
+        ]
+      }
+      {
+        service: 'Microsoft.Web'
+        locations: [
+          '*'
+        ]
+      }
+    ]
+    delegations: []
+    privateEndpointNetworkPolicies: 'Disabled'
+    privateLinkServiceNetworkPolicies: 'Enabled'
   }
   dependsOn:[
     subnetacrResource
   ]
 }
-output subnetfunctionapp string = subnetacrResource.id
+output subnetfunctionapp string = subnetfunctionappResource.id
 
 resource subnetvmResource 'Microsoft.Network/virtualNetworks/subnets@2023-05-01' = {
   name: subnetvm
