@@ -20,7 +20,6 @@ resource appserviceplanresource 'Microsoft.Web/serverfarms@2022-09-01' = {
     elasticScaleEnabled: true
     maximumElasticWorkerCount: 20
     isSpot: false
-    reserved: true
     isXenon: false
     hyperV: false
     targetWorkerCount: 0
