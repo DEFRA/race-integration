@@ -23,7 +23,7 @@ resource storageAccount_resource 'Microsoft.Storage/storageAccounts@2023-01-01' 
     allowCrossTenantReplication: false
     minimumTlsVersion: 'TLS1_0'
     allowBlobPublicAccess: true
-    allowSharedKeyAccess: false
+    allowSharedKeyAccess: true
     networkAcls: {
       bypass: 'AzureServices'
       virtualNetworkRules: []
