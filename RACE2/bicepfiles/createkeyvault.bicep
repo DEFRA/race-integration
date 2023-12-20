@@ -41,7 +41,7 @@ resource Race2KeyVaultResource 'Microsoft.KeyVault/vaults@2023-07-01' = {
   }
 } 
 
-resource keyvaultPrivateEndpoint 'Microsoft.Network/privateEndpoints@2023-05-01' = {
+resource keyvaultPrivateEndpoint 'Microsoft.Network/privateEndpoints@2023-06-01' = {
   name: 'PrivateEndpointKeyVault'
   location: location
   properties: {

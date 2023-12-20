@@ -3,11 +3,11 @@ param location string = resourceGroup().location
 param vnet string
 param subnetstorageaccount string
 
-resource virtualNetworkResource 'Microsoft.Network/virtualNetworks@2023-05-01' existing = {
+resource virtualNetworkResource 'Microsoft.Network/virtualNetworks@2023-06-01' existing = {
   name: vnet
 }
 
-resource subnetstorageaccountResource 'Microsoft.Network/virtualNetworks/subnets@2023-05-01' existing= {
+resource subnetstorageaccountResource 'Microsoft.Network/virtualNetworks/subnets@2023-06-01' existing= {
   name: subnetstorageaccount
 }
 
@@ -21,7 +21,7 @@ resource storageAccount_resource 'Microsoft.Storage/storageAccounts@2023-01-01' 
   }
 }
 
-resource privateEndpoint 'Microsoft.Network/privateEndpoints@2023-05-01' = {
+resource privateEndpoint 'Microsoft.Network/privateEndpoints@2023-06-01' = {
   name: 'PrivateEndpointStorageAccount'
   location: location
   properties: {

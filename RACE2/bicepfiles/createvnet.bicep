@@ -10,7 +10,7 @@ param subnetacr string
 param subnetvm string
 param location string 
 
-resource virtualNetworkResource 'Microsoft.Network/virtualNetworks@2023-05-01' = {
+resource virtualNetworkResource 'Microsoft.Network/virtualNetworks@2023-06-01' = {
   name: vnet
   location: location
   properties: {
@@ -23,7 +23,7 @@ resource virtualNetworkResource 'Microsoft.Network/virtualNetworks@2023-05-01' =
   }
 }
 
-resource subnetcontainerappenvResource 'Microsoft.Network/virtualNetworks/subnets@2023-05-01' = {
+resource subnetcontainerappenvResource 'Microsoft.Network/virtualNetworks/subnets@2023-06-01' = {
   name: subnetcontainerappenv
   parent: virtualNetworkResource
   properties: {
@@ -32,7 +32,7 @@ resource subnetcontainerappenvResource 'Microsoft.Network/virtualNetworks/subnet
 }
 output subnetcontainerappenvId string = subnetcontainerappenvResource.id
 
-resource subnetstorageaccountResource 'Microsoft.Network/virtualNetworks/subnets@2023-05-01' = {
+resource subnetstorageaccountResource 'Microsoft.Network/virtualNetworks/subnets@2023-06-01' = {
   name: subnetstorageaccount
   parent: virtualNetworkResource
   properties: {
@@ -46,7 +46,7 @@ resource subnetstorageaccountResource 'Microsoft.Network/virtualNetworks/subnets
 }
 output subnetstorageaccountId string = subnetstorageaccountResource.id
 
-resource subnetsqlserverResource 'Microsoft.Network/virtualNetworks/subnets@2023-05-01' = {
+resource subnetsqlserverResource 'Microsoft.Network/virtualNetworks/subnets@2023-06-01' = {
   name: subnetsqlserver
   parent: virtualNetworkResource
   properties: {
@@ -58,7 +58,7 @@ resource subnetsqlserverResource 'Microsoft.Network/virtualNetworks/subnets@2023
 }
 output subnetsqlserverId string = subnetsqlserverResource.id
 
-resource subnetefgridtopicResource 'Microsoft.Network/virtualNetworks/subnets@2023-05-01' = {
+resource subnetefgridtopicResource 'Microsoft.Network/virtualNetworks/subnets@2023-06-01' = {
   name: subnetefgridtopic
   parent: virtualNetworkResource
   properties: {
@@ -70,7 +70,7 @@ resource subnetefgridtopicResource 'Microsoft.Network/virtualNetworks/subnets@20
 }
 output subnetefgridtopic string = subnetefgridtopicResource.id
 
-resource subnetkeyvaultResource 'Microsoft.Network/virtualNetworks/subnets@2023-05-01' = {
+resource subnetkeyvaultResource 'Microsoft.Network/virtualNetworks/subnets@2023-06-01' = {
   name: subnetkeyvault
   parent: virtualNetworkResource
   properties: {
@@ -82,7 +82,7 @@ resource subnetkeyvaultResource 'Microsoft.Network/virtualNetworks/subnets@2023-
 }
 output subnetkeyvault string = subnetkeyvaultResource.id
 
-resource subnetappconfigResource 'Microsoft.Network/virtualNetworks/subnets@2023-05-01' = {
+resource subnetappconfigResource 'Microsoft.Network/virtualNetworks/subnets@2023-06-01' = {
   name: subnetappconfig
   parent: virtualNetworkResource
   properties: {
@@ -94,7 +94,7 @@ resource subnetappconfigResource 'Microsoft.Network/virtualNetworks/subnets@2023
 }
 output subnetappconfig string = subnetappconfigResource.id
 
-resource subnetacrResource 'Microsoft.Network/virtualNetworks/subnets@2023-05-01' = {
+resource subnetacrResource 'Microsoft.Network/virtualNetworks/subnets@2023-06-01' = {
   name: subnetacr
   parent: virtualNetworkResource
   properties: {
@@ -106,7 +106,7 @@ resource subnetacrResource 'Microsoft.Network/virtualNetworks/subnets@2023-05-01
 }
 output subnetacr string = subnetacrResource.id
 
-resource subnetfunctionappResource 'Microsoft.Network/virtualNetworks/subnets@2023-05-01' = {
+resource subnetfunctionappResource 'Microsoft.Network/virtualNetworks/subnets@2023-06-01' = {
   name: subnetfunctionapp
   parent: virtualNetworkResource
   properties: {
@@ -154,7 +154,7 @@ resource subnetfunctionappResource 'Microsoft.Network/virtualNetworks/subnets@20
 }
 output subnetfunctionapp string = subnetfunctionappResource.id
 
-resource subnetvmResource 'Microsoft.Network/virtualNetworks/subnets@2023-05-01' = {
+resource subnetvmResource 'Microsoft.Network/virtualNetworks/subnets@2023-06-01' = {
   name: subnetvm
   parent: virtualNetworkResource
   properties: {

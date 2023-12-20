@@ -3,7 +3,7 @@ targetScope = 'subscription'
 param resourceGroupName string
 
 // Creating resource group
-resource rg 'Microsoft.Resources/resourceGroups@2022-09-01' existing = {
+resource rg 'Microsoft.Resources/resourceGroups@2023-07-01' existing = {
   name: resourceGroupName
 }
 
