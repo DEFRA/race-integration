@@ -166,6 +166,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                             var timeToWait = Int32.Parse(_config["TimeToWaitForUpload"]);
                             System.Threading.Thread.Sleep(timeToWait); //wait for 10 seconds
                             var containerNameToDownloadFrom = _config["CleanContainer"]; //"cleanfiles";
+                            var RSTEmailAddress = String.IsNullOrEmpty(_config["RSTEmailAddress"])? userDetails.Email : _config["RSTEmailAddress"] ;
                             var bytes = await blobStorageService.GetBlobAsByteArray(containerNameToDownloadFrom, trustedFileNameForFileStorage);
                             if (bytes == null)
                             {
@@ -177,7 +178,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                                 await _notificationService.SendConfirmationMailtoSE(userDetails.Email, ReservoirRegName);
                                 if (selectedFile.Size < UploadFileData.NotifyServiceFileAttachmentLimit)
                                 {
-                                    await _notificationService.SendConfirmationMailtoRST(userDetails.Email, ReservoirRegName, bytes, userDetails.cFirstName + " " + userDetails.cLastName, UndertakerName);
+                                    await _notificationService.SendConfirmationMailtoRST(RSTEmailAddress, ReservoirRegName, bytes, userDetails.cFirstName + " " + userDetails.cLastName, UndertakerName);
                                     if (YesNoValue == "Yes")
                                     {
                                         await _notificationService.SendConfirmationMailWithAttachment(bytes, UndertakerEmail, ReservoirRegName);
