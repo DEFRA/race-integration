@@ -17,35 +17,7 @@ resource storageAccount_resource 'Microsoft.Storage/storageAccounts@2023-01-01' 
   kind: 'StorageV2'
   sku: {
     name: 'Standard_LRS'
-  }
-  properties: {
-    defaultToOAuthAuthentication: false
-    allowCrossTenantReplication: false
-    minimumTlsVersion: 'TLS1_0'
-    allowBlobPublicAccess: true
-    allowSharedKeyAccess: true
-    networkAcls: {
-      bypass: 'AzureServices'
-      virtualNetworkRules: []
-      ipRules: []
-      defaultAction: 'Allow'
-    }
-    supportsHttpsTrafficOnly: true
-    encryption: {
-      services: {
-        file: {
-          keyType: 'Account'
-          enabled: true
-        }
-        blob: {
-          keyType: 'Account'
-          enabled: true
-        }
-      }
-      keySource: 'Microsoft.Storage'
-    }
-    accessTier: 'Hot'
-  }
+  } 
 }
 
 resource privateEndpoint 'Microsoft.Network/privateEndpoints@2023-06-01' = {
