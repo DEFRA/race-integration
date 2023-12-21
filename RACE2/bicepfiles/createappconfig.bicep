@@ -52,7 +52,7 @@ resource appconfigPrivateEndpoint 'Microsoft.Network/privateEndpoints@2023-06-01
         properties: {
           privateLinkServiceId: race2appconfig_resource.id
           groupIds: [
-            'appConfig'
+            'configurationStores'
           ]
         }
       }

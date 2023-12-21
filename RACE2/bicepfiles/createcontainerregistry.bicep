@@ -22,7 +22,6 @@ resource race2acrresource 'Microsoft.ContainerRegistry/registries@2023-11-01-pre
   }
   sku: {
     name: 'Premium'
-    tier: 'Premium'
   }
   identity: {
     type: 'UserAssigned'
