@@ -48,11 +48,11 @@ resource appconfigPrivateEndpoint 'Microsoft.Network/privateEndpoints@2023-06-01
     }
     privateLinkServiceConnections: [
       {
-        name: 'PrivateEndpointKeyVault'
+        name: 'PrivateEndpointAppConfig'
         properties: {
           privateLinkServiceId: race2appconfig_resource.id
           groupIds: [
-            'vault'
+            'appConfig'
           ]
         }
       }
