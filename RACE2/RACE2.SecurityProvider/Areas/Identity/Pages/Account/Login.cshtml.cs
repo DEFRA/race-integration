@@ -94,23 +94,32 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null) 
         {
-            if (!string.IsNullOrEmpty(ErrorMessage))
+            try
             {
-                ModelState.AddModelError(string.Empty, ErrorMessage);
+
+
+                if (!string.IsNullOrEmpty(ErrorMessage))
+                {
+                    ModelState.AddModelError(string.Empty, ErrorMessage);
+                }
+
+                returnUrl ??= Url.Content("~/");
+                WebAppUrl = _config["RACE2FrontEndURL"];
+                // Clear the existing external cookie to ensure a clean login process
+                await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+
+                //ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
+                ReturnUrl = returnUrl;
             }
-            
-            returnUrl ??= Url.Content("~/");
-            WebAppUrl = _config["RACE2FrontEndURL"];
-            // Clear the existing external cookie to ensure a clean login process
-            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
-
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-
-            ReturnUrl = returnUrl;
+            catch (Exception ex)
+            {
+                _logger.LogError("System error!" + " : " + ex.Message);
+            }
         }
 
-        //[ValidateAntiForgeryToken]
-        [IgnoreAntiforgeryToken]
+        [ValidateAntiForgeryToken]
+        //[IgnoreAntiforgeryToken]
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             try
@@ -118,7 +127,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
                 returnUrl ??= Url.Content("~/");
                 WebAppUrl = _config["RACE2FrontEndURL"];
 
-                ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+                //ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
                 if (ModelState.IsValid)
                 {
@@ -134,10 +143,10 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
                     {
                         _logger.LogInformation("User logged in failed." + " : " + Input.Email);
                     }
-                    if (result.RequiresTwoFactor)
-                    {
-                        return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
-                    }
+                    //if (result.RequiresTwoFactor)
+                    //{
+                    //    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
+                    //}
                     if (result.IsLockedOut)
                     {
                         _logger.LogWarning("User account locked out." + " : " + Input.Email);

@@ -24,13 +24,13 @@ namespace RACE2.DataModel
         public string FileLocation { get; set; }
         [StringLength(64)]
         public string FileType { get; set; }
-        [Required,StringLength(250)]
+        [StringLength(250)]
         public string DocumentName { get; set; }
         [StringLength(1024)]
         public string DocumentDescription { get; set; }
         [Required,StringLength(64)]
         public string DocumentType { get; set; }
-        public DateTime DocumentDate { get; set; }
+        public DateTime? DocumentDate { get; set; }
         [StringLength(64)]
         public string DocumentStatus { get; set; }
         [StringLength(64)]
@@ -47,12 +47,22 @@ namespace RACE2.DataModel
         [Required]
         public DateTime DateSent { get; set;}
 
-        public DateTime DateReceived { get; set;}
+        public DateTime? DateReceived { get; set;}
 
         [StringLength(64)]
         public string? UsedTemplateEdition { get; set;}
 
         public decimal? UsedTemplateVersion { get; set;}
+
+        public DateTime AVScanDate { get; set;}
+
+        public bool IsClean { get; set;}
+
+        [StringLength(1024)]
+        public string? CleanFileStorageLink { get; set;}
+
+        [StringLength(64)]
+        public string? BlobStorageFileName { get; set;}
     }
 
 

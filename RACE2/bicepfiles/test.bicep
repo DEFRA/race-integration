@@ -1,179 +1,49 @@
-param virtualNetworks_POCRACINFVN1401_name string = 'POCRACINFVN1401'
+param topics_DefenderEventGridTopic_name string = 'DefenderEventGridTopic'
+param sites_RACE2DefenderScanAzurefn_externalid string = '/subscriptions/d9cce027-07b6-4275-a215-dd8d52b9d469/resourceGroups/POCRACINFRG1401/providers/Microsoft.Web/sites/RACE2DefenderScanAzurefn'
 
-resource virtualNetworks_POCRACINFVN1401_name_resource 'Microsoft.Network/virtualNetworks@2023-04-01' = {
-  name: virtualNetworks_POCRACINFVN1401_name
+resource topics_DefenderEventGridTopic_name_resource 'Microsoft.EventGrid/topics@2023-12-15-preview' = {
+  name: topics_DefenderEventGridTopic_name
   location: 'uksouth'
   tags: {
     ServiceCode: 'RAC'
   }
+  sku: {
+    name: 'Basic'
+  }
+  kind: 'Azure'
+  identity: {
+    type: 'None'
+  }
   properties: {
-    addressSpace: {
-      addressPrefixes: [
-        '10.10.0.0/16'
-      ]
+    minimumTlsVersionAllowed: '1.0'
+    inputSchema: 'EventGridSchema'
+    publicNetworkAccess: 'Enabled'
+    inboundIpRules: []
+    disableLocalAuth: false
+    dataResidencyBoundary: 'WithinGeopair'
+  }
+}
+
+resource topics_DefenderEventGridTopic_name_topics_DefenderEventGridTopic_name_Subscription 'Microsoft.EventGrid/topics/eventSubscriptions@2023-12-15-preview' = {
+  parent: topics_DefenderEventGridTopic_name_resource
+  name: '${topics_DefenderEventGridTopic_name}Subscription'
+  properties: {
+    destination: {
+      properties: {
+        resourceId: '${sites_RACE2DefenderScanAzurefn_externalid}/functions/MoveMaliciousBlobEventTrigger'
+        maxEventsPerBatch: 1
+        preferredBatchSizeInKilobytes: 64
+      }
+      endpointType: 'AzureFunction'
     }
-    subnets: [
-      {
-        name: 'subnetsqlserver'
-        id: virtualNetworks_POCRACINFVN1401_name_subnetsqlserver.id
-        properties: {
-          addressPrefix: '10.10.0.0/24'
-          serviceEndpoints: [
-            {
-              service: 'Microsoft.Sql'
-              locations: [
-                'uksouth'
-              ]
-            }
-          ]
-          delegations: []
-          privateEndpointNetworkPolicies: 'Disabled'
-          privateLinkServiceNetworkPolicies: 'Enabled'
-        }
-        type: 'Microsoft.Network/virtualNetworks/subnets'
-      }
-      {
-        name: 'subnetcontainerappenvResource'
-        properties: {
-          addressPrefix: '10.10.1.0/24'
-          serviceEndpoints: [
-            {
-              service: 'Microsoft.Web'
-              locations: [
-                '*'
-              ]
-            }
-          ]
-          delegations: []
-          privateEndpointNetworkPolicies: 'Disabled'
-          privateLinkServiceNetworkPolicies: 'Enabled'
-        }
-        type: 'Microsoft.Network/virtualNetworks/subnets'
-      }
-      {
-        name: 'subnetservicebusResource'
-        properties: {
-          addressPrefix: '10.10.2.0/24'
-          serviceEndpoints: [
-            {
-              service: 'Microsoft.ServiceBus'
-              locations: [
-                '*'
-              ]
-            }
-          ]
-          delegations: []
-          privateEndpointNetworkPolicies: 'Disabled'
-          privateLinkServiceNetworkPolicies: 'Enabled'
-        }
-        type: 'Microsoft.Network/virtualNetworks/subnets'
-      }
-      {
-        name: 'subnetstorageaccountResource'
-        properties: {
-          addressPrefix: '10.10.3.0/24'
-          serviceEndpoints: [
-            {
-              service: 'Microsoft.Storage'
-              locations: [
-                'uksouth'
-                'ukwest'
-              ]
-            }
-          ]
-          delegations: []
-          privateEndpointNetworkPolicies: 'Disabled'
-          privateLinkServiceNetworkPolicies: 'Enabled'
-        }
-        type: 'Microsoft.Network/virtualNetworks/subnets'
-      }
-    ]
-    virtualNetworkPeerings: []
-    enableDdosProtection: false
+    filter: {
+      enableAdvancedFilteringOnArrays: true
+    }
+    labels: []
+    eventDeliverySchema: 'EventGridSchema'
+    retryPolicy: {
+      maxDeliveryAttempts: 30
+      eventTimeToLiveInMinutes: 1440
+    }
   }
-}
-
-resource virtualNetworks_POCRACINFVN1401_name_subnetcontainerappenvResource 'Microsoft.Network/virtualNetworks/subnets@2023-04-01' = {
-  name: '${virtualNetworks_POCRACINFVN1401_name}/subnetcontainerappenvResource'
-  properties: {
-    addressPrefix: '10.10.1.0/24'
-    serviceEndpoints: [
-      {
-        service: 'Microsoft.Web'
-        locations: [
-          '*'
-        ]
-      }
-    ]
-    delegations: []
-    privateEndpointNetworkPolicies: 'Disabled'
-    privateLinkServiceNetworkPolicies: 'Enabled'
-  }
-  dependsOn: [
-    virtualNetworks_POCRACINFVN1401_name_resource
-  ]
-}
-
-resource virtualNetworks_POCRACINFVN1401_name_subnetservicebusResource 'Microsoft.Network/virtualNetworks/subnets@2023-04-01' = {
-  name: '${virtualNetworks_POCRACINFVN1401_name}/subnetservicebusResource'
-  properties: {
-    addressPrefix: '10.10.2.0/24'
-    serviceEndpoints: [
-      {
-        service: 'Microsoft.ServiceBus'
-        locations: [
-          '*'
-        ]
-      }
-    ]
-    delegations: []
-    privateEndpointNetworkPolicies: 'Disabled'
-    privateLinkServiceNetworkPolicies: 'Enabled'
-  }
-  dependsOn: [
-    virtualNetworks_POCRACINFVN1401_name_resource
-  ]
-}
-
-resource virtualNetworks_POCRACINFVN1401_name_subnetsqlserver 'Microsoft.Network/virtualNetworks/subnets@2023-04-01' = {
-  name: '${virtualNetworks_POCRACINFVN1401_name}/subnetsqlserver'
-  properties: {
-    addressPrefix: '10.10.0.0/24'
-    serviceEndpoints: [
-      {
-        service: 'Microsoft.Sql'
-        locations: [
-          'uksouth'
-        ]
-      }
-    ]
-    delegations: []
-    privateEndpointNetworkPolicies: 'Disabled'
-    privateLinkServiceNetworkPolicies: 'Enabled'
-  }
-  dependsOn: [
-    virtualNetworks_POCRACINFVN1401_name_resource
-  ]
-}
-
-resource virtualNetworks_POCRACINFVN1401_name_subnetstorageaccountResource 'Microsoft.Network/virtualNetworks/subnets@2023-04-01' = {
-  name: '${virtualNetworks_POCRACINFVN1401_name}/subnetstorageaccountResource'
-  properties: {
-    addressPrefix: '10.10.3.0/24'
-    serviceEndpoints: [
-      {
-        service: 'Microsoft.Storage'
-        locations: [
-          'uksouth'
-          'ukwest'
-        ]
-      }
-    ]
-    delegations: []
-    privateEndpointNetworkPolicies: 'Disabled'
-    privateLinkServiceNetworkPolicies: 'Enabled'
-  }
-  dependsOn: [
-    virtualNetworks_POCRACINFVN1401_name_resource
-  ]
 }

@@ -17,7 +17,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.24")
+                .HasAnnotation("ProductVersion", "6.0.25")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -144,17 +144,14 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                         .HasColumnType("bit");
 
                     b.Property<string>("Notes")
-                        .IsRequired()
                         .HasMaxLength(1024)
                         .HasColumnType("nvarchar(1024)");
 
                     b.Property<string>("Priority")
-                        .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
                     b.Property<string>("RaceActionId")
-                        .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
@@ -180,7 +177,6 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Type")
-                        .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
@@ -353,7 +349,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
-                    b.Property<int>("ReservoirId")
+                    b.Property<int?>("ReservoirId")
                         .HasColumnType("int");
 
                     b.Property<int>("SourceSubmissionId")
@@ -376,10 +372,10 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("DocumentId")
+                    b.Property<int?>("DocumentId")
                         .HasColumnType("int");
 
-                    b.Property<int>("EngineerUserId")
+                    b.Property<int?>("EngineerUserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -427,10 +423,10 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("DocumentId")
+                    b.Property<int?>("DocumentId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ReservoirId")
+                    b.Property<int?>("ReservoirId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -450,10 +446,10 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("DocumentId")
+                    b.Property<int?>("DocumentId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SubmissionId")
+                    b.Property<int?>("SubmissionId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -483,7 +479,6 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                         .HasColumnType("nvarchar(64)");
 
                     b.Property<string>("ReasonSummary")
-                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
@@ -568,12 +563,10 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                         .HasColumnType("int");
 
                     b.Property<string>("RevisionDetails")
-                        .IsRequired()
                         .HasMaxLength(1024)
                         .HasColumnType("nvarchar(1024)");
 
                     b.Property<string>("RevisionType")
-                        .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
@@ -622,23 +615,21 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Exception")
-                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IP")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Level")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LogEvent")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Message")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MessageTemplate")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Properties")
@@ -646,6 +637,9 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     b.Property<DateTime>("TimeStamp")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -662,6 +656,10 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     b.Property<string>("OrgName")
                         .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("cBranch")
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
@@ -687,14 +685,13 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("Addressid")
+                    b.Property<int?>("Addressid")
                         .HasColumnType("int");
 
-                    b.Property<int>("OrganisationId")
+                    b.Property<int?>("OrganisationId")
                         .HasColumnType("int");
 
                     b.Property<string>("Type")
-                        .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
@@ -715,13 +712,13 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("OrganisationId")
+                    b.Property<int?>("OrganisationId")
                         .HasColumnType("int");
 
                     b.Property<int?>("PrimaryContactUserId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ReservoirId")
+                    b.Property<int?>("ReservoirId")
                         .HasColumnType("int");
 
                     b.Property<int?>("SecondaryContactUserId")
@@ -817,7 +814,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                     b.Property<int?>("Capacity")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("ConstructionStartDate")
+                    b.Property<DateTime?>("ConstructionStartDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("GridReference")
@@ -831,13 +828,13 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                         .HasMaxLength(512)
                         .HasColumnType("nvarchar(512)");
 
-                    b.Property<DateTime>("LastCertificationDate")
+                    b.Property<DateTime?>("LastCertificationDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("LastInspectionByUserId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("LastInspectionDate")
+                    b.Property<DateTime?>("LastInspectionDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("LastInspectionEngineerName")
@@ -851,10 +848,10 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                     b.Property<string>("NearestTown")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("NextInspectionDate102")
+                    b.Property<DateTime?>("NextInspectionDate102")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("NextInspectionDate103")
+                    b.Property<DateTime?>("NextInspectionDate103")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("OperatorType")
@@ -892,7 +889,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                     b.Property<decimal?>("TopWaterLevel")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<DateTime>("VerifiedDetailsDate")
+                    b.Property<DateTime?>("VerifiedDetailsDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -980,7 +977,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
-                    b.Property<int>("ReservoirId")
+                    b.Property<int?>("ReservoirId")
                         .HasColumnType("int");
 
                     b.Property<string>("Status")
@@ -1157,7 +1154,8 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                     b.Property<DateTime>("LastModifiedDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("LastModifiedScreenId")
+                    b.Property<int?>("LastModifiedScreen")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("OverrideUsedTemplate")
@@ -1173,8 +1171,10 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SubmissionReference")
-                        .HasColumnType("int");
+                    b.Property<string>("SubmissionReference")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("varchar(64)");
 
                     b.Property<int>("SubmittedById")
                         .HasColumnType("int");
@@ -1185,8 +1185,6 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                     b.HasKey("Id");
 
                     b.HasIndex("LastModifiedById");
-
-                    b.HasIndex("LastModifiedScreenId");
 
                     b.HasIndex("ReservoirId");
 
@@ -1205,32 +1203,39 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("DateReceived")
+                    b.Property<DateTime>("AVScanDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("BlobStorageFileName")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("CleanFileStorageLink")
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
+
+                    b.Property<DateTime?>("DateReceived")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DateSent")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DocumentAuthorName")
-                        .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
-                    b.Property<DateTime>("DocumentDate")
+                    b.Property<DateTime?>("DocumentDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DocumentDescription")
-                        .IsRequired()
                         .HasMaxLength(1024)
                         .HasColumnType("nvarchar(1024)");
 
                     b.Property<string>("DocumentName")
-                        .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("DocumentStatus")
-                        .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
@@ -1240,7 +1245,6 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                         .HasColumnType("nvarchar(64)");
 
                     b.Property<string>("FileLocation")
-                        .IsRequired()
                         .HasMaxLength(1024)
                         .HasColumnType("nvarchar(1024)");
 
@@ -1250,17 +1254,17 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("FileType")
-                        .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
+                    b.Property<bool>("IsClean")
+                        .HasColumnType("bit");
+
                     b.Property<string>("ProtectiveMarking")
-                        .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
                     b.Property<string>("RaceDocumentId")
-                        .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
@@ -1396,12 +1400,6 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getdate()");
 
-                    b.Property<string>("cCurrentPanel")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)")
-                        .HasDefaultValue(" ");
-
                     b.Property<string>("cDefraId")
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(64)
@@ -1428,7 +1426,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
-                    b.Property<bool>("cIsFirstTimeUser")
+                    b.Property<bool?>("cIsFirstTimeUser")
                         .HasColumnType("bit");
 
                     b.Property<string>("cJobTitle")
@@ -1437,7 +1435,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                         .HasColumnType("nvarchar(64)")
                         .HasDefaultValue(" ");
 
-                    b.Property<DateTime>("cLastAccessDate")
+                    b.Property<DateTime?>("cLastAccessDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("cLastName")
@@ -1453,20 +1451,8 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                         .HasColumnType("nvarchar(64)")
                         .HasDefaultValue(" ");
 
-                    b.Property<string>("cPaon")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)")
-                        .HasDefaultValue(" ");
-
                     b.Property<string>("cRaceId")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("cSaon")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)")
-                        .HasDefaultValue(" ");
 
                     b.Property<string>("cStatus")
                         .IsRequired()
@@ -1539,10 +1525,10 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("AppointmentEndDate")
+                    b.Property<DateTime?>("AppointmentEndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("AppointmentStartDate")
+                    b.Property<DateTime?>("AppointmentStartDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("AppointmentType")
@@ -1552,10 +1538,10 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
-                    b.Property<int>("ReservoirId")
+                    b.Property<int?>("ReservoirId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -1675,9 +1661,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     b.HasOne("RACE2.DataModel.Reservoir", "Reservoir")
                         .WithMany()
-                        .HasForeignKey("ReservoirId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ReservoirId");
 
                     b.Navigation("CreatedBy");
 
@@ -1688,15 +1672,11 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                 {
                     b.HasOne("RACE2.DataModel.SupportingDocument", "Document")
                         .WithMany()
-                        .HasForeignKey("DocumentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DocumentId");
 
                     b.HasOne("RACE2.DataModel.UserDetail", "EngineerUser")
                         .WithMany()
-                        .HasForeignKey("EngineerUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("EngineerUserId");
 
                     b.Navigation("Document");
 
@@ -1726,15 +1706,11 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                 {
                     b.HasOne("RACE2.DataModel.SupportingDocument", "Document")
                         .WithMany()
-                        .HasForeignKey("DocumentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DocumentId");
 
                     b.HasOne("RACE2.DataModel.Reservoir", "Reservoir")
                         .WithMany()
-                        .HasForeignKey("ReservoirId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ReservoirId");
 
                     b.Navigation("Document");
 
@@ -1745,15 +1721,11 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                 {
                     b.HasOne("RACE2.DataModel.SupportingDocument", "Document")
                         .WithMany()
-                        .HasForeignKey("DocumentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DocumentId");
 
                     b.HasOne("RACE2.DataModel.SubmissionStatus", "Submission")
                         .WithMany()
-                        .HasForeignKey("SubmissionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SubmissionId");
 
                     b.Navigation("Document");
 
@@ -1786,15 +1758,11 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                 {
                     b.HasOne("RACE2.DataModel.Address", "Address")
                         .WithMany()
-                        .HasForeignKey("Addressid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Addressid");
 
                     b.HasOne("RACE2.DataModel.Organisation", "Organisation")
                         .WithMany()
-                        .HasForeignKey("OrganisationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OrganisationId");
 
                     b.Navigation("Address");
 
@@ -1805,9 +1773,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                 {
                     b.HasOne("RACE2.DataModel.Organisation", "Organisation")
                         .WithMany()
-                        .HasForeignKey("OrganisationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OrganisationId");
 
                     b.HasOne("RACE2.DataModel.UserDetail", "PrimaryContactUser")
                         .WithMany()
@@ -1815,9 +1781,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     b.HasOne("RACE2.DataModel.Reservoir", "Reservoir")
                         .WithMany()
-                        .HasForeignKey("ReservoirId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ReservoirId");
 
                     b.HasOne("RACE2.DataModel.UserDetail", "SecondaryContactUser")
                         .WithMany()
@@ -1845,9 +1809,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                 {
                     b.HasOne("RACE2.DataModel.Reservoir", "Reservoir")
                         .WithMany()
-                        .HasForeignKey("ReservoirId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ReservoirId");
 
                     b.Navigation("Reservoir");
                 });
@@ -1920,12 +1882,6 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("RACE2.DataModel.ScreenDefinition", "LastModifiedScreen")
-                        .WithMany()
-                        .HasForeignKey("LastModifiedScreenId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("RACE2.DataModel.Reservoir", "Reservoir")
                         .WithMany()
                         .HasForeignKey("ReservoirId")
@@ -1945,8 +1901,6 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                         .IsRequired();
 
                     b.Navigation("LastModifiedBy");
-
-                    b.Navigation("LastModifiedScreen");
 
                     b.Navigation("Reservoir");
 
@@ -2021,15 +1975,11 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                 {
                     b.HasOne("RACE2.DataModel.Reservoir", "Reservoir")
                         .WithMany("UserReservoirs")
-                        .HasForeignKey("ReservoirId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ReservoirId");
 
                     b.HasOne("RACE2.DataModel.UserDetail", "User")
                         .WithMany("Reservoirs")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Reservoir");
 

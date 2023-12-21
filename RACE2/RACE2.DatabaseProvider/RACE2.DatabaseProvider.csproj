@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <UserSecretsId>d691c4d6-f7ad-4f94-a3ad-5f7ee6506209</UserSecretsId>
@@ -23,14 +23,14 @@
   <ItemGroup>
 	<PackageReference Include="IdentityServer4.AspNetIdentity" Version="4.1.2" />
 	<PackageReference Include="IdentityServer4.EntityFramework" Version="4.1.2" />
-	<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.24" />
-	<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.24" />
-	<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.24">
+	<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.25" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.25" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.25">
 	  <PrivateAssets>all</PrivateAssets>
 	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	</PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
-	  <PackageReference Include="Azure.Identity" Version="1.10.3" />
+	  <PackageReference Include="Azure.Identity" Version="1.10.4" />
 	  <PackageReference Include="Microsoft.Azure.AppConfiguration.AspNetCore" Version="6.1.1" />
   </ItemGroup>
 
