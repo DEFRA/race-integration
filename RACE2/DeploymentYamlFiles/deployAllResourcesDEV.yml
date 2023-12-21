@@ -29,6 +29,3 @@ steps:
       az --version
       az group create -n $(resourceGroupName) -l $(location)     
       az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFileAllResources) --parameters $(parameterfileAllResources)
-
-
-az deployment group what-if  --resource-group PRDRACINFRG1401 --template-file ./RACE2/bicepfiles/createallresources.bicep --parameters ./RACE2/bicepfiles/createallresourcesPRD.bicepparam
