@@ -2,14 +2,14 @@ param location string
 param eventgridtopicName string = 'DefenderEventGridTopic'
 param sites_RACE2DefenderScanAzurefn_externalid string = '/subscriptions/d9cce027-07b6-4275-a215-dd8d52b9d469/resourceGroups/POCRACINFRG1401/providers/Microsoft.Web/sites/RACE2DefenderScanAzurefn'
 param vnet string
-param subnetappconfig string
+param subneteventgrid string
 
 resource virtualNetworkResource 'Microsoft.Network/virtualNetworks@2023-06-01' existing = {
   name: vnet
 }
 
 resource subnetefgridtopicResource 'Microsoft.Network/virtualNetworks/subnets@2023-06-01' existing= {
-  name: subnetappconfig
+  name: subneteventgrid
 }
 resource topics_DefenderEventGridTopic_name_resource 'Microsoft.EventGrid/topics@2023-12-15-preview' = {
   name: eventgridtopicName
