@@ -67,7 +67,7 @@ resource eventgridtopicPrivateEndpoint 'Microsoft.Network/privateEndpoints@2023-
     }
     privateLinkServiceConnections: [
       {
-        name: 'PrivateEndpointAppConfig'
+        name: 'PrivateEndpointEventGridTopic'
         properties: {
           privateLinkServiceId: topics_DefenderEventGridTopic_name_resource.id
           groupIds: [
