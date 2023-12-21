@@ -134,6 +134,8 @@ module createappconfigmodule 'createappconfig.bicep' = {
     resourcegroup: resourcegroup
     appconfigName: appconfigName
     managedidentity: managedidentity
+    subnetappconfig : subnetappconfig
+    vnet : vnet
   }
   dependsOn: [
     createmanagedidentitymodule
