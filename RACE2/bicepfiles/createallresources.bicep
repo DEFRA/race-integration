@@ -13,7 +13,6 @@ param subnetappconfig string
 param subnetkeyvault string
 param subnetacr string
 param subnetvm string
-param subneteventgrid string
 param servers_race2sqlserver_name string
 param servers_race2sqldb_name string
 param containerregistryName string
@@ -90,7 +89,7 @@ module createeventgridtopicmodule 'createeventgridtopic.bicep' = {
     location: location
     eventgridtopicName: eventgridtopicName
     vnet: vnet
-    subneteventgrid: subneteventgrid
+    subnetefgridtopic: subnetefgridtopic
   }
   dependsOn: [
     createmanagedidentitymodule
