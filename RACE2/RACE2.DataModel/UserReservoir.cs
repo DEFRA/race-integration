@@ -13,7 +13,7 @@ namespace RACE2.DataModel
     {
         public int Id { get; set; }
         [StringLength(64)]
-        public string? RaceAppointmentId { get; set; }
+        public string? BackEndAppointmentId { get; set; }
         public UserDetail User { get; set; } = new UserDetail();
 
         public Reservoir Reservoir { get; set; } = new Reservoir();       

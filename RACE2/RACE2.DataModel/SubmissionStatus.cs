@@ -32,14 +32,14 @@ namespace RACE2.DataModel
         [Required]  
         public DateTime LastModifiedDateTime { get; set; }
         [Required]
-        public UserDetail LastModifiedBy { get; set; } = new UserDetail();
+        public UserDetail LastModifiedByUser { get; set; } = new UserDetail();
         [Required]
-        public int? LastModifiedScreen { get; set; }
+        public int? LastModifiedScreenId { get; set; }
         [Required]
         public DateTime SubmittedDateTime { get; set; }
         [Required]
-        public UserDetail SubmittedBy  { get; set;}  = new UserDetail();
+        public UserDetail SubmittedByUser { get; set;}  = new UserDetail();
 
-        public string? OverrideUsedTemplate { get; set; } 
+        public string? OverrideTemplateName { get; set; } 
     }
 }

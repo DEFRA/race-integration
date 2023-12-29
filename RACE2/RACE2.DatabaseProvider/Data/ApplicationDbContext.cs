@@ -73,6 +73,7 @@ namespace RACE2.DatabaseProvider.Data
         public DbSet<StatementDetails> StatementDetails { get; set; }
         public DbSet<Log> Logs { get; set; }
 
+        public DbSet<PanelMembership> PanelMembership { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -162,7 +163,7 @@ namespace RACE2.DatabaseProvider.Data
                .IsRequired(true);
 
             modelBuilder.Entity<UserDetail>()
-                .Property(e => e.cCreatedOnDate)
+                .Property(e => e.cCreatedDate)
                 .HasDefaultValueSql("getdate()");
 
             modelBuilder.Entity<UserDetail>()

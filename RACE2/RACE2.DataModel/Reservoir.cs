@@ -16,7 +16,7 @@ namespace RACE2.DataModel
         [Key, Required]
         public int Id { get; set; }
         [StringLength(64)]
-        public string? RaceReservoirId { get; set; }
+        public string? BackEndReservoirId { get; set; }
         [StringLength(200)]
         public string? PublicName { get; set; }
         [StringLength(200),Required]

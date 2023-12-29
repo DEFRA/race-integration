@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RACE2.DataModel
 {
-    [Table("OrganisationReservoirs")]
+    [Table("OrganisationReservoir")]
     public class OrganisationReservoir
     {
         public int Id { get; set; }

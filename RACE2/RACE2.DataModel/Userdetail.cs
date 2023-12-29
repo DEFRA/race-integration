@@ -13,7 +13,7 @@ namespace RACE2.DataModel
     public  class UserDetail: IdentityUser<int>    
     {    
 
-            public string? cRaceId { get; set; }
+            public string? cBackEndUserId { get; set; }
             public string? cDefraId { get; set; }
            
 
@@ -58,9 +58,14 @@ namespace RACE2.DataModel
         [Required]
             public string cStatus { get; set; }
          
-            public DateTime cCreatedOnDate { get; set; }
+            public DateTime cCreatedDate { get; set; }
 
-            public DateTime? cLastAccessDate { get; set; }
+        public DateTime? cLastModifiedDate { get; set; }
+
+        [StringLength(64)]
+        public UserDetail? cLastModifiedByUserId { get; set; }
+
+        public DateTime? cLastAccessDate { get; set; }
 
             public bool? cIsFirstTimeUser { get; set; }
 

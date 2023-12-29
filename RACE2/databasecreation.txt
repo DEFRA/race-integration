@@ -18,7 +18,7 @@ dotnet ef database update -c ConfigurationDbContext
 
 //startup project->RACE2.SecurityProvider, packagemanager defualt project->RACE2.Dto
 
-Add-Migration AddScanFileColumns -c ApplicationDbContext -o Migrations/IdentityServer/ApplicationDb
+Add-Migration UpdateDBReview -c ApplicationDbContext -o Migrations/IdentityServer/ApplicationDb
 
 
 	update-database -context ApplicationDbContext
