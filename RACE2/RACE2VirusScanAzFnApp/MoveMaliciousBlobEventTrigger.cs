@@ -9,14 +9,19 @@ using Azure.Identity;
 using Azure.Messaging;
 using Azure.Messaging.EventGrid;
 using Azure.Storage.Blobs;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.Azure.Functions.Worker;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using RACE2.Services;
 
 namespace RACE2VirusScanAzFnApp
 {
     public class MoveMaliciousBlobEventTrigger
     {
         private readonly ILogger<MoveMaliciousBlobEventTrigger> log;
+        private readonly IConfiguration _config;
+        private readonly IReservoirService _reservoirService;
         private const string AntimalwareScanEventType = "Microsoft.Security.MalwareScanningResult";
         private const string MaliciousVerdict = "Malicious";
         private const string CleanVerdict = "No threats found";
@@ -24,16 +29,20 @@ namespace RACE2VirusScanAzFnApp
         private const string CleanContainer = "cleanfiles";
         private const string InterestedContainer = "unscannedcontent";
 
-        public MoveMaliciousBlobEventTrigger(ILogger<MoveMaliciousBlobEventTrigger> logger)
+        public MoveMaliciousBlobEventTrigger(ILogger<MoveMaliciousBlobEventTrigger> logger, IConfiguration config, IReservoirService reservoirService)
         {
             log = logger;
+            _config = config;
+            _reservoirService = reservoirService;
         }
 
         [Function(nameof(MoveMaliciousBlobEventTrigger))]
         public async Task Run([EventGridTrigger] EventGridEvent eventGridEvent)
         {
+            //var res = await _reservoirService.GetReservoirsByUserId(2);
+            var connString = _config["SqlConnectionString"];
             log.LogInformation("Event type: {type}, Event subject: {subject}", eventGridEvent.EventType, eventGridEvent.Subject);
-            string connString = Environment.GetEnvironmentVariable("SqlConnectionString", EnvironmentVariableTarget.Process);
+            //string connString = Environment.GetEnvironmentVariable("SqlConnectionString", EnvironmentVariableTarget.Process);
 
             if (eventGridEvent.EventType != AntimalwareScanEventType)
             {
