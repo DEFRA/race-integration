@@ -5,14 +5,14 @@ param appInsightConnectionString string
 param vnet string
 param subnetkeyvault string
 
-resource virtualNetworkResource 'Microsoft.Network/virtualNetworks@2023-05-01' existing = {
+resource virtualNetworkResource 'Microsoft.Network/virtualNetworks@2023-06-01' existing = {
   name: vnet
 }
 
-resource subnetsqlserverResource 'Microsoft.Network/virtualNetworks/subnets@2023-05-01' existing= {
+resource subnetkeyvaultResource 'Microsoft.Network/virtualNetworks/subnets@2023-06-01' existing= {
   name: subnetkeyvault
 }
-resource Race2KeyVault_resource 'Microsoft.KeyVault/vaults@2022-11-01' = {
+resource Race2KeyVaultResource 'Microsoft.KeyVault/vaults@2023-07-01' = {
     name: keyvaultName
     location: location
 
@@ -41,18 +41,18 @@ resource Race2KeyVault_resource 'Microsoft.KeyVault/vaults@2022-11-01' = {
   }
 } 
 
-resource keyvaultPrivateEndpoint 'Microsoft.Network/privateEndpoints@2023-05-01' = {
+resource keyvaultPrivateEndpoint 'Microsoft.Network/privateEndpoints@2023-06-01' = {
   name: 'PrivateEndpointKeyVault'
   location: location
   properties: {
     subnet: {
-      id: '${virtualNetworkResource.id}/subnets/${subnetsqlserverResource.name}'
+      id: '${virtualNetworkResource.id}/subnets/${subnetkeyvaultResource.name}'
     }
     privateLinkServiceConnections: [
       {
         name: 'PrivateEndpointKeyVault'
         properties: {
-          privateLinkServiceId: Race2KeyVault_resource.id
+          privateLinkServiceId: Race2KeyVaultResource.id
           groupIds: [
             'vault'
           ]

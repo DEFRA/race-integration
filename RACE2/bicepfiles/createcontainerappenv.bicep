@@ -4,7 +4,7 @@ param lawsCustromerId string
 param lawsSharedKey string
 param infrastructureSubnetId string
 
-resource managedEnvironments_race2containerappenv_name_resource 'Microsoft.App/managedEnvironments@2023-05-01' = {
+resource managedEnvironments_race2containerappenv_name_resource 'Microsoft.App/managedEnvironments@2023-08-01-preview' = {
   name: race2appenv
   location: location
   tags: {

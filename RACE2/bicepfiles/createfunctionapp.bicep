@@ -1,30 +1,58 @@
-param location string
-param functionappName string = 'ASP-POCRACINFRG1401-85f7'
 
-resource serverfarms_ASP_POCRACINFRG1401_85f7_name_resource 'Microsoft.Web/serverfarms@2022-09-01' = {
+param location string
+param race2appinsightName string
+param storageAccountName string
+param appserviceplanName string
+param functionappName string
+
+resource appInsightResource 'Microsoft.Insights/components@2020-02-02' existing= {
+  name: race2appinsightName
+}
+
+resource storageAccountResource 'Microsoft.Storage/storageAccounts@2023-01-01' existing= {
+  name: storageAccountName
+}
+
+resource appServicePlanResource 'Microsoft.Web/serverfarms@2023-01-01' existing= {
+  name:appserviceplanName
+}
+
+resource functionApp 'Microsoft.Web/sites@2023-01-01' = {
   name: functionappName
   location: location
-  tags: {
-    ServiceCode: 'RAC'
+  kind: 'functionapp'
+  identity: {
+    type: 'SystemAssigned'
   }
-  sku: {
-    name: 'EP1'
-    tier: 'ElasticPremium'
-    size: 'EP1'
-    family: 'EP'
-    capacity: 1
-  }
-  kind: 'elastic'
   properties: {
-    perSiteScaling: false
-    elasticScaleEnabled: true
-    maximumElasticWorkerCount: 20
-    isSpot: false
-    reserved: true
-    isXenon: false
-    hyperV: false
-    targetWorkerCount: 0
-    targetWorkerSizeId: 0
-    zoneRedundant: false
+    httpsOnly: true
+    serverFarmId: appServicePlanResource.id
+    clientAffinityEnabled: true
+    siteConfig: {
+      appSettings: [
+        {
+          name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
+          value: appInsightResource.properties.InstrumentationKey
+        }
+        {
+          name: 'AzureWebJobsStorage'
+          value: 'DefaultEndpointsProtocol=https;AccountName=${storageAccountResource.name};EndpointSuffix=${environment().suffixes.storage};AccountKey=${listKeys(storageAccountResource.id, storageAccountResource.apiVersion).keys[0].value}'
+        }
+        {
+          name: 'FUNCTIONS_EXTENSION_VERSION'
+          value: '~4'
+        }
+        {
+          name: 'FUNCTIONS_WORKER_RUNTIME'
+          value: 'dotnet-isolated'
+        }
+        {
+          name: 'WEBSITE_CONTENTAZUREFILECONNECTIONSTRING'
+          value: 'DefaultEndpointsProtocol=https;AccountName=${storageAccountResource.name};EndpointSuffix=${environment().suffixes.storage};AccountKey=${listKeys(storageAccountResource.id, storageAccountResource.apiVersion).keys[0].value}'
+        }     
+        // WEBSITE_CONTENTSHARE will also be auto-generated - https://docs.microsoft.com/en-us/azure/azure-functions/functions-app-settings#website_contentshare
+        // WEBSITE_RUN_FROM_PACKAGE will be set to 1 by func azure functionapp publish
+      ]
+    }
   }
 }

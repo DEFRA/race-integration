@@ -1,49 +1,29 @@
-param topics_DefenderEventGridTopic_name string = 'DefenderEventGridTopic'
-param sites_RACE2DefenderScanAzurefn_externalid string = '/subscriptions/d9cce027-07b6-4275-a215-dd8d52b9d469/resourceGroups/POCRACINFRG1401/providers/Microsoft.Web/sites/RACE2DefenderScanAzurefn'
+param serverfarms_ASP_PRDRACINFRG1401_a408_name string = 'ASP-PRDRACINFRG1401-a408'
 
-resource topics_DefenderEventGridTopic_name_resource 'Microsoft.EventGrid/topics@2023-12-15-preview' = {
-  name: topics_DefenderEventGridTopic_name
-  location: 'uksouth'
+resource serverfarms_ASP_PRDRACINFRG1401_a408_name_resource 'Microsoft.Web/serverfarms@2023-01-01' = {
+  name: serverfarms_ASP_PRDRACINFRG1401_a408_name
+  location: 'UK South'
   tags: {
     ServiceCode: 'RAC'
   }
   sku: {
-    name: 'Basic'
+    name: 'EP1'
+    tier: 'ElasticPremium'
+    size: 'EP1'
+    family: 'EP'
+    capacity: 1
   }
-  kind: 'Azure'
-  identity: {
-    type: 'None'
-  }
+  kind: 'elastic'
   properties: {
-    minimumTlsVersionAllowed: '1.0'
-    inputSchema: 'EventGridSchema'
-    publicNetworkAccess: 'Enabled'
-    inboundIpRules: []
-    disableLocalAuth: false
-    dataResidencyBoundary: 'WithinGeopair'
-  }
-}
-
-resource topics_DefenderEventGridTopic_name_topics_DefenderEventGridTopic_name_Subscription 'Microsoft.EventGrid/topics/eventSubscriptions@2023-12-15-preview' = {
-  parent: topics_DefenderEventGridTopic_name_resource
-  name: '${topics_DefenderEventGridTopic_name}Subscription'
-  properties: {
-    destination: {
-      properties: {
-        resourceId: '${sites_RACE2DefenderScanAzurefn_externalid}/functions/MoveMaliciousBlobEventTrigger'
-        maxEventsPerBatch: 1
-        preferredBatchSizeInKilobytes: 64
-      }
-      endpointType: 'AzureFunction'
-    }
-    filter: {
-      enableAdvancedFilteringOnArrays: true
-    }
-    labels: []
-    eventDeliverySchema: 'EventGridSchema'
-    retryPolicy: {
-      maxDeliveryAttempts: 30
-      eventTimeToLiveInMinutes: 1440
-    }
+    perSiteScaling: false
+    elasticScaleEnabled: true
+    maximumElasticWorkerCount: 20
+    isSpot: false
+    reserved: false
+    isXenon: false
+    hyperV: false
+    targetWorkerCount: 0
+    targetWorkerSizeId: 0
+    zoneRedundant: false
   }
 }

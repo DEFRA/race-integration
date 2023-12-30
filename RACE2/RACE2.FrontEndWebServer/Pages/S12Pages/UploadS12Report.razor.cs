@@ -166,13 +166,14 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                             var timeToWait = Int32.Parse(_config["TimeToWaitForUpload"]);
                             System.Threading.Thread.Sleep(timeToWait); //wait for 10 seconds
                             var containerNameToDownloadFrom = _config["CleanContainer"]; //"cleanfiles";
+                            //var containerNameToDownloadFrom = _config["UnscannedContainer"];
                             var RSTEmailAddress = String.IsNullOrEmpty(_config["RSTEmailAddress"])? userDetails.Email : _config["RSTEmailAddress"] ;
                             var bytes = await blobStorageService.GetBlobAsByteArray(containerNameToDownloadFrom, trustedFileNameForFileStorage);
-                            if (bytes == null)
-                            {
-                                System.Threading.Thread.Sleep(5000);//wait for 5 more seconds
-                                bytes = await blobStorageService.GetBlobAsByteArray(containerNameToDownloadFrom, trustedFileNameForFileStorage);
-                            }
+                            //if (bytes == null)
+                            //{
+                            //    System.Threading.Thread.Sleep(5000);//wait for 5 more seconds
+                            //    bytes = await blobStorageService.GetBlobAsByteArray(containerNameToDownloadFrom, trustedFileNameForFileStorage);
+                            //}
                             if (bytes != null)
                             {
                                 await _notificationService.SendConfirmationMailtoSE(userDetails.Email, ReservoirRegName);
@@ -201,19 +202,14 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                                // bool cleanFile = false;
                                 bool notScanned = false;
                                 var containerNameforMaliciousFile = _config["MaliciousContainer"]; //"maliciousfiles";
-                                System.Threading.Thread.Sleep(5000);
-                                var malicioubytes = await blobStorageService.GetBlobAsByteArray(containerNameforMaliciousFile, trustedFileNameForFileStorage);
-
-                                if (malicioubytes == null)
+                                System.Threading.Thread.Sleep(timeToWait);
+                                var maliciousbytes = await blobStorageService.GetBlobAsByteArray(containerNameforMaliciousFile, trustedFileNameForFileStorage);
+                                //if (maliciousbytes == null)
+                                //{
+                                //    notScanned = true;                                 
+                                //}
+                                if (maliciousbytes != null)
                                 {
-
-                                    notScanned = true;
-                                    
-                                    
-                                }
-                                if (malicioubytes != null)
-                                {
-
                                     Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File infected by virus.");
                                     FileVirusScanFailed();
                                     await InvokeAsync(() =>
@@ -230,6 +226,10 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                                     //    notScanned = false;
                                     //    cleanFile = true;
                                     //}
+                                }
+                                else
+                                {
+                                    notScanned = true;
                                 }
                                 if (notScanned)
                                 {
