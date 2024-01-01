@@ -20,7 +20,7 @@ namespace RACE2VirusScanAzFnApp
     public class MoveMaliciousBlobEventTrigger
     {
         private readonly ILogger<MoveMaliciousBlobEventTrigger> log;
-        //private readonly IConfiguration _config;
+        private readonly IConfiguration _config;
         private readonly IReservoirService _reservoirService;
         private const string AntimalwareScanEventType = "Microsoft.Security.MalwareScanningResult";
         private const string MaliciousVerdict = "Malicious";
@@ -29,23 +29,23 @@ namespace RACE2VirusScanAzFnApp
         private const string CleanContainer = "cleanfiles";
         private const string InterestedContainer = "unscannedcontent";
 
-        //public MoveMaliciousBlobEventTrigger(ILogger<MoveMaliciousBlobEventTrigger> logger, IConfiguration config, IReservoirService reservoirService)
-        public MoveMaliciousBlobEventTrigger(ILogger<MoveMaliciousBlobEventTrigger> logger, IReservoirService reservoirService)
+        public MoveMaliciousBlobEventTrigger(ILogger<MoveMaliciousBlobEventTrigger> logger, IConfiguration config, IReservoirService reservoirService)
+        //public MoveMaliciousBlobEventTrigger(ILogger<MoveMaliciousBlobEventTrigger> logger, IReservoirService reservoirService)
         {
             log = logger;
             _reservoirService = reservoirService;
-            //_config = config;
+            _config = config;
             _reservoirService = reservoirService;
         }
 
         [Function(nameof(MoveMaliciousBlobEventTrigger))]
         public async Task Run([EventGridTrigger] EventGridEvent eventGridEvent)
         {
-            //var connString = _config["SqlConnectionString"];
-            string kvConnString = Environment.GetEnvironmentVariable("KeyVaultUrl", EnvironmentVariableTarget.Process);
-            var client = new SecretClient(vaultUri: new Uri(kvConnString), credential: new DefaultAzureCredential());
-            KeyVaultSecret secret = client.GetSecret("SqlServerConnString");
-            string connString = secret.Value;
+            var connString = _config["SqlConnectionString"];
+            //string kvConnString = Environment.GetEnvironmentVariable("KeyVaultUrl", EnvironmentVariableTarget.Process);
+            //var client = new SecretClient(vaultUri: new Uri(kvConnString), credential: new DefaultAzureCredential());
+            //KeyVaultSecret secret = client.GetSecret("SqlServerConnString");
+            //string connString = secret.Value;
             var res = await _reservoirService.GetReservoirsByUserId(2);
             //var connString = _config["SqlConnectionString"];
             log.LogInformation("Event type: {type}, Event subject: {subject}", eventGridEvent.EventType, eventGridEvent.Subject);
