@@ -1,20 +1,21 @@
 using Azure.Identity;
 using Microsoft.Azure.Functions.Worker;
+using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RACE2.DataAccess.Repository;
 using RACE2.Services;
+using Microsoft.Azure.AppConfiguration.Functions.Worker;
 
 var host = new HostBuilder()
     //.ConfigureAppConfiguration(builder =>
     //{
     //    builder.AddAzureAppConfiguration(options =>
     //    {
-    //        //var connectionString = builder.Configuration["AZURE_APPCONFIGURATION_CONNECTIONSTRING"];
     //        var azureAppConfigUrl = Environment.GetEnvironmentVariable("AzureAppConfigURL");
-    //        var credential = new DefaultAzureCredential();    
+    //        var credential = new DefaultAzureCredential();
     //        options.Connect(new Uri(azureAppConfigUrl), credential)
     //        .ConfigureKeyVault(kv =>
     //        {

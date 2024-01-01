@@ -41,6 +41,7 @@ namespace RACE2VirusScanAzFnApp
         [Function(nameof(MoveMaliciousBlobEventTrigger))]
         public async Task Run([EventGridTrigger] EventGridEvent eventGridEvent)
         {
+            //var connString = _config["SqlConnectionString"];
             string kvConnString = Environment.GetEnvironmentVariable("KeyVaultUrl", EnvironmentVariableTarget.Process);
             var client = new SecretClient(vaultUri: new Uri(kvConnString), credential: new DefaultAzureCredential());
             KeyVaultSecret secret = client.GetSecret("SqlServerConnString");
