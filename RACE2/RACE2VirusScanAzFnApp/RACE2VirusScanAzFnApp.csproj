@@ -7,7 +7,6 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Azure.Security.KeyVault.Secrets" Version="4.5.0" />
     <PackageReference Include="Microsoft.Azure.AppConfiguration.Functions.Worker" Version="6.1.1" />
     <PackageReference Include="Microsoft.Azure.Functions.Worker" Version="1.20.0" />
     <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.EventGrid" Version="3.4.1" />
@@ -16,7 +15,6 @@
     <PackageReference Include="Microsoft.Azure.Functions.Worker.ApplicationInsights" Version="1.1.0" />
 	<PackageReference Include="Azure.Identity" Version="1.10.4" />
 	<PackageReference Include="Azure.Storage.Blobs" Version="12.19.1" />
-	<PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">
@@ -29,10 +27,6 @@
   </ItemGroup>
   <ItemGroup>
     <Using Include="System.Threading.ExecutionContext" Alias="ExecutionContext" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties\PublishProfiles\" />
-    <Folder Include="Properties\ServiceDependencies\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RACE2.Services\RACE2.Services.csproj" />
