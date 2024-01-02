@@ -33,7 +33,6 @@ namespace RACE2VirusScanAzFnApp
         //public MoveMaliciousBlobEventTrigger(ILogger<MoveMaliciousBlobEventTrigger> logger, IReservoirService reservoirService)
         {
             log = logger;
-            _reservoirService = reservoirService;
             _config = config;
             _reservoirService = reservoirService;
         }
