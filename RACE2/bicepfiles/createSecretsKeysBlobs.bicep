@@ -33,7 +33,7 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-01-01' existing 
   name: storageAccountName
 }
 
-resource blobService 'Microsoft.Storage/storageAccounts/blobServices@2021-06-01' existing= {
+resource blobService 'Microsoft.Storage/storageAccounts/blobServices@2023-01-01' existing= {
   name: '${storageAccount.name}/default'
 }
 
@@ -45,7 +45,7 @@ resource serviceBusAccount 'Microsoft.ServiceBus/namespaces@2022-10-01-preview' 
   name: serviceBusResouceName
 }
 
-resource storageAccountConnectionString 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
+resource storageAccountConnectionString 'Microsoft.KeyVault/vaults/secrets@2023-07-01' = {
   parent: keyVault
   name: storageAccountConnectionStringSecretName
   properties: {
@@ -63,7 +63,7 @@ resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@20
 }
 
 // Store the connection string in KV if specified
-resource applicationInsightConnectionString 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
+resource applicationInsightConnectionString 'Microsoft.KeyVault/vaults/secrets@2023-07-01' = {
   parent: keyVault
   name: applicationInsightConnectionStringSecretName
   properties: {
@@ -71,7 +71,7 @@ resource applicationInsightConnectionString 'Microsoft.KeyVault/vaults/secrets@2
   }
 }
 
-resource storageAccountKeyString 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
+resource storageAccountKeyString 'Microsoft.KeyVault/vaults/secrets@2023-07-01' = {
   parent: keyVault
   name: storageAccountKeySecretName
   properties: {
@@ -80,7 +80,7 @@ resource storageAccountKeyString 'Microsoft.KeyVault/vaults/secrets@2023-02-01' 
 }
 
 var sqlServerConnectionStringVal = 'Server=tcp:${sqlServerName}${environment().suffixes.sqlServerHostname},1433;Initial Catalog=${sqlDatabaseName};Persist Security Info=False;User ID=${sqlServerUserName};Password=${sqlServerPassword};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;'
-resource sqlServerConnectionString 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
+resource sqlServerConnectionString 'Microsoft.KeyVault/vaults/secrets@2023-07-01' = {
   parent: keyVault
   name: sqlServerConnectionStringSecretName
   properties: {
@@ -89,7 +89,7 @@ resource sqlServerConnectionString 'Microsoft.KeyVault/vaults/secrets@2023-02-01
 }
 
 var serviceBusEndpoint = '${serviceBusAccount.id}/AuthorizationRules/RootManageSharedAccessKey'
-resource serviceBusConnectionString 'Microsoft.KeyVault/vaults/secrets@2021-11-01-preview' = {
+resource serviceBusConnectionString 'Microsoft.KeyVault/vaults/secrets@2023-07-01' = {
   parent: keyVault
   name: serviceBusConnectionStringSecretName
   properties: {
@@ -97,15 +97,15 @@ resource serviceBusConnectionString 'Microsoft.KeyVault/vaults/secrets@2021-11-0
   }
 }
 
-resource webserverContainerApp 'Microsoft.App/containerApps@2023-05-01' existing = {
+resource webserverContainerApp 'Microsoft.App/containerApps@2023-08-01-preview' existing = {
   name: webserverContainerAppName
 }
 
-resource securityProviderContainerApp 'Microsoft.App/containerApps@2023-05-01' existing = {
+resource securityProviderContainerApp 'Microsoft.App/containerApps@2023-08-01-preview' existing = {
   name: securityProviderContainerAppName
 }
 
-resource webApiContainerApp 'Microsoft.App/containerApps@2023-05-01' existing = {
+resource webApiContainerApp 'Microsoft.App/containerApps@2023-08-01-preview' existing = {
   name: webApiContainerAppName
 }
 

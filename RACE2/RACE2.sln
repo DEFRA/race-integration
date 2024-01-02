@@ -160,6 +160,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.SecurityAzureFunction
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.DefenderScanAzurefn", "RACE2.DefenderScanAzurefn\RACE2.DefenderScanAzurefn.csproj", "{EC257838-58FE-42CC-BD87-351360C6CAE5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RACE2VirusScanAzFnApp", "RACE2VirusScanAzFnApp\RACE2VirusScanAzFnApp.csproj", "{C1CF275D-304E-4AF8-8C44-1E7EF8A3385B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -269,6 +271,12 @@ Global
 		{EC257838-58FE-42CC-BD87-351360C6CAE5}.Development|Any CPU.Build.0 = Debug|Any CPU
 		{EC257838-58FE-42CC-BD87-351360C6CAE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC257838-58FE-42CC-BD87-351360C6CAE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1CF275D-304E-4AF8-8C44-1E7EF8A3385B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1CF275D-304E-4AF8-8C44-1E7EF8A3385B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1CF275D-304E-4AF8-8C44-1E7EF8A3385B}.Development|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1CF275D-304E-4AF8-8C44-1E7EF8A3385B}.Development|Any CPU.Build.0 = Debug|Any CPU
+		{C1CF275D-304E-4AF8-8C44-1E7EF8A3385B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1CF275D-304E-4AF8-8C44-1E7EF8A3385B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

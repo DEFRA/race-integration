@@ -8,15 +8,15 @@ param location string
 param vnet string
 param subnetsqlserver string
 
-resource virtualNetworkResource 'Microsoft.Network/virtualNetworks@2023-05-01' existing = {
+resource virtualNetworkResource 'Microsoft.Network/virtualNetworks@2023-06-01' existing = {
   name: vnet
 }
 
-resource subnetsqlserverResource 'Microsoft.Network/virtualNetworks/subnets@2023-05-01' existing= {
+resource subnetsqlserverResource 'Microsoft.Network/virtualNetworks/subnets@2023-06-01' existing= {
   name: subnetsqlserver
 }
 
-resource servers_race2sqlserver_name_resource 'Microsoft.Sql/servers@2023-02-01-preview' = {
+resource servers_race2sqlserver_name_resource 'Microsoft.Sql/servers@2023-05-01-preview' = {
   name: servers_race2sqlserver_name
   location: location
   tags: {
@@ -32,7 +32,7 @@ resource servers_race2sqlserver_name_resource 'Microsoft.Sql/servers@2023-02-01-
   }
 }
 
-resource servers_race2sqlserver_name_RACE2DB 'Microsoft.Sql/servers/databases@2023-02-01-preview' = {
+resource servers_race2sqlserver_name_RACE2DB 'Microsoft.Sql/servers/databases@2023-05-01-preview' = {
   parent: servers_race2sqlserver_name_resource
   location: location
   name: servers_race2sqldb_name
@@ -55,7 +55,7 @@ resource servers_race2sqlserver_name_RACE2DB 'Microsoft.Sql/servers/databases@20
   }
 }
 
-resource sqlPrivateEndpoint 'Microsoft.Network/privateEndpoints@2023-05-01' = {
+resource sqlPrivateEndpoint 'Microsoft.Network/privateEndpoints@2023-06-01' = {
   name: 'PrivateEndpointSqlServer'
   location: location
   properties: {
