@@ -41,7 +41,7 @@ namespace RACE2VirusScanAzFnApp
         [Function(nameof(MoveMaliciousBlobEventTrigger))]
         public async Task Run([EventGridTrigger] EventGridEvent eventGridEvent)
         {
-            var connString = _config["SqlConnectionString"];
+            //var connString = _config["SqlConnectionString"];
             //string kvConnString = Environment.GetEnvironmentVariable("KeyVaultUrl", EnvironmentVariableTarget.Process);
             //var client = new SecretClient(vaultUri: new Uri(kvConnString), credential: new DefaultAzureCredential());
             //KeyVaultSecret secret = client.GetSecret("SqlServerConnString");
@@ -88,7 +88,7 @@ namespace RACE2VirusScanAzFnApp
                 log.LogInformation("blob {0} is malicious, moving it to {1} container", blobUri, MalwareContainer);
                 try
                 {
-                    await MoveMaliciousBlobAsync(blobUri, log, false, Convert.ToDateTime(scannedTime), connString);
+                    await MoveMaliciousBlobAsync(blobUri, log, false, Convert.ToDateTime(scannedTime));
                 }
                 catch (Exception e)
                 {
@@ -102,7 +102,7 @@ namespace RACE2VirusScanAzFnApp
                 log.LogInformation("blob {0} is malicious, moving it to {1} container", blobUri, CleanContainer);
                 try
                 {
-                    await MoveCleanBlobAsync(blobUri, log, isclean, Convert.ToDateTime(scannedTime), connString);
+                    await MoveCleanBlobAsync(blobUri, log, isclean, Convert.ToDateTime(scannedTime));
 
                 }
                 catch (Exception e)
@@ -112,7 +112,7 @@ namespace RACE2VirusScanAzFnApp
                 }
             }
         }
-        private async Task MoveMaliciousBlobAsync(Uri blobUri, ILogger log, bool IsClean, DateTime scannedTime, string connString)
+        private async Task MoveMaliciousBlobAsync(Uri blobUri, ILogger log, bool IsClean, DateTime scannedTime)
 
         {
             var blobUriBuilder = new BlobUriBuilder(blobUri);
@@ -146,11 +146,12 @@ namespace RACE2VirusScanAzFnApp
             log.LogInformation("{0}", blobUriBuilder.BlobName);
             // log.LogInformation("{0}", connString);
             log.LogInformation("{0}", scannedTime);
-            UpdateScanResulttoDB(connString, scannedTime, IsClean, Convert.ToString(destBlobClient.Uri), blobUriBuilder.BlobName);
+            await _reservoirService.UpdateScannedDocumentResult(scannedTime, IsClean, Convert.ToString(destBlobClient.Uri), blobUriBuilder.BlobName);
+            //UpdateScanResulttoDB(connString, scannedTime, IsClean, Convert.ToString(destBlobClient.Uri), blobUriBuilder.BlobName);
             log.LogInformation("Database updated successfully");
         }
 
-        private async Task MoveCleanBlobAsync(Uri blobUri, ILogger log, bool IsClean, DateTime scannedTime, string connString)
+        private async Task MoveCleanBlobAsync(Uri blobUri, ILogger log, bool IsClean, DateTime scannedTime)
         {
             var blobUriBuilder = new BlobUriBuilder(blobUri);
             if (blobUriBuilder.BlobContainerName == CleanContainer)
@@ -183,32 +184,34 @@ namespace RACE2VirusScanAzFnApp
             log.LogInformation("{0}", blobUriBuilder.BlobName);
             // log.LogInformation("{0}", connString);
             log.LogInformation("{0}", scannedTime);
-            UpdateScanResulttoDB(connString, scannedTime, IsClean, Convert.ToString(destBlobClient.Uri), blobUriBuilder.BlobName);
+
+            await _reservoirService.UpdateScannedDocumentResult(scannedTime, IsClean, Convert.ToString(destBlobClient.Uri), blobUriBuilder.BlobName);
+            //UpdateScanResulttoDB(connString, scannedTime, IsClean, Convert.ToString(destBlobClient.Uri), blobUriBuilder.BlobName);
             log.LogInformation("Database updated successfully");
         }
 
-        private void UpdateScanResulttoDB(string connString, DateTime scannedTime, bool isclean, string blobpath, string documentName)
-        {
-            using (SqlConnection conn = new SqlConnection(connString))
-            {
-                conn.Open();
+        //private void UpdateScanResulttoDB(string connString, DateTime scannedTime, bool isclean, string blobpath, string documentName)
+        //{
+        //    using (SqlConnection conn = new SqlConnection(connString))
+        //    {
+        //        conn.Open();
 
-                // 1.  create a command object identifying the stored procedure
-                SqlCommand cmd = new SqlCommand("sp_UpdateScannedDocumentResult", conn);
+        //        // 1.  create a command object identifying the stored procedure
+        //        SqlCommand cmd = new SqlCommand("sp_UpdateScannedDocumentResult", conn);
 
-                // 2. set the command object so it knows to execute a stored procedure
-                cmd.CommandType = CommandType.StoredProcedure;
+        //        // 2. set the command object so it knows to execute a stored procedure
+        //        cmd.CommandType = CommandType.StoredProcedure;
 
-                // 3. add parameter to command, which will be passed to the stored procedure
-                cmd.Parameters.Add(new SqlParameter("@scannedtime", scannedTime));
-                cmd.Parameters.Add(new SqlParameter("@isClean", isclean));
-                cmd.Parameters.Add(new SqlParameter("@uploadBlobpath", blobpath));
-                cmd.Parameters.Add(new SqlParameter("@documentName", documentName));
+        //        // 3. add parameter to command, which will be passed to the stored procedure
+        //        cmd.Parameters.Add(new SqlParameter("@scannedtime", scannedTime));
+        //        cmd.Parameters.Add(new SqlParameter("@isClean", isclean));
+        //        cmd.Parameters.Add(new SqlParameter("@uploadBlobpath", blobpath));
+        //        cmd.Parameters.Add(new SqlParameter("@documentName", documentName));
 
-                cmd.ExecuteNonQuery();
-                conn.Close();
+        //        cmd.ExecuteNonQuery();
+        //        conn.Close();
 
-            }
-        }
+        //    }
+        //}
     }
 }
