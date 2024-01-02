@@ -103,7 +103,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                         var r = new Reservoir()
                         {
                             Id = rn.Id,
-                            RaceReservoirId = rn.RaceReservoirId,
+                            BackEndReservoirId = rn.RaceReservoirId,
                             PublicName = rn.PublicName,
                             RegisteredName = rn.RegisteredName,
                             NearestTown = rn.NearestTown,
@@ -221,7 +221,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
 
                 SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(reservoir.Id, userDetails.Id, "In progress");
 
-                var blobName = updatedStatus.OverrideUsedTemplate + ".docx";
+                var blobName = updatedStatus.OverrideTemplateName + ".docx";
                 //var blobName = "S12ReportTemplate.docx";
                 //var blobName = "TestWithTags.docx";
                 Stream response = await blobStorageService.GetBlobFileStream(blobName);

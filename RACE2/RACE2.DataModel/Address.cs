@@ -14,7 +14,7 @@ namespace RACE2.DataModel
         [Key, Required]
         public int id { get; set; }
         [StringLength(64)]
-        public string? RaceAddressKey { get; set; }
+        public string? BackEndAddressKey { get; set; }
         [Required]
         public string? AddressLine1 { get; set; }
         

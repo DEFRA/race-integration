@@ -73,6 +73,17 @@ namespace RACE2.DatabaseProvider.Data
         public DbSet<StatementDetails> StatementDetails { get; set; }
         public DbSet<Log> Logs { get; set; }
 
+        public DbSet<PanelMembership> PanelMembership { get; set; }
+        public DbSet<RAW_ActionSummary> RAW_ActionSummary { get; set; }
+
+        public DbSet<RAW_MaintenanceMeasures> RAW_MaintenanceMeasures { get; set; }
+
+        public DbSet<RAW_MIOS>  RAW_MIOS { get; set; }
+
+        public DbSet<RAW_WatchItems> RAW_WatchItems { get; set; }
+
+        public DbSet<RAW_StatementDetails> RAW_StatementDetails { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -162,7 +173,7 @@ namespace RACE2.DatabaseProvider.Data
                .IsRequired(true);
 
             modelBuilder.Entity<UserDetail>()
-                .Property(e => e.cCreatedOnDate)
+                .Property(e => e.cCreatedDate)
                 .HasDefaultValueSql("getdate()");
 
             modelBuilder.Entity<UserDetail>()
@@ -224,6 +235,28 @@ namespace RACE2.DatabaseProvider.Data
             //    .HasMany(left => left.Organisation)
             //    .WithMany(right => right.Addresses)
             //    .UsingEntity(join => join.ToTable("OrganisationAddresses"));
+
+
+
+            modelBuilder.Entity<RAW_StatementDetails>(
+                e => e.HasNoKey()
+                );
+
+            modelBuilder.Entity<RAW_ActionSummary>(
+                e => e.HasNoKey()
+                );
+
+            modelBuilder.Entity<RAW_MaintenanceMeasures>(
+                e => e.HasNoKey()
+                );
+
+            modelBuilder.Entity<RAW_MIOS>(
+                e => e.HasNoKey()
+                );
+
+            modelBuilder.Entity<RAW_WatchItems>(
+                e => e.HasNoKey()
+                );
         }
     }
 

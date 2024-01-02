@@ -15,7 +15,7 @@ namespace RACE2.DataModel
         [Key, Required]
         public int Id { get; set; }
         [StringLength(64)]
-        public string RaceActionId { get; set; }
+        public string BackEndActionId { get; set; }
         [StringLength(64),Required]
         public string Reference { get; set; }
         [StringLength(64),Required]
@@ -32,10 +32,13 @@ namespace RACE2.DataModel
         [StringLength(64)]
         public string Priority { get; set; }
         public bool IsComplianceAction { get; set; }
-        [StringLength(64),Required]
-      //  public UserRole OwnerRole { get; set; }
+        [Required]
+        public UserRole OwnerRole { get; set; }
        
-         
+         public UserDetail? OwnedByUser { get; set; }
+
+        [StringLength(250)]
+        public string OwnedByName { get; set; }
         public DateTime CreatedDate { get; set; }
         [Required]
         public DateTime TargetDate { get; set; }

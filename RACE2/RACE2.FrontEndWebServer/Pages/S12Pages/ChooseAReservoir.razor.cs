@@ -53,7 +53,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 reservoirNamesList.Add(rn.PublicName);
                 var r = new Reservoir()
                 {
-                    RaceReservoirId = rn.RaceReservoirId,
+                    BackEndReservoirId = rn.RaceReservoirId,
                     PublicName = rn.PublicName,
                     NearestTown = rn.NearestTown,
                     GridReference = rn.GridReference
