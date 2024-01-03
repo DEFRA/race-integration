@@ -3,6 +3,7 @@
 @using RACE2.FrontEndWebServer.Components
 @inject NavigationManager NavigationManager
 @inject ILogger<Index> Logger
+@inject IConfiguration _config
 
 <Header />
 
@@ -110,15 +111,25 @@
     public string UserName { get; set; } = "Unknown";
     public AuthenticationState authState  { get; set; }
 
-    protected override async void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        authState = await AuthenticationStateTask; //AuthenticationStateProvider.GetAuthenticationStateAsync();
+        authState = await AuthenticationStateTask; //AuthenticationStateProvider.GetAuthenticationStateAsync();        
+        await base.OnInitializedAsync();
     }
 
     private async void GoToLoginPage()
     {
+        var maintMode = _config["IsMaintenanceMode"];
+
         bool forceLoad = true;
-        NavigationManager.NavigateTo("/login", forceLoad);
+        if (maintMode.ToLower() == "true")
+        {
+            NavigationManager.NavigateTo("/MaintenancePage", forceLoad);
+        }
+        else
+        {
+            NavigationManager.NavigateTo("/login", forceLoad);
+        }
     }
 
     private async void GoToNextPage()
