@@ -113,37 +113,34 @@
 
     protected override async Task OnInitializedAsync()
     {
-        authState = await AuthenticationStateTask; //AuthenticationStateProvider.GetAuthenticationStateAsync();        
-        await base.OnInitializedAsync();
-    }
-
-    private async void GoToLoginPage()
-    {
         var maintMode = _config["IsMaintenanceMode"];
-
         bool forceLoad = true;
         if (maintMode.ToLower() == "true")
         {
             NavigationManager.NavigateTo("/MaintenancePage", forceLoad);
         }
-        else
-        {
-            NavigationManager.NavigateTo("/login", forceLoad);
-        }
+        authState = await AuthenticationStateTask; //AuthenticationStateProvider.GetAuthenticationStateAsync();        
+        await base.OnInitializedAsync();
+    }
+
+    private void GoToLoginPage()
+    {
+        bool forceLoad = true;
+        NavigationManager.NavigateTo("/login", forceLoad);
     }
 
     private void GoToNextPage()
     {
         bool forceLoad = false;
         NavigationManager.NavigateTo("/annual-statements", forceLoad);
-        if (authState.User.Identity.IsAuthenticated)
-        {           
-           NavigationManager.NavigateTo("/annual-statements", forceLoad);
-        }
-        else
-        {
-           NavigationManager.NavigateTo("/login", forceLoad);
-        }
+        // if (authState.User.Identity.IsAuthenticated)
+        // {           
+        //    NavigationManager.NavigateTo("/annual-statements", forceLoad);
+        // }
+        // else
+        // {
+        //    NavigationManager.NavigateTo("/login", forceLoad);
+        // }
     }
 }
 
