@@ -191,7 +191,6 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                                     var internalEmail = _config["InternalEmailAddress"];
                                     await _notificationService.SendInternalMail(internalEmail, ReservoirRegName, UndertakerEmail, YesNoValue);
                                 }
-                                will call you after lunch
                                 //Store the uploaded document information
                                 documentDTO.SubmissionId = updatedStatus.Id;
                                 await reservoirService.InsertDocumentRelatedTable(Int32.Parse(ReservoirId), updatedStatus.Id, docID);
