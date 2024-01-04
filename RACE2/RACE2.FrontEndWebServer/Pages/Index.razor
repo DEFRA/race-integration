@@ -3,6 +3,7 @@
 @using RACE2.FrontEndWebServer.Components
 @inject NavigationManager NavigationManager
 @inject ILogger<Index> Logger
+@inject IConfiguration _config
 
 <Header />
 
@@ -110,29 +111,36 @@
     public string UserName { get; set; } = "Unknown";
     public AuthenticationState authState  { get; set; }
 
-    protected override async void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        authState = await AuthenticationStateTask; //AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var maintMode = _config["IsMaintenanceMode"];
+        bool forceLoad = true;
+        if (maintMode.ToLower() == "true")
+        {
+            NavigationManager.NavigateTo("/MaintenancePage", forceLoad);
+        }
+        authState = await AuthenticationStateTask; //AuthenticationStateProvider.GetAuthenticationStateAsync();        
+        await base.OnInitializedAsync();
     }
 
-    private async void GoToLoginPage()
+    private void GoToLoginPage()
     {
         bool forceLoad = true;
         NavigationManager.NavigateTo("/login", forceLoad);
     }
 
-    private async void GoToNextPage()
+    private void GoToNextPage()
     {
         bool forceLoad = false;
         NavigationManager.NavigateTo("/annual-statements", forceLoad);
-        if (authState.User.Identity.IsAuthenticated)
-        {           
-           NavigationManager.NavigateTo("/annual-statements", forceLoad);
-        }
-        else
-        {
-           NavigationManager.NavigateTo("/login", forceLoad);
-        }
+        // if (authState.User.Identity.IsAuthenticated)
+        // {           
+        //    NavigationManager.NavigateTo("/annual-statements", forceLoad);
+        // }
+        // else
+        // {
+        //    NavigationManager.NavigateTo("/login", forceLoad);
+        // }
     }
 }
 
