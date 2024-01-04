@@ -490,7 +490,7 @@ namespace RACE2.DataAccess.Repository
                     var parameters = new DynamicParameters();
                     parameters.Add("documentid", documentid, DbType.Int64);
                     parameters.Add("submissionid", submissionid, DbType.Int64);
-                    parameters.Add("reservoirid", documentid, DbType.Int64);
+                    parameters.Add("reservoirid", reservoirid, DbType.Int64);
 
                     if (documentid != 0)
                     {
