@@ -4,7 +4,7 @@
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_ENVIRONMENT": "Production",
         //"AzureAppConfigURL": "https://prdracinfac1401.azconfig.io/"
         "AzureAppConfigURL": "https://pocracinfac1401.azconfig.io/"
         //"AzureAppConfigURL": "https://devracinfac1401.azconfig.io/"
