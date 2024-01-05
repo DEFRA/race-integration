@@ -102,7 +102,6 @@
 <Footer />
 
 @code {
-
     [CascadingParameter]
     public Task<AuthenticationState> AuthenticationStateTask { get; set; }
 
@@ -112,27 +111,31 @@
     public AuthenticationState authState  { get; set; }
 
     protected override async Task OnInitializedAsync()
-    {
-        var maintMode = _config["IsMaintenanceMode"];
+    {        
         bool forceLoad = true;
+        var maintMode = _config["IsMaintenanceMode"];
         if (maintMode.ToLower() == "true")
         {
             NavigationManager.NavigateTo("/MaintenancePage", forceLoad);
         }
-        authState = await AuthenticationStateTask; //AuthenticationStateProvider.GetAuthenticationStateAsync();        
+        else
+        {
+            authState = await AuthenticationStateTask; 
+        }
         await base.OnInitializedAsync();
     }
 
     private void GoToLoginPage()
     {
-        bool forceLoad = true;
-        NavigationManager.NavigateTo("/login", forceLoad);
+        bool forceLoad = true; 
+        NavigationManager.NavigateTo("/login", forceLoad);        
     }
 
     private void GoToNextPage()
     {
         bool forceLoad = false;
         NavigationManager.NavigateTo("/annual-statements", forceLoad);
+
         // if (authState.User.Identity.IsAuthenticated)
         // {           
         //    NavigationManager.NavigateTo("/annual-statements", forceLoad);
