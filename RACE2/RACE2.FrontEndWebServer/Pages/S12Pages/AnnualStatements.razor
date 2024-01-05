@@ -113,12 +113,14 @@
                                     }
                                 </td>
                                 <td class="govuk-table__cell" width="10%" style="text-align:center;">
-                                    <a class="govuk-link govuk-link--no-visited-state" style="cursor:pointer;" @onclick="()=>DownloadTemplateFile(reservoir)">Download</a>
+                                    <a class="govuk-link govuk-link--no-visited-state" style="cursor:pointer;" @onclick="()=>DownloadTemplateFile(reservoir)">Download
+                                        <span class="govuk-visually-hidden">template</span></a>
                                 </td>
                                 @if (reservoir.Status.ToLower() == "in progress")
                                 {
                                     <td class="govuk-table__cell" width="10%" style="text-align:right;">
-                                        <a class="govuk-link govuk-link--no-visited-state" style="cursor:pointer;" @onclick="()=>gotoSubmissionPage(reservoir)">Send</a>
+                                        <a class="govuk-link govuk-link--no-visited-state" style="cursor:pointer;" @onclick="()=>gotoSubmissionPage(reservoir)">Send
+                                            <span class="govuk-visually-hidden">template</span></a>
                                     </td>
                                 }
                                 else
