@@ -53,6 +53,12 @@ git pull origin main
 git merge main
 git push origin
 
+Server=tcp:pocracinfss1401.database.windows.net,1433;Initial Catalog=pocracinfdb1401;Persist Security Info=False;Authentication=Active Directory Default;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
+create user [UserAssignedManagedIdentity] from external provider
+alter role db_datareader add member [UserAssignedManagedIdentity]
+alter role db_datawriter add member [UserAssignedManagedIdentity]
+GRANT EXECUTE ON SCHEMA::dbo TO [UserAssignedManagedIdentity]
+
 podman build -t race2acr.azurecr.io/race2securityprovider:v1 -f Dockerfile_SecurityProvider .
 podman push race2acr.azurecr.io/race2securityprovider:v1
 
