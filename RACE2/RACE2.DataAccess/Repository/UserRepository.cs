@@ -12,13 +12,11 @@ using Dapper;
 using Microsoft.Data.SqlClient;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using Microsoft.AspNetCore.Identity;
-//using RACE2.Logging.Service;
 using RACE2.Dto;
-using System.Data.SqlClient;
 using Microsoft.Extensions.Logging;
 using RACE2.Common;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
-//using RACE2.Logging;
+
 
 namespace RACE2.DataAccess.Repository
 {

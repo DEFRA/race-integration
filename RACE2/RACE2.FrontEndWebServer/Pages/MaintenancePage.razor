@@ -46,9 +46,9 @@
     [Parameter]
     public string ErrorMessage { get; set; }
     public string MaintModeEndTime { get; set; }
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
         MaintModeEndTime = _config["MaintModeEndTime"];
-        await base.OnInitializedAsync();
+        base.OnInitialized();
     }
 }
