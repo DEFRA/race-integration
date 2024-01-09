@@ -12,7 +12,8 @@ namespace RACE2.DataModel
     [Table("RAW_StatementDetails")]
     public class RAW_StatementDetails
     {
-
+        [Key, Required]
+        public int Id { get; set; }
 
         [StringLength(64)]
         public string DocumentName { get; set; }

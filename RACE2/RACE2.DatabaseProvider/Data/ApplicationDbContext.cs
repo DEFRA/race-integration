@@ -78,11 +78,13 @@ namespace RACE2.DatabaseProvider.Data
 
         public DbSet<RAW_MaintenanceMeasures> RAW_MaintenanceMeasures { get; set; }
 
-        public DbSet<RAW_MIOS>  RAW_MIOS { get; set; }
+        public DbSet<RAW_MIOS> RAW_MIOS { get; set; }
 
         public DbSet<RAW_WatchItems> RAW_WatchItems { get; set; }
 
         public DbSet<RAW_StatementDetails> RAW_StatementDetails { get; set; }
+
+        public DbSet<ReservoirDetailsChangeHistory> ReservoirDetailsChangeHistory { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -238,25 +240,25 @@ namespace RACE2.DatabaseProvider.Data
 
 
 
-            modelBuilder.Entity<RAW_StatementDetails>(
-                e => e.HasNoKey()
-                );
+            //modelBuilder.Entity<RAW_StatementDetails>(
+            //    e => e.HasNoKey()
+            //    );
 
-            modelBuilder.Entity<RAW_ActionSummary>(
-                e => e.HasNoKey()
-                );
+            //modelBuilder.Entity<RAW_ActionSummary>(
+            //    e => e.HasNoKey()
+            //    );
 
-            modelBuilder.Entity<RAW_MaintenanceMeasures>(
-                e => e.HasNoKey()
-                );
+            //modelBuilder.Entity<RAW_MaintenanceMeasures>(
+            //    e => e.HasNoKey()
+            //    );
 
-            modelBuilder.Entity<RAW_MIOS>(
-                e => e.HasNoKey()
-                );
+            //modelBuilder.Entity<RAW_MIOS>(
+            //    e => e.HasNoKey()
+            //    );
 
-            modelBuilder.Entity<RAW_WatchItems>(
-                e => e.HasNoKey()
-                );
+            //modelBuilder.Entity<RAW_WatchItems>(
+            //    e => e.HasNoKey()
+            //    );
         }
     }
 

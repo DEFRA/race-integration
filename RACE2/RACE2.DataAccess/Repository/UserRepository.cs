@@ -9,13 +9,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
+using Microsoft.Data.SqlClient;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using Microsoft.AspNetCore.Identity;
 using RACE2.Dto;
 using Microsoft.Extensions.Logging;
 using RACE2.Common;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
-using Microsoft.Data.SqlClient;
+
 
 namespace RACE2.DataAccess.Repository
 {

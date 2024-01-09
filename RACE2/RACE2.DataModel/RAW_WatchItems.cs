@@ -13,6 +13,8 @@ namespace RACE2.DataModel
     
     public class RAW_WatchItems
     {
+        [Key, Required]
+        public int Id { get; set; }
 
         [StringLength(64)]
         public string DocumentName { get; set; }
