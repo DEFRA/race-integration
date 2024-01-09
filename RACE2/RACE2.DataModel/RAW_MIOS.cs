@@ -12,6 +12,8 @@ namespace RACE2.DataModel
     [Table("RAW_MIOS")]
     public class RAW_MIOS
     {
+        [Key, Required]
+        public int Id { get; set; }
 
         [StringLength(64)]
         public string DocumentName { get; set; }
