@@ -23,6 +23,10 @@ variables:
     value: 'race2frontendwebserver'
   - name: dockerfile_frontendwebserver
     value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_FrontEndWebServer'
+  - name: repository_webapiexternal
+    value: 'race2webapiexternal'
+  - name: dockerfile_webapiexternal
+    value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_WebApiExternal'  
   - name: containerRegistry
     value: 'AZR-RAC-POC2-DockerRegistry'
   - name: tag
@@ -69,6 +73,14 @@ stages:
         dockerfile: ${{ variables.dockerfile_frontendwebServer }}
         containerRegistry: ${{ variables.containerRegistry }}
         tags: ${{ variables.tag }}
+    - task: Docker@2
+      displayName: Build and push an image - WebApiExternal
+      inputs:
+        command: buildAndPush
+        repository: ${{ variables.repository_webapiexternal }}
+        dockerfile: ${{ variables.dockerfile_webapiexternal }}
+        containerRegistry: ${{ variables.containerRegistry }}
+        tags: ${{ variables.tag }}   
 
 - stage : DeployContainerApps
   displayName: Deploy Container Apps to Azure Portal

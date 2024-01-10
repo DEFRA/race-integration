@@ -28,7 +28,7 @@ namespace RACE2.WebApi.Mutation
 
         public async Task<int> UpdateFirstTimeUserLogin(IUserService _userService, String email)
         {
-            int result = await _userService.UpdateFirstTimeUserLogin(email);
+            int result = await _userService.UpdateFirstTimeUserLogin(email,false);
             return result;
         }
     }

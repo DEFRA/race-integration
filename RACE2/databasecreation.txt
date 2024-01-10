@@ -17,8 +17,11 @@ dotnet ef migrations add InitialMigration -c ConfigurationDbContext -o Migration
 dotnet ef database update -c ConfigurationDbContext
 
 //startup project->RACE2.SecurityProvider, packagemanager defualt project->RACE2.Dto
-Add-Migration UpdateDataModel -c ApplicationDbContext -o Migrations/IdentityServer/ApplicationDb
-update-database -context ApplicationDbContext
+
+Add-Migration AddScanFileColumns -c ApplicationDbContext -o Migrations/IdentityServer/ApplicationDb
+
+
+	update-database -context ApplicationDbContext
 
 //dotnet ef commands
 dotnet ef migrations add InitialMigration -c ApplicationDbContext -o Migrations/IdentityServer/ApplicationDb

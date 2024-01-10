@@ -47,7 +47,7 @@ namespace RACE2.Services
             }
         }
 
-        public async Task<string> UploadFileToBlobAsync(string containerName, string strFileName, string contecntType, Stream fileStream)
+        public async Task<string> UploadFileToBlobAsync(string containerName, string strFileName, string contentType, Stream fileStream)
         {
             try
             {
@@ -58,7 +58,7 @@ namespace RACE2.Services
                     await container.SetAccessPolicyAsync(Azure.Storage.Blobs.Models.PublicAccessType.Blob);
                 var blob = container.GetBlobClient(strFileName);
                 await blob.DeleteIfExistsAsync(DeleteSnapshotsOption.IncludeSnapshots);
-                await blob.UploadAsync(fileStream, new BlobHttpHeaders { ContentType = contecntType });
+                await blob.UploadAsync(fileStream, new BlobHttpHeaders { ContentType = contentType });
                 var urlString = blob.Uri.ToString();
                 return urlString;
             }
@@ -201,9 +201,30 @@ namespace RACE2.Services
                 return response.Value.Content;
 
                 //var response = await blob.DownloadAsync();
-                //using (MemoryStream stream = new MemoryStream())                {
+                //using (MemoryStream stream = new MemoryStream())
+                //{
                 //    response.Value.Content.CopyTo(stream);
                 //    return stream;
+                //}
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public async Task<Byte[]> GetBlobAsByteArray(string containerName, string blobName)
+        {
+            var container = new BlobContainerClient(blobStorageconnection, containerName);
+            var blobClient = container.GetBlobClient(blobName);
+
+            if (await blobClient.ExistsAsync())
+            {
+                using (var ms = new MemoryStream())
+                {
+                    blobClient.DownloadTo(ms);
+                    return ms.ToArray();
+                }
             }
             else
             {
