@@ -203,6 +203,20 @@ resource storageBlobDataReaderRoleAssignment 'Microsoft.Authorization/roleAssign
   }
 }
 
+resource storageBlobDataContributorRoleDefinition 'Microsoft.Authorization/roleDefinitions@2022-05-01-preview' existing = {
+  scope: resourceGroup()
+  name: 'ba92f5b4-2d11-453d-a403-e96b0029c9fe'
+}
+
+resource storageBlobDataCntributorRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name:  guid(resourceGroup().id, mi.id, storageBlobDataContributorRoleDefinition.id)
+  properties: {
+    roleDefinitionId: storageBlobDataContributorRoleDefinition.id
+    principalId: mi.properties.principalId
+    principalType: 'ServicePrincipal'
+  }
+}
+
 resource SQLDBContributorRoleDefinition 'Microsoft.Authorization/roleDefinitions@2022-05-01-preview' existing = {
   scope: resourceGroup()
   name: '9b7fa17d-e63e-47b0-bb0a-15c516ac86ec'
@@ -222,7 +236,7 @@ resource SQLManagedInstanceContributorRoleDefinition 'Microsoft.Authorization/ro
   name: '4939a1f6-9ae0-4e48-a1e0-f2cbe897382d'
 }
 
-resource SQLManagedInstanceContributorRoleAssignment 'Microsoft.Authorization/roleAssignments@@2022-04-01' = {
+resource SQLManagedInstanceContributorRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name:  guid(resourceGroup().id, mi.id, SQLManagedInstanceContributorRoleDefinition.id)
   properties: {
     roleDefinitionId: SQLManagedInstanceContributorRoleDefinition.id

@@ -12,7 +12,6 @@ param subnetfunctionapp string
 param subnetappconfig string
 param subnetkeyvault string
 param subnetacr string
-param subnetvm string
 param servers_race2sqlserver_name string
 param servers_race2sqldb_name string
 param containerregistryName string
@@ -52,7 +51,6 @@ module createvnetmodule 'createvnet.bicep' = {
     subnetappconfig: subnetappconfig
     subnetkeyvault: subnetkeyvault
     subnetacr: subnetacr
-    subnetvm: subnetvm
     location: location 
   }
 }
@@ -218,3 +216,17 @@ module createfunctionappmodule 'createfunctionapp.bicep' = {
   ]
 }
 
+module createRoleAssignments 'createroleassignments.bicep' = {
+  scope: resourceGroup(resourcegroup)
+  name: 'createroleassignmentsdeploy'
+  params: {
+    managedIdentityName: managedidentity    
+  }
+  dependsOn: [
+    createsqlservermodule
+    createappconfigmodule
+    createstorageaccountmodule
+    createkeyvaultmodule
+    createcontainerregistrymodule
+  ]
+}
