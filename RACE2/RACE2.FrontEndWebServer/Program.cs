@@ -1,5 +1,4 @@
 using Azure.Identity;
-using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
@@ -7,6 +6,9 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel;
+using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
@@ -14,12 +16,13 @@ using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using Microsoft.IdentityModel.Logging;
 using RACE2.DataAccess.Repository;
 using RACE2.DataModel;
-using RACE2.FrontEndWebServer.Components;
-using RACE2.FrontEndWebServer.ExceptionGlobalErrorHandling;
 using RACE2.Services;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.MSSqlServer;
+using RACE2.Notification;
+using RACE2.FrontEndWebServer.ExceptionGlobalErrorHandling;
+using RACE2.FrontEndWebServer.Components;
 
 Serilog.Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Information()
@@ -27,7 +30,9 @@ Serilog.Log.Logger = new LoggerConfiguration()
             .Enrich.FromLogContext()
             .WriteTo.Console()
             .CreateBootstrapLogger();
-try { 
+
+try
+{
     var builder = WebApplication.CreateBuilder(args);
     builder.Configuration.AddAzureAppConfiguration(options =>
     {
@@ -51,9 +56,10 @@ try {
     var blazorClientURL = builder.Configuration["RACE2FrontEndURL"];
     var RACE2WebApiURL = builder.Configuration["RACE2WebApiURL"];
     var RACE2IDPURL = builder.Configuration["RACE2SecurityProviderURL"];
-    var clientSecret=builder.Configuration["ClientSecret"];
-    var appinsightsConnString= builder.Configuration["AppInsightsConnectionString"];
+    var clientSecret = builder.Configuration["ClientSecret"];
+    var appinsightsConnString = builder.Configuration["AppInsightsConnectionString"];
     var sqlConnectionString = builder.Configuration["SqlConnectionString"];
+    //IConfiguration _configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../appsettings.json").Build();
 
     //Serilog Use
     var tableName = "Logs";
@@ -66,8 +72,8 @@ try {
         .WriteTo.MSSqlServer(sqlConnectionString, tableName, columnOptions: columnOptions)
         .WriteTo.ApplicationInsights(new TelemetryConfiguration { ConnectionString = appinsightsConnString }, TelemetryConverter.Traces));
 
-    builder.Services.AddApplicationInsightsTelemetry(options => 
-    { 
+    builder.Services.AddApplicationInsightsTelemetry(options =>
+    {
         options.ConnectionString = appinsightsConnString;
     });
 
@@ -131,7 +137,7 @@ try {
             // Save the tokens we receive from the IDP
             options.SaveTokens = true; // default false
             // It's recommended to always get claims from the UserInfoEndpoint during the flow.
-            options.GetClaimsFromUserInfoEndpoint = true; 
+            options.GetClaimsFromUserInfoEndpoint = true;
             options.Scope.Add("race2WebApi");
             options.RequireHttpsMetadata = requireHttpsMetadata;
         });
@@ -149,6 +155,13 @@ try {
     builder.Services.AddScoped<IBlobStorageService, BlobStorageService>();
     builder.Services.AddScoped<IOpenXMLUtilitiesService, OpenXMLUtilitiesService>();
     builder.Services.AddScoped<CustomErrorBoundary>();
+    builder.Services.AddDataProtection()
+        .UseCryptographicAlgorithms(new AuthenticatedEncryptorConfiguration
+        {
+            EncryptionAlgorithm = EncryptionAlgorithm.AES_256_CBC,
+            ValidationAlgorithm = ValidationAlgorithm.HMACSHA256
+        });
+    builder.Services.AddSingleton<INotification, RaceNotification>();
 
     var app = builder.Build();
     app.UseForwardedHeaders();

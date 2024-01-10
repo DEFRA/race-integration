@@ -1,11 +1,17 @@
 using Azure.Identity;
+using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
+using DocumentFormat.OpenXml.Wordprocessing;
+using Microsoft.ApplicationInsights.Extensibility;
+using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel;
+using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.MSSqlServer;
-using Microsoft.ApplicationInsights.Extensibility;
+using System.IdentityModel.Tokens.Jwt;
+
 Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Information()
             .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
@@ -91,15 +97,27 @@ try
                 .AllowAnyHeader();
             });
     });
+
+    builder.Services.AddDataProtection()
+        .UseCryptographicAlgorithms(new AuthenticatedEncryptorConfiguration
+        {
+            EncryptionAlgorithm = EncryptionAlgorithm.AES_256_CBC,
+            ValidationAlgorithm = ValidationAlgorithm.HMACSHA256
+        });
+
     var app = builder.Build();
-    app.UseSerilogRequestLogging();
+
     // Configure the HTTP request pipeline.
+    //app.UseSerilogRequestLogging(configure =>
+    //{
+    //    configure.MessageTemplate = "HTTP {RequestMethod} {RequestPath} ({UserId}) responded {StatusCode} in {Elapsed:0.0000}ms";
+    //}); // We want to log all HTTP requests
+    app.UseSerilogRequestLogging();
     if (app.Environment.IsDevelopment())
     {
         app.UseSwagger();
         app.UseSwaggerUI();
     }
-
     app.UseHttpsRedirection();
 
     app.UseAuthentication();
@@ -117,3 +135,4 @@ finally
 {
     Serilog.Log.CloseAndFlush();
 }
+

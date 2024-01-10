@@ -1,4 +1,4 @@
-﻿@page "/upload-your-template/{ReservoirId}/{ReservoirRegName}/{UndertakerName}/{UndertakerEmail}/{YesNoValue}"
+﻿@page "/upload-your-template/{ReservoirId}/{ReservoirRegName}/{UndertakerName}/{UndertakerEmail}/{SubmissionReference}/{YesNoValue}"
 @using Microsoft.AspNetCore.Authorization;
 @using Microsoft.AspNetCore.Components
 @using Microsoft.AspNetCore.Components.Authorization
@@ -8,11 +8,15 @@
 @using RACE2.DataModel
 @using RACE2.Dto
 @using RACE2.Services
+@using RACE2.Notification
 @inject NavigationManager NavigationManager
 @inject IBlobStorageService blobStorageService
 @inject IUserService userService
-@inject IReservoirService reservoirService
 @inject IJSRuntime jsRuntime
+@inject IConfiguration _config
+@inject IReservoirService reservoirService
+@inject INotification _notificationService
+
 @attribute [Authorize]
 
 <HeaderWithBanner />
@@ -28,24 +32,27 @@
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-three-quarters">
                 <EditForm Model="@uploadFileData" OnSubmit="OnUploadSubmit">
-                    @if (uploadFileData.MaxFileSizeExceeded)
+                    @if (ValidationErrors.Count > 0)
                     {
                         <div class="govuk-error-summary" data-module="govuk-error-summary">
                             <div role="alert">
                                 <h2 class="govuk-error-summary__title">
                                     There is a problem
                                 </h2>
-                                <div class="govuk-error-summary__body">
-                                    <ul class="govuk-list govuk-error-summary__list">
-                                        <li>
-                                            <a href="#">The selected file must be smaller than 30MB</a>
-                                        </li>
-                                    </ul>
-                                </div>
+                                @foreach (var error in ValidationErrors.Values)
+                                {
+                                    <div class="govuk-error-summary__body">
+                                        <ul class="govuk-list govuk-error-summary__list">
+                                            <li>
+                                                <a href="#">@error</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                }
                             </div>
                         </div>
                         <div class="govuk-form-group govuk-form-group--error">
-                            <label class="govuk-label" for="file-upload-2">
+                            <label class="govuk-label" for="file-upload">
                                 <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">
                                     Upload your statement
                                 </h1>
@@ -54,30 +61,37 @@
                                 You can upload your statement as a PDF or Word document. It can be up to 30MB.
                             </div>
                             <br />
-                            <p id="file-upload-2-error" class="govuk-error-message">
-                                <span class="govuk-visually-hidden">Error:</span>The selected file must be smaller than 30MB
-                            </p>
-                            <InputFile class="govuk-file-upload govuk-file-upload--error" id="file-upload-2" name="fileUpload2" type="file"
-                                       aria-describedby="file-upload-1-error" OnChange="OnInputFileChange" accept=".docx,.pdf" />
+                            @foreach (var error in ValidationErrors.Values)
+                            {
+                                <p id="file-upload-error" class="govuk-error-message">
+                                    <span class="govuk-visually-hidden">Error:</span>@error
+                                </p>
+                            }
+                            <InputFile class="govuk-file-upload govuk-file-upload--error" id="file-upload" name="fileUpload" type="file"
+                                       aria-describedby="file-upload-error" OnChange="OnInputFileChange" multiple />
+                            <p class="govuk-body" style="margin-top:25px;">We’ll check the statement when you upload it.</p>
+                            <p class="govuk-body">This could take up to 20 seconds.</p>
                         </div>
                     }
                     else
                     {
                         <div class="govuk-form-group">
-                            <label class="govuk-label" for="file-upload-1">
+                            <label class="govuk-label" for="file-upload">
                                 <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">Upload your statement</h1>
                             </label>
                             <div id="file-upload-hint" class="govuk-hint">
                                 You can upload your statement as a PDF or Word document. It can be up to 30MB.
                             </div>
                             <br />
-                            <InputFile id="file-upload-1" class="govuk-file-upload" OnChange="OnInputFileChange" accept=".docx,.pdf" />
+                            <InputFile id="file-upload" name="file-upload" class="govuk-file-upload" OnChange="OnInputFileChange" multiple />
+                            <p class="govuk-body" style="margin-top:25px;">We’ll check the statement when you upload it.</p>
+                            <p class="govuk-body">This could take up to 20 seconds.</p>
                         </div>
                     }
                     <button type="submit" draggable="false"
                             class="govuk-button govuk-!-margin-top-6 govuk-!-margin-bottom-6 govuk-!-margin-right-4"
                             data-module="govuk-button">
-                        Send statement
+                        Upload and send statement
                     </button>
                 </EditForm>
 
@@ -89,14 +103,17 @@
 <Footer />
 
 @code{
-    private int UserId { get; set; } = 0;
+    private string _fileNameResult;
+    public string fileExtn = String.Empty;
     private string UserName { get; set; } = "Unknown";
-    private UserDetail UserDetail { get; set; }
+    private UserSpecificDto userDetails { get; set; }
     public string ReservoirName { get; set; } = default!;
     private IBrowserFile loadedFile;
     IBrowserFile selectedFile;
+    List<IBrowserFile> selectedFiles;
     private UploadFileData uploadFileData { get; set; } = new UploadFileData();
     private List<FileUploadViewModel> fileUploadViewModels = new();
+    DocumentDTO documentDTO = new DocumentDTO();
     [Parameter]
     public string ReservoirId { get; set; }
     [Parameter]
@@ -106,113 +123,303 @@
     [Parameter]
     public string UndertakerEmail { get; set; }
     [Parameter]
+    public string SubmissionReference { get; set; }
+    [Parameter]
     public string YesNoValue { get; set; }
-
-    public string displayMessage { get; set; }
-
-    public string warningMessage { get; set; }
+    public Dictionary<string, string> ValidationErrors = new Dictionary<string, string>();
 
     [CascadingParameter]
     public Task<AuthenticationState> AuthenticationStateTask { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
         AuthenticationState authState = await AuthenticationStateTask; // AuthenticationStateProvider.GetAuthenticationStateAsync();
         UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
-        var userDetails = await userService.GetUserByEmailID(UserName);
-        UserId = userDetails.Id;
-        UserDetail = new UserDetail()
-            {
-                UserName = UserName,
-                Id = UserId,
-                Email = userDetails.Email
-            };
-        var rid = ReservoirId;
-        var rname = ReservoirRegName;
+        userDetails = await userService.GetUserByEmailID(UserName);
         await InvokeAsync(() =>
         {
             StateHasChanged();
         });
+        clearAllUploadFileSettings();
         await base.OnInitializedAsync();
     }
-    private async Task OnInputFileChange(InputFileChangeEventArgs e)
+    private void OnInputFileChange(InputFileChangeEventArgs e)
     {
-        selectedFile = e.File;
-        if (selectedFile.Size > uploadFileData.MaxFileSize)
-        {
-            uploadFileData.MaxFileSizeExceeded = true;
-        }
-        else
-        {
-            uploadFileData.MaxFileSizeExceeded = false;
-        }
-        await InvokeAsync(() =>
-        {
-            StateHasChanged();
-        });
+        selectedFiles = e.GetMultipleFiles().ToList();
     }
     private async Task OnUploadSubmit()
     {
-        try
+        clearAllUploadFileSettings();
+        uploadFileData.EmptyFileSize = long.Parse(_config["EmptyFileSizeLimit"]);
+        if (selectedFiles == null)
         {
-            var extn = selectedFile.Name.Split('.')[1];
-            var containerName = UserName.Split("@")[0];
-            if (containerName.Contains('.'))
+            NoFileSelected();
+            await InvokeAsync(() =>
             {
-                containerName = containerName.Split('.')[0];
+                StateHasChanged();
+            });
+        }
+        else if (selectedFiles.Count() > 1)
+        {
+            MoreThanOneFileSelected();
+            await InvokeAsync(() =>
+            {
+                StateHasChanged();
+            });
+        }
+        else
+        {
+            selectedFile = selectedFiles[0];
+            var fileExtns = selectedFile.Name.Split('.');
+            int totalExtns = fileExtns.Length;
+            fileExtn = selectedFile.Name.Split('.')[totalExtns - 1];
+            var fileExtensionsAllowed = _config["SupportedUploadFileExtensions"].Split(';');
+            if (!fileExtensionsAllowed.Contains(fileExtn))
+            //if (!(fileExtn == "docx" || fileExtn == "doc" || fileExtn == "pdf"))
+            {
+                WrongExtensionSelected();
             }
-            var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + "." + extn;
-            var blobUrl = await blobStorageService.UploadFileToBlobAsync(containerName, trustedFileNameForFileStorage, selectedFile.ContentType, selectedFile.OpenReadStream(uploadFileData.MaxFileSize));
-            if (blobUrl != null)
+            if (selectedFile.Size > uploadFileData.MaxFileSize)
             {
-                FileUploadViewModel fileUploadViewModel = new FileUploadViewModel()
-                    {
-                        FileName = trustedFileNameForFileStorage,
-                        FileStorageUrl = blobUrl,
-                        ContentType = selectedFile.ContentType,
-                    };
-
-                fileUploadViewModels.Add(fileUploadViewModel);
-                displayMessage = trustedFileNameForFileStorage + " Uploaded!!";
-                SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(Int32.Parse(ReservoirId), UserDetail.Id, "Sent");
-                goToNextPage();
+                MaxFileSizeExceeded();
+            }
+            if (selectedFile.Size < uploadFileData.EmptyFileSize)
+            {
+                FileIsEmpty();
+            }
+            if (ValidationErrors.Count() > 0)
+            {
+                await InvokeAsync(() =>
+                {
+                    StateHasChanged();
+                });
             }
             else
-                warningMessage = "File Upload failed, Please try again!!";
+            {
+                try
+                {
+                    //var containerName = UserName.Split("@")[0];
+                    //if (containerName.Contains('.'))
+                    //{
+                    //    containerName = containerName.Split('.')[0];
+                    //}
+                    var containerNameToUplodTo = _config["UnscannedContainer"];//"unscannedcontent";
+                    //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + "."+ extn;
+                    //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + SubmissionReference + "." + fileExtn;
+                    var trustedFileNameForFileStorage = SubmissionReference + "_" + DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + DateTime.Now.Hour + DateTime.Now.Minute + DateTime.Now.Second + "." + fileExtn;
+                    //Store the uploaded document information
+                    documentDTO.FileName = selectedFile.Name.Split('.')[0];
+                    documentDTO.FileType = fileExtn;
+                    documentDTO.DateSent = DateTime.Now;
+                    documentDTO.FileLocation = selectedFile.Name;
+                    documentDTO.ReservoirId = Int32.Parse(ReservoirId);
+                    documentDTO.SuppliedViaService = 1;
+                    documentDTO.BlobStorageFileName = trustedFileNameForFileStorage;
+                    documentDTO.DocumentType = "S12";
+                    documentDTO.SuppliedBy = userDetails.Id;
+                    var docID = await reservoirService.InsertUploadDocumentDetails(documentDTO);
 
-        }
-        catch (Exception ex)
-        {
-            warningMessage = "File Upload failed, Please try again!!";
-        }
+                    var blobUrl = await blobStorageService.UploadFileToBlobAsync(containerNameToUplodTo, trustedFileNameForFileStorage, selectedFile.ContentType, selectedFile.OpenReadStream(uploadFileData.MaxFileSize));
+                    if (blobUrl != null)
+                    {
+                        FileUploadViewModel fileUploadViewModel = new FileUploadViewModel()
+                            {
+                                FileName = trustedFileNameForFileStorage,
+                                FileStorageUrl = blobUrl,
+                                ContentType = selectedFile.ContentType,
+                            };
 
-        await InvokeAsync(() =>
-        {
-            StateHasChanged();
-        });
+                        fileUploadViewModels.Add(fileUploadViewModel);
+                        SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(Int32.Parse(ReservoirId), userDetails.Id, "Sent");
+                        //_fileNameResult=await jsRuntime.InvokeAsync<string>("getFileName");
+
+                        //System.Threading.Thread.Sleep(20000);//wait for 10 seconds
+                        var timeToWait = Int32.Parse(_config["TimeToWaitForUpload"]);
+                        System.Threading.Thread.Sleep(timeToWait); //wait for timeToWait seconds
+
+                        //For testing without virus scan, comment the next line and uncomment the next to next line
+                        //var containerNameToDownloadFrom = _config["CleanContainer"]; //"cleanfiles";
+                        var containerNameToDownloadFrom = _config["UnscannedContainer"];
+
+                        var RSTEmailAddress = String.IsNullOrEmpty(_config["RSTEmailAddress"]) ? userDetails.Email : _config["RSTEmailAddress"];
+                        var bytes = await blobStorageService.GetBlobAsByteArray(containerNameToDownloadFrom, trustedFileNameForFileStorage);
+                        //if (bytes == null)
+                        //{
+                        //    System.Threading.Thread.Sleep(5000);//wait for 5 more seconds
+                        //    bytes = await blobStorageService.GetBlobAsByteArray(containerNameToDownloadFrom, trustedFileNameForFileStorage);
+                        //}
+                        if (bytes != null)
+                        {
+                            await _notificationService.SendConfirmationMailtoSE(userDetails.Email, ReservoirRegName);
+                            if (selectedFile.Size < uploadFileData.NotifyServiceFileAttachmentLimit)
+                            {
+                                await _notificationService.SendConfirmationMailtoRST(RSTEmailAddress, ReservoirRegName, bytes, userDetails.cFirstName + " " + userDetails.cLastName, UndertakerName);
+                                if (YesNoValue == "Yes")
+                                {
+                                    await _notificationService.SendConfirmationMailWithAttachment(bytes, UndertakerEmail, ReservoirRegName);
+                                }
+                            }
+                            else
+                            {
+                                var internalEmail = _config["InternalEmailAddress"];
+                                await _notificationService.SendInternalMail(internalEmail, ReservoirRegName, UndertakerEmail, YesNoValue);
+                            }
+                            //Store the uploaded document information
+                            documentDTO.SubmissionId = updatedStatus.Id;
+                            await reservoirService.InsertDocumentRelatedTable(Int32.Parse(ReservoirId), updatedStatus.Id, docID);
+                            Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Information("File upload succeeded.");
+                            goToNextPage();
+                        }
+                        else
+                        {
+                            // bool cleanFile = false;
+                            bool notScanned = false;
+                            var containerNameforMaliciousFile = _config["MaliciousContainer"]; //"maliciousfiles";
+                            System.Threading.Thread.Sleep(timeToWait);
+                            var maliciousbytes = await blobStorageService.GetBlobAsByteArray(containerNameforMaliciousFile, trustedFileNameForFileStorage);
+                            //if (maliciousbytes == null)
+                            //{
+                            //    notScanned = true;
+                            //}
+                            if (maliciousbytes != null)
+                            {
+                                Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File infected by virus.");
+                                FileVirusScanFailed();
+                                await InvokeAsync(() =>
+                                {
+                                    StateHasChanged();
+                                });
+                                //var scanResult = await reservoirService.GetScannedResultbyDocId(docID);
+                                //if (scanResult.AVScanDate == DateTime.MinValue)
+                                //{
+                                //    notScanned = true;
+                                //}
+                                //else if (scanResult.AVScanDate != DateTime.MinValue && scanResult.CleanFileStorageLink != null && scanResult.IsClean)
+                                //{
+                                //    notScanned = false;
+                                //    cleanFile = true;
+                                //}
+                            }
+                            else
+                            {
+                                notScanned = true;
+                            }
+                            if (notScanned)
+                            {
+                                Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File not scanned for virus.");
+                                FileUploadFailed();
+                                await InvokeAsync(() =>
+                                {
+                                    StateHasChanged();
+                                });
+                            }
+                            //else if (!cleanFile)
+                            //{
+                            //    Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File infected by virus.");
+                            //    FileVirusScanFailed();
+                            //    await InvokeAsync(() =>
+                            //    {
+                            //        StateHasChanged();
+                            //    });
+                            //}
+
+                        }
+                    }
+                    else
+                    {
+                        Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File upload failed.");
+                        FileUploadFailed();
+                        await InvokeAsync(() =>
+                        {
+                            StateHasChanged();
+                        });
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File upload failed : " + ex.Message);
+                    FileUploadFailed();
+                    await InvokeAsync(() =>
+                    {
+                        StateHasChanged();
+                    });
+                }
+                finally
+                {
+                }
+            }
+        }
     }
 
     private void goback()
     {
         bool forceLoad = false;
-        string pagelink = $"/send-your-statement/{ReservoirId}/{ReservoirRegName}/{UndertakerName}/{UndertakerEmail}";
+        string pagelink = $"/send-your-statement/{ReservoirId}/{ReservoirRegName}/{UndertakerName}/{UndertakerEmail}/{SubmissionReference}";
         NavigationManager.NavigateTo(pagelink, forceLoad);
     }
     private void goToNextPage()
     {
         bool forceLoad = false;
-        string pagelink = $"/upload-confirmation/{ReservoirId}/{ReservoirRegName}/{UndertakerName}/{UndertakerEmail}/{YesNoValue}";
+        string pagelink = $"/upload-confirmation/{ReservoirId}/{ReservoirRegName}/{UndertakerName}/{UndertakerEmail}/{SubmissionReference}/{YesNoValue}";
         NavigationManager.NavigateTo(pagelink, forceLoad);
+    }
+
+    private void clearAllUploadFileSettings()
+    {
+        ValidationErrors.Clear();
+    }
+    private void MaxFileSizeExceeded()
+    {
+        ValidationErrors.Add("MaxFileSizeExceeded", "The selected file must be smaller than 30MB");
+    }
+    private void NoFileSelected()
+    {
+        ValidationErrors.Add("NoFileSelected", "Select a file");
+    }
+    private void MoreThanOneFileSelected()
+    {
+        ValidationErrors.Add("MoreThanOneFileSelected", "You can only select up to 1 file at the same time");
+    }
+    private void WrongExtensionSelected()
+    {
+        ValidationErrors.Add("WrongExtensionSelected", "The selected file must be a PDF or a Word document");
+    }
+    private void FileIsEmpty()
+    {
+        ValidationErrors.Add("FileIsEmpty", "The selected file is empty");
+    }
+    private void FileContainsVirus()
+    {
+        ValidationErrors.Add("FileContainsVirus", "The selected file contains a virus");
+    }
+    private void FilePasswordProtected()
+    {
+        ValidationErrors.Add("FilePasswordProtected", "FilePasswordProtected");
+    }
+    private void FileIncorrectTemplate()
+    {
+        ValidationErrors.Add("FileIncorrectTemplate", "FileIncorrectTemplate");
+    }
+    private void FileUploadFailed()
+    {
+        ValidationErrors.Add("FileUploadFailed", "The selected file could not be uploaded - try again");
+    }
+
+    private void FileVirusScanFailed()
+    {
+        ValidationErrors.Add("FileVirusScanFailed", "FileVirusScanFailed");
     }
     public class UploadFileData
     {
         public long MaxFileSize { get; set; }
-        public bool MaxFileSizeExceeded { get; set; }
-        public bool noFileSelected { get; set; }
+        public long NotifyServiceFileAttachmentLimit { get; set; }
+        public long EmptyFileSize { get; set; }
         public UploadFileData()
         {
             MaxFileSize = 30 * 1024 * 1024;
+            //EmptyFileSize = 12 * 1024;
+            NotifyServiceFileAttachmentLimit = 2 * 1024 * 1024;
         }
     }
 }
-
 

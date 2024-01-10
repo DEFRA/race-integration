@@ -16,7 +16,7 @@ namespace RACE2.DataModel
         [Key, Required]
         public int Id { get; set; }
         [StringLength(64)]
-        public string? RaceReservoirId { get; set; }
+        public string? BackEndReservoirId { get; set; }
         [StringLength(200)]
         public string? PublicName { get; set; }
         [StringLength(200),Required]
@@ -35,20 +35,20 @@ namespace RACE2.DataModel
         public bool? HasMultipleDams { get; set; }
         [StringLength(512)]
         public string? KeyFacts { get; set; }
-        public DateTime ConstructionStartDate { get; set; }
-        public DateTime VerifiedDetailsDate { get; set; }
-        public DateTime LastInspectionDate { get; set; }
+        public DateTime? ConstructionStartDate { get; set; }
+        public DateTime? VerifiedDetailsDate { get; set; }
+        public DateTime? LastInspectionDate { get; set; }
 
         public UserDetail? LastInspectionByUser { get; set; }
         [StringLength(250)]
         public string? LastInspectionEngineerName { get; set; }
         [StringLength(64)]
         public string? LastInspectionEngineerPhone { get; set; }
-        public DateTime LastCertificationDate { get; set; }
+        public DateTime? LastCertificationDate { get; set; }
 
-        public DateTime NextInspectionDate102 { get; set; }
+        public DateTime? NextInspectionDate102 { get; set; }
 
-        public DateTime NextInspectionDate103 { get; set; }
+        public DateTime? NextInspectionDate103 { get; set; }
 
       //  public List<UserDetail> LastInspectionByUser { get; set; } = new List<UserDetail>();
 

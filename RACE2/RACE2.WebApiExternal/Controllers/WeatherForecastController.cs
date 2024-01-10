@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
 namespace RACE2.WebApiExternal.Controllers
 {
     [ApiController]
@@ -12,17 +11,24 @@ namespace RACE2.WebApiExternal.Controllers
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
     };
 
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly Serilog.ILogger _serilogLogger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController( Serilog.ILogger serilogLogger)
         {
-            _logger = logger;
+            _serilogLogger = serilogLogger;
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
+            // The following line demonstrates how we could use serilog's
+            // own abstraction. Offers more features than ASP.NET core logging.
+            _serilogLogger
+                .ForContext("Controller", nameof(WeatherForecastController))
+                .ForContext("Method", nameof(Get))
+                .Warning("Entered");
+
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),

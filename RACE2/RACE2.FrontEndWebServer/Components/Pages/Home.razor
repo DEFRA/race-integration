@@ -74,21 +74,18 @@
             <p>
                 Read about<a href="https://www.gov.uk/guidance/reservoir-supervising-engineers-written-statements-and-site-visit-reports"
                              class="govuk-link govuk-link--no-visited-state">
-                    supervising engineers' written statements and site visit reports
+                    supervising engineers' written statements
+                    and site visit reports
                 </a>
             </p>
 
             <h2 class="govuk-heading-m govuk-!-font-size-27 govuk-!-padding-top-6"> Get help using this service</h2>
 
             <p class="govuk-body">
-                To get help using this online service contact the Environment Agency.
-            </p>
-            <p class="govuk-body">
-                Email <a href="mailto:s12statement@environment-agency.gov.uk"
-                         class="govuk-link">s12statement@environment-agency.gov.uk</a>
-            </p>
-            <p class="govuk-body">
-                Staff monitor emails from 9am to 5pm, Monday to Friday.
+                You can <a href="#" class="govuk-link govuk-link--no-visited-state">
+                    get help doing
+                    things online
+                </a>.
             </p>
         </div>
     </div>
@@ -127,18 +124,24 @@
 
     private async void GoToNextPage()
     {
-        AuthenticationState authState =
-         await AuthenticationStateProvider.GetAuthenticationStateAsync();
         bool forceLoad = false;
         NavigationManager.NavigateTo("/annual-statements", forceLoad);
-        if (authState.User.Identity.IsAuthenticated)
-        {
-            NavigationManager.NavigateTo("/annual-statements", forceLoad);
-        }
-        else
-        {
-            NavigationManager.NavigateTo("/login", forceLoad);
-        }
+        //NavigationManager.NavigateTo("/choose-a-reservoir", forceLoad);
+        //if (authState.User.Claims == null)
+        //{
+        //    Claims = authState.User.Claims;
+
+        //    Claim? givenNameClaim = authState.User.FindFirst("name");
+        //    if (givenNameClaim is not null)
+        //    {
+        //        UserName = givenNameClaim.Value;
+        //    }
+        //    NavigationManager.NavigateTo("/annual-statements", forceLoad);
+        //}
+        //else
+        //{
+        //    NavigationManager.NavigateTo("/login", forceLoad);
+        //}
     }
 }
 

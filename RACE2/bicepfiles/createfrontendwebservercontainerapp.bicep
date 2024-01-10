@@ -63,10 +63,6 @@ resource containerFrontEndApp 'Microsoft.App/containerApps@2023-05-01' = {
           ]
           image: '${containerImage}:${tagVal.tag}' //concat('${frontendcontainerImage}',':','${tagVal.tag}')
           name: containerAppName
-          resources: {
-            cpu: '0.5'
-            memory: '1Gi'
-          }   
         }
       ]
       scale: {

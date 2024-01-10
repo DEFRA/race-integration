@@ -27,7 +27,7 @@ using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.MSSqlServer;
 using System.Configuration;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 
 Serilog.Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Information()
@@ -179,11 +179,9 @@ try
 
     app.UseCookiePolicy(new CookiePolicyOptions
     {
-        MinimumSameSitePolicy = SameSiteMode.None
+        MinimumSameSitePolicy = SameSiteMode.Lax
     });
-
     app.UseStaticFiles();
-    app.UseAntiforgery();
 
     app.UseRouting();
 

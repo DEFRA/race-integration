@@ -41,9 +41,6 @@
       "webApiContainerAppName": {
         "value":"race2webapi"
       },
-      "webApiExternalContainerAppName": {
-        "value":"race2webapiexternal"
-      },
       "frontendwebservercontainerImage": {
         "value":"tstracinfcr1401.azurecr.io/race2frontendwebserver"
       },
@@ -52,9 +49,6 @@
       },
       "webapicontainerImage": {
         "value": "tstracinfcr1401.azurecr.io/race2webapi"
-      },
-      "webapiexternalcontainerImage": {
-        "value": "tstracinfcr1401.azurecr.io/race2webapiexternal"
-      } 
+      }
     }
 }

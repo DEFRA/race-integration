@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RACE2.DataModel
 {
-    [Table("ScreenSequenceAuditHistories")]
+    [Table("ScreenSequenceAuditHistory")]
     public class ScreenSequenceAuditHistory
     {
         [Key, Required]
@@ -22,8 +22,8 @@ namespace RACE2.DataModel
         [Required]
         public int NewValue { get; set; }
         [Required]
-        public DateTime ModifiedOn { get; set; }
+        public DateTime LastModifiedDateTime { get; set; }
         [Required]
-        public UserDetail ModifiedBy { get; set; } = new UserDetail();
+        public UserDetail LastModifiedByUser { get; set; } = new UserDetail();
     }
 }

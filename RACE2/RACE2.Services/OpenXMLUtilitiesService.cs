@@ -43,13 +43,19 @@ namespace RACE2.Services
                 {
                     docText = sr.ReadToEnd();
                 }
+
+                //input = input.Replace("&", "&amp;")
+                //.Replace("'", "&apos;")
+                //.Replace("\"", "&quot;")
+                //.Replace(">", "&gt;")
+                //.Replace("<", "&lt;");
                 var tagList = new S12ReportTemplateTags().Tags;
                 foreach (var tag in tagList)
                 {
                     Regex tagVal = new Regex(tag);
                     switch (tag)
                     {
-                        case "{Reservoir name}":
+                        case "{Reservoir name}":                            
                             docText = tagVal.Replace(docText, s12PrePopulationFields.ReservoirName);
                             break;
                         case "{Reservoir nearest town}":
@@ -62,6 +68,7 @@ namespace RACE2.Services
                             docText = tagVal.Replace(docText, s12PrePopulationFields.SupervisingEngineerName);
                             break;
                         case "{Supervising engineer company name}":
+                            s12PrePopulationFields.SupervisingEngineerCompanyName = s12PrePopulationFields.SupervisingEngineerCompanyName.Replace("&", "&amp;");
                             docText = tagVal.Replace(docText, s12PrePopulationFields.SupervisingEngineerCompanyName);
                             break;
                         case "{Supervising engineer address}":
@@ -74,8 +81,9 @@ namespace RACE2.Services
                             docText = tagVal.Replace(docText, s12PrePopulationFields.SupervisingEngineerPhoneNumber);
                             break;
                         case "{Undertaker name}":
-                            docText = tagVal.Replace(docText, s12PrePopulationFields.UndertakerName);
-                            break;
+                            s12PrePopulationFields.UndertakerName = s12PrePopulationFields.UndertakerName.Replace("&", "&amp;");
+                            docText = tagVal.Replace(docText, s12PrePopulationFields.UndertakerName);                            
+                             break;
                         case "{Undertaker address}":
                             docText = tagVal.Replace(docText, s12PrePopulationFields.UndertakerAddress);
                             break;

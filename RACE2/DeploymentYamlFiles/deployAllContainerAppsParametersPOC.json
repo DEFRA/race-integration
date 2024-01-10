@@ -32,29 +32,23 @@
       "maxReplicas": {
         "value": 2
       },
-      "securityProviderContainerAppName": {
-        "value":"race2securityprovider"
-      },
       "frontEndWebServerContainerAppName": {
         "value":"race2frontendwebserver"
+      },
+      "securityProviderContainerAppName": {
+        "value":"race2securityprovider"
       },
       "webApiContainerAppName": {
         "value":"race2webapi"
       },
-      "webApiExternalContainerAppName": {
-        "value":"race2webapiexternal"
+      "frontendwebservercontainerImage": {
+        "value":"race2acr.azurecr.io/race2frontendwebserver"
       },
       "securityprovidercontainerImage": {
         "value":"race2acr.azurecr.io/race2securityprovider"
       },
-      "frontendwebservercontainerImage": {
-        "value":"race2acr.azurecr.io/race2frontendwebserver"
-      },
       "webapicontainerImage": {
         "value":"race2acr.azurecr.io/race2webapi"
-      },
-      "webapiexternalcontainerImage": {
-        "value":"race2acr.azurecr.io/race2webapiexternal"
       } 
     }
 }

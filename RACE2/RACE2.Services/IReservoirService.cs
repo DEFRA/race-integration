@@ -30,5 +30,13 @@ namespace RACE2.Services
 
         public Task<SubmissionStatus> UpdateReservoirStatus(int reservoirid, int userid, string reportStatus);
 
+        public Task<int> InsertUploadDocumentDetails(DocumentDTO document);
+
+        public Task<int> UpdateScannedDocumentResult(DateTime scanneddatetime, bool isClean, string uploadblobpath, string blobStorageFileName);
+
+        public Task<DocumentDTO> GetScannedResultbyDocId(int id);
+
+        public Task<int> InsertDocumentRelatedTable(int reservoirid, int submissionid, int documentid);
+
     }
 }

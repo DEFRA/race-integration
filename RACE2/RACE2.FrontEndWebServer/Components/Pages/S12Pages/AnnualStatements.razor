@@ -6,7 +6,6 @@
 @inject IReservoirService reservoirService
 @inject IJSRuntime jsRuntime
 @inject NavigationManager NavigationManager
-@inject ILogger<AnnualStatements> Logger
 @using Microsoft.AspNetCore.Authorization
 @using RACE2.FrontEndWebServer.Components
 @using RACE2.Dto;
@@ -68,91 +67,95 @@
                 </div>
                 </div>
                 </div> *@
-                <h5 style="font-weight:bold;">Templates</h5>
+                <h5 class="govuk-table__caption govuk-table__caption--m">Templates</h5>
                 <table class="govuk-table govuk-!-margin-top-4">
-
-                    <thead class="govuk-table__head">
+                    @*                     <caption class="govuk-table__caption govuk-table__caption--m">Templates</caption>
+                    *@
+                    <thead class="govuk-table__head" style="width:100%;">
                         <tr class="govuk-table__row govuk-body govuk-!-font-size-16">
-
-                            <th scope="col" class="govuk-table__header app-custom-class">
+                            <th scope="col" class="govuk-table__header app-custom-class" width="25%">
                                 <button aria-label="Sort by Reservoir" type="button" class="icon-sort-button"
                                         onclick="@(() => SortTable("ReservoirName"))">
                                     Reservoir
                                     <div class="icon-sort"></div>
                                 </button>
                             </th>
-
-                            <th scope="col" class="govuk-table__header app-custom-class">
+                            <th scope="col" class="govuk-table__header app-custom-class" width="25%">
                                 <button aria-label="Sort by Undertaker" type="button" class="icon-sort-button"
                                         onclick="@(() => SortTable("UndertakerName"))">
                                     Undertaker
                                     <div class="icon-sort"></div>
                                 </button>
                             </th>
-
-                            <th scope="col" class="govuk-table__header app-custom-class">
+                            <th scope="col" class="govuk-table__header app-custom-class" width="20%">
                                 <button aria-label="Sort by Due date" type="button" class="icon-sort-button"
                                         onclick="@(() => SortTable("DueDate"))">
                                     Due date
                                     <div class="icon-sort"></div>
                                 </button>
                             </th>
-
-                            <th scope="col" class="govuk-table__header app-custom-class">
+                            <th scope="col" class="govuk-table__header app-custom-class" width="15%">
                                 <button aria-label="Sort by Status" type="button" class="icon-sort-button"
                                         onclick="@(() => SortTable("Status"))">
                                     Status
                                     <div class="icon-sort"></div>
                                 </button>
                             </th>
-
-                            <th scope="col" class="govuk-table__header app-custom-class"></th>
-
-                            <th scope="col" class="govuk-table__header app-custom-class"></th>
+                            <th scope="col" class="govuk-table__header app-custom-class" width="10%"></th>
+                            <th scope="col" class="govuk-table__header app-custom-class" width="10%"></th>
                         </tr>
-
                     </thead>
 
-                    <tbody class="govuk-table__body govuk-body govuk-!-font-size-16">
+                    <tbody class="govuk-table__body govuk-body govuk-!-font-size-16" style="width:100%;">
                         @foreach (var reservoir in ReservoirsLinkedToUserForDisplay)
                         {
-                            <input type="hidden" value="@reservoir.ReservoirID" />
-                            <input type="hidden" value="@reservoir.UndertakerEmail" />
                             <tr class="govuk-table__row">
-                                <td scope="row" class="govuk-table__cell">@reservoir.ReservoirName</td>
-                                <td class="govuk-table__cell">@reservoir.UndertakerName</td>
-                                <td class="govuk-table__cell">@reservoir.DueDate</td>
-                                <td class="govuk-table__cell">
+                                <td scope="row" class="govuk-table__cell" width="25%">@reservoir.ReservoirName</td>
+                                <td class="govuk-table__cell" width="25%">@reservoir.UndertakerName</td>
+                                <td class="govuk-table__cell" width="20%">@reservoir.DueDate</td>
+                                <td class="govuk-table__cell" width="15%">
                                     @if (reservoir.Status.ToLower() == "in progress")
                                     {
                                         <strong class="in-progress-tag-new">
                                             @reservoir.Status
                                         </strong>
-                                        @*                                             <span style="background-color: #d2e2f1;color:#144e81;padding-top: 5px;Padding-right: 4px;Padding-bottom: 4px;Padding-left: 4px;">
-                                @reservoir.Status
-                                </span> *@
+                                    }
+                                    else if (reservoir.Status.ToLower() == "sent")
+                                    {
+                                        <strong class="sent-tag-new">
+                                            @reservoir.Status
+                                        </strong>
                                     }
                                     else
                                     {
                                         <strong class="not-started-tag-new">
                                             @reservoir.Status
                                         </strong>
-                                        @*                                             <span style="background-color:lightgrey;padding-top: 5px;Padding-right: 4px;Padding-bottom: 4px;Padding-left: 4px;">
-                                @reservoir.Status
-                                </span> *@
                                     }
                                 </td>
-                                <td class="govuk-table__cell">
-                                    <a class="govuk-link govuk-link--no-visited-state" href="annual-statements" @onclick="()=>DownloadTemplateFile(reservoir)">Download</a>
+                                <td class="govuk-table__cell" width="10%" style="text-align:center;">
+                                    <a class="govuk-link govuk-link--no-visited-state" style="cursor:pointer;" @onclick="()=>DownloadTemplateFile(reservoir)">
+                                        Download
+                                        <span class="govuk-visually-hidden">template</span>
+                                    </a>
                                 </td>
                                 @if (reservoir.Status.ToLower() == "in progress")
                                 {
-                                    <td class="govuk-table__cell">
-                                        <a class="govuk-link govuk-link--no-visited-state" href="annual-statements" @onclick="()=>gotoSubmissionPage(reservoir)">Send</a>
+                                    <td class="govuk-table__cell" width="10%" style="text-align:right;">
+                                        <a class="govuk-link govuk-link--no-visited-state" style="cursor:pointer;" @onclick="()=>gotoSubmissionPage(reservoir)">
+                                            Send
+                                            <span class="govuk-visually-hidden">template</span>
+                                        </a>
                                     </td>
                                 }
-
+                                else
+                                {
+                                    <td class="govuk-table__cell" width="10%" style="text-align:right;">&nbsp;</td>
+                                }
                             </tr>
+                            <input type="hidden" value="@reservoir.ReservoirID" />
+                            <input type="hidden" value="@reservoir.UndertakerEmail" />
+                            <input type="hidden" value="@reservoir.SubmissionReference" />
                         }
                     </tbody>
                 </table>
@@ -164,7 +167,6 @@
     </main>
 </div>
 <Footer />
-
 @code {
     bool? IsLoggedIn;
     private string UserName { get; set; } = "Unknown";
@@ -175,6 +177,8 @@
     private List<ReservoirsLinkedToUserForDisplay> ReservoirsLinkedToUserForDisplayOnStart { get; set; } = new List<ReservoirsLinkedToUserForDisplay>();
     private IEnumerable<Claim> Claims { get; set; }
     private List<OperatorDTO> Undertakers { get; set; }
+    bool IsAdmin = false;
+    bool IsFirstTimeUser = false;
     private string _searchString;
     private bool _sortNameByLength;
     private List<string> _events = new();
@@ -199,40 +203,32 @@
         {
             var authState = await AuthenticationStateTask;
             UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
-
             userDetails = await userService.GetUserByEmailID(UserName);
-            Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement").Information(UserName + " accessed S12 template generation.");
-
-            if (userDetails.cIsFirstTimeUser)
+            //userDetailsWithRoles = await userService.GetUserWithRoles(UserName);
+            foreach (var role in userDetails.roles)
             {
-                bool forceLoad = true;
-                string pagelink = _config["RACE2SecurityProviderURL"] + "/Identity/Account/CreatePassword?userEmail=" + UserName;
-                try
+                if (role.Name == "System Administrator")
                 {
-                    NavigationManager.NavigateTo(pagelink, forceLoad);
-                }
-                catch (NavigationException navigationException)
-                {
-                    NavigationManager.NavigateTo("/PageNotFound", forceLoad);
+                    IsAdmin = true;
+                    break;
                 }
             }
+            if (IsAdmin)
+            {
+                NavigationManager.NavigateTo("/race2-admin", true);
+            }
 
-            UserDetail = new UserDetail()
-                {
-                    UserName = UserName,
-                    Id = userDetails.Id,
-                    Email = userDetails.Email,
-                    PhoneNumber = userDetails.PhoneNumber,
-                    cFirstName = userDetails.cFirstName,
-                    cLastName = userDetails.cLastName,
-                    cIsFirstTimeUser = userDetails.cIsFirstTimeUser,
-                    cMobile = userDetails.cMobile,
-                    cAlternativePhone = userDetails.cAlternativePhone,
-                    cAlternativeMobile = userDetails.cAlternativeMobile,
-                    cAlternativeEmergencyPhone = userDetails.cAlternativeEmergencyPhone
-                };
+            if ((bool)userDetails.cIsFirstTimeUser)
+            {
+                IsFirstTimeUser = true;
+                bool forceLoad = true;
+                string pagelink = _config["RACE2SecurityProviderURL"] + "/Identity/Account/CreatePassword?userEmail=" + UserName;
+                NavigationManager.NavigateTo(pagelink, forceLoad);
+            }
 
-            ReservoirDetailsLinkedToUser = await reservoirService.GetReservoirsByUserId(UserDetail.Id);
+            Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement").Information(UserName + " accessed S12 template generation.");
+
+            ReservoirDetailsLinkedToUser = await reservoirService.GetReservoirsByUserId(userDetails.Id);
 
             foreach (var rn in ReservoirDetailsLinkedToUser)
             {
@@ -241,7 +237,7 @@
                     var r = new Reservoir()
                         {
                             Id = rn.Id,
-                            RaceReservoirId = rn.RaceReservoirId,
+                            BackEndReservoirId = rn.RaceReservoirId,
                             PublicName = rn.PublicName,
                             RegisteredName = rn.RegisteredName,
                             NearestTown = rn.NearestTown,
@@ -282,15 +278,8 @@
             //throw new ApplicationException("Error loading annual statement data.");
             bool forceLoad = false;
             string pagelink = "/ApplicationError";
-            try
-            {
-                NavigationManager.NavigateTo(pagelink, forceLoad);
-            }
-            catch (NavigationException navigationException)
-            {
-                NavigationManager.NavigateTo("/PageNotFound", forceLoad);
-            }
-    }
+            NavigationManager.NavigateTo(pagelink, forceLoad);
+        }
         finally
         {
             await base.OnInitializedAsync();
@@ -326,10 +315,11 @@
                             reservoirsLinkedToUser.UndertakerEmail = "";
                         }
                     }
-                    SubmissionStatusList = await reservoirService.GetReservoirStatusByUserId(UserDetail.Id);
+                    SubmissionStatusList = await reservoirService.GetReservoirStatusByUserId(userDetails.Id);
                     SubmissionStatus = SubmissionStatusList.Where(s => s.RegisteredName == reservoir.RegisteredName).FirstOrDefault();
-                    reservoirsLinkedToUser.DueDate = SubmissionStatus.DueDate != DateTime.MinValue ? SubmissionStatus.DueDate.ToString("dd MMMMM yyyy") : "";
-                    reservoirsLinkedToUser.Status = SubmissionStatus.Status != null ? SubmissionStatus.Status : "Not started";
+                    reservoirsLinkedToUser.SubmissionReference = SubmissionStatus.SubmissionReference;
+                    reservoirsLinkedToUser.DueDate = SubmissionStatus.DueDate != DateTime.MinValue ? SubmissionStatus.DueDate.ToString("dd MMMMM yyyy") : String.Empty;
+                    reservoirsLinkedToUser.Status = SubmissionStatus.Status != null ? SubmissionStatus.Status : String.Empty;
 
                     ReservoirsLinkedToUserForDisplay.Add(reservoirsLinkedToUser);
                 }
@@ -351,20 +341,8 @@
             //throw new ApplicationException("Error loading reservoir data.");
             bool forceLoad = false;
             string pagelink = "/ApplicationError";
-            try
-            {
-                NavigationManager.NavigateTo(pagelink, forceLoad);
-            }
-            catch (NavigationException navigationException)
-            {
-                NavigationManager.NavigateTo("/PageNotFound", forceLoad);
-            }
+            NavigationManager.NavigateTo(pagelink, forceLoad);
         };
-    }
-
-    protected override async void OnAfterRender(bool firstRender)
-    {
-
     }
 
     private async void DownloadReportTemplate(ReservoirsLinkedToUserForDisplay item)
@@ -375,9 +353,9 @@
             SubmissionStatus = SubmissionStatusList.Where(s => s.RegisteredName == reservoir.RegisteredName).FirstOrDefault();
             var Undertakers = await reservoirService.GetOperatorsforReservoir(reservoir.Id, reservoir.OperatorType);
 
-            SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(reservoir.Id, UserDetail.Id, "In progress");
+            SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(reservoir.Id, userDetails.Id, "In progress");
 
-            var blobName = updatedStatus.OverrideUsedTemplate + ".docx";
+            var blobName = updatedStatus.OverrideTemplateName + ".docx";
             //var blobName = "S12ReportTemplate.docx";
             //var blobName = "TestWithTags.docx";
             Stream response = await blobStorageService.GetBlobFileStream(blobName);
@@ -385,8 +363,9 @@
             s12PrePopulationFields.ReservoirName = reservoir.RegisteredName;
             s12PrePopulationFields.ReservoirNearestTown = reservoir.NearestTown != null ? reservoir.NearestTown : "";
             s12PrePopulationFields.ReservoirGridRef = reservoir.GridReference != null ? reservoir.GridReference : "";
-            s12PrePopulationFields.SupervisingEngineerName = UserDetail.cFirstName + " " + UserDetail.cLastName;
-            s12PrePopulationFields.SupervisingEngineerCompanyName = " ";
+            s12PrePopulationFields.SupervisingEngineerName = userDetails.cFirstName + " " + userDetails.cLastName;
+            var companyDetails = await userService.GetCompanyNameByUserId(userDetails.Id);
+            s12PrePopulationFields.SupervisingEngineerCompanyName = companyDetails.OrgName == null ? " " : companyDetails.OrgName;
             Address address = userDetails.addresses.FirstOrDefault();
             s12PrePopulationFields.SupervisingEngineerAddress = address.AddressLine1;
             if (!String.IsNullOrEmpty(address.AddressLine2))
@@ -397,17 +376,17 @@
                 s12PrePopulationFields.SupervisingEngineerAddress = s12PrePopulationFields.SupervisingEngineerAddress + ", " + address.County;
             if (!String.IsNullOrEmpty(address.Postcode))
                 s12PrePopulationFields.SupervisingEngineerAddress = s12PrePopulationFields.SupervisingEngineerAddress + ", " + address.Postcode;
-            s12PrePopulationFields.SupervisingEngineerEmail = UserDetail.Email;
-            if (!String.IsNullOrEmpty(UserDetail.cMobile))
-                s12PrePopulationFields.SupervisingEngineerPhoneNumber = UserDetail.cMobile;
-            else if (!String.IsNullOrEmpty(UserDetail.cAlternativeMobile))
-                s12PrePopulationFields.SupervisingEngineerPhoneNumber = UserDetail.cAlternativeMobile;
-            else if (!String.IsNullOrEmpty(UserDetail.cAlternativePhone))
-                s12PrePopulationFields.SupervisingEngineerPhoneNumber = UserDetail.cAlternativePhone;
-            else if (!String.IsNullOrEmpty(UserDetail.cAlternativeEmergencyPhone))
-                s12PrePopulationFields.SupervisingEngineerPhoneNumber = UserDetail.cAlternativeEmergencyPhone;
+            s12PrePopulationFields.SupervisingEngineerEmail = userDetails.Email;
+            if (!String.IsNullOrEmpty(userDetails.cMobile))
+                s12PrePopulationFields.SupervisingEngineerPhoneNumber = userDetails.cMobile;
+            else if (!String.IsNullOrEmpty(userDetails.cAlternativeMobile))
+                s12PrePopulationFields.SupervisingEngineerPhoneNumber = userDetails.cAlternativeMobile;
+            else if (!String.IsNullOrEmpty(userDetails.cAlternativePhone))
+                s12PrePopulationFields.SupervisingEngineerPhoneNumber = userDetails.cAlternativePhone;
+            else if (!String.IsNullOrEmpty(userDetails.cAlternativeEmergencyPhone))
+                s12PrePopulationFields.SupervisingEngineerPhoneNumber = userDetails.cAlternativeEmergencyPhone;
             else
-                s12PrePopulationFields.SupervisingEngineerPhoneNumber = UserDetail.PhoneNumber != null ? UserDetail.PhoneNumber : "";
+                s12PrePopulationFields.SupervisingEngineerPhoneNumber = userDetails.PhoneNumber != null ? userDetails.PhoneNumber : "";
             Undertakers = await reservoirService.GetOperatorsforReservoir(reservoir.Id, reservoir.OperatorType);
             s12PrePopulationFields.UndertakerName = item.UndertakerName;
             s12PrePopulationFields.UndertakerEmail = Undertakers[0].Email;
@@ -429,17 +408,17 @@
             else if (!String.IsNullOrEmpty(Undertakers[0].cAlternativeEmergencyPhone))
                 s12PrePopulationFields.UndertakerPhoneNumber = Undertakers[0].cAlternativeEmergencyPhone;
             else
-                s12PrePopulationFields.UndertakerPhoneNumber = "Please provide a contact number";
+                s12PrePopulationFields.UndertakerPhoneNumber = "";
             if (reservoir.NextInspectionDate103 != DateTime.MinValue)
             {
-                s12PrePopulationFields.NextInspectionDate = (reservoir.NextInspectionDate103 != DateTime.MinValue) ? reservoir.NextInspectionDate103.ToString("dd MMMM yyyy") : " ";
+                s12PrePopulationFields.NextInspectionDate = (reservoir.NextInspectionDate103 != DateTime.MinValue) && (reservoir.LastCertificationDate.HasValue) ? reservoir.NextInspectionDate103.Value.ToString("dd MMMM yyyy") : " ";
             }
             else
             {
-                s12PrePopulationFields.NextInspectionDate = (reservoir.NextInspectionDate102 != DateTime.MinValue) ? reservoir.NextInspectionDate102.ToString("dd MMMM yyyy") : " ";
+                s12PrePopulationFields.NextInspectionDate = (reservoir.NextInspectionDate102 != DateTime.MinValue) && (reservoir.LastCertificationDate.HasValue) ? reservoir.NextInspectionDate102.Value.ToString("dd MMMM yyyy") : " ";
             }
-            s12PrePopulationFields.LastCertificationDate = (reservoir.LastCertificationDate != DateTime.MinValue) ? reservoir.LastCertificationDate.ToString("dd MMMM yyyy") : " ";
-            s12PrePopulationFields.LastInspectionDate = (reservoir.LastInspectionDate != DateTime.MinValue) ? reservoir.LastInspectionDate.ToString("dd MMMM yyyy") : " ";
+            s12PrePopulationFields.LastCertificationDate = (reservoir.LastCertificationDate != DateTime.MinValue) && (reservoir.LastCertificationDate.HasValue) ? reservoir.LastCertificationDate.Value.ToString("dd MMMM yyyy") : " ";
+            s12PrePopulationFields.LastInspectionDate = (reservoir.LastInspectionDate != DateTime.MinValue) && (reservoir.LastInspectionDate.HasValue) ? reservoir.LastInspectionDate.Value.ToString("dd MMMM yyyy") : " ";
             if ((reservoir.LastInspectionByUser.Id != 0) && (reservoir.LastInspectionByUser != null))
             {
                 s12PrePopulationFields.LastInspectingEngineerName = !String.IsNullOrEmpty(reservoir.LastInspectionByUser.cFirstName) && !String.IsNullOrEmpty(reservoir.LastInspectionByUser.cLastName) ? reservoir.LastInspectionByUser.cFirstName + " " + reservoir.LastInspectionByUser.cLastName : " ";
@@ -452,7 +431,7 @@
                 else if (!String.IsNullOrEmpty(reservoir.LastInspectionByUser.cAlternativeEmergencyPhone))
                     s12PrePopulationFields.LastInspectingEngineerPhoneNumber = reservoir.LastInspectionByUser.cAlternativeEmergencyPhone;
                 else
-                    s12PrePopulationFields.LastInspectingEngineerPhoneNumber = "Please provide a contact number";
+                    s12PrePopulationFields.LastInspectingEngineerPhoneNumber = "";
             }
             else
             {
@@ -462,7 +441,6 @@
             MemoryStream processedStream = openXMLUtilitiesService.SearchAndReplace(response, s12PrePopulationFields);
             processedStream.Position = 0;
             var streamRef = new DotNetStreamReference(stream: processedStream);
-            //await jsRuntime.InvokeVoidAsync("downloadFileFromStream", blobName, streamRef);
             string downloadedFileName = reservoir.RegisteredName + " S12.docx";
             await jsRuntime.InvokeVoidAsync("downloadFileFromStream", downloadedFileName, streamRef);
             var reservoirLinkedToUser = ReservoirsLinkedToUserForDisplay.Where(r => r.ReservoirName == reservoir.RegisteredName).FirstOrDefault();
@@ -479,14 +457,7 @@
             //throw new ApplicationException("Error downloading S12ReportTemplate for the reservoir.");
             bool forceLoad = false;
             string pagelink = "/ApplicationError";
-            try
-            {
-                NavigationManager.NavigateTo(pagelink, forceLoad);
-            }
-            catch (NavigationException navigationException)
-            {
-                NavigationManager.NavigateTo("/PageNotFound", forceLoad);
-            }
+            NavigationManager.NavigateTo(pagelink, forceLoad);
         };
     }
 
@@ -499,28 +470,13 @@
         bool forceLoad = false;
         string pagelink = "/choose-a-reservoir";
         NavigationManager.NavigateTo(pagelink, forceLoad);
-        try
-        {
-            NavigationManager.NavigateTo(pagelink, forceLoad);
-        }
-        catch (NavigationException navigationException)
-        {
-            NavigationManager.NavigateTo("/PageNotFound", forceLoad);
-        }
     }
 
     private void goback()
     {
         bool forceLoad = false;
         string pagelink = "/";
-        try
-        {
-            NavigationManager.NavigateTo(pagelink, forceLoad);
-        }
-        catch (NavigationException navigationException)
-        {
-            NavigationManager.NavigateTo("/PageNotFound", forceLoad);
-        }
+        NavigationManager.NavigateTo(pagelink, forceLoad);
     }
 
     private void gotoPage(SubmissionStatusDTO reservoirStatus)
@@ -532,28 +488,14 @@
         {
             pagelink = "/s12-statement-confirmation-draft-sent";
         }
-        try
-        {
-            NavigationManager.NavigateTo(pagelink, forceLoad);
-        }
-        catch (NavigationException navigationException)
-        {
-            NavigationManager.NavigateTo("/PageNotFound", forceLoad);
-        }
+        NavigationManager.NavigateTo(pagelink, forceLoad);
     }
 
     private void gotoSubmissionPage(ReservoirsLinkedToUserForDisplay Item)
     {
         bool forceLoad = false;
-        string pagelink = $"/send-your-statement/{Item.ReservoirID}/{Item.ReservoirName}/{Item.UndertakerName}/{Item.UndertakerEmail}";
-        try
-        {
-            NavigationManager.NavigateTo(pagelink, forceLoad);
-        }
-        catch (NavigationException navigationException)
-        {
-            NavigationManager.NavigateTo("/PageNotFound", forceLoad);
-        }
+        string pagelink = $"/send-your-statement/{Item.ReservoirID}/{Item.ReservoirName}/{Item.UndertakerName}/{Item.UndertakerEmail}/{Item.SubmissionReference}";
+        NavigationManager.NavigateTo(pagelink, forceLoad);
     }
 
     private async void SearchOnEnter(KeyboardEventArgs e)
@@ -631,4 +573,5 @@
             IsSortedAscending = !IsSortedAscending;
         }
     }
+}
 }
