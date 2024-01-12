@@ -515,5 +515,26 @@ namespace RACE2.DataAccess.Repository
             }
         }
 
+
+        public async Task<ReservoirSubmissionDTO> GetReservoirUserIdbySubRef(string submissionReference)
+        {
+            try
+            {
+                using (var conn = Connection)
+                {
+
+                    DynamicParameters parameters = new DynamicParameters();
+                    parameters.Add("submissionreference", submissionReference, DbType.String);
+                    var reservoir = await conn.QueryAsync<ReservoirSubmissionDTO>("sp_GetReservoirIdBySubmissionReference", parameters, commandType: CommandType.StoredProcedure);
+                    return reservoir.FirstOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return null;
+            }
+        }
+
     }
 }

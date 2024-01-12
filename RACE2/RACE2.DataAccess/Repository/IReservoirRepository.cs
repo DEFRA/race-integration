@@ -37,6 +37,7 @@ namespace RACE2.DataAccess.Repository
         public Task<DocumentDTO> GetScannedResultbyDocId(int id);
 
         public Task<int> InsertDocumentRelatedTable(int reservoirid, int submissionid, int documentid);
+        public Task<ReservoirSubmissionDTO> GetReservoirUserIdbySubRef(string submissionReference);
 
     }
 }

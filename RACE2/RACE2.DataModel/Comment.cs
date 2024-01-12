@@ -37,5 +37,7 @@ namespace RACE2.DataModel
         public UserDetail? ClosedByUser { get; set; }
 
         public DateTime ClosedDate { get; set; }
+
+        public bool IsQualityCheckRequired { get; set; }
     }
 }

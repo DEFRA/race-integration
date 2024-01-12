@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RACE2.DatabaseProvider.Data;
 
@@ -11,9 +12,10 @@ using RACE2.DatabaseProvider.Data;
 namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240108190126_UpdatedReservoirHistoryTable")]
+    partial class UpdatedReservoirHistoryTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1296,7 +1298,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                     b.Property<int>("ReservoirId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SourceSubmissionId")
+                    b.Property<int?>("SourceSubmissionId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -1518,19 +1520,16 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                     b.Property<int>("DocumentId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("NextStatementDate")
+                    b.Property<DateTime>("NextStatementDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("PeriodEndDate")
+                    b.Property<DateTime>("PeriodEndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("PeriodStartDate")
+                    b.Property<DateTime>("PeriodStartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("SignatureDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("StatementDate")
+                    b.Property<DateTime>("StatementDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("StatementType")
@@ -2283,9 +2282,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     b.HasOne("RACE2.DataModel.SubmissionStatus", "SourceSubmission")
                         .WithMany()
-                        .HasForeignKey("SourceSubmissionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SourceSubmissionId");
 
                     b.Navigation("Reservoir");
 

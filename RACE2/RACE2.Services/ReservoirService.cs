@@ -1,4 +1,5 @@
 ﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using DocumentFormat.OpenXml.Office2010.Word;
 using RACE2.DataAccess.Repository;
 using RACE2.DataModel;
 using RACE2.Dto;
@@ -212,6 +213,18 @@ namespace RACE2.Services
             catch (Exception ex)
             {
                 return 1;
+            }
+        }
+
+        public async Task<ReservoirSubmissionDTO> GetReservoirUserIdbySubRef(string submissionReference)
+        {
+            try
+            {
+                return await _reservoirRepository.GetReservoirUserIdbySubRef(submissionReference);
+            }
+            catch (Exception ex)
+            {
+                return new ReservoirSubmissionDTO();
             }
         }
     }
