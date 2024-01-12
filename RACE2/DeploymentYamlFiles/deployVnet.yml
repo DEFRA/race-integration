@@ -25,5 +25,4 @@ steps:
     useGlobalConfig: false    
     inlineScript: |      
       az --version
-      az login -u kriss.sahoo@defra.gov.uk -p Saudamini123!
       az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) --parameters $(parameterfile)
