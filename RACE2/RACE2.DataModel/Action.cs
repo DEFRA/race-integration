@@ -22,17 +22,17 @@ namespace RACE2.DataModel
         public string Category { get; set; }
         [StringLength(64)]
         public string Type { get; set; }
-        [StringLength(200),Required]
+        [StringLength(200)]
         public string Summary { get; set; }
         [StringLength(1024),Required]
         public string Description { get; set; }
-        [StringLength(64),Required]
+        [StringLength(64)]
         public string Frequency { get; set; }
         public bool IsMandatory { get; set; }
         [StringLength(64)]
         public string Priority { get; set; }
         public bool IsComplianceAction { get; set; }
-        [Required]
+        
         public UserRole OwnerRole { get; set; }
        
          public UserDetail? OwnedByUser { get; set; }
@@ -40,7 +40,7 @@ namespace RACE2.DataModel
         [StringLength(250)]
         public string OwnedByName { get; set; }
         public DateTime CreatedDate { get; set; }
-        [Required]
+        
         public DateTime TargetDate { get; set; }
         [StringLength(1024)]
         public string Notes { get; set; }

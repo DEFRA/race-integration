@@ -16,6 +16,7 @@ using RACE2.Dto;
 using Microsoft.Extensions.Logging;
 using RACE2.Common;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
 
 
 namespace RACE2.DataAccess.Repository
@@ -477,6 +478,26 @@ namespace RACE2.DataAccess.Repository
                 return null;
             }
 
+        }
+
+        public async Task<SubmissionStatus> GetReservoirUserId(string submissionReference)
+        {
+            try
+            {
+                using (var conn = Connection)
+                {
+
+                    DynamicParameters parameters = new DynamicParameters();
+                    parameters.Add("submissionreference", submissionReference, DbType.String);
+                    var user = await conn.QueryAsync<SubmissionStatus>("sp_GetReservoirIdBySubmissionReference", parameters, commandType: CommandType.StoredProcedure);
+                    return user.FirstOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return null;
+            }
         }
     }
 }

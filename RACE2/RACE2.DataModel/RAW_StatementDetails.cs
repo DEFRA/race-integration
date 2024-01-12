@@ -17,13 +17,13 @@ namespace RACE2.DataModel
 
         [StringLength(64)]
         public string DocumentName { get; set; }
-        [StringLength(64)]
+        [StringLength(200)]
         public string ReservoirName { get; set; }
-        [StringLength(64)]
+        [StringLength(250)]
         public string SupervisingEngineer_short { get; set; }
-        [StringLength(64)]
+        [StringLength(5)]
         public string IsTypeOfStatement12_2 { get; set; }
-        [StringLength(64)]
+        [StringLength(5)]
         public string IsTypeOfStatement12_2A { get; set; }
         [StringLength(64)]
         public string NearestTown { get; set; }
@@ -39,14 +39,14 @@ namespace RACE2.DataModel
         public string GridReference { get; set; }
         [StringLength(64)]
         public string UndertakeName { get; set; }
-        [StringLength(64)]
+        [StringLength(512)]
         public string UndertakerAddress { get; set; }
         [StringLength(64)]
         public string UndertakerEmail { get; set; }
         [StringLength(64)]
         public string UndertakerPhone { get; set; }
 
-        [StringLength(64)]
+        [StringLength(250)]
         public string SupervisingEngineer_long { get; set; }
         [StringLength(64)]
         public string SupervisingEngineerCompany { get; set; }
@@ -57,9 +57,9 @@ namespace RACE2.DataModel
 
         [StringLength(64)]
         public string SupervisingEngineerPhone { get; set; }
-        [StringLength(64)]
+        [StringLength(5)]
         public string HasAlternativeEngineerYes { get; set; }
-        [StringLength(64)]
+        [StringLength(5)]
         public string HasAlternativeEngineerNo { get; set; }
         [StringLength(64)]
         public string LastInspectingEngineerName { get; set; }
@@ -71,9 +71,9 @@ namespace RACE2.DataModel
         [StringLength(64)]
         public string LastCertificationDate { get; set; }
 
-        [StringLength(64)]
+        [StringLength(5)]
         public string IsEarlyInspectionRequiredYes { get; set; }
-        [StringLength(64)]
+        [StringLength(5)]
         public string IsEarlyInspectionRequiredNo { get; set; }
         [StringLength(64)]
         public string NextInspectionDate { get; set; }
@@ -87,6 +87,11 @@ namespace RACE2.DataModel
 
         [StringLength(64)]
         public string LastModifiedDateTime { get; set; }
-        
+
+        public bool SignatureStrip { get; set; }
+
+        public DateTime? SignatureDate { get; set; }
+
+
     }
 }

@@ -1,60 +1,63 @@
 using System;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.Azure.WebJobs.Extensions.Sql;
+using Microsoft.Azure.Functions.Worker;
+using Microsoft.Azure.Functions.Worker.Http;
+using Microsoft.Azure.Functions.Worker.Extensions.Sql;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using RACE2.DataModel;
-using System.Text.Json;
-using DocumentFormat.OpenXml.Wordprocessing;
-using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
-using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
-using DocumentFormat.OpenXml.Bibliography;
-using RACE2.DataAccess.Repository;
-using Microsoft.SqlServer.TransactSql.ScriptDom;
-using System.Linq;
-using System.Reflection;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Newtonsoft.Json.Linq;
 using Dapper;
-using DocumentFormat.OpenXml.Office2010.Word;
-using System.Data;
-using System.Reflection.Metadata;
+using Microsoft.Extensions.Configuration;
+using RACE2.Services;
+using RACE2.Dto;
+using System.Globalization;
 
-
-namespace RACE2.TrackChangeHistoryFunction
+namespace RACE2VirusScanAzFnApp
 {
-    public static class SqlTriggerBinding
+    public class UploadDataExtract_SqlTrigger
     {
-        // Visit https://aka.ms/sqltrigger to learn how to use this trigger binding
-        [FunctionName("RAW_StatementDetails_TriggerFunction")]
-        public static void Run(
-                [SqlTrigger("RAW_StatementDetails", "ConnectionString")] IReadOnlyList<SqlChange<RAW_StatementDetails>> changes,
-                ILogger log)
+        private readonly ILogger<UploadDataExtract_SqlTrigger> _logger;
+        private readonly IConfiguration _config;
+        private readonly IReservoirService _reservoirService;
+
+        public UploadDataExtract_SqlTrigger(ILogger<UploadDataExtract_SqlTrigger> logger, IConfiguration config, IReservoirService reservoirService)
         {
-            string connString = Environment.GetEnvironmentVariable("ConnectionString", EnvironmentVariableTarget.Process);
-            BasicDetails basicDetails = new BasicDetails();
+            _logger = logger;
+            _config = config;
+            _reservoirService = reservoirService;
+        }
+
+        // Visit https://aka.ms/sqltrigger to learn how to use this trigger binding
+        [Function("UploadDataExtract_SqlTrigger")]
+        public async Task Run(
+            [SqlTrigger("RAW_StatementDetails", "SqlServerConnectionString")] IReadOnlyList<SqlChange<RAW_StatementDetails>> changes,
+                FunctionContext context)
+        {
+            string connString = Environment.GetEnvironmentVariable("SqlServerConnectionString", EnvironmentVariableTarget.Process);
+            ReservoirSubmissionDTO reservoirSubmission = new ReservoirSubmissionDTO();
+           // BasicDetails basicDetails = new BasicDetails();
             ReservoirDetailsChangeHistory changeHistory = new ReservoirDetailsChangeHistory();
             List<ReservoirDetailsChangeHistory> reservoirDetailsChangeHistory = new List<ReservoirDetailsChangeHistory>();
             foreach (var change in changes)
             {
-                log.LogInformation("SQL Changes: " + change.Operation);
-                log.LogInformation("item inserteed" + System.Text.Json.JsonSerializer.Serialize(change.Item));
-                basicDetails = GetAllIds(change.Item.DocumentName, connString);
-                Reservoir actualReservoir = GetReservoirValuesFromDB(basicDetails.ReservoirId,connString);
-                Reservoir UpdatedReservoir = CompareValues(connString ,actualReservoir, (change.Item), basicDetails);
-            //    changeHistory  = AddHistory
+                _logger.LogInformation("SQL Changes: " + change.Operation);
+                _logger.LogInformation("item inserteed" + System.Text.Json.JsonSerializer.Serialize(change.Item));
+                string[] subs = change.Item.DocumentName.Split('_');
+                reservoirSubmission = await _reservoirService.GetReservoirUserIdbySubRef(subs[0].ToString());
+                //basicDetails = GetAllIds(change.Item.DocumentName, connString);
+                //basicDetails.SubmissionId = submissionStatus.Id;
+                //basicDetails.ReservoirId = submissionStatus.ReservoirId;
+                //basicDetails.SubmittedUserId = submissionStatus.SubmittedByUser;
+                Reservoir actualReservoir = GetReservoirValuesFromDB(reservoirSubmission.ReservoirId, connString);
+                Reservoir UpdatedReservoir = CompareValues(connString, actualReservoir, (change.Item), reservoirSubmission);
+                //    changeHistory  = AddHistory
 
-                
+
                 //UpdateDBAndChangeHistory(connString, actualReservoir,UpdatedReservoir, change.Item, basicDetails);
             }
 
-
         }
+
 
         public static BasicDetails GetAllIds(string documentName, string connString)
         {
@@ -100,10 +103,10 @@ namespace RACE2.TrackChangeHistoryFunction
             }
             return documentId;
         }
-        public static ReservoirDetailsChangeHistory AddHistory (string OldValue, String NewValue ,string FieldName, BasicDetails basicDetails)
+        public static ReservoirDetailsChangeHistory AddHistory(string OldValue, String NewValue, string FieldName, ReservoirSubmissionDTO submissionDetails)
         {
             ReservoirDetailsChangeHistory changeHistory = new ReservoirDetailsChangeHistory();
-          //  changeHistory = null;
+            //  changeHistory = null;
             if ((!String.IsNullOrEmpty(NewValue)) && (!String.IsNullOrEmpty(OldValue)))
             {
                 if (NewValue != OldValue)
@@ -112,9 +115,9 @@ namespace RACE2.TrackChangeHistoryFunction
                     changeHistory.NewValue = NewValue;
                     changeHistory.FieldName = FieldName;
                     changeHistory.IsBackEndChange = false;
-                    changeHistory.ChangeByUserId = basicDetails.SubmittedUserId;
-                    changeHistory.SourceSubmissionId = basicDetails.SubmissionId;
-                    changeHistory.ReservoirId = basicDetails.ReservoirId;
+                    changeHistory.ChangeByUserId = submissionDetails.SubmittedByUserId;
+                    changeHistory.SourceSubmissionId = submissionDetails.SubmissionId;
+                    changeHistory.ReservoirId = submissionDetails.ReservoirId;
                     changeHistory.ChangeDateTime = DateTime.Now;
                 }
                 else
@@ -127,9 +130,9 @@ namespace RACE2.TrackChangeHistoryFunction
                 changeHistory.FieldName = FieldName;
                 changeHistory.IsBackEndChange = false;
                 changeHistory.ChangeDateTime = DateTime.Now;
-                changeHistory.ChangeByUserId = basicDetails.SubmittedUserId;
-                changeHistory.SourceSubmissionId = basicDetails.SubmissionId;
-                changeHistory.ReservoirId = basicDetails.ReservoirId;
+                changeHistory.ChangeByUserId = submissionDetails.SubmittedByUserId;
+                changeHistory.SourceSubmissionId = submissionDetails.SubmissionId;
+                changeHistory.ReservoirId = submissionDetails.ReservoirId;
 
 
             }
@@ -140,8 +143,8 @@ namespace RACE2.TrackChangeHistoryFunction
 
 
             return changeHistory;
-            
-             
+
+
         }
 
         //public static RAW_StatementDetails GetActualValueFromDB(int reservoirid)
@@ -172,14 +175,14 @@ namespace RACE2.TrackChangeHistoryFunction
         //    }
         //}
 
-        public static Reservoir GetReservoirValuesFromDB(int reservoirid , string connString)
+        public static Reservoir GetReservoirValuesFromDB(int reservoirid, string connString)
         {
             Reservoir Actualreservoir = new Reservoir();
             var query = "SELECT * FROM Reservoirs where Id = " + reservoirid;
             using (SqlConnection conn = new SqlConnection(connString))
             {
                 conn.Open();
-                using (SqlCommand cmd = new SqlCommand(query,conn))
+                using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     SqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
@@ -201,7 +204,7 @@ namespace RACE2.TrackChangeHistoryFunction
                         Actualreservoir.ConstructionStartDate = Convert.ToDateTime(reader["ConstructionStartDate"]);
                         Actualreservoir.VerifiedDetailsDate = Convert.ToDateTime(reader["VerifiedDetailsDate"]);
                         Actualreservoir.LastInspectionDate = Convert.ToDateTime(reader["LastInspectionDate"]);
-                       // Actualreservoir.LastInspectionByUser = Convert.ToInt32(reader["LastInspectionByUserId"]);
+                        // Actualreservoir.LastInspectionByUser = Convert.ToInt32(reader["LastInspectionByUserId"]);
                         Actualreservoir.LastInspectionEngineerName = Convert.ToString(reader["LastInspectionEngineerName"]);
                         Actualreservoir.LastInspectionEngineerPhone = Convert.ToString(reader["LastInspectionEngineerPhone"]);
                         Actualreservoir.LastCertificationDate = Convert.ToDateTime(reader["LastCertificationDate"]);
@@ -217,7 +220,7 @@ namespace RACE2.TrackChangeHistoryFunction
             return Actualreservoir;
         }
 
-        public static Reservoir CompareValues(string connString,Reservoir Actual, RAW_StatementDetails Updated , BasicDetails basicDetails)
+        public static Reservoir CompareValues(string connString, Reservoir Actual, RAW_StatementDetails Updated, ReservoirSubmissionDTO submissionDetails)
         {
             //Dictionary<string, string> ObjDifference = new Dictionary<string, string>();
             List<ReservoirDetailsChangeHistory> reservoirDetailsChangeHistory = new List<ReservoirDetailsChangeHistory>();
@@ -240,16 +243,17 @@ namespace RACE2.TrackChangeHistoryFunction
                     // IsEarlyInspectionRequiredYes
                     // IsEarlyInspectionRequiredNo
                     case "ReservoirName":
+                        
                         UpdatedValue = property.GetValue(Updated).ToString();
                         actualvalue = Actual.RegisteredName;
-                        changeHistory = AddHistory(actualvalue, UpdatedValue, "RegisteredName",basicDetails);
-                        if(changeHistory != null)
+                        changeHistory = AddHistory(actualvalue, UpdatedValue, "RegisteredName", submissionDetails);
+                        if (changeHistory != null)
                         {
                             updatedReservoir.RegisteredName = UpdatedValue;
                             changeHistory.Reservoir = updatedReservoir;
                             reservoirDetailsChangeHistory.Add(changeHistory);
                         }
-                                                  
+
                         break;
                     case "IsTypeOfStatement12_2":
                         if (Convert.ToString(property.GetValue(Updated)) == "Yes")
@@ -271,13 +275,13 @@ namespace RACE2.TrackChangeHistoryFunction
                             statementDetails.PeriodStartDate = null;
                         else
                             statementDetails.PeriodStartDate = Convert.ToDateTime(property.GetValue(Updated));
-                       
+
                         break;
                     case "PeriodEnd":
                         if (property.GetValue(Updated) == null)
                             statementDetails.PeriodEndDate = null;
                         else
-                            statementDetails.PeriodEndDate = Convert.ToDateTime(property.GetValue(Updated));
+                            statementDetails.PeriodEndDate = DateTime.ParseExact(property.GetValue(Updated).ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture); //Convert.ToDateTime(property.GetValue(Updated));
                         break;
                     case "StatementDate":
                         if (property.GetValue(Updated) == null)
@@ -288,47 +292,47 @@ namespace RACE2.TrackChangeHistoryFunction
                     case "NearestTown":
                         UpdatedValue = property.GetValue(Updated).ToString();
                         actualvalue = Actual.NearestTown;
-                        changeHistory = AddHistory(actualvalue, UpdatedValue, "NearestTown",basicDetails);
+                        changeHistory = AddHistory(actualvalue, UpdatedValue, "NearestTown", submissionDetails);
                         if (changeHistory != null)
                         {
                             updatedReservoir.NearestTown = UpdatedValue;
                             reservoirDetailsChangeHistory.Add(changeHistory);
                         }
-                        
+
                         break;
                     case "GridReference":
                         UpdatedValue = property.GetValue(Updated).ToString();
                         actualvalue = Actual.GridReference;
-                        changeHistory = AddHistory(actualvalue, UpdatedValue, "GridReference",basicDetails);
+                        changeHistory = AddHistory(actualvalue, UpdatedValue, "GridReference", submissionDetails);
                         if (changeHistory != null)
                         {
                             updatedReservoir.GridReference = UpdatedValue;
-                            
+
                             reservoirDetailsChangeHistory.Add(changeHistory);
                         }
-                       
+
                         break;
                     case "LastInspectionDate":
-                        UpdatedValue =Convert.ToString(property.GetValue(Updated));
+                        UpdatedValue = Convert.ToString(property.GetValue(Updated));
                         actualvalue = Convert.ToString(Actual.LastInspectionDate);
-                        changeHistory = AddHistory(actualvalue, UpdatedValue, "LastInspectionDate", basicDetails);
+                        changeHistory = AddHistory(actualvalue, UpdatedValue, "LastInspectionDate", submissionDetails);
                         if (changeHistory != null)
                         {
                             updatedReservoir.LastInspectionDate = Convert.ToDateTime(UpdatedValue);
                             reservoirDetailsChangeHistory.Add(changeHistory);
                         }
-                       
+
                         break;
                     case "LastCertificationDate":
                         UpdatedValue = Convert.ToString(property.GetValue(Updated));
                         actualvalue = Convert.ToString(Actual.LastCertificationDate);
-                        changeHistory = AddHistory(actualvalue, UpdatedValue, "LastCertificationDate", basicDetails);
+                        changeHistory = AddHistory(actualvalue, UpdatedValue, "LastCertificationDate", submissionDetails);
                         if (changeHistory != null)
                         {
                             updatedReservoir.LastCertificationDate = Convert.ToDateTime(UpdatedValue);
                             reservoirDetailsChangeHistory.Add(changeHistory);
                         }
-                       
+
                         break;
                     case "IsEarlyInspectionRequiredYes":
                         if (Convert.ToString(property.GetValue(Updated)) == "Yes")
@@ -339,22 +343,22 @@ namespace RACE2.TrackChangeHistoryFunction
                             IsEarlyInspectionRequired = false;
                         break;
                     case "NextInspectionDate":
-                        UpdatedValue = Convert.ToString(property.GetValue(Updated));                       
+                        UpdatedValue = Convert.ToString(property.GetValue(Updated));
                         actualvalue = Convert.ToString(Actual.NextInspectionDate102);
-                        changeHistory = AddHistory(actualvalue, UpdatedValue, "NextInspectionDate102", basicDetails);
+                        changeHistory = AddHistory(actualvalue, UpdatedValue, "NextInspectionDate102", submissionDetails);
                         if (changeHistory != null)
                         {
                             updatedReservoir.NextInspectionDate102 = Convert.ToDateTime(UpdatedValue);
                             reservoirDetailsChangeHistory.Add(changeHistory);
                         }
-                        
+
                         break;
-                    
+
                     default:
                         break;
-                 }
-              
-                
+                }
+
+
             }
             // var query = "Update Reservoirs set  + reservoirid;
             var query = "INSERT INTO [dbo].[ReservoirDetailsChangeHistory]([ReservoirId],[SourceSubmissionId],[FieldName],[OldValue],[NewValue],[ChangeDateTime],[IsBackEndChange],[ChangeByUserId]) VALUES(@ReservoirId,@SourceSubmissionId,@FieldName,@OldValue,@NewValue,@ChangeDateTime,@IsBackEndChange,@ChangeByUserId)";
@@ -370,11 +374,11 @@ namespace RACE2.TrackChangeHistoryFunction
                     cmd.Parameters.Add(new SqlParameter("@nearesttown", updatedReservoir.NearestTown));
                     cmd.Parameters.Add(new SqlParameter("@lastinspectiondate", updatedReservoir.LastInspectionDate));
                     cmd.Parameters.Add(new SqlParameter("@lastcertificationdate", updatedReservoir.LastCertificationDate));
-                    cmd.Parameters.Add(new SqlParameter("@nextinspectiondate102", updatedReservoir.NextInspectionDate102));                                     
-                    cmd.ExecuteNonQuery();                    
+                    cmd.Parameters.Add(new SqlParameter("@nextinspectiondate102", updatedReservoir.NextInspectionDate102));
+                    cmd.ExecuteNonQuery();
                 }
 
-                using(SqlCommand cmd = new SqlCommand("sp_InsertStatementDetails",conn))
+                using (SqlCommand cmd = new SqlCommand("sp_InsertStatementDetails", conn))
                 {
                     //statementDetails.StatementType = "";
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -385,75 +389,75 @@ namespace RACE2.TrackChangeHistoryFunction
                     cmd.Parameters.Add(new SqlParameter("@statementdate", statementDetails.StatementDate == null ? DBNull.Value : statementDetails.StatementDate));
                     cmd.ExecuteNonQuery();
                 }
-               
-                using(SqlCommand cmd = new SqlCommand(query, conn))
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     var rowsaffedted = conn.Execute(query, reservoirDetailsChangeHistory);
                 }
 
-                                             
+
             }
             return updatedReservoir;
         }
 
-                //if (objValue == null && anotherValue == null)
-                //{
+        //if (objValue == null && anotherValue == null)
+        //{
 
-                    //}
-                    //else if ((objValue == null) || (anotherValue == null))
-                    //{
-                    //    var change = new ReservoirDetailsChangeHistory();
-                    //    change.FieldName = property.Name;
-                    //    change.OldValue = (objValue == null) ? null : objValue.ToString();
-                    //    change.NewValue = (anotherValue == null) ? null : anotherValue.ToString();
-                    //    reservoirDetailsChangeHistory.Add(change);
-                    //}
+        //}
+        //else if ((objValue == null) || (anotherValue == null))
+        //{
+        //    var change = new ReservoirDetailsChangeHistory();
+        //    change.FieldName = property.Name;
+        //    change.OldValue = (objValue == null) ? null : objValue.ToString();
+        //    change.NewValue = (anotherValue == null) ? null : anotherValue.ToString();
+        //    reservoirDetailsChangeHistory.Add(change);
+        //}
 
-                    //else if (!objValue.Equals(anotherValue) && objValue != null && anotherValue != null)
-                    //{
-                    //    var change = new ReservoirDetailsChangeHistory();
-                    //    change.FieldName = property.Name;
-                    //    change.OldValue = objValue.ToString();
-                    //    change.NewValue = anotherValue.ToString();
+        //else if (!objValue.Equals(anotherValue) && objValue != null && anotherValue != null)
+        //{
+        //    var change = new ReservoirDetailsChangeHistory();
+        //    change.FieldName = property.Name;
+        //    change.OldValue = objValue.ToString();
+        //    change.NewValue = anotherValue.ToString();
 
-                    //    reservoirDetailsChangeHistory.Add(change);
-                    //    result = false;
-                    //}
-//public static void UpdateDBAndChangeHistory(string connString, Reservoir actualValue, Reservoir updatedValue, RAW_StatementDetails changeItem ,BasicDetails basicDetails)
-//{
-//    string query;
-//    using (SqlConnection conn = new SqlConnection(connString))
-//    {
-//        // query = "select * from Reservoirs where";
-//        conn.Open();
-//        using (SqlCommand cmd = new SqlCommand("sp_UpdateReservoirDetailsFromExtract", conn))
-//        {
-//            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-//            foreach (var change in reservoirDetailsChangeHistory)
-//            {
-//                List<PropertyInfo> properties = UpdatedValue.GetType().GetProperties().ToList();
-//                //  if (properties.Contains(change.FieldName))  //.Contains(change.FieldName))
-//                {
+        //    reservoirDetailsChangeHistory.Add(change);
+        //    result = false;
+        //}
+        //public static void UpdateDBAndChangeHistory(string connString, Reservoir actualValue, Reservoir updatedValue, RAW_StatementDetails changeItem ,BasicDetails basicDetails)
+        //{
+        //    string query;
+        //    using (SqlConnection conn = new SqlConnection(connString))
+        //    {
+        //        // query = "select * from Reservoirs where";
+        //        conn.Open();
+        //        using (SqlCommand cmd = new SqlCommand("sp_UpdateReservoirDetailsFromExtract", conn))
+        //        {
+        //            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+        //            foreach (var change in reservoirDetailsChangeHistory)
+        //            {
+        //                List<PropertyInfo> properties = UpdatedValue.GetType().GetProperties().ToList();
+        //                //  if (properties.Contains(change.FieldName))  //.Contains(change.FieldName))
+        //                {
 
-//                    cmd.Parameters.Add(new SqlParameter("@reservoirid", basicDetails.ReservoirId));
-//                    //cmd.Parameters.Add(new SqlParameter("@reservoirName", isclean));
-//                    //cmd.Parameters.Add(new SqlParameter("@gridreference", blobpath));
-//                    //cmd.Parameters.Add(new SqlParameter("@nearesttown", documentName));
-//                    //cmd.Parameters.Add(new SqlParameter("@lastinspectiondate", scannedTime));
-//                    //cmd.Parameters.Add(new SqlParameter("@lastcertificationdate", isclean));
-//                    //cmd.Parameters.Add(new SqlParameter("@nextinspectiondate102", blobpath));
-//                    //cmd.Parameters.Add(new SqlParameter("@nextinspectiondate103", documentName));
-//                }
-//            }
-//            cmd.ExecuteNonQuery();
-//        }
-
-
-//    }
-//}
+        //                    cmd.Parameters.Add(new SqlParameter("@reservoirid", basicDetails.ReservoirId));
+        //                    //cmd.Parameters.Add(new SqlParameter("@reservoirName", isclean));
+        //                    //cmd.Parameters.Add(new SqlParameter("@gridreference", blobpath));
+        //                    //cmd.Parameters.Add(new SqlParameter("@nearesttown", documentName));
+        //                    //cmd.Parameters.Add(new SqlParameter("@lastinspectiondate", scannedTime));
+        //                    //cmd.Parameters.Add(new SqlParameter("@lastcertificationdate", isclean));
+        //                    //cmd.Parameters.Add(new SqlParameter("@nextinspectiondate102", blobpath));
+        //                    //cmd.Parameters.Add(new SqlParameter("@nextinspectiondate103", documentName));
+        //                }
+        //            }
+        //            cmd.ExecuteNonQuery();
+        //        }
 
 
-public class BasicDetails
+        //    }
+        //}
+
+
+        public class BasicDetails
         {
             public int ReservoirId { get; set; }
             public int SubmissionId { get; set; }
@@ -461,6 +465,7 @@ public class BasicDetails
             public int SubmittedUserId { get; set; }
         }
 
-
     }
+
+
 }
