@@ -7,35 +7,49 @@ using Newtonsoft.Json;
 using RACE2.DataModel;
 using Microsoft.Data.SqlClient;
 using Dapper;
+using Microsoft.Extensions.Configuration;
+using RACE2.Services;
+using RACE2.Dto;
+using System.Globalization;
 
 namespace RACE2VirusScanAzFnApp
 {
     public class UploadDataExtract_SqlTrigger
     {
-        private readonly ILogger _logger;
+        private readonly ILogger<UploadDataExtract_SqlTrigger> _logger;
+        private readonly IConfiguration _config;
+        private readonly IReservoirService _reservoirService;
 
-        public UploadDataExtract_SqlTrigger(ILoggerFactory loggerFactory)
+        public UploadDataExtract_SqlTrigger(ILogger<UploadDataExtract_SqlTrigger> logger, IConfiguration config, IReservoirService reservoirService)
         {
-            _logger = loggerFactory.CreateLogger<UploadDataExtract_SqlTrigger>();
+            _logger = logger;
+            _config = config;
+            _reservoirService = reservoirService;
         }
 
         // Visit https://aka.ms/sqltrigger to learn how to use this trigger binding
         [Function("UploadDataExtract_SqlTrigger")]
-        public void Run(
+        public async Task Run(
             [SqlTrigger("RAW_StatementDetails", "SqlServerConnectionString")] IReadOnlyList<SqlChange<RAW_StatementDetails>> changes,
                 FunctionContext context)
         {
             string connString = Environment.GetEnvironmentVariable("SqlServerConnectionString", EnvironmentVariableTarget.Process);
-            BasicDetails basicDetails = new BasicDetails();
+            ReservoirSubmissionDTO reservoirSubmission = new ReservoirSubmissionDTO();
+           // BasicDetails basicDetails = new BasicDetails();
             ReservoirDetailsChangeHistory changeHistory = new ReservoirDetailsChangeHistory();
             List<ReservoirDetailsChangeHistory> reservoirDetailsChangeHistory = new List<ReservoirDetailsChangeHistory>();
             foreach (var change in changes)
             {
                 _logger.LogInformation("SQL Changes: " + change.Operation);
                 _logger.LogInformation("item inserteed" + System.Text.Json.JsonSerializer.Serialize(change.Item));
-                basicDetails = GetAllIds(change.Item.DocumentName, connString);
-                Reservoir actualReservoir = GetReservoirValuesFromDB(basicDetails.ReservoirId, connString);
-                Reservoir UpdatedReservoir = CompareValues(connString, actualReservoir, (change.Item), basicDetails);
+                string[] subs = change.Item.DocumentName.Split('_');
+                reservoirSubmission = await _reservoirService.GetReservoirUserIdbySubRef(subs[0].ToString());
+                //basicDetails = GetAllIds(change.Item.DocumentName, connString);
+                //basicDetails.SubmissionId = submissionStatus.Id;
+                //basicDetails.ReservoirId = submissionStatus.ReservoirId;
+                //basicDetails.SubmittedUserId = submissionStatus.SubmittedByUser;
+                Reservoir actualReservoir = GetReservoirValuesFromDB(reservoirSubmission.ReservoirId, connString);
+                Reservoir UpdatedReservoir = CompareValues(connString, actualReservoir, (change.Item), reservoirSubmission);
                 //    changeHistory  = AddHistory
 
 
@@ -43,6 +57,8 @@ namespace RACE2VirusScanAzFnApp
             }
 
         }
+
+
         public static BasicDetails GetAllIds(string documentName, string connString)
         {
             BasicDetails basicdetails = new BasicDetails();
@@ -87,7 +103,7 @@ namespace RACE2VirusScanAzFnApp
             }
             return documentId;
         }
-        public static ReservoirDetailsChangeHistory AddHistory(string OldValue, String NewValue, string FieldName, BasicDetails basicDetails)
+        public static ReservoirDetailsChangeHistory AddHistory(string OldValue, String NewValue, string FieldName, ReservoirSubmissionDTO submissionDetails)
         {
             ReservoirDetailsChangeHistory changeHistory = new ReservoirDetailsChangeHistory();
             //  changeHistory = null;
@@ -99,9 +115,9 @@ namespace RACE2VirusScanAzFnApp
                     changeHistory.NewValue = NewValue;
                     changeHistory.FieldName = FieldName;
                     changeHistory.IsBackEndChange = false;
-                    changeHistory.ChangeByUserId = basicDetails.SubmittedUserId;
-                    changeHistory.SourceSubmissionId = basicDetails.SubmissionId;
-                    changeHistory.ReservoirId = basicDetails.ReservoirId;
+                    changeHistory.ChangeByUserId = submissionDetails.SubmittedByUserId;
+                    changeHistory.SourceSubmissionId = submissionDetails.SubmissionId;
+                    changeHistory.ReservoirId = submissionDetails.ReservoirId;
                     changeHistory.ChangeDateTime = DateTime.Now;
                 }
                 else
@@ -114,9 +130,9 @@ namespace RACE2VirusScanAzFnApp
                 changeHistory.FieldName = FieldName;
                 changeHistory.IsBackEndChange = false;
                 changeHistory.ChangeDateTime = DateTime.Now;
-                changeHistory.ChangeByUserId = basicDetails.SubmittedUserId;
-                changeHistory.SourceSubmissionId = basicDetails.SubmissionId;
-                changeHistory.ReservoirId = basicDetails.ReservoirId;
+                changeHistory.ChangeByUserId = submissionDetails.SubmittedByUserId;
+                changeHistory.SourceSubmissionId = submissionDetails.SubmissionId;
+                changeHistory.ReservoirId = submissionDetails.ReservoirId;
 
 
             }
@@ -204,7 +220,7 @@ namespace RACE2VirusScanAzFnApp
             return Actualreservoir;
         }
 
-        public static Reservoir CompareValues(string connString, Reservoir Actual, RAW_StatementDetails Updated, BasicDetails basicDetails)
+        public static Reservoir CompareValues(string connString, Reservoir Actual, RAW_StatementDetails Updated, ReservoirSubmissionDTO submissionDetails)
         {
             //Dictionary<string, string> ObjDifference = new Dictionary<string, string>();
             List<ReservoirDetailsChangeHistory> reservoirDetailsChangeHistory = new List<ReservoirDetailsChangeHistory>();
@@ -227,9 +243,10 @@ namespace RACE2VirusScanAzFnApp
                     // IsEarlyInspectionRequiredYes
                     // IsEarlyInspectionRequiredNo
                     case "ReservoirName":
+                        
                         UpdatedValue = property.GetValue(Updated).ToString();
                         actualvalue = Actual.RegisteredName;
-                        changeHistory = AddHistory(actualvalue, UpdatedValue, "RegisteredName", basicDetails);
+                        changeHistory = AddHistory(actualvalue, UpdatedValue, "RegisteredName", submissionDetails);
                         if (changeHistory != null)
                         {
                             updatedReservoir.RegisteredName = UpdatedValue;
@@ -264,7 +281,7 @@ namespace RACE2VirusScanAzFnApp
                         if (property.GetValue(Updated) == null)
                             statementDetails.PeriodEndDate = null;
                         else
-                            statementDetails.PeriodEndDate = Convert.ToDateTime(property.GetValue(Updated));
+                            statementDetails.PeriodEndDate = DateTime.ParseExact(property.GetValue(Updated).ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture); //Convert.ToDateTime(property.GetValue(Updated));
                         break;
                     case "StatementDate":
                         if (property.GetValue(Updated) == null)
@@ -275,7 +292,7 @@ namespace RACE2VirusScanAzFnApp
                     case "NearestTown":
                         UpdatedValue = property.GetValue(Updated).ToString();
                         actualvalue = Actual.NearestTown;
-                        changeHistory = AddHistory(actualvalue, UpdatedValue, "NearestTown", basicDetails);
+                        changeHistory = AddHistory(actualvalue, UpdatedValue, "NearestTown", submissionDetails);
                         if (changeHistory != null)
                         {
                             updatedReservoir.NearestTown = UpdatedValue;
@@ -286,7 +303,7 @@ namespace RACE2VirusScanAzFnApp
                     case "GridReference":
                         UpdatedValue = property.GetValue(Updated).ToString();
                         actualvalue = Actual.GridReference;
-                        changeHistory = AddHistory(actualvalue, UpdatedValue, "GridReference", basicDetails);
+                        changeHistory = AddHistory(actualvalue, UpdatedValue, "GridReference", submissionDetails);
                         if (changeHistory != null)
                         {
                             updatedReservoir.GridReference = UpdatedValue;
@@ -298,7 +315,7 @@ namespace RACE2VirusScanAzFnApp
                     case "LastInspectionDate":
                         UpdatedValue = Convert.ToString(property.GetValue(Updated));
                         actualvalue = Convert.ToString(Actual.LastInspectionDate);
-                        changeHistory = AddHistory(actualvalue, UpdatedValue, "LastInspectionDate", basicDetails);
+                        changeHistory = AddHistory(actualvalue, UpdatedValue, "LastInspectionDate", submissionDetails);
                         if (changeHistory != null)
                         {
                             updatedReservoir.LastInspectionDate = Convert.ToDateTime(UpdatedValue);
@@ -309,7 +326,7 @@ namespace RACE2VirusScanAzFnApp
                     case "LastCertificationDate":
                         UpdatedValue = Convert.ToString(property.GetValue(Updated));
                         actualvalue = Convert.ToString(Actual.LastCertificationDate);
-                        changeHistory = AddHistory(actualvalue, UpdatedValue, "LastCertificationDate", basicDetails);
+                        changeHistory = AddHistory(actualvalue, UpdatedValue, "LastCertificationDate", submissionDetails);
                         if (changeHistory != null)
                         {
                             updatedReservoir.LastCertificationDate = Convert.ToDateTime(UpdatedValue);
@@ -328,7 +345,7 @@ namespace RACE2VirusScanAzFnApp
                     case "NextInspectionDate":
                         UpdatedValue = Convert.ToString(property.GetValue(Updated));
                         actualvalue = Convert.ToString(Actual.NextInspectionDate102);
-                        changeHistory = AddHistory(actualvalue, UpdatedValue, "NextInspectionDate102", basicDetails);
+                        changeHistory = AddHistory(actualvalue, UpdatedValue, "NextInspectionDate102", submissionDetails);
                         if (changeHistory != null)
                         {
                             updatedReservoir.NextInspectionDate102 = Convert.ToDateTime(UpdatedValue);
