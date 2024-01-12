@@ -28,6 +28,8 @@ param storageAccountName string
 param logAnalyticsWorkspaceName string
 param race2appenvName string
 param race2appinsightName string
+param adgroupname string
+param adgroupsid string
 
 module createmanagedidentitymodule 'createmanagedidentity.bicep' = {
   scope: resourceGroup(resourcegroup)
@@ -169,6 +171,10 @@ module createsqlservermodule 'createsqlserver.bicep' = {
     servers_race2sqldb_name: servers_race2sqldb_name
     vnet: vnet
     subnetsqlserver: subnetsqlserver
+    tenantId: tenantId
+    adgroupname: adgroupname
+    adgroupsid: adgroupsid
+
   }
   dependsOn: [
     createmanagedidentitymodule

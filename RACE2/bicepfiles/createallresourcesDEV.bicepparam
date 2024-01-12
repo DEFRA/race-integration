@@ -28,4 +28,6 @@ param eventgridtopicName = 'DEVRACINFEG1401'
 param functionappName = 'DEVRACINFAF1401'
 param subnetefgridtopic = 'subnetefgridtopic'
 param subnetfunctionapp = 'subnetfunctionapp'
+param adgroupname = 'AG-Azure-RAC-DEV1-Race2'
+param adgroupsid = 'c52bdbe4-c0cb-4bde-8dcb-a4cd09b832bb'
 
