@@ -222,3 +222,17 @@ module createfunctionappmodule 'createfunctionapp.bicep' = {
   ]
 }
 
+module createRoleAssignments 'createroleassignments.bicep' = {
+  scope: resourceGroup(resourcegroup)
+  name: 'createroleassignmentsdeploy'
+  params: {
+    managedIdentityName: managedidentity    
+  }
+  dependsOn: [
+    createsqlservermodule
+    createappconfigmodule
+    createstorageaccountmodule
+    createkeyvaultmodule
+    createcontainerregistrymodule
+  ]
+}
