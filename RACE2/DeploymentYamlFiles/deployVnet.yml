@@ -1,0 +1,28 @@
+trigger:
+- none
+pr:
+- none
+
+name: Deploy VNet
+
+variables:
+  vmImageName: 'ubuntu-latest'
+
+  azureServiceConnection: 'AZR-RAC-POC1'
+  resourceGroupName: 'POCRACINFRG1401'
+  templateFile: './RACE2/bicepfiles/createvnet.bicep'
+  parameterfile: './RACE2/bicepfiles/createvnet.bicepparam'
+
+pool:
+  vmImage: $(vmImageName)
+
+steps:
+- task: AzureCLI@2  
+  inputs:
+    azureSubscription: $(azureServiceConnection)
+    scriptType: bash
+    scriptLocation: inlineScript
+    useGlobalConfig: false    
+    inlineScript: |
+      az --version
+      az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) --parameters $(parameterfile)
