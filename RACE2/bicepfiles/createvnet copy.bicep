@@ -45,7 +45,7 @@ resource subnetstorageaccountResource 'Microsoft.Network/virtualNetworks/subnets
 }
 output subnetstorageaccountId string = subnetstorageaccountResource.id
 
-resource privateDnsZonesStoageAcct 'Microsoft.Network/privateDnsZones@2020-06-01' = {
+resource privateDnsZonesStorageAcct 'Microsoft.Network/privateDnsZones@2020-06-01' = {
   name: 'azureStgPrivateDnsZone'
   location: location
   dependsOn: [
@@ -54,7 +54,7 @@ resource privateDnsZonesStoageAcct 'Microsoft.Network/privateDnsZones@2020-06-01
 }
 
 resource virtualNetworkLinksStorageAcct 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = {
-  parent: privateDnsZonesStoageAcct
+  parent: privateDnsZonesStorageAcct
   location: location
   name: 'link-to-${virtualNetworkResource.name}'
   properties: {

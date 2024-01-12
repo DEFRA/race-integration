@@ -45,40 +45,6 @@ resource subnetstorageaccountResource 'Microsoft.Network/virtualNetworks/subnets
 }
 output subnetstorageaccountId string = subnetstorageaccountResource.id
 
-resource privateDnsZonesStorageAcct 'Microsoft.Network/privateDnsZones@2020-06-01' = {
-  name: 'azureStgPrivateDnsZone'
-  location: location
-  dependsOn: [
-    virtualNetworkResource
-  ]
-}
-
-resource virtualNetworkLinksStorageAcct 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = {
-  parent: privateDnsZonesStorageAcct
-  location: location
-  name: 'link-to-${virtualNetworkResource.name}'
-  properties: {
-    registrationEnabled: false
-    virtualNetwork: {
-      id: virtualNetworkResource.id
-    }
-  }
-}
-
-resource privateDnsZoneGroupStorageAcct 'Microsoft.Network/privateEndpoints/privateDnsZoneGroups@2023-06-01' = {
-  name: 'dnsgroupStorageAcct/storageaccount'
-  properties: {
-    privateDnsZoneConfigs: [
-      {
-        name: 'configStorageAcct'
-        properties: {
-          privateDnsZoneId: resourceId('Microsoft.Network/privateDnsZones', privateDnsZonesSqlServer.name)
-        }
-      }
-    ]
-  }
-}
-
 resource subnetsqlserverResource 'Microsoft.Network/virtualNetworks/subnets@2023-06-01' = {
   name: subnetsqlserver
   parent: virtualNetworkResource
@@ -90,40 +56,6 @@ resource subnetsqlserverResource 'Microsoft.Network/virtualNetworks/subnets@2023
   ]
 }
 output subnetsqlserverId string = subnetsqlserverResource.id
-
-resource privateDnsZonesSqlServer 'Microsoft.Network/privateDnsZones@2020-06-01' = {
-  name: 'azureSqlPrivateDnsZone'
-  location: location
-  dependsOn: [
-    virtualNetworkResource
-  ]
-}
-
-resource virtualNetworkLinksSqlServer 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = {
-  parent: privateDnsZonesSqlServer
-  location: location
-  name: 'link-to-${virtualNetworkResource.name}'
-  properties: {
-    registrationEnabled: false
-    virtualNetwork: {
-      id: virtualNetworkResource.id
-    }
-  }
-}
-
-resource privateDnsZoneGroupSqlServer 'Microsoft.Network/privateEndpoints/privateDnsZoneGroups@2023-04-01' = {
-  name: 'dnsgroupSqlServer/sqlserver'
-  properties: {
-    privateDnsZoneConfigs: [
-      {
-        name: 'configSqlServer'
-        properties: {
-          privateDnsZoneId: resourceId('Microsoft.Network/privateDnsZones', privateDnsZonesSqlServer.name)
-        }
-      }
-    ]
-  }
-}
 
 resource subnetefgridtopicResource 'Microsoft.Network/virtualNetworks/subnets@2023-06-01' = {
   name: subnetefgridtopic
@@ -137,40 +69,6 @@ resource subnetefgridtopicResource 'Microsoft.Network/virtualNetworks/subnets@20
 }
 output subnetefgridtopic string = subnetefgridtopicResource.id
 
-resource privateDnsZonesEFGridTopic 'Microsoft.Network/privateDnsZones@2020-06-01' = {
-  name: 'azureEFGPrivateDnsZone'
-  location: location
-  dependsOn: [
-    virtualNetworkResource
-  ]
-}
-
-resource virtualNetworkLinksEFGridTopic 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = {
-  parent: privateDnsZonesEFGridTopic
-  location: location
-  name: 'link-to-${virtualNetworkResource.name}'
-  properties: {
-    registrationEnabled: false
-    virtualNetwork: {
-      id: virtualNetworkResource.id
-    }
-  }
-}
-
-resource privateDnsZoneGroupEFGridTopic 'Microsoft.Network/privateEndpoints/privateDnsZoneGroups@2023-06-01' = {
-  name: 'dnsgroupEFGridTopic/efgridtopic'
-  properties: {
-    privateDnsZoneConfigs: [
-      {
-        name: 'configStorageAcct'
-        properties: {
-          privateDnsZoneId: resourceId('Microsoft.Network/privateDnsZones', privateDnsZonesEFGridTopic.name)
-        }
-      }
-    ]
-  }
-}
-
 resource subnetkeyvaultResource 'Microsoft.Network/virtualNetworks/subnets@2023-06-01' = {
   name: subnetkeyvault
   parent: virtualNetworkResource
@@ -182,40 +80,6 @@ resource subnetkeyvaultResource 'Microsoft.Network/virtualNetworks/subnets@2023-
   ]
 }
 output subnetkeyvault string = subnetkeyvaultResource.id
-
-resource privateDnsZonesKeyVault 'Microsoft.Network/privateDnsZones@2020-06-01' = {
-  name: 'azureKVPrivateDnsZone'
-  location: location
-  dependsOn: [
-    virtualNetworkResource
-  ]
-}
-
-resource virtualNetworkLinksKeyVault 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = {
-  parent: privateDnsZonesKeyVault
-  location: location
-  name: 'link-to-${virtualNetworkResource.name}'
-  properties: {
-    registrationEnabled: false
-    virtualNetwork: {
-      id: virtualNetworkResource.id
-    }
-  }
-}
-
-resource privateDnsZoneGroupKeyVault 'Microsoft.Network/privateEndpoints/privateDnsZoneGroups@2023-06-01' = {
-  name: 'dnsgroupKeyVault/keyvault'
-  properties: {
-    privateDnsZoneConfigs: [
-      {
-        name: 'configKeyVault'
-        properties: {
-          privateDnsZoneId: resourceId('Microsoft.Network/privateDnsZones', privateDnsZonesKeyVault.name)
-        }
-      }
-    ]
-  }
-}
 
 resource subnetappconfigResource 'Microsoft.Network/virtualNetworks/subnets@2023-06-01' = {
   name: subnetappconfig
@@ -229,40 +93,6 @@ resource subnetappconfigResource 'Microsoft.Network/virtualNetworks/subnets@2023
 }
 output subnetappconfig string = subnetappconfigResource.id
 
-resource privateDnsZonesAppConfig 'Microsoft.Network/privateDnsZones@2020-06-01' = {
-  name: 'azureAppConfigPrivateDnsZone'
-  location: location
-  dependsOn: [
-    virtualNetworkResource
-  ]
-}
-
-resource virtualNetworkLinksAppConfig 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = {
-  parent: privateDnsZonesAppConfig
-  location: location
-  name: 'link-to-${virtualNetworkResource.name}'
-  properties: {
-    registrationEnabled: false
-    virtualNetwork: {
-      id: virtualNetworkResource.id
-    }
-  }
-}
-
-resource privateDnsZoneGroupAppConfig 'Microsoft.Network/privateEndpoints/privateDnsZoneGroups@2023-06-01' = {
-  name: 'dnsgroupAppConfig/appconfig'
-  properties: {
-    privateDnsZoneConfigs: [
-      {
-        name: 'configAppConfig'
-        properties: {
-          privateDnsZoneId: resourceId('Microsoft.Network/privateDnsZones', privateDnsZonesAppConfig.name)
-        }
-      }
-    ]
-  }
-}
-
 resource subnetacrResource 'Microsoft.Network/virtualNetworks/subnets@2023-06-01' = {
   name: subnetacr
   parent: virtualNetworkResource
@@ -274,40 +104,6 @@ resource subnetacrResource 'Microsoft.Network/virtualNetworks/subnets@2023-06-01
   ]
 }
 output subnetacr string = subnetacrResource.id
-
-resource privateDnsZonesACR 'Microsoft.Network/privateDnsZones@2020-06-01' = {
-  name: 'azureACRPrivateDnsZone'
-  location: location
-  dependsOn: [
-    virtualNetworkResource
-  ]
-}
-
-resource virtualNetworkLinksACR 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = {
-  parent: privateDnsZonesACR
-  location: location
-  name: 'link-to-${virtualNetworkResource.name}'
-  properties: {
-    registrationEnabled: false
-    virtualNetwork: {
-      id: virtualNetworkResource.id
-    }
-  }
-}
-
-resource privateDnsZoneGroupACR 'Microsoft.Network/privateEndpoints/privateDnsZoneGroups@2023-06-01' = {
-  name: 'dnsgroupACR/acr'
-  properties: {
-    privateDnsZoneConfigs: [
-      {
-        name: 'configACR'
-        properties: {
-          privateDnsZoneId: resourceId('Microsoft.Network/privateDnsZones', privateDnsZonesACR.name)
-        }
-      }
-    ]
-  }
-}
 
 resource subnetfunctionappResource 'Microsoft.Network/virtualNetworks/subnets@2023-06-01' = {
   name: subnetfunctionapp
