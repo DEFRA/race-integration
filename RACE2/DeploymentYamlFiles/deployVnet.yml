@@ -8,8 +8,8 @@ name: Deploy VNet
 variables:
   vmImageName: 'ubuntu-latest'
 
-  azureServiceConnection: 'AZR-RAC-POC1'
-  resourceGroupName: 'POCRACINFRG1401'
+  azureServiceConnection: 'AZR-RAC-DEV1'
+  resourceGroupName: 'DEVRACINFRG1401'
   templateFile: './RACE2/bicepfiles/createvnet.bicep'
   parameterfile: './RACE2/bicepfiles/createvnet.bicepparam'
 
