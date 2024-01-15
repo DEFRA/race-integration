@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RACE2.DatabaseProvider.Data;
 
@@ -11,9 +12,10 @@ using RACE2.DatabaseProvider.Data;
 namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240112143723_UpdatedRAWTables")]
+    partial class UpdatedRAWTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -139,7 +141,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
-                    b.Property<bool?>("IsComplianceAction")
+                    b.Property<bool>("IsComplianceAction")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsMandatory")
@@ -156,7 +158,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                     b.Property<int?>("OwnedByUserId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("OwnerRoleId")
+                    b.Property<int?>("OwnerRolecId")
                         .HasColumnType("int");
 
                     b.Property<string>("Priority")
@@ -168,7 +170,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
-                    b.Property<int>("ReservoirId")
+                    b.Property<int?>("ReservoirId")
                         .HasColumnType("int");
 
                     b.Property<string>("Status")
@@ -180,7 +182,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<DateTime?>("TargetDate")
+                    b.Property<DateTime>("TargetDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Type")
@@ -191,7 +193,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     b.HasIndex("OwnedByUserId");
 
-                    b.HasIndex("OwnerRoleId");
+                    b.HasIndex("OwnerRolecId");
 
                     b.HasIndex("ReservoirId");
 
@@ -2050,13 +2052,11 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 
                     b.HasOne("RACE2.DataModel.UserRole", "OwnerRole")
                         .WithMany()
-                        .HasForeignKey("OwnerRoleId");
+                        .HasForeignKey("OwnerRolecId");
 
                     b.HasOne("RACE2.DataModel.Reservoir", "Reservoir")
                         .WithMany()
-                        .HasForeignKey("ReservoirId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ReservoirId");
 
                     b.Navigation("OwnedByUser");
 

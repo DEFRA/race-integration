@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace RACE2.Services
 {
-    public class ReservoirService :IReservoirService
+    public class ReservoirService : IReservoirService
     {
         public IReservoirRepository _reservoirRepository;
         public IUserRepository _userRepository;
-        public ReservoirService(IUserRepository userRepository,IReservoirRepository reservoirRepository)
+        public ReservoirService(IUserRepository userRepository, IReservoirRepository reservoirRepository)
         {
             _userRepository = userRepository;
             _reservoirRepository = reservoirRepository;
@@ -40,7 +40,7 @@ namespace RACE2.Services
             catch (Exception ex)
             {
                 return new Reservoir();
-            }            
+            }
         }
 
         //public async Task<UserDetail> GetReservoirsByUserId(int id)
@@ -58,7 +58,7 @@ namespace RACE2.Services
             {
                 return new List<ReservoirDetailsDTO>();
             }
-            
+
         }
 
         public async Task<List<ReservoirDetailsDTO>> GetReservoirsByUserEmailId(string emailId)
@@ -72,7 +72,7 @@ namespace RACE2.Services
             {
                 return new List<ReservoirDetailsDTO>();
             }
-            
+
         }
 
         public async Task<List<DataModel.Action>> GetActionsListByReservoirIdAndCategory(int reservoirid, int category)
@@ -123,7 +123,7 @@ namespace RACE2.Services
             {
                 return new List<OperatorDTO>();
             }
-            
+
         }
 
         public async Task<List<SubmissionStatusDTO>> GetReservoirStatusByUserId(int id)
@@ -136,7 +136,7 @@ namespace RACE2.Services
             {
                 return new List<SubmissionStatusDTO>();
             }
-           
+
         }
 
         public async Task<List<UndertakerDTO>> GetUndertakerforReservoir(int id)
@@ -149,7 +149,7 @@ namespace RACE2.Services
             {
                 return new List<UndertakerDTO>();
             }
-           
+
         }
 
 
@@ -163,18 +163,18 @@ namespace RACE2.Services
             {
                 return new SubmissionStatus();
             }
-           
+
         }
 
-        public  async Task<int> InsertUploadDocumentDetails(DocumentDTO document)
+        public async Task<int> InsertUploadDocumentDetails(DocumentDTO document)
         {
             try
             {
-                return  await _reservoirRepository.InsertUploadDocumentDetails(document);
+                return await _reservoirRepository.InsertUploadDocumentDetails(document);
             }
             catch (Exception ex)
             {
-                return  1;
+                return 1;
             }
         }
 
@@ -184,7 +184,7 @@ namespace RACE2.Services
         {
             try
             {
-                return await _reservoirRepository.UpdateScannedDocumentResult(scanneddatetime,isClean,uploadblobpath, blobStorageFileName);
+                return await _reservoirRepository.UpdateScannedDocumentResult(scanneddatetime, isClean, uploadblobpath, blobStorageFileName);
             }
             catch (Exception ex)
             {
@@ -225,6 +225,18 @@ namespace RACE2.Services
             catch (Exception ex)
             {
                 return new ReservoirSubmissionDTO();
+            }
+        }
+
+        public async Task<int> InsertActionTableFromExtract(DataModel.Action action)
+        {
+            try
+            {
+                return await _reservoirRepository.InsertActionTableFromExtract(action);
+            }
+            catch (Exception ex)
+            {
+                return 1;
             }
         }
     }

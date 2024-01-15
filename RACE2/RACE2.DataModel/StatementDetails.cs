@@ -16,7 +16,7 @@ namespace RACE2.DataModel
         [Required]
         public int DocumentId {  get; set; }
         [ForeignKey("DocumentId")]
-        public SupportingDocument Document { get; set; } = new SupportingDocument();
+        public virtual SupportingDocument Document { get; set; }
         [Required,StringLength(64)]
         public string StatementType { get; set; }
         public DateTime? PeriodStartDate { get; set; }

@@ -59,6 +59,8 @@ namespace RACE2VirusScanAzFnApp
         }
 
 
+
+
         public static BasicDetails GetAllIds(string documentName, string connString)
         {
             BasicDetails basicdetails = new BasicDetails();
@@ -274,7 +276,7 @@ namespace RACE2VirusScanAzFnApp
                         if (property.GetValue(Updated) == null)
                             statementDetails.PeriodStartDate = null;
                         else
-                            statementDetails.PeriodStartDate = Convert.ToDateTime(property.GetValue(Updated));
+                            statementDetails.PeriodStartDate = DateTime.ParseExact(property.GetValue(Updated).ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
 
                         break;
                     case "PeriodEnd":
@@ -287,7 +289,7 @@ namespace RACE2VirusScanAzFnApp
                         if (property.GetValue(Updated) == null)
                             statementDetails.StatementDate = null;
                         else
-                            statementDetails.StatementDate = Convert.ToDateTime(property.GetValue(Updated));
+                            statementDetails.StatementDate = DateTime.ParseExact(property.GetValue(Updated).ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
                         break;
                     case "NearestTown":
                         UpdatedValue = property.GetValue(Updated).ToString();
@@ -318,7 +320,7 @@ namespace RACE2VirusScanAzFnApp
                         changeHistory = AddHistory(actualvalue, UpdatedValue, "LastInspectionDate", submissionDetails);
                         if (changeHistory != null)
                         {
-                            updatedReservoir.LastInspectionDate = Convert.ToDateTime(UpdatedValue);
+                            updatedReservoir.LastInspectionDate = DateTime.ParseExact(UpdatedValue, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                             reservoirDetailsChangeHistory.Add(changeHistory);
                         }
 
@@ -329,7 +331,7 @@ namespace RACE2VirusScanAzFnApp
                         changeHistory = AddHistory(actualvalue, UpdatedValue, "LastCertificationDate", submissionDetails);
                         if (changeHistory != null)
                         {
-                            updatedReservoir.LastCertificationDate = Convert.ToDateTime(UpdatedValue);
+                            updatedReservoir.LastCertificationDate = DateTime.ParseExact(UpdatedValue, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                             reservoirDetailsChangeHistory.Add(changeHistory);
                         }
 
@@ -348,7 +350,7 @@ namespace RACE2VirusScanAzFnApp
                         changeHistory = AddHistory(actualvalue, UpdatedValue, "NextInspectionDate102", submissionDetails);
                         if (changeHistory != null)
                         {
-                            updatedReservoir.NextInspectionDate102 = Convert.ToDateTime(UpdatedValue);
+                            updatedReservoir.NextInspectionDate102 = DateTime.ParseExact(UpdatedValue, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                             reservoirDetailsChangeHistory.Add(changeHistory);
                         }
 
