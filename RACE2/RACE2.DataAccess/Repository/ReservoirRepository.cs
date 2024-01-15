@@ -14,6 +14,7 @@ using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using Microsoft.Data.SqlClient;
+using System.Reflection.Metadata;
 
 namespace RACE2.DataAccess.Repository
 {
@@ -535,6 +536,33 @@ namespace RACE2.DataAccess.Repository
                 return null;
             }
         }
+
+        public async Task<int> InsertActionTableFromExtract(DataModel.Action action)
+        {
+            _logger.LogInformation("Insert Action table from Data extraction ");
+            try
+            {
+
+                using (var conn = Connection)
+                {
+                    var parameters = new DynamicParameters();
+                    parameters.Add("reference", action.Reference, DbType.String);
+                    parameters.Add("description", action.Description, DbType.String);
+                    parameters.Add("mandatory", action.IsMandatory, DbType.Boolean);
+                    parameters.Add("priority", action.Priority, DbType.String);
+                    parameters.Add("reservoirid",action.ReservoirId , DbType.Int64);
+                    var result = await conn.ExecuteAsync("sp_InsertActionFromExtract", parameters, commandType: CommandType.StoredProcedure);
+        
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return 0;
+            }
+            return 1;
+        }
+
 
     }
 }

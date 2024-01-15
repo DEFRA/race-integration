@@ -40,5 +40,7 @@ namespace RACE2.Services
 
         public Task<ReservoirSubmissionDTO> GetReservoirUserIdbySubRef(string submissionReference);
 
+        public Task<int> InsertActionTableFromExtract(DataModel.Action action);
+
     }
 }

@@ -31,21 +31,27 @@ namespace RACE2.DataModel
         public bool IsMandatory { get; set; }
         [StringLength(64)]
         public string Priority { get; set; }
-        public bool IsComplianceAction { get; set; }
-        
-        public UserRole OwnerRole { get; set; }
-       
-         public UserDetail? OwnedByUser { get; set; }
+        public bool? IsComplianceAction { get; set; }
+
+        public int? OwnerRoleId { get; set; }
+        [ForeignKey("OwnerRoleId")]
+        public virtual UserRole OwnerRole { get; set; }
+        public int? OwnedByUserId { get; set; }
+        [ForeignKey("OwnedByUserId")]
+        public virtual UserDetail OwnedByUser { get; set; }
 
         [StringLength(250)]
         public string OwnedByName { get; set; }
         public DateTime CreatedDate { get; set; }
         
-        public DateTime TargetDate { get; set; }
+        public DateTime? TargetDate { get; set; }
         [StringLength(1024)]
         public string Notes { get; set; }
 
-        public Reservoir? Reservoir { get; set; }
+        public int ReservoirId { get; set; }
+        [ForeignKey("ReservoirId")]
+
+        public virtual Reservoir Reservoir { get; set; }
         [StringLength(64),Required]
         public string? Status { get; set; }
 
