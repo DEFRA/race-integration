@@ -49,7 +49,7 @@ module createvnetmodule 'createvnet.bicep' = {
 
 module createprivateendpointswithvnetmodule 'createprivateendpointswithvnet.bicep' = {
   scope: resourceGroup(resourcegroup)
-  name: 'vnetdeploy'
+  name: 'privateendpointswithvnetdeploy'
   params: {
     vnet: vnet
     subnetcontainerappenv: subnetcontainerappenv
@@ -80,7 +80,7 @@ module createappinsightmodule 'createappinsight.bicep' = {
 
 module createappserviceplanmodule 'createappserviceplan.bicep' = {
   scope: resourceGroup(resourcegroup)
-  name: 'createappserviceplandeploy'
+  name: 'appserviceplandeploy'
   params: {
     location: location
     appserviceplanName: appserviceplanName
@@ -191,7 +191,7 @@ module createcontainerappenvmodule 'createcontainerappenv.bicep' = {
 
 module createfunctionappmodule 'createfunctionapp.bicep' = {
   scope: resourceGroup(resourcegroup)
-  name: 'createfunctionappdeploy'
+  name: 'functionappdeploy'
   params: {
     subscriptionid: subscriptionid
     location: location
