@@ -1,23 +1,12 @@
-@secure()
 param servers_race2sqlserver_name string
 param administratorLogin string
 @secure()
 param administratorLoginPassword string
 param servers_race2sqldb_name string
 param location string
-param vnet string
-param subnetsqlserver string
 param tenantId string
 param adgroupname string
 param adgroupsid string
-
-resource virtualNetworkResource 'Microsoft.Network/virtualNetworks@2023-06-01' existing = {
-  name: vnet
-}
-
-resource subnetsqlserverResource 'Microsoft.Network/virtualNetworks/subnets@2023-06-01' existing= {
-  name: subnetsqlserver
-}
 
 resource servers_race2sqlserver_name_resource 'Microsoft.Sql/servers@2023-05-01-preview' = {
   name: servers_race2sqlserver_name
@@ -54,6 +43,16 @@ resource servers_pocracinfss1401_name_ActiveDirectory 'Microsoft.Sql/servers/adm
   }
 }
 
+// Allow Azure Service and Resources to access this server
+resource allowAllWindowsAzureIps 'Microsoft.Sql/servers/firewallRules@2023-05-01-preview' = {
+  name: 'AllowAllWindowsAzureIps' // don't change the name
+  parent: servers_race2sqlserver_name_resource
+  properties: {
+    endIpAddress: '0.0.0.0'
+    startIpAddress: '0.0.0.0'
+  }
+}
+
 resource servers_pocracinfss1401_name_Default 'Microsoft.Sql/servers/advancedThreatProtectionSettings@2023-05-01-preview' = {
   parent: servers_race2sqlserver_name_resource
   name: 'Default'
@@ -85,23 +84,3 @@ resource servers_race2sqlserver_name_RACE2DB 'Microsoft.Sql/servers/databases@20
   }
 }
 
-resource sqlPrivateEndpoint 'Microsoft.Network/privateEndpoints@2023-06-01' = {
-  name: 'PrivateEndpointSqlServer'
-  location: location
-  properties: {
-    subnet: {
-      id: '${virtualNetworkResource.id}/subnets/${subnetsqlserverResource.name}'
-    }
-    privateLinkServiceConnections: [
-      {
-        name: 'PrivateEndpointSqlServer'
-        properties: {
-          privateLinkServiceId: servers_race2sqlserver_name_resource.id
-          groupIds: [
-            'sqlServer'
-          ]
-        }
-      }
-    ]
-  }
-}

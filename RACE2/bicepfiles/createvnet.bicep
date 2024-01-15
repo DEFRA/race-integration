@@ -1,13 +1,8 @@
 param location string 
 param vnet string
 param subnetcontainerappenv string
-param subnetsqlserver string
-param subnetstorageaccount string
+param subnetpasaccount string
 param subnetfunctionapp string
-param subnetappconfig string
-param subnetkeyvault string
-param subnetacr string
-param subnetefgridtopic string
 
 resource virtualNetworkResource 'Microsoft.Network/virtualNetworks@2023-06-01' = {
   name: vnet
@@ -31,124 +26,28 @@ resource subnetcontainerappenvResource 'Microsoft.Network/virtualNetworks/subnet
 }
 output subnetcontainerappenvId string = subnetcontainerappenvResource.id
 
-resource subnetstorageaccountResource 'Microsoft.Network/virtualNetworks/subnets@2023-06-01' = {
-  name: subnetstorageaccount
+resource subnetpasResource 'Microsoft.Network/virtualNetworks/subnets@2023-06-01' = {
+  name: subnetpasaccount
   parent: virtualNetworkResource
   properties: {
     addressPrefix: '10.10.2.0/24'
     privateEndpointNetworkPolicies: 'Disabled'
     privateLinkServiceNetworkPolicies: 'Disabled'
-  }
-  dependsOn:[
-    subnetcontainerappenvResource
-  ]
+  }  
 }
-output subnetstorageaccountId string = subnetstorageaccountResource.id
-
-resource subnetsqlserverResource 'Microsoft.Network/virtualNetworks/subnets@2023-06-01' = {
-  name: subnetsqlserver
-  parent: virtualNetworkResource
-  properties: {
-    addressPrefix: '10.10.3.0/24'
-  }
-  dependsOn:[
-    subnetstorageaccountResource
-  ]
-}
-output subnetsqlserverId string = subnetsqlserverResource.id
-
-resource subnetefgridtopicResource 'Microsoft.Network/virtualNetworks/subnets@2023-06-01' = {
-  name: subnetefgridtopic
-  parent: virtualNetworkResource
-  properties: {
-    addressPrefix: '10.10.4.0/24'
-  }
-  dependsOn:[
-    subnetsqlserverResource
-  ]
-}
-output subnetefgridtopic string = subnetefgridtopicResource.id
-
-resource subnetkeyvaultResource 'Microsoft.Network/virtualNetworks/subnets@2023-06-01' = {
-  name: subnetkeyvault
-  parent: virtualNetworkResource
-  properties: {
-    addressPrefix: '10.10.5.0/24'
-  }
-  dependsOn:[
-    subnetefgridtopicResource
-  ]
-}
-output subnetkeyvault string = subnetkeyvaultResource.id
-
-resource subnetappconfigResource 'Microsoft.Network/virtualNetworks/subnets@2023-06-01' = {
-  name: subnetappconfig
-  parent: virtualNetworkResource
-  properties: {
-    addressPrefix: '10.10.6.0/24'
-  }
-  dependsOn:[
-    subnetkeyvaultResource
-  ]
-}
-output subnetappconfig string = subnetappconfigResource.id
-
-resource subnetacrResource 'Microsoft.Network/virtualNetworks/subnets@2023-06-01' = {
-  name: subnetacr
-  parent: virtualNetworkResource
-  properties: {
-    addressPrefix: '10.10.7.0/24'
-  }
-  dependsOn:[
-    subnetappconfigResource
-  ]
-}
-output subnetacr string = subnetacrResource.id
+output subnetpasaccount string = subnetpasResource.id
 
 resource subnetfunctionappResource 'Microsoft.Network/virtualNetworks/subnets@2023-06-01' = {
   name: subnetfunctionapp
   parent: virtualNetworkResource
   properties: {
-    addressPrefix: '10.10.8.0/24'
-    serviceEndpoints: [
-      {
-        service: 'Microsoft.ContainerRegistry'
-        locations: [
-          '*'
-        ]
-      }
-      {
-        service: 'Microsoft.KeyVault'
-        locations: [
-          '*'
-        ]
-      }
-      {
-        service: 'Microsoft.Sql'
-        locations: [
-          'uksouth'
-        ]
-      }
-      {
-        service: 'Microsoft.Storage'
-        locations: [
-          'uksouth'
-          'ukwest'
-        ]
-      }
-      {
-        service: 'Microsoft.Web'
-        locations: [
-          '*'
-        ]
-      }
-    ]
+    addressPrefix: '10.10.3.0/24'    
     delegations: []
     privateEndpointNetworkPolicies: 'Disabled'
     privateLinkServiceNetworkPolicies: 'Enabled'
   }
   dependsOn:[
-    subnetacrResource
+    subnetpasResource
   ]
 }
 output subnetfunctionapp string = subnetfunctionappResource.id

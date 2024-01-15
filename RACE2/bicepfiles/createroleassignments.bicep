@@ -161,54 +161,12 @@ resource keyVaultCertificatesOfficerRoleAssignment 'Microsoft.Authorization/role
   }
 }
 
-resource storageAccountContributorRoleDefinition 'Microsoft.Authorization/roleDefinitions@2022-05-01-preview' existing = {
-  scope: resourceGroup()
-  name: '17d1049b-9a84-46fb-8f53-869881c3d3ab'
-}
-
-resource storageAccountContributorRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name:  guid(resourceGroup().id, mi.id, storageAccountContributorRoleDefinition.id)
-  properties: {
-    roleDefinitionId: storageAccountContributorRoleDefinition.id
-    principalId: mi.properties.principalId
-    principalType: 'ServicePrincipal'
-  }
-}
-
-resource StorageBlobDataOwnerRoleDefinition 'Microsoft.Authorization/roleDefinitions@2022-05-01-preview' existing = {
-  scope: resourceGroup()
-  name: 'b7e6dc6d-f1e8-4753-8033-0f276bb0955b'
-}
-
-resource StorageBlobDataOwnerRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name:  guid(resourceGroup().id, mi.id, StorageBlobDataOwnerRoleDefinition.id)
-  properties: {
-    roleDefinitionId: StorageBlobDataOwnerRoleDefinition.id
-    principalId: mi.properties.principalId
-    principalType: 'ServicePrincipal'
-  }
-}
-
-resource storageBlobDataReaderRoleDefinition 'Microsoft.Authorization/roleDefinitions@2022-05-01-preview' existing = {
-  scope: resourceGroup()
-  name: '2a2b9908-6ea1-4ae2-8e65-a410df84e7d1'
-}
-
-resource storageBlobDataReaderRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name:  guid(resourceGroup().id, mi.id, storageBlobDataReaderRoleDefinition.id)
-  properties: {
-    roleDefinitionId: storageBlobDataReaderRoleDefinition.id
-    principalId: mi.properties.principalId
-    principalType: 'ServicePrincipal'
-  }
-}
-
 resource storageBlobDataContributorRoleDefinition 'Microsoft.Authorization/roleDefinitions@2022-05-01-preview' existing = {
   scope: resourceGroup()
   name: 'ba92f5b4-2d11-453d-a403-e96b0029c9fe'
 }
 
-resource storageBlobDataCntributorRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+resource storageBlobDataContributorRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name:  guid(resourceGroup().id, mi.id, storageBlobDataContributorRoleDefinition.id)
   properties: {
     roleDefinitionId: storageBlobDataContributorRoleDefinition.id

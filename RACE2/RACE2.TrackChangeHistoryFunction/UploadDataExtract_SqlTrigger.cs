@@ -28,10 +28,10 @@ using System.Reflection.Metadata;
 
 namespace RACE2.TrackChangeHistoryFunction
 {
-    public static class SqlTriggerBinding
+    public static class UploadDataExtract_SqlTrigger
     {
         // Visit https://aka.ms/sqltrigger to learn how to use this trigger binding
-        [FunctionName("RAW_StatementDetails_TriggerFunction")]
+        [FunctionName("UploadDataExtract_SqlTrigger")]
         public static void Run(
                 [SqlTrigger("RAW_StatementDetails", "ConnectionString")] IReadOnlyList<SqlChange<RAW_StatementDetails>> changes,
                 ILogger log)

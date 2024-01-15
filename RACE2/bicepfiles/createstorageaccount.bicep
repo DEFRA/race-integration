@@ -1,15 +1,5 @@
 param storageAccountname string 
 param location string = resourceGroup().location
-param vnet string
-param subnetstorageaccount string
-
-resource virtualNetworkResource 'Microsoft.Network/virtualNetworks@2023-06-01' existing = {
-  name: vnet
-}
-
-resource subnetstorageaccountResource 'Microsoft.Network/virtualNetworks/subnets@2023-06-01' existing= {
-  name: subnetstorageaccount
-}
 
 resource storageAccount_resource 'Microsoft.Storage/storageAccounts@2023-01-01' = {
   name: storageAccountname
@@ -18,26 +8,52 @@ resource storageAccount_resource 'Microsoft.Storage/storageAccounts@2023-01-01' 
   sku: {
     name: 'Standard_LRS'
   } 
-}
-
-resource privateEndpoint 'Microsoft.Network/privateEndpoints@2023-06-01' = {
-  name: 'PrivateEndpointStorageAccount'
-  location: location
-  properties: {
-    subnet: {
-      id: '${virtualNetworkResource.id}/subnets/${subnetstorageaccountResource.name}'
+  properties: { 
+    dnsEndpointType: 'Standard'
+    defaultToOAuthAuthentication: false
+    publicNetworkAccess: 'Disabled'
+    allowCrossTenantReplication: false
+    minimumTlsVersion: 'TLS1_2'
+    allowBlobPublicAccess: false
+    allowSharedKeyAccess: true
+    networkAcls: {
+      bypass: 'AzureServices'
+      virtualNetworkRules: []
+      ipRules: []
+      defaultAction: 'Deny'
     }
-    privateLinkServiceConnections: [
-      {
-        properties: {
-          privateLinkServiceId: storageAccount_resource.id
-          groupIds: [
-            'blob'
-          ]
+    supportsHttpsTrafficOnly: true
+    encryption: {
+      requireInfrastructureEncryption: false
+      services: {
+        file: {
+          keyType: 'Account'
+          enabled: true
         }
-        name: 'PrivateEndpointStorageAccount'
+        blob: {
+          keyType: 'Account'
+          enabled: true
+        }
       }
-    ]
+      keySource: 'Microsoft.Storage'
+    }
+    accessTier: 'Hot'
   }
 }
 
+
+resource unscannedcontentcontainerresource 'Microsoft.Storage/storageAccounts/blobServices/containers@2021-09-01' = { 
+  name: '${storageAccount_resource.name}/default/unscannedcontent' 
+}
+
+resource cleanfilescontainerresource 'Microsoft.Storage/storageAccounts/blobServices/containers@2021-09-01' = { 
+  name: '${storageAccount_resource.name}/default/cleanfiles' 
+}
+
+resource maliciousfilescontainerresource 'Microsoft.Storage/storageAccounts/blobServices/containers@2021-09-01' = { 
+  name: '${storageAccount_resource.name}/default/maliciousfiles' 
+}
+
+resource s12reporttemplatecontainerresource 'Microsoft.Storage/storageAccounts/blobServices/containers@2021-09-01' = { 
+  name: '${storageAccount_resource.name}/default/s12reporttemplate' 
+}

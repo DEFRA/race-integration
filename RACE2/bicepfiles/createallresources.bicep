@@ -5,13 +5,8 @@ param resourcegroup string
 param managedidentity string
 param vnet string
 param subnetcontainerappenv string
-param subnetsqlserver string
-param subnetstorageaccount string
-param subnetefgridtopic string
+param subnetpasaccount string
 param subnetfunctionapp string
-param subnetappconfig string
-param subnetkeyvault string
-param subnetacr string
 param servers_race2sqlserver_name string
 param servers_race2sqldb_name string
 param containerregistryName string
@@ -46,14 +41,27 @@ module createvnetmodule 'createvnet.bicep' = {
   params: {
     vnet: vnet
     subnetcontainerappenv: subnetcontainerappenv
-    subnetsqlserver: subnetsqlserver
-    subnetstorageaccount: subnetstorageaccount 
-    subnetefgridtopic: subnetefgridtopic
-    subnetfunctionapp: subnetfunctionapp
-    subnetappconfig: subnetappconfig
-    subnetkeyvault: subnetkeyvault
-    subnetacr: subnetacr
+    subnetpasaccount: subnetpasaccount
     location: location 
+    subnetfunctionapp: subnetfunctionapp
+  }
+}
+
+module createprivateendpointswithvnetmodule 'createprivateendpointswithvnet.bicep' = {
+  scope: resourceGroup(resourcegroup)
+  name: 'vnetdeploy'
+  params: {
+    vnet: vnet
+    subnetcontainerappenv: subnetcontainerappenv
+    subnetpasaccount: subnetpasaccount
+    location: location 
+    appconfigName: appconfigName
+    keyvaultName: keyvaultName
+    containerregistryname: containerregistryName
+    eventgridtopicName: eventgridtopicName
+    storageAccountname: storageAccountName
+    subnetfunctionapp: subnetfunctionapp
+    servers_race2sqlserver_name: servers_race2sqlserver_name
   }
 }
 
@@ -66,7 +74,7 @@ module createappinsightmodule 'createappinsight.bicep' = {
     race2appinsight: race2appinsightName
   }
   dependsOn: [
-    createvnetmodule
+    createprivateendpointswithvnetmodule
   ]
 }
 
@@ -82,20 +90,6 @@ module createappserviceplanmodule 'createappserviceplan.bicep' = {
   ]
 }
 
-module createeventgridtopicmodule 'createeventgridtopic.bicep' = {
-  scope: resourceGroup(resourcegroup)
-  name: 'eventgridtopicdeploy'
-  params: {
-    location: location
-    eventgridtopicName: eventgridtopicName
-    vnet: vnet
-    subnetefgridtopic: subnetefgridtopic
-  }
-  dependsOn: [
-    createmanagedidentitymodule
-  ]
-}
-
 module createcontainerregistrymodule 'createcontainerregistry.bicep' = {
   scope: resourceGroup(resourcegroup)
   name: 'containerregistrydeploy'
@@ -105,8 +99,6 @@ module createcontainerregistrymodule 'createcontainerregistry.bicep' = {
     resourcegroup: resourcegroup
     containerregistryname: containerregistryName
     managedidentity: managedidentity
-    vnet: vnet
-    subnetacr: subnetacr
   }
   dependsOn: [
     createmanagedidentitymodule
@@ -119,8 +111,6 @@ module createstorageaccountmodule 'createstorageaccount.bicep' = {
   params: {
     location: location
     storageAccountname: storageAccountName
-    vnet: vnet
-    subnetstorageaccount: subnetstorageaccount
   }
   dependsOn: [
     createmanagedidentitymodule
@@ -136,8 +126,6 @@ module createappconfigmodule 'createappconfig.bicep' = {
     resourcegroup: resourcegroup
     appconfigName: appconfigName
     managedidentity: managedidentity
-    subnetappconfig : subnetappconfig
-    vnet : vnet
   }
   dependsOn: [
     createmanagedidentitymodule
@@ -152,8 +140,6 @@ module createkeyvaultmodule 'createkeyvault.bicep' = {
     keyvaultName: keyvaultName
     tenantId: tenantId
     appInsightConnectionString: createappinsightmodule.outputs.connectionString
-    vnet: vnet
-    subnetkeyvault: subnetkeyvault
   }
   dependsOn: [
     createmanagedidentitymodule
@@ -169,8 +155,6 @@ module createsqlservermodule 'createsqlserver.bicep' = {
     administratorLogin: administratorLogin
     administratorLoginPassword: administratorLoginPassword
     servers_race2sqldb_name: servers_race2sqldb_name
-    vnet: vnet
-    subnetsqlserver: subnetsqlserver
     tenantId: tenantId
     adgroupname: adgroupname
     adgroupsid: adgroupsid
@@ -209,7 +193,10 @@ module createfunctionappmodule 'createfunctionapp.bicep' = {
   scope: resourceGroup(resourcegroup)
   name: 'createfunctionappdeploy'
   params: {
+    subscriptionid: subscriptionid
     location: location
+    resourcegroup: resourcegroup
+    managedidentity: managedidentity
     functionappName: functionappName
     race2appinsightName: race2appinsightName
     appserviceplanName: appserviceplanName
@@ -219,6 +206,18 @@ module createfunctionappmodule 'createfunctionapp.bicep' = {
     createappserviceplanmodule
     createappinsightmodule
     createstorageaccountmodule
+  ]
+}
+
+module createeventgridtopicmodule 'createeventgridtopic.bicep' = {
+  scope: resourceGroup(resourcegroup)
+  name: 'eventgridtopicdeploy'
+  params: {
+    location: location
+    eventgridtopicName: eventgridtopicName
+  }
+  dependsOn: [
+    createfunctionappmodule
   ]
 }
 

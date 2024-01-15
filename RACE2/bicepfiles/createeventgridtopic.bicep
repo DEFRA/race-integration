@@ -1,16 +1,7 @@
 param location string
-param eventgridtopicName string = 'DefenderEventGridTopic'
+param eventgridtopicName string 
 param sites_RACE2DefenderScanAzurefn_externalid string = '/subscriptions/d9cce027-07b6-4275-a215-dd8d52b9d469/resourceGroups/POCRACINFRG1401/providers/Microsoft.Web/sites/RACE2DefenderScanAzurefn'
-param vnet string
-param subnetefgridtopic string
 
-resource virtualNetworkResource 'Microsoft.Network/virtualNetworks@2023-06-01' existing = {
-  name: vnet
-}
-
-resource subnetefgridtopicResource 'Microsoft.Network/virtualNetworks/subnets@2023-06-01' existing= {
-  name: subnetefgridtopic
-}
 resource topics_DefenderEventGridTopic_name_resource 'Microsoft.EventGrid/topics@2023-12-15-preview' = {
   name: eventgridtopicName
   location: location
@@ -58,23 +49,3 @@ resource topics_DefenderEventGridTopic_name_topics_DefenderEventGridTopic_name_S
   }
 }
 
-resource eventgridtopicPrivateEndpoint 'Microsoft.Network/privateEndpoints@2023-06-01' = {
-  name: 'PrivateEndpointEventGridTopic'
-  location: location
-  properties: {
-    subnet: {
-      id: '${virtualNetworkResource.id}/subnets/${subnetefgridtopicResource.name}'
-    }
-    privateLinkServiceConnections: [
-      {
-        name: 'PrivateEndpointEventGridTopic'
-        properties: {
-          privateLinkServiceId: topics_DefenderEventGridTopic_name_resource.id
-          groupIds: [
-            'topic'
-          ]
-        }
-      }
-    ]
-  }
-}
