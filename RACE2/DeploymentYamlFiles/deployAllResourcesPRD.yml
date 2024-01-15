@@ -9,7 +9,7 @@ variables:
   vmImageName: 'ubuntu-latest'
 
   azureServiceConnection: 'AZR-RAC-DEV1'
-  resourceGroupName: 'DEVRACINFRG1401'
+  resourceGroupName: 'POCRACINFRG1401'
   location: 'uksouth' 
   templateFileResourceGroup: './RACE2/bicepfiles/createresourcegroup.bicep'  
   templateFileAllResources: './RACE2/bicepfiles/createallresources.bicep'
