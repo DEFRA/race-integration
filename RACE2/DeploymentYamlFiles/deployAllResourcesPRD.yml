@@ -8,7 +8,7 @@ name: Deploy All Resources
 variables:
   vmImageName: 'ubuntu-latest'
 
-  azureServiceConnection: 'AZR-RAC-DEV1'
+  azureServiceConnection: 'AZR-RAC-POC1'
   resourceGroupName: 'POCRACINFRG1401'
   location: 'uksouth' 
   templateFileResourceGroup: './RACE2/bicepfiles/createresourcegroup.bicep'  
