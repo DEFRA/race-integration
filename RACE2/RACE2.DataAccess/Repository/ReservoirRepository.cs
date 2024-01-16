@@ -561,6 +561,36 @@ namespace RACE2.DataAccess.Repository
                 return 0;
             }
             return 1;
+
+        }
+
+        public async Task<int> InsertMaintenanceMeasureFromExtract(DataModel.Action action, Comment comment)
+        {
+            _logger.LogInformation("Insert Action and comment table from Data extraction ");
+            try
+            {
+
+                using (var conn = Connection)
+                {
+                    var parameters = new DynamicParameters();
+                    parameters.Add("reference", action.Reference, DbType.String);
+                    parameters.Add("description", action.Description, DbType.String);
+                    parameters.Add("comment", comment.CommentText, DbType.String);
+                    parameters.Add("isQualitycheck", comment.IsQualityCheckRequired, DbType.Boolean);
+                    parameters.Add("userid", comment.CreatedByUser, DbType.Int32);
+                    parameters.Add("reservoirid", action.ReservoirId, DbType.Int32);
+                    parameters.Add("relatestorecordid", comment.RelatesToRecordId, DbType.Int32);
+                    var result = await conn.ExecuteAsync("sp_InsertMaintenanceMeasureFromExtract", parameters, commandType: CommandType.StoredProcedure);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return 0;
+            }
+            return 1;
+
         }
 
 

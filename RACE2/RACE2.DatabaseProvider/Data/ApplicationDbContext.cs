@@ -86,6 +86,12 @@ namespace RACE2.DatabaseProvider.Data
 
         public DbSet<ReservoirDetailsChangeHistory> ReservoirDetailsChangeHistory { get; set; }
 
+        public DbSet<SafetyMeasuresChangeHistory> SafetyMeasuresChangeHistory { get; set; }
+
+        public DbSet<CommentsChangeHistory> CommentsChangeHistory { get; set; }
+
+        public DbSet<ActionsChangeHistory> ActionsChangeHistory { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

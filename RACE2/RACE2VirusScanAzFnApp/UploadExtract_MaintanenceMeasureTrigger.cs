@@ -38,6 +38,18 @@ namespace RACE2VirusScanAzFnApp
                 _logger.LogInformation("SQL Changes: " + JsonConvert.SerializeObject(changes));
                 string[] subs = change.Item.DocumentName.Split('_');
                 reservoirSubmission = await _reservoirService.GetReservoirUserIdbySubRef(subs[0].ToString());
+                RACE2.DataModel.Action _action = new RACE2.DataModel.Action();
+                Comment _comment = new Comment();
+                _action.Reference = change.Item.Reference;
+                _action.Description = change.Item.Action;
+                _action.ReservoirId = reservoirSubmission.ReservoirId;
+                _comment.CommentText = change.Item.Comment;
+                _comment.IsQualityCheckRequired = change.Item.MergedComment;
+                _comment.CreatedByUserId = reservoirSubmission.SubmittedByUserId;
+                _comment.RelatesToRecordId = 1;
+
+               
+                int result = await _reservoirService.InsertMaintenanceMeasureFromExtract(_action,_comment);
 
             }
         }
