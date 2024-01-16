@@ -42,5 +42,7 @@ namespace RACE2.Services
 
         public Task<int> InsertActionTableFromExtract(DataModel.Action action);
 
+        public Task<int> InsertMaintenanceMeasureFromExtract(DataModel.Action action, Comment comment);
+
     }
 }

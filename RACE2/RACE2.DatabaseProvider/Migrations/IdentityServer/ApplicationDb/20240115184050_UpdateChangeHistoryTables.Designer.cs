@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RACE2.DatabaseProvider.Data;
 
@@ -11,9 +12,10 @@ using RACE2.DatabaseProvider.Data;
 namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240115184050_UpdateChangeHistoryTables")]
+    partial class UpdateChangeHistoryTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -336,7 +338,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                     b.Property<int?>("ClosedByUserId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("ClosedDate")
+                    b.Property<DateTime>("ClosedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CommentText")
@@ -350,7 +352,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool?>("IsQualityCheckRequired")
+                    b.Property<bool>("IsQualityCheckRequired")
                         .HasColumnType("bit");
 
                     b.Property<int?>("ParentCommentidId")

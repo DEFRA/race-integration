@@ -239,5 +239,17 @@ namespace RACE2.Services
                 return 1;
             }
         }
+
+        public async Task<int> InsertMaintenanceMeasureFromExtract(DataModel.Action action, Comment comment)
+        {
+            try
+            {
+                return await _reservoirRepository.InsertMaintenanceMeasureFromExtract(action,comment);
+            }
+            catch (Exception ex)
+            {
+                return 1;
+            }
+        }
     }
 }
