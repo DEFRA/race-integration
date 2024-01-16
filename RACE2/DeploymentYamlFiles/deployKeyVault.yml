@@ -11,7 +11,7 @@ variables:
   azureServiceConnection: 'AZR-RAC-POC1'
   resourceGroupName: 'POCRACINFRG1401' 
   templateFile: './RACE2/bicepfiles/createkeyvault.bicep'
-  parameterfile: './RACE2/bicepfiles/createkeyvault.bicepparam'
+  parameterfile: './RACE2/bicepfiles/createkeyvault_prd.bicepparam'
 
 pool:
   vmImage: $(vmImageName)
