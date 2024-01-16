@@ -173,9 +173,6 @@ resource appconfigPrivateEndpoint 'Microsoft.Network/privateEndpoints@2023-06-01
         name: 'PrivateEndpointAppConfig'
         properties: {
           privateLinkServiceId: race2appconfig_resource.id
-          groupIds: [
-            'configurationStores'
-          ]
           privateLinkServiceConnectionState: {
             status: 'Approved'
             description: 'Auto-Approved'
