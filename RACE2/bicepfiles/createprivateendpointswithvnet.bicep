@@ -176,9 +176,14 @@ resource appconfigPrivateEndpoint 'Microsoft.Network/privateEndpoints@2023-06-01
           groupIds: [
             'configurationStores'
           ]
+          privateLinkServiceConnectionState: {
+            status: 'Approved'
+            description: 'Auto-Approved'
+          }
         }
       }
     ]
+    
   }
 }
 
