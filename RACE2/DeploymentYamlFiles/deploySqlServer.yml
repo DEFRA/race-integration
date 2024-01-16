@@ -11,6 +11,7 @@ variables:
   azureServiceConnection: 'AZR-RAC-POC1'
   resourceGroupName: 'POCRACINFRG1401' 
   templateFile: './RACE2/bicepfiles/createsqlserver.bicep'
+  parameterfile: './RACE2/bicepfiles/createsqlserver.bicepparam'
 
 pool:
   vmImage: $(vmImageName)
@@ -24,4 +25,4 @@ steps:
     useGlobalConfig: false    
     inlineScript: |
       az --version
-      az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) -p servers_race2sqlserver_name="prdracinfss1401" location="uksouth"
+      az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) -p @(parameterfile)
