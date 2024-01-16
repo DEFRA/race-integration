@@ -31,17 +31,6 @@ resource servers_race2sqlserver_name_resource 'Microsoft.Sql/servers@2023-05-01-
   }
 }
 
-resource servers_pocracinfss1401_name_ActiveDirectory 'Microsoft.Sql/servers/administrators@2023-05-01-preview' = {
-  parent: servers_race2sqlserver_name_resource
-  name: 'ActiveDirectory'
-  properties: {
-    administratorType: 'ActiveDirectory'
-    login: adgroupname
-    sid: adgroupsid
-    tenantId: tenantId
-  }
-}
-
 // Allow Azure Service and Resources to access this server
 resource allowAllWindowsAzureIps 'Microsoft.Sql/servers/firewallRules@2023-05-01-preview' = {
   name: 'AllowAllWindowsAzureIps' // don't change the name
