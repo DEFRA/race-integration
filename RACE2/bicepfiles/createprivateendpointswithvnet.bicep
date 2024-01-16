@@ -56,12 +56,12 @@ resource subnetfunctionappResource 'Microsoft.Network/virtualNetworks/subnets@20
 }
 output subnetfunctionapp string = subnetfunctionappResource.id
 
-resource sqlPrivateEndpoint 'Microsoft.Network/privateEndpoints@2023-06-01' = {
+resource privateEndpointSqlServer 'Microsoft.Network/privateEndpoints@2023-06-01' = {
   name: 'PrivateEndpointSqlServer'
   location: location
   properties: {
     subnet: {
-      id: '${virtualNetworkResource.id}/subnets/${subnetpasResource .name}'
+      id: '${virtualNetworkResource.id}/subnets/${subnetpasResource.name}'
     }
     privateLinkServiceConnections: [
       {
@@ -82,7 +82,7 @@ resource privateEndpointStorageAccountBlob 'Microsoft.Network/privateEndpoints@2
   location: location
   properties: {
     subnet: {
-      id: '${virtualNetworkResource.id}/subnets/${subnetpasResource .name}'
+      id: '${virtualNetworkResource.id}/subnets/${subnetpasResource.name}'
     }
     privateLinkServiceConnections: [
       {
@@ -103,7 +103,7 @@ resource privateEndpointStorageAccountFile 'Microsoft.Network/privateEndpoints@2
   location: location
   properties: {
     subnet: {
-      id: '${virtualNetworkResource.id}/subnets/${subnetpasResource .name}'
+      id: '${virtualNetworkResource.id}/subnets/${subnetpasResource.name}'
     }
     privateLinkServiceConnections: [
       {
@@ -124,7 +124,7 @@ resource privateEndpointStorageAccountTable 'Microsoft.Network/privateEndpoints@
   location: location
   properties: {
     subnet: {
-      id: '${virtualNetworkResource.id}/subnets/${subnetpasResource .name}'
+      id: '${virtualNetworkResource.id}/subnets/${subnetpasResource.name}'
     }
     privateLinkServiceConnections: [
       {
@@ -156,7 +156,7 @@ resource containerRegistryPrivateEndpoint 'Microsoft.Network/privateEndpoints@20
       }
     ]
     subnet: {
-      id: '${virtualNetworkResource.id}/subnets/${subnetpasResource .name}'
+      id: '${virtualNetworkResource.id}/subnets/${subnetpasResource.name}'
     }
   }
 }
