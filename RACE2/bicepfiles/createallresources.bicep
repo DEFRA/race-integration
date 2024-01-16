@@ -228,3 +228,14 @@ module createprivateendpointswithvnetmodule 'createprivateendpointswithvnet.bice
     createcontainerregistrymodule
   ]
 }
+
+module createroleassignmentsmodule 'createroleassignments.bicep' = {
+  scope: resourceGroup(resourcegroup)
+  name: 'createroleassignmentsdeploy'
+  params: {
+    managedIdentityName: managedidentity
+  }
+  dependsOn: [
+    createmanagedidentitymodule
+  ]
+}
