@@ -1,7 +1,6 @@
 param keyvaultName string
 param location string
 param tenantId string
-param appInsightConnectionString string
 
 resource Race2KeyVaultResource 'Microsoft.KeyVault/vaults@2023-07-01' = {
     name: keyvaultName
@@ -21,15 +20,7 @@ resource Race2KeyVaultResource 'Microsoft.KeyVault/vaults@2023-07-01' = {
         bypass: 'AzureServices'
         defaultAction: 'Deny'
       }
-    }
-
-    resource storageNameSecret 'secrets' = {
-    name: 'AppInsightsConnectionString'
-    properties: {
-      contentType: 'text/plain'
-      value: appInsightConnectionString
-    }
-  }
+    }    
 } 
 
 

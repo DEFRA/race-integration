@@ -13,7 +13,6 @@ param storageAccountConnectionStringSecretName string
 param serviceBusConnectionStringSecretName string
 param storageAccountKeySecretName string
 param sqlServerConnectionStringSecretName string
-param containerName string
 param webserverContainerAppName string
 param securityProviderContainerAppName string
 param webApiContainerAppName string
@@ -50,15 +49,6 @@ resource storageAccountConnectionString 'Microsoft.KeyVault/vaults/secrets@2023-
   name: storageAccountConnectionStringSecretName
   properties: {
     value: 'DefaultEndpointsProtocol=https;AccountName=${storageAccount.name};AccountKey=${listKeys(storageAccount.id, storageAccount.apiVersion).keys[0].value};EndpointSuffix=${environment().suffixes.storage}'
-  }
-}
-
-resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@2023-01-01' =  {
-  parent: blobService
-  name: toLower(containerName)
-  properties: {
-    publicAccess: 'None'
-    metadata: {}
   }
 }
 

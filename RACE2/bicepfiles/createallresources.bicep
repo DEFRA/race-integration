@@ -39,10 +39,10 @@ module createvnetmodule 'createvnet.bicep' = {
   scope: resourceGroup(resourcegroup)
   name: 'vnetdeploy'
   params: {
+    location: location 
     vnet: vnet
     subnetcontainerappenv: subnetcontainerappenv
-    subnetpasaccount: subnetpasaccount
-    location: location 
+    subnetpasaccount: subnetpasaccount 
     subnetfunctionapp: subnetfunctionapp
   }
 }
@@ -226,6 +226,7 @@ module createprivateendpointswithvnetmodule 'createprivateendpointswithvnet.bice
     createsqlservermodule
     createstorageaccountmodule
     createcontainerregistrymodule
+    createfunctionappmodule
   ]
 }
 
