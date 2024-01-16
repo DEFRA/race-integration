@@ -47,24 +47,6 @@ module createvnetmodule 'createvnet.bicep' = {
   }
 }
 
-module createprivateendpointswithvnetmodule 'createprivateendpointswithvnet.bicep' = {
-  scope: resourceGroup(resourcegroup)
-  name: 'privateendpointswithvnetdeploy'
-  params: {
-    vnet: vnet
-    subnetcontainerappenv: subnetcontainerappenv
-    subnetpasaccount: subnetpasaccount
-    location: location 
-    appconfigName: appconfigName
-    keyvaultName: keyvaultName
-    containerregistryname: containerregistryName
-    eventgridtopicName: eventgridtopicName
-    storageAccountname: storageAccountName
-    subnetfunctionapp: subnetfunctionapp
-    servers_race2sqlserver_name: servers_race2sqlserver_name
-  }
-}
-
 module createappinsightmodule 'createappinsight.bicep' = {
   scope: resourceGroup(resourcegroup)
   name: 'appinsightdeploy'
@@ -74,7 +56,7 @@ module createappinsightmodule 'createappinsight.bicep' = {
     race2appinsight: race2appinsightName
   }
   dependsOn: [
-    createprivateendpointswithvnetmodule
+    createvnetmodule
   ]
 }
 
@@ -221,3 +203,28 @@ module createeventgridtopicmodule 'createeventgridtopic.bicep' = {
   ]
 }
 
+module createprivateendpointswithvnetmodule 'createprivateendpointswithvnet.bicep' = {
+  scope: resourceGroup(resourcegroup)
+  name: 'privateendpointswithvnetdeploy'
+  params: {
+    vnet: vnet
+    subnetcontainerappenv: subnetcontainerappenv
+    subnetpasaccount: subnetpasaccount
+    location: location 
+    appconfigName: appconfigName
+    keyvaultName: keyvaultName
+    containerregistryname: containerregistryName
+    eventgridtopicName: eventgridtopicName
+    storageAccountname: storageAccountName
+    subnetfunctionapp: subnetfunctionapp
+    servers_race2sqlserver_name: servers_race2sqlserver_name
+  }
+  dependsOn: [
+    createappconfigmodule
+    createkeyvaultmodule
+    createeventgridtopicmodule
+    createsqlservermodule
+    createstorageaccountmodule
+    createcontainerregistrymodule
+  ]
+}
