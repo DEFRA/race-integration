@@ -251,5 +251,29 @@ namespace RACE2.Services
                 return 1;
             }
         }
+
+        public async Task<int> InsertWatchItemsFromExtract(DataModel.Action action, Comment comment)
+        {
+            try
+            {
+                return await _reservoirRepository.InsertWatchItemsFromExtract(action, comment);
+            }
+            catch (Exception ex)
+            {
+                return 1;
+            }
+        }
+
+        public async Task<int> InsertSafetyMeasuresFromExtract(SafetyMeasure safetyMeasure, Comment comment)
+        {
+            try
+            {
+                return await _reservoirRepository.InsertSafetyMeasuresFromExtract(safetyMeasure, comment);
+            }
+            catch (Exception ex)
+            {
+                return 1;
+            }
+        }
     }
 }

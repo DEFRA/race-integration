@@ -43,5 +43,9 @@ namespace RACE2.DataAccess.Repository
 
         public Task<int> InsertMaintenanceMeasureFromExtract(DataModel.Action action, Comment comment);
 
+        public Task<int> InsertWatchItemsFromExtract(DataModel.Action action, Comment comment);
+
+        public Task<int> InsertSafetyMeasuresFromExtract(SafetyMeasure safetyMeasure, Comment comment);
+
     }
 }
