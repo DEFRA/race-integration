@@ -2,33 +2,21 @@ using './createSecretsKeysBlobs.bicep' /*TODO: Provide a path to a bicep templat
 
 param storageAccountName = 'tstracinfst1401'
 
-param sqlServerName = 'tstracinfss1401'
-
 param applicationInsightName = 'TSTRACINFAI1401'
-
-param sqlDatabaseName = 'tstracinfdb1401'
-
-param sqlServerUserName = 'race2admin'
-
-param sqlServerPassword = 'Race2Password123!'
-
-param sqlServerConnectionStringSecretName = 'SqlServerConnString'
 
 param keyVaultName = 'TSTRACINFVT1401'
 
+param notifyAPIKeySecretName = 'NotifyAPIKey'
+
+param notifyAPIKeySecretValue = 'race2frontend-34699fe1-7b6c-49b7-a562-358f403f75f1-921e2564-534c-4b0a-b705-b9ef5047dd45'
+
 param appConfigResourceName = 'TSTRACINFAC1401'
 
-param serviceBusResouceName = 'TSTRACINFSB1401'
-
 param storageAccountKeySecretName = 'StorageAccessKey'
-
-param containerName = 's12reporttemplate'
 
 param applicationInsightConnectionStringSecretName = 'AppInsightsConnectionString'
 
 param storageAccountConnectionStringSecretName = 'StorageAccountConnString'
-
-param serviceBusConnectionStringSecretName = 'ServiceBusConnString'
 
 param webserverContainerAppName = 'race2frontendwebserver'
 

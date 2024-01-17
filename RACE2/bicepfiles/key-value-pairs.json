@@ -36,6 +36,15 @@
 		}
 	},
 	{
+		"key": "NotifyAPIKey",
+		"value": "NotifyAPIKeyUrl",
+		"contentType": "application/vnd.microsoft.appconfig.keyvaultref+json;charset=utf-8",
+        "label": "Production",
+		"tags": {
+			"environment": "Production"
+		}
+	},
+	{
 		"key": "StorageAccountConnectionString",
 		"value": "StorageAccountConnectionStringSecretUrl",
 		"contentType": "application/vnd.microsoft.appconfig.keyvaultref+json;charset=utf-8",
@@ -83,15 +92,6 @@
 	{
 		"key": "RACE2WebApiURL",
 		"value": "WebApiContainerAppNameValue",
-		"contentType": "string",
-        "label": "Production",
-		"tags": {
-			"environment": "Production"
-		}
-	}, 
-	{
-		"key": "ForgetPasswordTemplateId",
-		"value": "950e6a2b-8bbc-4374-9dc1-3a086d01bd3f",
 		"contentType": "string",
         "label": "Production",
 		"tags": {
