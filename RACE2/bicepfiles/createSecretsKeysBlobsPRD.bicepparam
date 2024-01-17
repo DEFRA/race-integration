@@ -1,12 +1,12 @@
 using './createSecretsKeysBlobs.bicep' /*TODO: Provide a path to a bicep template*/
 
-param storageAccountName = 'race2storageaccount'
+param storageAccountName = 'prdracinfst1401'
 
-param keyVaultName = 'Race2KeyVault'
+param keyVaultName = 'PRDRACINFVT1401'
 
 param applicationInsightName = 'PRDRACINFAI1401'
 
-param appConfigResourceName = 'Race2AppConfig'
+param appConfigResourceName = 'PRDRACINFAC1401'
 
 param notifyAPIKeySecretName = 'NotifyAPIKey'
 
