@@ -577,7 +577,7 @@ namespace RACE2.DataAccess.Repository
                     parameters.Add("description", action.Description, DbType.String);
                     parameters.Add("comment", comment.CommentText, DbType.String);
                     parameters.Add("isQualitycheck", comment.IsQualityCheckRequired, DbType.Boolean);
-                    parameters.Add("userid", comment.CreatedByUser, DbType.Int32);
+                    parameters.Add("userid", comment.CreatedByUserId, DbType.Int32);
                     parameters.Add("reservoirid", action.ReservoirId, DbType.Int32);
                     parameters.Add("relatestorecordid", comment.RelatesToRecordId, DbType.Int32);
                     var result = await conn.ExecuteAsync("sp_InsertMaintenanceMeasureFromExtract", parameters, commandType: CommandType.StoredProcedure);
@@ -636,7 +636,7 @@ namespace RACE2.DataAccess.Repository
                     parameters.Add("status", safetyMeasure.Description, DbType.String);
                     parameters.Add("comment", comment.CommentText, DbType.String);
                     parameters.Add("isqualitycheckrequired", comment.IsQualityCheckRequired, DbType.Boolean);
-                    parameters.Add("userid", comment.CreatedByUser, DbType.Int32);
+                    parameters.Add("userid", comment.CreatedByUserId, DbType.Int32);
                     parameters.Add("reservoirid", safetyMeasure.ReservoirId, DbType.Int32);
                     parameters.Add("relatestorecordid", comment.RelatesToRecordId, DbType.Int32);
                     var result = await conn.ExecuteAsync("sp_InsertSafetyMeasureFromExtract", parameters, commandType: CommandType.StoredProcedure);
