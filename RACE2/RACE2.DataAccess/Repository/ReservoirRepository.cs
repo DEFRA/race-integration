@@ -593,6 +593,64 @@ namespace RACE2.DataAccess.Repository
 
         }
 
+        public async Task<int> InsertWatchItemsFromExtract(DataModel.Action action, Comment comment)
+        {
+            _logger.LogInformation("Insert Action and comment table from Data extraction ");
+            try
+            {
+
+                using (var conn = Connection)
+                {
+                    var parameters = new DynamicParameters();
+                    parameters.Add("reference", action.Reference, DbType.String);
+                    parameters.Add("description", action.Description, DbType.String);
+                    parameters.Add("comment", comment.CommentText, DbType.String);
+                    parameters.Add("isQualitycheck", comment.IsQualityCheckRequired, DbType.Boolean);
+                    parameters.Add("userid", comment.CreatedByUserId, DbType.Int32);
+                    parameters.Add("reservoirid", action.ReservoirId, DbType.Int32);
+                    parameters.Add("relatestorecordid", comment.RelatesToRecordId, DbType.Int32);
+                    var result = await conn.ExecuteAsync("sp_InsertMaintenanceMeasureFromExtract", parameters, commandType: CommandType.StoredProcedure);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return 0;
+            }
+            return 1;
+        }
+
+        public async Task<int> InsertSafetyMeasuresFromExtract(SafetyMeasure safetyMeasure, Comment comment)
+        {
+            _logger.LogInformation("Insert Safety Measure and comment table from Data extraction ");
+            try
+            {
+
+                using (var conn = Connection)
+                {
+                    var parameters = new DynamicParameters();
+                    parameters.Add("reference", safetyMeasure.Reference, DbType.String);
+                    parameters.Add("description", safetyMeasure.Description, DbType.String);
+                    parameters.Add("targetdate", safetyMeasure.TargetDate, DbType.DateTime);
+                    parameters.Add("status", safetyMeasure.Description, DbType.String);
+                    parameters.Add("comment", comment.CommentText, DbType.String);
+                    parameters.Add("isqualitycheckrequired", comment.IsQualityCheckRequired, DbType.Boolean);
+                    parameters.Add("userid", comment.CreatedByUser, DbType.Int32);
+                    parameters.Add("reservoirid", safetyMeasure.ReservoirId, DbType.Int32);
+                    parameters.Add("relatestorecordid", comment.RelatesToRecordId, DbType.Int32);
+                    var result = await conn.ExecuteAsync("sp_InsertSafetyMeasureFromExtract", parameters, commandType: CommandType.StoredProcedure);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return 0;
+            }
+            return 1;
+        }
+
 
     }
 }
