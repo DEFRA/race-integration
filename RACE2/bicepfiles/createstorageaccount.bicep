@@ -1,6 +1,13 @@
 param storageAccountname string 
 param location string = resourceGroup().location
 
+param containerNames array = [
+  's12reporttemplate'
+  'unscannedcontent'
+  'cleanfiles'
+  'maliciousfiles'
+]
+
 resource storageAccount_resource 'Microsoft.Storage/storageAccounts@2023-01-01' = {
   name: storageAccountname
   location: location
@@ -11,10 +18,10 @@ resource storageAccount_resource 'Microsoft.Storage/storageAccounts@2023-01-01' 
   properties: { 
     dnsEndpointType: 'Standard'
     defaultToOAuthAuthentication: false
-    publicNetworkAccess: 'Disabled'
+    publicNetworkAccess: 'Enabled'
     allowCrossTenantReplication: false
     minimumTlsVersion: 'TLS1_2'
-    allowBlobPublicAccess: false
+    allowBlobPublicAccess: true
     allowSharedKeyAccess: true
     networkAcls: {
       bypass: 'AzureServices'
@@ -42,18 +49,16 @@ resource storageAccount_resource 'Microsoft.Storage/storageAccounts@2023-01-01' 
 }
 
 
-resource unscannedcontentcontainerresource 'Microsoft.Storage/storageAccounts/blobServices/containers@2021-09-01' = { 
-  name: '${storageAccount_resource.name}/default/unscannedcontent' 
+resource blobServices 'Microsoft.Storage/storageAccounts/blobServices@2023-01-01' =  {
+  name: 'default'
+  parent: storageAccount_resource
 }
 
-resource cleanfilescontainerresource 'Microsoft.Storage/storageAccounts/blobServices/containers@2021-09-01' = { 
-  name: '${storageAccount_resource.name}/default/cleanfiles' 
-}
-
-resource maliciousfilescontainerresource 'Microsoft.Storage/storageAccounts/blobServices/containers@2021-09-01' = { 
-  name: '${storageAccount_resource.name}/default/maliciousfiles' 
-}
-
-resource s12reporttemplatecontainerresource 'Microsoft.Storage/storageAccounts/blobServices/containers@2021-09-01' = { 
-  name: '${storageAccount_resource.name}/default/s12reporttemplate' 
-}
+resource storageContainers 'Microsoft.Storage/storageAccounts/blobServices/containers@2023-01-01' = [for i in range(0, length(containerNames)):{
+  name: containerNames[i]
+  parent: blobServices
+  properties: {
+    publicAccess: 'None'
+    metadata: {}
+  }
+}]
