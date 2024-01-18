@@ -121,7 +121,6 @@ module createkeyvaultmodule 'createkeyvault.bicep' = {
     location: location
     keyvaultName: keyvaultName
     tenantId: tenantId
-    appInsightConnectionString: createappinsightmodule.outputs.connectionString
   }
   dependsOn: [
     createmanagedidentitymodule
