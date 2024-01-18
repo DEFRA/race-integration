@@ -609,7 +609,7 @@ namespace RACE2.DataAccess.Repository
                     parameters.Add("userid", comment.CreatedByUserId, DbType.Int32);
                     parameters.Add("reservoirid", action.ReservoirId, DbType.Int32);
                     parameters.Add("relatestorecordid", comment.RelatesToRecordId, DbType.Int32);
-                    var result = await conn.ExecuteAsync("sp_InsertMaintenanceMeasureFromExtract", parameters, commandType: CommandType.StoredProcedure);
+                    var result = await conn.ExecuteAsync("sp_InsertWatchItemsFromExtract", parameters, commandType: CommandType.StoredProcedure);
 
                 }
             }
