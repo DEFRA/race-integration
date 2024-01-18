@@ -17,7 +17,7 @@ resource topics_DefenderEventGridTopic_name_resource 'Microsoft.EventGrid/topics
   properties: {
     minimumTlsVersionAllowed: '1.0'
     inputSchema: 'EventGridSchema'
-    publicNetworkAccess: 'Enabled'
+    publicNetworkAccess: 'Disabled'
     inboundIpRules: []
     disableLocalAuth: false
     dataResidencyBoundary: 'WithinGeopair'

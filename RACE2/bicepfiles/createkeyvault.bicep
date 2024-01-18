@@ -11,6 +11,7 @@ resource Race2KeyVaultResource 'Microsoft.KeyVault/vaults@2023-07-01' = {
       enabledForDeployment: false
       enabledForDiskEncryption: true
       enabledForTemplateDeployment: false
+      publicNetworkAccess: 'Disabled'
       tenantId: tenantId
       sku: {
         family: 'A'

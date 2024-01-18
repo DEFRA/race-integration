@@ -49,8 +49,8 @@ resource race2acrresource 'Microsoft.ContainerRegistry/registries@2023-11-01-pre
       status: 'disabled'
     }
     dataEndpointEnabled: false
-    publicNetworkAccess: 'Enabled'
-    networkRuleBypassOptions: 'AzureServices'
+    publicNetworkAccess: 'Disabled'
+    networkRuleBypassOptions: 'Deny'
     zoneRedundancy: 'Disabled'
     anonymousPullEnabled: false
   }

@@ -20,6 +20,7 @@ resource servers_race2sqlserver_name_resource 'Microsoft.Sql/servers@2023-05-01-
     version: '12.0'
     minimalTlsVersion: '1.2' 
     restrictOutboundNetworkAccess: 'Disabled'
+    publicNetworkAccess: 'Disabled'
     administrators: {
       administratorType: 'ActiveDirectory'
       principalType: 'Group'

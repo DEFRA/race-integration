@@ -26,6 +26,7 @@ resource race2appconfig_resource 'Microsoft.AppConfiguration/configurationStores
     disableLocalAuth: false
     softDeleteRetentionInDays: 7
     enablePurgeProtection: false
+    publicNetworkAccess: 'Disabled'
   }
 }
 
