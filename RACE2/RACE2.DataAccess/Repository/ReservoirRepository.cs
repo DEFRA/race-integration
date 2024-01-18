@@ -623,7 +623,7 @@ namespace RACE2.DataAccess.Repository
 
         public async Task<int> InsertSafetyMeasuresFromExtract(SafetyMeasure safetyMeasure, Comment comment)
         {
-            _logger.LogInformation("Insert Safety Measure and comment table from Data extraction ");
+            _logger.LogInformation("Insert Safety Measure and comment table from Data extraction for {userid} ",comment.CreatedByUserId);
             try
             {
 
