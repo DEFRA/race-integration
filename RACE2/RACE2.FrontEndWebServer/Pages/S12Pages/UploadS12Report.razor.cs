@@ -150,7 +150,13 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         private void goback()
         {
             bool forceLoad = false;
-            string pagelink = "/reservoir-details";
+            string pagelink = $"/send-your-statement/{ReservoirId}/{ReservoirRegName}/{UndertakerName}/{UndertakerEmail}/{SubmissionReference}";
+            NavigationManager.NavigateTo(pagelink, forceLoad);
+        }
+        private void goToNextPage()
+        {
+            bool forceLoad = false;
+            string pagelink = $"/upload-confirmation/{ReservoirId}/{ReservoirRegName}/{UndertakerName}/{UndertakerEmail}/{SubmissionReference}/{YesNoValue}";
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }        
     }
