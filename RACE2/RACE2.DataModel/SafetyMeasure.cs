@@ -14,7 +14,7 @@ namespace RACE2.DataModel
         [Key, Required]
         public int Id { get; set; }
         [StringLength(64)]
-        public string? RaceSafetyMeasureId { get; set; }
+        public string? BackEndSafetyMeasureId { get; set; }
         [StringLength(64)]
         public string? Reference { get; set; }
         [StringLength(64)]
@@ -35,7 +35,9 @@ namespace RACE2.DataModel
         [StringLength(1024)]
         public string? Notes { get; set; }
 
-        public Reservoir Reservoir { get; set; } = new Reservoir();
+        public int ReservoirId { get; set; }
+        [ForeignKey("ReservoirId")]
+        public virtual Reservoir Reservoir { get; set; }
 
     }   
 

@@ -54,6 +54,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         public string SubmissionReference { get; set; }
         [Parameter]
         public string YesNoValue { get; set; }
+        public Dictionary<string,string> ValidationErrors=new Dictionary<string,string>();
 
         [CascadingParameter]
         public Task<AuthenticationState> AuthenticationStateTask { get; set; }
@@ -75,7 +76,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         }
         private async Task OnUploadSubmit()
         {
-           UploadFileData.EmptyFileSize = long.Parse(_config["EmptyFileSizeLimit"]);
+            clearAllUploadFileSettings();
+            UploadFileData.EmptyFileSize = long.Parse(_config["EmptyFileSizeLimit"]);
             if (selectedFiles == null)
             {
                 NoFileSelected();
@@ -96,28 +98,24 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             {
                 selectedFile = selectedFiles[0];
                 var fileExtns = selectedFile.Name.Split('.');
-                int totalExtns= fileExtns.Length;
-                fileExtn = selectedFile.Name.Split('.')[totalExtns-1];
-                if (!_config["SupportedUploadFileExtensions"].Split(';').Contains(fileExtn))
-                   // if (!(fileExtn == "docx" || fileExtn == "doc" || fileExtn == "pdf"))
+                int totalExtns = fileExtns.Length;
+                fileExtn = selectedFile.Name.Split('.')[totalExtns - 1];
+                var fileExtensionsAllowed = _config["SupportedUploadFileExtensions"].Split(';');
+                if (!fileExtensionsAllowed.Contains(fileExtn))
+                //if (!(fileExtn == "docx" || fileExtn == "doc" || fileExtn == "pdf"))
                 {
                     WrongExtensionSelected();
-                    await InvokeAsync(() =>
-                    {
-                        StateHasChanged();
-                    });
                 }
-                else if (selectedFile.Size > UploadFileData.MaxFileSize)
+                if (selectedFile.Size > UploadFileData.MaxFileSize)
                 {
                     MaxFileSizeExceeded();
-                    await InvokeAsync(() =>
-                    {
-                        StateHasChanged();
-                    });
                 }
-                else if (selectedFile.Size < UploadFileData.EmptyFileSize)
+                if (selectedFile.Size < UploadFileData.EmptyFileSize)
                 {
-                    FileIsEmpty();
+                    FileIsEmpty();                   
+                }
+                if (ValidationErrors.Count() > 0)
+                {
                     await InvokeAsync(() =>
                     {
                         StateHasChanged();
@@ -133,9 +131,9 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                         //    containerName = containerName.Split('.')[0];
                         //}
                         var containerNameToUplodTo = _config["UnscannedContainer"];//"unscannedcontent";
-                        //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + "."+ extn;
-                        //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + SubmissionReference + "." + fileExtn;
-                        var trustedFileNameForFileStorage = SubmissionReference +"_" + DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day+ DateTime.Now.Hour + DateTime.Now.Minute + DateTime.Now.Second + "." + fileExtn;
+                                                                                   //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + "."+ extn;
+                                                                                   //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + SubmissionReference + "." + fileExtn;
+                        var trustedFileNameForFileStorage = SubmissionReference + "_" + DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + DateTime.Now.Hour + DateTime.Now.Minute + DateTime.Now.Second + "." + fileExtn;
                         //Store the uploaded document information
                         documentDTO.FileName = selectedFile.Name.Split('.')[0];
                         documentDTO.FileType = fileExtn;
@@ -164,15 +162,19 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
 
                             //System.Threading.Thread.Sleep(20000);//wait for 10 seconds
                             var timeToWait = Int32.Parse(_config["TimeToWaitForUpload"]);
-                            System.Threading.Thread.Sleep(timeToWait); //wait for 10 seconds
+                            System.Threading.Thread.Sleep(timeToWait); //wait for timeToWait seconds
+
+                            //For testing without virus scan, comment the next line and uncomment the next to next line
                             var containerNameToDownloadFrom = _config["CleanContainer"]; //"cleanfiles";
-                            var RSTEmailAddress = String.IsNullOrEmpty(_config["RSTEmailAddress"])? userDetails.Email : _config["RSTEmailAddress"] ;
+                            //var containerNameToDownloadFrom = _config["UnscannedContainer"];
+
+                            var RSTEmailAddress = String.IsNullOrEmpty(_config["RSTEmailAddress"]) ? userDetails.Email : _config["RSTEmailAddress"];
                             var bytes = await blobStorageService.GetBlobAsByteArray(containerNameToDownloadFrom, trustedFileNameForFileStorage);
-                            if (bytes == null)
-                            {
-                                System.Threading.Thread.Sleep(5000);//wait for 5 more seconds
-                                bytes = await blobStorageService.GetBlobAsByteArray(containerNameToDownloadFrom, trustedFileNameForFileStorage);
-                            }
+                            //if (bytes == null)
+                            //{
+                            //    System.Threading.Thread.Sleep(5000);//wait for 5 more seconds
+                            //    bytes = await blobStorageService.GetBlobAsByteArray(containerNameToDownloadFrom, trustedFileNameForFileStorage);
+                            //}
                             if (bytes != null)
                             {
                                 await _notificationService.SendConfirmationMailtoSE(userDetails.Email, ReservoirRegName);
@@ -189,31 +191,25 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                                     var internalEmail = _config["InternalEmailAddress"];
                                     await _notificationService.SendInternalMail(internalEmail, ReservoirRegName, UndertakerEmail, YesNoValue);
                                 }
-
                                 //Store the uploaded document information
-                                documentDTO.SubmissionId = updatedStatus.Id;   
-                                await reservoirService.InsertDocumentRelatedTable(Int32.Parse(ReservoirId), updatedStatus.Id,docID);
+                                documentDTO.SubmissionId = updatedStatus.Id;
+                                await reservoirService.InsertDocumentRelatedTable(Int32.Parse(ReservoirId), updatedStatus.Id, docID);
                                 Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Information("File upload succeeded.");
                                 goToNextPage();
                             }
-                            else 
+                            else
                             {
-                               // bool cleanFile = false;
+                                // bool cleanFile = false;
                                 bool notScanned = false;
                                 var containerNameforMaliciousFile = _config["MaliciousContainer"]; //"maliciousfiles";
-                                System.Threading.Thread.Sleep(5000);
-                                var malicioubytes = await blobStorageService.GetBlobAsByteArray(containerNameforMaliciousFile, trustedFileNameForFileStorage);
-
-                                if (malicioubytes == null)
+                                System.Threading.Thread.Sleep(timeToWait);
+                                var maliciousbytes = await blobStorageService.GetBlobAsByteArray(containerNameforMaliciousFile, trustedFileNameForFileStorage);
+                                //if (maliciousbytes == null)
+                                //{
+                                //    notScanned = true;                                 
+                                //}
+                                if (maliciousbytes != null)
                                 {
-
-                                    notScanned = true;
-                                    
-                                    
-                                }
-                                if (malicioubytes != null)
-                                {
-
                                     Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File infected by virus.");
                                     FileVirusScanFailed();
                                     await InvokeAsync(() =>
@@ -230,6 +226,10 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                                     //    notScanned = false;
                                     //    cleanFile = true;
                                     //}
+                                }
+                                else
+                                {
+                                    notScanned = true;
                                 }
                                 if (notScanned)
                                 {
@@ -272,7 +272,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                         });
                     }
                     finally
-                    {                        
+                    {
                     }
                 }
             }
@@ -293,66 +293,48 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
 
         private void clearAllUploadFileSettings()
         {
-            UploadFileData.NoFileSelected = false;
-            UploadFileData.FileIsEmpty = false;
-            UploadFileData.MaxFileSizeExceeded = false;
-            UploadFileData.MoreThanOneFileSelected = false;
-            UploadFileData.WrongExtensionSelected = false;
-            UploadFileData.FileContainsVirus = false;
-            UploadFileData.FileIncorrectTemplate = false;
-            UploadFileData.FilePasswordProtected = false;
-            UploadFileData.FileUploadFailed = false;     
+            ValidationErrors.Clear();
         }
         private void MaxFileSizeExceeded()
         {
-            clearAllUploadFileSettings();
-            UploadFileData.MaxFileSizeExceeded = true;
+            ValidationErrors.Add("MaxFileSizeExceeded", "The selected file must be smaller than 30MB");
         }
         private void NoFileSelected()
         {
-            clearAllUploadFileSettings();
-            UploadFileData.NoFileSelected = true;
+            ValidationErrors.Add("NoFileSelected", "Select a file");
         }
         private void MoreThanOneFileSelected()
         {
-            clearAllUploadFileSettings();
-            UploadFileData.MoreThanOneFileSelected = true;
+            ValidationErrors.Add("MoreThanOneFileSelected", "You can only select up to 1 file at the same time");
         }
         private void WrongExtensionSelected()
         {
-            clearAllUploadFileSettings();
-            UploadFileData.WrongExtensionSelected = true;
+            ValidationErrors.Add("WrongExtensionSelected", "The selected file must be a PDF or a Word document");
         }
         private void FileIsEmpty()
         {
-            clearAllUploadFileSettings();
-            UploadFileData.FileIsEmpty = true;
+            ValidationErrors.Add("FileIsEmpty", "The selected file is empty");
         }
         private void FileContainsVirus()
         {
-            clearAllUploadFileSettings();
-            UploadFileData.FileContainsVirus = true;
+            ValidationErrors.Add("FileContainsVirus", "The selected file contains a virus");
         }
         private void FilePasswordProtected()
         {
-            clearAllUploadFileSettings();
-            UploadFileData.FilePasswordProtected = true;
+            ValidationErrors.Add("FilePasswordProtected", "FilePasswordProtected");
         }
         private void FileIncorrectTemplate()
         {
-            clearAllUploadFileSettings();
-            UploadFileData.FileIncorrectTemplate = true;
+            ValidationErrors.Add("FileIncorrectTemplate", "FileIncorrectTemplate");
         }
         private void FileUploadFailed()
         {
-            clearAllUploadFileSettings();
-            UploadFileData.FileUploadFailed = true;
+            ValidationErrors.Add("FileUploadFailed", "The selected file could not be uploaded - try again");
         }
 
         private void FileVirusScanFailed()
         {
-            clearAllUploadFileSettings();
-            UploadFileData.FileContainsVirus = true;
+            ValidationErrors.Add("FileVirusScanFailed", "FileVirusScanFailed");
         }
     }
 }
@@ -361,16 +343,7 @@ public class UploadFileData
 {
     public long MaxFileSize { get; set; }
     public long NotifyServiceFileAttachmentLimit { get; set; }
-    public long EmptyFileSize { get; set; }
-    public bool MaxFileSizeExceeded { get; set; }
-    public bool NoFileSelected { get; set; }
-    public bool MoreThanOneFileSelected { get; set; }
-    public bool WrongExtensionSelected { get; set; }
-    public bool FileIsEmpty { get; set; }
-    public bool FileContainsVirus { get; set; }
-    public bool FilePasswordProtected { get; set; }
-    public bool FileIncorrectTemplate { get; set; }
-    public bool FileUploadFailed { get; set; }
+    public long EmptyFileSize { get; set; }    
     public UploadFileData()
     {
         MaxFileSize = 30 * 1024 * 1024;

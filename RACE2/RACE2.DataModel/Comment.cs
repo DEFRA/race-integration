@@ -14,15 +14,17 @@ namespace RACE2.DataModel
         [Key, Required]
         public int Id { get; set; }
         [StringLength(64)]
-        public string? RaceCommentId { get; set; }
+        public string? BackEndCommentId { get; set; }
         [StringLength(64)]
         [Required]
         public string? RelatesToObject { get; set; }
-       public int RelatesToRecord { get; set; }
+       public int RelatesToRecordId { get; set; }
         [Required]
-        public UserDetail CreatedBy { get; set; }
+        public int CreatedByUserId { get; set; }
+        [ForeignKey("CreatedByUserId")]
+        public virtual UserDetail CreatedByUser { get; set; }
         [Required]
-        public DateTime CreatedOn { get; set; }
+        public DateTime CreatedDate { get; set; }
 
         [StringLength(1024)]
         [Required]
@@ -34,8 +36,10 @@ namespace RACE2.DataModel
         [Required]
         public string Status { get; set; }
 
-        public UserDetail? ClosedBy { get; set; }
+        public UserDetail? ClosedByUser { get; set; }
 
-        public DateTime ClosedOn { get; set; }
+        public DateTime? ClosedDate { get; set; }
+
+        public bool? IsQualityCheckRequired { get; set; }
     }
 }

@@ -15,15 +15,15 @@ namespace RACE2.DataModel
         [Key, Required]
         public int Id { get; set; }
         [StringLength(64),Required]
-        public string? ScreenName { get; set; }
+        public string? Reference { get; set; }
         [StringLength(64)]
         public string? Title { get; set; }
         [Required]
         public bool? HasSignificantChange { get; set; }
         [Required]
-        public DateTime Modified { get; set; }
+        public DateTime LastModifiedDateTime { get; set; }
         [Required]
-        public UserDetail ModifiedBy { get; set;} = new UserDetail();
+        public UserDetail LastModifiedByUser { get; set;} = new UserDetail();
 
 
     }

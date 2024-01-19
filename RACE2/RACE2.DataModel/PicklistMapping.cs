@@ -14,9 +14,13 @@ namespace RACE2.DataModel
         [Key, Required]
         public int Id { get; set; }
         [StringLength(64)]
-        public string? PicklistValue { get; set; }
-        [StringLength(64)]
-        public string? BackendValue { get; set; }
+        public PicklistDefinition? PicklistValueId { get; set; }
+        [StringLength(64),Required]
+        public string? BackEndValueId { get; set; }
 
-    }
+        public DateTime? StartDate { get; set; }
+
+        public DateTime? EndDate { get; set;}
+
+    }   
 }

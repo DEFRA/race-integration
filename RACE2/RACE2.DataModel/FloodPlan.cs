@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace RACE2.DataModel
 {
-    [Table("FloodPlans")]
+    [Table("FloodPlan")]
     public class FloodPlan
     {
         [Key,Required]
         public int Id { get; set; }
         [StringLength(64)]
-        public string? RaceCertificateId { get; set; }
+        public string? BackEndCertificateId { get; set; }
         [Required]
         public DateTime CertificateDate { get; set; }
         [Required,StringLength(64)]

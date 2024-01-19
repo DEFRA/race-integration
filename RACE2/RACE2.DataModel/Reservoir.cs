@@ -16,7 +16,7 @@ namespace RACE2.DataModel
         [Key, Required]
         public int Id { get; set; }
         [StringLength(64)]
-        public string? RaceReservoirId { get; set; }
+        public string? BackEndReservoirId { get; set; }
         [StringLength(200)]
         public string? PublicName { get; set; }
         [StringLength(200),Required]
@@ -50,9 +50,10 @@ namespace RACE2.DataModel
 
         public DateTime? NextInspectionDate103 { get; set; }
 
-      //  public List<UserDetail> LastInspectionByUser { get; set; } = new List<UserDetail>();
+        //  public List<UserDetail> LastInspectionByUser { get; set; } = new List<UserDetail>();
 
-       // public Address? Address { get; set; } = new Address();
+        // public Address? Address { get; set; } = new Address();
+        [StringLength(64)]
         public string? NearestTown { get; set; }
        
        public List<UserReservoir> UserReservoirs { get; set; } = new List<UserReservoir>();

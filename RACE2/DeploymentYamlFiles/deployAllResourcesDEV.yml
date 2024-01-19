@@ -14,7 +14,7 @@ variables:
   servicePrincipalId: '96b8b0ef-e54f-4455-981e-33eaacd977e8'
   templateFileResourceGroup: './RACE2/bicepfiles/createresourcegroup.bicep'  
   templateFileAllResources: './RACE2/bicepfiles/createallresources.bicep'
-  parameterfileAllResources: './RACE2/DeploymentYamlFiles/deployAlResourcesParametersDEV.json'
+  parameterfileAllResources: './RACE2/bicepfiles/createallresourcesDEV.bicepparam'
 pool:
   vmImage: $(vmImageName)
 
@@ -28,4 +28,4 @@ steps:
     inlineScript: |
       az --version
       az group create -n $(resourceGroupName) -l $(location)     
-      az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFileAllResources) --parameter @$(parameterfileAllResources)
+      az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFileAllResources) --parameters $(parameterfileAllResources)

@@ -2,6 +2,12 @@ param storageAccountname string
 param location string = resourceGroup().location
 param vnet string
 param subnetstorageaccount string
+param containerNames array = [
+  's12reporttemplate'
+  'unscannedcontent'
+  'cleanfiles'
+  'maliciousfiles'
+]
 
 resource virtualNetworkResource 'Microsoft.Network/virtualNetworks@2023-05-01' existing = {
   name: vnet
@@ -37,22 +43,26 @@ resource storageAccountname_resource 'Microsoft.Storage/storageAccounts@2022-09-
     }
     supportsHttpsTrafficOnly: true
     encryption: {
-      requireInfrastructureEncryption: false
-      services: {
-        file: {
-          keyType: 'Account'
-          enabled: true
-        }
-        blob: {
-          keyType: 'Account'
-          enabled: true
-        }
-      }
+      requireInfrastructureEncryption: false      
       keySource: 'Microsoft.Storage'
     }
     accessTier: 'Hot'
   }
 }
+
+resource blobServices 'Microsoft.Storage/storageAccounts/blobServices@2023-01-01' =  {
+  name: 'default'
+  parent: storageAccountname_resource
+}
+
+resource storageContainers 'Microsoft.Storage/storageAccounts/blobServices/containers@2023-01-01' = [for i in range(0, length(containerNames)):{
+  name: containerNames[i]
+  parent: blobServices
+  properties: {
+    publicAccess: 'None'
+    metadata: {}
+  }
+}]
 
 resource privateEndpoint 'Microsoft.Network/privateEndpoints@2023-05-01' = {
   name: 'PrivateEndpointStorageAccount'
@@ -80,6 +90,7 @@ resource privateDnsZones 'Microsoft.Network/privateDnsZones@2020-06-01' = {
   location: 'global'
   properties: {}
 }
+
 resource privateDnsZoneLink 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = {
   name: '${privateDnsZones.name}/${privateDnsZones.name}-link'
   location: 'global'

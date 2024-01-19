@@ -15,7 +15,7 @@ param managedidentity string
 param subscriptionid string 
 param logAnalyticsWorkspaceName string
 
-resource registry 'Microsoft.ContainerRegistry/registries@2022-12-01' existing = {
+resource registry 'Microsoft.ContainerRegistry/registries@2023-11-01-preview' existing = {
   name: registryName
   scope: resourceGroup(registryResourceGroup)
 }
@@ -34,7 +34,7 @@ resource logAnalyticsWorkspace'Microsoft.OperationalInsights/workspaces@2022-10-
   })
 }
 
-resource managedEnvironments_race2containerappenv_name_resource 'Microsoft.App/managedEnvironments@2023-05-01' = {
+resource managedEnvironments_race2containerappenv_name_resource 'Microsoft.App/managedEnvironments@2023-08-01-preview' = {
   name: race2appenv
   location: location
   tags: {
@@ -54,7 +54,7 @@ resource managedEnvironments_race2containerappenv_name_resource 'Microsoft.App/m
   }
 }
 
-resource containerFrontEndApp 'Microsoft.App/containerApps@2023-05-01' = {
+resource containerFrontEndApp 'Microsoft.App/containerApps@2023-08-01-preview' = {
   name: containerFrontEndAppName
   location: location
   properties: {
@@ -100,7 +100,7 @@ resource containerFrontEndApp 'Microsoft.App/containerApps@2023-05-01' = {
   }
 }
 
-resource containerSecurityProviderApp 'Microsoft.App/containerApps@2023-05-01' = {
+resource containerSecurityProviderApp 'Microsoft.App/containerApps@2023-08-01-preview' = {
   name: containerSecurityProviderAppName
   location: location
   properties: {
@@ -146,7 +146,7 @@ resource containerSecurityProviderApp 'Microsoft.App/containerApps@2023-05-01' =
   }
 }
 
-resource containerWebApiApp 'Microsoft.App/containerApps@2023-05-01' = {
+resource containerWebApiApp 'Microsoft.App/containerApps@2023-08-01-preview' = {
   name: containerWebApiAppName
   location: location
   properties: {
