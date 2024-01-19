@@ -3,13 +3,14 @@
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>enable</Nullable>
+		<Nullable>disable</Nullable>
 	</PropertyGroup>
 	
     <ItemGroup>
-		<PackageReference Include="Dapper" Version="2.1.15" />
-		<PackageReference Include="RestSharp" Version="110.2.0" />
-		<PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
+		<PackageReference Include="Dapper" Version="2.1.28" />
+		<PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.4" />
+		<PackageReference Include="RestSharp" Version="109.0.1" />
+	
     </ItemGroup>
 	
     <ItemGroup>

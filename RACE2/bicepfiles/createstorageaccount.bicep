@@ -1,33 +1,27 @@
 param storageAccountname string 
 param location string = resourceGroup().location
-param vnet string
-param subnetstorageaccount string
 
-resource virtualNetworkResource 'Microsoft.Network/virtualNetworks@2023-05-01' existing = {
-  name: vnet
-}
+param containerNames array = [
+  's12reporttemplate'
+  'unscannedcontent'
+  'cleanfiles'
+  'maliciousfiles'
+]
 
-resource subnetstorageaccountResource 'Microsoft.Network/virtualNetworks/subnets@2023-05-01' existing= {
-  name: subnetstorageaccount
-}
-
-resource storageAccountname_resource 'Microsoft.Storage/storageAccounts@2022-09-01' = {
+resource storageAccount_resource 'Microsoft.Storage/storageAccounts@2023-01-01' = {
   name: storageAccountname
   location: location
-  tags: {
-    ServiceCode: 'RAC'
-  }
-  sku: {
-    name: 'Standard_ZRS'
-  }
   kind: 'StorageV2'
-  properties: {
+  sku: {
+    name: 'Standard_LRS'
+  } 
+  properties: { 
     dnsEndpointType: 'Standard'
     defaultToOAuthAuthentication: false
     publicNetworkAccess: 'Enabled'
-    allowCrossTenantReplication: true
+    allowCrossTenantReplication: false
     minimumTlsVersion: 'TLS1_2'
-    allowBlobPublicAccess: true
+    allowBlobPublicAccess: false
     allowSharedKeyAccess: true
     networkAcls: {
       bypass: 'None'
@@ -47,6 +41,14 @@ resource storageAccountname_resource 'Microsoft.Storage/storageAccounts@2022-09-
           keyType: 'Account'
           enabled: true
         }
+        table: {
+          keyType: 'Account'
+          enabled: true
+        }
+        queue: {
+          keyType: 'Account'
+          enabled: true
+        }
       }
       keySource: 'Microsoft.Storage'
     }
@@ -54,24 +56,17 @@ resource storageAccountname_resource 'Microsoft.Storage/storageAccounts@2022-09-
   }
 }
 
-resource privateEndpoint 'Microsoft.Network/privateEndpoints@2023-05-01' = {
-  name: 'PrivateEndpointStorageAccount'
-  location: location
-  properties: {
-    subnet: {
-      id: '${virtualNetworkResource.id}/subnets/${subnetstorageaccountResource.name}'
-    }
-    privateLinkServiceConnections: [
-      {
-        properties: {
-          privateLinkServiceId: storageAccountname_resource.id
-          groupIds: [
-            'blob'
-          ]
-        }
-        name: 'PrivateEndpointStorageAccount'
-      }
-    ]
-  }
+
+resource blobServices 'Microsoft.Storage/storageAccounts/blobServices@2023-01-01' =  {
+  name: 'default'
+  parent: storageAccount_resource
 }
 
+resource storageContainers 'Microsoft.Storage/storageAccounts/blobServices/containers@2023-01-01' = [for i in range(0, length(containerNames)):{
+  name: containerNames[i]
+  parent: blobServices
+  properties: {
+    publicAccess: 'None'
+    metadata: {}
+  }
+}]

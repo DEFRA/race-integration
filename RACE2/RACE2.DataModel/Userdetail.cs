@@ -13,7 +13,7 @@ namespace RACE2.DataModel
     public  class UserDetail: IdentityUser<int>    
     {    
 
-            public string? cRaceId { get; set; }
+            public string? cBackEndUserId { get; set; }
             public string? cDefraId { get; set; }
            
 
@@ -50,19 +50,24 @@ namespace RACE2.DataModel
 
            public string? cJobTitle { get; set; }
           
-            public string? cCurrentPanel { get; set; }
+            //public string? cCurrentPanel { get; set; }
           
-            public string? cPaon { get; set; }
+            //public string? cPaon { get; set; }
            
-            public string? cSaon { get; set; }
-            
-            public string? cStatus { get; set; }
+            //public string? cSaon { get; set; }
+        [Required]
+            public string cStatus { get; set; }
          
-            public DateTime cCreatedOnDate { get; set; }
+            public DateTime cCreatedDate { get; set; }
 
-            public DateTime cLastAccessDate { get; set; }
+        public DateTime? cLastModifiedDate { get; set; }
 
-            public bool cIsFirstTimeUser { get; set; }
+        [StringLength(64)]
+        public UserDetail? cLastModifiedByUserId { get; set; }
+
+        public DateTime? cLastAccessDate { get; set; }
+
+            public bool? cIsFirstTimeUser { get; set; }
 
           // public List<UserRole> Roles { get; set; } =new List<UserRole>();
 

@@ -7,6 +7,7 @@ dotnet graphql download https://localhost:5003/graphql -f ./RACE2GraphQLSchema/s
 
 az login
 az login -u kriss.sahoo@defra.gov.uk -p test
+az login --use-device-code
 
 az acr login -n race2acr  -n race2acr
 az acr login -n race2acr -u Race2Acr -p 3q23FKncYFoNMky5N+4arugBI6FHagtWC07sVgPHdo+ACRB3HwHE
@@ -24,30 +25,35 @@ az acr run --registry Race2ACR --cmd 'acr purge --filter race2securityprovider:.
 
 az acr run --registry <ACR Name> --cmd 'acr purge --filter <repository name>:.*  --ago 0d --untagged --keep 1' /dev/null
 
-az account set -s 97ea02ef-73bc-4ee9-b320-b38a6b41b4d7
-az acr run --registry Race2ACR --cmd 'acr purge --filter race2securityprovider:.*  --ago 0d --keep 1' /dev/null
-az acr run --registry Race2ACR --cmd 'acr purge --filter race2frontendwebserver:.*  --ago 0d --keep 1' /dev/null
-az acr run --registry Race2ACR --cmd 'acr purge --filter race2webapi:.*  --ago 0d --keep 1' /dev/null
-
+az account set -s AZR-RAC-POC1 //d9cce027-07b6-4275-a215-dd8d52b9d469
 az acr run --registry POCRACINFCR1401 --cmd 'acr purge --filter race2securityprovider:.*  --ago 0d --keep 1' /dev/null
 az acr run --registry POCRACINFCR1401 --cmd 'acr purge --filter race2frontendwebserver:.*  --ago 0d --keep 1' /dev/null
 az acr run --registry POCRACINFCR1401 --cmd 'acr purge --filter race2webapi:.*  --ago 0d --keep 1' /dev/null
+az acr run --registry POCRACINFCR1401 --cmd 'acr purge --filter race2webapiexternal:.*  --ago 0d --keep 1' /dev/null
 
-az account set -s 97ea02ef-73bc-4ee9-b320-b38a6b41b4d7
+az account set -s AZR-RAC-DEV1 //97ea02ef-73bc-4ee9-b320-b38a6b41b4d7
 az acr run --registry DEVRACINFCR1401 --cmd 'acr purge --filter race2securityprovider:.*  --ago 0d --keep 1' /dev/null
 az acr run --registry DEVRACINFCR1401 --cmd 'acr purge --filter race2frontendwebserver:.*  --ago 0d --keep 1' /dev/null
 az acr run --registry DEVRACINFCR1401 --cmd 'acr purge --filter race2webapi:.*  --ago 0d --keep 1' /dev/null
+az acr run --registry DEVRACINFCR1401 --cmd 'acr purge --filter race2webapiexternal:.*  --ago 0d --keep 1' /dev/null
 
-az account set -s 9327c8db-cebb-445d-9933-1bca1a76b82e
+az account set -s AZR-RAC-TST1  //9327c8db-cebb-445d-9933-1bca1a76b82e
 az acr run --registry TSTRACINFCR1401 --cmd 'acr purge --filter race2securityprovider:.*  --ago 0d --keep 1' /dev/null
 az acr run --registry TSTRACINFCR1401 --cmd 'acr purge --filter race2frontendwebserver:.*  --ago 0d --keep 1' /dev/null
 az acr run --registry TSTRACINFCR1401 --cmd 'acr purge --filter race2webapi:.*  --ago 0d --keep 1' /dev/null
+az acr run --registry TSTRACINFCR1401 --cmd 'acr purge --filter race2webapiexternal:.*  --ago 0d --keep 1' /dev/null
 
 //sync kris branch with main
 git checkout kris
 git pull origin main
 git merge main
 git push origin
+
+Server=tcp:pocracinfss1401.database.windows.net,1433;Initial Catalog=pocracinfdb1401;Persist Security Info=False;Authentication=Active Directory Default;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
+create user [UserAssignedManagedIdentity] from external provider
+alter role db_datareader add member [UserAssignedManagedIdentity]
+alter role db_datawriter add member [UserAssignedManagedIdentity]
+GRANT EXECUTE ON SCHEMA::dbo TO [UserAssignedManagedIdentity]
 
 podman build -t race2acr.azurecr.io/race2securityprovider:v1 -f Dockerfile_SecurityProvider .
 podman push race2acr.azurecr.io/race2securityprovider:v1

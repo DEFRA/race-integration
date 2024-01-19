@@ -23,6 +23,11 @@ namespace RACE2.DataAccess.Repository
         public Task<IEnumerable<FeatureFunction>> GetFeaturePermissionForRole(int roleid);
         public Task<OrganisationDTO> GetOrganisationAddressbyId(int orgId);
 
-        public Task<int> UpdateFirstTimeUserLogin(string email);
+        public Task<int> UpdateFirstTimeUserLogin(string email, bool val);
+        public Task<int> ResetUserLockout(string email);
+
+        public Task<OrganisationDTO> GetCompanyNameByUserId(int userId);
+
+        
     }
 }

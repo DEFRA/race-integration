@@ -7,12 +7,14 @@ using RACE2.Dto;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using Microsoft.Data.SqlClient;
+using System.Reflection.Metadata;
 
 namespace RACE2.DataAccess.Repository
 {
@@ -325,7 +327,7 @@ namespace RACE2.DataAccess.Repository
         }
 
 
-        public async Task<SubmissionStatus> UpdateReservoirStatus(int reservoirid, int userid)
+        public async Task<SubmissionStatus> UpdateReservoirStatus(int reservoirid, int userid, string reportStatus)
         {
             _logger.LogInformation("Updating reservoir status for the reservoir  {reservoirid} by the {userid}  ", reservoirid, userid);
             try
@@ -336,6 +338,7 @@ namespace RACE2.DataAccess.Repository
                     var parameters = new DynamicParameters();
                     parameters.Add("reservoirid", reservoirid, DbType.Int64);
                     parameters.Add("userid", userid, DbType.Int64);
+                    parameters.Add("reportStatus", reportStatus, DbType.String);
                     if (reservoirid != 0)
                     {
 
@@ -358,5 +361,296 @@ namespace RACE2.DataAccess.Repository
                 return null;
             }
         }
+
+
+        public async Task<int> InsertUploadDocumentDetails(DocumentDTO document)
+        {
+            int result = 0;
+            _logger.LogInformation("Inserting uploaded document details for the reservoir" );
+            try
+            {
+
+                using (var conn = Connection)
+                {
+                    var parameters = new DynamicParameters();
+                    parameters.Add("filename", document.FileName, DbType.String);
+                    parameters.Add("filelocation", document.FileLocation, DbType.String);
+                    parameters.Add("filetype", document.FileType, DbType.String);
+                    parameters.Add("documenttype", document.DocumentType, DbType.String);
+                    parameters.Add("suppliedby", document.SuppliedBy, DbType.Int64);
+                    parameters.Add("suppliedviaservice", document.SuppliedViaService, DbType.Int64);
+                    parameters.Add("datesent", document.DateSent, DbType.DateTime);
+                    parameters.Add("reservoirid", document.ReservoirId, DbType.Int64);
+                    //parameters.Add("submissionid", document.SubmissionId, DbType.Int64);
+                    //parameters.Add("documentName",document.DocumentName,DbType.String);
+                    parameters.Add("blobStorageFileName", document.BlobStorageFileName, DbType.String);
+                     parameters.Add("newid", dbType: DbType.Int32, direction: ParameterDirection.Output);
+                    if (document != null)
+                    {
+                        result  = await conn.ExecuteAsync("sp_InsertDocumentUpload", parameters, commandType: CommandType.StoredProcedure);
+                        var id = parameters.Get<int>("newid");
+                        return id;                     
+
+                    }
+                    else
+                    {
+                        _logger.LogInformation("The input is not valid ");
+                        return result;
+                    }
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return 1;
+            }
+        }
+
+
+        public async Task<int> UpdateScannedDocumentResult(DateTime scanneddatetime, bool isClean, string uploadblobpath , string blobStorageFileName)
+        {
+            _logger.LogInformation("Updating scan result for the reservoir  {documentName}  ", blobStorageFileName);
+            try
+            {
+
+                using (var conn = Connection)
+                {
+                    var parameters = new DynamicParameters();
+                    parameters.Add("scannedtime", scanneddatetime, DbType.DateTime);
+                    parameters.Add("isClean", isClean, DbType.Boolean);
+                    parameters.Add("uploadBlobpath", uploadblobpath, DbType.String);
+                    parameters.Add("documentName", blobStorageFileName, DbType.String);
+                    if (blobStorageFileName != null)
+                    {
+
+                         await conn.ExecuteAsync("sp_UpdateScannedDocumentResult", parameters, commandType: CommandType.StoredProcedure);
+
+                        return 1;
+                    }
+                    else
+                    {
+                        _logger.LogInformation("The input is not valid {documentName}", blobStorageFileName);
+                        return 0;
+                    }
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return 0;
+            }
+        }
+
+
+        public async Task<DocumentDTO> GetScannedResultbyDocId(int id)
+        {
+            _logger.LogInformation("Get scan result for the document  {id}  ", id);
+            try
+            {
+
+                using (var conn = Connection)
+                {
+                    var parameters = new DynamicParameters();
+                    parameters.Add("docid",id, DbType.Int64);
+                    
+                    if (id != 0)
+                    {
+
+                        var result = await conn.QueryAsync<DocumentDTO>("sp_GetScannedResultByDocId", parameters, commandType: CommandType.StoredProcedure);
+
+                        return result.FirstOrDefault();
+                    }
+                    else
+                    {
+                        _logger.LogInformation("The input is not valid {id}", id);
+                        return null;
+                    }
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return null;
+            }
+        }
+
+        public async Task<int> InsertDocumentRelatedTable(int reservoirid, int submissionid, int documentid)
+        {
+            _logger.LogInformation("Insert document related table for the document  {id}  ", documentid);
+            try
+            {
+
+                using (var conn = Connection)
+                {
+                    var parameters = new DynamicParameters();
+                    parameters.Add("documentid", documentid, DbType.Int64);
+                    parameters.Add("submissionid", submissionid, DbType.Int64);
+                    parameters.Add("reservoirid", reservoirid, DbType.Int64);
+
+                    if (documentid != 0)
+                    {
+
+                        var result = await conn.ExecuteAsync("sp_InsertDocumentRelatedTable", parameters, commandType: CommandType.StoredProcedure);
+
+                        return 1;
+                    }
+                    else
+                    {
+                        _logger.LogInformation("The input is not valid {id}", documentid);
+                        return 0;
+                    }
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return 0;
+            }
+        }
+
+
+        public async Task<ReservoirSubmissionDTO> GetReservoirUserIdbySubRef(string submissionReference)
+        {
+            try
+            {
+                using (var conn = Connection)
+                {
+
+                    DynamicParameters parameters = new DynamicParameters();
+                    parameters.Add("submissionreference", submissionReference, DbType.String);
+                    var reservoir = await conn.QueryAsync<ReservoirSubmissionDTO>("sp_GetReservoirIdBySubmissionReference", parameters, commandType: CommandType.StoredProcedure);
+                    return reservoir.FirstOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return null;
+            }
+        }
+
+        public async Task<int> InsertActionTableFromExtract(DataModel.Action action)
+        {
+            _logger.LogInformation("Insert Action table from Data extraction ");
+            try
+            {
+
+                using (var conn = Connection)
+                {
+                    var parameters = new DynamicParameters();
+                    parameters.Add("reference", action.Reference, DbType.String);
+                    parameters.Add("description", action.Description, DbType.String);
+                    parameters.Add("mandatory", action.IsMandatory, DbType.Boolean);
+                    parameters.Add("priority", action.Priority, DbType.String);
+                    parameters.Add("reservoirid",action.ReservoirId , DbType.Int64);
+                    var result = await conn.ExecuteAsync("sp_InsertActionFromExtract", parameters, commandType: CommandType.StoredProcedure);
+        
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return 0;
+            }
+            return 1;
+
+        }
+
+        public async Task<int> InsertMaintenanceMeasureFromExtract(DataModel.Action action, Comment comment)
+        {
+            _logger.LogInformation("Insert Action and comment table from Data extraction ");
+            try
+            {
+
+                using (var conn = Connection)
+                {
+                    var parameters = new DynamicParameters();
+                    parameters.Add("reference", action.Reference, DbType.String);
+                    parameters.Add("description", action.Description, DbType.String);
+                    parameters.Add("comment", comment.CommentText, DbType.String);
+                    parameters.Add("isQualitycheck", comment.IsQualityCheckRequired, DbType.Boolean);
+                    parameters.Add("userid", comment.CreatedByUserId, DbType.Int32);
+                    parameters.Add("reservoirid", action.ReservoirId, DbType.Int32);
+                    parameters.Add("relatestorecordid", comment.RelatesToRecordId, DbType.Int32);
+                    var result = await conn.ExecuteAsync("sp_InsertMaintenanceMeasureFromExtract", parameters, commandType: CommandType.StoredProcedure);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return 0;
+            }
+            return 1;
+
+        }
+
+        public async Task<int> InsertWatchItemsFromExtract(DataModel.Action action, Comment comment)
+        {
+            _logger.LogInformation("Insert Action and comment table from Data extraction ");
+            try
+            {
+
+                using (var conn = Connection)
+                {
+                    var parameters = new DynamicParameters();
+                    parameters.Add("reference", action.Reference, DbType.String);
+                    parameters.Add("description", action.Description, DbType.String);
+                    parameters.Add("comment", comment.CommentText, DbType.String);
+                    parameters.Add("isQualitycheck", comment.IsQualityCheckRequired, DbType.Boolean);
+                    parameters.Add("userid", comment.CreatedByUserId, DbType.Int32);
+                    parameters.Add("reservoirid", action.ReservoirId, DbType.Int32);
+                    parameters.Add("relatestorecordid", comment.RelatesToRecordId, DbType.Int32);
+                    var result = await conn.ExecuteAsync("sp_InsertWatchItemsFromExtract", parameters, commandType: CommandType.StoredProcedure);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return 0;
+            }
+            return 1;
+        }
+
+        public async Task<int> InsertSafetyMeasuresFromExtract(SafetyMeasure safetyMeasure, Comment comment)
+        {
+            _logger.LogInformation("Insert Safety Measure and comment table from Data extraction for {userid} ",comment.CreatedByUserId);
+            try
+            {
+
+                using (var conn = Connection)
+                {
+                    var parameters = new DynamicParameters();
+                    parameters.Add("reference", safetyMeasure.Reference, DbType.String);
+                    parameters.Add("description", safetyMeasure.Description, DbType.String);
+                    parameters.Add("targetdate", safetyMeasure.TargetDate, DbType.DateTime);
+                    parameters.Add("status", safetyMeasure.Description, DbType.String);
+                    parameters.Add("comment", comment.CommentText, DbType.String);
+                    parameters.Add("isqualitycheckrequired", comment.IsQualityCheckRequired, DbType.Boolean);
+                    parameters.Add("userid", comment.CreatedByUserId, DbType.Int32);
+                    parameters.Add("reservoirid", safetyMeasure.ReservoirId, DbType.Int32);
+                    parameters.Add("relatestorecordid", comment.RelatesToRecordId, DbType.Int32);
+                    var result = await conn.ExecuteAsync("sp_InsertSafetyMeasureFromExtract", parameters, commandType: CommandType.StoredProcedure);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return 0;
+            }
+            return 1;
+        }
+
+
     }
 }

@@ -11,23 +11,11 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="Package1"
   DTS:PackageType="5"
-  DTS:VersionBuild="9"
-  DTS:VersionGUID="{5B809529-C329-4F34-B714-1D095E088EC2}">
+  DTS:VersionBuild="11"
+  DTS:VersionGUID="{EE555E6D-57A7-4090-B9EA-12363F5D8EF9}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
-    <DTS:ConnectionManager
-      DTS:refId="Package.ConnectionManagers[Excel Connection Manager]"
-      DTS:CreationName="EXCEL"
-      DTS:DTSID="{772644A7-93BF-4B59-A4DA-EF2C6771C6CF}"
-      DTS:ObjectName="Excel Connection Manager">
-      <DTS:ObjectData>
-        <DTS:ConnectionManager
-          DTS:ConnectRetryCount="0"
-          DTS:ConnectRetryInterval="0"
-          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\RACE2\Test Data Private Beta\SG RACE FE DB Test Data - Test Env v0.2 (2).xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
-      </DTS:ObjectData>
-    </DTS:ConnectionManager>
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[Excel Connection Manager 1]"
       DTS:CreationName="EXCEL"
@@ -43,31 +31,31 @@
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[Excel Connection Manager 2]"
       DTS:CreationName="EXCEL"
-      DTS:DTSID="{9960DA82-B2C7-4272-9136-8142E85C3E51}"
+      DTS:DTSID="{92031968-1BF5-4B75-A52E-7DF208903A33}"
       DTS:ObjectName="Excel Connection Manager 2">
       <DTS:ObjectData>
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="0"
           DTS:ConnectRetryInterval="0"
-          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\RACE2\Test Data Private Beta\SG RACE FE DB Test Data - Test Env v0.2 (2).xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\RACE2\Private Beta Data\SG RACE FE DB Test Data - Test Env v0.2 (3).xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[Excel Connection Manager 3]"
       DTS:CreationName="EXCEL"
-      DTS:DTSID="{81D5C72C-C067-46FF-B990-C1C909EF98E4}"
+      DTS:DTSID="{45D29356-6C3D-4CA3-8EA7-CA7D43E8A8A8}"
       DTS:ObjectName="Excel Connection Manager 3">
       <DTS:ObjectData>
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="0"
           DTS:ConnectRetryInterval="0"
-          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\RACE2\Test Data Private Beta\SG RACE FE DB Test Data - Test Env v0.2 (2).xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=D:\DEFRA\SG RACE FE DB Test Data - Test Env v0.2 (5).xlsx;Extended Properties=&quot;Excel 12.0 XML;HDR=YES&quot;;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[Flat File Connection Manager]"
       DTS:CreationName="FLATFILE"
-      DTS:DTSID="{B530F80F-0F20-402B-BB67-D053554384C5}"
+      DTS:DTSID="{E931CBDB-D791-435F-B9EA-A883CE5BB6E2}"
       DTS:ObjectName="Flat File Connection Manager">
       <DTS:ObjectData>
         <DTS:ConnectionManager
@@ -77,7 +65,7 @@
           DTS:RowDelimiter=""
           DTS:TextQualifier="_x003C_none_x003E_"
           DTS:CodePage="1252"
-          DTS:ConnectionString="C:\RACE2\Test Data Private Beta\flat file\user.txt">
+          DTS:ConnectionString="C:\RACE2\Private Beta Data\flat files\users.txt">
           <DTS:FlatFileColumns>
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -85,7 +73,7 @@
               DTS:DataType="5"
               DTS:TextQualified="True"
               DTS:ObjectName="Id"
-              DTS:DTSID="{1995EC4F-0B66-4504-A00B-2E4137018F4A}"
+              DTS:DTSID="{20531B6E-2C86-4057-8F91-F438A0645A9A}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -93,7 +81,7 @@
               DTS:DataType="5"
               DTS:TextQualified="True"
               DTS:ObjectName="OrganisationIdid"
-              DTS:DTSID="{1FE6DA44-5F40-411E-A99F-6D9B234AE0A8}"
+              DTS:DTSID="{1DC80B56-1A6F-4A29-AD0E-6D9BAA10FC0B}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -102,7 +90,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="UserName"
-              DTS:DTSID="{5E42E2F4-D998-420C-9FB5-AB29659C70CF}"
+              DTS:DTSID="{390831FE-7DD8-4707-8FD6-DE37EF23EDF0}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -111,7 +99,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="NormalizedUserName"
-              DTS:DTSID="{583C417B-0453-4EB3-A32C-384777A14E06}"
+              DTS:DTSID="{06DF57F9-EBDE-454C-B1A0-D7E8DC1B9B35}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -120,7 +108,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="Email"
-              DTS:DTSID="{32888FDF-32B6-47FC-AA0C-513F610A0721}"
+              DTS:DTSID="{215DEF8E-1E00-44DE-BB34-F6BA17EC1D6F}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -129,23 +117,24 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="NormalizedEmail"
-              DTS:DTSID="{5D3F9815-0931-41FD-A61A-6F603F746DD5}"
+              DTS:DTSID="{CB955006-AB23-4D01-A82E-888DBB43A7C8}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
               DTS:ColumnDelimiter="_x002C_"
-              DTS:DataType="7"
+              DTS:DataType="5"
               DTS:TextQualified="True"
               DTS:ObjectName="EmailConfirmed"
-              DTS:DTSID="{D68CA1E0-2DBB-4791-81C1-23C9006B07B5}"
+              DTS:DTSID="{A6E2BBF5-BA1C-4885-9460-CADBBE4BB234}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
               DTS:ColumnDelimiter="_x002C_"
-              DTS:DataType="7"
+              DTS:MaximumWidth="255"
+              DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="PasswordHash"
-              DTS:DTSID="{500104AE-2D80-42C1-BE23-421FDDB3300B}"
+              DTS:DTSID="{AC4DB332-A274-42C8-BFAC-93A919406654}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -154,7 +143,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="SecurityStamp"
-              DTS:DTSID="{2B7FB3DB-D1C8-4ED1-A701-E1AC48A4A9F2}"
+              DTS:DTSID="{D8F4A2D0-FC0F-4AB3-8A71-5A6662E6A8C6}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -163,7 +152,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="ConcurrencyStamp"
-              DTS:DTSID="{4CE88835-A109-48DF-9CF9-82EAF158CE26}"
+              DTS:DTSID="{B9CBF3E0-F382-4271-9C67-3008604E2038}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -172,7 +161,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="PhoneNumber"
-              DTS:DTSID="{A229DD19-29F3-4006-B186-EFC738DBEA95}"
+              DTS:DTSID="{4D626493-D063-4009-A0EE-4B9E2ADC73F1}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -180,7 +169,7 @@
               DTS:DataType="5"
               DTS:TextQualified="True"
               DTS:ObjectName="PhoneNumberConfirmed"
-              DTS:DTSID="{3BE9E748-93B1-4F62-991D-9C8F8FB3680D}"
+              DTS:DTSID="{957DB721-FD4A-4D66-84CB-EF98C94B428E}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -188,7 +177,7 @@
               DTS:DataType="5"
               DTS:TextQualified="True"
               DTS:ObjectName="TwoFactorEnabled"
-              DTS:DTSID="{63176845-C888-452E-94D4-EFDC86F7A5D8}"
+              DTS:DTSID="{24EDBCBB-DBFF-4B2E-8058-97E7D2464C9A}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -197,7 +186,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="LockoutEnd"
-              DTS:DTSID="{29D519ED-0780-4357-928E-2DF23196B8E2}"
+              DTS:DTSID="{41829DBA-9BDB-4B99-9CDF-AF99713AD946}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -205,7 +194,7 @@
               DTS:DataType="5"
               DTS:TextQualified="True"
               DTS:ObjectName="LockoutEnabled"
-              DTS:DTSID="{A1884C40-1286-49C1-B43D-C730149A575A}"
+              DTS:DTSID="{CB1B4C92-5121-4B9E-BCC8-86A5A75E4019}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -213,7 +202,16 @@
               DTS:DataType="5"
               DTS:TextQualified="True"
               DTS:ObjectName="AccessFailedCount"
-              DTS:DTSID="{025F1C1F-3848-4EE3-8A46-A57E472AF265}"
+              DTS:DTSID="{534E0496-B902-4994-A70A-70FCED07EF96}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="255"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Action Status"
+              DTS:DTSID="{A0654E99-4844-42FF-9C50-96BEA5E45BF6}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -222,7 +220,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="cRaceId"
-              DTS:DTSID="{E10587B5-BB3B-4660-8AC4-D0ACC4A476FA}"
+              DTS:DTSID="{EEC43D75-9EF5-4A54-9654-A259A8D35BD2}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -231,7 +229,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="cDefraId"
-              DTS:DTSID="{81ECEAE9-8B24-447D-964A-4FB747D3742E}"
+              DTS:DTSID="{CE94A9A7-C5B3-40DA-BCFA-8E46EE36D4EF}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -240,7 +238,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="cType"
-              DTS:DTSID="{DADCF6D7-4CF7-424E-AC9F-ED1F75875CA9}"
+              DTS:DTSID="{0F10A7E5-A52C-463F-A145-403ECA84F951}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -249,7 +247,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="cDisplayName"
-              DTS:DTSID="{0F968E35-FB5B-48D5-BB2D-C94EB6C79B86}"
+              DTS:DTSID="{E5626B44-418A-4583-AB94-CB4539D379C1}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -258,7 +256,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="cFirstName"
-              DTS:DTSID="{80A8E9BD-12F2-48EC-81DD-3E6686F07D38}"
+              DTS:DTSID="{5F31162A-84B8-46B6-9963-29E72C70A886}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -267,7 +265,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="cLastName"
-              DTS:DTSID="{C0D3E1B8-73FF-4C2A-8024-32DBE4A83FE6}"
+              DTS:DTSID="{7E25D936-EE1C-4CC3-B15B-1978346CE77A}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -276,7 +274,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="cFullName"
-              DTS:DTSID="{553A9A93-24F9-4D81-8292-816B18F319E0}"
+              DTS:DTSID="{160B2F41-BECF-4BFE-81BB-D9C5FC2FAE59}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -285,7 +283,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="cMobile"
-              DTS:DTSID="{DEC47225-4806-491A-A2F3-085875F5F129}"
+              DTS:DTSID="{CB1C841D-F49E-4476-822B-D78C10EF841E}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -294,7 +292,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="cAlternativeMobile"
-              DTS:DTSID="{02810EB8-4274-4159-9956-5827D73D5DB0}"
+              DTS:DTSID="{4B7C8155-C17D-4927-BCD5-4DBA2DCB9040}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -303,7 +301,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="cAlternativePhone"
-              DTS:DTSID="{EE2B5A60-DC6C-48F8-85D6-AC4AFEECA0AC}"
+              DTS:DTSID="{80E0D651-86C1-40A3-B2FF-D3558F8D5BBD}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -312,7 +310,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="cEmergencyPhone"
-              DTS:DTSID="{0C8595D7-2085-4780-A795-E694201C94E8}"
+              DTS:DTSID="{CA05CC61-B151-4D4F-920E-68A7738015AC}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -321,7 +319,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="cAlternativeEmergencyPhone"
-              DTS:DTSID="{D5C8A917-E9A4-4ED1-82C8-E0EB7B5B90DF}"
+              DTS:DTSID="{0FD4DDDA-9C41-4374-B42E-87774BAFA8E1}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -330,7 +328,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="cJobTitle"
-              DTS:DTSID="{E4EE7682-C1B3-4BA7-A665-2EE09848B880}"
+              DTS:DTSID="{59612020-BB4A-408F-BD01-938B95ABAEB2}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -338,8 +336,8 @@
               DTS:MaximumWidth="255"
               DTS:DataType="130"
               DTS:TextQualified="True"
-              DTS:ObjectName="cCurrentPanel"
-              DTS:DTSID="{7CBD6184-0484-4229-A4D1-DA2A58359D9A}"
+              DTS:ObjectName="cCurrnetPanel"
+              DTS:DTSID="{83775A1C-BB9C-4F09-90DE-1B73555462F9}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -348,7 +346,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="cPaon"
-              DTS:DTSID="{4CE849A0-F87F-4E46-935F-4B1A0973F099}"
+              DTS:DTSID="{BB4521BA-05CF-4DBE-A7A0-72675A84C97D}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -357,7 +355,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="cSaon"
-              DTS:DTSID="{0432E006-C6C2-4F3E-AA07-6191BBB4F707}"
+              DTS:DTSID="{727D0B1B-8DC4-4854-A141-C2FB0834332F}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -366,7 +364,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="cStatus"
-              DTS:DTSID="{8A00717D-93F8-4C98-A753-F8C8EA8FB52F}"
+              DTS:DTSID="{0BCEFE9A-EA07-4D20-BCE0-BA30E021D889}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -374,7 +372,7 @@
               DTS:DataType="7"
               DTS:TextQualified="True"
               DTS:ObjectName="cCreatedOnDate"
-              DTS:DTSID="{63C14912-6745-46B3-A1E0-3AC080D9AC0D}"
+              DTS:DTSID="{5BC7293A-B6C7-4969-B787-3CD6897F1ECD}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -382,7 +380,7 @@
               DTS:DataType="7"
               DTS:TextQualified="True"
               DTS:ObjectName="cLastAccessDate"
-              DTS:DTSID="{30419C65-D0FC-4B14-870F-4606196F34EA}"
+              DTS:DTSID="{B45EA5F9-170B-42EB-B084-CFCBC7737521}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -390,7 +388,7 @@
               DTS:DataType="11"
               DTS:TextQualified="True"
               DTS:ObjectName="cIsFirstTimeUser"
-              DTS:DTSID="{C6DFB409-5AF0-4F58-86D3-CD8F279D65E7}"
+              DTS:DTSID="{63A59AE3-A411-492F-9478-5F5EAA8BE991}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -399,7 +397,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="cAlternativeEmail"
-              DTS:DTSID="{A24DF27C-2E80-4F76-BE47-53FFC9DD8B3F}"
+              DTS:DTSID="{BF90D6C9-ED5B-4F83-A18D-E873BF8D8FB7}"
               DTS:CreationName="" />
           </DTS:FlatFileColumns>
         </DTS:ConnectionManager>
@@ -435,10 +433,11 @@
                   name="Conditional Split Input">
                   <inputColumns>
                     <inputColumn
-                      refId="Package\Data Flow Task\Conditional Split.Inputs[Conditional Split Input].Columns[Id]"
-                      cachedDataType="r8"
-                      cachedName="Id"
-                      lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[Id]" />
+                      refId="Package\Data Flow Task\Conditional Split.Inputs[Conditional Split Input].Columns[Action Status]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Action Status"
+                      lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[Action Status]" />
                   </inputColumns>
                   <externalMetadataColumns />
                 </input>
@@ -458,13 +457,13 @@
                       containsID="true"
                       dataType="System.String"
                       description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
-                      name="Expression">[REPLACENULL](#{Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[Id]},0) &gt; 67</property>
+                      name="Expression">[REPLACENULL](#{Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[Action Status]}," ") == "New"</property>
                     <property
                       containsID="true"
                       dataType="System.String"
                       description="Specifies the friendly version of the expression. This expression version uses column names."
                       expressionType="Notify"
-                      name="FriendlyExpression">REPLACENULL(Id,0) &gt; 67</property>
+                      name="FriendlyExpression">REPLACENULL([Action Status]," ") == "New"</property>
                     <property
                       dataType="System.Int32"
                       description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
@@ -623,7 +622,7 @@
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
                       refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[EmailConfirmed]"
-                      dataType="date"
+                      dataType="r8"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[EmailConfirmed]"
@@ -632,10 +631,11 @@
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
                       refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[PasswordHash]"
-                      dataType="date"
+                      dataType="wstr"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[PasswordHash]"
+                      length="255"
                       lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[PasswordHash]"
                       name="PasswordHash"
                       truncationRowDisposition="FailComponent" />
@@ -714,6 +714,16 @@
                       externalMetadataColumnId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[AccessFailedCount]"
                       lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[AccessFailedCount]"
                       name="AccessFailedCount"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[Action Status]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[Action Status]"
+                      length="255"
+                      lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[Action Status]"
+                      name="Action Status"
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
                       refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[cRaceId]"
@@ -846,14 +856,14 @@
                       name="cJobTitle"
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
-                      refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[cCurrentPanel]"
+                      refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[cCurrnetPanel]"
                       dataType="wstr"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[cCurrentPanel]"
+                      externalMetadataColumnId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[cCurrnetPanel]"
                       length="255"
-                      lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[cCurrentPanel]"
-                      name="cCurrentPanel"
+                      lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[cCurrnetPanel]"
+                      name="cCurrnetPanel"
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
                       refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[cPaon]"
@@ -1079,10 +1089,10 @@
                       length="255"
                       name="cJobTitle" />
                     <externalMetadataColumn
-                      refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[cCurrentPanel]"
+                      refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[cCurrnetPanel]"
                       dataType="wstr"
                       length="255"
-                      name="cCurrentPanel" />
+                      name="cCurrnetPanel" />
                     <externalMetadataColumn
                       refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[cPaon]"
                       dataType="wstr"
@@ -1132,6 +1142,12 @@
                   isErrorOut="true"
                   name="Excel Source Error Output">
                   <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Error Output].Columns[Action Status]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Error Output].Columns[Action Status]"
+                      name="Action Status" />
                     <outputColumn
                       refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Error Output].Columns[Id]"
                       dataType="r8"
@@ -1221,11 +1237,11 @@
                       lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Error Output].Columns[cJobTitle]"
                       name="cJobTitle" />
                     <outputColumn
-                      refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Error Output].Columns[cCurrentPanel]"
+                      refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Error Output].Columns[cCurrnetPanel]"
                       dataType="wstr"
                       length="255"
-                      lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Error Output].Columns[cCurrentPanel]"
-                      name="cCurrentPanel" />
+                      lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Error Output].Columns[cCurrnetPanel]"
+                      name="cCurrnetPanel" />
                     <outputColumn
                       refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Error Output].Columns[cPaon]"
                       dataType="wstr"
@@ -1439,13 +1455,14 @@
                       lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[NormalizedEmail]" />
                     <inputColumn
                       refId="Package\Data Flow Task\Flat File Destination.Inputs[Flat File Destination Input].Columns[EmailConfirmed]"
-                      cachedDataType="date"
+                      cachedDataType="r8"
                       cachedName="EmailConfirmed"
                       externalMetadataColumnId="Package\Data Flow Task\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[EmailConfirmed]"
                       lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[EmailConfirmed]" />
                     <inputColumn
                       refId="Package\Data Flow Task\Flat File Destination.Inputs[Flat File Destination Input].Columns[PasswordHash]"
-                      cachedDataType="date"
+                      cachedDataType="wstr"
+                      cachedLength="255"
                       cachedName="PasswordHash"
                       externalMetadataColumnId="Package\Data Flow Task\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[PasswordHash]"
                       lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[PasswordHash]" />
@@ -1501,6 +1518,13 @@
                       cachedName="AccessFailedCount"
                       externalMetadataColumnId="Package\Data Flow Task\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[AccessFailedCount]"
                       lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[AccessFailedCount]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Flat File Destination.Inputs[Flat File Destination Input].Columns[Action Status]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Action Status"
+                      externalMetadataColumnId="Package\Data Flow Task\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Action Status]"
+                      lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[Action Status]" />
                     <inputColumn
                       refId="Package\Data Flow Task\Flat File Destination.Inputs[Flat File Destination Input].Columns[cRaceId]"
                       cachedDataType="wstr"
@@ -1593,12 +1617,12 @@
                       externalMetadataColumnId="Package\Data Flow Task\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[cJobTitle]"
                       lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[cJobTitle]" />
                     <inputColumn
-                      refId="Package\Data Flow Task\Flat File Destination.Inputs[Flat File Destination Input].Columns[cCurrentPanel]"
+                      refId="Package\Data Flow Task\Flat File Destination.Inputs[Flat File Destination Input].Columns[cCurrnetPanel]"
                       cachedDataType="wstr"
                       cachedLength="255"
-                      cachedName="cCurrentPanel"
-                      externalMetadataColumnId="Package\Data Flow Task\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[cCurrentPanel]"
-                      lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[cCurrentPanel]" />
+                      cachedName="cCurrnetPanel"
+                      externalMetadataColumnId="Package\Data Flow Task\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[cCurrnetPanel]"
+                      lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[cCurrnetPanel]" />
                     <inputColumn
                       refId="Package\Data Flow Task\Flat File Destination.Inputs[Flat File Destination Input].Columns[cPaon]"
                       cachedDataType="wstr"
@@ -1678,11 +1702,12 @@
                       name="NormalizedEmail" />
                     <externalMetadataColumn
                       refId="Package\Data Flow Task\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[EmailConfirmed]"
-                      dataType="date"
+                      dataType="r8"
                       name="EmailConfirmed" />
                     <externalMetadataColumn
                       refId="Package\Data Flow Task\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[PasswordHash]"
-                      dataType="date"
+                      dataType="wstr"
+                      length="255"
                       name="PasswordHash" />
                     <externalMetadataColumn
                       refId="Package\Data Flow Task\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[SecurityStamp]"
@@ -1720,6 +1745,11 @@
                       refId="Package\Data Flow Task\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[AccessFailedCount]"
                       dataType="r8"
                       name="AccessFailedCount" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Action Status]"
+                      dataType="wstr"
+                      length="255"
+                      name="Action Status" />
                     <externalMetadataColumn
                       refId="Package\Data Flow Task\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[cRaceId]"
                       dataType="wstr"
@@ -1786,10 +1816,10 @@
                       length="255"
                       name="cJobTitle" />
                     <externalMetadataColumn
-                      refId="Package\Data Flow Task\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[cCurrentPanel]"
+                      refId="Package\Data Flow Task\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[cCurrnetPanel]"
                       dataType="wstr"
                       length="255"
-                      name="cCurrentPanel" />
+                      name="cCurrnetPanel" />
                     <externalMetadataColumn
                       refId="Package\Data Flow Task\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[cPaon]"
                       dataType="wstr"
@@ -1872,7 +1902,7 @@
                 <property
                   dataType="System.Boolean"
                   description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
-                  name="FastLoadKeepNulls">true</property>
+                  name="FastLoadKeepNulls">false</property>
                 <property
                   dataType="System.String"
                   description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
@@ -1934,13 +1964,14 @@
                       lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[NormalizedEmail]" />
                     <inputColumn
                       refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[EmailConfirmed]"
-                      cachedDataType="date"
+                      cachedDataType="r8"
                       cachedName="EmailConfirmed"
                       externalMetadataColumnId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[EmailConfirmed]"
                       lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[EmailConfirmed]" />
                     <inputColumn
                       refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[PasswordHash]"
-                      cachedDataType="date"
+                      cachedDataType="wstr"
+                      cachedLength="255"
                       cachedName="PasswordHash"
                       externalMetadataColumnId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PasswordHash]"
                       lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[PasswordHash]" />
@@ -2088,27 +2119,6 @@
                       externalMetadataColumnId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[cJobTitle]"
                       lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[cJobTitle]" />
                     <inputColumn
-                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[cCurrentPanel]"
-                      cachedDataType="wstr"
-                      cachedLength="255"
-                      cachedName="cCurrentPanel"
-                      externalMetadataColumnId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[cCurrentPanel]"
-                      lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[cCurrentPanel]" />
-                    <inputColumn
-                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[cPaon]"
-                      cachedDataType="wstr"
-                      cachedLength="255"
-                      cachedName="cPaon"
-                      externalMetadataColumnId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[cPaon]"
-                      lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[cPaon]" />
-                    <inputColumn
-                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[cSaon]"
-                      cachedDataType="wstr"
-                      cachedLength="255"
-                      cachedName="cSaon"
-                      externalMetadataColumnId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[cSaon]"
-                      lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[cSaon]" />
-                    <inputColumn
                       refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[cStatus]"
                       cachedDataType="wstr"
                       cachedLength="255"
@@ -2188,21 +2198,6 @@
                       dataType="wstr"
                       length="64"
                       name="cJobTitle" />
-                    <externalMetadataColumn
-                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[cCurrentPanel]"
-                      dataType="wstr"
-                      length="64"
-                      name="cCurrentPanel" />
-                    <externalMetadataColumn
-                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[cPaon]"
-                      dataType="wstr"
-                      length="64"
-                      name="cPaon" />
-                    <externalMetadataColumn
-                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[cSaon]"
-                      dataType="wstr"
-                      length="64"
-                      name="cSaon" />
                     <externalMetadataColumn
                       refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[cStatus]"
                       dataType="wstr"
@@ -2395,113 +2390,113 @@
       <GraphLayout
         Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="171.2,41.6"
-          Id="Package\Data Flow Task\OLE DB Destination"
-          TopLeft="253.333319491811,296.399997938871" />
-        <NodeLayout
           Size="170.4,41.6"
           Id="Package\Data Flow Task\Flat File Destination"
-          TopLeft="490.366642535065,301.033331278231" />
+          TopLeft="430.833309793639,257.399998210073" />
+        <NodeLayout
+          Size="171.2,41.6"
+          Id="Package\Data Flow Task\OLE DB Destination"
+          TopLeft="197.999991121392,251.299998499354" />
         <NodeLayout
           Size="153.6,41.6"
           Id="Package\Data Flow Task\Conditional Split"
-          TopLeft="315.833316076961,156.866665575835" />
+          TopLeft="312.999983198941,151.966665648156" />
         <NodeLayout
           Size="140,41.6"
           Id="Package\Data Flow Task\Excel Source"
           TopLeft="319.499995321035,55.499999254942" />
         <EdgeLayout
-          Id="Package\Data Flow Task.Paths[Conditional Split Default Output]"
-          TopLeft="416.899982743628,198.466665575835">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="158.666659791437,102.566665702396"
-              Start="0,0"
-              End="158.666659791437,95.066665702396">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,37.6610992646846" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,37.6610992646846"
-                    Point2="0,41.6610992646846"
-                    Point3="4,41.6610992646846" />
-                  <mssgle:LineSegment
-                    End="154.666659791437,41.6610992646846" />
-                  <mssgle:CubicBezierSegment
-                    Point1="154.666659791437,41.6610992646846"
-                    Point2="158.666659791437,41.6610992646846"
-                    Point3="158.666659791437,45.6610992646846" />
-                  <mssgle:LineSegment
-                    End="158.666659791437,95.066665702396" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="8.71942364571868,46.6610992646846,141.2278125,11.658203125"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
           Id="Package\Data Flow Task.Paths[New]"
-          TopLeft="368.366649410294,198.466665575835">
+          TopLeft="389.799983198941,193.566665648156">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-29.4333299184833,97.933332363036"
+              EndConnector="-106.19999207755,57.733332851198"
               Start="0,0"
-              End="-29.4333299184833,90.433332363036">
+              End="-106.19999207755,50.233332851198">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,35.7791061350889" />
+                    End="0,24.866666425599" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,35.7791061350889"
-                    Point2="0,39.7791061350889"
-                    Point3="-4,39.7791061350889" />
+                    Point1="0,24.866666425599"
+                    Point2="0,28.866666425599"
+                    Point3="-4,28.866666425599" />
                   <mssgle:LineSegment
-                    End="-25.4333299184833,39.7791061350889" />
+                    End="-102.19999207755,28.866666425599" />
                   <mssgle:CubicBezierSegment
-                    Point1="-25.4333299184833,39.7791061350889"
-                    Point2="-29.4333299184833,39.7791061350889"
-                    Point3="-29.4333299184833,43.7791061350889" />
+                    Point1="-102.19999207755,28.866666425599"
+                    Point2="-106.19999207755,28.866666425599"
+                    Point3="-106.19999207755,32.866666425599" />
                   <mssgle:LineSegment
-                    End="-29.4333299184833,90.433332363036" />
+                    End="-106.19999207755,50.233332851198" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-24.9507079279917,44.7791061350889,20.4680859375,9.3974609375"
+              BoundingBox="-63.3340390075248,33.866666425599,20.4680859375,9.3974609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Data Flow Task.Paths[Excel Source Output]"
-          TopLeft="391.066655698998,97.099999254942">
+          TopLeft="389.649989259988,97.099999254942">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,59.766666320893"
+              EndConnector="0,54.8666663932138"
               Start="0,0"
-              End="0,52.266666320893">
+              End="0,47.3666663932138">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,52.266666320893" />
+                    End="0,47.3666663932138" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Data Flow Task.Paths[Conditional Split Default Output]"
+          TopLeft="414.066649865608,193.566665648156">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="101.966659928031,63.8333325619168"
+              Start="0,0"
+              End="101.966659928031,56.3333325619168">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,21.9281783808198" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,21.9281783808198"
+                    Point2="0,25.9281783808198"
+                    Point3="4,25.9281783808198" />
+                  <mssgle:LineSegment
+                    End="97.9666599280308,25.9281783808198" />
+                  <mssgle:CubicBezierSegment
+                    Point1="97.9666599280308,25.9281783808198"
+                    Point2="101.966659928031,25.9281783808198"
+                    Point3="101.966659928031,29.9281783808198" />
+                  <mssgle:LineSegment
+                    End="101.966659928031,56.3333325619168" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-19.6305762859846,30.9281783808198,141.2278125,11.658203125"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>

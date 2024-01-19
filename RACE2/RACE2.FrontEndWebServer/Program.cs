@@ -21,6 +21,7 @@ using RACE2.Services;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.MSSqlServer;
+using RACE2.Notification;
 
 Serilog.Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Information()
@@ -158,6 +159,7 @@ try
             EncryptionAlgorithm = EncryptionAlgorithm.AES_256_CBC,
             ValidationAlgorithm = ValidationAlgorithm.HMACSHA256
         });
+    builder.Services.AddSingleton<INotification, RaceNotification>();
 
     var app = builder.Build();
     app.UseForwardedHeaders();

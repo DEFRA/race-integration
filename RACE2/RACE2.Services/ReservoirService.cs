@@ -1,4 +1,5 @@
 ﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using DocumentFormat.OpenXml.Office2010.Word;
 using RACE2.DataAccess.Repository;
 using RACE2.DataModel;
 using RACE2.Dto;
@@ -10,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace RACE2.Services
 {
-    public class ReservoirService :IReservoirService
+    public class ReservoirService : IReservoirService
     {
         public IReservoirRepository _reservoirRepository;
         public IUserRepository _userRepository;
-        public ReservoirService(IUserRepository userRepository,IReservoirRepository reservoirRepository)
+        public ReservoirService(IUserRepository userRepository, IReservoirRepository reservoirRepository)
         {
             _userRepository = userRepository;
             _reservoirRepository = reservoirRepository;
@@ -39,7 +40,7 @@ namespace RACE2.Services
             catch (Exception ex)
             {
                 return new Reservoir();
-            }            
+            }
         }
 
         //public async Task<UserDetail> GetReservoirsByUserId(int id)
@@ -57,7 +58,7 @@ namespace RACE2.Services
             {
                 return new List<ReservoirDetailsDTO>();
             }
-            
+
         }
 
         public async Task<List<ReservoirDetailsDTO>> GetReservoirsByUserEmailId(string emailId)
@@ -71,7 +72,7 @@ namespace RACE2.Services
             {
                 return new List<ReservoirDetailsDTO>();
             }
-            
+
         }
 
         public async Task<List<DataModel.Action>> GetActionsListByReservoirIdAndCategory(int reservoirid, int category)
@@ -122,7 +123,7 @@ namespace RACE2.Services
             {
                 return new List<OperatorDTO>();
             }
-            
+
         }
 
         public async Task<List<SubmissionStatusDTO>> GetReservoirStatusByUserId(int id)
@@ -135,7 +136,7 @@ namespace RACE2.Services
             {
                 return new List<SubmissionStatusDTO>();
             }
-           
+
         }
 
         public async Task<List<UndertakerDTO>> GetUndertakerforReservoir(int id)
@@ -148,21 +149,131 @@ namespace RACE2.Services
             {
                 return new List<UndertakerDTO>();
             }
-           
+
         }
 
 
-        public async Task<SubmissionStatus> UpdateReservoirStatus(int reservoirid, int userid)
+        public async Task<SubmissionStatus> UpdateReservoirStatus(int reservoirid, int userid, string reportStatus)
         {
             try
             {
-                return await _reservoirRepository.UpdateReservoirStatus(reservoirid, userid);
+                return await _reservoirRepository.UpdateReservoirStatus(reservoirid, userid, reportStatus);
             }
             catch (Exception ex)
             {
                 return new SubmissionStatus();
             }
-           
+
+        }
+
+        public async Task<int> InsertUploadDocumentDetails(DocumentDTO document)
+        {
+            try
+            {
+                return await _reservoirRepository.InsertUploadDocumentDetails(document);
+            }
+            catch (Exception ex)
+            {
+                return 1;
+            }
+        }
+
+
+
+        public async Task<int> UpdateScannedDocumentResult(DateTime scanneddatetime, bool isClean, string uploadblobpath, string blobStorageFileName)
+        {
+            try
+            {
+                return await _reservoirRepository.UpdateScannedDocumentResult(scanneddatetime, isClean, uploadblobpath, blobStorageFileName);
+            }
+            catch (Exception ex)
+            {
+                return 1;
+            }
+        }
+
+        public async Task<DocumentDTO> GetScannedResultbyDocId(int id)
+        {
+            try
+            {
+                return await _reservoirRepository.GetScannedResultbyDocId(id);
+            }
+            catch (Exception ex)
+            {
+                return new DocumentDTO();
+            }
+        }
+
+        public async Task<int> InsertDocumentRelatedTable(int reservoirid, int submissionid, int documentid)
+        {
+            try
+            {
+                return await _reservoirRepository.InsertDocumentRelatedTable(reservoirid, submissionid, documentid);
+            }
+            catch (Exception ex)
+            {
+                return 1;
+            }
+        }
+
+        public async Task<ReservoirSubmissionDTO> GetReservoirUserIdbySubRef(string submissionReference)
+        {
+            try
+            {
+                return await _reservoirRepository.GetReservoirUserIdbySubRef(submissionReference);
+            }
+            catch (Exception ex)
+            {
+                return new ReservoirSubmissionDTO();
+            }
+        }
+
+        public async Task<int> InsertActionTableFromExtract(DataModel.Action action)
+        {
+            try
+            {
+                return await _reservoirRepository.InsertActionTableFromExtract(action);
+            }
+            catch (Exception ex)
+            {
+                return 1;
+            }
+        }
+
+        public async Task<int> InsertMaintenanceMeasureFromExtract(DataModel.Action action, Comment comment)
+        {
+            try
+            {
+                return await _reservoirRepository.InsertMaintenanceMeasureFromExtract(action,comment);
+            }
+            catch (Exception ex)
+            {
+                return 1;
+            }
+        }
+
+        public async Task<int> InsertWatchItemsFromExtract(DataModel.Action action, Comment comment)
+        {
+            try
+            {
+                return await _reservoirRepository.InsertWatchItemsFromExtract(action, comment);
+            }
+            catch (Exception ex)
+            {
+                return 1;
+            }
+        }
+
+        public async Task<int> InsertSafetyMeasuresFromExtract(SafetyMeasure safetyMeasure, Comment comment)
+        {
+            try
+            {
+                return await _reservoirRepository.InsertSafetyMeasuresFromExtract(safetyMeasure, comment);
+            }
+            catch (Exception ex)
+            {
+                return 1;
+            }
         }
     }
 }

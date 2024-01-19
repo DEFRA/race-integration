@@ -9,16 +9,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
-//using Microsoft.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using Microsoft.AspNetCore.Identity;
-//using RACE2.Logging.Service;
 using RACE2.Dto;
-using System.Data.SqlClient;
 using Microsoft.Extensions.Logging;
 using RACE2.Common;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
-//using RACE2.Logging;
+using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
+
 
 namespace RACE2.DataAccess.Repository
 {
@@ -63,7 +62,7 @@ namespace RACE2.DataAccess.Repository
         public async Task<UserSpecificDto> GetUserByEmailID(string email)
         {
 
-           // _logService.Write("Repository");
+            // _logService.Write("Repository");
             try
             {
                 using (var conn = Connection)
@@ -72,13 +71,15 @@ namespace RACE2.DataAccess.Repository
                     DynamicParameters parameters = new DynamicParameters();
                     parameters.Add("Email", email, DbType.String);
 
-                    var user = await conn.QueryAsync<UserSpecificDto,Address,UserSpecificDto>("sp_GetUserByEmailID", (user,address) =>
+
+                    var user = await conn.QueryAsync<UserSpecificDto, Address, Role, UserSpecificDto>("sp_GetUserByEmailID", (user, address, role) =>
                     {
                         user.addresses.Add(address);
-                       
+                        user.roles.Add(role);
+
                         return user;
 
-                    }, parameters,null,true,splitOn: "Id,Addressid", commandType: CommandType.StoredProcedure);
+                    }, parameters, null, true, splitOn: "Id,Addressid,Id", commandType: CommandType.StoredProcedure);
                     var result = user.GroupBy(u => u.Id).Select(g =>
                     {
                         var groupedUser = g.First();
@@ -93,7 +94,6 @@ namespace RACE2.DataAccess.Repository
             {
                 return null;
             }
-
         }
 
         public async Task<UserSpecificDto> GetUserWithRoles(string email)
@@ -376,7 +376,7 @@ namespace RACE2.DataAccess.Repository
             }
         }
 
-        public async Task<int> UpdateFirstTimeUserLogin(string email)
+        public async Task<int> UpdateFirstTimeUserLogin(string email, bool val)
         {
             _logger.LogInformation("Getting UpdateFirstTimeUserLogin for the user {email} ", email);
 
@@ -391,6 +391,7 @@ namespace RACE2.DataAccess.Repository
 
                             var parameters = new DynamicParameters();
                             parameters.Add("@email", email, DbType.String);
+                            parameters.Add("@changeFirstTimeUserValue", val, DbType.Boolean);
                             await conn.ExecuteAsync("sp_UpdateFirstTimeUser", parameters,commandType:CommandType.StoredProcedure);
                             //await conn.ExecuteAsync("Update AspNetUsers SET c_IsFirstTimeUser=0 WHERE email=@email",param:new{email=email});
                             return 1;
@@ -413,6 +414,89 @@ namespace RACE2.DataAccess.Repository
             {
                 _logger.LogError(ex, ex.Message);
                 return 0;
+            }
+        }
+
+        public async Task<int> ResetUserLockout(string email)
+        {
+            _logger.LogInformation("ResetUserLockout for the user {email} ", email);
+
+            try
+            {
+                if (email != null)
+                {
+                    try
+                    {
+                        using (var conn = Connection)
+                        {
+
+                            var parameters = new DynamicParameters();
+                            parameters.Add("@email", email, DbType.String);
+                            await conn.ExecuteAsync("sp_ResetUserLockout", parameters, commandType: CommandType.StoredProcedure);
+                            return 1;
+
+                        }
+                    }
+                    catch
+                    {
+                        _logger.LogInformation("Exception thrown");
+                        return 0;
+                    }
+                }
+                else
+                {
+                    _logger.LogInformation("The input is not valid");
+                    return 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return 0;
+            }
+        }
+
+        public async Task<OrganisationDTO> GetCompanyNameByUserId(int userId)
+        {
+            try
+            {
+                using (var conn = Connection)
+                {
+
+                    DynamicParameters parameters = new DynamicParameters();
+                    parameters.Add("userid", userId, DbType.String);
+
+
+                    var user = await conn.QueryAsync<OrganisationDTO>("sp_GetCompanyNameByUserId",parameters, commandType: CommandType.StoredProcedure);
+                   
+                    return user.FirstOrDefault();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
+        }
+
+        public async Task<SubmissionStatus> GetReservoirUserId(string submissionReference)
+        {
+            try
+            {
+                using (var conn = Connection)
+                {
+
+                    DynamicParameters parameters = new DynamicParameters();
+                    parameters.Add("submissionreference", submissionReference, DbType.String);
+                    var user = await conn.QueryAsync<SubmissionStatus>("sp_GetReservoirIdBySubmissionReference", parameters, commandType: CommandType.StoredProcedure);
+                    return user.FirstOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return null;
             }
         }
     }
