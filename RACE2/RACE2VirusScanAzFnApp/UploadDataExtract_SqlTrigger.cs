@@ -28,7 +28,7 @@ namespace RACE2VirusScanAzFnApp
         }
 
         // Visit https://aka.ms/sqltrigger to learn how to use this trigger binding
-        [Function("UploadDataExtract_SqlTrigger")]
+        [Function("UploadDataExtract_StatementDetailsTrigger")]
         public async Task Run(
             [SqlTrigger("RAW_StatementDetails", "SqlServerConnectionString")] IReadOnlyList<SqlChange<RAW_StatementDetails>> changes,
                 FunctionContext context)
@@ -61,30 +61,30 @@ namespace RACE2VirusScanAzFnApp
 
 
 
-        public static BasicDetails GetAllIds(string documentName, string connString)
-        {
-            BasicDetails basicdetails = new BasicDetails();
-            string[] subs = documentName.Split('_');
+        //public static BasicDetails GetAllIds(string documentName, string connString)
+        //{
+        //    BasicDetails basicdetails = new BasicDetails();
+        //    string[] subs = documentName.Split('_');
 
-            var query = "SELECT * FROM SubmissionStatus where SubmissionReference = '" + subs[0].ToString() + "'";
-            using (SqlConnection conn = new SqlConnection(connString))
-            {
-                conn.Open();
-                SqlCommand cmd = new SqlCommand(query, conn);
-                SqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    basicdetails.ReservoirId = Convert.ToInt16(reader["ReservoirId"]);
-                    basicdetails.SubmissionId = Convert.ToInt16(reader["Id"]);
-                    basicdetails.SubmittedUserId = Convert.ToInt16(reader["SubmittedByUserId"]);
-                    // ActualValues.LastCertificationDate = reader["LastCertificationDate"].ToString();
-                    //ActualValues.LastInspectionDate = reader["LastInspectionDate"].ToString();
-                    // ActualValues.NextInspectionDate = reader[""].ToString();
-                }
-                reader.Close();
-            }
-            return basicdetails;
-        }
+        //    var query = "SELECT * FROM SubmissionStatus where SubmissionReference = '" + subs[0].ToString() + "'";
+        //    using (SqlConnection conn = new SqlConnection(connString))
+        //    {
+        //        conn.Open();
+        //        SqlCommand cmd = new SqlCommand(query, conn);
+        //        SqlDataReader reader = cmd.ExecuteReader();
+        //        while (reader.Read())
+        //        {
+        //            basicdetails.ReservoirId = Convert.ToInt16(reader["ReservoirId"]);
+        //            basicdetails.SubmissionId = Convert.ToInt16(reader["Id"]);
+        //            basicdetails.SubmittedUserId = Convert.ToInt16(reader["SubmittedByUserId"]);
+        //            // ActualValues.LastCertificationDate = reader["LastCertificationDate"].ToString();
+        //            //ActualValues.LastInspectionDate = reader["LastInspectionDate"].ToString();
+        //            // ActualValues.NextInspectionDate = reader[""].ToString();
+        //        }
+        //        reader.Close();
+        //    }
+        //    return basicdetails;
+        //}
 
         public static int GetDocumentId(string documentName, string connString)
         {
