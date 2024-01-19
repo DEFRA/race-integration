@@ -4,7 +4,7 @@ param subscriptionid string
 param resourcegroup string
 param managedidentity string
 
-resource race2appconfig_resource 'Microsoft.AppConfiguration/configurationStores@2022-05-01' = {
+resource race2appconfig_resource 'Microsoft.AppConfiguration/configurationStores@2023-03-01' = {
   name: appconfigName
   location: location
   tags: {
@@ -26,5 +26,9 @@ resource race2appconfig_resource 'Microsoft.AppConfiguration/configurationStores
     disableLocalAuth: false
     softDeleteRetentionInDays: 7
     enablePurgeProtection: false
+    publicNetworkAccess: 'Disabled'
   }
 }
+
+
+

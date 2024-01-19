@@ -18,7 +18,7 @@ dotnet ef database update -c ConfigurationDbContext
 
 //startup project->RACE2.SecurityProvider, packagemanager defualt project->RACE2.Dto
 
-Add-Migration AddScanFileColumns -c ApplicationDbContext -o Migrations/IdentityServer/ApplicationDb
+Add-Migration UpdateChangeHistoryTables -c ApplicationDbContext -o Migrations/IdentityServer/ApplicationDb
 
 
 	update-database -context ApplicationDbContext
@@ -26,5 +26,20 @@ Add-Migration AddScanFileColumns -c ApplicationDbContext -o Migrations/IdentityS
 //dotnet ef commands
 dotnet ef migrations add InitialMigration -c ApplicationDbContext -o Migrations/IdentityServer/ApplicationDb
 dotnet ef database update -c ApplicationDbContext
+
+
+ALTER DATABASE RACE2DB
+SET CHANGE_TRACKING = ON
+(CHANGE_RETENTION = 2 DAYS, AUTO_CLEANUP = ON);
+
+ALTER TABLE RAW_StatementDetails
+ENABLE CHANGE_TRACKING;
+
+ALTER TABLE RAW_StatementDetails
+ADD Id int identity(1,1) not null
+GO
+
+Alter table RAW_StatementDetails
+ADD Primary Key (Id)
 
 

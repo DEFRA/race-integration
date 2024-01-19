@@ -1,7 +1,7 @@
 param location string
-param appserviceplanName string = 'ASP-POCRACINFRG1401-85f7'
+param appserviceplanName string 
 
-resource appserviceplanresource 'Microsoft.Web/serverfarms@2022-09-01' = {
+resource appserviceplanresource 'Microsoft.Web/serverfarms@2023-01-01' = {
   name: appserviceplanName
   location: location
   tags: {
@@ -20,7 +20,6 @@ resource appserviceplanresource 'Microsoft.Web/serverfarms@2022-09-01' = {
     elasticScaleEnabled: true
     maximumElasticWorkerCount: 20
     isSpot: false
-    reserved: true
     isXenon: false
     hyperV: false
     targetWorkerCount: 0

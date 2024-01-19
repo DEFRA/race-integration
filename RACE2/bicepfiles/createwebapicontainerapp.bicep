@@ -15,15 +15,15 @@ var tagVal=json(tag)
 var subscriptionid = subscription().subscriptionId
 var location = resourceGroup().location
 
-resource managedEnvironments_race2containerappenv_name_resource 'Microsoft.App/managedEnvironments@2023-05-01' existing= {
+resource managedEnvironments_race2containerappenv_name_resource 'Microsoft.App/managedEnvironments@2023-08-01-preview' existing= {
   name: race2appenv 
 }
 
-resource managedIdentity_resource 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' existing= {
+resource managedIdentity_resource 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-07-31-preview' existing= {
   name: managedidentity 
 }
 
-resource containerWebApiApp 'Microsoft.App/containerApps@2023-05-01' = {
+resource containerWebApiApp 'Microsoft.App/containerApps@2023-08-01-preview' = {
   name: containerAppName
   location: location
   properties: {

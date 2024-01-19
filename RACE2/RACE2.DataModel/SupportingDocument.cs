@@ -19,13 +19,13 @@ namespace RACE2.DataModel
         [StringLength(64)]
         public string RaceDocumentId { get; set; }
         [Required,StringLength(100)]
-        public string FileName { get; set; }    
+        public string UploadFileName { get; set; }    
         [StringLength(1024)]
-        public string FileLocation { get; set; }
+        public string UploadFileLocation { get; set; }
         [StringLength(64)]
-        public string FileType { get; set; }
+        public string UploadFileType { get; set; }
         [StringLength(250)]
-        public string DocumentName { get; set; }
+        public string? DocumentTitle { get; set; }
         [StringLength(1024)]
         public string DocumentDescription { get; set; }
         [Required,StringLength(64)]
@@ -39,10 +39,10 @@ namespace RACE2.DataModel
         public string ProtectiveMarking { get; set;}
 
         [Required]
-        public FeatureFunction SuppliedViaService { get; set; }
+        public FeatureFunction SourceService { get; set; }
 
         [Required]
-        public UserDetail SuppliedBy { get; set; }
+        public UserDetail UploadByUser { get; set; }
 
         [Required]
         public DateTime DateSent { get; set;}
@@ -50,9 +50,9 @@ namespace RACE2.DataModel
         public DateTime? DateReceived { get; set;}
 
         [StringLength(64)]
-        public string? UsedTemplateEdition { get; set;}
+        public string? TemplateType { get; set;}
 
-        public decimal? UsedTemplateVersion { get; set;}
+        public decimal? TemplateVersion { get; set;}
 
         public DateTime AVScanDate { get; set;}
 

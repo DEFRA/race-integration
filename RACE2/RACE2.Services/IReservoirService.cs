@@ -38,5 +38,15 @@ namespace RACE2.Services
 
         public Task<int> InsertDocumentRelatedTable(int reservoirid, int submissionid, int documentid);
 
+        public Task<ReservoirSubmissionDTO> GetReservoirUserIdbySubRef(string submissionReference);
+
+        public Task<int> InsertActionTableFromExtract(DataModel.Action action);
+
+        public Task<int> InsertMaintenanceMeasureFromExtract(DataModel.Action action, Comment comment);
+
+        public Task<int> InsertWatchItemsFromExtract(DataModel.Action action, Comment comment);
+
+        public Task<int> InsertSafetyMeasuresFromExtract(SafetyMeasure safetyMeasure, Comment comment);
+
     }
 }

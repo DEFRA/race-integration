@@ -3,26 +3,15 @@ param location string
 param subscriptionid string 
 param resourcegroup string
 param managedidentity string
-param vnet string
-param subnetacr string
 
-resource virtualNetworkResource 'Microsoft.Network/virtualNetworks@2023-05-01' existing = {
-  name: vnet
-}
-
-resource subnetacrResource 'Microsoft.Network/virtualNetworks/subnets@2023-05-01' existing= {
-  name: subnetacr
-}
-
-resource race2acrresource 'Microsoft.ContainerRegistry/registries@2023-01-01-preview' = {
+resource race2acrresource 'Microsoft.ContainerRegistry/registries@2023-11-01-preview' = {
   name: containerregistryname
   location: location
   tags: {
     ServiceCode: 'RAC'
   }
   sku: {
-    name: 'Standard'
-    tier: 'Standard'
+    name: 'Premium'
   }
   identity: {
     type: 'UserAssigned'
@@ -60,8 +49,8 @@ resource race2acrresource 'Microsoft.ContainerRegistry/registries@2023-01-01-pre
       status: 'disabled'
     }
     dataEndpointEnabled: false
-    publicNetworkAccess: 'Enabled'
-    networkRuleBypassOptions: 'AzureServices'
+    publicNetworkAccess: 'Disabled'
+    networkRuleBypassOptions: 'Deny'
     zoneRedundancy: 'Disabled'
     anonymousPullEnabled: false
   }
@@ -69,23 +58,4 @@ resource race2acrresource 'Microsoft.ContainerRegistry/registries@2023-01-01-pre
 output registryusername string = race2acrresource.listCredentials().username
 output registrypassword string = race2acrresource.listCredentials().passwords[0].value
 
-resource containerRegistryPrivateEndpoint 'Microsoft.Network/privateEndpoints@2022-01-01' = {
-  name: 'PrivateEndpointACR'
-  location: location
-  properties: {
-    privateLinkServiceConnections: [
-      {
-        name: 'PrivateEndpointACR'
-        properties: {
-          groupIds: [
-            'registry'
-          ]
-          privateLinkServiceId: race2acrresource.id
-        }
-      }
-    ]
-    subnet: {
-      id: '${virtualNetworkResource.id}/subnets/${subnetacrResource.name}'
-    }
-  }
-}
+

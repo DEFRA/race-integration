@@ -1,49 +1,39 @@
-param topics_DefenderEventGridTopic_name string = 'DefenderEventGridTopic'
-param sites_RACE2DefenderScanAzurefn_externalid string = '/subscriptions/d9cce027-07b6-4275-a215-dd8d52b9d469/resourceGroups/POCRACINFRG1401/providers/Microsoft.Web/sites/RACE2DefenderScanAzurefn'
+param configurationStores_prdracinfac1401_name string = 'prdracinfac1401'
+param privateEndpoints_PrivateEndpointAppConfig_externalid string = '/subscriptions/d9cce027-07b6-4275-a215-dd8d52b9d469/resourceGroups/POCRACINFRG1401/providers/Microsoft.Network/privateEndpoints/PrivateEndpointAppConfig'
 
-resource topics_DefenderEventGridTopic_name_resource 'Microsoft.EventGrid/topics@2023-12-15-preview' = {
-  name: topics_DefenderEventGridTopic_name
+resource configurationStores_prdracinfac1401_name_resource 'Microsoft.AppConfiguration/configurationStores@2023-03-01' = {
+  name: configurationStores_prdracinfac1401_name
   location: 'uksouth'
   tags: {
     ServiceCode: 'RAC'
   }
   sku: {
-    name: 'Basic'
+    name: 'standard'
   }
-  kind: 'Azure'
   identity: {
-    type: 'None'
+    type: 'UserAssigned'
+    userAssignedIdentities: {
+      '/subscriptions/d9cce027-07b6-4275-a215-dd8d52b9d469/resourcegroups/POCRACINFRG1401/providers/Microsoft.ManagedIdentity/userAssignedIdentities/PRDRACINFMI1401': {}
+    }
   }
   properties: {
-    minimumTlsVersionAllowed: '1.0'
-    inputSchema: 'EventGridSchema'
-    publicNetworkAccess: 'Enabled'
-    inboundIpRules: []
+    encryption: {}
     disableLocalAuth: false
-    dataResidencyBoundary: 'WithinGeopair'
+    softDeleteRetentionInDays: 7
+    enablePurgeProtection: false
   }
 }
 
-resource topics_DefenderEventGridTopic_name_topics_DefenderEventGridTopic_name_Subscription 'Microsoft.EventGrid/topics/eventSubscriptions@2023-12-15-preview' = {
-  parent: topics_DefenderEventGridTopic_name_resource
-  name: '${topics_DefenderEventGridTopic_name}Subscription'
+resource configurationStores_prdracinfac1401_name_PrivateEndpointAppConfig 'Microsoft.AppConfiguration/configurationStores/privateEndpointConnections@2023-03-01' = {
+  parent: configurationStores_prdracinfac1401_name_resource
+  name: 'PrivateEndpointAppConfig'
   properties: {
-    destination: {
-      properties: {
-        resourceId: '${sites_RACE2DefenderScanAzurefn_externalid}/functions/MoveMaliciousBlobEventTrigger'
-        maxEventsPerBatch: 1
-        preferredBatchSizeInKilobytes: 64
-      }
-      endpointType: 'AzureFunction'
+    privateEndpoint: {
+      id: privateEndpoints_PrivateEndpointAppConfig_externalid
     }
-    filter: {
-      enableAdvancedFilteringOnArrays: true
-    }
-    labels: []
-    eventDeliverySchema: 'EventGridSchema'
-    retryPolicy: {
-      maxDeliveryAttempts: 30
-      eventTimeToLiveInMinutes: 1440
+    privateLinkServiceConnectionState: {
+      status: 'Approved'
+      description: 'Auto-Approved'
     }
   }
 }

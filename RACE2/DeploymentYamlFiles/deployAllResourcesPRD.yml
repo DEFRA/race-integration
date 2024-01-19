@@ -8,12 +8,12 @@ name: Deploy All Resources
 variables:
   vmImageName: 'ubuntu-latest'
 
-  azureServiceConnection: 'AZR-RAC-POC1'
+  azureServiceConnection: 'AZR-RAC-PRD1'
   resourceGroupName: 'PRDRACINFRG1401'
   location: 'uksouth' 
   templateFileResourceGroup: './RACE2/bicepfiles/createresourcegroup.bicep'  
   templateFileAllResources: './RACE2/bicepfiles/createallresources.bicep'
-  parameterfileAllResources: './RACE2/DeploymentYamlFiles/deployAlResourcesParametersPRD.json'
+  parameterfileAllResources: './RACE2/bicepfiles/createallresourcesPRD.bicepparam'
 pool:
   vmImage: $(vmImageName)
 
@@ -25,6 +25,6 @@ steps:
     scriptLocation: inlineScript
     useGlobalConfig: false    
     inlineScript: |
-      az --version
-      az group create -n $(resourceGroupName) -l $(location)     
-      az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFileAllResources) --parameter @$(parameterfileAllResources)
+      az --version 
+      az group create -n $(resourceGroupName) -l $(location)  
+      az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFileAllResources) --parameters $(parameterfileAllResources)

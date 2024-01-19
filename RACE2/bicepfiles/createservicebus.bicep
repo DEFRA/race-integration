@@ -20,7 +20,7 @@ resource ServiceBus_name_resource 'Microsoft.ServiceBus/namespaces@2022-10-01-pr
   }
 }
 
-resource Race2ServiceBus_name_RootManageSharedAccessKey 'Microsoft.ServiceBus/namespaces/authorizationrules@2022-10-01-preview' = {
+resource Race2ServiceBus_name_RootManageSharedAccessKey 'Microsoft.ServiceBus/namespaces/AuthorizationRules@2022-10-01-preview' = {
   parent: ServiceBus_name_resource
   name: 'RootManageSharedAccessKey'
   properties: {

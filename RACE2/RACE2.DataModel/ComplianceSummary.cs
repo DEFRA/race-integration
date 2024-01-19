@@ -23,11 +23,14 @@ namespace RACE2.DataModel
         public string? ComplianceStatus { get; set; }
         [StringLength(1024)]
         public string? Comment { get; set; }    
-        public UserDetail? CreatedBy { get; set; }
+        public UserDetail? CreatedByUser { get; set; }
+
+        [StringLength(250)]
+        public string? CreatedByName { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime LastModifiedDate { get; set;}
 
-        public int SourceSubmissionId { get; set; }
+        public SubmissionStatus? SourceSubmissionId { get; set; }
 
         public Reservoir Reservoir { get; set;} =  new Reservoir();
 
