@@ -3,15 +3,15 @@ trigger:
 pr:
 - none
 
-name: Deploy Sql Server
+name: Deploy App Config
 
 variables:
   vmImageName: 'ubuntu-latest'
 
   azureServiceConnection: 'AZR-RAC-POC1'
   resourceGroupName: 'POCRACINFRG1401' 
-  templateFile: './RACE2/bicepfiles/createsqlserver.bicep'
-  parameterfile: './RACE2/bicepfiles/createsqlserver.bicepparam'
+  templateFile: './RACE2/bicepfiles/createprivateendpointswithvnet.bicep'
+  parameterfile: './RACE2/bicepfiles/createprivateendpointswithvnet_prd.bicepparam'
 
 pool:
   vmImage: $(vmImageName)

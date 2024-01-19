@@ -175,6 +175,34 @@ resource storageBlobDataContributorRoleAssignment 'Microsoft.Authorization/roleA
   }
 }
 
+resource storageFileDataPrivilegedContributorRoleDefinition 'Microsoft.Authorization/roleDefinitions@2022-05-01-preview' existing = {
+  scope: resourceGroup()
+  name: '69566ab7-960f-475b-8e7c-b3118f30c6bd'
+}
+
+resource storageFileDataPrivilegedContributorRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name:  guid(resourceGroup().id, mi.id, storageFileDataPrivilegedContributorRoleDefinition.id)
+  properties: {
+    roleDefinitionId: storageFileDataPrivilegedContributorRoleDefinition.id
+    principalId: mi.properties.principalId
+    principalType: 'ServicePrincipal'
+  }
+}
+
+resource storageTableDataContributorRoleDefinition 'Microsoft.Authorization/roleDefinitions@2022-05-01-preview' existing = {
+  scope: resourceGroup()
+  name: '0a9a7e1f-b9d0-4cc4-a60d-0319b160aaa3'
+}
+
+resource storageTableDataContributorRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name:  guid(resourceGroup().id, mi.id, storageTableDataContributorRoleDefinition.id)
+  properties: {
+    roleDefinitionId: storageTableDataContributorRoleDefinition.id
+    principalId: mi.properties.principalId
+    principalType: 'ServicePrincipal'
+  }
+}
+
 resource SQLDBContributorRoleDefinition 'Microsoft.Authorization/roleDefinitions@2022-05-01-preview' existing = {
   scope: resourceGroup()
   name: '9b7fa17d-e63e-47b0-bb0a-15c516ac86ec'
@@ -198,20 +226,6 @@ resource SQLManagedInstanceContributorRoleAssignment 'Microsoft.Authorization/ro
   name:  guid(resourceGroup().id, mi.id, SQLManagedInstanceContributorRoleDefinition.id)
   properties: {
     roleDefinitionId: SQLManagedInstanceContributorRoleDefinition.id
-    principalId: mi.properties.principalId
-    principalType: 'ServicePrincipal'
-  }
-}
-
-resource SQLSecurityManagerRoleDefinition 'Microsoft.Authorization/roleDefinitions@2022-05-01-preview' existing = {
-  scope: resourceGroup()
-  name: '056cd41c-7e88-42e1-933e-88ba6a50c9c3'
-}
-
-resource SQLSecurityManagerRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name:  guid(resourceGroup().id, mi.id, SQLSecurityManagerRoleDefinition.id)
-  properties: {
-    roleDefinitionId: SQLSecurityManagerRoleDefinition.id
     principalId: mi.properties.principalId
     principalType: 'ServicePrincipal'
   }
