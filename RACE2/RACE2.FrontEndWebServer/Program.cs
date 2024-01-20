@@ -110,7 +110,7 @@ try
         options.Cookie.MaxAge = options.ExpireTimeSpan; // optional
         options.SlidingExpiration = true;
         options.LoginPath = "/login";
-        options.LogoutPath = "/login";  //"/logout";
+        options.LogoutPath = "/logout";
     })
     .AddOpenIdConnect(
         OpenIdConnectDefaults.AuthenticationScheme,
