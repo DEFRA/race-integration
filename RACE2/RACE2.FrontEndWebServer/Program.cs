@@ -109,8 +109,8 @@ try
         options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
         options.Cookie.MaxAge = options.ExpireTimeSpan; // optional
         options.SlidingExpiration = true;
-        options.LoginPath = RACE2IDPURL + "/Identity/Account/Login"; //"/login";
-        options.LogoutPath = RACE2IDPURL + "/Identity/Account/Logout"; //logout";
+        options.LoginPath = "/login";
+        options.LogoutPath = "/login";  //"/logout";
     })
     .AddOpenIdConnect(
         OpenIdConnectDefaults.AuthenticationScheme,
