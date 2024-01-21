@@ -106,7 +106,7 @@ try
     //.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(10);//default 5 min
         options.Cookie.MaxAge = options.ExpireTimeSpan; // optional
         options.SlidingExpiration = true;
         options.LoginPath = "/login";
@@ -133,7 +133,7 @@ try
             // When set to code, the middleware will use PKCE protection
             options.ResponseType = "code id_token";
             // Save the tokens we receive from the IDP
-            options.SaveTokens = true; // default false
+            options.SaveTokens = false; // default false
             // It's recommended to always get claims from the UserInfoEndpoint during the flow.
             options.GetClaimsFromUserInfoEndpoint = true;
             options.Scope.Add("race2WebApi");
