@@ -169,8 +169,10 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                             //_fileNameResult=await jsRuntime.InvokeAsync<string>("getFileName");
 
                             FileUploadInProgress = true;
-                            StateHasChanged();
-
+                            await InvokeAsync(() =>
+                            {
+                                StateHasChanged();
+                            });
                             //System.Threading.Thread.Sleep(20000);//wait for 20 seconds
                             var timeToWait = Int32.Parse(_config["TimeToWaitForUpload"]);
                             System.Threading.Thread.Sleep(timeToWait); //wait for timeToWait seconds
