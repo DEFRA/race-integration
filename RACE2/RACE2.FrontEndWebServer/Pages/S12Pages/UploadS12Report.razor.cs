@@ -127,11 +127,11 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 {
                     try
                     {
-                        FileUploadInProgress = true;
-                        await InvokeAsync(() =>
-                        {
-                            StateHasChanged();
-                        });
+                        //FileUploadInProgress = true;
+                        //await InvokeAsync(() =>
+                        //{
+                        //    StateHasChanged();
+                        //});
 
                         //var containerName = UserName.Split("@")[0];
                         //if (containerName.Contains('.'))
@@ -167,7 +167,12 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                             fileUploadViewModels.Add(fileUploadViewModel);
                             SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(Int32.Parse(ReservoirId), userDetails.Id, "Sent");
                             //_fileNameResult=await jsRuntime.InvokeAsync<string>("getFileName");
-                            
+
+                            FileUploadInProgress = true;
+                            await InvokeAsync(() =>
+                            {
+                                StateHasChanged();
+                            });
                             //System.Threading.Thread.Sleep(20000);//wait for 20 seconds
                             var timeToWait = Int32.Parse(_config["TimeToWaitForUpload"]);
                             System.Threading.Thread.Sleep(timeToWait); //wait for timeToWait seconds
