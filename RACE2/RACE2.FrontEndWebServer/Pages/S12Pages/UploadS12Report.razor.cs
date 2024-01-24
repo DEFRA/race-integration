@@ -31,6 +31,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
         [Inject]
         public INotification _notificationService { get; set; } = default!;
 
+        private bool FileUploadInProgress { get; set; } = false;
         private string _fileNameResult;
         public string fileExtn = String.Empty;
         private string UserName { get; set; } = "Unknown";
@@ -63,6 +64,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
             AuthenticationState authState = await AuthenticationStateTask; // AuthenticationStateProvider.GetAuthenticationStateAsync();
             UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
             userDetails = await userService.GetUserByEmailID(UserName);
+            FileUploadInProgress = false;
             await InvokeAsync(() =>
             {
                 StateHasChanged();
@@ -125,14 +127,20 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 {
                     try
                     {
+                        FileUploadInProgress = true;
+                        await InvokeAsync(() =>
+                        {
+                            StateHasChanged();
+                        });
+
                         //var containerName = UserName.Split("@")[0];
                         //if (containerName.Contains('.'))
                         //{
                         //    containerName = containerName.Split('.')[0];
                         //}
                         var containerNameToUplodTo = _config["UnscannedContainer"];//"unscannedcontent";
-                                                                                   //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + "."+ extn;
-                                                                                   //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + SubmissionReference + "." + fileExtn;
+                        //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + "."+ extn;
+                        //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + SubmissionReference + "." + fileExtn;
                         var trustedFileNameForFileStorage = SubmissionReference + "_" + DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + DateTime.Now.Hour + DateTime.Now.Minute + DateTime.Now.Second + "." + fileExtn;
                         //Store the uploaded document information
                         documentDTO.FileName = selectedFile.Name.Split('.')[0];
@@ -159,8 +167,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                             fileUploadViewModels.Add(fileUploadViewModel);
                             SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(Int32.Parse(ReservoirId), userDetails.Id, "Sent");
                             //_fileNameResult=await jsRuntime.InvokeAsync<string>("getFileName");
-
-                            //System.Threading.Thread.Sleep(20000);//wait for 10 seconds
+                            
+                            //System.Threading.Thread.Sleep(20000);//wait for 20 seconds
                             var timeToWait = Int32.Parse(_config["TimeToWaitForUpload"]);
                             System.Threading.Thread.Sleep(timeToWait); //wait for timeToWait seconds
 
