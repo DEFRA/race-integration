@@ -436,3 +436,6 @@ FodyWeavers.xsd
 /.gitignore
 /.gitignore
 /.gitignore
+/RACE2/RACE2.SecurityAzureFunction/local.settings.json
+/RACE2/RACE2.TrackChangeHistoryFunction/local.settings.json
+/.gitignore
