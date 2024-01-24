@@ -168,11 +168,11 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                             SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(Int32.Parse(ReservoirId), userDetails.Id, "Sent");
                             //_fileNameResult=await jsRuntime.InvokeAsync<string>("getFileName");
 
-                            FileUploadInProgress = true;
-                            await InvokeAsync(() =>
-                            {
-                                StateHasChanged();
-                            });
+                            //FileUploadInProgress = true;
+                            //await InvokeAsync(() =>
+                            //{
+                            //    StateHasChanged();
+                            //});
                             //System.Threading.Thread.Sleep(20000);//wait for 20 seconds
                             var timeToWait = Int32.Parse(_config["TimeToWaitForUpload"]);
                             System.Threading.Thread.Sleep(timeToWait); //wait for timeToWait seconds
