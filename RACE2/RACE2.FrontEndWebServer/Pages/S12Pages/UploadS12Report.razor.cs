@@ -183,11 +183,11 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
 
                             var RSTEmailAddress = String.IsNullOrEmpty(_config["RSTEmailAddress"]) ? userDetails.Email : _config["RSTEmailAddress"];
                             var bytes = await blobStorageService.GetBlobAsByteArray(containerNameToDownloadFrom, trustedFileNameForFileStorage);
-                            //if (bytes == null)
-                            //{
-                            //    System.Threading.Thread.Sleep(5000);//wait for 5 more seconds
-                            //    bytes = await blobStorageService.GetBlobAsByteArray(containerNameToDownloadFrom, trustedFileNameForFileStorage);
-                            //}
+                            if (bytes == null)
+                            {
+                                System.Threading.Thread.Sleep(5000);//wait for 5 more seconds
+                                bytes = await blobStorageService.GetBlobAsByteArray(containerNameToDownloadFrom, trustedFileNameForFileStorage);
+                            }
                             if (bytes != null)
                             {
                                 await _notificationService.SendConfirmationMailtoSE(userDetails.Email, ReservoirRegName);
