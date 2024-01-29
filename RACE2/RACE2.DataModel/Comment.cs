@@ -41,5 +41,10 @@ namespace RACE2.DataModel
         public DateTime? ClosedDate { get; set; }
 
         public bool? IsQualityCheckRequired { get; set; }
+
+        public int SourceSubmissionId { get; set; }
+
+        [ForeignKey("SourceSubmissionId")]
+        public virtual SubmissionStatus SubmissionStatus { get; set; }
     }
 }

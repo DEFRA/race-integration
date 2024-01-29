@@ -18,7 +18,7 @@ namespace RACE2.Services
   
         public Task<List<DataModel.Action>> GetActionsListByReservoirIdAndCategory(int reservoirid, int category);
 
-        public Task<List<SafetyMeasure>> GetSafetyMeasuresListByReservoirId(int reservoirid);
+        
 
         public Task<Address> GetAddressByReservoirId(int reservoirid, string operatortype);
 
@@ -47,6 +47,10 @@ namespace RACE2.Services
         public Task<int> InsertWatchItemsFromExtract(DataModel.Action action, Comment comment);
 
         public Task<int> InsertSafetyMeasuresFromExtract(SafetyMeasure safetyMeasure, Comment comment);
+
+        public Task<SafetyMeasure> GetSafetyMeasuresByReservoir(int reservoirid, string reference);
+
+        public Task<int> InsertSafetyMeasureChangeHistory(List<SafetyMeasuresChangeHistory> changeHistory);
 
     }
 }

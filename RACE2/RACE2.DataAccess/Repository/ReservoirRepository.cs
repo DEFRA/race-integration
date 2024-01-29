@@ -15,6 +15,7 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using Microsoft.Data.SqlClient;
 using System.Reflection.Metadata;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace RACE2.DataAccess.Repository
 {
@@ -159,17 +160,17 @@ namespace RACE2.DataAccess.Repository
             }
         }
 
-        public async Task<List<SafetyMeasure>> GetSafetyMeasuresListByReservoirId(int reservoirid)
-        {
-            using (var conn = Connection)
-            {
+        //public async Task<List<SafetyMeasure>> GetSafetyMeasuresListByReservoirId(int reservoirid)
+        //{
+        //    using (var conn = Connection)
+        //    {
 
-                var parameters = new DynamicParameters();
-                parameters.Add("reservoirid", reservoirid, DbType.Int64);
-                var actionlist = await conn.QueryAsync<SafetyMeasure>("sp_GetSafetyMeasuresListByReservoirId", parameters, commandType: CommandType.StoredProcedure);
-                return actionlist.ToList();
-            }
-        }
+        //        var parameters = new DynamicParameters();
+        //        parameters.Add("reservoirid", reservoirid, DbType.Int64);
+        //        var actionlist = await conn.QueryAsync<SafetyMeasure>("sp_GetSafetyMeasuresListByReservoirId", parameters, commandType: CommandType.StoredProcedure);
+        //        return actionlist.ToList();
+        //    }
+       // }
 
         public async Task<Address> GetAddressByReservoirId(int reservoirid, string operatortype)
         {
@@ -633,7 +634,8 @@ namespace RACE2.DataAccess.Repository
                     parameters.Add("reference", safetyMeasure.Reference, DbType.String);
                     parameters.Add("description", safetyMeasure.Description, DbType.String);
                     parameters.Add("targetdate", safetyMeasure.TargetDate, DbType.DateTime);
-                    parameters.Add("status", safetyMeasure.Description, DbType.String);
+                    parameters.Add("createddate", safetyMeasure.CreatedDate,DbType.DateTime);
+                    parameters.Add("status", safetyMeasure.Status, DbType.String);
                     parameters.Add("comment", comment.CommentText, DbType.String);
                     parameters.Add("isqualitycheckrequired", comment.IsQualityCheckRequired, DbType.Boolean);
                     parameters.Add("userid", comment.CreatedByUserId, DbType.Int32);
@@ -649,6 +651,80 @@ namespace RACE2.DataAccess.Repository
                 return 0;
             }
             return 1;
+        }
+
+        public async Task<SafetyMeasure> GetSafetyMeasuresByReservoir(int reservoirid,string reference)
+        {
+            _logger.LogInformation("Getting safety Measure for the reservoir {id}", reservoirid);
+            try
+            {
+
+                using (var conn = Connection)
+                {
+                    var parameters = new DynamicParameters();
+                    parameters.Add("reservoirid", reservoirid, DbType.Int32);
+                    parameters.Add("reference", reference, DbType.String);
+                    if (reservoirid != 0)
+                    {
+
+                        var safetymeasurelist = await conn.QueryAsync<SafetyMeasure>("sp_GetSafetyMeasureByReservoir", parameters, commandType: CommandType.StoredProcedure);
+
+                        return safetymeasurelist.FirstOrDefault();
+                    }
+
+                    else
+                    {
+                        _logger.LogInformation($"The input is not valid or null {1}", reservoirid);
+                        return null;
+                    }
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return null;
+            }
+        }
+
+        public async Task<int> InsertSafetyMeasureChangeHistory(List<SafetyMeasuresChangeHistory> changeHistory)
+        {
+
+            _logger.LogInformation("Adding Safety Measure channge History");
+            try
+            {
+
+                using (var conn = Connection)
+                {
+                    foreach (var change in changeHistory)
+                    {
+
+                        var parameters = new DynamicParameters();
+                        parameters.Add("reservoirid", change.ReservoirId, DbType.Int32);
+                        parameters.Add("submissionid", change.SourceSubmissionId, DbType.Int32);                       
+                        parameters.Add("measureId", change.MeasureId, DbType.Int32);
+                        parameters.Add("fieldName", change.FieldName, DbType.String);
+                        parameters.Add("oldValue", change.OldValue, DbType.String);
+                        parameters.Add("newValue", change.NewValue == null ?string.Empty:change.NewValue, DbType.String);
+                        parameters.Add("changeDateTime", change.ChangeDateTime, DbType.DateTime2);
+                        parameters.Add("isBackendChange", change.IsBackEndChange, DbType.Boolean);
+                        parameters.Add("userId", change.ChangeByUserId, DbType.Int32);
+
+                        var result = await conn.ExecuteAsync("sp_InsertSafetyMeasuresChangeHistory", parameters, commandType: CommandType.StoredProcedure);
+
+                        
+                    }
+
+                    return 1;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return 0;
+            }
         }
 
 

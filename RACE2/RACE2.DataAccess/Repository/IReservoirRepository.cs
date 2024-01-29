@@ -15,9 +15,6 @@ namespace RACE2.DataAccess.Repository
         public Task<List<ReservoirDetailsDTO>> GetReservoirsByUserId(int id);
         public Task<List<DataModel.Action>> GetActionsListByReservoirIdAndCategory(int reservoirid, int category);
       
-        public Task<List<SafetyMeasure>> GetSafetyMeasuresListByReservoirId(int reservoirid);
-        //  public Task<UserDetail> GetReservoirsByUserEmailId(string email);
-
         public Task<Address> GetAddressByReservoirId(int reservoirid, string operatortype);
 
         public Task<List<OperatorDTO>> GetOperatorsforReservoir(int reservoirid, string operatortype);
@@ -47,6 +44,9 @@ namespace RACE2.DataAccess.Repository
 
         public Task<int> InsertSafetyMeasuresFromExtract(SafetyMeasure safetyMeasure, Comment comment);
 
+        public Task<SafetyMeasure> GetSafetyMeasuresByReservoir(int reservoirid, string reference);
+
+        public Task<int> InsertSafetyMeasureChangeHistory(List<SafetyMeasuresChangeHistory> changeHistory);
       //  public Task<SupportingDocument> GetDocumentById(string blobStorageName);
 
     }

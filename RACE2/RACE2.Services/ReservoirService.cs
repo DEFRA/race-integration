@@ -87,18 +87,18 @@ namespace RACE2.Services
             }
         }
 
-        public async Task<List<SafetyMeasure>> GetSafetyMeasuresListByReservoirId(int reservoirid)
-        {
-            try
-            {
-                return await _reservoirRepository.GetSafetyMeasuresListByReservoirId(reservoirid);
-            }
-            catch (Exception ex)
-            {
-                return new List<SafetyMeasure>();
-            }
+        //public async Task<List<SafetyMeasure>> GetSafetyMeasuresListByReservoirId(int reservoirid)
+        //{
+        //    try
+        //    {
+        //        return await _reservoirRepository.GetSafetyMeasuresListByReservoirId(reservoirid);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new List<SafetyMeasure>();
+        //    }
 
-        }
+        //}
 
         public async Task<Address> GetAddressByReservoirId(int reservoirid, string operatortype)
         {
@@ -273,6 +273,30 @@ namespace RACE2.Services
             catch (Exception ex)
             {
                 return 1;
+            }
+        }
+
+        public async Task<SafetyMeasure> GetSafetyMeasuresByReservoir(int reservoirid, string reference)
+        {
+            try
+            {
+                return await _reservoirRepository.GetSafetyMeasuresByReservoir(reservoirid,reference);
+            }
+            catch (Exception ex)
+            {
+                return new SafetyMeasure();
+            }
+        }
+
+        public async Task<int> InsertSafetyMeasureChangeHistory(List<SafetyMeasuresChangeHistory> changeHistory)
+        {
+            try
+            {
+                return await _reservoirRepository.InsertSafetyMeasureChangeHistory(changeHistory);
+            }
+            catch (Exception ex)
+            {
+                return 0;
             }
         }
     }
