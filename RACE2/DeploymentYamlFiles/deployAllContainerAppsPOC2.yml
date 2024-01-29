@@ -28,7 +28,7 @@ variables:
   - name: dockerfile_webapiexternal
     value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_WebApiExternal'  
   - name: containerRegistry
-    value: 'AZR-RAC-POC2-DockerRegistry'
+    value: 'AZR-RAC-POC1-ACR'
   - name: tag
     value: '$(Build.BuildId)'
   - name: azureServiceConnection

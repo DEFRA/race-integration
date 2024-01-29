@@ -16,11 +16,11 @@
 		"tags": {
 			"environment": "Production"
 		}
-	} ,
+	},
 	{
 		"key": "SqlConnectionString",
-		"value": "SqlServerConnectionStringSecretUrl",
-		"contentType": "application/vnd.microsoft.appconfig.keyvaultref+json;charset=utf-8",
+		"value": "Server=tcp:pocracinfss1401.database.windows.net,1433;Initial Catalog=pocracinfdb1401;Persist Security Info=False;Authentication=Active Directory Default;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;",
+		"contentType": "string",
         "label": "Production",
 		"tags": {
 			"environment": "Production"
@@ -29,6 +29,15 @@
 	{
 		"key": "StorageAccessKey",
 		"value": "StorageAccountKeySecretUrl",
+		"contentType": "application/vnd.microsoft.appconfig.keyvaultref+json;charset=utf-8",
+        "label": "Production",
+		"tags": {
+			"environment": "Production"
+		}
+	},
+	{
+		"key": "NotifyAPIKey",
+		"value": "NotifyAPIKeyUrl",
 		"contentType": "application/vnd.microsoft.appconfig.keyvaultref+json;charset=utf-8",
         "label": "Production",
 		"tags": {
@@ -54,15 +63,6 @@
 		}
 	},
 	{
-		"key": "ServiceBusConnectionString",
-		"value": "ServiceBusConnectionStringSecretUrl",
-		"contentType": "application/vnd.microsoft.appconfig.keyvaultref+json;charset=utf-8",
-        "label": "Production",
-		"tags": {
-			"environment": "Production"
-		}
-	},
-	{
 		"key": "AppInsightsConnectionString",
 		"value": "ApplicationInsightConnectionStringSecretUrl",
 		"contentType": "application/vnd.microsoft.appconfig.keyvaultref+json;charset=utf-8",
@@ -79,7 +79,7 @@
 		"tags": {
 			"environment": "Production"
 		}
-	} ,
+	},
 	{
 		"key": "RACE2SecurityProviderURL",
 		"value": "SecurityProviderContainerAppNameValue",
@@ -88,7 +88,7 @@
 		"tags": {
 			"environment": "Production"
 		}
-	} ,
+	},	
 	{
 		"key": "RACE2WebApiURL",
 		"value": "WebApiContainerAppNameValue",
@@ -97,5 +97,140 @@
 		"tags": {
 			"environment": "Production"
 		}
-	}   
+	}, 
+	{
+		"key": "InternalEmailAddress",
+		"value": "s12statement@environment-agency.gov.uk",
+		"contentType": "string",
+        "label": "Production",
+		"tags": {
+			"environment": "Production"
+		}
+	},
+	{
+		"key": "RSTEmailAddress",
+		"value": "s12statement@environment-agency.gov.uk",
+		"contentType": "string",
+        "label": "Production",
+		"tags": {
+			"environment": "Production"
+		}
+	},
+	{
+		"key": "InternalEmailTemplateId",
+		"value": "750791c7-5bcb-456f-a3b5-c773945e52b0",
+		"contentType": "string",
+        "label": "",
+		"tags": {
+			"environment": ""
+		}
+	},  
+	{
+		"key": "ConfirmSubmissiontoOperatorTemplateId",
+		"value": "76c2562e-8bb6-4f98-830d-a76b30c7d4e5",
+		"contentType": "string",
+        "label": "",
+		"tags": {
+			"environment": ""
+		}
+	},
+	{
+		"key": "ConfirmSubmissiontoSETemplateId",
+		"value": "4f801102-36f4-4ce9-b59c-baf5c2488bcc",
+		"contentType": "string",
+        "label": "",
+		"tags": {
+			"environment": ""
+		}
+	},
+	{
+		"key": "ForgetPasswordTemplateId",
+		"value": "950e6a2b-8bbc-4374-9dc1-3a086d01bd3f",
+		"contentType": "string",
+        "label": "",
+		"tags": {
+			"environment": ""
+		}
+	}, 
+	{
+		"key": "IsMaintenanceMode",
+		"value": "false",
+		"contentType": "string",
+        "label": "",
+		"tags": {
+			"environment": "Production"
+		}
+	},  
+	{
+		"key": "MaintModeEndTime",
+		"value": "11:30AM on 3rd January 2024",
+		"contentType": "string",
+        "label": "",
+		"tags": {
+			"environment": ""
+		}
+	},   
+	{
+		"key": "MaliciousContainer",
+		"value": "maliciousfiles",
+		"contentType": "string",
+        "label": "",
+		"tags": {
+			"environment": ""
+		}
+	},   
+	{
+		"key": "UnscannedContainer",
+		"value": "unscannedcontent",
+		"contentType": "string",
+        "label": "",
+		"tags": {
+			"environment": ""
+		}
+	},    
+	{
+		"key": "CleanContainer",
+		"value": "cleanfiles",
+		"contentType": "string",
+        "label": "",
+		"tags": {
+			"environment": ""
+		}
+	},    
+	{
+		"key": "ClientSecret",
+		"value": "blazorserver-secret",
+		"contentType": "string",
+        "label": "",
+		"tags": {
+			"environment": ""
+		}
+	},	
+	{
+		"key": "EmptyFileSizeLimit",
+		"value": "0",
+		"contentType": "string",
+        "label": "",
+		"tags": {
+			"environment": ""
+		}
+	},
+	{
+		"key": "TimeToWaitForUpload",
+		"value": "20000",
+		"contentType": "string",
+        "label": "",
+		"tags": {
+			"environment": ""
+		}
+	},
+	{
+		"key": "SupportedUploadFileExtensions",
+		"value": "docx;doc;pdf",
+		"contentType": "string",
+        "label": "",
+		"tags": {
+			"environment": ""
+		}
+	}      
 ]
