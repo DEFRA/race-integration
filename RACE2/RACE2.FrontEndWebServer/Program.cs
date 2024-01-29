@@ -101,17 +101,18 @@ try
     builder.Services.AddAuthentication(options =>
     {
         options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+        options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
         options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
     })
-    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
-    //.AddCookie(options =>
-    //{
-    //    options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
-    //    options.Cookie.MaxAge = options.ExpireTimeSpan; // optional
-    //    options.SlidingExpiration = true;
-    //    options.LoginPath = "/login";
-    //    options.LogoutPath = "/logout";
-    //})
+    //.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(2);//default 5 min
+        options.Cookie.MaxAge = options.ExpireTimeSpan; // optional
+        options.SlidingExpiration = true;
+        options.LoginPath = "/Login";
+        options.LogoutPath = "/Logout";
+    })
     .AddOpenIdConnect(
         OpenIdConnectDefaults.AuthenticationScheme,
         options =>
@@ -133,11 +134,21 @@ try
             // When set to code, the middleware will use PKCE protection
             options.ResponseType = "code id_token";
             // Save the tokens we receive from the IDP
-            options.SaveTokens = true; // default false
-                                       // It's recommended to always get claims from the UserInfoEndpoint during the flow.
+            options.SaveTokens = false; // default false
+            // It's recommended to always get claims from the UserInfoEndpoint during the flow.
             options.GetClaimsFromUserInfoEndpoint = true;
+            options.UseTokenLifetime = false;
             options.Scope.Add("race2WebApi");
             options.RequireHttpsMetadata = requireHttpsMetadata;
+            options.Events = new OpenIdConnectEvents
+            {
+                OnAccessDenied = context =>
+                {
+                    context.HandleResponse();
+                    context.Response.Redirect("/");
+                    return Task.CompletedTask;
+                }
+            };
         });
 
     builder.Services.Configure<ForwardedHeadersOptions>(options =>
@@ -183,7 +194,10 @@ try
     app.UseAuthentication();
     app.UseAuthorization();
 
-    app.MapBlazorHub();
+    app.MapBlazorHub(options =>
+    {
+        options.CloseOnAuthenticationExpiration = true;
+    });
     app.MapFallbackToPage("/_Host");
     //IdentityModelEventSource.ShowPII = true;
     app.Run();

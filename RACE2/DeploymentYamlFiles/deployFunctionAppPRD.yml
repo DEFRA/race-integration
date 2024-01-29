@@ -9,7 +9,7 @@ variables:
   vmImageName: 'ubuntu-latest'
 
   azureServiceConnection: 'AZR-RAC-POC1'
-  resourceGroupName: 'PRDRACINFRG1401' 
+  resourceGroupName: 'POCRACINFRG1401' 
   templateFile: './RACE2/bicepfiles/createfunctionapp.bicep'
   parameterFile: './RACE2/bicepfiles/createfunctionapp_prd.bicepparam'
 
