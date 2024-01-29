@@ -47,5 +47,7 @@ namespace RACE2.DataAccess.Repository
 
         public Task<int> InsertSafetyMeasuresFromExtract(SafetyMeasure safetyMeasure, Comment comment);
 
+      //  public Task<SupportingDocument> GetDocumentById(string blobStorageName);
+
     }
 }
