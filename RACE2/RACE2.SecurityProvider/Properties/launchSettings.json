@@ -6,10 +6,9 @@
       //"launchUrl": "https://localhost:5010",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Production",
-        //"AzureAppConfigURL": "https://prdracinfac1401.azconfig.io"
-        "AzureAppConfigURL": "https://pocracinfac1401.azconfig.io/"
+       // "AzureAppConfigURL": "https://pocracinfac1401.azconfig.io/"
         //"AzureAppConfigURL": "https://devracinfac1401.azconfig.io/"
-        //"AzureAppConfigURL": "https://tstracinfac1401.azconfig.io/"
+        "AzureAppConfigURL": "https://tstracinfac1401.azconfig.io/"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:5010",
