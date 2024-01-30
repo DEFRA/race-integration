@@ -107,7 +107,7 @@ try
     //.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.ExpireTimeSpan = TimeSpan.FromMinutes(2);//default 5 min
+        options.ExpireTimeSpan = TimeSpan.FromDays(60);//default 5 min
         options.Cookie.MaxAge = options.ExpireTimeSpan; // optional
         options.SlidingExpiration = true;
         options.LoginPath = "/Login";
