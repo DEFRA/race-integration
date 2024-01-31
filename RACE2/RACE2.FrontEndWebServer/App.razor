@@ -1,19 +1,24 @@
-﻿<CascadingAuthenticationState>
+﻿@inject NavigationManager Navigation
+<CascadingAuthenticationState>
     <Router AppAssembly="@typeof(App).Assembly">
         <Found Context="routeData">
             <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
                 <NotAuthorized>
-                    <RedirectToLogin />
+                    @if (!context.User.Identity.IsAuthenticated)
+                    {
+                        <RedirectToLogin />
+                    }
+                    else {
+                        Navigation.NavigateTo("/UserNotAuthenticated", true);
+                    }
                 </NotAuthorized>
             </AuthorizeRouteView>
             <FocusOnNavigate RouteData="@routeData" Selector="h1" />
         </Found>
         <NotFound>
-            <RedirectToLogin />
-@*             <PageTitle>Not found</PageTitle>
-            <LayoutView Layout="@typeof(MainLayout)">
-                <p role="alert">Sorry, there's nothing at this address.</p>
-            </LayoutView> *@
+            Navigation.NavigateTo("/PageNotFound",true);
+            @* <RedirectToLogin />
+            *@
         </NotFound>
     </Router>
 </CascadingAuthenticationState>
