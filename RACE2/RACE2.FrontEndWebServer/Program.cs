@@ -118,7 +118,7 @@ try
     //})
     .AddCookie(options =>
     {
-        options.ExpireTimeSpan = TimeSpan.FromMinutes(30);//default 5 min
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(60);//default 5 min
         options.Cookie.MaxAge = options.ExpireTimeSpan; // optional
         options.SlidingExpiration = true;
         options.LoginPath = "/Login";
