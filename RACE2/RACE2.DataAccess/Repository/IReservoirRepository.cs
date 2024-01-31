@@ -13,7 +13,7 @@ namespace RACE2.DataAccess.Repository
         public Task<Reservoir> GetReservoirById(int id);
         public Task<Reservoir> UpdateReservoir(ReservoirUpdateDetailsDTO updatedReservoir);
         public Task<List<ReservoirDetailsDTO>> GetReservoirsByUserId(int id);
-        public Task<List<DataModel.Action>> GetActionsListByReservoirIdAndCategory(int reservoirid, int category);
+        
       
         public Task<Address> GetAddressByReservoirId(int reservoirid, string operatortype);
 
@@ -38,16 +38,19 @@ namespace RACE2.DataAccess.Repository
 
         public Task<int> InsertActionTableFromExtract(DataModel.Action action);
 
-        public Task<int> InsertMaintenanceMeasureFromExtract(DataModel.Action action, Comment comment);
+        public Task<int> InsertorUpdateMaintenanceMeasureFromExtract(DataModel.Action action, Comment comment);
 
-        public Task<int> InsertWatchItemsFromExtract(DataModel.Action action, Comment comment);
+        public Task<int> InsertorUpdateWatchItemsFromExtract(DataModel.Action action, Comment comment);
 
-        public Task<int> InsertSafetyMeasuresFromExtract(SafetyMeasure safetyMeasure, Comment comment);
+        public Task<int> InsertorUpdateSafetyMeasuresFromExtract(SafetyMeasure safetyMeasure, Comment comment);
 
         public Task<SafetyMeasure> GetSafetyMeasuresByReservoir(int reservoirid, string reference);
+        public Task<DataModel.Action> GetActionsListByReservoirIdAndCategory(int reservoirid, int category, string reference);
 
         public Task<int> InsertSafetyMeasureChangeHistory(List<SafetyMeasuresChangeHistory> changeHistory);
-      //  public Task<SupportingDocument> GetDocumentById(string blobStorageName);
+        
+        public Task<int> InsertActionChangeHistory(List<ActionsChangeHistory> changeHistory);
+
 
     }
 }

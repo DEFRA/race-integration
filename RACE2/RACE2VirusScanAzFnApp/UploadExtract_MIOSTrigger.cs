@@ -64,7 +64,7 @@ namespace RACE2VirusScanAzFnApp
                 // int result  = await CompareMIOSListWithDB(_extractedSafetyMeasureList);
                 SafetyMeasure _existingsafetyMeasure = await _reservoirService.GetSafetyMeasuresByReservoir(safetyMeasure.ReservoirId,safetyMeasure.Reference);
                 if(_existingsafetyMeasure == null)
-                  result = await _reservoirService.InsertSafetyMeasuresFromExtract(safetyMeasure, _comment);
+                  result = await _reservoirService.InsertorUpdateSafetyMeasuresFromExtract(safetyMeasure, _comment);
                 else
                 {
                     List<SafetyMeasuresChangeHistory> _UpdatedChangeHistory = new List<SafetyMeasuresChangeHistory>();
@@ -72,27 +72,27 @@ namespace RACE2VirusScanAzFnApp
                     
                     if (safetyMeasure.Reference != _existingsafetyMeasure.Reference)
                     {
-                        changeHistory = AddHistory(_existingsafetyMeasure.Id,_existingsafetyMeasure.Reference, safetyMeasure.Reference, "Reference", reservoirSubmission);
+                        changeHistory = AddHistory(_existingsafetyMeasure.Id,_existingsafetyMeasure.Reference, safetyMeasure.Reference, "Reference", reservoirSubmission,safetyMeasure.CreatedDate);
                         _UpdatedChangeHistory.Add(changeHistory);
                     }
 
                     if(safetyMeasure.Description != _existingsafetyMeasure.Description)
                     {
-                        changeHistory = AddHistory(_existingsafetyMeasure.Id,_existingsafetyMeasure.Description, safetyMeasure.Description, "Description", reservoirSubmission);
+                        changeHistory = AddHistory(_existingsafetyMeasure.Id,_existingsafetyMeasure.Description, safetyMeasure.Description, "Description", reservoirSubmission,safetyMeasure.CreatedDate);
                         _UpdatedChangeHistory.Add(changeHistory);
                     }
                     if(safetyMeasure.TargetDate != _existingsafetyMeasure.TargetDate)
                     {
-                        changeHistory = AddHistory(_existingsafetyMeasure.Id, Convert.ToString(_existingsafetyMeasure.TargetDate), Convert.ToString(safetyMeasure.TargetDate), "TargetDate", reservoirSubmission);
+                        changeHistory = AddHistory(_existingsafetyMeasure.Id, Convert.ToString(_existingsafetyMeasure.TargetDate), Convert.ToString(safetyMeasure.TargetDate), "TargetDate", reservoirSubmission,safetyMeasure.CreatedDate);
                         _UpdatedChangeHistory.Add(changeHistory);
                     }
                     if(safetyMeasure.Status != _existingsafetyMeasure.Status)
                     {
-                        changeHistory = AddHistory(_existingsafetyMeasure.Id, Convert.ToString(_existingsafetyMeasure.Status), Convert.ToString(safetyMeasure.Status), "Status", reservoirSubmission);
+                        changeHistory = AddHistory(_existingsafetyMeasure.Id, Convert.ToString(_existingsafetyMeasure.Status), Convert.ToString(safetyMeasure.Status), "Status", reservoirSubmission,safetyMeasure.CreatedDate);
                         _UpdatedChangeHistory.Add(changeHistory);
                     }
                     int history = await _reservoirService.InsertSafetyMeasureChangeHistory(_UpdatedChangeHistory);
-                    result = await _reservoirService.InsertSafetyMeasuresFromExtract(safetyMeasure, _comment);
+                    result = await _reservoirService.InsertorUpdateSafetyMeasuresFromExtract(safetyMeasure, _comment);
 
                 }
 
@@ -101,7 +101,7 @@ namespace RACE2VirusScanAzFnApp
         }
 
 
-        public static SafetyMeasuresChangeHistory AddHistory(int MeasureId,string OldValue, String NewValue, string FieldName, ReservoirSubmissionDTO submissionDetails)
+        public static SafetyMeasuresChangeHistory AddHistory(int MeasureId,string OldValue, String NewValue, string FieldName, ReservoirSubmissionDTO submissionDetails,DateTime changeTime)
         {
             SafetyMeasuresChangeHistory changeHistory = new SafetyMeasuresChangeHistory();
             //  changeHistory = null;
@@ -117,7 +117,7 @@ namespace RACE2VirusScanAzFnApp
                     changeHistory.SourceSubmissionId = submissionDetails.SubmissionId;
                     changeHistory.ReservoirId = submissionDetails.ReservoirId;
                     changeHistory.MeasureId = MeasureId;
-                    changeHistory.ChangeDateTime = DateTime.Now;
+                    changeHistory.ChangeDateTime = changeTime;
                 }
                 else
                     return null;
@@ -128,7 +128,7 @@ namespace RACE2VirusScanAzFnApp
                 changeHistory.NewValue = (NewValue == null) ? null : NewValue.ToString(); ;
                 changeHistory.FieldName = FieldName;
                 changeHistory.IsBackEndChange = false;
-                changeHistory.ChangeDateTime = DateTime.Now;
+                changeHistory.ChangeDateTime = changeTime;
                 changeHistory.ChangeByUserId = submissionDetails.SubmittedByUserId;
                 changeHistory.SourceSubmissionId = submissionDetails.SubmissionId;
                 changeHistory.ReservoirId = submissionDetails.ReservoirId;

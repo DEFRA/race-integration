@@ -146,7 +146,7 @@ namespace RACE2.DataAccess.Repository
             }
         }
 
-        public async Task<List<DataModel.Action>> GetActionsListByReservoirIdAndCategory(int reservoirid, int category)
+        public async Task<DataModel.Action> GetActionsListByReservoirIdAndCategory(int reservoirid, int category,string reference)
         {
             var strCategory = (Category)category;
             using (var conn = Connection)
@@ -155,8 +155,9 @@ namespace RACE2.DataAccess.Repository
                 var parameters = new DynamicParameters();
                 parameters.Add("reservoirid", reservoirid, DbType.Int64);
                 parameters.Add("category", strCategory.ToString(), DbType.String);
+                parameters.Add("reference", reference, DbType.String);
                 var actionlist = await conn.QueryAsync<DataModel.Action>("sp_GetActionsListByReservoirId", parameters, commandType: CommandType.StoredProcedure);
-                return actionlist.ToList();
+                return actionlist.FirstOrDefault();
             }
         }
 
@@ -565,7 +566,7 @@ namespace RACE2.DataAccess.Repository
 
         }
 
-        public async Task<int> InsertMaintenanceMeasureFromExtract(DataModel.Action action, Comment comment)
+        public async Task<int> InsertorUpdateMaintenanceMeasureFromExtract(DataModel.Action action, Comment comment)
         {
             _logger.LogInformation("Insert Action and comment table from Data extraction ");
             try
@@ -581,6 +582,7 @@ namespace RACE2.DataAccess.Repository
                     parameters.Add("userid", comment.CreatedByUserId, DbType.Int32);
                     parameters.Add("reservoirid", action.ReservoirId, DbType.Int32);
                     parameters.Add("relatestorecordid", comment.RelatesToRecordId, DbType.Int32);
+                    parameters.Add("createddate", action.CreatedDate, DbType.DateTime);
                     var result = await conn.ExecuteAsync("sp_InsertMaintenanceMeasureFromExtract", parameters, commandType: CommandType.StoredProcedure);
 
                 }
@@ -594,9 +596,9 @@ namespace RACE2.DataAccess.Repository
 
         }
 
-        public async Task<int> InsertWatchItemsFromExtract(DataModel.Action action, Comment comment)
+        public async Task<int> InsertorUpdateWatchItemsFromExtract(DataModel.Action action, Comment comment)
         {
-            _logger.LogInformation("Insert Action and comment table from Data extraction ");
+            _logger.LogInformation("Insert Action watch items and comment table from Data extraction ");
             try
             {
 
@@ -610,6 +612,7 @@ namespace RACE2.DataAccess.Repository
                     parameters.Add("userid", comment.CreatedByUserId, DbType.Int32);
                     parameters.Add("reservoirid", action.ReservoirId, DbType.Int32);
                     parameters.Add("relatestorecordid", comment.RelatesToRecordId, DbType.Int32);
+                    parameters.Add("createddate", action.CreatedDate, DbType.DateTime);
                     var result = await conn.ExecuteAsync("sp_InsertWatchItemsFromExtract", parameters, commandType: CommandType.StoredProcedure);
 
                 }
@@ -622,7 +625,7 @@ namespace RACE2.DataAccess.Repository
             return 1;
         }
 
-        public async Task<int> InsertSafetyMeasuresFromExtract(SafetyMeasure safetyMeasure, Comment comment)
+        public async Task<int> InsertorUpdateSafetyMeasuresFromExtract(SafetyMeasure safetyMeasure, Comment comment)
         {
             _logger.LogInformation("Insert Safety Measure and comment table from Data extraction for {userid} ",comment.CreatedByUserId);
             try
@@ -726,6 +729,47 @@ namespace RACE2.DataAccess.Repository
                 return 0;
             }
         }
+
+
+        public async Task<int> InsertActionChangeHistory(List<ActionsChangeHistory> changeHistory)
+        {
+
+            _logger.LogInformation("Adding Action channge History");
+            try
+            {
+
+                using (var conn = Connection)
+                {
+                    foreach (var change in changeHistory)
+                    {
+
+                        var parameters = new DynamicParameters();
+                        parameters.Add("@reservoirid", change.ReservoirId, DbType.Int32);
+                        parameters.Add("@submissionid", change.SourceSubmissionId, DbType.Int32);
+                        parameters.Add("@actionid", change.ActionId, DbType.Int32);
+                        parameters.Add("@fieldname", change.FieldName, DbType.String);
+                        parameters.Add("@oldvalue", change.OldValue == null ? string.Empty : change.OldValue, DbType.String);
+                        parameters.Add("@newvalue", change.NewValue == null ? string.Empty : change.NewValue, DbType.String);
+                        parameters.Add("@changetime", change.ChangeDateTime, DbType.DateTime2);
+                        parameters.Add("@Isbackendchange", change.IsBackEndChange, DbType.Boolean);
+                        parameters.Add("@changeuserid", change.ChangeByUserId, DbType.Int32);
+
+                        var result = await conn.ExecuteAsync("sp_InsertActionsChangeHistory", parameters, commandType: CommandType.StoredProcedure);
+
+
+                    }
+
+                    return 1;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return 0;
+            }
+        }
+
 
 
     }

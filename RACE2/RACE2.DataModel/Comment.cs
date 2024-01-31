@@ -42,7 +42,7 @@ namespace RACE2.DataModel
 
         public bool? IsQualityCheckRequired { get; set; }
 
-        public int SourceSubmissionId { get; set; }
+        public int? SourceSubmissionId { get; set; }
 
         [ForeignKey("SourceSubmissionId")]
         public virtual SubmissionStatus SubmissionStatus { get; set; }

@@ -75,15 +75,15 @@ namespace RACE2.Services
 
         }
 
-        public async Task<List<DataModel.Action>> GetActionsListByReservoirIdAndCategory(int reservoirid, int category)
+        public async Task<DataModel.Action> GetActionsListByReservoirIdAndCategory(int reservoirid, int category,string reference)
         {
             try
             {
-                return await _reservoirRepository.GetActionsListByReservoirIdAndCategory(reservoirid, category);
+                return await _reservoirRepository.GetActionsListByReservoirIdAndCategory(reservoirid, category,reference);
             }
             catch (Exception ex)
             {
-                return new List<DataModel.Action>();
+                return new DataModel.Action();
             }
         }
 
@@ -240,11 +240,11 @@ namespace RACE2.Services
             }
         }
 
-        public async Task<int> InsertMaintenanceMeasureFromExtract(DataModel.Action action, Comment comment)
+        public async Task<int> InsertorUpdateMaintenanceMeasureFromExtract(DataModel.Action action, Comment comment)
         {
             try
             {
-                return await _reservoirRepository.InsertMaintenanceMeasureFromExtract(action,comment);
+                return await _reservoirRepository.InsertorUpdateMaintenanceMeasureFromExtract(action,comment);
             }
             catch (Exception ex)
             {
@@ -252,11 +252,11 @@ namespace RACE2.Services
             }
         }
 
-        public async Task<int> InsertWatchItemsFromExtract(DataModel.Action action, Comment comment)
+        public async Task<int> InsertorUpdateWatchItemsFromExtract(DataModel.Action action, Comment comment)
         {
             try
             {
-                return await _reservoirRepository.InsertWatchItemsFromExtract(action, comment);
+                return await _reservoirRepository.InsertorUpdateWatchItemsFromExtract(action, comment);
             }
             catch (Exception ex)
             {
@@ -264,11 +264,11 @@ namespace RACE2.Services
             }
         }
 
-        public async Task<int> InsertSafetyMeasuresFromExtract(SafetyMeasure safetyMeasure, Comment comment)
+        public async Task<int> InsertorUpdateSafetyMeasuresFromExtract(SafetyMeasure safetyMeasure, Comment comment)
         {
             try
             {
-                return await _reservoirRepository.InsertSafetyMeasuresFromExtract(safetyMeasure, comment);
+                return await _reservoirRepository.InsertorUpdateSafetyMeasuresFromExtract(safetyMeasure, comment);
             }
             catch (Exception ex)
             {
@@ -293,6 +293,18 @@ namespace RACE2.Services
             try
             {
                 return await _reservoirRepository.InsertSafetyMeasureChangeHistory(changeHistory);
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+        }
+
+        public async Task<int> InsertActionChangeHistory(List<ActionsChangeHistory> changeHistory)
+        {
+            try
+            {
+                return await _reservoirRepository.InsertActionChangeHistory(changeHistory);
             }
             catch (Exception ex)
             {
