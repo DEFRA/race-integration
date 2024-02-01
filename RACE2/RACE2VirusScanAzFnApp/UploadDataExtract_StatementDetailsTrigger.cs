@@ -11,16 +11,18 @@ using Microsoft.Extensions.Configuration;
 using RACE2.Services;
 using RACE2.Dto;
 using System.Globalization;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using DocumentFormat.OpenXml.Office2010.Drawing;
 
 namespace RACE2VirusScanAzFnApp
 {
-    public class UploadDataExtract_SqlTrigger
+    public class UploadDataExtract_StatementDetailsTrigger
     {
-        private readonly ILogger<UploadDataExtract_SqlTrigger> _logger;
+        private readonly ILogger<UploadDataExtract_StatementDetailsTrigger> _logger;
         private readonly IConfiguration _config;
         private readonly IReservoirService _reservoirService;
 
-        public UploadDataExtract_SqlTrigger(ILogger<UploadDataExtract_SqlTrigger> logger, IConfiguration config, IReservoirService reservoirService)
+        public UploadDataExtract_StatementDetailsTrigger(ILogger<UploadDataExtract_StatementDetailsTrigger> logger, IConfiguration config, IReservoirService reservoirService)
         {
             _logger = logger;
             _config = config;
@@ -33,27 +35,158 @@ namespace RACE2VirusScanAzFnApp
             [SqlTrigger("RAW_StatementDetails", "SqlServerConnectionString")] IReadOnlyList<SqlChange<RAW_StatementDetails>> changes,
                 FunctionContext context)
         {
-            string connString = Environment.GetEnvironmentVariable("SqlServerConnectionString", EnvironmentVariableTarget.Process);
-            ReservoirSubmissionDTO reservoirSubmission = new ReservoirSubmissionDTO();
-           // BasicDetails basicDetails = new BasicDetails();
+            ReservoirSubmissionDTO reservoirSubmission = new ReservoirSubmissionDTO();          
             ReservoirDetailsChangeHistory changeHistory = new ReservoirDetailsChangeHistory();
             List<ReservoirDetailsChangeHistory> reservoirDetailsChangeHistory = new List<ReservoirDetailsChangeHistory>();
+            Reservoir updatedReservoir = new Reservoir();
+            string UpdatedValue ;
+            string actualvalue ;
+            bool IsEarlyInspectionRequired;
+            StatementDetails statementDetails = new StatementDetails();
+
+          
             foreach (var change in changes)
             {
                 _logger.LogInformation("SQL Changes: " + change.Operation);
                 _logger.LogInformation("item inserteed" + System.Text.Json.JsonSerializer.Serialize(change.Item));
                 string[] subs = change.Item.DocumentName.Split('_');
                 reservoirSubmission = await _reservoirService.GetReservoirUserIdbySubRef(subs[0].ToString());
-                //basicDetails = GetAllIds(change.Item.DocumentName, connString);
-                //basicDetails.SubmissionId = submissionStatus.Id;
-                //basicDetails.ReservoirId = submissionStatus.ReservoirId;
-                //basicDetails.SubmittedUserId = submissionStatus.SubmittedByUser;
-                Reservoir actualReservoir = GetReservoirValuesFromDB(reservoirSubmission.ReservoirId, connString);
-                Reservoir UpdatedReservoir = CompareValues(connString, actualReservoir, (change.Item), reservoirSubmission);
-                //    changeHistory  = AddHistory
+                statementDetails.DocumentId = await _reservoirService.GetDocumentId(change.Item.DocumentName);
+                if ( reservoirSubmission.ReservoirId > 0 )
+                {
+                    Reservoir actualReservoir = await _reservoirService.GetReservoirById(reservoirSubmission.ReservoirId);                    
+                    foreach (var property in change.Item.GetType().GetProperties())
+                    {
+                        switch (property.Name)
+                            {
+                                
+                                case "ReservoirName":
+
+                                    UpdatedValue = property.GetValue(change.Item).ToString();
+                                    actualvalue = actualReservoir.RegisteredName;
+                                    changeHistory = AddHistory(actualvalue, UpdatedValue, "RegisteredName", reservoirSubmission);
+                                    if (changeHistory != null)
+                                    {
+                                        updatedReservoir.RegisteredName = UpdatedValue;
+                                        changeHistory.Reservoir = updatedReservoir;
+                                        reservoirDetailsChangeHistory.Add(changeHistory);
+                                    }
+
+                                    break;
+                                case "IsTypeOfStatement12_2":
+                                    if (Convert.ToString(property.GetValue(change.Item)) == "Yes")
+                                    {
+                                        statementDetails.StatementType = "Section 12(2)";
+                                    }
+                                    else statementDetails.StatementType = "";
+                                    break;
+                                case "IsTypeOfStatement12_2A":
+                                    if (Convert.ToString(property.GetValue(change.Item)) == "Yes")
+                                    {
+                                        if (!string.IsNullOrEmpty(statementDetails.StatementType))
+                                            statementDetails.StatementType = statementDetails.StatementType + " & Section 12(2A)";
+                                        else statementDetails.StatementType = "Section 12(2A)";
+                                    }
+                                    break;
+                                case "PeriodStart":
+                                    if (property.GetValue(change.Item) == null)
+                                        statementDetails.PeriodStartDate = null;
+                                    else
+                                        statementDetails.PeriodStartDate = DateTime.ParseExact(property.GetValue(change.Item).ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+
+                                    break;
+                                case "PeriodEnd":
+                                    if (property.GetValue(change.Item) == null)
+                                        statementDetails.PeriodEndDate = null;
+                                    else
+                                        statementDetails.PeriodEndDate = DateTime.ParseExact(property.GetValue(change.Item).ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture); //Convert.ToDateTime(property.GetValue(Updated));
+                                    break;
+                                case "StatementDate":
+                                    if (property.GetValue(change.Item) == null)
+                                        statementDetails.StatementDate = null;
+                                    else
+                                        statementDetails.StatementDate = DateTime.ParseExact(property.GetValue(change.Item).ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                                    break;
+                                case "NearestTown":
+                                    UpdatedValue = property.GetValue(change.Item).ToString();
+                                    actualvalue = actualReservoir.NearestTown;
+                                    changeHistory = AddHistory(actualvalue, UpdatedValue, "NearestTown", reservoirSubmission);
+                                    if (changeHistory != null)
+                                    {
+                                        updatedReservoir.NearestTown = UpdatedValue;
+                                        reservoirDetailsChangeHistory.Add(changeHistory);
+                                    }
+
+                                    break;
+                                case "GridReference":
+                                    UpdatedValue = property.GetValue(change.Item).ToString();
+                                    actualvalue = actualReservoir.GridReference;
+                                    changeHistory = AddHistory(actualvalue, UpdatedValue, "GridReference", reservoirSubmission);
+                                    if (changeHistory != null)
+                                    {
+                                        updatedReservoir.GridReference = UpdatedValue;
+
+                                        reservoirDetailsChangeHistory.Add(changeHistory);
+                                    }
+
+                                    break;
+                                case "LastInspectionDate":
+                                    UpdatedValue = Convert.ToString(property.GetValue(change.Item));
+                                    actualvalue = Convert.ToString(actualReservoir.LastInspectionDate);
+                                    changeHistory = AddHistory(actualvalue, UpdatedValue, "LastInspectionDate", reservoirSubmission);
+                                    if (changeHistory != null)
+                                    {
+                                        updatedReservoir.LastInspectionDate = DateTime.ParseExact(UpdatedValue, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                                        reservoirDetailsChangeHistory.Add(changeHistory);
+                                    }
+
+                                    break;
+                                case "LastCertificationDate":
+                                    UpdatedValue = Convert.ToString(property.GetValue(change.Item));
+                                    actualvalue = Convert.ToString(actualReservoir.LastCertificationDate);
+                                    changeHistory = AddHistory(actualvalue, UpdatedValue, "LastCertificationDate", reservoirSubmission);
+                                    if (changeHistory != null)
+                                    {
+                                        updatedReservoir.LastCertificationDate = DateTime.ParseExact(UpdatedValue, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                                        reservoirDetailsChangeHistory.Add(changeHistory);
+                                    }
+
+                                    break;
+                                case "IsEarlyInspectionRequiredYes":
+                                    if (Convert.ToString(property.GetValue(change.Item)) == "Yes")
+                                        IsEarlyInspectionRequired = true;
+                                    break;
+                                case "IsEarlyInspectionRequiredNo":
+                                    if (Convert.ToString(property.GetValue(change.Item)) == "Yes")
+                                        IsEarlyInspectionRequired = false;
+                                    break;
+                                case "NextInspectionDate":
+                                    UpdatedValue = Convert.ToString(property.GetValue(change.Item));
+                                    actualvalue = Convert.ToString(actualReservoir.NextInspectionDate102);
+                                    changeHistory = AddHistory(actualvalue, UpdatedValue, "NextInspectionDate102", reservoirSubmission);
+                                    if (changeHistory != null)
+                                    {
+                                        updatedReservoir.NextInspectionDate102 = DateTime.ParseExact(UpdatedValue, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                                        reservoirDetailsChangeHistory.Add(changeHistory);
+                                    }
+
+                                    break;
+
+                                default:
+                                    break;
+                            
+                        }
 
 
-                //UpdateDBAndChangeHistory(connString, actualReservoir,UpdatedReservoir, change.Item, basicDetails);
+                    }
+
+                    await _reservoirService.UpdateReservoirDetailsFromExtract(updatedReservoir);
+                    await _reservoirService.InsertStatementDetailsFromExtract(statementDetails);
+                    await _reservoirService.InsertReservoirDetailsChangeHistory(reservoirDetailsChangeHistory);
+
+                }
+               
+
             }
 
         }

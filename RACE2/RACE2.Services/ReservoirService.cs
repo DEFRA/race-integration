@@ -311,5 +311,77 @@ namespace RACE2.Services
                 return 0;
             }
         }
+
+        public async Task<int> UpdateReservoirDetailsFromExtract(Reservoir reservoir)
+        {
+            try
+            {
+                return await _reservoirRepository.UpdateReservoirDetailsFromExtract(reservoir);
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+        }
+
+        public async Task<int> InsertStatementDetailsFromExtract(StatementDetails statementDetails)
+        {
+            try
+            {
+                return await _reservoirRepository.InsertStatementDetailsFromExtract(statementDetails);
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+        }
+
+        public async Task<int> InsertReservoirDetailsChangeHistory(List<ReservoirDetailsChangeHistory> changeHistory)
+        {
+            try
+            {
+                return await _reservoirRepository.InsertReservoirDetailsChangeHistory(changeHistory);
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+        }
+
+        public async Task<int> GetDocumentId(string documentName)
+        {
+            try
+            {
+                return await _reservoirRepository.GetDocumentId(documentName);
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+        }
+
+        public async Task<int> InsertCommentChangeHistory(List<CommentsChangeHistory> changeHistory)
+        {
+            try
+            {
+                return await _reservoirRepository.InsertCommentChangeHistory(changeHistory);
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+        }
+
+        public async Task<Comment> GetExisitngComments(string relatestoobject, int relatestorecordid)
+        {
+            try
+            {
+                return await _reservoirRepository.GetExisitngComments(relatestoobject,relatestorecordid);
+            }
+            catch (Exception ex)
+            {
+                return new Comment();
+            }
+        }
     }
 }
