@@ -33,6 +33,7 @@ namespace RACE2VirusScanAzFnApp
         {
             ReservoirSubmissionDTO reservoirSubmission = new ReservoirSubmissionDTO();
             ActionsChangeHistory changeHistory = new ActionsChangeHistory();
+            CommentsChangeHistory commentsChangeHistory = new CommentsChangeHistory();
            
             foreach (var change in changes)
             {
@@ -53,11 +54,13 @@ namespace RACE2VirusScanAzFnApp
                 _action.CreatedDate = Convert.ToDateTime(change.Item.LastModifiedDateTime);
 
                 RACE2.DataModel.Action _existingWatchItems = await _reservoirService.GetActionsListByReservoirIdAndCategory(_action.ReservoirId, 1, _action.Reference);
+                Comment _existingComments = await _reservoirService.GetExisitngComments(Category.WatchMatter.ToString(), _existingWatchItems.Id);
                 if( _existingWatchItems == null )
                      result = await _reservoirService.InsertorUpdateWatchItemsFromExtract(_action, _comment);
                 else
                 {
                     List<ActionsChangeHistory> _actionChangeHistory = new List<ActionsChangeHistory>();
+                    List<CommentsChangeHistory> _commentsChangeHistory = new List<CommentsChangeHistory>();
 
                     if (_action.Reference != _existingWatchItems.Reference)
                     {
@@ -69,6 +72,12 @@ namespace RACE2VirusScanAzFnApp
                     {
                         changeHistory = AddHistory(_existingWatchItems.Id, _existingWatchItems.Description, _action.Description, "Description", reservoirSubmission, _action.CreatedDate);
                         _actionChangeHistory.Add(changeHistory);
+                    }
+
+                    if(_comment.CommentText != _existingComments.CommentText)
+                    {
+                        commentsChangeHistory = AddCommentsHistory(_existingComments.Id, _existingComments.CommentText, _comment.CommentText, "CommentText", reservoirSubmission, _action.CreatedDate);
+                        _commentsChangeHistory.Add(commentsChangeHistory);
                     }
                    
                    
@@ -112,6 +121,52 @@ namespace RACE2VirusScanAzFnApp
                 changeHistory.SourceSubmissionId = submissionDetails.SubmissionId;
                 changeHistory.ReservoirId = submissionDetails.ReservoirId;
                 changeHistory.ActionId = Actionid;
+
+
+            }
+            else
+            {
+                return null;
+            }
+
+
+            return changeHistory;
+
+
+        }
+
+        public static CommentsChangeHistory AddCommentsHistory(int Actionid, string OldValue, String NewValue, string FieldName, ReservoirSubmissionDTO submissionDetails, DateTime changedatetime)
+        {
+            CommentsChangeHistory changeHistory = new CommentsChangeHistory();
+            //  changeHistory = null;
+            if ((!String.IsNullOrEmpty(NewValue)) && (!String.IsNullOrEmpty(OldValue)))
+            {
+                if (NewValue != OldValue)
+                {
+                    changeHistory.OldValue = OldValue;
+                    changeHistory.NewValue = NewValue;
+                    changeHistory.FieldName = FieldName;
+                    changeHistory.IsBackEndChange = false;
+                    changeHistory.ChangeByUserId = submissionDetails.SubmittedByUserId;
+                    changeHistory.SourceSubmissionId = submissionDetails.SubmissionId;
+                    changeHistory.ReservoirId = submissionDetails.ReservoirId;
+                    changeHistory.CommentId = Actionid;
+                    changeHistory.ChangeDateTime = changedatetime;
+                }
+                else
+                    return null;
+            }
+            else if ((String.IsNullOrEmpty(NewValue)) || (String.IsNullOrEmpty(OldValue)))
+            {
+                changeHistory.OldValue = (OldValue == null) ? null : OldValue.ToString();
+                changeHistory.NewValue = (NewValue == null) ? null : NewValue.ToString(); ;
+                changeHistory.FieldName = FieldName;
+                changeHistory.IsBackEndChange = false;
+                changeHistory.ChangeDateTime = changedatetime;
+                changeHistory.ChangeByUserId = submissionDetails.SubmittedByUserId;
+                changeHistory.SourceSubmissionId = submissionDetails.SubmissionId;
+                changeHistory.ReservoirId = submissionDetails.ReservoirId;
+                changeHistory.CommentId = Actionid;
 
 
             }

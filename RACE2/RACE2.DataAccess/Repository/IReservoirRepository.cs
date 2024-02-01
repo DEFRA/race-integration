@@ -51,6 +51,18 @@ namespace RACE2.DataAccess.Repository
         
         public Task<int> InsertActionChangeHistory(List<ActionsChangeHistory> changeHistory);
 
+        public Task<int> UpdateReservoirDetailsFromExtract(Reservoir reservoir);
+
+        public Task<int> InsertStatementDetailsFromExtract(StatementDetails statementDetails);
+
+        public Task<int> InsertReservoirDetailsChangeHistory(List<ReservoirDetailsChangeHistory> changeHistory);
+
+        public Task<int> GetDocumentId(string documentName);
+
+        public Task<int> InsertCommentChangeHistory(List<CommentsChangeHistory> changeHistory);
+
+        public Task<Comment> GetExisitngComments(string relatestoobject, int relatestorecordid);
+
 
     }
 }

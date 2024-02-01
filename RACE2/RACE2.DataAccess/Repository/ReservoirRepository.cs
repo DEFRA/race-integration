@@ -583,6 +583,7 @@ namespace RACE2.DataAccess.Repository
                     parameters.Add("reservoirid", action.ReservoirId, DbType.Int32);
                     parameters.Add("relatestorecordid", comment.RelatesToRecordId, DbType.Int32);
                     parameters.Add("createddate", action.CreatedDate, DbType.DateTime);
+                    parameters.Add("submissionid", comment.SourceSubmissionId, DbType.Int32);
                     var result = await conn.ExecuteAsync("sp_InsertMaintenanceMeasureFromExtract", parameters, commandType: CommandType.StoredProcedure);
 
                 }
@@ -613,6 +614,7 @@ namespace RACE2.DataAccess.Repository
                     parameters.Add("reservoirid", action.ReservoirId, DbType.Int32);
                     parameters.Add("relatestorecordid", comment.RelatesToRecordId, DbType.Int32);
                     parameters.Add("createddate", action.CreatedDate, DbType.DateTime);
+                    parameters.Add("submissionid", comment.SourceSubmissionId, DbType.Int32);
                     var result = await conn.ExecuteAsync("sp_InsertWatchItemsFromExtract", parameters, commandType: CommandType.StoredProcedure);
 
                 }
@@ -644,6 +646,7 @@ namespace RACE2.DataAccess.Repository
                     parameters.Add("userid", comment.CreatedByUserId, DbType.Int32);
                     parameters.Add("reservoirid", safetyMeasure.ReservoirId, DbType.Int32);
                     parameters.Add("relatestorecordid", comment.RelatesToRecordId, DbType.Int32);
+                    parameters.Add("submissionid", comment.SourceSubmissionId, DbType.Int32);
                     var result = await conn.ExecuteAsync("sp_InsertSafetyMeasureFromExtract", parameters, commandType: CommandType.StoredProcedure);
 
                 }
@@ -767,6 +770,191 @@ namespace RACE2.DataAccess.Repository
             {
                 _logger.LogError(ex, ex.Message);
                 return 0;
+            }
+        }
+
+        public async Task<int> UpdateReservoirDetailsFromExtract(Reservoir updatedReservoir)
+        {
+            _logger.LogInformation("Updating Action channge History");
+            try
+            {
+
+                using (var conn = Connection)
+                {
+                    var parameters = new DynamicParameters();
+                    parameters.Add("@reservoirid", updatedReservoir.Id);
+                    parameters.Add("@reservoirName", updatedReservoir.RegisteredName);
+                    parameters.Add("@gridreference", updatedReservoir.GridReference);
+                    parameters.Add("@nearesttown", updatedReservoir.NearestTown);
+                    parameters.Add("@lastinspectiondate", updatedReservoir.LastInspectionDate);
+                    parameters.Add("@lastcertificationdate", updatedReservoir.LastCertificationDate);
+                    parameters.Add("@nextinspectiondate102", updatedReservoir.NextInspectionDate102);
+                    var result = await conn.ExecuteAsync("sp_UpdateReservoirDetailsFromExtract", parameters, commandType: CommandType.StoredProcedure);
+                    return 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return 0;
+            }
+        }
+
+        public async Task<int> InsertStatementDetailsFromExtract(StatementDetails statementDetails)
+        {
+            _logger.LogInformation("Insert statement details from extract");
+            try
+            {
+
+                using (var conn = Connection)
+                {
+                    var parameters = new DynamicParameters();
+                   
+                    parameters.Add("@documentid", statementDetails.DocumentId);
+                    parameters.Add("@statementType", statementDetails.StatementType);
+                    parameters.Add("@periodStartdate", statementDetails.PeriodStartDate == null ? DBNull.Value : statementDetails.PeriodStartDate);
+                    parameters.Add("@periodenddate", statementDetails.PeriodEndDate == null ? DBNull.Value : statementDetails.PeriodEndDate);
+                    parameters.Add("@statementdate", statementDetails.StatementDate == null ? DBNull.Value : statementDetails.StatementDate);
+                    var result = await conn.ExecuteAsync("sp_InsertStatementDetails", parameters, commandType: CommandType.StoredProcedure);
+                    return 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return 0;
+            }
+        }
+
+        public async Task<int> InsertReservoirDetailsChangeHistory(List<ReservoirDetailsChangeHistory> changeHistory)
+        {
+            _logger.LogInformation("Insert Reservoir change History");
+            try
+            {
+
+                using (var conn = Connection)
+                {
+                    foreach (var change in changeHistory)
+                    {
+
+                        var parameters = new DynamicParameters();
+                        parameters.Add("@reservoirid", change.ReservoirId, DbType.Int32);
+                        parameters.Add("@submissionid", change.SourceSubmissionId, DbType.Int32);
+                        parameters.Add("@fieldName", change.FieldName, DbType.String);
+                        parameters.Add("@oldValue", change.OldValue == null ? string.Empty : change.OldValue, DbType.String);
+                        parameters.Add("@newValue", change.NewValue == null ? string.Empty : change.NewValue, DbType.String);
+                        parameters.Add("@changeDateTime", change.ChangeDateTime, DbType.DateTime2);
+                        parameters.Add("@isBackendChange", change.IsBackEndChange, DbType.Boolean);
+                        parameters.Add("@userId", change.ChangeByUserId, DbType.Int32);
+
+                        var result = await conn.ExecuteAsync("sp_InsertReservoirsChangeDetailsHistory", parameters, commandType: CommandType.StoredProcedure);
+
+
+                    }
+
+                    return 1;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return 0;
+            }
+        }
+
+        public async Task<int> GetDocumentId(string documentName)
+        {
+            _logger.LogInformation("Get document id ");
+            try
+            {
+
+                using (var conn = Connection)
+                {
+                    var parameters = new DynamicParameters();
+                    parameters.Add("blobStorageName", documentName, DbType.String);
+
+                    if (documentName != null)
+                    {
+                        var result = await conn.QueryAsync<int>("sp_GetDocumentId", parameters, commandType: CommandType.StoredProcedure);
+                        return result.FirstOrDefault();
+                    }
+                    else
+                    {
+                        _logger.LogInformation("The input is not valid " );
+                        return 0;
+                    }
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return 0;
+            }
+        }
+
+        public async Task<int> InsertCommentChangeHistory(List<CommentsChangeHistory> changeHistory)
+        {
+
+            _logger.LogInformation("Adding comment channge History");
+            try
+            {
+
+                using (var conn = Connection)
+                {
+                    foreach (var change in changeHistory)
+                    {
+
+                        var parameters = new DynamicParameters();
+                        parameters.Add("@reservoirid", change.ReservoirId, DbType.Int32);
+                        parameters.Add("@submissionid", change.SourceSubmissionId, DbType.Int32);
+                        parameters.Add("@commentid", change.CommentId, DbType.Int32);
+                        parameters.Add("@fieldname", change.FieldName, DbType.String);
+                        parameters.Add("@oldvalue", change.OldValue == null ? string.Empty : change.OldValue, DbType.String);
+                        parameters.Add("@newvalue", change.NewValue == null ? string.Empty : change.NewValue, DbType.String);
+                        parameters.Add("@changetime", change.ChangeDateTime, DbType.DateTime2);
+                        parameters.Add("@Isbackendchange", change.IsBackEndChange, DbType.Boolean);
+                        parameters.Add("@changeuserid", change.ChangeByUserId, DbType.Int32);
+
+                        var result = await conn.ExecuteAsync("sp_InsertCommentsChangeHistory", parameters, commandType: CommandType.StoredProcedure);
+
+
+                    }
+
+                    return 1;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return 0;
+            }
+        }
+
+
+        public async Task<Comment> GetExisitngComments(string relatestoobject, int relatestorecordid)
+        {
+            _logger.LogInformation("Get comments");
+            try
+            {
+
+                using (var conn = Connection)
+                {
+                    var parameters = new DynamicParameters();
+                    parameters.Add("relatestoobject", relatestoobject, DbType.String);
+                    parameters.Add("relatestorecordid", relatestorecordid, DbType.Int32);
+                    var result = await conn.QueryAsync<Comment>("sp_GetComments", parameters, commandType: CommandType.StoredProcedure);
+                    return result.FirstOrDefault();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return null;
             }
         }
 
