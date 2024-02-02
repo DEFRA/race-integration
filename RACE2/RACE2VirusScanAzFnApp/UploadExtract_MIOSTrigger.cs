@@ -10,6 +10,7 @@ using RACE2.Services;
 using RACE2.Dto;
 using DocumentFormat.OpenXml.Drawing.Diagrams;
 using System.Reflection;
+using RACE2.Common;
 
 namespace RACE2VirusScanAzFnApp
 {
@@ -33,10 +34,9 @@ namespace RACE2VirusScanAzFnApp
                 FunctionContext context)
         {
             ReservoirSubmissionDTO reservoirSubmission = new ReservoirSubmissionDTO();
-           
-            List<ReservoirDetailsChangeHistory> reservoirDetailsChangeHistory = new List<ReservoirDetailsChangeHistory>();
             List<SafetyMeasure> _extractedSafetyMeasureList = new List<SafetyMeasure>();
             SafetyMeasuresChangeHistory changeHistory = null;
+            CommentsChangeHistory commentsChangeHistory = new CommentsChangeHistory();
             foreach (var change in changes)
             {
                 int result;
@@ -63,13 +63,16 @@ namespace RACE2VirusScanAzFnApp
                 _extractedSafetyMeasureList.Add(safetyMeasure);
                 // int result  = await CompareMIOSListWithDB(_extractedSafetyMeasureList);
                 SafetyMeasure _existingsafetyMeasure = await _reservoirService.GetSafetyMeasuresByReservoir(safetyMeasure.ReservoirId,safetyMeasure.Reference);
-                if(_existingsafetyMeasure == null)
+                Comment _existingComments = await _reservoirService.GetExisitngComments("SafetyMeasure" , _existingsafetyMeasure.Id);
+
+                if (_existingsafetyMeasure == null)
                   result = await _reservoirService.InsertorUpdateSafetyMeasuresFromExtract(safetyMeasure, _comment);
                 else
                 {
                     List<SafetyMeasuresChangeHistory> _UpdatedChangeHistory = new List<SafetyMeasuresChangeHistory>();
-                    
-                    
+                    List<CommentsChangeHistory> _commentsChangeHistory = new List<CommentsChangeHistory>();
+
+
                     if (safetyMeasure.Reference != _existingsafetyMeasure.Reference)
                     {
                         changeHistory = AddHistory(_existingsafetyMeasure.Id,_existingsafetyMeasure.Reference, safetyMeasure.Reference, "Reference", reservoirSubmission,safetyMeasure.CreatedDate);
@@ -91,6 +94,13 @@ namespace RACE2VirusScanAzFnApp
                         changeHistory = AddHistory(_existingsafetyMeasure.Id, Convert.ToString(_existingsafetyMeasure.Status), Convert.ToString(safetyMeasure.Status), "Status", reservoirSubmission,safetyMeasure.CreatedDate);
                         _UpdatedChangeHistory.Add(changeHistory);
                     }
+
+                    if (_comment.CommentText != _existingComments.CommentText)
+                    {
+                        //commentsChangeHistory = AddCommentsHistory(_existingComments.Id, _existingComments.CommentText, _comment.CommentText, "CommentText", reservoirSubmission, _action.CreatedDate);
+                       // _commentsChangeHistory.Add(commentsChangeHistory);
+                    }
+
                     int history = await _reservoirService.InsertSafetyMeasureChangeHistory(_UpdatedChangeHistory);
                     result = await _reservoirService.InsertorUpdateSafetyMeasuresFromExtract(safetyMeasure, _comment);
 
