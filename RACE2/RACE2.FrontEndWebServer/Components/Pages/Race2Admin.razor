@@ -1,0 +1,162 @@
+﻿@page "/race2-admin"
+@using RACE2.FrontEndWebServer.Components
+@using RACE2.DataModel
+@using RACE2.Dto
+@using RACE2.Services
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Authorization
+@inject IConfiguration _config
+@inject NavigationManager NavigationManager
+@inject IUserService userService
+@attribute [Authorize]
+
+<Header />
+<div class="govuk-width-container" style="min-height: 69vh;">
+    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+
+        <div class="govuk-grid-row" style="flex-flow">
+            <div class="govuk-grid-column-one-thirds">
+                <div>
+                    <span class="govuk-heading-xl">
+                        Choose an action from the list below
+                    </span>
+                </div>
+                <nav>
+                    <NavLink class="nav-link" @onclick="goToRegPage" style="cursor:pointer">
+                        <span class="govuk-body">1. New User Registration</span>
+                    </NavLink>
+                    <NavLink class="nav-link" @onclick="goToChangePWPage" style="cursor:pointer">
+                        <span class="govuk-body">2. Change User Password</span>
+                    </NavLink>
+                    <NavLink class="nav-link" style="cursor:none">
+                        <span class="govuk-body">3. Reset User Lockout</span><br />
+                        <EditForm Model="emailModel" OnValidSubmit="@OnValidSubmitUnlockUser" style="margin-left:20px;">
+                            <DataAnnotationsValidator />
+                            @* <ValidationSummary /> *@
+                            <div class="govuk-form-group">
+                                <label class="govuk-label" for="govGateUserEmail">
+                                    Email address
+                                </label>
+                                <ValidationMessage For="() => emailModel.UserEmail" />
+                                <a id="email-error" style="text-decoration:none;">
+                                    <InputText @bind-Value="emailModel.UserEmail" class="govuk-input govuk-!-width-three-quarters" aria-required="true" aria-describedby="govGateUserId-hint" id="govGateUserEmail" name="govGateUserEmail"/>
+                                </a>
+                            </div>
+                            <button type="submit" class="btn btn-success">
+                                Continue
+                            </button>
+                        </EditForm>
+                    </NavLink>
+                    <NavLink class="nav-link" style="cursor:none">
+                        <span class="govuk-body">4. Set User As First Time User</span><br />
+                        <EditForm Model="emailModel" OnValidSubmit="@OnValidSubmitFirstTimeUser" style="margin-left:20px;">
+                            <DataAnnotationsValidator />
+                            @* <ValidationSummary /> *@
+                            <div class="govuk-form-group">
+                                <label class="govuk-label" for="govGateUsername">
+                                    Email address
+                                </label>
+                                <ValidationMessage For="() => emailModel.UserEmail" />
+                                <a id="email-error" style="text-decoration:none;">
+                                    <InputText @bind-Value="emailModel.UserEmail" class="govuk-input govuk-!-width-three-quarters" aria-required="true" aria-describedby="govGateUserId-hint" id="govGateUsername" name="govGateUsername"/>
+                                </a>
+                            </div>
+                            <button type="submit" class="btn btn-success">
+                                Continue
+                            </button>
+                        </EditForm>
+                    </NavLink>
+                    <NavLink class="nav-link" @onclick="goToLogoutPage" style="cursor:pointer">
+                        <span class="govuk-body">5. Sign Out</span>
+                    </NavLink>
+                </nav>
+            </div>
+         </div>
+
+    </main>
+</div>
+<Footer />
+@code {
+    public class EmailModel
+    {
+        [Required]
+        [EmailAddress]
+        public string UserEmail { get; set; }
+    }
+    private string UserName { get; set; } = "Unknown";
+    private UserDetail UserDetail { get; set; } = default!;
+    UserSpecificDto userDetails { get; set; }
+    EmailModel emailModel { get; set; }
+    private bool IsAdmin = false;
+    private bool IsFirstTimeUser = false;
+    private bool IsUserLockedOut = false;
+    private string enabled = "hidden";
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthenticationStateTask { get; set; }
+    protected async override Task OnInitializedAsync()
+    {
+        emailModel = new EmailModel();
+        emailModel.UserEmail = "kriss.sahoo@capgemini.com";
+        enabled = "visible";
+        var authState = await AuthenticationStateTask;
+        UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
+
+        userDetails = await userService.GetUserWithRoles(UserName);
+        foreach (var role in userDetails.roles)
+        {
+            if (role.Name == "System Administrator")
+            {
+                IsAdmin = true;
+                break;
+            }
+        }
+        base.OnInitializedAsync();
+    }
+
+    bool forceLoad = false;
+    public void goToRegPage()
+    {
+        bool forceLoad = true;
+        string pagelink = _config["RACE2SecurityProviderURL"] + "/Identity/Account/Register";
+        NavigationManager.NavigateTo(pagelink, forceLoad);
+    }
+
+    private void goToChangePWPage()
+    {
+        bool forceLoad = true;
+        string pagelink = _config["RACE2SecurityProviderURL"] + "/Identity/Account/ChangeExistingUserPassword";
+        NavigationManager.NavigateTo(pagelink, forceLoad);
+    }
+    private void OnValidSubmitFirstTimeUser()
+    {
+        IsUserLockedOut = false;
+        IsFirstTimeUser = true;
+        userService.UpdateFirstTimeUserLogin(emailModel.UserEmail, true);
+        IsFirstTimeUser = false;
+        enabled = "visible";
+        StateHasChanged();
+    }
+
+    private void OnValidSubmitUnlockUser()
+    {
+        IsUserLockedOut = true;
+        IsFirstTimeUser = false;
+        userService.UpdateFirstTimeUserLogin(emailModel.UserEmail, true);
+        userService.ResetUserLockout(emailModel.UserEmail);
+        IsUserLockedOut = false;
+        enabled = "visible";
+        StateHasChanged();
+    }
+
+    private void goToLogoutPage()
+    {
+        bool forceLoad = true;
+        string pagelink = "/Logout";
+        NavigationManager.NavigateTo(pagelink, forceLoad);
+    }
+}
+    
+}

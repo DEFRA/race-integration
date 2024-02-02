@@ -105,15 +105,15 @@ try
         options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
         options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
     })
-    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
-    //.AddCookie(options =>
-    //{
-    //    options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
-    //    options.Cookie.MaxAge = options.ExpireTimeSpan; // optional
-    //    options.SlidingExpiration = true;
-    //    options.LoginPath = "/login";
-    //    options.LogoutPath = "/logout";
-    //})
+    //.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+        options.Cookie.MaxAge = options.ExpireTimeSpan; // optional
+        options.SlidingExpiration = true;
+        options.LoginPath = "/login";
+        options.LogoutPath = "/logout";
+    })
     .AddOpenIdConnect(
         OpenIdConnectDefaults.AuthenticationScheme,
         options =>
