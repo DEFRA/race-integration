@@ -101,13 +101,24 @@ try
     builder.Services.AddAuthentication(options =>
     {
         options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-        options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+        //options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
         options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
     })
     //.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
+    //.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
+    //{
+    //    //options.Cookie = new Microsoft.AspNetCore.Http.CookieBuilder()
+    //    //{
+    //    //    SecurePolicy = Microsoft.AspNetCore.Http.CookieSecurePolicy.Always,
+    //    //    HttpOnly = true,
+    //    //    SameSite = Microsoft.AspNetCore.Http.SameSiteMode.None,
+    //    //};
+    //    options.ExpireTimeSpan = TimeSpan.FromMinutes(1);//default 5 min
+    //    options.Cookie.MaxAge = options.ExpireTimeSpan; // optional
+    //})
     .AddCookie(options =>
     {
-        options.ExpireTimeSpan = TimeSpan.FromMinutes(2);//default 5 min
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(20);//default 5 min
         options.Cookie.MaxAge = options.ExpireTimeSpan; // optional
         options.SlidingExpiration = true;
         options.LoginPath = "/Login";
@@ -194,6 +205,7 @@ try
     app.UseAuthentication();
     app.UseAuthorization();
 
+    //app.MapBlazorHub();
     app.MapBlazorHub(options =>
     {
         options.CloseOnAuthenticationExpiration = true;
