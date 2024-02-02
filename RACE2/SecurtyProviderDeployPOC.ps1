@@ -1,11 +1,11 @@
-$RESOURCE_GROUP = "race2projectrg"
+$RESOURCE_GROUP = "POCRACINFRG1401"
 $ENVIRONMENT="Production"
-$MANAGEDIDENTITY="Race2ManagedIdentity"
-$APPCONFIG_URL="https://race2appconfig.azconfig.io/"
-$REGISTRY_SERVER="race2acr.azurecr.io"
-$CONTAINERAPPS_ENVIRONMENT="race2containerappenv"
-$CONTAINERAPPNAME ="race2securityprovider"
-$REMOTE_IMAGENAME="race2acr.azurecr.io/race2securityprovider:365017"
+$MANAGEDIDENTITY="POCRACINFMI1401"
+$APPCONFIG_URL="https://pocracinfac1401.azconfig.io/"
+$REGISTRY_SERVER="pocracinfcr1401.azurecr.io"
+$CONTAINERAPPS_ENVIRONMENT="POCRACINFCE1401"
+$CONTAINERAPPNAME ="securityprovider"
+$REMOTE_IMAGENAME="pocracinfcr1401.azurecr.io/securityprovider:v1"
 
 $identityClientId = (az identity show --resource-group $RESOURCE_GROUP --name $MANAGEDIDENTITY --output json --query "clientId")
 $identityResourceId = (az identity show --resource-group $RESOURCE_GROUP --name $MANAGEDIDENTITY --output json --query "id")
@@ -17,7 +17,7 @@ az containerapp create `
   --image $REMOTE_IMAGENAME `
   --registry-server $REGISTRY_SERVER `
   --registry-identity $identityResourceId `
-  --target-port 80 `
+  --target-port 8080 `
   --ingress 'external' `
   --cpu 0.5 `
   --memory 1.0Gi `

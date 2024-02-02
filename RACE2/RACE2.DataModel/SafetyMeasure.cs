@@ -35,7 +35,9 @@ namespace RACE2.DataModel
         [StringLength(1024)]
         public string? Notes { get; set; }
 
-        public Reservoir Reservoir { get; set; } = new Reservoir();
+        public int ReservoirId { get; set; }
+        [ForeignKey("ReservoirId")]
+        public virtual Reservoir Reservoir { get; set; }
 
     }   
 

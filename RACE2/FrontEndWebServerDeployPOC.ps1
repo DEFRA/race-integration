@@ -1,12 +1,11 @@
-$RESOURCE_GROUP = "race2projectrg"
-$LOCATION="westeurope"
-$CONTAINERAPPS_ENVIRONMENT="race2containerappenv"
-$CONTAINERAPPNAME ="race2frontendwebserver"
-$REMOTE_IMAGENAME="race2acr.azurecr.io/race2frontendwebserver:351491"
-$MANAGEDIDENTITY="Race2ManagedIdentity"
-$REGISTRY_SERVER="race2acr.azurecr.io"
-$APPCONFIG_URL="https://race2appconfig.azconfig.io/"
+$RESOURCE_GROUP = "POCRACINFRG1401"
 $ENVIRONMENT="Production"
+$MANAGEDIDENTITY="POCRACINFMI1401"
+$APPCONFIG_URL="https://pocracinfac1401.azconfig.io/"
+$REGISTRY_SERVER="pocracinfcr1401.azurecr.io"
+$CONTAINERAPPS_ENVIRONMENT="POCRACINFCE1401"
+$CONTAINERAPPNAME ="frontendapp"
+$REMOTE_IMAGENAME="pocracinfcr1401.azurecr.io/frontendapp:v1"
 
 $identityClientId = (az identity show --resource-group $RESOURCE_GROUP --name $MANAGEDIDENTITY --output json --query "clientId")
 $identityResourceId = (az identity show --resource-group $RESOURCE_GROUP --name $MANAGEDIDENTITY --output json --query "id")
@@ -18,7 +17,7 @@ $identityResourceId = (az identity show --resource-group $RESOURCE_GROUP --name 
   --image $REMOTE_IMAGENAME `
   --registry-server $REGISTRY_SERVER `
   --registry-identity $identityResourceId `
-  --target-port 80 `
+  --target-port 8080 `
   --ingress 'external' `
   --cpu 0.5 `
   --memory 1.0Gi `

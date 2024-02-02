@@ -14,15 +14,19 @@ namespace RACE2.DataModel
         [Key,Required]
         public int Id { get; set; }
         [Required]
-        public SupportingDocument Document { get; set; } = new SupportingDocument();
+        public int DocumentId {  get; set; }
+        [ForeignKey("DocumentId")]
+        public virtual SupportingDocument Document { get; set; }
         [Required,StringLength(64)]
         public string StatementType { get; set; }
-        public DateTime PeriodStartDate { get; set; }
-        public DateTime PeriodEndDate { get; set; }
+        public DateTime? PeriodStartDate { get; set; }
+        public DateTime? PeriodEndDate { get; set; }
 
-        public DateTime StatementDate { get; set; }
+        public DateTime? StatementDate { get; set; }
 
-        public DateTime NextStatementDate { get; set; }
+        public DateTime? NextStatementDate { get; set; }
+
+        public DateTime? SignatureDate { get; set; }
 
     }
 }

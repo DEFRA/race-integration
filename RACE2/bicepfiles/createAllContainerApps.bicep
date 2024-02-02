@@ -5,6 +5,8 @@ param securityProviderContainerAppName string
 param securityprovidercontainerImage string
 param webApiContainerAppName string
 param webapicontainerImage string
+param webApiExternalContainerAppName string
+param webapiexternalcontainerImage string
 param frontEndWebServerContainerAppName string
 param frontendwebservercontainerImage string
 param registryName string
@@ -66,6 +68,25 @@ module createwebapicontainerappmodule 'createwebapicontainerapp.bicep' = {
     useExternalIngress: useExternalIngress
     containerPort: containerPort
     containerImage: webapicontainerImage
+    managedidentity: managedidentity
+    appConfigURL: appConfigURL
+    aspnetCoreEnv: aspnetCoreEnv
+    tag: tag
+    minReplicas: minReplicas
+    maxReplicas: maxReplicas
+  }
+}
+module createwebapiexternalcontainerappmodule 'createwebapiexternalcontainerapp.bicep' = {
+  scope: resourceGroup(resourcegroup)
+  name: 'webapiexternalcontainerappdeploy'
+  params: {
+    race2appenv: race2appenvName
+    containerAppName: webApiExternalContainerAppName
+    registryName: registryName
+    resourcegroup: resourcegroup
+    useExternalIngress: useExternalIngress
+    containerPort: containerPort
+    containerImage: webapiexternalcontainerImage
     managedidentity: managedidentity
     appConfigURL: appConfigURL
     aspnetCoreEnv: aspnetCoreEnv

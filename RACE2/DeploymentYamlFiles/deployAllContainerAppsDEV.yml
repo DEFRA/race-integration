@@ -20,12 +20,16 @@ variables:
     value: 'race2webapi'  
   - name: dockerfile_webapi
     value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_WebApi'
+  - name: repository_webapiexternal
+    value: 'race2webapiexternal'
+  - name: dockerfile_webapiexternal
+    value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_WebApiExternal'  
   - name: repository_frontendwebserver
     value: 'race2frontendwebserver'
   - name: dockerfile_frontendwebserver
     value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_FrontEndWebServer'
   - name: containerRegistry
-    value: 'AZR-RAC-DEV1-DockerRegistry'
+    value: 'AZR-RAC-DEV1-ACR'
   - name: tag
     value: '$(Build.BuildId)'
   - name: azureServiceConnection
@@ -61,7 +65,15 @@ stages:
         repository: ${{ variables.repository_webapi }}
         dockerfile: ${{ variables.dockerfile_webapi }}
         containerRegistry: ${{ variables.containerRegistry }}
-        tags: ${{ variables.tag }}      
+        tags: ${{ variables.tag }}  
+    - task: Docker@2
+      displayName: Build and push an image - WebApiExternal
+      inputs:
+        command: buildAndPush
+        repository: ${{ variables.repository_webapiexternal }}
+        dockerfile: ${{ variables.dockerfile_webapiexternal }}
+        containerRegistry: ${{ variables.containerRegistry }}
+        tags: ${{ variables.tag }}     
     - task: Docker@2
       displayName: Build and push an image - FrontEndWebServer
       inputs:

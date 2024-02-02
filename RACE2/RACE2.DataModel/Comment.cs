@@ -20,7 +20,9 @@ namespace RACE2.DataModel
         public string? RelatesToObject { get; set; }
        public int RelatesToRecordId { get; set; }
         [Required]
-        public UserDetail CreatedByUser { get; set; }
+        public int CreatedByUserId { get; set; }
+        [ForeignKey("CreatedByUserId")]
+        public virtual UserDetail CreatedByUser { get; set; }
         [Required]
         public DateTime CreatedDate { get; set; }
 
@@ -36,6 +38,8 @@ namespace RACE2.DataModel
 
         public UserDetail? ClosedByUser { get; set; }
 
-        public DateTime ClosedDate { get; set; }
+        public DateTime? ClosedDate { get; set; }
+
+        public bool? IsQualityCheckRequired { get; set; }
     }
 }

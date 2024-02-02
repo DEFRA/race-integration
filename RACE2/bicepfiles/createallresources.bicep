@@ -5,13 +5,8 @@ param resourcegroup string
 param managedidentity string
 param vnet string
 param subnetcontainerappenv string
-param subnetsqlserver string
-param subnetstorageaccount string
-param subnetservicebus string
-param subnetappconfig string
-param subnetkeyvault string
-param subnetacr string
-param subnetvm string
+param subnetpasaccount string
+param subnetfunctionapp string
 param servers_race2sqlserver_name string
 param servers_race2sqldb_name string
 param containerregistryName string
@@ -21,11 +16,15 @@ param administratorLogin string
 param administratorLoginPassword string
 param appconfigName string
 param keyvaultName string
-param serviceBusName string
+param appserviceplanName string
+param eventgridtopicName string
+param functionappName string
 param storageAccountName string
 param logAnalyticsWorkspaceName string
 param race2appenvName string
 param race2appinsightName string
+param adgroupname string
+param adgroupsid string
 
 module createmanagedidentitymodule 'createmanagedidentity.bicep' = {
   scope: resourceGroup(resourcegroup)
@@ -40,17 +39,37 @@ module createvnetmodule 'createvnet.bicep' = {
   scope: resourceGroup(resourcegroup)
   name: 'vnetdeploy'
   params: {
+    location: location 
     vnet: vnet
     subnetcontainerappenv: subnetcontainerappenv
-    subnetsqlserver: subnetsqlserver
-    subnetstorageaccount: subnetstorageaccount 
-    subnetservicebus: subnetservicebus
-    subnetappconfig: subnetappconfig
-    subnetkeyvault: subnetkeyvault
-    subnetacr: subnetacr
-    subnetvm: subnetvm
-    location: location 
+    subnetpasaccount: subnetpasaccount 
+    subnetfunctionapp: subnetfunctionapp
   }
+}
+
+module createappinsightmodule 'createappinsight.bicep' = {
+  scope: resourceGroup(resourcegroup)
+  name: 'appinsightdeploy'
+  params: {
+    location: location
+    logAnalyticsWorkspaceid: createappworkspacemodule.outputs.id
+    race2appinsight: race2appinsightName
+  }
+  dependsOn: [
+    createvnetmodule
+  ]
+}
+
+module createappserviceplanmodule 'createappserviceplan.bicep' = {
+  scope: resourceGroup(resourcegroup)
+  name: 'appserviceplandeploy'
+  params: {
+    location: location
+    appserviceplanName: appserviceplanName
+  }
+  dependsOn: [
+    createmanagedidentitymodule
+  ]
 }
 
 module createcontainerregistrymodule 'createcontainerregistry.bicep' = {
@@ -68,26 +87,12 @@ module createcontainerregistrymodule 'createcontainerregistry.bicep' = {
   ]
 }
 
-module createservicebusmodule 'createservicebus.bicep' = {
-  scope: resourceGroup(resourcegroup)
-  name: 'servicebusdeploy'
-  params: {
-    location: location
-    serviceBusName: serviceBusName
-  }
-  dependsOn: [
-    createmanagedidentitymodule
-  ]
-}
-
 module createstorageaccountmodule 'createstorageaccount.bicep' = {
   scope: resourceGroup(resourcegroup)
   name: 'storageaccountdeploy'
   params: {
     location: location
     storageAccountname: storageAccountName
-    vnet: vnet
-    subnetstorageaccount: subnetstorageaccount
   }
   dependsOn: [
     createmanagedidentitymodule
@@ -116,7 +121,6 @@ module createkeyvaultmodule 'createkeyvault.bicep' = {
     location: location
     keyvaultName: keyvaultName
     tenantId: tenantId
-    appInsightConnectionString: createappinsightmodule.outputs.connectionString
   }
   dependsOn: [
     createmanagedidentitymodule
@@ -132,8 +136,10 @@ module createsqlservermodule 'createsqlserver.bicep' = {
     administratorLogin: administratorLogin
     administratorLoginPassword: administratorLoginPassword
     servers_race2sqldb_name: servers_race2sqldb_name
-    vnet: vnet
-    subnetsqlserver: subnetsqlserver
+    tenantId: tenantId
+    adgroupname: adgroupname
+    adgroupsid: adgroupsid
+
   }
   dependsOn: [
     createmanagedidentitymodule
@@ -149,19 +155,6 @@ module createappworkspacemodule 'createappworkspace.bicep' = {
   }
 }
 
-module createappinsightmodule 'createappinsight.bicep' = {
-  scope: resourceGroup(resourcegroup)
-  name: 'appinsightdeploy'
-  params: {
-    location: location
-    logAnalyticsWorkspaceid: createappworkspacemodule.outputs.id
-    race2appinsight: race2appinsightName
-  }
-  dependsOn: [
-    createmanagedidentitymodule
-  ]
-}
-
 module createcontainerappenvmodule 'createcontainerappenv.bicep' = {
   scope: resourceGroup(resourcegroup)
   name: 'race2appenvdeploy'
@@ -174,6 +167,65 @@ module createcontainerappenvmodule 'createcontainerappenv.bicep' = {
   }
   dependsOn: [
     createappworkspacemodule
+  ]
+}
+
+module createfunctionappmodule 'createfunctionapp.bicep' = {
+  scope: resourceGroup(resourcegroup)
+  name: 'functionappdeploy'
+  params: {
+    subscriptionid: subscriptionid
+    location: location
+    resourcegroup: resourcegroup
+    managedidentity: managedidentity
+    functionappName: functionappName
+    race2appinsightName: race2appinsightName
+    appserviceplanName: appserviceplanName
+    storageAccountName: storageAccountName
+  }
+  dependsOn: [
+    createappserviceplanmodule
+    createappinsightmodule
+    createstorageaccountmodule
+  ]
+}
+
+module createeventgridtopicmodule 'createeventgridtopic.bicep' = {
+  scope: resourceGroup(resourcegroup)
+  name: 'eventgridtopicdeploy'
+  params: {
+    location: location
+    eventgridtopicName: eventgridtopicName
+  }
+  dependsOn: [
+    createfunctionappmodule
+  ]
+}
+
+module createprivateendpointswithvnetmodule 'createprivateendpointswithvnet.bicep' = {
+  scope: resourceGroup(resourcegroup)
+  name: 'privateendpointswithvnetdeploy'
+  params: {
+    vnet: vnet
+    subnetcontainerappenv: subnetcontainerappenv
+    subnetpasaccount: subnetpasaccount
+    location: location 
+    appconfigName: appconfigName
+    keyvaultName: keyvaultName
+    containerregistryname: containerregistryName
+    eventgridtopicName: eventgridtopicName
+    storageAccountname: storageAccountName
+    subnetfunctionapp: subnetfunctionapp
+    servers_race2sqlserver_name: servers_race2sqlserver_name
+  }
+  dependsOn: [
+    createappconfigmodule
+    createkeyvaultmodule
+    createeventgridtopicmodule
+    createsqlservermodule
+    createstorageaccountmodule
+    createcontainerregistrymodule
+    createfunctionappmodule
   ]
 }
 
