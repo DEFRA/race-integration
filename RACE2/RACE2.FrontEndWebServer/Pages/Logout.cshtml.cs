@@ -10,10 +10,10 @@ namespace RACE2.FrontEndWebServer.Pages
     {
         public async Task<IActionResult> OnGetAsync()
         {
+            //HttpContext.Response.Cookies.Delete(".AspNetCore.Cookies");
             // just to remove compiler warning
             await Task.CompletedTask;
-            return SignOut(OpenIdConnectDefaults.AuthenticationScheme,
-                           CookieAuthenticationDefaults.AuthenticationScheme);
+            return SignOut(OpenIdConnectDefaults.AuthenticationScheme, CookieAuthenticationDefaults.AuthenticationScheme);
         }
     }
 }

@@ -1,6 +1,7 @@
-﻿@page "/PageNotFound"
-@page "/PageNotFound/{ErrorMessage}"
+﻿@page "/ServiceUnavailable"
+@page "/ServiceUnavailable/{ErrorMessage}"
 @using RACE2.FrontEndWebServer.Components
+@inject IConfiguration _config
 
 <Header/>
 
@@ -15,22 +16,18 @@
 
                 <div class="govuk-panel govuk-panel-dropout govuk-!-margin-top-4 govuk-!-margin-bottom-9">
                     <h1 class="govuk-panel__title">
-                        Page not found
+                        Sorry, the service is unavailable
                     </h1>
                 </div>
 
-                <p class="govuk-body govuk-!-margin-top-6">
-                    If you typed the web address, check it is correct.
-                </p>
                 <p class="govuk-body">
-                    If you pasted the web address, check you copied the entire address.
+                    You'll be able to use the service from @MaintModeEndTime.
                 </p>
 
                 <p class="govuk-body">
-                    If the web address is correct or you selected a link or button, and you need to talk to someone about your
-                    annual statement, contact the
-                    Environment Agency.
+                    If you need to talk to someone about your annual statement, contact the Environment Agency.
                 </p>
+
                 <p class="govuk-body">
                     Email <a href="mailto:s12statement@environment-agency.gov.uk"
                              class="govuk-link">s12statement@environment-agency.gov.uk</a>
@@ -48,4 +45,10 @@
 @code {
     [Parameter]
     public string ErrorMessage { get; set; }
+    public string MaintModeEndTime { get; set; }
+    protected override void OnInitialized()
+    {
+        MaintModeEndTime = _config["MaintModeEndTime"];
+        base.OnInitialized();
+    }
 }

@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "RACE2.TrackChangeHistoryFunction": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7179",
+      "launchBrowser": false
+    }
+  }
+}
