@@ -7,6 +7,7 @@ dotnet graphql download https://localhost:5003/graphql -f ./RACE2GraphQLSchema/s
 
 az login
 az login -u kriss.sahoo@defra.gov.uk -p test
+az login --use-device-code
 
 az acr login -n race2acr  -n race2acr
 az acr login -n race2acr -u Race2Acr -p 3q23FKncYFoNMky5N+4arugBI6FHagtWC07sVgPHdo+ACRB3HwHE

@@ -1,179 +1,39 @@
-param virtualNetworks_POCRACINFVN1401_name string = 'POCRACINFVN1401'
+param configurationStores_prdracinfac1401_name string = 'prdracinfac1401'
+param privateEndpoints_PrivateEndpointAppConfig_externalid string = '/subscriptions/d9cce027-07b6-4275-a215-dd8d52b9d469/resourceGroups/POCRACINFRG1401/providers/Microsoft.Network/privateEndpoints/PrivateEndpointAppConfig'
 
-resource virtualNetworks_POCRACINFVN1401_name_resource 'Microsoft.Network/virtualNetworks@2023-04-01' = {
-  name: virtualNetworks_POCRACINFVN1401_name
+resource configurationStores_prdracinfac1401_name_resource 'Microsoft.AppConfiguration/configurationStores@2023-03-01' = {
+  name: configurationStores_prdracinfac1401_name
   location: 'uksouth'
   tags: {
     ServiceCode: 'RAC'
   }
-  properties: {
-    addressSpace: {
-      addressPrefixes: [
-        '10.10.0.0/16'
-      ]
+  sku: {
+    name: 'standard'
+  }
+  identity: {
+    type: 'UserAssigned'
+    userAssignedIdentities: {
+      '/subscriptions/d9cce027-07b6-4275-a215-dd8d52b9d469/resourcegroups/POCRACINFRG1401/providers/Microsoft.ManagedIdentity/userAssignedIdentities/PRDRACINFMI1401': {}
     }
-    subnets: [
-      {
-        name: 'subnetsqlserver'
-        id: virtualNetworks_POCRACINFVN1401_name_subnetsqlserver.id
-        properties: {
-          addressPrefix: '10.10.0.0/24'
-          serviceEndpoints: [
-            {
-              service: 'Microsoft.Sql'
-              locations: [
-                'uksouth'
-              ]
-            }
-          ]
-          delegations: []
-          privateEndpointNetworkPolicies: 'Disabled'
-          privateLinkServiceNetworkPolicies: 'Enabled'
-        }
-        type: 'Microsoft.Network/virtualNetworks/subnets'
-      }
-      {
-        name: 'subnetcontainerappenvResource'
-        properties: {
-          addressPrefix: '10.10.1.0/24'
-          serviceEndpoints: [
-            {
-              service: 'Microsoft.Web'
-              locations: [
-                '*'
-              ]
-            }
-          ]
-          delegations: []
-          privateEndpointNetworkPolicies: 'Disabled'
-          privateLinkServiceNetworkPolicies: 'Enabled'
-        }
-        type: 'Microsoft.Network/virtualNetworks/subnets'
-      }
-      {
-        name: 'subnetservicebusResource'
-        properties: {
-          addressPrefix: '10.10.2.0/24'
-          serviceEndpoints: [
-            {
-              service: 'Microsoft.ServiceBus'
-              locations: [
-                '*'
-              ]
-            }
-          ]
-          delegations: []
-          privateEndpointNetworkPolicies: 'Disabled'
-          privateLinkServiceNetworkPolicies: 'Enabled'
-        }
-        type: 'Microsoft.Network/virtualNetworks/subnets'
-      }
-      {
-        name: 'subnetstorageaccountResource'
-        properties: {
-          addressPrefix: '10.10.3.0/24'
-          serviceEndpoints: [
-            {
-              service: 'Microsoft.Storage'
-              locations: [
-                'uksouth'
-                'ukwest'
-              ]
-            }
-          ]
-          delegations: []
-          privateEndpointNetworkPolicies: 'Disabled'
-          privateLinkServiceNetworkPolicies: 'Enabled'
-        }
-        type: 'Microsoft.Network/virtualNetworks/subnets'
-      }
-    ]
-    virtualNetworkPeerings: []
-    enableDdosProtection: false
+  }
+  properties: {
+    encryption: {}
+    disableLocalAuth: false
+    softDeleteRetentionInDays: 7
+    enablePurgeProtection: false
   }
 }
 
-resource virtualNetworks_POCRACINFVN1401_name_subnetcontainerappenvResource 'Microsoft.Network/virtualNetworks/subnets@2023-04-01' = {
-  name: '${virtualNetworks_POCRACINFVN1401_name}/subnetcontainerappenvResource'
+resource configurationStores_prdracinfac1401_name_PrivateEndpointAppConfig 'Microsoft.AppConfiguration/configurationStores/privateEndpointConnections@2023-03-01' = {
+  parent: configurationStores_prdracinfac1401_name_resource
+  name: 'PrivateEndpointAppConfig'
   properties: {
-    addressPrefix: '10.10.1.0/24'
-    serviceEndpoints: [
-      {
-        service: 'Microsoft.Web'
-        locations: [
-          '*'
-        ]
-      }
-    ]
-    delegations: []
-    privateEndpointNetworkPolicies: 'Disabled'
-    privateLinkServiceNetworkPolicies: 'Enabled'
+    privateEndpoint: {
+      id: privateEndpoints_PrivateEndpointAppConfig_externalid
+    }
+    privateLinkServiceConnectionState: {
+      status: 'Approved'
+      description: 'Auto-Approved'
+    }
   }
-  dependsOn: [
-    virtualNetworks_POCRACINFVN1401_name_resource
-  ]
-}
-
-resource virtualNetworks_POCRACINFVN1401_name_subnetservicebusResource 'Microsoft.Network/virtualNetworks/subnets@2023-04-01' = {
-  name: '${virtualNetworks_POCRACINFVN1401_name}/subnetservicebusResource'
-  properties: {
-    addressPrefix: '10.10.2.0/24'
-    serviceEndpoints: [
-      {
-        service: 'Microsoft.ServiceBus'
-        locations: [
-          '*'
-        ]
-      }
-    ]
-    delegations: []
-    privateEndpointNetworkPolicies: 'Disabled'
-    privateLinkServiceNetworkPolicies: 'Enabled'
-  }
-  dependsOn: [
-    virtualNetworks_POCRACINFVN1401_name_resource
-  ]
-}
-
-resource virtualNetworks_POCRACINFVN1401_name_subnetsqlserver 'Microsoft.Network/virtualNetworks/subnets@2023-04-01' = {
-  name: '${virtualNetworks_POCRACINFVN1401_name}/subnetsqlserver'
-  properties: {
-    addressPrefix: '10.10.0.0/24'
-    serviceEndpoints: [
-      {
-        service: 'Microsoft.Sql'
-        locations: [
-          'uksouth'
-        ]
-      }
-    ]
-    delegations: []
-    privateEndpointNetworkPolicies: 'Disabled'
-    privateLinkServiceNetworkPolicies: 'Enabled'
-  }
-  dependsOn: [
-    virtualNetworks_POCRACINFVN1401_name_resource
-  ]
-}
-
-resource virtualNetworks_POCRACINFVN1401_name_subnetstorageaccountResource 'Microsoft.Network/virtualNetworks/subnets@2023-04-01' = {
-  name: '${virtualNetworks_POCRACINFVN1401_name}/subnetstorageaccountResource'
-  properties: {
-    addressPrefix: '10.10.3.0/24'
-    serviceEndpoints: [
-      {
-        service: 'Microsoft.Storage'
-        locations: [
-          'uksouth'
-          'ukwest'
-        ]
-      }
-    ]
-    delegations: []
-    privateEndpointNetworkPolicies: 'Disabled'
-    privateLinkServiceNetworkPolicies: 'Enabled'
-  }
-  dependsOn: [
-    virtualNetworks_POCRACINFVN1401_name_resource
-  ]
 }

@@ -1,0 +1,26 @@
+trigger:
+- none
+pr:
+- none
+
+name: Deploy All Resources
+
+variables:
+  vmImageName: 'ubuntu-latest'
+  resourceGroupName: 'POCRACINFRG1402'
+  azureServiceConnection: 'AZR-RAC-POC2'
+  managedIdentityName: 'POCRACINFMI1402'
+  templateFileRoleAssignments: './RACE2/bicepfiles/createroleassignments.bicep'
+pool:
+  vmImage: $(vmImageName)
+
+steps:
+- task: AzureCLI@2  
+  inputs:
+    azureSubscription: $(azureServiceConnection)
+    scriptType: bash
+    scriptLocation: inlineScript
+    useGlobalConfig: false    
+    inlineScript: |
+      az --version
+      az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFileRoleAssignments) --parameters managedIdentityName=$(managedIdentityName)

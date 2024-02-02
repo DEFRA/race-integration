@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "RACE2.DefenderScanAzurefn": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7118",
+      "launchBrowser": false
+    }
+  }
+}

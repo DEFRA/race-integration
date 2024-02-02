@@ -27,5 +27,7 @@ namespace RACE2.DataAccess.Repository
         public Task<int> ResetUserLockout(string email);
 
         public Task<OrganisationDTO> GetCompanyNameByUserId(int userId);
+
+        
     }
 }

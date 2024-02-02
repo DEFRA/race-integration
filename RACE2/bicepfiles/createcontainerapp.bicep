@@ -24,7 +24,7 @@ resource registry 'Microsoft.ContainerRegistry/registries@2022-12-01' existing =
   scope: resourceGroup(registryResourceGroup)
 }
 
-resource managedEnvironments_race2containerappenv_name_resource 'Microsoft.App/managedEnvironments@2023-05-01' existing= {
+resource managedEnvironments_race2containerappenv_name_resource 'Microsoft.App/managedEnvironments@2023-08-01-preview' existing= {
   name: race2appenv 
 }
 
