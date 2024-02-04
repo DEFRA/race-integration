@@ -434,3 +434,6 @@ FodyWeavers.xsd
 /RACE2/RACE2.FrontEndWebServer/Pages
 /RACE2/RACE2VirusScanAzFnApp/Properties/serviceDependencies.json
 /RACE2/RACE2VirusScanAzFnApp/local.settings.json
+/RACE2/RACE2VirusScanAzFnApp/Properties/ServiceDependencies/DEVRACINFAF1401 - Zip Deploy
+/RACE2/RACE2VirusScanAzFnApp/Properties/serviceDependencies.DEVRACINFAF1401 - Zip Deploy.json
+/RACE2.VirusTrackingFnApp/local.settings.json
