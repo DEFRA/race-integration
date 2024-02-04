@@ -15,8 +15,8 @@
 
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-three-quarters">
-                @if (!FileUploadInProgress)
-                {
+@*                 @if (!FileUploadInProgress)
+                { *@
                     <EditForm Model="@UploadFileData" OnSubmit="OnUploadSubmit">
                         @*                     @if (UploadFileData.FileIsEmpty)
                     {
@@ -324,12 +324,12 @@
                             Upload and send statement
                         </button>
                     </EditForm>
-                }
+                @*}
                 else
                 {
                     <p class="govuk-body">File upload in progress.</p>
                     <p class="govuk-body">This could take up to 20 seconds.</p>
-                }
+                } *@
             </div>
         </div>
     </main>
