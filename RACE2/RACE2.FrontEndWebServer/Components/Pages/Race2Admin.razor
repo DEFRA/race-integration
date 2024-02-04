@@ -1,10 +1,13 @@
 ﻿@page "/race2-admin"
 @using RACE2.FrontEndWebServer.Components
-@using RACE2.Services
 @using RACE2.DataModel
 @using RACE2.Dto
-@using Microsoft.AspNetCore.Authorization
+@using RACE2.Services
 @using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Authorization
 @inject IConfiguration _config
 @inject NavigationManager NavigationManager
 @inject IUserService userService
@@ -76,7 +79,6 @@
     </main>
 </div>
 <Footer />
-
 @code {
     public class EmailModel
     {

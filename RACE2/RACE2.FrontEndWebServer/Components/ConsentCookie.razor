@@ -1,0 +1,39 @@
+﻿@using Microsoft.AspNetCore.Http.Features
+@using Microsoft.AspNetCore.Http
+
+@inject IHttpContextAccessor Http
+@inject IJSRuntime JSRuntime
+
+@if (showBanner)
+{
+    if (!hideBanner)
+    {
+        <div id="cookieConsent" class="alert alert-info alert-dismissible fade show" role="alert">
+            This application uses cookies. Please give your consent to store cookies in the browser.
+            <button type="button" class="accept-policy close" data-dismiss="alert" aria-label="Close" data-cookie-string="@cookieString" @onclick="AcceptMessage">
+                Accept Cookies
+            </button>
+        </div>
+    }
+}
+@code {
+    ITrackingConsentFeature consentFeature;
+    bool showBanner;
+    bool hideBanner;
+    string cookieString;
+
+    protected override void OnInitialized()
+    {
+        consentFeature = Http.HttpContext.Features.Get<ITrackingConsentFeature>();
+        showBanner = !consentFeature?.CanTrack ?? false;
+        cookieString = consentFeature?.CreateConsentCookie();
+        hideBanner = false;
+    }
+
+    private void AcceptMessage()
+    {
+        // JsInterop call to store the consent cookies.
+        JSRuntime.InvokeVoidAsync("CookieFunction.acceptMessage", cookieString);
+        hideBanner = true;
+    }
+}

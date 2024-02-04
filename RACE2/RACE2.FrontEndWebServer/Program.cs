@@ -79,17 +79,17 @@ try
 
     // Add services to the container.
     builder.Services.AddRazorComponents()
-        .AddInteractiveServerComponents();
-    //.AddHubOptions(options =>
-    //    {
-    //        options.ClientTimeoutInterval = TimeSpan.FromSeconds(60);//.FromSeconds(30); 
-    //        options.EnableDetailedErrors = true;
-    //        options.HandshakeTimeout = TimeSpan.FromSeconds(30); //FromSeconds(15); 
-    //        options.KeepAliveInterval = TimeSpan.FromSeconds(30);//.FromSeconds(15);  
-    //        options.MaximumParallelInvocationsPerClient = 1; 
-    //        options.MaximumReceiveMessageSize = 128 * 1024; //32*1024;
-    //        options.StreamBufferCapacity = 10;
-    //    });
+        .AddInteractiveServerComponents()
+        .AddHubOptions(options =>
+            {
+                options.ClientTimeoutInterval = TimeSpan.FromSeconds(1);//.FromSeconds(30); 
+                options.EnableDetailedErrors = true;
+                options.HandshakeTimeout = TimeSpan.FromSeconds(30); //FromSeconds(15); 
+                options.KeepAliveInterval = TimeSpan.FromSeconds(30);//.FromSeconds(15);  
+                options.MaximumParallelInvocationsPerClient = 1;
+                options.MaximumReceiveMessageSize = 128 * 1024; //32*1024;
+                options.StreamBufferCapacity = 10;
+            });
     builder.Services.AddRazorPages();
 
     builder.Services.Configure<CookiePolicyOptions>(options =>
@@ -108,11 +108,11 @@ try
     //.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.ExpireTimeSpan = TimeSpan.FromMinutes(20);//default 5 min
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
         options.Cookie.MaxAge = options.ExpireTimeSpan; // optional
         options.SlidingExpiration = true;
-        options.LoginPath = "/Login";
-        options.LogoutPath = "/Logout";
+        options.LoginPath = "/login";
+        options.LogoutPath = "/logout";
     })
     .AddOpenIdConnect(
         OpenIdConnectDefaults.AuthenticationScheme,
@@ -135,20 +135,11 @@ try
             // When set to code, the middleware will use PKCE protection
             options.ResponseType = "code id_token";
             // Save the tokens we receive from the IDP
-            options.SaveTokens = false; // default false
+            options.SaveTokens = true; // default false
             // It's recommended to always get claims from the UserInfoEndpoint during the flow.
             options.GetClaimsFromUserInfoEndpoint = true;
             options.Scope.Add("race2WebApi");
             options.RequireHttpsMetadata = requireHttpsMetadata;
-            options.Events = new OpenIdConnectEvents
-            {
-                OnAccessDenied = context =>
-                {
-                    context.HandleResponse();
-                    context.Response.Redirect("/");
-                    return Task.CompletedTask;
-                }
-            };
         });
 
     builder.Services.Configure<ForwardedHeadersOptions>(options =>
