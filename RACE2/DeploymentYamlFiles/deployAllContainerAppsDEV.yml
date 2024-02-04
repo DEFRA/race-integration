@@ -29,7 +29,7 @@ variables:
   - name: dockerfile_frontendwebserver
     value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_FrontEndWebServer'
   - name: containerRegistry
-    value: 'AZR-RAC-DEV1-DockerRegistry'
+    value: 'AZR-RAC-DEV1-ACR'
   - name: tag
     value: '$(Build.BuildId)'
   - name: azureServiceConnection

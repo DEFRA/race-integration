@@ -39,10 +39,15 @@ namespace RACE2.DataModel
         public string ProtectiveMarking { get; set;}
 
         [Required]
-        public FeatureFunction SourceService { get; set; }
+        public int SourceServiceId { get; set; }
 
+        [ForeignKey("SourceServiceId")]
+        public virtual FeatureFunction SourceService { get; set; }
         [Required]
-        public UserDetail UploadByUser { get; set; }
+        public int UploadByUserId { get; set; }
+
+        [ForeignKey("UploadByUserId")]
+        public virtual UserDetail UploadByUser { get; set; }
 
         [Required]
         public DateTime DateSent { get; set;}

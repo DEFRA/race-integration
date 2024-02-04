@@ -1,9 +1,11 @@
-
 param location string
 param race2appinsightName string
 param storageAccountName string
 param appserviceplanName string
 param functionappName string
+param subscriptionid string 
+param resourcegroup string
+param managedidentity string
 
 resource appInsightResource 'Microsoft.Insights/components@2020-02-02' existing= {
   name: race2appinsightName
@@ -22,7 +24,11 @@ resource functionApp 'Microsoft.Web/sites@2023-01-01' = {
   location: location
   kind: 'functionapp'
   identity: {
-    type: 'SystemAssigned'
+    type: 'UserAssigned'
+    userAssignedIdentities: {
+      '/subscriptions/${subscriptionid}/resourcegroups/${resourcegroup}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/${managedidentity}': {
+      }
+    }
   }
   properties: {
     httpsOnly: true

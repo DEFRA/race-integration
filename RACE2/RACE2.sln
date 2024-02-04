@@ -28,6 +28,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedFiles", "SharedFiles"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StoredProcedures", "StoredProcedures", "{F40D405C-8DD0-44A8-81BF-9072721B1300}"
 	ProjectSection(SolutionItems) = preProject
+		..\..\DEFRA\POC_TestRAWActionSummary.sql = ..\..\DEFRA\POC_TestRAWActionSummary.sql
+		..\..\DEFRA\POC_TestRAWDAta.sql = ..\..\DEFRA\POC_TestRAWDAta.sql
+		..\..\DEFRA\POC_TestRAWMaintanenceMeasure.sql = ..\..\DEFRA\POC_TestRAWMaintanenceMeasure.sql
+		..\..\DEFRA\POC_TestWatchItems.sql = ..\..\DEFRA\POC_TestWatchItems.sql
 		sp_GetActionsListByReservoirId.sql = sp_GetActionsListByReservoirId.sql
 		sp_GetAddressForReservoir.sql = sp_GetAddressForReservoir.sql
 		sp_GetOrganisationAddressbyId.sql = sp_GetOrganisationAddressbyId.sql
@@ -160,7 +164,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.SecurityAzureFunction
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.DefenderScanAzurefn", "RACE2.DefenderScanAzurefn\RACE2.DefenderScanAzurefn.csproj", "{EC257838-58FE-42CC-BD87-351360C6CAE5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RACE2VirusScanAzFnApp", "RACE2VirusScanAzFnApp\RACE2VirusScanAzFnApp.csproj", "{C1CF275D-304E-4AF8-8C44-1E7EF8A3385B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2VirusScanAzFnApp", "RACE2VirusScanAzFnApp\RACE2VirusScanAzFnApp.csproj", "{C1CF275D-304E-4AF8-8C44-1E7EF8A3385B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.TrackChangeHistoryFunction", "RACE2.TrackChangeHistoryFunction\RACE2.TrackChangeHistoryFunction.csproj", "{A1E396C8-898B-4170-B8C3-61913662776F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -277,6 +283,12 @@ Global
 		{C1CF275D-304E-4AF8-8C44-1E7EF8A3385B}.Development|Any CPU.Build.0 = Debug|Any CPU
 		{C1CF275D-304E-4AF8-8C44-1E7EF8A3385B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1CF275D-304E-4AF8-8C44-1E7EF8A3385B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1E396C8-898B-4170-B8C3-61913662776F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1E396C8-898B-4170-B8C3-61913662776F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1E396C8-898B-4170-B8C3-61913662776F}.Development|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1E396C8-898B-4170-B8C3-61913662776F}.Development|Any CPU.Build.0 = Debug|Any CPU
+		{A1E396C8-898B-4170-B8C3-61913662776F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1E396C8-898B-4170-B8C3-61913662776F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
