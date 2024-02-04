@@ -433,3 +433,5 @@ FodyWeavers.xsd
 /RACE2/RACE2.SecurityAzureFunction/local.settings.json
 
 /RACE2/RACE2.DefenderScanAzurefn/Properties
+/RACE2/RACE2VirusScanAzFnApp/Properties
+/RACE2/Visual Studio 2022/Visualizers
