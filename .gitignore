@@ -432,3 +432,5 @@ FodyWeavers.xsd
 /RACE2/RACE2.SecurityAzureFunction/local.settings.json
 /RACE2/RACE2.SecurityAzureFunction/local.settings.json
 /RACE2/RACE2.FrontEndWebServer/Pages
+/RACE2/RACE2VirusScanAzFnApp/Properties/serviceDependencies.json
+/RACE2/RACE2VirusScanAzFnApp/local.settings.json
