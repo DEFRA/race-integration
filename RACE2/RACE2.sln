@@ -28,10 +28,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedFiles", "SharedFiles"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StoredProcedures", "StoredProcedures", "{F40D405C-8DD0-44A8-81BF-9072721B1300}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\DEFRA\POC_TestRAWActionSummary.sql = ..\..\DEFRA\POC_TestRAWActionSummary.sql
-		..\..\DEFRA\POC_TestRAWDAta.sql = ..\..\DEFRA\POC_TestRAWDAta.sql
-		..\..\DEFRA\POC_TestRAWMaintanenceMeasure.sql = ..\..\DEFRA\POC_TestRAWMaintanenceMeasure.sql
-		..\..\DEFRA\POC_TestWatchItems.sql = ..\..\DEFRA\POC_TestWatchItems.sql
 		sp_GetActionsListByReservoirId.sql = sp_GetActionsListByReservoirId.sql
 		sp_GetAddressForReservoir.sql = sp_GetAddressForReservoir.sql
 		sp_GetOrganisationAddressbyId.sql = sp_GetOrganisationAddressbyId.sql
