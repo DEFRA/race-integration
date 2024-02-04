@@ -42,15 +42,15 @@ namespace RACE2.WebApi.Types
             return result;
         }
 
-        public async Task<List<DataModel.Action>> GetActionsListByReservoirIdAndCategory(IReservoirService _reservoirService, int reservoirid, int category)
-        {
-            return await _reservoirService.GetActionsListByReservoirIdAndCategory(reservoirid, category);
-        }
+        //public async Task<List<DataModel.Action>> GetActionsListByReservoirIdAndCategory(IReservoirService _reservoirService, int reservoirid, int category)
+        //{
+        //    return await _reservoirService.GetActionsListByReservoirIdAndCategory(reservoirid, category);
+        //}
 
-        public async Task<List<SafetyMeasure>> GetSafetyMeasuresListByReservoirId(IReservoirService _reservoirService, int reservoirid)
-        {
-            return await _reservoirService.GetSafetyMeasuresListByReservoirId(reservoirid);
-        }
+        //public async Task<List<SafetyMeasure>> GetSafetyMeasuresListByReservoirId(IReservoirService _reservoirService, int reservoirid)
+        //{
+        //    return await _reservoirService.GetSafetyMeasuresListByReservoirId(reservoirid);
+        //}
 
         public async Task<Address> GetAddressByReservoirId(IReservoirService _reservoirService, int reservoirid, string operatortype)
         {
