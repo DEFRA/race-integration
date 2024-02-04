@@ -8,10 +8,12 @@ namespace RACE2.Common
 { 
     public enum Category
     {
-        visual_inspection, 
-        issue_watch,
-        maintenance_item,
-        records_update,
-        monitoring_item
+        VisualInspection,
+        WatchMatter,
+        MaintenanceMeasure,
+        RecordsSupervision,
+        MonitoringItem,
+        FloodPlanDirective,
+        ActionSummary
     }
 }
