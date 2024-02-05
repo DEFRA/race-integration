@@ -32,7 +32,4 @@
   <ItemGroup>
     <ProjectReference Include="..\RACE2.Services\RACE2.Services.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties\" />
-  </ItemGroup>
 </Project>
