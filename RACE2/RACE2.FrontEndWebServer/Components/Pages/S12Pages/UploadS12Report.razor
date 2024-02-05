@@ -31,8 +31,8 @@
 
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-three-quarters">
-                @*                 @if (!FileUploadInProgress)
-                { *@
+                @if (!FileUploadInProgress)
+                {
                 <EditForm Model="@uploadFileData" OnSubmit="OnUploadSubmit">
                     @*                     @if (UploadFileData.FileIsEmpty)
                     {
@@ -340,12 +340,12 @@
                         Upload and send statement
                     </button>
                 </EditForm>
-                @*}
+                }
                 else
                 {
                 <p class="govuk-body">File upload in progress.</p>
                 <p class="govuk-body">This could take up to 20 seconds.</p>
-                } *@
+                }
             </div>
         </div>
     </main>
@@ -502,8 +502,8 @@
                         System.Threading.Thread.Sleep(timeToWait); //wait for timeToWait seconds
 
                         //For testing without virus scan, comment the next line and uncomment the next to next line
-                        var containerNameToDownloadFrom = _config["CleanContainer"]; //"cleanfiles";
-                        //var containerNameToDownloadFrom = _config["UnscannedContainer"];
+                        //var containerNameToDownloadFrom = _config["CleanContainer"]; //"cleanfiles";
+                        var containerNameToDownloadFrom = _config["UnscannedContainer"];
 
                         var RSTEmailAddress = String.IsNullOrEmpty(_config["RSTEmailAddress"]) ? userDetails.Email : _config["RSTEmailAddress"];
                         var bytes = await blobStorageService.GetBlobAsByteArray(containerNameToDownloadFrom, trustedFileNameForFileStorage);
