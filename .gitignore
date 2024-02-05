@@ -446,3 +446,13 @@ FodyWeavers.xsd
 /RACE2/RACE2VirusScanAzFnApp/Properties/serviceDependencies.POCRACINFFA1401 - Zip Deploy.json
 /RACE2/RACE2VirusScanAzFnApp/Properties/serviceDependencies.PRDRACINFAF1401 - Zip Deploy.json
 /RACE2/RACE2VirusScanAzFnApp/Properties/serviceDependencies.RACE2VirusScanAzFnApp - Zip Deploy.json
+/RACE2/RACE2VirusScanAzFnApp/Properties/PublishProfiles/DEVRACINFAF1401 - Zip Deploy.pubxml
+/RACE2/RACE2VirusScanAzFnApp/Properties/PublishProfiles/POCRACINFFA1401 - Zip Deploy.pubxml
+/RACE2/RACE2VirusScanAzFnApp/Properties/ServiceDependencies/POCRACINFAF1401 - Zip Deploy/appInsights1.arm.json
+/RACE2/RACE2VirusScanAzFnApp/Properties/ServiceDependencies/POCRACINFAF1401 - Zip Deploy/appInsights2.arm.json
+/RACE2/RACE2VirusScanAzFnApp/Properties/ServiceDependencies/POCRACINFAF1401 - Zip Deploy/profile.arm.json
+/RACE2/RACE2VirusScanAzFnApp/Properties/ServiceDependencies/POCRACINFAF1401 - Zip Deploy/storage1.arm.json
+/RACE2/RACE2VirusScanAzFnApp/Properties/ServiceDependencies/POCRACINFFA1401 - Zip Deploy/appInsights2.arm.json
+/RACE2/RACE2VirusScanAzFnApp/Properties/ServiceDependencies/POCRACINFFA1401 - Zip Deploy/profile.arm.json
+/RACE2/RACE2VirusScanAzFnApp/Properties/ServiceDependencies/POCRACINFFA1401 - Zip Deploy/storage1.arm.json
+/RACE2/RACE2VirusScanAzFnApp/Properties/ServiceDependencies/PRDRACINFAF1401 - Zip Deploy/profile.arm.json
