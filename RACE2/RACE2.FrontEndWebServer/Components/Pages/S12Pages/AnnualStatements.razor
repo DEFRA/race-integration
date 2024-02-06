@@ -168,17 +168,15 @@
 </div>
 <Footer />
 @code {
-    bool? IsLoggedIn;
+    bool IsAdmin = false;
+    bool IsFirstTimeUser = false;
     private string UserName { get; set; } = "Unknown";
-    private UserDetail UserDetail { get; set; } = default!;
     private List<Reservoir> ReservoirsLinkedToUser { get; set; } = new List<Reservoir>();
     private List<ReservoirDetailsDTO> ReservoirDetailsLinkedToUser { get; set; } = new List<ReservoirDetailsDTO>();
     private List<ReservoirsLinkedToUserForDisplay> ReservoirsLinkedToUserForDisplay { get; set; } = new List<ReservoirsLinkedToUserForDisplay>();
     private List<ReservoirsLinkedToUserForDisplay> ReservoirsLinkedToUserForDisplayOnStart { get; set; } = new List<ReservoirsLinkedToUserForDisplay>();
     private IEnumerable<Claim> Claims { get; set; }
     private List<OperatorDTO> Undertakers { get; set; }
-    bool IsAdmin = false;
-    bool IsFirstTimeUser = false;
     private string _searchString;
     private bool _sortNameByLength;
     private List<string> _events = new();
@@ -191,6 +189,7 @@
     //We also need a field to tell us which column the table is sorted by.
     private string CurrentSortColumn;
     UserSpecificDto userDetails { get; set; }
+    UserSpecificDto userDetailsWithRoles { get; set; }
     List<SubmissionStatusDTO> SubmissionStatusList { get; set; }
     SubmissionStatusDTO SubmissionStatus { get; set; }
 
@@ -277,7 +276,7 @@
             Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement OnInitializedAsync").Fatal("Error getting data from backend services : " + ex.Message);
             //throw new ApplicationException("Error loading annual statement data.");
             bool forceLoad = false;
-            string pagelink = "/ApplicationError";
+            string pagelink = "/ProblemWithService";
             NavigationManager.NavigateTo(pagelink, forceLoad);
         }
         finally
@@ -340,7 +339,7 @@
             Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement PopulateReservoirsToDisplay").Fatal("Error loading reservoir data : " + ex.Message);
             //throw new ApplicationException("Error loading reservoir data.");
             bool forceLoad = false;
-            string pagelink = "/ApplicationError";
+            string pagelink = "/ProblemWithService";
             NavigationManager.NavigateTo(pagelink, forceLoad);
         };
     }
@@ -456,7 +455,7 @@
             Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement DownloadReportTemplate").Fatal("Error downloading S12ReportTemplate for the reservoir : " + ex.Message);
             //throw new ApplicationException("Error downloading S12ReportTemplate for the reservoir.");
             bool forceLoad = false;
-            string pagelink = "/ApplicationError";
+            string pagelink = "/ProblemWithService";
             NavigationManager.NavigateTo(pagelink, forceLoad);
         };
     }
@@ -497,6 +496,7 @@
         string pagelink = $"/send-your-statement/{Item.ReservoirID}/{Item.ReservoirName}/{Item.UndertakerName}/{Item.UndertakerEmail}/{Item.SubmissionReference}";
         NavigationManager.NavigateTo(pagelink, forceLoad);
     }
+
 
     private async void SearchOnEnter(KeyboardEventArgs e)
     {
@@ -573,5 +573,4 @@
             IsSortedAscending = !IsSortedAscending;
         }
     }
-}
 }

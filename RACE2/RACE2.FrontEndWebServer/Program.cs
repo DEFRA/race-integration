@@ -108,7 +108,7 @@ try
     //.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(2);
         options.Cookie.MaxAge = options.ExpireTimeSpan; // optional
         options.SlidingExpiration = true;
         options.LoginPath = "/login";
@@ -140,6 +140,15 @@ try
             options.GetClaimsFromUserInfoEndpoint = true;
             options.Scope.Add("race2WebApi");
             options.RequireHttpsMetadata = requireHttpsMetadata;
+            options.Events = new OpenIdConnectEvents
+            {
+                OnAccessDenied = context =>
+                {
+                    context.HandleResponse();
+                    context.Response.Redirect("/");
+                    return Task.CompletedTask;
+                }
+            };
         });
 
     builder.Services.Configure<ForwardedHeadersOptions>(options =>
@@ -191,6 +200,10 @@ try
 
     app.MapRazorComponents<App>()
         .AddInteractiveServerRenderMode();
+    //app.MapBlazorHub(options =>
+    //{
+    //    options.CloseOnAuthenticationExpiration = true;
+    //});
     app.MapRazorPages();
 
     app.Run();

@@ -3,6 +3,8 @@
 @code {
     protected override void OnInitialized()
     {
+        //Navigation.NavigateTo("/PageTimedOut", true);
+        //Navigation.NavigateTo("/Logout", true);
         Navigation.NavigateTo($"/login?returnUrl={Uri.EscapeDataString(Navigation.Uri)}");
     }
 }
