@@ -446,3 +446,5 @@ FodyWeavers.xsd
 /RACE2/RACE2VirusScanAzFnApp/Properties/serviceDependencies.POCRACINFFA1401 - Zip Deploy.json
 /RACE2/RACE2VirusScanAzFnApp/Properties/serviceDependencies.PRDRACINFAF1401 - Zip Deploy.json
 /RACE2/RACE2VirusScanAzFnApp/Properties/serviceDependencies.RACE2VirusScanAzFnApp - Zip Deploy.json
+/RACE2/RACE2.VirusCureSqlTriggersAzFnApp
+/.vscode/extensions.json
