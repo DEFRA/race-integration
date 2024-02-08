@@ -178,8 +178,8 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                             System.Threading.Thread.Sleep(timeToWait); //wait for timeToWait seconds
 
                             //For testing without virus scan, comment the next line and uncomment the next to next line
-                            var containerNameToDownloadFrom = _config["CleanContainer"]; //"cleanfiles";
-                            //var containerNameToDownloadFrom = _config["UnscannedContainer"];
+                            //var containerNameToDownloadFrom = _config["CleanContainer"]; //"cleanfiles";
+                            var containerNameToDownloadFrom = _config["UnscannedContainer"];
 
                             var RSTEmailAddress = String.IsNullOrEmpty(_config["RSTEmailAddress"]) ? userDetails.Email : _config["RSTEmailAddress"];
                             var bytes = await blobStorageService.GetBlobAsByteArray(containerNameToDownloadFrom, trustedFileNameForFileStorage);
