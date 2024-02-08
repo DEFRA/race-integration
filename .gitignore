@@ -431,6 +431,7 @@ FodyWeavers.xsd
 /RACE2/RACE2.sln
 /RACE2/RACE2.SecurityAzureFunction/local.settings.json
 /RACE2/RACE2.SecurityAzureFunction/local.settings.json
+
 /RACE2/RACE2.FrontEndWebServer/Pages
 /RACE2/RACE2VirusScanAzFnApp/Properties/serviceDependencies.json
 /RACE2/RACE2VirusScanAzFnApp/local.settings.json
@@ -457,3 +458,9 @@ FodyWeavers.xsd
 /RACE2/RACE2VirusScanAzFnApp/Properties/ServiceDependencies/POCRACINFFA1401 - Zip Deploy/storage1.arm.json
 /RACE2/RACE2VirusScanAzFnApp/Properties/ServiceDependencies/PRDRACINFAF1401 - Zip Deploy/profile.arm.json
 /.vscode/extensions.json
+
+
+/RACE2/RACE2.DefenderScanAzurefn/Properties
+/RACE2/RACE2VirusScanAzFnApp/Properties
+/RACE2/Visual Studio 2022/Visualizers
+
