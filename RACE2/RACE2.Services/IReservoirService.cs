@@ -16,9 +16,9 @@ namespace RACE2.Services
         public Task<List<ReservoirDetailsDTO>> GetReservoirsByUserId(int id);
         public Task<List<ReservoirDetailsDTO>> GetReservoirsByUserEmailId(string emailId);
   
-        public Task<List<DataModel.Action>> GetActionsListByReservoirIdAndCategory(int reservoirid, int category);
+        public Task<DataModel.Action> GetActionsListByReservoirIdAndCategory(int reservoirid, int category, string reference);
 
-        public Task<List<SafetyMeasure>> GetSafetyMeasuresListByReservoirId(int reservoirid);
+        
 
         public Task<Address> GetAddressByReservoirId(int reservoirid, string operatortype);
 
@@ -42,11 +42,27 @@ namespace RACE2.Services
 
         public Task<int> InsertActionTableFromExtract(DataModel.Action action);
 
-        public Task<int> InsertMaintenanceMeasureFromExtract(DataModel.Action action, Comment comment);
+        public Task<int> InsertorUpdateMaintenanceMeasureFromExtract(DataModel.Action action, Comment comment);
 
-        public Task<int> InsertWatchItemsFromExtract(DataModel.Action action, Comment comment);
+        public Task<int> InsertorUpdateWatchItemsFromExtract(DataModel.Action action, Comment comment);
 
-        public Task<int> InsertSafetyMeasuresFromExtract(SafetyMeasure safetyMeasure, Comment comment);
+        public Task<int> InsertorUpdateSafetyMeasuresFromExtract(SafetyMeasure safetyMeasure, Comment comment);
+
+        public Task<SafetyMeasure> GetSafetyMeasuresByReservoir(int reservoirid, string reference);
+
+        public Task<int> InsertSafetyMeasureChangeHistory(List<SafetyMeasuresChangeHistory> changeHistory);
+
+        public Task<int> InsertActionChangeHistory(List<ActionsChangeHistory> changeHistory);
+
+        public Task<int> UpdateReservoirDetailsFromExtract(Reservoir reservoir);
+
+        public Task<int> InsertStatementDetailsFromExtract(StatementDetails statementDetails);
+
+        public Task<int> InsertReservoirDetailsChangeHistory(List<ReservoirDetailsChangeHistory> changeHistory);
+        public Task<int> GetDocumentId(string documentName);
+        public Task<int> InsertCommentChangeHistory(List<CommentsChangeHistory> changeHistory);
+
+        public Task<Comment> GetExisitngComments(string relatestoobject, int relatestorecordid);
 
     }
 }

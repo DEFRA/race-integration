@@ -1,11 +1,11 @@
-@inject NavigationManager Navigation
+﻿@inject NavigationManager Navigation
 
 @code {
     // [CascadingParameter]
     // public Task<AuthenticationState> AuthenticationStateTask { get; set; }
     protected override async Task OnInitializedAsync()
     {
-        Navigation.NavigateTo("/PageTimedOut", true);
+        Navigation.NavigateTo("/PageNotFound", true);
         //Navigation.NavigateTo("/Logout", true);
 
         // Navigation.NavigateTo($"/login?returnUrl={Uri.EscapeDataString(Navigation.Uri)}");

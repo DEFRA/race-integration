@@ -11,8 +11,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="Package1"
   DTS:PackageType="5"
-  DTS:VersionBuild="7"
-  DTS:VersionGUID="{3014D007-2EDF-4C8D-AD07-1CDE34385F15}">
+  DTS:VersionBuild="11"
+  DTS:VersionGUID="{D7280314-7B65-4BE1-837A-2E6A17861B5E}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -49,7 +49,19 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="0"
           DTS:ConnectRetryInterval="0"
-          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\RACE2\Private Beta Data\Copy of SG RACE FE DB Test Data - Test Env v0.2 (3) - Copy.xlsx;Extended Properties=&quot;Excel 12.0 XML;HDR=YES&quot;;" />
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\RACE2\Private Beta Data\Copy of SG RACE FE DB Test Data - Test Env v0.2 (3) - Copy.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Excel Connection Manager 4]"
+      DTS:CreationName="EXCEL"
+      DTS:DTSID="{95793F75-7E3C-4CA5-9FAA-C190248AECE8}"
+      DTS:ObjectName="Excel Connection Manager 4">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="0"
+          DTS:ConnectRetryInterval="0"
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\RACE2\SG RACE FE DB Test Data - Test Env v0.2 (6).xlsx;Extended Properties=&quot;Excel 12.0 XML;HDR=YES&quot;;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -264,7 +276,7 @@
                 <property
                   dataType="System.String"
                   description="Specifies the name of the database object used to open a rowset."
-                  name="OpenRowset">Addresses$</property>
+                  name="OpenRowset">Addresses$C1:I73</property>
                 <property
                   dataType="System.String"
                   description="Specifies the variable that contains the name of the database object used to open a rowset."
@@ -291,8 +303,8 @@
               <connections>
                 <connection
                   refId="Package\Data Flow Task\Excel Source.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[Excel Connection Manager 3]"
-                  connectionManagerRefId="Package.ConnectionManagers[Excel Connection Manager 3]"
+                  connectionManagerID="Package.ConnectionManagers[Excel Connection Manager 4]"
+                  connectionManagerRefId="Package.ConnectionManagers[Excel Connection Manager 4]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -361,16 +373,6 @@
                       name="Postcode"
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
-                      refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[RaceAddressKey]"
-                      dataType="wstr"
-                      errorOrTruncationOperation="Conversion"
-                      errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[RaceAddressKey]"
-                      length="255"
-                      lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[RaceAddressKey]"
-                      name="RaceAddressKey"
-                      truncationRowDisposition="FailComponent" />
-                    <outputColumn
                       refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[Action Status]"
                       dataType="wstr"
                       errorOrTruncationOperation="Conversion"
@@ -413,30 +415,10 @@
                       length="255"
                       name="Postcode" />
                     <externalMetadataColumn
-                      refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[RaceAddressKey]"
-                      dataType="wstr"
-                      length="255"
-                      name="RaceAddressKey" />
-                    <externalMetadataColumn
-                      refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[Test Data Owner]"
-                      dataType="wstr"
-                      length="255"
-                      name="Test Data Owner" />
-                    <externalMetadataColumn
-                      refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[Test Data Purpose]"
-                      dataType="wstr"
-                      length="255"
-                      name="Test Data Purpose" />
-                    <externalMetadataColumn
                       refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[Action Status]"
                       dataType="wstr"
                       length="255"
                       name="Action Status" />
-                    <externalMetadataColumn
-                      refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[F11]"
-                      dataType="wstr"
-                      length="255"
-                      name="F11" />
                   </externalMetadataColumns>
                 </output>
                 <output
@@ -485,12 +467,6 @@
                       length="255"
                       lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Error Output].Columns[Postcode]"
                       name="Postcode" />
-                    <outputColumn
-                      refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Error Output].Columns[RaceAddressKey]"
-                      dataType="wstr"
-                      length="255"
-                      lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Error Output].Columns[RaceAddressKey]"
-                      name="RaceAddressKey" />
                     <outputColumn
                       refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
                       dataType="i4"
@@ -585,20 +561,6 @@
                       cachedName="Postcode"
                       externalMetadataColumnId="Package\Data Flow Task\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Postcode]"
                       lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[Postcode]" />
-                    <inputColumn
-                      refId="Package\Data Flow Task\Flat File Destination.Inputs[Flat File Destination Input].Columns[RaceAddressKey]"
-                      cachedDataType="wstr"
-                      cachedLength="255"
-                      cachedName="RaceAddressKey"
-                      externalMetadataColumnId="Package\Data Flow Task\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[RaceAddressKey]"
-                      lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[RaceAddressKey]" />
-                    <inputColumn
-                      refId="Package\Data Flow Task\Flat File Destination.Inputs[Flat File Destination Input].Columns[Action Status]"
-                      cachedDataType="wstr"
-                      cachedLength="255"
-                      cachedName="Action Status"
-                      externalMetadataColumnId="Package\Data Flow Task\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Action Status]"
-                      lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[Action Status]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -758,13 +720,6 @@
                       cachedName="Postcode"
                       externalMetadataColumnId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Postcode]"
                       lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[Postcode]" />
-                    <inputColumn
-                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[RaceAddressKey]"
-                      cachedDataType="wstr"
-                      cachedLength="255"
-                      cachedName="RaceAddressKey"
-                      externalMetadataColumnId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[RaceAddressKey]"
-                      lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[RaceAddressKey]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -793,10 +748,10 @@
                       dataType="nText"
                       name="Postcode" />
                     <externalMetadataColumn
-                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[RaceAddressKey]"
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[BackEndAddressKey]"
                       dataType="wstr"
                       length="64"
-                      name="RaceAddressKey" />
+                      name="BackEndAddressKey" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -872,13 +827,17 @@
       <GraphLayout
         Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="140,41.6"
-          Id="Package\Data Flow Task\Excel Source"
-          TopLeft="385.999994248152,46.9999992996454" />
+          Size="170.4,41.6"
+          Id="Package\Data Flow Task\Flat File Destination"
+          TopLeft="461.666641442313,214.199998788635" />
         <NodeLayout
           Size="153.6,41.6"
           Id="Package\Data Flow Task\Conditional Split"
           TopLeft="384.166645676726,142.999999005596" />
+        <NodeLayout
+          Size="140,41.6"
+          Id="Package\Data Flow Task\Excel Source"
+          TopLeft="385.999994248152,46.9999992996454" />
         <EdgeLayout
           Id="Package\Data Flow Task.Paths[Excel Source Output]"
           TopLeft="458.483319962439,88.5999992996454">
@@ -901,77 +860,79 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="171.2,41.6"
-          Id="Package\Data Flow Task\OLE DB Destination"
-          TopLeft="225.833320994345,199.333331947194" />
         <EdgeLayout
-          Id="Package\Data Flow Task.Paths[New]"
-          TopLeft="384.166645676726,163.799999005596">
+          Id="Package\Data Flow Task.Paths[Conditional Split Default Output]"
+          TopLeft="485.233312343393,184.599999005596">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-72.7333246823816,35.5333329415983"
+              EndConnector="61.6333290989204,29.599999783039"
               Start="0,0"
-              End="-72.7333246823816,28.0333329415983">
+              End="61.6333290989204,22.099999783039">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="-68.7333246823816,0" />
+                    End="0,8.02309269537873" />
                   <mssgle:CubicBezierSegment
-                    Point1="-68.7333246823816,0"
-                    Point2="-72.7333246823816,0"
-                    Point3="-72.7333246823816,4" />
+                    Point1="0,8.02309269537873"
+                    Point2="0,12.0230926953787"
+                    Point3="4,12.0230926953787" />
                   <mssgle:LineSegment
-                    End="-72.7333246823816,28.0333329415983" />
+                    End="57.6333290989204,12.0230926953787" />
+                  <mssgle:CubicBezierSegment
+                    Point1="57.6333290989204,12.0230926953787"
+                    Point2="61.6333290989204,12.0230926953787"
+                    Point3="61.6333290989204,16.0230926953787" />
+                  <mssgle:LineSegment
+                    End="61.6333290989204,22.099999783039" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-82.9673676511316,-15.3974609375,20.4680859375,9.3974609375"
+              BoundingBox="-39.7972417005398,17.0230926953787,141.2278125,11.658203125"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <NodeLayout
-          Size="170.4,41.6"
-          Id="Package\Data Flow Task\Flat File Destination"
-          TopLeft="460.833308154511,214.199998788635" />
+          Size="171.2,41.6"
+          Id="Package\Data Flow Task\OLE DB Destination"
+          TopLeft="264.999985521039,247.866664943033" />
         <EdgeLayout
-          Id="Package\Data Flow Task.Paths[Conditional Split Default Output]"
-          TopLeft="460.966645676726,184.599999005596">
+          Id="Package\Data Flow Task.Paths[New]"
+          TopLeft="436.699979010059,184.599999005596">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="85.066662477785,29.5999997830391"
+              EndConnector="-86.0999934890203,63.2666659374368"
               Start="0,0"
-              End="85.066662477785,22.0999997830391">
+              End="-86.0999934890203,55.7666659374368">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,10.7999998915196" />
+                    End="0,21.6980065766496" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,10.7999998915196"
-                    Point2="0,14.7999998915196"
-                    Point3="4,14.7999998915196" />
+                    Point1="0,21.6980065766496"
+                    Point2="0,25.6980065766496"
+                    Point3="-4,25.6980065766496" />
                   <mssgle:LineSegment
-                    End="81.066662477785,14.7999998915196" />
+                    End="-82.0999934890203,25.6980065766496" />
                   <mssgle:CubicBezierSegment
-                    Point1="81.066662477785,14.7999998915196"
-                    Point2="85.066662477785,14.7999998915196"
-                    Point3="85.066662477785,18.7999998915196" />
+                    Point1="-82.0999934890203,25.6980065766496"
+                    Point2="-86.0999934890203,25.6980065766496"
+                    Point3="-86.0999934890203,29.6980065766496" />
                   <mssgle:LineSegment
-                    End="85.066662477785,22.0999997830391" />
+                    End="-86.0999934890203,55.7666659374368" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-28.0805750111075,19.7999998915196,141.2278125,11.658203125"
+              BoundingBox="-53.2840397132602,30.6980065766496,20.4680859375,9.3974609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
