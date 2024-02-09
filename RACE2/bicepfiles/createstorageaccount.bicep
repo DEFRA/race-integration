@@ -24,10 +24,10 @@ resource storageAccount_resource 'Microsoft.Storage/storageAccounts@2023-01-01' 
     allowBlobPublicAccess: false
     allowSharedKeyAccess: true
     networkAcls: {
-      bypass: 'None'
+      bypass: 'AzureServices'
       virtualNetworkRules: []
       ipRules: []
-      defaultAction: 'Deny'
+      defaultAction: 'Allow'
     }
     supportsHttpsTrafficOnly: true
     encryption: {
@@ -66,7 +66,7 @@ resource storageContainers 'Microsoft.Storage/storageAccounts/blobServices/conta
   name: containerNames[i]
   parent: blobServices
   properties: {
-    publicAccess: 'None'
+    publicAccess: 'Container'
     metadata: {}
   }
 }]
