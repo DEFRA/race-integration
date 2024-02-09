@@ -19,6 +19,10 @@ az acr build -r race2acr -t race2acr.azurecr.io/race2frontend:v1 -f Dockerfile_F
 az acr build -r race2acr -t race2acr.azurecr.io/race2frontendweb:v1 -f Dockerfile_FrontEndWeb .
 
 
+//group delete from a subscription
+ az account set --subscription "AZD-RAC-POC1"
+ az group delete --name POCRACINFRG1402
+
 //purge images
 az acr run --registry <ACR Name> --cmd 'acr purge --filter <repository name>:.*  --ago 0d --untagged --keep 1 --dry-run' /dev/null
 az acr run --registry Race2ACR --cmd 'acr purge --filter race2securityprovider:.*  --ago 0d --keep 1 --dry-run' /dev/null
