@@ -8,10 +8,10 @@ name: Deploy FunctionApp
 variables:
   vmImageName: 'ubuntu-latest'
 
-  azureServiceConnection: 'AZR-RAC-POC1'
-  resourceGroupName: 'POCRACINFRG1401' 
+  azureServiceConnection: 'AZD-RAC-POC1'
+  resourceGroupName: 'POCRACINFRG1402' 
   templateFile: './RACE2/bicepfiles/createfunctionapp.bicep'
-  parameterFile: './RACE2/bicepfiles/createfunctionapp_prd.bicepparam'
+  parameterFile: './RACE2/bicepfiles/createfunctionapp_poc.bicepparam'
 
 pool:
   vmImage: $(vmImageName)

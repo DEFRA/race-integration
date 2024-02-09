@@ -1,14 +1,20 @@
 using './createfunctionapp.bicep' /*TODO: Provide a path to a bicep template*/
 
+param subscriptionid  = 'd248d1f6-90c3-4c35-bbb9-027991742dde'
+
 param location = 'uksouth'
 
-param race2appinsightName = 'POCRACINFAI1401'
+param resourcegroup = 'POCRACINFRG1402'
 
-param storageAccountName = 'pocracinfst1401'
+param managedidentity = 'PRDRACINFMI1402'
 
-param appserviceplanName = 'POCRACINFAS1401'
+param race2appinsightName = 'PRDRACINFAI1402'
 
-param functionappName = 'POCRACINFAF1401'
+param storageAccountName = 'prdracinfst1402'
+
+param appserviceplanName = 'PRDRACINFAS1402'
+
+param functionappName = 'PRDRACINFAF1402'
 
 
 
