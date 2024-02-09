@@ -6,15 +6,15 @@ param location = 'uksouth'
 
 param resourcegroup = 'POCRACINFRG1402'
 
-param managedidentity = 'PRDRACINFMI1402'
+param managedidentity = 'POCRACINFMI1402'
 
-param race2appinsightName = 'PRDRACINFAI1402'
+param race2appinsightName = 'POCRACINFAI1402'
 
-param storageAccountName = 'prdracinfst1402'
+param storageAccountName = 'pocracinfst1402'
 
-param appserviceplanName = 'PRDRACINFAS1402'
+param appserviceplanName = 'POCRACINFAS1402'
 
-param functionappName = 'PRDRACINFAF1402'
+param functionappName = 'POCRACINFAF1402'
 
 
 
