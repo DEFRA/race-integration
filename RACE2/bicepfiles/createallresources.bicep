@@ -176,10 +176,7 @@ module createeventgridtopicmodule 'createeventgridtopic.bicep' = {
   params: {
     location: location
     eventgridtopicName: eventgridtopicName
-  }
-  dependsOn: [
-    createfunctionappmodule
-  ]
+  }  
 }
 module createfunctionappmodule 'createfunctionapp.bicep' = {
   scope: resourceGroup(resourcegroup)
