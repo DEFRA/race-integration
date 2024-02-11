@@ -86,13 +86,13 @@ resource privateEndpointStorageAccountBlob 'Microsoft.Network/privateEndpoints@2
     }
     privateLinkServiceConnections: [
       {
+        name: 'PrivateEndpointStorageAccountBlob'
         properties: {
           privateLinkServiceId: storageAccount_resource.id
           groupIds: [
             'blob'
           ]
         }
-        name: 'PrivateEndpointStorageAccountBlob'
       }
     ]
   }
@@ -107,13 +107,13 @@ resource privateEndpointStorageAccountFile 'Microsoft.Network/privateEndpoints@2
     }
     privateLinkServiceConnections: [
       {
+        name: 'PrivateEndpointStorageAccountFile'
         properties: {
           privateLinkServiceId: storageAccount_resource.id
           groupIds: [
             'file'
           ]
         }
-        name: 'PrivateEndpointStorageAccountFile'
       }
     ]
   }
@@ -128,13 +128,13 @@ resource privateEndpointStorageAccountTable 'Microsoft.Network/privateEndpoints@
     }
     privateLinkServiceConnections: [
       {
+        name: 'PrivateEndpointStorageAccountTable'
         properties: {
           privateLinkServiceId: storageAccount_resource.id
           groupIds: [
             'table'
           ]
         }
-        name: 'PrivateEndpointStorageAccountTable'
       }
     ]
   }
@@ -144,6 +144,9 @@ resource containerRegistryPrivateEndpoint 'Microsoft.Network/privateEndpoints@20
   name: 'PrivateEndpointACR'
   location: location
   properties: {
+    subnet: {
+      id: '${virtualNetworkResource.id}/subnets/${subnetpasResource.name}'
+    }
     privateLinkServiceConnections: [
       {
         name: 'PrivateEndpointACR'
@@ -155,34 +158,6 @@ resource containerRegistryPrivateEndpoint 'Microsoft.Network/privateEndpoints@20
         }
       }
     ]
-    subnet: {
-      id: '${virtualNetworkResource.id}/subnets/${subnetpasResource.name}'
-    }
-  }
-}
-
-resource appconfigPrivateEndpoint 'Microsoft.Network/privateEndpoints@2023-06-01' = {
-  name: 'PrivateEndpointAppConfig'
-  location: location
-  properties: {
-    subnet: {
-      id: '${virtualNetworkResource.id}/subnets/${subnetpasResource.name}'
-    }
-    privateLinkServiceConnections: [
-      {
-        name: 'PrivateEndpointAppConfig'
-        properties: {
-          privateLinkServiceId: race2appconfig_resource.id
-          groupIds: [
-            'configurationStores'
-          ]
-          privateLinkServiceConnectionState: {
-            status: 'Approved'
-            description: 'Auto-Approved'
-          }
-        }
-      }
-    ]    
   }
 }
 
@@ -204,6 +179,27 @@ resource keyvaultPrivateEndpoint 'Microsoft.Network/privateEndpoints@2023-06-01'
         }
       }
     ]
+  }
+}
+
+resource appconfigPrivateEndpoint 'Microsoft.Network/privateEndpoints@2023-06-01' = {
+  name: 'PrivateEndpointAppConfig'
+  location: location
+  properties: {
+    subnet: {
+      id: '${virtualNetworkResource.id}/subnets/${subnetpasResource.name}'
+    }
+    privateLinkServiceConnections: [
+      {
+        name: 'PrivateEndpointAppConfig'
+        properties: {
+          privateLinkServiceId: race2appconfig_resource.id
+          groupIds: [
+            'configurationStores'
+          ]
+        }
+      }
+    ]    
   }
 }
 
