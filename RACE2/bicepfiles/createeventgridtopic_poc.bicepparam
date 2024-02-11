@@ -1,3 +1,3 @@
 using './createeventgridtopic.bicep'
 param location = 'uksouth'
-param eventgridtopicName = 'PRDRACINFEG1401'
+param eventgridtopicName = 'POCRACINFEG1402'
