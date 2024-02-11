@@ -21,7 +21,7 @@ resource storageAccount_resource 'Microsoft.Storage/storageAccounts@2023-01-01' 
     publicNetworkAccess: 'Enabled'
     allowCrossTenantReplication: false
     minimumTlsVersion: 'TLS1_2'
-    allowBlobPublicAccess: false
+    allowBlobPublicAccess: true
     allowSharedKeyAccess: true
     networkAcls: {
       bypass: 'AzureServices'
@@ -43,11 +43,11 @@ resource storageAccount_resource 'Microsoft.Storage/storageAccounts@2023-01-01' 
         }
         table: {
           keyType: 'Account'
-          enabled: true
+          enabled: false
         }
         queue: {
           keyType: 'Account'
-          enabled: true
+          enabled: false
         }
       }
       keySource: 'Microsoft.Storage'
