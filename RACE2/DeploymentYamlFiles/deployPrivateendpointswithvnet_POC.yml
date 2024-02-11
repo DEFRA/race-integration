@@ -10,7 +10,7 @@ variables:
 
   azureServiceConnection: 'AZD-RAC-POC1'
   resourceGroupName: 'POCRACINFRG1402' 
-  templateFile: './RACE2/bicepfiles/createprivateendpointswithvnetappconfig.bicep'
+  templateFile: './RACE2/bicepfiles/createprivateendpointswithvnetappconfig.bicep' 
   parameterfile: './RACE2/bicepfiles/createprivateendpointswithvnetappconfig.bicepparam'
 
 pool:
