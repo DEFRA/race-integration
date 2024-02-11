@@ -170,6 +170,14 @@ module createcontainerappenvmodule 'createcontainerappenv.bicep' = {
   ]
 }
 
+module createeventgridtopicmodule 'createeventgridtopic.bicep' = {
+  scope: resourceGroup(resourcegroup)
+  name: 'eventgridtopicdeploy'
+  params: {
+    location: location
+    eventgridtopicName: eventgridtopicName
+  }  
+}
 module createfunctionappmodule 'createfunctionapp.bicep' = {
   scope: resourceGroup(resourcegroup)
   name: 'functionappdeploy'
@@ -189,19 +197,6 @@ module createfunctionappmodule 'createfunctionapp.bicep' = {
     createstorageaccountmodule
   ]
 }
-
-module createeventgridtopicmodule 'createeventgridtopic.bicep' = {
-  scope: resourceGroup(resourcegroup)
-  name: 'eventgridtopicdeploy'
-  params: {
-    location: location
-    eventgridtopicName: eventgridtopicName
-  }
-  dependsOn: [
-    createfunctionappmodule
-  ]
-}
-
 module createprivateendpointswithvnetmodule 'createprivateendpointswithvnet.bicep' = {
   scope: resourceGroup(resourcegroup)
   name: 'privateendpointswithvnetdeploy'

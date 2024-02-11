@@ -9,7 +9,7 @@ variables:
   vmImageName: 'ubuntu-latest'
 
   azureServiceConnection: 'AZD-RAC-POC1'
-  resourceGroupName: 'POCRACINFRG1401'
+  resourceGroupName: 'POCRACINFRG1402'
   location: 'uksouth' 
   templateFileAllResources: './RACE2/bicepfiles/createallresources.bicep'
   parameterfileAllResources: './RACE2/bicepfiles/createallresourcesPOC.bicepparam'

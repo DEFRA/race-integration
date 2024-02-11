@@ -8,9 +8,10 @@ name: Deploy Storage Account
 variables:
   vmImageName: 'ubuntu-latest'
 
-  azureServiceConnection: 'AZR-RAC-POC1'
-  resourceGroupName: 'RGPRACE2ALLRESOURCES201' 
+  azureServiceConnection: 'AZD-RAC-POC1'
+  resourceGroupName: 'POCRACINFRG1402' 
   templateFile: './RACE2/bicepfiles/createstorageaccount.bicep'
+  parameterfile: './RACE2/bicepfiles/createstorageaccount.bicepparam'
 
 pool:
   vmImage: $(vmImageName)
@@ -24,4 +25,6 @@ steps:
     useGlobalConfig: false    
     inlineScript: |
       az --version
-      az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) -p storageAccounts_race2storageaccount_name="race2storageaccount1"
+      az group create -n $(resourceGroupName) -l $(location)     
+      az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) -p $(parameterfile)
+
