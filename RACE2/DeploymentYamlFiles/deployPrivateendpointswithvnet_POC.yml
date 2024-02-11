@@ -8,10 +8,10 @@ name: Deploy App Config
 variables:
   vmImageName: 'ubuntu-latest'
 
-  azureServiceConnection: 'AZR-RAC-POC1'
-  resourceGroupName: 'POCRACINFRG1401' 
-  templateFile: './RACE2/bicepfiles/createprivateendpointswithvnet.bicep'
-  parameterfile: './RACE2/bicepfiles/createprivateendpointswithvnet_prd.bicepparam'
+  azureServiceConnection: 'AZD-RAC-POC1'
+  resourceGroupName: 'POCRACINFRG1402' 
+  templateFile: './RACE2/bicepfiles/createprivateendpointswithvnetappconfig.bicep'
+  parameterfile: './RACE2/bicepfiles/createprivateendpointswithvnetappconfig.bicepparam'
 
 pool:
   vmImage: $(vmImageName)
