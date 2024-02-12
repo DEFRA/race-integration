@@ -22,7 +22,7 @@ resource race2acrresource 'Microsoft.ContainerRegistry/registries@2023-11-01-pre
   name: containerregistryname
 }
 
-resource race2appconfig_resource 'Microsoft.ContainerRegistry/registries@2023-11-01-preview' existing = {
+resource race2appconfig_resource 'Microsoft.AppConfiguration/configurationStores@2023-03-01' existing = {
   name: appconfigName
 }
 
