@@ -9,7 +9,7 @@ variables:
   vmImageName: 'ubuntu-latest'
 
   azureServiceConnection: 'AZD-RAC-POC1'
-  resourceGroupName: 'POCRACINFRG1401' 
+  resourceGroupName: 'POCRACINFRG1402' 
   templateFile: './RACE2/bicepfiles/createsqlserver.bicep'
   parameterfile: './RACE2/bicepfiles/createsqlserver.bicepparam'
 
