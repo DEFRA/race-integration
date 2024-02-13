@@ -26,7 +26,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddAzureAppConfiguration(options =>
 {
     var azureAppConfigUrl = builder.Configuration["AzureAppConfigURL"];
-    var credential = new DefaultAzureCredential();
+    var azureTenantId = builder.Configuration["AZURE_TENANT_ID"];
+    var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions { SharedTokenCacheTenantId = azureTenantId, VisualStudioTenantId = azureTenantId });
     options.Connect(new Uri(azureAppConfigUrl), credential)
     .ConfigureKeyVault(options =>
     {

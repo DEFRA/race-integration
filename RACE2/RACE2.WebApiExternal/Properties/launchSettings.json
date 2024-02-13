@@ -5,11 +5,12 @@
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
-      "launchUrl": "swagger",
-      "applicationUrl": "https://localhost:5003",
+      "launchUrl": "weatherforecast",
+      "applicationUrl": "https://localhost:5002",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "AzureAppConfigURL": "https://pocracinfac1401.azconfig.io/"
+        "ASPNETCORE_ENVIRONMENT": "Production",
+        "AZURE_TENANT_ID": "6f504113-6b64-43f2-ade9-242e05780007",
+        "AzureAppConfigURL": "https://pocracinfac1402.azconfig.io/"
         //"AzureAppConfigURL": "https://devracinfac1401.azconfig.io/"
         //"AzureAppConfigURL": "https://tstracinfac1401.azconfig.io/"
       }
