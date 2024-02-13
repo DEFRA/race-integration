@@ -51,11 +51,12 @@ Alter table RAW_StatementDetails
 ADD Primary Key (Id)
 
 
-//secretless MI access to Azure Sql
-CREATE USER [<identity-name>] FROM EXTERNAL PROVIDER;
-ALTER ROLE db_datareader ADD MEMBER [<identity-name>];
-ALTER ROLE db_datawriter ADD MEMBER [<identity-name>];
-ALTER ROLE db_ddladmin ADD MEMBER [<identity-name>];
+//secretless MI access to Azure Sql -- dbaname and MI 
+USE pocracinfdb1401;
+CREATE USER [POCRACINFMI1402] FROM EXTERNAL PROVIDER WITH DEFAULT_SCHEMA = [dbo];
+ALTER ROLE db_datareader ADD MEMBER [POCRACINFMI1402];
+ALTER ROLE db_datawriter ADD MEMBER [POCRACINFMI1402];
+ALTER ROLE db_ddladmin ADD MEMBER [POCRACINFMI1402];
 
 
 

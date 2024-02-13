@@ -5,8 +5,8 @@ param administratorLoginPassword string
 param servers_race2sqldb_name string
 param location string
 param tenantId string
-param aduserame string
-param aduserid string
+param adgroupname string
+param adgroupid string
 
 resource servers_race2sqlserver_name_resource 'Microsoft.Sql/servers@2023-05-01-preview' = {
   name: servers_race2sqlserver_name
@@ -23,9 +23,9 @@ resource servers_race2sqlserver_name_resource 'Microsoft.Sql/servers@2023-05-01-
     publicNetworkAccess: 'Enabled'
     administrators: {
       administratorType: 'ActiveDirectory'
-      principalType: 'User'
-      login: aduserame
-      sid: aduserid
+      principalType: 'Group'
+      login: adgroupname
+      sid: adgroupid
       tenantId: tenantId
       azureADOnlyAuthentication: false
     }
