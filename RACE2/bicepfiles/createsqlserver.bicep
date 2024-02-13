@@ -5,8 +5,8 @@ param administratorLoginPassword string
 param servers_race2sqldb_name string
 param location string
 param tenantId string
-param adgroupname string
-param adgroupsid string
+param aduserame string
+param aduserid string
 
 resource servers_race2sqlserver_name_resource 'Microsoft.Sql/servers@2023-05-01-preview' = {
   name: servers_race2sqlserver_name
@@ -24,8 +24,8 @@ resource servers_race2sqlserver_name_resource 'Microsoft.Sql/servers@2023-05-01-
     administrators: {
       administratorType: 'ActiveDirectory'
       principalType: 'User'
-      login: adgroupname
-      sid: adgroupsid
+      login: aduserame
+      sid: aduserid
       tenantId: tenantId
       azureADOnlyAuthentication: false
     }
