@@ -23,7 +23,7 @@ resource servers_race2sqlserver_name_resource 'Microsoft.Sql/servers@2023-05-01-
     publicNetworkAccess: 'Enabled'
     administrators: {
       administratorType: 'ActiveDirectory'
-      principalType: 'Group'
+      principalType: 'User'
       login: adgroupname
       sid: adgroupsid
       tenantId: tenantId

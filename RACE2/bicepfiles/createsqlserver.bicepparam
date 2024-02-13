@@ -5,8 +5,8 @@ param administratorLogin = 'race2admin'
 param administratorLoginPassword = 'Race2Password123!'
 param servers_race2sqldb_name = 'pocracinfdb1401'
 param location = 'uksouth'
-param adgroupname = 'AG-Azure-RAC_POC1-ContributorsUAA'
-param adgroupsid = '3af2562f-808a-4be1-b41a-d88c22e3f2ee'
+param adgroupname = 'kriss.sahoo@degra.gov.uk'
+param adgroupsid = '3b910d33-d036-4305-8d72-7421c44d89a7'
 param tenantId = '6f504113-6b64-43f2-ade9-242e05780007'
 
 
