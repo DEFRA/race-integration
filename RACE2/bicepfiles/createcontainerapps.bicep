@@ -1,3 +1,4 @@
+param azureTenanatId string
 param containerFrontEndAppName string
 param containerSecurityProviderAppName string
 param containerWebApiAppName string
@@ -12,6 +13,7 @@ param frontendcontainerImage string
 param securityprovidercontainerImage string
 param webapicontainerImage string
 param managedidentity string
+param managedidentityClientId string
 param subscriptionid string 
 param logAnalyticsWorkspaceName string
 
@@ -81,6 +83,20 @@ resource containerFrontEndApp 'Microsoft.App/containerApps@2023-08-01-preview' =
     template: {
       containers: [
         {
+          env: [
+            {
+              name: 'ASPNETCORE_ENVIRONMENT'
+              value: 'Production'
+            }
+            {
+              name: 'AZURE_TENANT_ID'
+              value: azureTenanatId
+            }
+            {
+              name: 'ManagedIdenityClientId'
+              value: managedidentityClientId
+            }
+          ]     
           image: frontendcontainerImage
           name: containerFrontEndAppName
         }
