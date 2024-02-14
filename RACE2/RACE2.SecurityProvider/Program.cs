@@ -45,7 +45,8 @@ try
         //var connectionString = builder.Configuration["AZURE_APPCONFIGURATION_CONNECTIONSTRING"];
         var azureAppConfigUrl = builder.Configuration["AzureAppConfigURL"];
         var azureTenantId = builder.Configuration["AZURE_TENANT_ID"];
-        var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions { SharedTokenCacheTenantId= azureTenantId, VisualStudioTenantId = azureTenantId });
+        var managedIdenityClientId = builder.Configuration["ManagedIdenityClientId"];
+        var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions { TenantId = azureTenantId, ManagedIdentityClientId = managedIdenityClientId, VisualStudioTenantId = azureTenantId });
 
         //options.Connect(connectionString)      
         options.Connect(new Uri(azureAppConfigUrl), credential)
