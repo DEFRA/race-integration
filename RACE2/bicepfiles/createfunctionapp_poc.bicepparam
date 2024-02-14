@@ -1,5 +1,7 @@
 using './createfunctionapp.bicep' /*TODO: Provide a path to a bicep template*/
 
+param tenantId = '6f504113-6b64-43f2-ade9-242e05780007'
+
 param subscriptionid  = 'd248d1f6-90c3-4c35-bbb9-027991742dde'
 
 param location = 'uksouth'

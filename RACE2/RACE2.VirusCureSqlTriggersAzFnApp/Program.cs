@@ -15,7 +15,8 @@ var host = new HostBuilder()
         builder.AddAzureAppConfiguration(options =>
         {
             var azureAppConfigUrl = Environment.GetEnvironmentVariable("AzureAppConfigURL");
-            var credential = new DefaultAzureCredential();
+            var azureTenantId = Environment.GetEnvironmentVariable("AZURE_TENANT_ID");
+            var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions { SharedTokenCacheTenantId = azureTenantId, VisualStudioTenantId = azureTenantId });
             options.Connect(new Uri(azureAppConfigUrl), credential)
             .ConfigureKeyVault(kv =>
             {

@@ -4,6 +4,7 @@ param storageAccountName string
 param appserviceplanName string
 param functionappName string
 param subscriptionid string 
+param tenantId string 
 param resourcegroup string
 param managedidentity string
 
@@ -36,6 +37,10 @@ resource functionApp 'Microsoft.Web/sites@2023-01-01' = {
     clientAffinityEnabled: true
     siteConfig: {
       appSettings: [
+        {
+          name: 'AZURE_TENANT_ID'
+          value: tenantId
+        }
         {
           name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
           value: appInsightResource.properties.InstrumentationKey
