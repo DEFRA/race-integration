@@ -1,3 +1,4 @@
+param azureTenanatId string
 param race2appenv string
 param registryName string
 param resourcegroup string
@@ -45,6 +46,10 @@ resource containerWebApiExternalApp 'Microsoft.App/containerApps@2023-08-01-prev
         {
           env: [
             {
+              name: 'AZURE_TENANT_ID'
+              value: azureTenanatId
+            }
+            {
               name: 'ASPNETCORE_ENVIRONMENT'
               value: aspnetCoreEnv
             }
@@ -54,6 +59,10 @@ resource containerWebApiExternalApp 'Microsoft.App/containerApps@2023-08-01-prev
             }
             {
               name: 'AZURE_CLIENT_ID'
+              value: managedIdentity_resource.properties.clientId
+            }
+            {
+              name: 'ManagedIdenityClientId'
               value: managedIdentity_resource.properties.clientId
             }
           ]          
