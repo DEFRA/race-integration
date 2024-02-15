@@ -80,17 +80,17 @@ try
 
     // Add services to the container.
     builder.Services.AddRazorPages();
-    builder.Services.AddServerSideBlazor();
-    //.AddHubOptions(options =>
-    //    {
-    //        options.ClientTimeoutInterval = TimeSpan.FromSeconds(60);//.FromSeconds(30); 
-    //        options.EnableDetailedErrors = true;
-    //        options.HandshakeTimeout = TimeSpan.FromSeconds(30); //FromSeconds(15); 
-    //        options.KeepAliveInterval = TimeSpan.FromSeconds(30);//.FromSeconds(15);  
-    //        options.MaximumParallelInvocationsPerClient = 1; 
-    //        options.MaximumReceiveMessageSize = 128 * 1024; //32*1024;
-    //        options.StreamBufferCapacity = 10;
-    //    });
+    builder.Services.AddServerSideBlazor()
+    .AddHubOptions(options =>
+        {
+            options.ClientTimeoutInterval = TimeSpan.FromSeconds(10);//.FromSeconds(30); 
+            options.EnableDetailedErrors = true;
+            options.HandshakeTimeout = TimeSpan.FromSeconds(5); //FromSeconds(15); 
+            options.KeepAliveInterval = TimeSpan.FromSeconds(5);//.FromSeconds(15);  
+            options.MaximumParallelInvocationsPerClient = 1;
+            options.MaximumReceiveMessageSize = 128 * 1024; //32*1024;
+            options.StreamBufferCapacity = 10;
+        });
 
     builder.Services.Configure<CookiePolicyOptions>(options =>
     {
@@ -130,15 +130,16 @@ try
         OpenIdConnectDefaults.AuthenticationScheme,
         options =>
         {
-            //options.Events.OnTicketReceived = async (Context) =>
-            //{
-            //    Context.Properties.ExpiresUtc = DateTime.UtcNow.AddMinutes(20);
-            //};
-            //options.Events.OnRedirectToIdentityProvider = context =>
-            //{
-            //    context.ProtocolMessage.Prompt = "login";
-            //    return Task.CompletedTask;
-            //};
+            options.Events.OnTicketReceived = async context =>
+            {
+                context.Properties.ExpiresUtc = DateTime.UtcNow.AddMinutes(20);
+                await Task.FromResult(0);
+            };
+            options.Events.OnRedirectToIdentityProvider = async context =>
+            {
+                context.ProtocolMessage.RedirectUri = blazorClientURL+@"/signin-oidc";
+                await Task.FromResult(0);
+            };
             options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             options.SignOutScheme = OpenIdConnectDefaults.AuthenticationScheme;
             options.Authority = RACE2IDPURL;
