@@ -34,15 +34,16 @@
         <a class="dismiss">🗙</a>
     </div>
 
-    <script src="_framework/blazor.server.js"></script>
-    <script src="~/js/utilityfunctions.js"></script> 
-    <script>
+    <script src="_framework/blazor.server.js" autostart="false"></script>
+     <script>
         Blazor.start().then(() => {
             Blazor.defaultyReconnectionHandler._reconnectCallback = function (d) {
                 document.location.reload();
             }
         });
     </script>
+    <script src="~/js/utilityfunctions.js"></script>
+   
 </body>
 
 </html>
