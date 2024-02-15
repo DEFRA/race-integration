@@ -138,7 +138,7 @@ module createsqlservermodule 'createsqlserver.bicep' = {
     servers_race2sqldb_name: servers_race2sqldb_name
     tenantId: tenantId
     adgroupname: adgroupname
-    adgroupsid: adgroupsid
+    adgroupid: adgroupsid
 
   }
   dependsOn: [
@@ -182,6 +182,7 @@ module createfunctionappmodule 'createfunctionapp.bicep' = {
   scope: resourceGroup(resourcegroup)
   name: 'functionappdeploy'
   params: {
+    tenantId: tenantId
     subscriptionid: subscriptionid
     location: location
     resourcegroup: resourcegroup

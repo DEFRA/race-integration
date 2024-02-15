@@ -5,6 +5,9 @@
     "resourcegroup": {
       "value": "POCRACINFRG1401"
     },
+    "azureTenanatId":{
+      "value": "6f504113-6b64-43f2-ade9-242e05780007"
+    },
     "managedidentity": {
       "value": "POCRACINFMI1401"
     },
