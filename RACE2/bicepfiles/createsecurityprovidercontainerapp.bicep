@@ -1,4 +1,5 @@
 param azureTenanatId string
+param location string
 param race2appenv string
 param registryName string
 param resourcegroup string
@@ -14,7 +15,6 @@ param useExternalIngress bool
 param tag string
 var tagVal=json(tag)
 var subscriptionid = subscription().subscriptionId
-var location = resourceGroup().location
 
 resource managedEnvironments_race2containerappenv_name_resource 'Microsoft.App/managedEnvironments@2023-05-01' existing= {
   name: race2appenv 
