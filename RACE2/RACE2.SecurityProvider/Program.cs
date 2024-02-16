@@ -177,7 +177,7 @@ try
 
     app.UseHttpsRedirection();
 
-    HostingExtensions.InitializeDatabase(app);//seed initial data
+    //HostingExtensions.InitializeDatabase(app);//seed initial data
 
     app.UseCookiePolicy(new CookiePolicyOptions
     {
