@@ -1,3 +1,5 @@
+param azureTenanatId string
+param location string
 param resourcegroup string
 param managedidentity string
 param race2appenvName string
@@ -22,6 +24,8 @@ module createfrontendwebservercontainerappmodule 'createfrontendwebservercontain
   scope: resourceGroup(resourcegroup)
   name: 'frontendcontainerwebserverappdeploy'
   params: {
+    azureTenanatId: azureTenanatId
+    location: location
     race2appenv: race2appenvName
     containerAppName: frontEndWebServerContainerAppName
     registryName: registryName
@@ -42,6 +46,8 @@ module createsecurityprovidercontainerappmodule 'createsecurityprovidercontainer
   scope: resourceGroup(resourcegroup)
   name: 'securityprovidercontainerappdeploy'
   params: {
+    azureTenanatId: azureTenanatId
+    location: location
     race2appenv: race2appenvName
     containerAppName: securityProviderContainerAppName
     registryName: registryName
@@ -61,6 +67,8 @@ module createwebapicontainerappmodule 'createwebapicontainerapp.bicep' = {
   scope: resourceGroup(resourcegroup)
   name: 'webapicontainerappdeploy'
   params: {
+    azureTenanatId: azureTenanatId
+    location: location
     race2appenv: race2appenvName
     containerAppName: webApiContainerAppName
     registryName: registryName
@@ -80,6 +88,8 @@ module createwebapiexternalcontainerappmodule 'createwebapiexternalcontainerapp.
   scope: resourceGroup(resourcegroup)
   name: 'webapiexternalcontainerappdeploy'
   params: {
+    azureTenanatId: azureTenanatId
+    location: location
     race2appenv: race2appenvName
     containerAppName: webApiExternalContainerAppName
     registryName: registryName
