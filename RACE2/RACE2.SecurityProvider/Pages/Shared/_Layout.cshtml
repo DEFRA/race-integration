@@ -9,6 +9,23 @@
     <link rel="stylesheet" href="~/RACE2.SecurityProvider.styles.css" asp-append-version="true" />
 </head>
 <body>
+    <div id="components-reconnect-modal" class="my-reconnect-modal components-reconnect-hide">
+        <div class="show">
+            <p>
+                Attempting to connect to server.....
+            </p>
+        </div>
+        <div class="failed">
+            <p>
+                Failed to connect.....
+            </p>
+        </div>
+        <div class="rejected">
+            <p>
+                Refused to connect.....
+            </p>
+        </div>
+    </div>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
