@@ -23,6 +23,23 @@
 
 <body class="govuk-template__body">
     @RenderBody()
+    <div id="components-reconnect-modal" class="my-reconnect-modal components-reconnect-hide">
+        <div class="show">
+            <p>
+                 Attempting to reconnect.....
+            </p>
+        </div>
+        <div class="failed">
+            <p>
+                 Failing to reconnect.....
+            </p>
+        </div>
+        <div class="rejected">
+            <p>
+                 Refused to reconnect.....
+            </p>
+        </div>
+    </div>
     <div id="blazor-error-ui">
         <environment include="Staging,Production">
             An error has occurred. This application may no longer respond until reloaded.

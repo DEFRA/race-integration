@@ -123,9 +123,31 @@ namespace RACE2.SecurityProvider
                     }
                 };
 
+                Client webapiClient =
+                    new Client
+                    {
+                        ClientId = "webapi",
+                        ClientSecrets = new List<Secret> { new("secret".Sha512()) },
+                        ClientName = "Banana Cake Pop",
+                        AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
+                        AllowedScopes = new List<string>
+                        {
+                            "openid",
+                            "profile",
+                            "email",
+                            "role",
+                            "race2WebApi"
+                        },
+                        AllowedCorsOrigins = new List<string> {
+                        "https://race2frontend.gentlepebble-ae1a2a45.westeurope.azurecontainerapps.io",
+                        "https://localhost:5001"
+                        }
+                    };
+
                 List<Client> clients = new List<Client>();
                 clients.Add(blazorserverClient);
                 clients.Add(blazorwasmClient);
+                clients.Add(webapiClient);
                 return clients;
             }
         }
