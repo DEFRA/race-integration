@@ -14,7 +14,7 @@ variables:
   - name: repository_securityprovider
     value: 'race2securityprovider'
   - name: dockerfile_securityprovider
-    value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_SecurityProvider'
+    value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_IdentityProvider'
   - name: repository_frontendwebserver
     value: 'race2frontendwebserver'
   - name: dockerfile_frontendwebserver
