@@ -448,3 +448,4 @@ FodyWeavers.xsd
 /RACE2/RACE2VirusScanAzFnApp/Properties/serviceDependencies.RACE2VirusScanAzFnApp - Zip Deploy.json
 /RACE2/RACE2.VirusCureSqlTriggersAzFnApp
 /.vscode/extensions.json
+/RACE2/Dockerfile_SecurityProvider
