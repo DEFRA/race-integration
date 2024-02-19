@@ -428,7 +428,6 @@ FodyWeavers.xsd
 
 
 
-/RACE2/RACE2.sln
 /RACE2.VirusTrackingFnApp/local.settings.json
 /RACE2/RACE2VirusScanAzFnApp/Properties/ServiceDependencies/DEVRACINFAF1401 - Zip Deploy
 /RACE2/RACE2VirusScanAzFnApp/Properties/serviceDependencies.DEVRACINFAF1401 - Zip Deploy.json
@@ -446,6 +445,9 @@ FodyWeavers.xsd
 /RACE2/RACE2VirusScanAzFnApp/Properties/serviceDependencies.POCRACINFFA1401 - Zip Deploy.json
 /RACE2/RACE2VirusScanAzFnApp/Properties/serviceDependencies.PRDRACINFAF1401 - Zip Deploy.json
 /RACE2/RACE2VirusScanAzFnApp/Properties/serviceDependencies.RACE2VirusScanAzFnApp - Zip Deploy.json
-/RACE2/RACE2.VirusCureSqlTriggersAzFnApp
 /.vscode/extensions.json
 
+RACE2/RACE2.VirusCureSqlTriggersAzFnApp/local.settings.json
+RACE2/RACE2.VirusCureSqlTriggersAzFnApp/Properties/serviceDependencies.POCRACINFAF1402 - Zip Deploy.json
+RACE2/RACE2.VirusCureSqlTriggersAzFnApp/Properties/ServiceDependencies/POCRACINFAF1402 - Zip Deploy/profile.arm.json
+RACE2/RACE2.VirusCureSqlTriggersAzFnApp/Properties/ServiceDependencies/POCRACINFAF1402 - Zip Deploy/storage1.arm.json
