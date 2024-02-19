@@ -1,7 +1,27 @@
-﻿@inherits LayoutComponentBase
+﻿@using System.Timers
+@inherits LayoutComponentBase
+@inject NavigationManager UriHelper
+@inject IJSRuntime JSRuntime
 
 <div class="page">
     <main>
+         <div id="components-reconnect-modal" class="my-reconnect-modal components-reconnect-hide">
+            <div class="show">
+                <p>
+                    Attempting to connect to server.....
+                </p>
+            </div>
+            <div class="failed">
+                <p>
+                    Failed to connect.....
+                </p>
+            </div>
+            <div class="rejected">
+                <p>
+                    Refused to connect.....
+                </p>
+            </div>
+        </div>
         @Body
     </main>
 </div>
@@ -11,3 +31,41 @@
     <a href="" class="reload">Reload</a>
     <a class="dismiss">🗙</a>
 </div>
+
+@code {
+    [CascadingParameter]
+    private Task<AuthenticationState> stateAuthenticate { get; set; }
+    private Timer timerObj;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Set the Timer delay.
+        timerObj = new Timer(20*60*1000); //20 min timeout
+        timerObj.Elapsed += UpdateTimer;
+        timerObj.AutoReset = false;
+        // Identify whether the user is active or inactive using onmousemove and onkeypress in JS function.
+        await JSRuntime.InvokeVoidAsync("timeOutCall", DotNetObjectReference.Create(this));
+    }
+
+    [JSInvokable]
+    public void TimerInterval()
+    {
+        // Resetting the Timer if the user in active state.
+        timerObj.Stop();
+        // Call the TimeInterval to logout when the user is inactive.
+        timerObj.Start();
+    }
+
+    private void UpdateTimer(Object source, ElapsedEventArgs e)
+    {
+        InvokeAsync(async () =>
+        {
+            // Log out when the user is inactive.
+            var authstate = await stateAuthenticate;
+            if (authstate.User.Identity.IsAuthenticated)
+            {
+                UriHelper.NavigateTo("logout", true);
+            }
+        });
+    }
+}
