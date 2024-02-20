@@ -41,6 +41,7 @@
     {
         // Set the Timer delay.
         timerObj = new Timer(20*60*1000); //20 min timeout
+        //timerObj = new Timer(10000);//testing for 10 sec
         timerObj.Elapsed += UpdateTimer;
         timerObj.AutoReset = false;
         // Identify whether the user is active or inactive using onmousemove and onkeypress in JS function.
