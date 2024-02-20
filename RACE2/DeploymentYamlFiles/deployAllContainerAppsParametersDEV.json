@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": { 
       "azureTenanatId":{
-        "value": "770a2450-0227-4c62-90c7-4e38537f1102"
+        "value": "6f504113-6b64-43f2-ade9-242e05780007"
       },
       "location":{
         "value": "uksouth"
@@ -30,7 +30,7 @@
         "value": true
       },
       "containerPort": {
-        "value": 80
+        "value": 8080
       },  
       "minReplicas": {
         "value": 1
