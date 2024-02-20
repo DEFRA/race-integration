@@ -106,7 +106,7 @@ try
         //options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
         options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
     })
-    //.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
     //.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
     //{
     //    //options.Cookie = new Microsoft.AspNetCore.Http.CookieBuilder()
@@ -118,14 +118,14 @@ try
     //    options.ExpireTimeSpan = TimeSpan.FromMinutes(1);//default 5 min
     //    options.Cookie.MaxAge = options.ExpireTimeSpan; // optional
     //})
-    .AddCookie(options =>
-    {
-        options.ExpireTimeSpan = TimeSpan.FromMinutes(20);//default 5 min
-        options.Cookie.MaxAge = options.ExpireTimeSpan; // optional
-        options.SlidingExpiration = true;
-        options.LoginPath = "/Login";
-        options.LogoutPath = "/Logout";
-    })
+    //.AddCookie(options =>
+    //{
+    //    options.ExpireTimeSpan = TimeSpan.FromMinutes(20);//default 5 min
+    //    options.Cookie.MaxAge = options.ExpireTimeSpan; // optional
+    //    options.SlidingExpiration = true;
+    //    options.LoginPath = "/Login";
+    //    options.LogoutPath = "/Logout";
+    //})
     .AddOpenIdConnect(
         OpenIdConnectDefaults.AuthenticationScheme,
         options =>
@@ -208,11 +208,11 @@ try
     app.UseAuthentication();
     app.UseAuthorization();
 
-    //app.MapBlazorHub();
-    app.MapBlazorHub(options =>
-    {
-        options.CloseOnAuthenticationExpiration = true;
-    });
+    app.MapBlazorHub();
+    //app.MapBlazorHub(options =>
+    //{
+    //    options.CloseOnAuthenticationExpiration = true;
+    //});
     app.MapFallbackToPage("/_Host");
     //IdentityModelEventSource.ShowPII = true;
     app.Run();
