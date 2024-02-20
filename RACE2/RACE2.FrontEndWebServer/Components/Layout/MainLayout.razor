@@ -2,6 +2,7 @@
 @inherits LayoutComponentBase
 @inject NavigationManager UriHelper
 @inject IJSRuntime JSRuntime
+@inject IConfiguration _config;
 
 <div class="page">
     <main>
@@ -39,9 +40,9 @@
 
     protected override async Task OnInitializedAsync()
     {
+        string timeoutDuration = _config["TimeoutDuration"];
         // Set the Timer delay.        
-        //timerObj = new Timer(20*60*1000); //20 min timeout
-        timerObj = new Timer(10000);//testing for 10 sec
+        timerObj = new Timer(Convert.ToInt32(timeoutDuration)); // new Timer(20 * 60 * 1000); //20 min timeout
         timerObj.Elapsed += UpdateTimer;
         timerObj.AutoReset = false;
         // Identify whether the user is active or inactive using onmousemove and onkeypress in JS function.
