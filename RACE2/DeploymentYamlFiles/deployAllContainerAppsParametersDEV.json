@@ -5,6 +5,12 @@
       "resourcegroup": {
         "value": "DEVRACINFRG1401"
       },
+      "location":{
+        "value": "uksouth"
+      }, 
+      "azureTenanatId":{
+        "value": "6f504113-6b64-43f2-ade9-242e05780007"
+      },
       "managedidentity": {
         "value": "DEVRACINFMI1401"
       },
