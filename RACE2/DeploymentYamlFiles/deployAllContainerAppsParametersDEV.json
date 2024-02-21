@@ -38,10 +38,10 @@
       "maxReplicas": {
         "value": 1
       },
-      "transport": {
+      "transportVal": {
         "value": "http"
       },
-      "allowInsecure": {
+      "allowInsecureVal": {
         "value": false
       },       
       "frontEndWebServerContainerAppName": {
