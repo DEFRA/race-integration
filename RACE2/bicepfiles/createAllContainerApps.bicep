@@ -19,6 +19,8 @@ param aspnetCoreEnv string
 param tag string
 param minReplicas int
 param maxReplicas int
+param transport string
+param allowInsecure bool
 
 module createfrontendwebservercontainerappmodule 'createfrontendwebservercontainerapp.bicep' = {
   scope: resourceGroup(resourcegroup)
@@ -39,6 +41,8 @@ module createfrontendwebservercontainerappmodule 'createfrontendwebservercontain
     tag: tag
     minReplicas: minReplicas
     maxReplicas: maxReplicas
+    transport: transport
+    allowInsecure: allowInsecure
   }
 }
 
@@ -61,6 +65,8 @@ module createsecurityprovidercontainerappmodule 'createsecurityprovidercontainer
     tag: tag
     minReplicas: minReplicas
     maxReplicas: maxReplicas
+    transport: transport
+    allowInsecure: allowInsecure
   }
 }
 module createwebapicontainerappmodule 'createwebapicontainerapp.bicep' = {
@@ -82,6 +88,8 @@ module createwebapicontainerappmodule 'createwebapicontainerapp.bicep' = {
     tag: tag
     minReplicas: minReplicas
     maxReplicas: maxReplicas
+    transport: transport
+    allowInsecure: allowInsecure
   }
 }
 module createwebapiexternalcontainerappmodule 'createwebapiexternalcontainerapp.bicep' = {
@@ -103,5 +111,7 @@ module createwebapiexternalcontainerappmodule 'createwebapiexternalcontainerapp.
     tag: tag
     minReplicas: minReplicas
     maxReplicas: maxReplicas
+    transport: transport
+    allowInsecure: allowInsecure
   }
 }

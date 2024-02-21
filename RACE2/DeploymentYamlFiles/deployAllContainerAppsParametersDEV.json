@@ -36,8 +36,14 @@
         "value": 1
       },
       "maxReplicas": {
-        "value": 2
-      },    
+        "value": 1
+      },
+      "transport": {
+        "value": "http"
+      },
+      "allowInsecure": {
+        "value": false
+      },       
       "frontEndWebServerContainerAppName": {
         "value":"race2frontendwebserver"
       },

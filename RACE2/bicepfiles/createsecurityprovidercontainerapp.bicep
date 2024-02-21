@@ -15,6 +15,8 @@ param useExternalIngress bool
 param tag string
 var tagVal=json(tag)
 var subscriptionid = subscription().subscriptionId
+param transport string
+param allowInsecure bool
 
 resource managedEnvironments_race2containerappenv_name_resource 'Microsoft.App/managedEnvironments@2023-05-01' existing= {
   name: race2appenv 
@@ -39,6 +41,8 @@ resource containerSecurityProviderApp 'Microsoft.App/containerApps@2023-05-01' =
       ingress: {
         external: useExternalIngress
         targetPort: containerPort
+        transport: transport
+        allowInsecure: allowInsecure
       }
     }
     template: {
