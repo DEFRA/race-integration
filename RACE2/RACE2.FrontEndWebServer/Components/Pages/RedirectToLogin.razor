@@ -3,8 +3,24 @@
 @code {
     protected override void OnInitialized()
     {
-        //Navigation.NavigateTo("/PageTimedOut", true);
+        Navigation.NavigateTo("/PageTimedOut", true);
         //Navigation.NavigateTo("/Logout", true);
-        Navigation.NavigateTo($"/login?returnUrl={Uri.EscapeDataString(Navigation.Uri)}");
+        //Navigation.NavigateTo($"/login?returnUrl={Uri.EscapeDataString(Navigation.Uri)}");
+
+        // Navigation.NavigateTo($"/login?returnUrl={Uri.EscapeDataString(Navigation.Uri)}");
+
+        // var authenticationState = await AuthenticationStateTask;
+        // if (authenticationState?.User?.Identity is null || !authenticationState.User.Identity.IsAuthenticated)
+        // {
+        //     var returnUri = Navigation.ToBaseRelativePath(Navigation.Uri);
+        //     if (string.IsNullOrWhiteSpace(returnUri))
+        //     {
+        //         Navigation.NavigateTo("/login", true);
+        //     }
+        //     else
+        //     {
+        //         Navigation.NavigateTo($"/login?returnUrl={Uri.EscapeDataString(Navigation.Uri)}");
+        //     }
+        // }
     }
 }

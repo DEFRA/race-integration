@@ -3,6 +3,8 @@
 @inject NavigationManager UriHelper
 @inject IJSRuntime JSRuntime
 @inject IConfiguration _config;
+@inject IJSRuntime JSRuntime
+@using RACE2.FrontEndWebServer.ExceptionGlobalErrorHandling;
 
 <div class="page">
     <main>
@@ -23,7 +25,14 @@
                 </p>
             </div>
         </div>
-        @Body
+         <CustomErrorBoundary Context="exception" @ref="_customErrorBoundary">
+            <ChildContent>
+                @Body
+            </ChildContent>
+            <ErrorContent Context="exception">
+                <RACE2.FrontEndWebServer.Pages.ApplicationErrorPage ErrorMessage="@exception.Message" />
+            </ErrorContent>
+        </CustomErrorBoundary>    
     </main>
 </div>
 
@@ -34,6 +43,7 @@
 </div>
 
 @code {
+    private CustomErrorBoundary? _customErrorBoundary;
     [CascadingParameter]
     private Task<AuthenticationState> stateAuthenticate { get; set; }
     private Timer timerObj;
