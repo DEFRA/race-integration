@@ -33,8 +33,8 @@
 
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-three-quarters">
-                @if (!FileUploadInProgress)
-                {
+                @*                 @if (!FileUploadInProgress)
+                { *@
                 <EditForm Model="@uploadFileData" OnSubmit="OnUploadSubmit">
                     @*                     @if (UploadFileData.FileIsEmpty)
                     {
@@ -301,9 +301,9 @@
                         </div>
                         <div class="govuk-form-group govuk-form-group--error">
                             <label class="govuk-label" for="file-upload">
-                                <div class="govuk-heading-xl govuk-!-margin-bottom-5">
+                                <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">
                                     Upload your statement
-                                </div>
+                                </h1>
                             </label>
                             <div id="file-upload-hint" class="govuk-hint">
                                 You can upload your statement as a PDF or Word document. It can be up to 30MB.
@@ -325,7 +325,7 @@
                     {
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="file-upload">
-                                <div class="govuk-heading-xl govuk-!-margin-bottom-5">Upload your statement</div>
+                                <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">Upload your statement</h1>
                             </label>
                             <div id="file-upload-hint" class="govuk-hint">
                                 You can upload your statement as a PDF or Word document. It can be up to 30MB.
@@ -342,12 +342,12 @@
                         Upload and send statement
                     </button>
                 </EditForm>
-                }
+                @*}
                 else
                 {
                 <p class="govuk-body">File upload in progress.</p>
                 <p class="govuk-body">This could take up to 20 seconds.</p>
-                }
+                } *@
             </div>
         </div>
     </main>
@@ -355,7 +355,7 @@
 
 <Footer />
 
-@code{
+@code {
     private bool FileUploadInProgress { get; set; } = false;
     private string _fileNameResult;
     public string fileExtn = String.Empty;
@@ -364,9 +364,8 @@
     public string ReservoirName { get; set; } = default!;
     private IBrowserFile loadedFile;
     IBrowserFile selectedFile;
-    public UploadFileData uploadFileData = new UploadFileData();
     List<IBrowserFile> selectedFiles;
-    //private UploadFileData UploadFileData { get; set; } = new UploadFileData();
+    private UploadFileData uploadFileData { get; set; } = new UploadFileData();
     private List<FileUploadViewModel> fileUploadViewModels = new();
     DocumentDTO documentDTO = new DocumentDTO();
     [Parameter]
@@ -504,8 +503,8 @@
                         System.Threading.Thread.Sleep(timeToWait); //wait for timeToWait seconds
 
                         //For testing without virus scan, comment the next line and uncomment the next to next line
-                        //var containerNameToDownloadFrom = _config["CleanContainer"]; //"cleanfiles";
-                        var containerNameToDownloadFrom = _config["UnscannedContainer"];
+                        var containerNameToDownloadFrom = _config["CleanContainer"]; //"cleanfiles";
+                        //var containerNameToDownloadFrom = _config["UnscannedContainer"];
 
                         var RSTEmailAddress = String.IsNullOrEmpty(_config["RSTEmailAddress"]) ? userDetails.Email : _config["RSTEmailAddress"];
                         var bytes = await blobStorageService.GetBlobAsByteArray(containerNameToDownloadFrom, trustedFileNameForFileStorage);
@@ -674,14 +673,13 @@
     private void FileVirusScanFailed()
     {
         ValidationErrors.Add("FileVirusScanFailed", "FileVirusScanFailed");
-    }    
-
+    }
     public class UploadFileData
     {
         public long MaxFileSize { get; set; }
         public long NotifyServiceFileAttachmentLimit { get; set; }
         public long EmptyFileSize { get; set; }
-        public  UploadFileData()
+        public UploadFileData()
         {
             MaxFileSize = 30 * 1024 * 1024;
             //EmptyFileSize = 12 * 1024;
@@ -689,6 +687,3 @@
         }
     }
 }
-
-
-
