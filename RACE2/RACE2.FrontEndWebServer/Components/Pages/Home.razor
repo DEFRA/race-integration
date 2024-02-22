@@ -125,6 +125,8 @@
     }
     private async void GoToLoginPage()
     {
+        Serilog.Log.Logger.Information("User intitiated application start");
+
         bool forceLoad = true;
         NavigationManager.NavigateTo("/login", forceLoad);
     }
