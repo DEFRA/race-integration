@@ -5,11 +5,14 @@
     "resourcegroup": {
       "value": "POCRACINFRG1401"
     },
+    "azureTenanatId":{
+      "value": "770a2450-0227-4c62-90c7-4e38537f1102"
+    },
     "managedidentity": {
       "value": "POCRACINFMI1401"
     },
     "race2appenvName": {
-      "value": "POCRACINFCE1401"
+      "value": "POCRACINFAE1401"
     },
     "aspnetCoreEnv": {
       "value": "Production"
@@ -24,14 +27,20 @@
       "value": true
     },
     "containerPort": {
-      "value": 80
+      "value": 8080
     },  
     "minReplicas": {
       "value": 1
     },
     "maxReplicas": {
       "value": 2
-    },    
+    },
+    "transport": {
+      "value": "http"
+    },
+    "allowInsecure": {
+      "value": false
+    },      
     "frontEndWebServerContainerAppName": {
       "value":"race2frontendwebserver"
     },
