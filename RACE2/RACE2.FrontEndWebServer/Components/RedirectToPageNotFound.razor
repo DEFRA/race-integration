@@ -1,11 +1,27 @@
-﻿<div class="govuk-width-container ">
-    <div class="login-nav">
-        <ul class="login-nav__list">
-            <li class="login-nav__list-item-new"><a href="/my-account" class="govuk-link login-nav__link-new govuk-link--no-visited-state profile">Manage account</a></li>
-            <li class="login-nav__list-item-new"><a href="logout" class="govuk-link login-nav__link-new govuk-link--no-visited-state">Sign out</a></li>
-        </ul>
-    </div>
-</div>
-@code {
+﻿@inject NavigationManager Navigation
 
+@code {
+    // [CascadingParameter]
+    // public Task<AuthenticationState> AuthenticationStateTask { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        Navigation.NavigateTo("/PageNotFound", true);
+        //Navigation.NavigateTo("/Logout", true);
+
+        // Navigation.NavigateTo($"/login?returnUrl={Uri.EscapeDataString(Navigation.Uri)}");
+
+        // var authenticationState = await AuthenticationStateTask;
+        // if (authenticationState?.User?.Identity is null || !authenticationState.User.Identity.IsAuthenticated)
+        // {
+        //     var returnUri = Navigation.ToBaseRelativePath(Navigation.Uri);
+        //     if (string.IsNullOrWhiteSpace(returnUri))
+        //     {
+        //         Navigation.NavigateTo("/login", true);
+        //     }
+        //     else
+        //     {
+        //         Navigation.NavigateTo($"/login?returnUrl={Uri.EscapeDataString(Navigation.Uri)}");
+        //     }
+        // }
+    }
 }
