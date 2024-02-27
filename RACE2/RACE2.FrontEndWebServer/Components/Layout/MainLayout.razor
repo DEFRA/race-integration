@@ -5,6 +5,7 @@
 @inject IConfiguration _config;
 @inject IJSRuntime JSRuntime
 @using RACE2.FrontEndWebServer.ExceptionGlobalErrorHandling;
+@using RACE2.FrontEndWebServer.Helpers;
 
 <div class="page">
     <main>
@@ -46,38 +47,53 @@
     private CustomErrorBoundary? _customErrorBoundary;
     [CascadingParameter]
     private Task<AuthenticationState> stateAuthenticate { get; set; }
-    private Timer timerObj;
+    // private Timer timerObj;
+
+    // protected override async Task OnInitializedAsync()
+    // {
+    //     string timeoutDuration = _config["TimeoutDuration"];
+    //     // Set the Timer delay.        
+    //     timerObj = new Timer(Convert.ToInt32(timeoutDuration)); // new Timer(20 * 60 * 1000); //20 min timeout
+    //     timerObj.Elapsed += UpdateTimer;
+    //     timerObj.AutoReset = false;
+    //     // Identify whether the user is active or inactive using onmousemove and onkeypress in JS function.
+    //     await JSRuntime.InvokeVoidAsync("timeOutCall", DotNetObjectReference.Create(this));
+    // }
+
+    // [JSInvokable]
+    // public void TimerInterval()
+    // {
+    //     // Resetting the Timer if the user in active state.
+    //     timerObj.Stop();
+    //     // Call the TimeInterval to logout when the user is inactive.
+    //     timerObj.Start();
+    // }
+
+    // private void UpdateTimer(Object source, ElapsedEventArgs e)
+    // {
+    //     InvokeAsync(async () =>
+    //     {
+    //         // Log out when the user is inactive.
+    //         var authstate = await stateAuthenticate;
+    //         if (authstate.User.Identity.IsAuthenticated)
+    //         {
+    //             UriHelper.NavigateTo("logout", true);
+    //         }
+    //     });
+    // }
 
     protected override async Task OnInitializedAsync()
     {
-        string timeoutDuration = _config["TimeoutDuration"];
-        // Set the Timer delay.        
-        timerObj = new Timer(Convert.ToInt32(timeoutDuration)); // new Timer(20 * 60 * 1000); //20 min timeout
-        timerObj.Elapsed += UpdateTimer;
-        timerObj.AutoReset = false;
-        // Identify whether the user is active or inactive using onmousemove and onkeypress in JS function.
-        await JSRuntime.InvokeVoidAsync("timeOutCall", DotNetObjectReference.Create(this));
+        await JSRuntime.InitializeInactivityTimer(DotNetObjectReference.Create(this));
     }
 
     [JSInvokable]
-    public void TimerInterval()
+    public async Task Logout()
     {
-        // Resetting the Timer if the user in active state.
-        timerObj.Stop();
-        // Call the TimeInterval to logout when the user is inactive.
-        timerObj.Start();
-    }
-
-    private void UpdateTimer(Object source, ElapsedEventArgs e)
-    {
-        InvokeAsync(async () =>
+        var authstate = await stateAuthenticate;
+        if (authstate.User.Identity.IsAuthenticated)
         {
-            // Log out when the user is inactive.
-            var authstate = await stateAuthenticate;
-            if (authstate.User.Identity.IsAuthenticated)
-            {
-                UriHelper.NavigateTo("logout", true);
-            }
-        });
+            UriHelper.NavigateTo("logout", true);
+        }
     }
 }

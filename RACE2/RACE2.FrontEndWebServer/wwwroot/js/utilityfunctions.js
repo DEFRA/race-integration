@@ -34,3 +34,17 @@ function timeOutCall(dotnethelper) {
         dotnethelper.invokeMethodAsync("TimerInterval");
     }
 }
+
+function initializeInactivityTimer(dotnetHelper) {
+    var timer;
+    document.onmousemove = resetTimer();
+    document.onkeypress = resetTimer();
+
+    function resetTimer() {
+        clearTimeout(timer);
+        //timer = setTimeOut(logout, 5000);
+        timer = setTimeout(function () {
+            dotnetHelper.invokeMethodAsync("Logout");
+        }, 20*60*1000); 
+    }    
+}
