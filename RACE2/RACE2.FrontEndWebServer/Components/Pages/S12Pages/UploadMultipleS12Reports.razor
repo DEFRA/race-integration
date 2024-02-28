@@ -105,7 +105,7 @@
     public Reservoir CurrentReservoir { get; set; } = new Reservoir();
     [CascadingParameter]
     public Task<AuthenticationState> AuthenticationStateTask { get; set; }
-    protected override async void OnInitialized()
+    protected async override Task OnInitializedAsync()
     {
         AuthenticationState authState = await AuthenticationStateTask; // AuthenticationStateProvider.GetAuthenticationStateAsync();
         UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
@@ -121,7 +121,7 @@
             };
         CurrentReservoir = new Reservoir();
 
-        base.OnInitialized();
+        base.OnInitializedAsync();
     }
     private void OnInputFileChange(InputFileChangeEventArgs e)
     {

@@ -3,7 +3,7 @@
 @code {
     // [CascadingParameter]
     // public Task<AuthenticationState> AuthenticationStateTask { get; set; }
-    protected override async Task OnInitializedAsync()
+    protected async override Task OnInitializedAsync()    
     {
         Navigation.NavigateTo("/PageNotFound", true);
         //Navigation.NavigateTo("/Logout", true);
@@ -23,5 +23,6 @@
         //         Navigation.NavigateTo($"/login?returnUrl={Uri.EscapeDataString(Navigation.Uri)}");
         //     }
         // }
+        await base.OnInitializedAsync();
     }
 }

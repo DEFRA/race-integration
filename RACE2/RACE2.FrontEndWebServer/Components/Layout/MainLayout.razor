@@ -82,9 +82,10 @@
     //     });
     // }
 
-    protected override async Task OnInitializedAsync()
+    protected async override Task OnInitializedAsync()
     {
         await JSRuntime.InitializeInactivityTimer(DotNetObjectReference.Create(this));
+        await base.OnInitializedAsync();
     }
 
     [JSInvokable]
