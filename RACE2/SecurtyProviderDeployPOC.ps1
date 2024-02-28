@@ -23,7 +23,7 @@ az containerapp create `
   --cpu 0.5 `
   --memory 1.0Gi `
   --min-replicas 1 `
-  --max-replicas 2 `
+  --max-replicas 1 `
   --env-vars ASPNETCORE_ENVIRONMENT=$ENVIRONMENT AzureAppConfigURL=$APPCONFIG_URL ManagedIdenityClientId=$identityClientId AZURE_TENANT_ID=$AZURE_TENANT_ID `
   --user-assigned $MANAGEDIDENTITY
   
