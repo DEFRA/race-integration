@@ -44,7 +44,7 @@ function initializeInactivityTimer(dotnetHelper) {
         clearTimeout(timer);
         //timer = setTimeOut(logout, 5000);
         timer = setTimeout(function () {
-            dotnetHelper.invokeMethodAsync("Logout");
+            dotnetHelper.invokeMethodAsync("PageTimedOut");
         }, 20*60*1000); 
     }    
 }

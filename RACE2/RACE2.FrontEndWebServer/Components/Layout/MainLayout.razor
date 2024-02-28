@@ -88,12 +88,12 @@
     }
 
     [JSInvokable]
-    public async Task Logout()
+    public async Task PageTimedOut()
     {
         var authstate = await stateAuthenticate;
         if (authstate.User.Identity.IsAuthenticated)
         {
-            UriHelper.NavigateTo("logout", true);
+            UriHelper.NavigateTo("/PageTimedOut", true);
         }
     }
 }
