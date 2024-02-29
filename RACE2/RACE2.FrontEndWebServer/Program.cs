@@ -1,3 +1,4 @@
+using Fluxor;
 using Azure.Identity;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -173,6 +174,11 @@ try
             ValidationAlgorithm = ValidationAlgorithm.HMACSHA256
         });
     builder.Services.AddSingleton<INotification, RaceNotification>();
+    builder.Services.AddFluxor(o =>
+    {
+        o.ScanAssemblies(typeof(Program).Assembly);
+        o.UseReduxDevTools(rdt => { rdt.Name = "RACE2 application"; });
+    });
 
     var app = builder.Build();
     app.UseForwardedHeaders();
