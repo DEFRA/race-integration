@@ -183,7 +183,7 @@
     private Address UserAddress { get; set; } = new Address();
 
     private string changePasswordUrl = "";
-    protected override async void OnInitialized()
+    protected async override Task OnInitializedAsync()
     {
         try
         {

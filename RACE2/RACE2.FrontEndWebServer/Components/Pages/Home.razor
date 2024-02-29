@@ -108,7 +108,7 @@
 
     public string UserName { get; set; } = "Unknown";
 
-    protected override async Task OnInitializedAsync()
+    protected async override Task OnInitializedAsync()
     {
         AuthenticationState authState =
           await AuthenticationStateProvider.GetAuthenticationStateAsync();
@@ -122,8 +122,9 @@
                 UserName = givenNameClaim.Value;
             }
         }
+        await base.OnInitializedAsync();
     }
-    private async void GoToLoginPage()
+    private void GoToLoginPage()
     {
         Serilog.Log.Logger.Information("User intitiated application start");
 
@@ -131,7 +132,7 @@
         NavigationManager.NavigateTo("/login", forceLoad);
     }
 
-    private async void GoToNextPage()
+    private void GoToNextPage()
     {
         bool forceLoad = false;
         NavigationManager.NavigateTo("/annual-statements", forceLoad);

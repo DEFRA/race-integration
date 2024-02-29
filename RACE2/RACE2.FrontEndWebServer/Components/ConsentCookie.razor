@@ -22,12 +22,13 @@
     bool hideBanner;
     string cookieString;
 
-    protected override void OnInitialized()
+    protected async override Task OnInitializedAsync()
     {
         consentFeature = Http.HttpContext.Features.Get<ITrackingConsentFeature>();
         showBanner = !consentFeature?.CanTrack ?? false;
         cookieString = consentFeature?.CreateConsentCookie();
         hideBanner = false;
+        await base.OnInitializedAsync();
     }
 
     private void AcceptMessage()

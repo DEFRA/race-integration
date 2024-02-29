@@ -111,7 +111,7 @@ else
     protected bool IsLoggedIn { get; set; } = false;
     [CascadingParameter]
     public Task<AuthenticationState> AuthenticationStateTask { get; set; }
-    protected override async void OnInitialized()
+    protected async override Task OnInitializedAsync()
     {
         AuthenticationState authState = await AuthenticationStateTask; // AuthenticationStateProvider.GetAuthenticationStateAsync();
         if (authState.User.Claims.Count() == 0)

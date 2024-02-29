@@ -219,7 +219,7 @@
     public string SubmissionReference { get; set; }
     [CascadingParameter]
     public Task<AuthenticationState> AuthenticationStateTask { get; set; }
-    protected override async void OnInitialized()
+    protected async override Task OnInitializedAsync()
     {
         AuthenticationState authState = await AuthenticationStateTask;// AuthenticationStateProvider.GetAuthenticationStateAsync();
         await base.OnInitializedAsync();
