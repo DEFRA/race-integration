@@ -5,6 +5,7 @@
 @using Microsoft.AspNetCore.Authorization
 @using RACE2.FrontEndWebServer.Components
 @using RACE2.Dto
+@using RACE2.FrontEndWebServer.FluxorImplementation.Actions
 @inject NavigationManager NavigationManager
 @inject IState<ReportSubmissionDataState> State
 @inject IDispatcher Dispatcher
@@ -244,9 +245,11 @@
         else
         {
             YesNoError = false;
-            var YesNoValue = _yesno.YesNoOptions.ToString();
+            reportSubmissionDataDto.YesNoValue = _yesno.YesNoOptions.ToString(); 
+            var actionReportSubmissionData = new ReportSubmissionDataAction(reportSubmissionDataDto);
+            Dispatcher.Dispatch(actionReportSubmissionData);
             bool forceLoad = false;
-            //NavigationManager.NavigateTo($"/upload-your-template/{ReservoirId}/{ReservoirRegName}/{UndertakerName}/{UndertakerEmail}/{SubmissionReference}/{YesNoValue}", forceLoad);
+            NavigationManager.NavigateTo("/upload-your-template", forceLoad);
         }
     }
     public void GoToMyAccountPage()

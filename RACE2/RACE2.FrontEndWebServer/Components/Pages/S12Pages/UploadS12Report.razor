@@ -1,4 +1,5 @@
-﻿@page "/upload-your-template/{ReservoirId}/{ReservoirRegName}/{UndertakerName}/{UndertakerEmail}/{SubmissionReference}/{YesNoValue}"
+﻿@page "/upload-your-template"
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
 @using Microsoft.AspNetCore.Authorization;
 @using Microsoft.AspNetCore.Components
 @using Microsoft.AspNetCore.Components.Authorization
@@ -9,6 +10,8 @@
 @using RACE2.Dto
 @using RACE2.Services
 @using RACE2.Notification
+@using Fluxor
+@using RACE2.FrontEndWebServer.FluxorImplementation.Stores
 @inject NavigationManager NavigationManager
 @inject IBlobStorageService blobStorageService
 @inject IUserService userService
@@ -16,6 +19,8 @@
 @inject IConfiguration _config
 @inject IReservoirService reservoirService
 @inject INotification _notificationService
+@inject IState<ReportSubmissionDataState> State
+@inject IDispatcher Dispatcher
 
 @attribute [Authorize]
 
@@ -368,18 +373,9 @@
     private UploadFileData uploadFileData { get; set; } = new UploadFileData();
     private List<FileUploadViewModel> fileUploadViewModels = new();
     DocumentDTO documentDTO = new DocumentDTO();
-    [Parameter]
-    public string ReservoirId { get; set; }
-    [Parameter]
-    public string ReservoirRegName { get; set; }
-    [Parameter]
-    public string UndertakerName { get; set; }
-    [Parameter]
-    public string UndertakerEmail { get; set; }
-    [Parameter]
-    public string SubmissionReference { get; set; }
-    [Parameter]
-    public string YesNoValue { get; set; }
+
+    public ReportSubmissionDataState CurrentReportSubmissionDataState => State.Value;
+
     public Dictionary<string, string> ValidationErrors = new Dictionary<string, string>();
 
     [CascadingParameter]
@@ -466,13 +462,13 @@
                     var containerNameToUplodTo = _config["UnscannedContainer"];//"unscannedcontent";
                     //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + "."+ extn;
                     //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + SubmissionReference + "." + fileExtn;
-                    var trustedFileNameForFileStorage = SubmissionReference + "_" + DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + DateTime.Now.Hour + DateTime.Now.Minute + DateTime.Now.Second + "." + fileExtn;
+                    var trustedFileNameForFileStorage = CurrentReportSubmissionDataState.ReportSubmissionData.SubmissionReference + "_" + DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + DateTime.Now.Hour + DateTime.Now.Minute + DateTime.Now.Second + "." + fileExtn;
                     //Store the uploaded document information
                     documentDTO.FileName = selectedFile.Name.Split('.')[0];
                     documentDTO.FileType = fileExtn;
                     documentDTO.DateSent = DateTime.Now;
                     documentDTO.FileLocation = selectedFile.Name;
-                    documentDTO.ReservoirId = Int32.Parse(ReservoirId);
+                    documentDTO.ReservoirId = Int32.Parse(CurrentReportSubmissionDataState.ReportSubmissionData.ReservoirId);
                     documentDTO.SuppliedViaService = 1;
                     documentDTO.BlobStorageFileName = trustedFileNameForFileStorage;
                     documentDTO.DocumentType = "S12";
@@ -490,7 +486,7 @@
                             };
 
                         fileUploadViewModels.Add(fileUploadViewModel);
-                        SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(Int32.Parse(ReservoirId), userDetails.Id, "Sent");
+                        SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(Int32.Parse(CurrentReportSubmissionDataState.ReportSubmissionData.ReservoirId), userDetails.Id, "Sent");
                         //_fileNameResult=await jsRuntime.InvokeAsync<string>("getFileName");
 
                         FileUploadInProgress = true;
@@ -515,23 +511,23 @@
                         }
                         if (bytes != null)
                         {
-                            await _notificationService.SendConfirmationMailtoSE(userDetails.Email, ReservoirRegName);
+                            await _notificationService.SendConfirmationMailtoSE(userDetails.Email, CurrentReportSubmissionDataState.ReportSubmissionData.ReservoirRegName);
                             if (selectedFile.Size < uploadFileData.NotifyServiceFileAttachmentLimit)
                             {
-                                await _notificationService.SendConfirmationMailtoRST(RSTEmailAddress, ReservoirRegName, bytes, userDetails.cFirstName + " " + userDetails.cLastName, UndertakerName);
-                                if (YesNoValue == "Yes")
+                                await _notificationService.SendConfirmationMailtoRST(RSTEmailAddress, CurrentReportSubmissionDataState.ReportSubmissionData.ReservoirRegName, bytes, userDetails.cFirstName + " " + userDetails.cLastName, CurrentReportSubmissionDataState.ReportSubmissionData.UndertakerName);
+                                if (CurrentReportSubmissionDataState.ReportSubmissionData.YesNoValue == "Yes")
                                 {
-                                    await _notificationService.SendConfirmationMailWithAttachment(bytes, UndertakerEmail, ReservoirRegName);
+                                    await _notificationService.SendConfirmationMailWithAttachment(bytes, CurrentReportSubmissionDataState.ReportSubmissionData.UndertakerEmail, CurrentReportSubmissionDataState.ReportSubmissionData.ReservoirRegName);
                                 }
                             }
                             else
                             {
                                 var internalEmail = _config["InternalEmailAddress"];
-                                await _notificationService.SendInternalMail(internalEmail, ReservoirRegName, UndertakerEmail, YesNoValue);
+                                await _notificationService.SendInternalMail(internalEmail, CurrentReportSubmissionDataState.ReportSubmissionData.ReservoirRegName, CurrentReportSubmissionDataState.ReportSubmissionData.UndertakerEmail, CurrentReportSubmissionDataState.ReportSubmissionData.YesNoValue);
                             }
                             //Store the uploaded document information
                             documentDTO.SubmissionId = updatedStatus.Id;
-                            await reservoirService.InsertDocumentRelatedTable(Int32.Parse(ReservoirId), updatedStatus.Id, docID);
+                            await reservoirService.InsertDocumentRelatedTable(Int32.Parse(CurrentReportSubmissionDataState.ReportSubmissionData.ReservoirId), updatedStatus.Id, docID);
                             Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Information("File upload succeeded.");
                             goToNextPage();
                         }
@@ -619,13 +615,13 @@
     private void goback()
     {
         bool forceLoad = false;
-        string pagelink = $"/send-your-statement/{ReservoirId}/{ReservoirRegName}/{UndertakerName}/{UndertakerEmail}/{SubmissionReference}";
+        string pagelink = $"/send-your-statement";
         NavigationManager.NavigateTo(pagelink, forceLoad);
     }
     private void goToNextPage()
     {
         bool forceLoad = false;
-        string pagelink = $"/upload-confirmation/{ReservoirId}/{ReservoirRegName}/{UndertakerName}/{UndertakerEmail}/{SubmissionReference}/{YesNoValue}";
+        string pagelink = $"/upload-confirmation";
         NavigationManager.NavigateTo(pagelink, forceLoad);
     }
 
