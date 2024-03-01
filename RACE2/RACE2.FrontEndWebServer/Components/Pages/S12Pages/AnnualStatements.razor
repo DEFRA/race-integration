@@ -1,5 +1,5 @@
 @page "/annual-statements"
-@* @inherits Fluxor.Blazor.Web.Components.FluxorComponent *@
+@implements IDisposable
 @using Microsoft.AspNetCore.Authorization
 @using RACE2.FrontEndWebServer.Components
 @using RACE2.Dto;
@@ -18,9 +18,7 @@
 @using System.Runtime.CompilerServices;
 @using System.Security.Claims;
 @using System.Text;
-@using Fluxor
-@using RACE2.FrontEndWebServer.FluxorImplementation.Stores
-@using RACE2.FrontEndWebServer.FluxorImplementation.Actions
+@using RACE2.FrontEndWebServer.StateManagement
 @inject IConfiguration _config
 @inject IBlobStorageService blobStorageService
 @inject IOpenXMLUtilitiesService openXMLUtilitiesService
@@ -28,8 +26,7 @@
 @inject IReservoirService reservoirService
 @inject IJSRuntime jsRuntime
 @inject NavigationManager NavigationManager
-@inject IState<ReportSubmissionDataState> State
-@inject IDispatcher Dispatcher
+@inject ReportSubmissionDataStateContainer ReportSubmissionDataStateContainer
 
 @attribute [Authorize]
 
@@ -210,6 +207,7 @@
     {
         try
         {
+            ReportSubmissionDataStateContainer.OnChange += StateHasChanged;
             var authState = await AuthenticationStateTask;
             UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
             userDetails = await userService.GetUserByEmailID(UserName);
@@ -511,9 +509,7 @@
             SubmissionReference = Item.SubmissionReference,
             YesNoValue = ""
         };
-        var actionReportSubmissionData = new ReportSubmissionDataAction(reportSubmissionDataDto);
-        Dispatcher.Dispatch(actionReportSubmissionData);
-
+        ReportSubmissionDataStateContainer.Property = reportSubmissionDataDto;
         bool forceLoad = false;
         string pagelink = $"/send-your-statement";
         NavigationManager.NavigateTo(pagelink, forceLoad);
@@ -594,5 +590,9 @@
             //Toggle this boolean
             IsSortedAscending = !IsSortedAscending;
         }
+    }
+    public void Dispose()
+    {
+        ReportSubmissionDataStateContainer.OnChange -= StateHasChanged;
     }
 }

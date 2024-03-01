@@ -1,5 +1,5 @@
 ﻿@page "/upload-your-template"
-@* @inherits Fluxor.Blazor.Web.Components.FluxorComponent *@
+@implements IDisposable
 @using Microsoft.AspNetCore.Authorization;
 @using Microsoft.AspNetCore.Components
 @using Microsoft.AspNetCore.Components.Authorization
@@ -10,9 +10,7 @@
 @using RACE2.Dto
 @using RACE2.Services
 @using RACE2.Notification
-@using Fluxor
-@using RACE2.FrontEndWebServer.FluxorImplementation.Stores
-@using RACE2.FrontEndWebServer.FluxorImplementation.Actions
+@using RACE2.FrontEndWebServer.StateManagement
 @inject NavigationManager NavigationManager
 @inject IBlobStorageService blobStorageService
 @inject IUserService userService
@@ -20,8 +18,7 @@
 @inject IConfiguration _config
 @inject IReservoirService reservoirService
 @inject INotification _notificationService
-@inject IState<ReportSubmissionDataState> State
-@inject IDispatcher Dispatcher
+@inject ReportSubmissionDataStateContainer ReportSubmissionDataStateContainer
 
 @attribute [Authorize]
 
@@ -375,14 +372,13 @@
     private List<FileUploadViewModel> fileUploadViewModels = new();
     DocumentDTO documentDTO = new DocumentDTO();
 
-    public ReportSubmissionDataState CurrentReportSubmissionDataState => State.Value;
-
     public Dictionary<string, string> ValidationErrors = new Dictionary<string, string>();
 
     [CascadingParameter]
     public Task<AuthenticationState> AuthenticationStateTask { get; set; }
     protected async override Task OnInitializedAsync()
     {
+        ReportSubmissionDataStateContainer.OnChange += StateHasChanged;
         AuthenticationState authState = await AuthenticationStateTask; // AuthenticationStateProvider.GetAuthenticationStateAsync();
         UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
         userDetails = await userService.GetUserByEmailID(UserName);
@@ -463,13 +459,13 @@
                     var containerNameToUplodTo = _config["UnscannedContainer"];//"unscannedcontent";
                                                                                //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + "."+ extn;
                                                                                //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + SubmissionReference + "." + fileExtn;
-                    var trustedFileNameForFileStorage = CurrentReportSubmissionDataState.ReportSubmissionData.SubmissionReference + "_" + DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + DateTime.Now.Hour + DateTime.Now.Minute + DateTime.Now.Second + "." + fileExtn;
+                    var trustedFileNameForFileStorage = ReportSubmissionDataStateContainer.Property.SubmissionReference + "_" + DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + DateTime.Now.Hour + DateTime.Now.Minute + DateTime.Now.Second + "." + fileExtn;
                     //Store the uploaded document information
                     documentDTO.FileName = selectedFile.Name.Split('.')[0];
                     documentDTO.FileType = fileExtn;
                     documentDTO.DateSent = DateTime.Now;
                     documentDTO.FileLocation = selectedFile.Name;
-                    documentDTO.ReservoirId = Int32.Parse(CurrentReportSubmissionDataState.ReportSubmissionData.ReservoirId);
+                    documentDTO.ReservoirId = Int32.Parse(ReportSubmissionDataStateContainer.Property.ReservoirId);
                     documentDTO.SuppliedViaService = 1;
                     documentDTO.BlobStorageFileName = trustedFileNameForFileStorage;
                     documentDTO.DocumentType = "S12";
@@ -487,7 +483,7 @@
                             };
 
                         fileUploadViewModels.Add(fileUploadViewModel);
-                        SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(Int32.Parse(CurrentReportSubmissionDataState.ReportSubmissionData.ReservoirId), userDetails.Id, "Sent");
+                        SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(Int32.Parse(ReportSubmissionDataStateContainer.Property.ReservoirId), userDetails.Id, "Sent");
                         //_fileNameResult=await jsRuntime.InvokeAsync<string>("getFileName");
 
                         FileUploadInProgress = true;
@@ -512,23 +508,23 @@
                         }
                         if (bytes != null)
                         {
-                            await _notificationService.SendConfirmationMailtoSE(userDetails.Email, CurrentReportSubmissionDataState.ReportSubmissionData.ReservoirRegName);
+                            await _notificationService.SendConfirmationMailtoSE(userDetails.Email, ReportSubmissionDataStateContainer.Property.ReservoirRegName);
                             if (selectedFile.Size < uploadFileData.NotifyServiceFileAttachmentLimit)
                             {
-                                await _notificationService.SendConfirmationMailtoRST(RSTEmailAddress, CurrentReportSubmissionDataState.ReportSubmissionData.ReservoirRegName, bytes, userDetails.cFirstName + " " + userDetails.cLastName, CurrentReportSubmissionDataState.ReportSubmissionData.UndertakerName);
-                                if (CurrentReportSubmissionDataState.ReportSubmissionData.YesNoValue == "Yes")
+                                await _notificationService.SendConfirmationMailtoRST(RSTEmailAddress, ReportSubmissionDataStateContainer.Property.ReservoirRegName, bytes, userDetails.cFirstName + " " + userDetails.cLastName, ReportSubmissionDataStateContainer.Property.UndertakerName);
+                                if (ReportSubmissionDataStateContainer.Property.YesNoValue == "Yes")
                                 {
-                                    await _notificationService.SendConfirmationMailWithAttachment(bytes, CurrentReportSubmissionDataState.ReportSubmissionData.UndertakerEmail, CurrentReportSubmissionDataState.ReportSubmissionData.ReservoirRegName);
+                                    await _notificationService.SendConfirmationMailWithAttachment(bytes, ReportSubmissionDataStateContainer.Property.UndertakerEmail, ReportSubmissionDataStateContainer.Property.ReservoirRegName);
                                 }
                             }
                             else
                             {
                                 var internalEmail = _config["InternalEmailAddress"];
-                                await _notificationService.SendInternalMail(internalEmail, CurrentReportSubmissionDataState.ReportSubmissionData.ReservoirRegName, CurrentReportSubmissionDataState.ReportSubmissionData.UndertakerEmail, CurrentReportSubmissionDataState.ReportSubmissionData.YesNoValue);
+                                await _notificationService.SendInternalMail(internalEmail, ReportSubmissionDataStateContainer.Property.ReservoirRegName, ReportSubmissionDataStateContainer.Property.UndertakerEmail,ReportSubmissionDataStateContainer.Property.YesNoValue);
                             }
                             //Store the uploaded document information
                             documentDTO.SubmissionId = updatedStatus.Id;
-                            await reservoirService.InsertDocumentRelatedTable(Int32.Parse(CurrentReportSubmissionDataState.ReportSubmissionData.ReservoirId), updatedStatus.Id, docID);
+                            await reservoirService.InsertDocumentRelatedTable(Int32.Parse(ReportSubmissionDataStateContainer.Property.ReservoirId), updatedStatus.Id, docID);
                             Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Information("File upload succeeded.");
                             goToNextPage();
                         }
@@ -617,7 +613,6 @@
     {
         bool forceLoad = true;
         string pagelink = "/send-your-statement";
-        //string pagelink = "/annual-statements";
         NavigationManager.NavigateTo(pagelink, forceLoad);
     }
     private void goToNextPage()
@@ -671,6 +666,10 @@
     private void FileVirusScanFailed()
     {
         ValidationErrors.Add("FileVirusScanFailed", "FileVirusScanFailed");
+    }
+    public void Dispose()
+    {
+        ReportSubmissionDataStateContainer.OnChange -= StateHasChanged;
     }
     public class UploadFileData
     {

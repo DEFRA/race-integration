@@ -1,14 +1,11 @@
 ﻿@page "/send-your-statement"
-@inherits Fluxor.Blazor.Web.Components.FluxorComponent
-@using Fluxor
-@using RACE2.FrontEndWebServer.FluxorImplementation.Stores
+@implements IDisposable
 @using Microsoft.AspNetCore.Authorization
 @using RACE2.FrontEndWebServer.Components
 @using RACE2.Dto
-@using RACE2.FrontEndWebServer.FluxorImplementation.Actions
+@using RACE2.FrontEndWebServer.StateManagement
 @inject NavigationManager NavigationManager
-@inject IState<ReportSubmissionDataState> ReportSubmissionDataState
-@inject IDispatcher Dispatcher
+@inject ReportSubmissionDataStateContainer ReportSubmissionDataStateContainer
 
 @attribute [Authorize]
 
@@ -54,7 +51,7 @@
                                 </dt>
                                 <dd class="govuk-summary-list__value govuk-!-padding-left-9" for="reservoir-named-undertaker"
                                     id="reservoir-named-undertaker" name="reservoir-named-undertaker">
-                                    @ReportSubmissionDataState.Value.ReportSubmissionData.ReservoirRegName
+                                    @ReportSubmissionDataStateContainer.Property.ReservoirRegName
                                 </dd>
                             </div>
                             <div class="govuk-summary-list__row">
@@ -63,7 +60,7 @@
                                 </dt>
                                 <dd class="govuk-summary-list__value govuk-!-padding-left-9" for="reservoir-named-undertaker"
                                     id="reservoir-named-undertaker" name="reservoir-named-undertaker">
-                                    @ReportSubmissionDataState.Value.ReportSubmissionData.UndertakerName
+                                    @ReportSubmissionDataStateContainer.Property.UndertakerName
                                 </dd>
                             </div>
                             <div class="govuk-summary-list__row">
@@ -72,7 +69,7 @@
                                 </dt>
                                 <dd class="govuk-summary-list__value govuk-!-padding-left-9" for="reservoir-named-undertaker"
                                     id="reservoir-named-undertaker" name="reservoir-named-undertaker">
-                                    @ReportSubmissionDataState.Value.ReportSubmissionData.UndertakerEmail
+                                    @ReportSubmissionDataStateContainer.Property.UndertakerEmail
                                 </dd>
                             </div>
 
@@ -150,7 +147,7 @@
                                 </dt>
                                 <dd class="govuk-summary-list__value govuk-!-padding-left-9" for="reservoir-named-undertaker"
                                     id="reservoir-named-undertaker" name="reservoir-named-undertaker">
-                                    @ReportSubmissionDataState.Value.ReportSubmissionData.ReservoirRegName
+                                    @ReportSubmissionDataStateContainer.Property.ReservoirRegName
                                 </dd>
                             </div>
                             <div class="govuk-summary-list__row">
@@ -159,7 +156,7 @@
                                 </dt>
                                 <dd class="govuk-summary-list__value govuk-!-padding-left-9" for="reservoir-named-undertaker"
                                     id="reservoir-named-undertaker" name="reservoir-named-undertaker">
-                                    @ReportSubmissionDataState.Value.ReportSubmissionData.UndertakerName
+                                    @ReportSubmissionDataStateContainer.Property.UndertakerName
                                 </dd>
                             </div>
                             <div class="govuk-summary-list__row">
@@ -168,7 +165,7 @@
                                 </dt>
                                 <dd class="govuk-summary-list__value govuk-!-padding-left-9" for="reservoir-named-undertaker"
                                     id="reservoir-named-undertaker" name="reservoir-named-undertaker">
-                                    @ReportSubmissionDataState.Value.ReportSubmissionData.UndertakerEmail
+                                    @ReportSubmissionDataStateContainer.Property.UndertakerEmail
                                 </dd>
                             </div>
                         </dl>
@@ -215,23 +212,13 @@
 <Footer />
 
 @code {
-    public ReportSubmissionDataState CurrentReportSubmissionDataState => ReportSubmissionDataState.Value;
-    public ReportSubmissionDataDto reportSubmissionDataDto { get; set; } = new ReportSubmissionDataDto();
-
     [CascadingParameter]
     public Task<AuthenticationState> AuthenticationStateTask { get; set; }
 
     protected async override Task OnInitializedAsync()
     {
+        ReportSubmissionDataStateContainer.OnChange += StateHasChanged;
         AuthenticationState authState = await AuthenticationStateTask;// AuthenticationStateProvider.GetAuthenticationStateAsync();
-        if (CurrentReportSubmissionDataState.ReportSubmissionData != null)
-        {
-            reportSubmissionDataDto.ReservoirId = CurrentReportSubmissionDataState.ReportSubmissionData.ReservoirId;
-            reportSubmissionDataDto.ReservoirRegName = CurrentReportSubmissionDataState.ReportSubmissionData.ReservoirRegName;
-            reportSubmissionDataDto.UndertakerName = CurrentReportSubmissionDataState.ReportSubmissionData.UndertakerName;
-            reportSubmissionDataDto.UndertakerEmail = CurrentReportSubmissionDataState.ReportSubmissionData.UndertakerEmail;
-            reportSubmissionDataDto.SubmissionReference = CurrentReportSubmissionDataState.ReportSubmissionData.SubmissionReference;
-        }
         await base.OnInitializedAsync();
     }
     private YesNoClass _yesno = new YesNoClass();
@@ -247,9 +234,9 @@
         else
         {
             YesNoError = false;
-            reportSubmissionDataDto.YesNoValue = _yesno.YesNoOptions.ToString(); 
-            var actionReportSubmissionData = new ReportSubmissionDataAction(reportSubmissionDataDto);
-            Dispatcher.Dispatch(actionReportSubmissionData);
+            var savedReportSubmissionData = ReportSubmissionDataStateContainer.Property;
+            savedReportSubmissionData.YesNoValue = _yesno.YesNoOptions.ToString();
+            ReportSubmissionDataStateContainer.Property = savedReportSubmissionData;
             bool forceLoad = false;
             NavigationManager.NavigateTo("/upload-your-template", forceLoad);
         }
@@ -272,6 +259,12 @@
         string pagelink = "/annual-statements";
         NavigationManager.NavigateTo(pagelink, forceLoad);
     }
+
+    public void Dispose()
+    {
+        ReportSubmissionDataStateContainer.OnChange -= StateHasChanged;
+    }
+
     public class YesNoClass
     {
         public enum YesNoEnum { Yes = 1, No = 2 };

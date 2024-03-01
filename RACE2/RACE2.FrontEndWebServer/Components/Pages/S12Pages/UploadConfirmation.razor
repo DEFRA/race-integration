@@ -1,13 +1,11 @@
 ﻿@page "/upload-confirmation"
-@* @inherits Fluxor.Blazor.Web.Components.FluxorComponent *@
+@implements IDisposable
 @using Microsoft.AspNetCore.Authorization
 @using RACE2.FrontEndWebServer.Components
-@using Fluxor
-@using RACE2.FrontEndWebServer.FluxorImplementation.Stores
+@using RACE2.FrontEndWebServer.StateManagement
 @inject IConfiguration _config
 @inject NavigationManager NavigationManager
-@inject IState<ReportSubmissionDataState> State
-@inject IDispatcher Dispatcher
+@inject ReportSubmissionDataStateContainer ReportSubmissionDataStateContainer
 
 @attribute [Authorize]
 
@@ -27,7 +25,7 @@
 
                 <div class="govuk-panel govuk-panel--confirmation">
                     <div class="govuk-panel__title">
-                        Statement for @CurrentReportSubmissionDataState.ReportSubmissionData.ReservoirRegName sent
+                        Statement for @ReportSubmissionDataStateContainer.Property.ReservoirRegName sent
                     </div>
                 </div>
                 <br>
@@ -40,7 +38,7 @@
                 </p>
 
                 <p class="govuk-body">
-                    You can go back to <a class="govuk-link govuk-link--no-visited-state" @onclick="GoToAnnualStatementsPage">your annual statements</a> or go to your <a class="govuk-link govuk-link--no-visited-state" @onclick="GoToMyAccountPage">account</a> to manage your information.
+                    You can go back to <a class="govuk-link govuk-link--no-visited-state" style="cursor:pointer" @onclick="GoToAnnualStatementsPage">your annual statements</a> or go to your <a class="govuk-link govuk-link--no-visited-state" style="cursor:pointer" @onclick="GoToMyAccountPage">account</a> to manage your information.
                 </p>
 
                 <p class="govuk-!-margin-top-8">
@@ -58,12 +56,11 @@
 <Footer />
 
 @code {
-    public ReportSubmissionDataState CurrentReportSubmissionDataState => State.Value;
-
     [CascadingParameter]
     public Task<AuthenticationState> AuthenticationStateTask { get; set; }
     protected async override Task OnInitializedAsync()
     {
+        ReportSubmissionDataStateContainer.OnChange += StateHasChanged;
         AuthenticationState authState = await AuthenticationStateTask;// AuthenticationStateProvider.GetAuthenticationStateAsync();
         await base.OnInitializedAsync();
     }
@@ -91,4 +88,9 @@
         string pagelink = "/annual-statements";
         NavigationManager.NavigateTo(pagelink, forceLoad);
     }
+    public void Dispose()
+    {
+        ReportSubmissionDataStateContainer.OnChange -= StateHasChanged;
+    }
+
 }

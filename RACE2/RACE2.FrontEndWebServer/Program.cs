@@ -1,4 +1,3 @@
-using Fluxor;
 using Azure.Identity;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -24,6 +23,7 @@ using Serilog.Sinks.MSSqlServer;
 using RACE2.Notification;
 using RACE2.FrontEndWebServer.ExceptionGlobalErrorHandling;
 using RACE2.FrontEndWebServer.Components;
+using RACE2.FrontEndWebServer.StateManagement;
 
 Serilog.Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Information()
@@ -174,11 +174,7 @@ try
             ValidationAlgorithm = ValidationAlgorithm.HMACSHA256
         });
     builder.Services.AddSingleton<INotification, RaceNotification>();
-    builder.Services.AddFluxor(o =>
-    {
-        o.ScanAssemblies(typeof(Program).Assembly);
-        o.UseReduxDevTools(rdt => { rdt.Name = "RACE2 application"; });
-    });
+    builder.Services.AddSingleton<ReportSubmissionDataStateContainer>();
 
     var app = builder.Build();
     app.UseForwardedHeaders();
