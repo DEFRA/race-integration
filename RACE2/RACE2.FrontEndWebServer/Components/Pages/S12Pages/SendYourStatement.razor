@@ -7,7 +7,7 @@
 @using RACE2.Dto
 @using RACE2.FrontEndWebServer.FluxorImplementation.Actions
 @inject NavigationManager NavigationManager
-@inject IState<ReportSubmissionDataState> State
+@inject IState<ReportSubmissionDataState> ReportSubmissionDataState
 @inject IDispatcher Dispatcher
 
 @attribute [Authorize]
@@ -54,7 +54,7 @@
                                 </dt>
                                 <dd class="govuk-summary-list__value govuk-!-padding-left-9" for="reservoir-named-undertaker"
                                     id="reservoir-named-undertaker" name="reservoir-named-undertaker">
-                                    @reportSubmissionDataDto.ReservoirRegName
+                                    @ReportSubmissionDataState.Value.ReportSubmissionData.ReservoirRegName
                                 </dd>
                             </div>
                             <div class="govuk-summary-list__row">
@@ -63,7 +63,7 @@
                                 </dt>
                                 <dd class="govuk-summary-list__value govuk-!-padding-left-9" for="reservoir-named-undertaker"
                                     id="reservoir-named-undertaker" name="reservoir-named-undertaker">
-                                    @reportSubmissionDataDto.UndertakerName
+                                    @ReportSubmissionDataState.Value.ReportSubmissionData.UndertakerName
                                 </dd>
                             </div>
                             <div class="govuk-summary-list__row">
@@ -72,7 +72,7 @@
                                 </dt>
                                 <dd class="govuk-summary-list__value govuk-!-padding-left-9" for="reservoir-named-undertaker"
                                     id="reservoir-named-undertaker" name="reservoir-named-undertaker">
-                                    @reportSubmissionDataDto.UndertakerEmail
+                                    @ReportSubmissionDataState.Value.ReportSubmissionData.UndertakerEmail
                                 </dd>
                             </div>
 
@@ -150,7 +150,7 @@
                                 </dt>
                                 <dd class="govuk-summary-list__value govuk-!-padding-left-9" for="reservoir-named-undertaker"
                                     id="reservoir-named-undertaker" name="reservoir-named-undertaker">
-                                    @reportSubmissionDataDto.ReservoirRegName
+                                    @ReportSubmissionDataState.Value.ReportSubmissionData.ReservoirRegName
                                 </dd>
                             </div>
                             <div class="govuk-summary-list__row">
@@ -159,7 +159,7 @@
                                 </dt>
                                 <dd class="govuk-summary-list__value govuk-!-padding-left-9" for="reservoir-named-undertaker"
                                     id="reservoir-named-undertaker" name="reservoir-named-undertaker">
-                                    @reportSubmissionDataDto.UndertakerName
+                                    @ReportSubmissionDataState.Value.ReportSubmissionData.UndertakerName
                                 </dd>
                             </div>
                             <div class="govuk-summary-list__row">
@@ -168,7 +168,7 @@
                                 </dt>
                                 <dd class="govuk-summary-list__value govuk-!-padding-left-9" for="reservoir-named-undertaker"
                                     id="reservoir-named-undertaker" name="reservoir-named-undertaker">
-                                    @reportSubmissionDataDto.UndertakerEmail
+                                    @ReportSubmissionDataState.Value.ReportSubmissionData.UndertakerEmail
                                 </dd>
                             </div>
                         </dl>
@@ -215,21 +215,23 @@
 <Footer />
 
 @code {
+    public ReportSubmissionDataState CurrentReportSubmissionDataState => ReportSubmissionDataState.Value;
     public ReportSubmissionDataDto reportSubmissionDataDto { get; set; } = new ReportSubmissionDataDto();
 
     [CascadingParameter]
     public Task<AuthenticationState> AuthenticationStateTask { get; set; }
 
-    public ReportSubmissionDataState CurrentReportSubmissionDataState => State.Value;
-
     protected async override Task OnInitializedAsync()
     {
         AuthenticationState authState = await AuthenticationStateTask;// AuthenticationStateProvider.GetAuthenticationStateAsync();
-        reportSubmissionDataDto.ReservoirId = CurrentReportSubmissionDataState.ReportSubmissionData.ReservoirId;
-        reportSubmissionDataDto.ReservoirRegName = CurrentReportSubmissionDataState.ReportSubmissionData.ReservoirRegName;
-        reportSubmissionDataDto.UndertakerName = CurrentReportSubmissionDataState.ReportSubmissionData.UndertakerName;
-        reportSubmissionDataDto.UndertakerEmail = CurrentReportSubmissionDataState.ReportSubmissionData.UndertakerEmail;
-        reportSubmissionDataDto.SubmissionReference = CurrentReportSubmissionDataState.ReportSubmissionData.SubmissionReference;
+        if (CurrentReportSubmissionDataState.ReportSubmissionData != null)
+        {
+            reportSubmissionDataDto.ReservoirId = CurrentReportSubmissionDataState.ReportSubmissionData.ReservoirId;
+            reportSubmissionDataDto.ReservoirRegName = CurrentReportSubmissionDataState.ReportSubmissionData.ReservoirRegName;
+            reportSubmissionDataDto.UndertakerName = CurrentReportSubmissionDataState.ReportSubmissionData.UndertakerName;
+            reportSubmissionDataDto.UndertakerEmail = CurrentReportSubmissionDataState.ReportSubmissionData.UndertakerEmail;
+            reportSubmissionDataDto.SubmissionReference = CurrentReportSubmissionDataState.ReportSubmissionData.SubmissionReference;
+        }
         await base.OnInitializedAsync();
     }
     private YesNoClass _yesno = new YesNoClass();
