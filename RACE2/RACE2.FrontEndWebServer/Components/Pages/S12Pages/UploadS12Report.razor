@@ -1,5 +1,5 @@
 ﻿@page "/upload-your-template"
-@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+@* @inherits Fluxor.Blazor.Web.Components.FluxorComponent *@
 @using Microsoft.AspNetCore.Authorization;
 @using Microsoft.AspNetCore.Components
 @using Microsoft.AspNetCore.Components.Authorization
@@ -12,6 +12,7 @@
 @using RACE2.Notification
 @using Fluxor
 @using RACE2.FrontEndWebServer.FluxorImplementation.Stores
+@using RACE2.FrontEndWebServer.FluxorImplementation.Actions
 @inject NavigationManager NavigationManager
 @inject IBlobStorageService blobStorageService
 @inject IUserService userService
@@ -460,8 +461,8 @@
                     //    containerName = containerName.Split('.')[0];
                     //}
                     var containerNameToUplodTo = _config["UnscannedContainer"];//"unscannedcontent";
-                    //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + "."+ extn;
-                    //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + SubmissionReference + "." + fileExtn;
+                                                                               //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + "."+ extn;
+                                                                               //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + SubmissionReference + "." + fileExtn;
                     var trustedFileNameForFileStorage = CurrentReportSubmissionDataState.ReportSubmissionData.SubmissionReference + "_" + DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + DateTime.Now.Hour + DateTime.Now.Minute + DateTime.Now.Second + "." + fileExtn;
                     //Store the uploaded document information
                     documentDTO.FileName = selectedFile.Name.Split('.')[0];
@@ -500,7 +501,7 @@
 
                         //For testing without virus scan, comment the next line and uncomment the next to next line
                         var containerNameToDownloadFrom = _config["CleanContainer"]; //"cleanfiles";
-                        //var containerNameToDownloadFrom = _config["UnscannedContainer"];
+                                                                                     //var containerNameToDownloadFrom = _config["UnscannedContainer"];
 
                         var RSTEmailAddress = String.IsNullOrEmpty(_config["RSTEmailAddress"]) ? userDetails.Email : _config["RSTEmailAddress"];
                         var bytes = await blobStorageService.GetBlobAsByteArray(containerNameToDownloadFrom, trustedFileNameForFileStorage);
@@ -614,14 +615,15 @@
 
     private void goback()
     {
-        bool forceLoad = false;
-        string pagelink = $"/send-your-statement";
+        bool forceLoad = true;
+        string pagelink = "/send-your-statement";
+        //string pagelink = "/annual-statements";
         NavigationManager.NavigateTo(pagelink, forceLoad);
     }
     private void goToNextPage()
     {
-        bool forceLoad = false;
-        string pagelink = $"/upload-confirmation";
+        bool forceLoad = true;
+        string pagelink = "/upload-confirmation";
         NavigationManager.NavigateTo(pagelink, forceLoad);
     }
 

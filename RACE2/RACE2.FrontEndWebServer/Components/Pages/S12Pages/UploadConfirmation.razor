@@ -1,5 +1,5 @@
 ﻿@page "/upload-confirmation"
-@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+@* @inherits Fluxor.Blazor.Web.Components.FluxorComponent *@
 @using Microsoft.AspNetCore.Authorization
 @using RACE2.FrontEndWebServer.Components
 @using Fluxor
@@ -82,7 +82,7 @@
     public void GoToPrevPage()
     {
         bool forceLoad = true;
-        string pagelink = $"/upload-your-template";
+        string pagelink = "/upload-your-template";
         NavigationManager.NavigateTo(pagelink, forceLoad);
     }
     public void GoToAnnualStatementsPage()
