@@ -500,16 +500,16 @@
 
     private void gotoSubmissionPage(ReservoirsLinkedToUserForDisplay Item)
     {
-        ReportSubmissionDataDto reportSubmissionDataDto = new ReportSubmissionDataDto
+        ReportSubmissionDataDto reportSubmissionData = new ReportSubmissionDataDto
         {
             ReservoirId = Item.ReservoirID.ToString(),
             ReservoirRegName = Item.ReservoirName,
             UndertakerName = Item.UndertakerName,
-            UndertakerEmail = Item.UndertakerEmail,
+            UndertakerEmail = String.IsNullOrEmpty(Item.UndertakerEmail) ? " " : Item.UndertakerEmail,
             SubmissionReference = Item.SubmissionReference,
             YesNoValue = ""
         };
-        ReportSubmissionDataStateContainer.Property = reportSubmissionDataDto;
+        ReportSubmissionDataStateContainer.Property = reportSubmissionData;
         bool forceLoad = false;
         string pagelink = $"/send-your-statement";
         NavigationManager.NavigateTo(pagelink, forceLoad);
