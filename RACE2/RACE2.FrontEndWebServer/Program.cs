@@ -173,8 +173,8 @@ try
             EncryptionAlgorithm = EncryptionAlgorithm.AES_256_CBC,
             ValidationAlgorithm = ValidationAlgorithm.HMACSHA256
         });
-    builder.Services.AddSingleton<INotification, RaceNotification>();
-    builder.Services.AddSingleton<ReportSubmissionDataStateContainer>();
+    builder.Services.AddScoped<INotification, RaceNotification>();
+    builder.Services.AddScoped<ReportSubmissionDataStateContainer>();
 
     var app = builder.Build();
     app.UseForwardedHeaders();
