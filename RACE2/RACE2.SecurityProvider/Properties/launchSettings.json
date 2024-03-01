@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "RACE2.FrontEndWebServer": {
+    "RACE2.SecurityProvider": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
