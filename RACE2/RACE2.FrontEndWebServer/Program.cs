@@ -174,7 +174,7 @@ try
             ValidationAlgorithm = ValidationAlgorithm.HMACSHA256
         });
     builder.Services.AddScoped<INotification, RaceNotification>();
-    builder.Services.AddScoped<ReportSubmissionDataStateContainer>();
+    builder.Services.AddSingleton<ReportSubmissionDataStateContainer>();
 
     var app = builder.Build();
     app.UseForwardedHeaders();
