@@ -23,7 +23,6 @@ using Serilog.Sinks.MSSqlServer;
 using RACE2.Notification;
 using RACE2.FrontEndWebServer.ExceptionGlobalErrorHandling;
 using RACE2.FrontEndWebServer.Components;
-using RACE2.FrontEndWebServer.StateManagement;
 
 Serilog.Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Information()
@@ -174,7 +173,6 @@ try
             ValidationAlgorithm = ValidationAlgorithm.HMACSHA256
         });
     builder.Services.AddScoped<INotification, RaceNotification>();
-    builder.Services.AddSingleton<ReportSubmissionDataStateContainer>();
 
     var app = builder.Build();
     app.UseForwardedHeaders();

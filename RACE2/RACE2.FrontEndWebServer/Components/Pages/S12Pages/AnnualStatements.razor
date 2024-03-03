@@ -1,5 +1,4 @@
 @page "/annual-statements"
-@implements IDisposable
 @using Microsoft.AspNetCore.Authorization
 @using RACE2.FrontEndWebServer.Components
 @using RACE2.Dto;
@@ -18,7 +17,6 @@
 @using System.Runtime.CompilerServices;
 @using System.Security.Claims;
 @using System.Text;
-@using RACE2.FrontEndWebServer.StateManagement
 @inject IConfiguration _config
 @inject IBlobStorageService blobStorageService
 @inject IOpenXMLUtilitiesService openXMLUtilitiesService
@@ -26,7 +24,6 @@
 @inject IReservoirService reservoirService
 @inject IJSRuntime jsRuntime
 @inject NavigationManager NavigationManager
-@inject ReportSubmissionDataStateContainer ReportSubmissionDataStateContainer
 
 @attribute [Authorize]
 
@@ -203,11 +200,13 @@
     [CascadingParameter]
     public Task<AuthenticationState> AuthenticationStateTask { get; set; }
 
+    [CascadingParameter]
+    private ReportSubmissionDataStateProvider? ReportSubmissionDataStateProvider { get; set; }
+
     protected async override Task OnInitializedAsync()
     {
         try
         {
-            ReportSubmissionDataStateContainer.OnChange += StateHasChanged;
             var authState = await AuthenticationStateTask;
             UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
             userDetails = await userService.GetUserByEmailID(UserName);
@@ -498,7 +497,7 @@
         NavigationManager.NavigateTo(pagelink, forceLoad);
     }
 
-    private void gotoSubmissionPage(ReservoirsLinkedToUserForDisplay Item)
+    private async Task gotoSubmissionPage(ReservoirsLinkedToUserForDisplay Item)
     {
         ReportSubmissionDataDto reportSubmissionData = new ReportSubmissionDataDto
         {
@@ -509,12 +508,12 @@
             SubmissionReference = Item.SubmissionReference,
             YesNoValue = ""
         };
-        ReportSubmissionDataStateContainer.Property = reportSubmissionData;
+        ReportSubmissionDataStateProvider.CurrentReportSubmissionData = reportSubmissionData;
+        await ReportSubmissionDataStateProvider.SaveChangesAsync();
         bool forceLoad = false;
         string pagelink = $"/send-your-statement";
         NavigationManager.NavigateTo(pagelink, forceLoad);
     }
-
 
     private async void SearchOnEnter(KeyboardEventArgs e)
     {
@@ -590,9 +589,5 @@
             //Toggle this boolean
             IsSortedAscending = !IsSortedAscending;
         }
-    }
-    public void Dispose()
-    {
-        ReportSubmissionDataStateContainer.OnChange -= StateHasChanged;
     }
 }

@@ -1,11 +1,8 @@
 ﻿@page "/send-your-statement"
-@implements IDisposable
 @using Microsoft.AspNetCore.Authorization
 @using RACE2.FrontEndWebServer.Components
 @using RACE2.Dto
-@using RACE2.FrontEndWebServer.StateManagement
 @inject NavigationManager NavigationManager
-@inject ReportSubmissionDataStateContainer ReportSubmissionDataStateContainer
 
 @attribute [Authorize]
 
@@ -51,7 +48,7 @@
                                 </dt>
                                 <dd class="govuk-summary-list__value govuk-!-padding-left-9" for="reservoir-named-undertaker"
                                     id="reservoir-named-undertaker" name="reservoir-named-undertaker">
-                                    @ReportSubmissionDataStateContainer.Property.ReservoirRegName
+                                    @ReportSubmissionDataStateProvider?.CurrentReportSubmissionData.ReservoirRegName
                                 </dd>
                             </div>
                             <div class="govuk-summary-list__row">
@@ -60,7 +57,7 @@
                                 </dt>
                                 <dd class="govuk-summary-list__value govuk-!-padding-left-9" for="reservoir-named-undertaker"
                                     id="reservoir-named-undertaker" name="reservoir-named-undertaker">
-                                    @ReportSubmissionDataStateContainer.Property.UndertakerName
+                                    @ReportSubmissionDataStateProvider?.CurrentReportSubmissionData.UndertakerName
                                 </dd>
                             </div>
                             <div class="govuk-summary-list__row">
@@ -69,7 +66,7 @@
                                 </dt>
                                 <dd class="govuk-summary-list__value govuk-!-padding-left-9" for="reservoir-named-undertaker"
                                     id="reservoir-named-undertaker" name="reservoir-named-undertaker">
-                                    @ReportSubmissionDataStateContainer.Property.UndertakerEmail
+                                    @ReportSubmissionDataStateProvider?.CurrentReportSubmissionData.UndertakerEmail
                                 </dd>
                             </div>
 
@@ -147,7 +144,7 @@
                                 </dt>
                                 <dd class="govuk-summary-list__value govuk-!-padding-left-9" for="reservoir-named-undertaker"
                                     id="reservoir-named-undertaker" name="reservoir-named-undertaker">
-                                    @ReportSubmissionDataStateContainer.Property.ReservoirRegName
+                                    @ReportSubmissionDataStateProvider?.CurrentReportSubmissionData.ReservoirRegName
                                 </dd>
                             </div>
                             <div class="govuk-summary-list__row">
@@ -156,7 +153,7 @@
                                 </dt>
                                 <dd class="govuk-summary-list__value govuk-!-padding-left-9" for="reservoir-named-undertaker"
                                     id="reservoir-named-undertaker" name="reservoir-named-undertaker">
-                                    @ReportSubmissionDataStateContainer.Property.UndertakerName
+                                    @ReportSubmissionDataStateProvider?.CurrentReportSubmissionData.UndertakerName
                                 </dd>
                             </div>
                             <div class="govuk-summary-list__row">
@@ -165,7 +162,7 @@
                                 </dt>
                                 <dd class="govuk-summary-list__value govuk-!-padding-left-9" for="reservoir-named-undertaker"
                                     id="reservoir-named-undertaker" name="reservoir-named-undertaker">
-                                    @ReportSubmissionDataStateContainer.Property.UndertakerEmail
+                                    @ReportSubmissionDataStateProvider?.CurrentReportSubmissionData.UndertakerEmail
                                 </dd>
                             </div>
                         </dl>
@@ -215,16 +212,18 @@
     [CascadingParameter]
     public Task<AuthenticationState> AuthenticationStateTask { get; set; }
 
+    [CascadingParameter]
+    private ReportSubmissionDataStateProvider? ReportSubmissionDataStateProvider { get; set; }
+
     protected async override Task OnInitializedAsync()
     {
-        ReportSubmissionDataStateContainer.OnChange += StateHasChanged;
         AuthenticationState authState = await AuthenticationStateTask;// AuthenticationStateProvider.GetAuthenticationStateAsync();
         await base.OnInitializedAsync();
     }
     private YesNoClass _yesno = new YesNoClass();
     private bool YesNoError { get; set; } = false;
 
-    public void GoToNextPage()
+    public async Task GoToNextPage()
     {
         if (_yesno.YesNoOptions == 0)
         {
@@ -234,9 +233,9 @@
         else
         {
             YesNoError = false;
-            var savedReportSubmissionData = ReportSubmissionDataStateContainer.Property;
+            var savedReportSubmissionData = ReportSubmissionDataStateProvider?.CurrentReportSubmissionData;
             savedReportSubmissionData.YesNoValue = _yesno.YesNoOptions.ToString();
-            ReportSubmissionDataStateContainer.Property = savedReportSubmissionData;
+            await ReportSubmissionDataStateProvider.SaveChangesAsync();
             bool forceLoad = false;
             NavigationManager.NavigateTo("/upload-your-template", forceLoad);
         }
@@ -258,11 +257,6 @@
         bool forceLoad = true;
         string pagelink = "/annual-statements";
         NavigationManager.NavigateTo(pagelink, forceLoad);
-    }
-
-    public void Dispose()
-    {
-        ReportSubmissionDataStateContainer.OnChange -= StateHasChanged;
     }
 
     public class YesNoClass

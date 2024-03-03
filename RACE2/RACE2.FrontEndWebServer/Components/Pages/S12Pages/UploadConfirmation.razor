@@ -1,11 +1,8 @@
 ﻿@page "/upload-confirmation"
-@implements IDisposable
 @using Microsoft.AspNetCore.Authorization
 @using RACE2.FrontEndWebServer.Components
-@using RACE2.FrontEndWebServer.StateManagement
 @inject IConfiguration _config
 @inject NavigationManager NavigationManager
-@inject ReportSubmissionDataStateContainer ReportSubmissionDataStateContainer
 
 @attribute [Authorize]
 
@@ -25,7 +22,7 @@
 
                 <div class="govuk-panel govuk-panel--confirmation">
                     <div class="govuk-panel__title">
-                        Statement for @ReportSubmissionDataStateContainer.Property.ReservoirRegName sent
+                        Statement for @ReportSubmissionDataStateProvider?.CurrentReportSubmissionData.ReservoirRegName sent
                     </div>
                 </div>
                 <br>
@@ -58,9 +55,12 @@
 @code {
     [CascadingParameter]
     public Task<AuthenticationState> AuthenticationStateTask { get; set; }
+
+    [CascadingParameter]
+    private ReportSubmissionDataStateProvider? ReportSubmissionDataStateProvider { get; set; }
+
     protected async override Task OnInitializedAsync()
     {
-        ReportSubmissionDataStateContainer.OnChange += StateHasChanged;
         AuthenticationState authState = await AuthenticationStateTask;// AuthenticationStateProvider.GetAuthenticationStateAsync();
         await base.OnInitializedAsync();
     }
@@ -88,9 +88,4 @@
         string pagelink = "/annual-statements";
         NavigationManager.NavigateTo(pagelink, forceLoad);
     }
-    public void Dispose()
-    {
-        ReportSubmissionDataStateContainer.OnChange -= StateHasChanged;
-    }
-
 }
