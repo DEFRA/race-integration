@@ -15,9 +15,13 @@ var host = new HostBuilder()
         builder.AddAzureAppConfiguration(options =>
         {
             var azureAppConfigUrl = Environment.GetEnvironmentVariable("AzureAppConfigURL");
-            var credential = new DefaultAzureCredential();
+            var azureTenantId = Environment.GetEnvironmentVariable("AZURE_TENANT_ID");
+            var managedIdenityClientId = Environment.GetEnvironmentVariable("ManagedIdenityClientId");
+            var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions { TenantId = azureTenantId, ManagedIdentityClientId = managedIdenityClientId, VisualStudioTenantId = azureTenantId });
+
+            //options.Connect(connectionString)      
             options.Connect(new Uri(azureAppConfigUrl), credential)
-            .ConfigureKeyVault(kv =>
+                .ConfigureKeyVault(kv =>
             {
                 kv.SetCredential(credential);
             })

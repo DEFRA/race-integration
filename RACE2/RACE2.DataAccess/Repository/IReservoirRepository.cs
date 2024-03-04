@@ -13,8 +13,8 @@ namespace RACE2.DataAccess.Repository
         public Task<Reservoir> GetReservoirById(int id);
         public Task<Reservoir> UpdateReservoir(ReservoirUpdateDetailsDTO updatedReservoir);
         public Task<List<ReservoirDetailsDTO>> GetReservoirsByUserId(int id);
-        
-      
+
+
         public Task<Address> GetAddressByReservoirId(int reservoirid, string operatortype);
 
         public Task<List<OperatorDTO>> GetOperatorsforReservoir(int reservoirid, string operatortype);
@@ -48,7 +48,7 @@ namespace RACE2.DataAccess.Repository
         public Task<DataModel.Action> GetActionsListByReservoirIdAndCategory(int reservoirid, int category, string reference);
 
         public Task<int> InsertSafetyMeasureChangeHistory(List<SafetyMeasuresChangeHistory> changeHistory);
-        
+
         public Task<int> InsertActionChangeHistory(List<ActionsChangeHistory> changeHistory);
 
         public Task<int> UpdateReservoirDetailsFromExtract(Reservoir reservoir);

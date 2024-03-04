@@ -90,6 +90,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnGetAsync()
         {
+            ViewData["Title"] = "Change your password";
             WebAppUrl = _config["RACE2FrontEndURL"];
             var user = await _userManager.GetUserAsync(User);
             if (user == null)

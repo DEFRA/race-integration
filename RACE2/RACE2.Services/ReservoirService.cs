@@ -75,11 +75,11 @@ namespace RACE2.Services
 
         }
 
-        public async Task<DataModel.Action> GetActionsListByReservoirIdAndCategory(int reservoirid, int category,string reference)
+        public async Task<DataModel.Action> GetActionsListByReservoirIdAndCategory(int reservoirid, int category, string reference)
         {
             try
             {
-                return await _reservoirRepository.GetActionsListByReservoirIdAndCategory(reservoirid, category,reference);
+                return await _reservoirRepository.GetActionsListByReservoirIdAndCategory(reservoirid, category, reference);
             }
             catch (Exception ex)
             {
@@ -244,7 +244,7 @@ namespace RACE2.Services
         {
             try
             {
-                return await _reservoirRepository.InsertorUpdateMaintenanceMeasureFromExtract(action,comment);
+                return await _reservoirRepository.InsertorUpdateMaintenanceMeasureFromExtract(action, comment);
             }
             catch (Exception ex)
             {
@@ -280,7 +280,7 @@ namespace RACE2.Services
         {
             try
             {
-                return await _reservoirRepository.GetSafetyMeasuresByReservoir(reservoirid,reference);
+                return await _reservoirRepository.GetSafetyMeasuresByReservoir(reservoirid, reference);
             }
             catch (Exception ex)
             {
@@ -376,7 +376,7 @@ namespace RACE2.Services
         {
             try
             {
-                return await _reservoirRepository.GetExisitngComments(relatestoobject,relatestorecordid);
+                return await _reservoirRepository.GetExisitngComments(relatestoobject, relatestorecordid);
             }
             catch (Exception ex)
             {

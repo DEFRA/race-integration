@@ -9,10 +9,6 @@
     anchorElement.remove();
     URL.revokeObjectURL(url);
 };
-function getFileName() {
-    var fileName = document.getElementById("file-upload").value;
-    return fileName;
-}
 
 //window.CookieFunction = {
 //    acceptMessage: function (cookieString) {
@@ -29,3 +25,26 @@ function getFileName() {
     //anchorElement.click();
     //anchorElement.remove();
 //});
+
+function timeOutCall(dotnethelper) {
+    document.onmousemove = resetTimeDelay;
+    document.onkeypress = resetTimeDelay;
+
+    function resetTimeDelay() {
+        dotnethelper.invokeMethodAsync("TimerInterval");
+    }
+}
+
+function initializeInactivityTimer(dotnetHelper) {
+    var timer;
+    document.onmousemove = resetTimer();
+    document.onkeypress = resetTimer();
+
+    function resetTimer() {
+        clearTimeout(timer);
+        //timer = setTimeOut(logout, 5000);
+        timer = setTimeout(function () {
+            dotnetHelper.invokeMethodAsync("PageTimedOut");
+        }, 20*60*1000); 
+    }    
+}

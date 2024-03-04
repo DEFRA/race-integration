@@ -1,0 +1,91 @@
+﻿@page "/upload-confirmation"
+@using Microsoft.AspNetCore.Authorization
+@using RACE2.FrontEndWebServer.Components
+@inject IConfiguration _config
+@inject NavigationManager NavigationManager
+
+@attribute [Authorize]
+
+<PageTitle>Statement sent - Send a supervising engineer's annual statement - GOV.UK</PageTitle>
+
+<HeaderWithBanner />
+
+<div class="govuk-width-container" style="min-height: 69vh;">
+
+    <FeedbackBannerSignOut />
+    <a class="govuk-back-link" @onclick="GoToPrevPage" style="color:black">Back</a>
+    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+
+        <div class="govuk-grid-row">
+
+            <div class="govuk-grid-column-two-thirds">
+
+                <div class="govuk-panel govuk-panel--confirmation">
+                    <div class="govuk-panel__title">
+                        Statement for @ReportSubmissionDataStateProvider?.CurrentReportSubmissionData.ReservoirRegName sent
+                    </div>
+                </div>
+                <br>
+                <p class="govuk-body">We have sent you a confirmation email.</p>
+
+                <h2 class="govuk-heading-m govuk-!-padding-top-6">What happens next</h2>
+
+                <p class="govuk-body">
+                    The Environment Agency might contact you for more information.
+                </p>
+
+                <p class="govuk-body">
+                    You can go back to <a class="govuk-link govuk-link--no-visited-state" style="cursor:pointer" @onclick="GoToAnnualStatementsPage">your annual statements</a> or go to your <a class="govuk-link govuk-link--no-visited-state" style="cursor:pointer" @onclick="GoToMyAccountPage">account</a> to manage your information.
+                </p>
+
+                <p class="govuk-!-margin-top-8">
+                    <a href="https://defragroup.eu.qualtrics.com/jfe/form/SV_3pFNm8hRG5yWO3A" class="govuk-link govuk-link--no-visited-state">
+                        What did you think of this service?
+                    </a> (takes 30 seconds)
+                </p>
+
+            </div>
+        </div>
+    </main>
+
+</div>
+
+<Footer />
+
+@code {
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthenticationStateTask { get; set; }
+
+    [CascadingParameter]
+    private ReportSubmissionDataStateProvider? ReportSubmissionDataStateProvider { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+        AuthenticationState authState = await AuthenticationStateTask;// AuthenticationStateProvider.GetAuthenticationStateAsync();
+        await base.OnInitializedAsync();
+    }
+    public void GoToNextPage()
+    {
+        bool forceLoad = true;
+        string pagelink = "/logout";
+        NavigationManager.NavigateTo(pagelink, forceLoad);
+    }
+    public void GoToMyAccountPage()
+    {
+        bool forceLoad = true;
+        string pagelink = "/my-account";
+        NavigationManager.NavigateTo(pagelink, forceLoad);
+    }
+    public void GoToPrevPage()
+    {
+        bool forceLoad = true;
+        string pagelink = "/upload-your-template";
+        NavigationManager.NavigateTo(pagelink, forceLoad);
+    }
+    public void GoToAnnualStatementsPage()
+    {
+        bool forceLoad = true;
+        string pagelink = "/annual-statements";
+        NavigationManager.NavigateTo(pagelink, forceLoad);
+    }
+}

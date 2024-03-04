@@ -29,6 +29,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
         /// </summary>
         public void OnGet()
         {
+            ViewData["Title"] = "Lock out";
             WebAppUrl = _config["RACE2FrontEndURL"];
         }
     }

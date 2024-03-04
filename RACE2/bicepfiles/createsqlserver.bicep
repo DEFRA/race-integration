@@ -20,14 +20,14 @@ resource servers_race2sqlserver_name_resource 'Microsoft.Sql/servers@2023-05-01-
     version: '12.0'
     minimalTlsVersion: '1.2' 
     restrictOutboundNetworkAccess: 'Disabled'
-    publicNetworkAccess: 'Enabled'
+    publicNetworkAccess: 'Disabled'
     administrators: {
       administratorType: 'ActiveDirectory'
       principalType: 'Group'
       login: adgroupname
       sid: adgroupsid
       tenantId: tenantId
-      azureADOnlyAuthentication: false
+      azureADOnlyAuthentication: true
     }
   }
 }

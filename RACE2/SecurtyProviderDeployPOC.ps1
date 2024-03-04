@@ -1,11 +1,12 @@
-$RESOURCE_GROUP = "race2projectrg"
+$RESOURCE_GROUP = "POCRACINFRG1401"
 $ENVIRONMENT="Production"
-$MANAGEDIDENTITY="Race2ManagedIdentity"
-$APPCONFIG_URL="https://race2appconfig.azconfig.io/"
-$REGISTRY_SERVER="race2acr.azurecr.io"
-$CONTAINERAPPS_ENVIRONMENT="race2containerappenv"
+$MANAGEDIDENTITY="POCRACINFMI1401"
+$APPCONFIG_URL="https://pocracinfac1401.azconfig.io/"
+$AZURE_TENANT_ID="770a2450-0227-4c62-90c7-4e38537f1102"
+$REGISTRY_SERVER="pocracinfcr1401.azurecr.io"
+$CONTAINERAPPS_ENVIRONMENT="POCRACINFAE1401"
 $CONTAINERAPPNAME ="race2securityprovider"
-$REMOTE_IMAGENAME="race2acr.azurecr.io/race2securityprovider:365017"
+$REMOTE_IMAGENAME="pocracinfcr1401.azurecr.io/race2securityprovider:487418"
 
 $identityClientId = (az identity show --resource-group $RESOURCE_GROUP --name $MANAGEDIDENTITY --output json --query "clientId")
 $identityResourceId = (az identity show --resource-group $RESOURCE_GROUP --name $MANAGEDIDENTITY --output json --query "id")
@@ -17,13 +18,13 @@ az containerapp create `
   --image $REMOTE_IMAGENAME `
   --registry-server $REGISTRY_SERVER `
   --registry-identity $identityResourceId `
-  --target-port 80 `
+  --target-port 8080 `
   --ingress 'external' `
   --cpu 0.5 `
   --memory 1.0Gi `
   --min-replicas 1 `
-  --max-replicas 2 `
-  --env-vars ASPNETCORE_ENVIRONMENT=$ENVIRONMENT AzureAppConfigURL=$APPCONFIG_URL AZURE_CLIENT_ID=$identityClientId `
+  --max-replicas 1 `
+  --env-vars ASPNETCORE_ENVIRONMENT=$ENVIRONMENT AzureAppConfigURL=$APPCONFIG_URL ManagedIdenityClientId=$identityClientId AZURE_TENANT_ID=$AZURE_TENANT_ID `
   --user-assigned $MANAGEDIDENTITY
   
   

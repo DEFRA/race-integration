@@ -16,12 +16,13 @@ using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using Microsoft.IdentityModel.Logging;
 using RACE2.DataAccess.Repository;
 using RACE2.DataModel;
-using RACE2.FrontEndWebServer.ExceptionGlobalErrorHandling;
 using RACE2.Services;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.MSSqlServer;
 using RACE2.Notification;
+using RACE2.FrontEndWebServer.ExceptionGlobalErrorHandling;
+using RACE2.FrontEndWebServer.Components;
 
 Serilog.Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Information()
@@ -37,7 +38,9 @@ try
     {
         //var connectionString = builder.Configuration["AZURE_APPCONFIGURATION_CONNECTIONSTRING"];
         var azureAppConfigUrl = builder.Configuration["AzureAppConfigURL"];
-        var credential = new DefaultAzureCredential();
+        var azureTenantId = builder.Configuration["AZURE_TENANT_ID"];
+        var managedIdenityClientId = builder.Configuration["ManagedIdenityClientId"];
+        var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions { TenantId = azureTenantId, ManagedIdentityClientId = managedIdenityClientId, VisualStudioTenantId = azureTenantId });
 
         //options.Connect(connectionString)      
         options.Connect(new Uri(azureAppConfigUrl), credential)
@@ -70,25 +73,26 @@ try
         .WriteTo.Console()
         .WriteTo.MSSqlServer(sqlConnectionString, tableName, columnOptions: columnOptions)
         .WriteTo.ApplicationInsights(new TelemetryConfiguration { ConnectionString = appinsightsConnString }, TelemetryConverter.Traces));
-    
+
     builder.Services.AddApplicationInsightsTelemetry(options =>
     {
         options.ConnectionString = appinsightsConnString;
     });
 
     // Add services to the container.
+    builder.Services.AddRazorComponents()
+        .AddInteractiveServerComponents();
+        //.AddHubOptions(options =>
+        //    {
+        //        options.ClientTimeoutInterval = TimeSpan.FromSeconds(30);//.FromSeconds(30); 
+        //        options.EnableDetailedErrors = true;
+        //        options.HandshakeTimeout = TimeSpan.FromSeconds(15); //FromSeconds(15); 
+        //        options.KeepAliveInterval = TimeSpan.FromSeconds(15);//.FromSeconds(15);  
+        //        options.MaximumParallelInvocationsPerClient = 1;
+        //        options.MaximumReceiveMessageSize = 128 * 1024; //32*1024;
+        //        options.StreamBufferCapacity = 10;
+        //    });
     builder.Services.AddRazorPages();
-    builder.Services.AddServerSideBlazor();
-    //.AddHubOptions(options =>
-    //    {
-    //        options.ClientTimeoutInterval = TimeSpan.FromSeconds(60);//.FromSeconds(30); 
-    //        options.EnableDetailedErrors = true;
-    //        options.HandshakeTimeout = TimeSpan.FromSeconds(30); //FromSeconds(15); 
-    //        options.KeepAliveInterval = TimeSpan.FromSeconds(30);//.FromSeconds(15);  
-    //        options.MaximumParallelInvocationsPerClient = 1; 
-    //        options.MaximumReceiveMessageSize = 128 * 1024; //32*1024;
-    //        options.StreamBufferCapacity = 10;
-    //    });
 
     builder.Services.Configure<CookiePolicyOptions>(options =>
     {
@@ -101,29 +105,17 @@ try
     builder.Services.AddAuthentication(options =>
     {
         options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-        //options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
         options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
     })
-    //.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
-    //.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
+    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
+    //.AddCookie(options =>
     //{
-    //    //options.Cookie = new Microsoft.AspNetCore.Http.CookieBuilder()
-    //    //{
-    //    //    SecurePolicy = Microsoft.AspNetCore.Http.CookieSecurePolicy.Always,
-    //    //    HttpOnly = true,
-    //    //    SameSite = Microsoft.AspNetCore.Http.SameSiteMode.None,
-    //    //};
-    //    options.ExpireTimeSpan = TimeSpan.FromMinutes(1);//default 5 min
+    //    options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
     //    options.Cookie.MaxAge = options.ExpireTimeSpan; // optional
+    //    options.SlidingExpiration = true;
+    //    options.LoginPath = "/login";
+    //    options.LogoutPath = "/logout";
     //})
-    .AddCookie(options =>
-    {
-        options.ExpireTimeSpan = TimeSpan.FromMinutes(20);//default 5 min
-        options.Cookie.MaxAge = options.ExpireTimeSpan; // optional
-        options.SlidingExpiration = true;
-        options.LoginPath = "/Login";
-        options.LogoutPath = "/Logout";
-    })
     .AddOpenIdConnect(
         OpenIdConnectDefaults.AuthenticationScheme,
         options =>
@@ -145,10 +137,9 @@ try
             // When set to code, the middleware will use PKCE protection
             options.ResponseType = "code id_token";
             // Save the tokens we receive from the IDP
-            options.SaveTokens = false; // default false
+            options.SaveTokens = true; // default false
             // It's recommended to always get claims from the UserInfoEndpoint during the flow.
             options.GetClaimsFromUserInfoEndpoint = true;
-            options.UseTokenLifetime = false;
             options.Scope.Add("race2WebApi");
             options.RequireHttpsMetadata = requireHttpsMetadata;
             options.Events = new OpenIdConnectEvents
@@ -181,7 +172,7 @@ try
             EncryptionAlgorithm = EncryptionAlgorithm.AES_256_CBC,
             ValidationAlgorithm = ValidationAlgorithm.HMACSHA256
         });
-    builder.Services.AddSingleton<INotification, RaceNotification>();
+    builder.Services.AddScoped<INotification, RaceNotification>();
 
     var app = builder.Build();
     app.UseForwardedHeaders();
@@ -198,20 +189,25 @@ try
     app.UseSerilogRequestLogging();
     app.UseHttpsRedirection();
 
-    app.UseStaticFiles();
-    app.UseCookiePolicy();
-    app.UseRouting();
+    app.UseCookiePolicy(new CookiePolicyOptions
+    {
+        MinimumSameSitePolicy = SameSiteMode.None
+    });
 
+    app.UseStaticFiles();
+
+    app.UseAntiforgery();
     app.UseAuthentication();
     app.UseAuthorization();
 
-    //app.MapBlazorHub();
-    app.MapBlazorHub(options =>
-    {
-        options.CloseOnAuthenticationExpiration = true;
-    });
-    app.MapFallbackToPage("/_Host");
-    //IdentityModelEventSource.ShowPII = true;
+    app.MapRazorComponents<App>()
+        .AddInteractiveServerRenderMode();
+    //app.MapBlazorHub(options =>
+    //{
+    //    options.CloseOnAuthenticationExpiration = true;
+    //});
+    app.MapRazorPages();
+
     app.Run();
 }
 catch (Exception ex)

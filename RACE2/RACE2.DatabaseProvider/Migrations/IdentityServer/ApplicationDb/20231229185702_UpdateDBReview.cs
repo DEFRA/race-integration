@@ -553,14 +553,13 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
 
-            //migrationBuilder.AddForeignKey(
-            //    name: "FK_Document_FeatureFunction_SourceServiceId",
-            //    table: "Document",
-            //    column: "SourceServiceId",
-            //    principalTable: "FeatureFunction",
-            //    principalColumn: "Id",
-            //    onDelete: ReferentialAction.NoAction
-            //    );
+            migrationBuilder.AddForeignKey(
+                name: "FK_Document_FeatureFunction_SourceServiceId",
+                table: "Document",
+                column: "SourceServiceId",
+                principalTable: "FeatureFunction",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_FloodPlan_Reservoirs_ReservoirId",

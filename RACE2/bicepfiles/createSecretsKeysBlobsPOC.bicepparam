@@ -1,12 +1,12 @@
 using './createSecretsKeysBlobs.bicep' /*TODO: Provide a path to a bicep template*/
 
-param storageAccountName = 'pocracinfst1402'
+param storageAccountName = 'pocracinfst1401'
 
-param keyVaultName = 'POCRACINFVT1402'
+param keyVaultName = 'POCRACINFVT1401'
 
-param applicationInsightName = 'POCRACINFAI1402'
+param applicationInsightName = 'POCRACINFAI1401'
 
-param appConfigResourceName = 'POCRACINFAC1402'
+param appConfigResourceName = 'POCRACINFAC1401'
 
 param notifyAPIKeySecretName = 'NotifyAPIKey'
 

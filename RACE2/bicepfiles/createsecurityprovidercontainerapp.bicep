@@ -1,3 +1,5 @@
+param azureTenanatId string
+param location string
 param race2appenv string
 param registryName string
 param resourcegroup string
@@ -13,7 +15,8 @@ param useExternalIngress bool
 param tag string
 var tagVal=json(tag)
 var subscriptionid = subscription().subscriptionId
-var location = resourceGroup().location
+param transport string
+param allowInsecure bool
 
 resource managedEnvironments_race2containerappenv_name_resource 'Microsoft.App/managedEnvironments@2023-05-01' existing= {
   name: race2appenv 
@@ -38,12 +41,18 @@ resource containerSecurityProviderApp 'Microsoft.App/containerApps@2023-05-01' =
       ingress: {
         external: useExternalIngress
         targetPort: containerPort
+        transport: transport
+        allowInsecure: allowInsecure
       }
     }
     template: {
       containers: [
         {
           env: [
+            {
+              name: 'AZURE_TENANT_ID'
+              value: azureTenanatId
+            }
             {
               name: 'ASPNETCORE_ENVIRONMENT'
               value: aspnetCoreEnv
@@ -54,6 +63,10 @@ resource containerSecurityProviderApp 'Microsoft.App/containerApps@2023-05-01' =
             }
             {
               name: 'AZURE_CLIENT_ID'
+              value: managedIdentity_resource.properties.clientId
+            }
+            {
+              name: 'ManagedIdenityClientId'
               value: managedIdentity_resource.properties.clientId
             }
           ]          

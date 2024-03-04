@@ -17,7 +17,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.26")
+                .HasAnnotation("ProductVersion", "6.0.25")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -364,9 +364,6 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                     b.Property<int>("RelatesToRecordId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SourceSubmissionId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasMaxLength(64)
@@ -379,8 +376,6 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                     b.HasIndex("CreatedByUserId");
 
                     b.HasIndex("ParentCommentidId");
-
-                    b.HasIndex("SourceSubmissionId");
 
                     b.ToTable("Comments");
                 });
@@ -2283,17 +2278,11 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                         .WithMany()
                         .HasForeignKey("ParentCommentidId");
 
-                    b.HasOne("RACE2.DataModel.SubmissionStatus", "SubmissionStatus")
-                        .WithMany()
-                        .HasForeignKey("SourceSubmissionId");
-
                     b.Navigation("ClosedByUser");
 
                     b.Navigation("CreatedByUser");
 
                     b.Navigation("ParentCommentid");
-
-                    b.Navigation("SubmissionStatus");
                 });
 
             modelBuilder.Entity("RACE2.DataModel.CommentsChangeHistory", b =>

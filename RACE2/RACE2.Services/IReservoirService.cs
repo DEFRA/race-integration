@@ -15,10 +15,10 @@ namespace RACE2.Services
         //  public Task<UserDetail> GetReservoirsByUserId(int id);
         public Task<List<ReservoirDetailsDTO>> GetReservoirsByUserId(int id);
         public Task<List<ReservoirDetailsDTO>> GetReservoirsByUserEmailId(string emailId);
-  
+
         public Task<DataModel.Action> GetActionsListByReservoirIdAndCategory(int reservoirid, int category, string reference);
 
-        
+
 
         public Task<Address> GetAddressByReservoirId(int reservoirid, string operatortype);
 

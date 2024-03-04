@@ -1,0 +1,11 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "ASPNETCORE_ENVIRONMENT": "Production",
+    "AzureWebJobsStorage": "DefaultEndpointsProtocol=https;AccountName=pocracinfst1402;AccountKey=2YIXZbDp4NEwmv5VdoF0qtyvp5FwbmjkS6LBvwJKBho3U74KEwkhaHD0ULP75AaTkBOj+/20ip2P+AStOHlYSw==;EndpointSuffix=core.windows.net",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
+    "AzureAppConfigUrl": "https://pocracinfac1402.azconfig.io/",
+    "AZURE_TENANT_ID": "6f504113-6b64-43f2-ade9-242e05780007",
+    "ManagedIdenityClientId": "80026cc9-216c-4002-8d7c-f4648af0f20f"
+  }
+}
