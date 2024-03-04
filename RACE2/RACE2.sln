@@ -31,7 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.WebApiExternal", "RAC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.FrontEndWebServer", "RACE2.FrontEndWebServer\RACE2.FrontEndWebServer.csproj", "{FB08245B-937A-4241-8476-FBECBDA32647}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RACE2VirusCureSqlTriggerFnApp", "RACE2VirusCureSqlTriggerFnApp\RACE2VirusCureSqlTriggerFnApp.csproj", "{7FE13EE9-D2EE-420C-9907-FA4C762A81B6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RACE2.VirusCureSqlTriggerFnApp", "RACE2VirusCureSqlTriggerFnApp\RACE2.VirusCureSqlTriggerFnApp.csproj", "{7FE13EE9-D2EE-420C-9907-FA4C762A81B6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

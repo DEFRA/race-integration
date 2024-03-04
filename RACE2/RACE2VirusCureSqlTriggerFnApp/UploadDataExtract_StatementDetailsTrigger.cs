@@ -5,7 +5,7 @@ using Microsoft.Azure.Functions.Worker.Extensions.Sql;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
-namespace RACE2VirusCureSqlTriggerFnApp
+namespace RACE2.VirusCureSqlTriggerFnApp
 {
     public class UploadDataExtract_StatementDetailsTrigger
     {
