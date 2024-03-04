@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "RACE2VirusCureSqlTriggerFnApp": {
+    "RACE2.MultipleTriggerAzureFunctionApp": {
       "commandName": "Project",
       "commandLineArgs": "--port 7030",
       "launchBrowser": false
