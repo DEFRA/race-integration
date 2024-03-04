@@ -14,7 +14,7 @@ using System.Globalization;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using DocumentFormat.OpenXml.Office2010.Drawing;
 
-namespace RACE2.VirusCureSqlTriggerFnApp
+namespace RACE2.MultipleTriggerAzureFunctionApp
 {
     public class UploadDataExtract_StatementDetailsTrigger
     {

@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 using RACE2.Services;
 using RACE2.Dto;
 
-namespace RACE2.VirusCureSqlTriggerFnApp
+namespace RACE2.MultipleTriggerAzureFunctionApp
 {
     public class UploadExtract_ActionSummaryTrigger
     {

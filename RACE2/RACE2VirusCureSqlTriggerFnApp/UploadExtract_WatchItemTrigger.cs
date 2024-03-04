@@ -10,7 +10,7 @@ using RACE2.Dto;
 using RACE2.Common;
 using Microsoft.Azure.Functions.Worker;
 
-namespace RACE2.VirusCureSqlTriggerFnApp
+namespace RACE2.MultipleTriggerAzureFunctionApp
 {
     public class UploadExtract_WatchItemTrigger
     {

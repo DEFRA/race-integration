@@ -14,7 +14,7 @@ using System.Reflection;
 using RACE2.Common;
 using Grpc.Core;
 
-namespace RACE2.VirusCureSqlTriggerFnApp
+namespace RACE2.MultipleTriggerAzureFunctionApp
 {
     public class UploadExtract_MIOSTrigger
     {

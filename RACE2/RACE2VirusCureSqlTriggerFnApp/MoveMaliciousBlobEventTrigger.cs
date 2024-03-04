@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using RACE2.Services;
 
-namespace RACE2.VirusCureSqlTriggerFnApp
+namespace RACE2.MultipleTriggerAzureFunctionApp
 {
     public class MoveMaliciousBlobEventTrigger
     {
