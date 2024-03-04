@@ -31,7 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.WebApiExternal", "RAC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.FrontEndWebServer", "RACE2.FrontEndWebServer\RACE2.FrontEndWebServer.csproj", "{FB08245B-937A-4241-8476-FBECBDA32647}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2VirusScanAzFnApp", "RACE2VirusScanAzFnApp\RACE2VirusScanAzFnApp.csproj", "{8CE3D0C1-3BCA-4F06-BD35-085FBF07A572}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RACE2VirusCureSqlTriggerFnApp", "RACE2VirusCureSqlTriggerFnApp\RACE2VirusCureSqlTriggerFnApp.csproj", "{7FE13EE9-D2EE-420C-9907-FA4C762A81B6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -95,10 +95,10 @@ Global
 		{FB08245B-937A-4241-8476-FBECBDA32647}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB08245B-937A-4241-8476-FBECBDA32647}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB08245B-937A-4241-8476-FBECBDA32647}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8CE3D0C1-3BCA-4F06-BD35-085FBF07A572}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8CE3D0C1-3BCA-4F06-BD35-085FBF07A572}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8CE3D0C1-3BCA-4F06-BD35-085FBF07A572}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8CE3D0C1-3BCA-4F06-BD35-085FBF07A572}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FE13EE9-D2EE-420C-9907-FA4C762A81B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FE13EE9-D2EE-420C-9907-FA4C762A81B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FE13EE9-D2EE-420C-9907-FA4C762A81B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FE13EE9-D2EE-420C-9907-FA4C762A81B6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
