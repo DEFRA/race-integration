@@ -1,0 +1,12 @@
+{
+    "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "DefaultEndpointsProtocol=https;AccountName=pocacinfst1401;AccountKey=M3CuH8gcrjr03wsUXsPcLvV9OWyHxhuCdUxF4iuMbqjqnLSpaCZLOkfkWlNMjHtxhAVvDmdWNb+0+AStOQ04Nw==;EndpointSuffix=core.windows.net",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
+    "ASPNETCORE_ENVIRONMENT": "Development",
+    "AZURE_TENANT_ID": "770a2450-0227-4c62-90c7-4e38537f1102",
+    "ManagedIdenityClientId": "ed22ed2e-445d-470f-989c-4f9d3d1f7a20",
+    "AzureAppConfigURL": "https://pocracinfac1401.azconfig.io/",
+    "SqlServerConnectionString": "Server=tcp:pocracinfss1402.database.windows.net,1433;Initial Catalog=POCRACINFDB1402;Persist Security Info=False;User ID=race2admin;Password=Race2Password123!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+  }
+}
