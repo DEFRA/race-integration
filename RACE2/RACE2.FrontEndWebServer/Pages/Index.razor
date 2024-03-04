@@ -116,7 +116,7 @@
         var maintMode = _config["IsMaintenanceMode"];
         if (maintMode.ToLower() == "true")
         {
-            NavigationManager.NavigateTo("/MaintenancePage", forceLoad);
+            NavigationManager.NavigateTo("/ServiceUnavailable", forceLoad);
         }
         else
         {

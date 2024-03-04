@@ -431,11 +431,36 @@ FodyWeavers.xsd
 /RACE2/RACE2.sln
 /RACE2/RACE2.SecurityAzureFunction/local.settings.json
 /RACE2/RACE2.SecurityAzureFunction/local.settings.json
-/RACE2/RACE2.TrackChangeHistoryFunction/local.settings.json
-/.gitignore
-/.gitignore
-/.gitignore
-/.gitignore
-/RACE2/RACE2.SecurityAzureFunction/local.settings.json
-/RACE2/RACE2.TrackChangeHistoryFunction/local.settings.json
-/.gitignore
+
+/RACE2/RACE2.FrontEndWebServer/Pages
+/RACE2/RACE2VirusScanAzFnApp/Properties/serviceDependencies.json
+/RACE2/RACE2VirusScanAzFnApp/local.settings.json
+/RACE2/RACE2VirusScanAzFnApp/Properties/ServiceDependencies/DEVRACINFAF1401 - Zip Deploy
+/RACE2/RACE2VirusScanAzFnApp/Properties/serviceDependencies.DEVRACINFAF1401 - Zip Deploy.json
+/RACE2.VirusTrackingFnApp/local.settings.json
+/RACE2/RACE2VirusScanAzFnApp/Properties/ServiceDependencies
+/RACE2/RACE2VirusScanAzFnApp/Properties
+/RACE2/RACE2VirusScanAzFnApp/Properties/serviceDependencies.DEVRACINFAF1401 - Zip Deploy.json
+/RACE2/RACE2VirusScanAzFnApp/Properties/launchSettings.json
+/RACE2/RACE2VirusScanAzFnApp/Properties/serviceDependencies.local.json
+/RACE2/RACE2VirusScanAzFnApp/Properties/serviceDependencies.POCRACINFAF1401 - Zip Deploy.json
+/RACE2/RACE2VirusScanAzFnApp/Properties/serviceDependencies.POCRACINFFA1401 - Zip Deploy.json
+/RACE2/RACE2VirusScanAzFnApp/Properties/serviceDependencies.PRDRACINFAF1401 - Zip Deploy.json
+/RACE2/RACE2VirusScanAzFnApp/Properties/serviceDependencies.RACE2VirusScanAzFnApp - Zip Deploy.json
+/RACE2/RACE2VirusScanAzFnApp/Properties/PublishProfiles/DEVRACINFAF1401 - Zip Deploy.pubxml
+/RACE2/RACE2VirusScanAzFnApp/Properties/PublishProfiles/POCRACINFFA1401 - Zip Deploy.pubxml
+/RACE2/RACE2VirusScanAzFnApp/Properties/ServiceDependencies/POCRACINFAF1401 - Zip Deploy/appInsights1.arm.json
+/RACE2/RACE2VirusScanAzFnApp/Properties/ServiceDependencies/POCRACINFAF1401 - Zip Deploy/appInsights2.arm.json
+/RACE2/RACE2VirusScanAzFnApp/Properties/ServiceDependencies/POCRACINFAF1401 - Zip Deploy/profile.arm.json
+/RACE2/RACE2VirusScanAzFnApp/Properties/ServiceDependencies/POCRACINFAF1401 - Zip Deploy/storage1.arm.json
+/RACE2/RACE2VirusScanAzFnApp/Properties/ServiceDependencies/POCRACINFFA1401 - Zip Deploy/appInsights2.arm.json
+/RACE2/RACE2VirusScanAzFnApp/Properties/ServiceDependencies/POCRACINFFA1401 - Zip Deploy/profile.arm.json
+/RACE2/RACE2VirusScanAzFnApp/Properties/ServiceDependencies/POCRACINFFA1401 - Zip Deploy/storage1.arm.json
+/RACE2/RACE2VirusScanAzFnApp/Properties/ServiceDependencies/PRDRACINFAF1401 - Zip Deploy/profile.arm.json
+/.vscode/extensions.json
+
+
+/RACE2/RACE2.DefenderScanAzurefn/Properties
+/RACE2/RACE2VirusScanAzFnApp/Properties
+/RACE2/Visual Studio 2022/Visualizers
+

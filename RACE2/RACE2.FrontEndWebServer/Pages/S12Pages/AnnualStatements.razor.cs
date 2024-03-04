@@ -143,7 +143,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement OnInitializedAsync").Fatal("Error getting data from backend services : " + ex.Message);
                 //throw new ApplicationException("Error loading annual statement data.");
                 bool forceLoad = false;
-                string pagelink = "/ApplicationError";
+                string pagelink = "/ProblemWithService";
                 NavigationManager.NavigateTo(pagelink, forceLoad);
             }
             finally
@@ -206,7 +206,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement PopulateReservoirsToDisplay").Fatal("Error loading reservoir data : " + ex.Message);
                 //throw new ApplicationException("Error loading reservoir data.");
                 bool forceLoad = false;
-                string pagelink = "/ApplicationError";
+                string pagelink = "/ProblemWithService";
                 NavigationManager.NavigateTo(pagelink, forceLoad);
             };
         }
@@ -322,7 +322,7 @@ namespace RACE2.FrontEndWebServer.Pages.S12Pages
                 Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement DownloadReportTemplate").Fatal("Error downloading S12ReportTemplate for the reservoir : " + ex.Message);
                 //throw new ApplicationException("Error downloading S12ReportTemplate for the reservoir.");
                 bool forceLoad = false;
-                string pagelink = "/ApplicationError";
+                string pagelink = "/ProblemWithService";
                 NavigationManager.NavigateTo(pagelink, forceLoad);
             };
         }
