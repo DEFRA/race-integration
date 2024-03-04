@@ -18,7 +18,7 @@ namespace RACE2.DataModel
         [StringLength(64)]
         [Required]
         public string? RelatesToObject { get; set; }
-       public int RelatesToRecordId { get; set; }
+        public int RelatesToRecordId { get; set; }
         [Required]
         public int CreatedByUserId { get; set; }
         [ForeignKey("CreatedByUserId")]
@@ -41,5 +41,10 @@ namespace RACE2.DataModel
         public DateTime? ClosedDate { get; set; }
 
         public bool? IsQualityCheckRequired { get; set; }
+
+        public int? SourceSubmissionId { get; set; }
+
+        [ForeignKey("SourceSubmissionId")]
+        public virtual SubmissionStatus SubmissionStatus { get; set; }
     }
 }

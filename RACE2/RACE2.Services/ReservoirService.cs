@@ -75,30 +75,30 @@ namespace RACE2.Services
 
         }
 
-        public async Task<List<DataModel.Action>> GetActionsListByReservoirIdAndCategory(int reservoirid, int category)
+        public async Task<DataModel.Action> GetActionsListByReservoirIdAndCategory(int reservoirid, int category, string reference)
         {
             try
             {
-                return await _reservoirRepository.GetActionsListByReservoirIdAndCategory(reservoirid, category);
+                return await _reservoirRepository.GetActionsListByReservoirIdAndCategory(reservoirid, category, reference);
             }
             catch (Exception ex)
             {
-                return new List<DataModel.Action>();
+                return new DataModel.Action();
             }
         }
 
-        public async Task<List<SafetyMeasure>> GetSafetyMeasuresListByReservoirId(int reservoirid)
-        {
-            try
-            {
-                return await _reservoirRepository.GetSafetyMeasuresListByReservoirId(reservoirid);
-            }
-            catch (Exception ex)
-            {
-                return new List<SafetyMeasure>();
-            }
+        //public async Task<List<SafetyMeasure>> GetSafetyMeasuresListByReservoirId(int reservoirid)
+        //{
+        //    try
+        //    {
+        //        return await _reservoirRepository.GetSafetyMeasuresListByReservoirId(reservoirid);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new List<SafetyMeasure>();
+        //    }
 
-        }
+        //}
 
         public async Task<Address> GetAddressByReservoirId(int reservoirid, string operatortype)
         {
@@ -240,11 +240,11 @@ namespace RACE2.Services
             }
         }
 
-        public async Task<int> InsertMaintenanceMeasureFromExtract(DataModel.Action action, Comment comment)
+        public async Task<int> InsertorUpdateMaintenanceMeasureFromExtract(DataModel.Action action, Comment comment)
         {
             try
             {
-                return await _reservoirRepository.InsertMaintenanceMeasureFromExtract(action,comment);
+                return await _reservoirRepository.InsertorUpdateMaintenanceMeasureFromExtract(action, comment);
             }
             catch (Exception ex)
             {
@@ -252,11 +252,11 @@ namespace RACE2.Services
             }
         }
 
-        public async Task<int> InsertWatchItemsFromExtract(DataModel.Action action, Comment comment)
+        public async Task<int> InsertorUpdateWatchItemsFromExtract(DataModel.Action action, Comment comment)
         {
             try
             {
-                return await _reservoirRepository.InsertWatchItemsFromExtract(action, comment);
+                return await _reservoirRepository.InsertorUpdateWatchItemsFromExtract(action, comment);
             }
             catch (Exception ex)
             {
@@ -264,15 +264,123 @@ namespace RACE2.Services
             }
         }
 
-        public async Task<int> InsertSafetyMeasuresFromExtract(SafetyMeasure safetyMeasure, Comment comment)
+        public async Task<int> InsertorUpdateSafetyMeasuresFromExtract(SafetyMeasure safetyMeasure, Comment comment)
         {
             try
             {
-                return await _reservoirRepository.InsertSafetyMeasuresFromExtract(safetyMeasure, comment);
+                return await _reservoirRepository.InsertorUpdateSafetyMeasuresFromExtract(safetyMeasure, comment);
             }
             catch (Exception ex)
             {
                 return 1;
+            }
+        }
+
+        public async Task<SafetyMeasure> GetSafetyMeasuresByReservoir(int reservoirid, string reference)
+        {
+            try
+            {
+                return await _reservoirRepository.GetSafetyMeasuresByReservoir(reservoirid, reference);
+            }
+            catch (Exception ex)
+            {
+                return new SafetyMeasure();
+            }
+        }
+
+        public async Task<int> InsertSafetyMeasureChangeHistory(List<SafetyMeasuresChangeHistory> changeHistory)
+        {
+            try
+            {
+                return await _reservoirRepository.InsertSafetyMeasureChangeHistory(changeHistory);
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+        }
+
+        public async Task<int> InsertActionChangeHistory(List<ActionsChangeHistory> changeHistory)
+        {
+            try
+            {
+                return await _reservoirRepository.InsertActionChangeHistory(changeHistory);
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+        }
+
+        public async Task<int> UpdateReservoirDetailsFromExtract(Reservoir reservoir)
+        {
+            try
+            {
+                return await _reservoirRepository.UpdateReservoirDetailsFromExtract(reservoir);
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+        }
+
+        public async Task<int> InsertStatementDetailsFromExtract(StatementDetails statementDetails)
+        {
+            try
+            {
+                return await _reservoirRepository.InsertStatementDetailsFromExtract(statementDetails);
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+        }
+
+        public async Task<int> InsertReservoirDetailsChangeHistory(List<ReservoirDetailsChangeHistory> changeHistory)
+        {
+            try
+            {
+                return await _reservoirRepository.InsertReservoirDetailsChangeHistory(changeHistory);
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+        }
+
+        public async Task<int> GetDocumentId(string documentName)
+        {
+            try
+            {
+                return await _reservoirRepository.GetDocumentId(documentName);
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+        }
+
+        public async Task<int> InsertCommentChangeHistory(List<CommentsChangeHistory> changeHistory)
+        {
+            try
+            {
+                return await _reservoirRepository.InsertCommentChangeHistory(changeHistory);
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+        }
+
+        public async Task<Comment> GetExisitngComments(string relatestoobject, int relatestorecordid)
+        {
+            try
+            {
+                return await _reservoirRepository.GetExisitngComments(relatestoobject, relatestorecordid);
+            }
+            catch (Exception ex)
+            {
+                return new Comment();
             }
         }
     }
