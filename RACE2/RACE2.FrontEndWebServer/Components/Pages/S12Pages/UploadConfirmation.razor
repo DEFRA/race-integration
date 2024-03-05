@@ -1,8 +1,10 @@
-﻿@page "/upload-confirmation"
+﻿﻿@page "/upload-confirmation"
 @using Microsoft.AspNetCore.Authorization
 @using RACE2.FrontEndWebServer.Components
+@using RACE2.Dto
 @inject IConfiguration _config
 @inject NavigationManager NavigationManager
+@inject ProtectedSessionStorage ProtectedSessionStore
 
 @attribute [Authorize]
 
@@ -22,7 +24,7 @@
 
                 <div class="govuk-panel govuk-panel--confirmation">
                     <div class="govuk-panel__title">
-                        Statement for @ReportSubmissionDataStateProvider?.CurrentReportSubmissionData.ReservoirRegName sent
+                        Statement for @reportSubmissionData.ReservoirRegName sent
                     </div>
                 </div>
                 <br>
@@ -56,12 +58,18 @@
     [CascadingParameter]
     public Task<AuthenticationState> AuthenticationStateTask { get; set; }
 
-    [CascadingParameter]
-    private ReportSubmissionDataStateProvider? ReportSubmissionDataStateProvider { get; set; }
+    public ReportSubmissionDataDto reportSubmissionData { get; set; } = new ReportSubmissionDataDto();
 
     protected async override Task OnInitializedAsync()
     {
+        var reportSubmissionDataState = await ProtectedSessionStore.GetAsync<ReportSubmissionDataDto>("CurrentReportSubmissionData");
+        reportSubmissionData = reportSubmissionDataState.Value;
+
         AuthenticationState authState = await AuthenticationStateTask;// AuthenticationStateProvider.GetAuthenticationStateAsync();
+        await InvokeAsync(() =>
+             {
+                 StateHasChanged();
+             });
         await base.OnInitializedAsync();
     }
     public void GoToNextPage()
