@@ -1,0 +1,19 @@
+﻿@using RACE2.Dto
+public class ReportSubmissionDataStateContainer
+{
+    private ReportSubmissionDataDto? reportSubmissionData;
+
+    public ReportSubmissionDataDto ReportSubmissionData
+    {
+        get => reportSubmissionData ?? new ReportSubmissionDataDto();
+        set
+        {
+            reportSubmissionData = value;
+            NotifyStateChanged();
+        }
+    }
+
+    public event Action? OnChange;
+
+    private void NotifyStateChanged() => OnChange?.Invoke();
+}

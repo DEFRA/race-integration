@@ -24,6 +24,7 @@
 @inject IReservoirService reservoirService
 @inject IJSRuntime jsRuntime
 @inject NavigationManager NavigationManager
+@inject ProtectedSessionStorage ProtectedSessionStore
 
 @attribute [Authorize]
 
@@ -199,9 +200,6 @@
 
     [CascadingParameter]
     public Task<AuthenticationState> AuthenticationStateTask { get; set; }
-
-    [CascadingParameter]
-    private ReportSubmissionDataStateProvider? ReportSubmissionDataStateProvider { get; set; }
 
     protected async override Task OnInitializedAsync()
     {
@@ -508,8 +506,7 @@
             SubmissionReference = Item.SubmissionReference,
             YesNoValue = ""
         };
-        ReportSubmissionDataStateProvider.CurrentReportSubmissionData = reportSubmissionData;
-        await ReportSubmissionDataStateProvider.SaveChangesAsync();
+        await ProtectedSessionStore.SetAsync("CurrentReportSubmissionData", reportSubmissionData);
         bool forceLoad = false;
         string pagelink = $"/send-your-statement";
         NavigationManager.NavigateTo(pagelink, forceLoad);
