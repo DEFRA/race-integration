@@ -34,8 +34,8 @@
 
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-three-quarters">
-                @*                 @if (!FileUploadInProgress)
-                { *@
+               @if (!FileUploadInProgress)
+                {
                 <EditForm Model="@uploadFileData" OnSubmit="OnUploadSubmit">
                     @*                     @if (UploadFileData.FileIsEmpty)
                     {
@@ -343,12 +343,16 @@
                         Upload and send statement
                     </button>
                 </EditForm>
-                @*}
+                }
                 else
                 {
-                <p class="govuk-body">File upload in progress.</p>
-                <p class="govuk-body">This could take up to 20 seconds.</p>
-                } *@
+                    <div class="govuk-panel govuk-panel--confirmation govuk-!-margin-top-9">
+                        <div class="govuk-panel__title">
+                            File upload in progress.
+                        </div>
+                    </div>
+                    <p class="govuk-body">This could take up to 20 seconds.</p>
+                }
             </div>
         </div>
     </main>
@@ -448,20 +452,14 @@
             {
                 try
                 {
-                    //FileUploadInProgress = true;
-                    //await InvokeAsync(() =>
-                    //{
-                    //    StateHasChanged();
-                    //});
-
                     //var containerName = UserName.Split("@")[0];
                     //if (containerName.Contains('.'))
                     //{
                     //    containerName = containerName.Split('.')[0];
                     //}
                     var containerNameToUplodTo = _config["UnscannedContainer"];//"unscannedcontent";
-                                                                               //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + "."+ extn;
-                                                                               //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + SubmissionReference + "." + fileExtn;
+                    //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + "."+ extn;
+                    //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + SubmissionReference + "." + fileExtn;
                     var trustedFileNameForFileStorage = reportSubmissionData.SubmissionReference + "_" + DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + DateTime.Now.Hour + DateTime.Now.Minute + DateTime.Now.Second + "." + fileExtn;
                     //Store the uploaded document information
                     documentDTO.FileName = selectedFile.Name.Split('.')[0];
@@ -490,10 +488,7 @@
                         //_fileNameResult=await jsRuntime.InvokeAsync<string>("getFileName");
 
                         FileUploadInProgress = true;
-                        await InvokeAsync(() =>
-                        {
-                            StateHasChanged();
-                        });
+                        StateHasChanged();
                         //System.Threading.Thread.Sleep(20000);//wait for 20 seconds
                         var timeToWait = Int32.Parse(_config["TimeToWaitForUpload"]);
                         System.Threading.Thread.Sleep(timeToWait); //wait for timeToWait seconds
