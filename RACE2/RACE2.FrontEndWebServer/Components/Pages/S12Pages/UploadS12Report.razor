@@ -356,7 +356,7 @@
                         This could take up to 20 seconds.<br /><br />
                         <div> Progress:<br /></div>
                         <div>
-                            <progress max=@timeToWait value=@uploadTimeElapsed style="width:100%; height:30px;"></progress>
+                            <progress max=@timeToWait value=@uploadTimeElapsed style="width:100%; height:30px;"></progress><span style="color:black;margin-left:10px;">@uploadPerc%</span>
                         </div>
                     </p>
                 }
@@ -386,6 +386,7 @@
     public ReportSubmissionDataDto reportSubmissionData { get; set; }
 
     public int uploadTimeElapsed { get; set; } = 0;
+    public int uploadPerc { get; set; } = 0;
     public int timeToWait { get; set; } = 0;
 
     [CascadingParameter]
@@ -505,6 +506,7 @@
                         {
                             System.Threading.Thread.Sleep(1000);
                             uploadTimeElapsed++;
+                            uploadPerc = Convert.ToInt32((Convert.ToDouble(uploadTimeElapsed) / Convert.ToDouble(timeToWait)) * 100.0);
                             StateHasChanged();
                         }
 
@@ -540,6 +542,7 @@
                             await reservoirService.InsertDocumentRelatedTable(Int32.Parse(reportSubmissionData.ReservoirId), updatedStatus.Id, docID);
                             Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Information("File upload succeeded.");
                             uploadTimeElapsed++;
+                            uploadPerc = Convert.ToInt32((Convert.ToDouble(uploadTimeElapsed) / Convert.ToDouble(timeToWait)) * 100.0);
                             StateHasChanged();
                             goToNextPage();
                         }
