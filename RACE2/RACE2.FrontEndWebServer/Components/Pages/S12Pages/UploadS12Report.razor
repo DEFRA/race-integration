@@ -354,7 +354,7 @@
                     <div class="spinner"></div>
                     <p class="govuk-body">This could take up to 20 seconds.
                         <div>
-                            <progress max="100" style="width:100%; height:30px;" ></progress>
+                            <progress max="20" value=@uploadTimeElapsed style="width:100%; height:30px;"></progress>
                         </div>
                     </p>
                 }
@@ -382,6 +382,8 @@
     public Dictionary<string, string> ValidationErrors = new Dictionary<string, string>();
 
     public ReportSubmissionDataDto reportSubmissionData { get; set; }
+
+    public int uploadTimeElapsed { get; set; } = 0;
 
     [CascadingParameter]
     public Task<AuthenticationState> AuthenticationStateTask { get; set; }
@@ -463,8 +465,8 @@
                     //    containerName = containerName.Split('.')[0];
                     //}
                     var containerNameToUplodTo = _config["UnscannedContainer"];//"unscannedcontent";
-                    //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + "."+ extn;
-                    //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + SubmissionReference + "." + fileExtn;
+                                                                               //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + "."+ extn;
+                                                                               //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + SubmissionReference + "." + fileExtn;
                     var trustedFileNameForFileStorage = reportSubmissionData.SubmissionReference + "_" + DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + DateTime.Now.Hour + DateTime.Now.Minute + DateTime.Now.Second + "." + fileExtn;
                     //Store the uploaded document information
                     documentDTO.FileName = selectedFile.Name.Split('.')[0];
@@ -495,20 +497,29 @@
                         FileUploadInProgress = true;
                         StateHasChanged();
                         //System.Threading.Thread.Sleep(20000);//wait for 20 seconds
-                        var timeToWait = Int32.Parse(_config["TimeToWaitForUpload"]);
-                        System.Threading.Thread.Sleep(timeToWait); //wait for timeToWait seconds
+                        //var timeToWait = Int32.Parse(_config["TimeToWaitForUpload"])/1000;
+                        var timeToWait = 30;
+                        uploadTimeElapsed = 0;
+                        while (uploadTimeElapsed <= timeToWait)
+                        {
+                            System.Threading.Thread.Sleep(1000);
+                            uploadTimeElapsed++;
+                            StateHasChanged();
+                        }
+
+                        //System.Threading.Thread.Sleep(timeToWait); //wait for timeToWait seconds
 
                         //For testing without virus scan, comment the next line and uncomment the next to next line
                         var containerNameToDownloadFrom = _config["CleanContainer"]; //"cleanfiles";
-                                                                                     //var containerNameToDownloadFrom = _config["UnscannedContainer"];
+                        //var containerNameToDownloadFrom = _config["UnscannedContainer"];
 
                         var RSTEmailAddress = String.IsNullOrEmpty(_config["RSTEmailAddress"]) ? userDetails.Email : _config["RSTEmailAddress"];
                         var bytes = await blobStorageService.GetBlobAsByteArray(containerNameToDownloadFrom, trustedFileNameForFileStorage);
-                        if (bytes == null)
-                        {
-                            System.Threading.Thread.Sleep(5000);//wait for 5 more seconds
-                            bytes = await blobStorageService.GetBlobAsByteArray(containerNameToDownloadFrom, trustedFileNameForFileStorage);
-                        }
+                        // if (bytes == null)
+                        // {
+                        //     System.Threading.Thread.Sleep(5000);//wait for 5 more seconds
+                        //     bytes = await blobStorageService.GetBlobAsByteArray(containerNameToDownloadFrom, trustedFileNameForFileStorage);
+                        // }
                         if (bytes != null)
                         {
                             await _notificationService.SendConfirmationMailtoSE(userDetails.Email, reportSubmissionData.ReservoirRegName);
