@@ -354,7 +354,7 @@
                     <div class="spinner"></div>
                     <p class="govuk-body">This could take up to 20 seconds.
                         <div>
-                            <progress max="20" value=@uploadTimeElapsed style="width:100%; height:30px;"></progress>
+                            <progress max=@timeToWait value=@uploadTimeElapsed style="width:100%; height:30px;"></progress>
                         </div>
                     </p>
                 }
@@ -384,6 +384,7 @@
     public ReportSubmissionDataDto reportSubmissionData { get; set; }
 
     public int uploadTimeElapsed { get; set; } = 0;
+    public int timeToWait { get; set; } = 0;
 
     [CascadingParameter]
     public Task<AuthenticationState> AuthenticationStateTask { get; set; }
@@ -496,18 +497,14 @@
 
                         FileUploadInProgress = true;
                         StateHasChanged();
-                        //System.Threading.Thread.Sleep(20000);//wait for 20 seconds
-                        var timeToWait = Int32.Parse(_config["TimeToWaitForUpload"])/1000;
-                        //var timeToWait = 30;
+                        timeToWait = Int32.Parse(_config["TimeToWaitForUpload"]);
                         uploadTimeElapsed = 0;
-                        while (uploadTimeElapsed <= timeToWait)
+                        while (uploadTimeElapsed <= timeToWait-1)
                         {
                             System.Threading.Thread.Sleep(1000);
                             uploadTimeElapsed++;
                             StateHasChanged();
                         }
-
-                        //System.Threading.Thread.Sleep(timeToWait); //wait for timeToWait seconds
 
                         //For testing without virus scan, comment the next line and uncomment the next to next line
                         var containerNameToDownloadFrom = _config["CleanContainer"]; //"cleanfiles";
@@ -540,6 +537,8 @@
                             documentDTO.SubmissionId = updatedStatus.Id;
                             await reservoirService.InsertDocumentRelatedTable(Int32.Parse(reportSubmissionData.ReservoirId), updatedStatus.Id, docID);
                             Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Information("File upload succeeded.");
+                            uploadTimeElapsed++;
+                            StateHasChanged();
                             goToNextPage();
                         }
                         else
