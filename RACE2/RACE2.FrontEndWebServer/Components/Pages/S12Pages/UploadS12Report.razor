@@ -497,8 +497,8 @@
                         FileUploadInProgress = true;
                         StateHasChanged();
                         //System.Threading.Thread.Sleep(20000);//wait for 20 seconds
-                        //var timeToWait = Int32.Parse(_config["TimeToWaitForUpload"])/1000;
-                        var timeToWait = 30;
+                        var timeToWait = Int32.Parse(_config["TimeToWaitForUpload"])/1000;
+                        //var timeToWait = 30;
                         uploadTimeElapsed = 0;
                         while (uploadTimeElapsed <= timeToWait)
                         {
