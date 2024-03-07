@@ -92,7 +92,7 @@ namespace RACE2.MultipleTriggerAzureFunctionApp
 
             if (verdict == CleanVerdict)
             {
-                log.LogInformation("blob {0} is malicious, moving it to {1} container", blobUri, CleanContainer);
+                log.LogInformation("blob {0} is virus free, moving it to {1} container", blobUri, CleanContainer);
                 try
                 {
                     await MoveCleanBlobAsync(blobUri, log, isclean, Convert.ToDateTime(scannedTime));
