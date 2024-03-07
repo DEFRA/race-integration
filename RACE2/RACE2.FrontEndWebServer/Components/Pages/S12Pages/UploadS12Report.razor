@@ -521,7 +521,7 @@
                         StateHasChanged();
                         timeToWait = Int32.Parse(_config["TimeToWaitForUpload"]);
                         uploadTimeElapsed = 0;
-                        while (uploadTimeElapsed <= timeToWait-1)
+                        while (uploadTimeElapsed <= timeToWait-2)
                         {
                             System.Threading.Thread.Sleep(1000);
                             uploadTimeElapsed++;
