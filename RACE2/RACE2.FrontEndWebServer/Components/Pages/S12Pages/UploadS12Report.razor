@@ -346,18 +346,6 @@
                 }
                 else
                 {
-                    <div class="govuk-panel govuk-panel--confirmation govuk-!-margin-top-9">
-                        <div class="govuk-panel__title">
-                            File upload in progress.
-                        </div>
-                    </div>
-                      <p class="govuk-body">
-                        This could take up to 20 seconds.<br /><br />
-                        <div> Progress:<br /></div>
-                        <div>
-                            <progress max=@timeToWait value=@uploadTimeElapsed ></progress><span style="color:black;margin-left:10px;">@uploadPerc% complete</span>
-                        </div>
-                    </p>
                     @if (ValidationErrors.Count > 0)
                     {
                         <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -378,6 +366,18 @@
                             </div>
                         </div>
                     }
+                    <div class="govuk-panel govuk-panel--confirmation govuk-!-margin-top-9">
+                        <div class="govuk-panel__title">
+                            File upload in progress.
+                        </div>
+                    </div>
+                      <p class="govuk-body">
+                        This could take up to 20 seconds.<br /><br />
+                        <div> Progress:<br /></div>
+                        <div>
+                            <progress max=@timeToWait value=@uploadTimeElapsed ></progress><span style="color:black;margin-left:10px;">@uploadPerc% complete</span>
+                        </div>
+                    </p>                    
                 }
             </div>
         </div>
