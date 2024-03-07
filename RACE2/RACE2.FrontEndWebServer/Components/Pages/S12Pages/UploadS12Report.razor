@@ -351,14 +351,33 @@
                             File upload in progress.
                         </div>
                     </div>
-                    <div class="spinner"></div>
-                    <p class="govuk-body">
+                      <p class="govuk-body">
                         This could take up to 20 seconds.<br /><br />
                         <div> Progress:<br /></div>
                         <div>
-                            <progress max=@timeToWait value=@uploadTimeElapsed ></progress><span style="color:black;margin-left:10px;">@uploadPerc%</span>
+                            <progress max=@timeToWait value=@uploadTimeElapsed ></progress><span style="color:black;margin-left:10px;">@uploadPerc% Complete</span>
                         </div>
                     </p>
+                    @if (ValidationErrors.Count > 0)
+                    {
+                        <div class="govuk-error-summary" data-module="govuk-error-summary">
+                            <div role="alert">
+                                <h2 class="govuk-error-summary__title">
+                                    There is a problem
+                                </h2>
+                                @foreach (var error in ValidationErrors.Values)
+                                {
+                                    <div class="govuk-error-summary__body">
+                                        <ul class="govuk-list govuk-error-summary__list">
+                                            <li>
+                                                <a href="#">@error</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
                 }
             </div>
         </div>
