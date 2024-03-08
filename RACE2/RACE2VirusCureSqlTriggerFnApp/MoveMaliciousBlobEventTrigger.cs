@@ -115,9 +115,12 @@ namespace RACE2.MultipleTriggerAzureFunctionApp
                 return;
             }
             var destContainerUri = new Uri($"https://{blobUriBuilder.Host}/{MalwareContainer}");
-            var defaultAzureCredential = new DefaultAzureCredential();
-            var srcBlobClient = new BlobClient(blobUri, defaultAzureCredential);
-            var destContainerClient = new BlobContainerClient(destContainerUri, defaultAzureCredential);
+            var azureAppConfigUrl = Environment.GetEnvironmentVariable("AzureAppConfigURL");
+            var azureTenantId = Environment.GetEnvironmentVariable("AZURE_TENANT_ID");
+            var managedIdenityClientId = Environment.GetEnvironmentVariable("ManagedIdenityClientId");
+            var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions { TenantId = azureTenantId, ManagedIdentityClientId = managedIdenityClientId, VisualStudioTenantId = azureTenantId });
+            var srcBlobClient = new BlobClient(blobUri, credential);
+            var destContainerClient = new BlobContainerClient(destContainerUri, credential);
             log.LogInformation("Creating {0} container if it doesn't exist", MalwareContainer);
             await destContainerClient.CreateIfNotExistsAsync();
             var destBlobClient = destContainerClient.GetBlobClient(blobUriBuilder.BlobName);
@@ -153,9 +156,12 @@ namespace RACE2.MultipleTriggerAzureFunctionApp
                 return;
             }
             var destContainerUri = new Uri($"https://{blobUriBuilder.Host}/{CleanContainer}");
-            var defaultAzureCredential = new DefaultAzureCredential();
-            var srcBlobClient = new BlobClient(blobUri, defaultAzureCredential);
-            var destContainerClient = new BlobContainerClient(destContainerUri, defaultAzureCredential);
+            var azureAppConfigUrl = Environment.GetEnvironmentVariable("AzureAppConfigURL");
+            var azureTenantId = Environment.GetEnvironmentVariable("AZURE_TENANT_ID");
+            var managedIdenityClientId = Environment.GetEnvironmentVariable("ManagedIdenityClientId");
+            var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions { TenantId = azureTenantId, ManagedIdentityClientId = managedIdenityClientId, VisualStudioTenantId = azureTenantId });
+            var srcBlobClient = new BlobClient(blobUri, credential);
+            var destContainerClient = new BlobContainerClient(destContainerUri, credential);
             log.LogInformation("Creating {0} container if it doesn't exist", CleanContainer);
             await destContainerClient.CreateIfNotExistsAsync();
             var destBlobClient = destContainerClient.GetBlobClient(blobUriBuilder.BlobName);
