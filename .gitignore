@@ -465,3 +465,6 @@ FodyWeavers.xsd
 /RACE2/Visual Studio 2022/Visualizers
 
 /RACE2/RACE2.AzFnAppWithMultiTriggeredFunctions/Properties/launchSettings.json
+/RACE2/RACE2.AzFnAppWithMultiTriggeredFunctions/Properties/ServiceDependencies
+/RACE2/RACE2.AzFnAppWithMultiTriggeredFunctions/Properties
+*.json
