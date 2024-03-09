@@ -603,6 +603,8 @@
                             {
                                 Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File not scanned for virus.");
                                 FileUploadFailed();
+                                await reservoirService.UpdateReservoirStatus(Int32.Parse(reportSubmissionData.ReservoirId), userDetails.Id, "In progress");
+
                                 await InvokeAsync(() =>
                                 {
                                     StateHasChanged();
@@ -624,6 +626,7 @@
                     {
                         Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File upload failed.");
                         FileUploadFailed();
+                        await reservoirService.UpdateReservoirStatus(Int32.Parse(reportSubmissionData.ReservoirId), userDetails.Id, "In progress");
                         await InvokeAsync(() =>
                         {
                             StateHasChanged();
@@ -634,6 +637,7 @@
                 {
                     Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File upload failed : " + ex.Message);
                     FileUploadFailed();
+                    await reservoirService.UpdateReservoirStatus(Int32.Parse(reportSubmissionData.ReservoirId), userDetails.Id, "In progress");
                     await InvokeAsync(() =>
                     {
                         StateHasChanged();
