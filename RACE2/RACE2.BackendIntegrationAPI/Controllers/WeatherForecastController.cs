@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using RACE2.WebApiExternal;
-using RACE2.WebApiExternal.Authentication;
+using RACE2.BackendIntegrationAPI.Authentication;
 
-namespace RACE2APIExample.Controllers
+namespace RACE2.BackendIntegrationAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
@@ -20,7 +19,6 @@ namespace RACE2APIExample.Controllers
             _logger = logger;
         }
 
-        
         [HttpGet(Name = "GetWeatherForecast")]
         [ApiKeyAuthFilter]
         public IEnumerable<WeatherForecast> Get()

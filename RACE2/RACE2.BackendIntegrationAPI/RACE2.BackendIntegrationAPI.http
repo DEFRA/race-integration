@@ -1,0 +1,6 @@
+@RACE2.BackendIntegrationAPI_HostAddress = http://localhost:5219
+
+GET {{RACE2.BackendIntegrationAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
