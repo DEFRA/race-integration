@@ -1,15 +1,16 @@
-﻿@using System.Timers
+﻿using System.Timers
 @inherits LayoutComponentBase
 @inject NavigationManager UriHelper
 @inject IJSRuntime JSRuntime
 @inject IConfiguration _config;
 @inject IJSRuntime JSRuntime
 @using RACE2.FrontEndWebServer.ExceptionGlobalErrorHandling;
+@using RACE2.FrontEndWebServer.Components.Pages.S12Pages;
 @using RACE2.FrontEndWebServer.Helpers;
 
 <div class="page">
     <main>
-         <div id="components-reconnect-modal" class="my-reconnect-modal components-reconnect-hide">
+        <div id="components-reconnect-modal" class="my-reconnect-modal components-reconnect-hide">
             <div class="show">
                 <p>
                     Attempting to connect to server.....
@@ -26,14 +27,14 @@
                 </p>
             </div>
         </div>
-         <CustomErrorBoundary Context="exception" @ref="_customErrorBoundary">
+        <CustomErrorBoundary Context="exception" @ref="_customErrorBoundary">
             <ChildContent>
                 @Body
             </ChildContent>
             <ErrorContent Context="exception">
-                <RACE2.FrontEndWebServer.Pages.ApplicationErrorPage ErrorMessage="@exception.Message" />
+                <ApplicationErrorPage ErrorMessage="@exception.Message" />
             </ErrorContent>
-        </CustomErrorBoundary>    
+        </CustomErrorBoundary>
     </main>
 </div>
 
@@ -52,7 +53,7 @@
     // protected override async Task OnInitializedAsync()
     // {
     //     string timeoutDuration = _config["TimeoutDuration"];
-    //     // Set the Timer delay.        
+    //     // Set the Timer delay.
     //     timerObj = new Timer(Convert.ToInt32(timeoutDuration)); // new Timer(20 * 60 * 1000); //20 min timeout
     //     timerObj.Elapsed += UpdateTimer;
     //     timerObj.AutoReset = false;
