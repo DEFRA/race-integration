@@ -11,7 +11,7 @@ variables:
   azureServiceConnection: 'AZR-RAC-POC1'
   resourceGroupName: 'POCRACINFRG1401' 
   templateFile: './RACE2/bicepfiles/createcontainerappenv.bicep'
-  parametersFile: './RACE2/DeploymentYamlFiles/deployContainerAppEnvParameters.json'
+  parametersFile: './RACE2/bicepfiles/createcontainerappenv.bicepparam'
 pool:
   vmImage: $(vmImageName)
 
