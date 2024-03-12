@@ -23,4 +23,4 @@ steps:
     scriptLocation: inlineScript
     useGlobalConfig: false    
     inlineScript: |
-      az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) -p @$(parametersFile)
+      az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) -p $(parametersFile)
