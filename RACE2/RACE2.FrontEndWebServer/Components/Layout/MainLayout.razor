@@ -1,9 +1,9 @@
-﻿using System.Timers
-@inherits LayoutComponentBase
+﻿@inherits LayoutComponentBase
 @inject NavigationManager UriHelper
 @inject IJSRuntime JSRuntime
 @inject IConfiguration _config;
 @inject IJSRuntime JSRuntime
+@using System.Timers
 @using RACE2.FrontEndWebServer.ExceptionGlobalErrorHandling;
 @using RACE2.FrontEndWebServer.Components.Pages.S12Pages;
 @using RACE2.FrontEndWebServer.Helpers;
@@ -85,8 +85,15 @@
 
     protected async override Task OnInitializedAsync()
     {
-        await JSRuntime.InitializeInactivityTimer(DotNetObjectReference.Create(this));
-        await base.OnInitializedAsync();
+        try
+        {
+            await JSRuntime.InitializeInactivityTimer(DotNetObjectReference.Create(this));
+            await base.OnInitializedAsync();
+        }
+        catch (JSDisconnectedException ex)
+        {
+            // Ignore
+        }
     }
 
     [JSInvokable]
