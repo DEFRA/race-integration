@@ -159,6 +159,11 @@ try
                     }
 
                     return Task.CompletedTask;
+                },
+                OnAuthenticationFailed = (ctx) => {
+                    ctx.Response.Redirect("/login");
+                    ctx.HandleResponse();
+                    return Task.CompletedTask;
                 }
             };
         });
