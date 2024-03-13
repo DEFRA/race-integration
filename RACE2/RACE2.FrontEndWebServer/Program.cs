@@ -149,6 +149,16 @@ try
                     context.HandleResponse();
                     context.Response.Redirect("/");
                     return Task.CompletedTask;
+                },
+                OnRemoteFailure = (ctx) =>
+                {
+                    if (ctx.Failure?.Message == "Correlation failed.")
+                    {
+                        ctx.Response.Redirect("/login");
+                        ctx.HandleResponse();
+                    }
+
+                    return Task.CompletedTask;
                 }
             };
         });
