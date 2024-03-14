@@ -154,14 +154,14 @@ try
                 {
                     if (ctx.Failure?.Message == "Correlation failed.")
                     {
-                        ctx.Response.Redirect("/login");
+                        ctx.Response.Redirect("/");
                         ctx.HandleResponse();
                     }
 
                     return Task.CompletedTask;
                 },
                 OnAuthenticationFailed = (ctx) => {
-                    ctx.Response.Redirect("/login");
+                    ctx.Response.Redirect("/");
                     ctx.HandleResponse();
                     return Task.CompletedTask;
                 }
@@ -206,7 +206,7 @@ try
 
     app.UseCookiePolicy(new CookiePolicyOptions
     {
-        MinimumSameSitePolicy = SameSiteMode.None
+        MinimumSameSitePolicy = SameSiteMode.Lax
     });
 
     app.UseStaticFiles();
