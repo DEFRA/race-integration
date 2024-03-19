@@ -41,6 +41,9 @@
 	  <Content Update="Components\Pages\S12Pages\ApplicationErrorPage.razor">
 	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
 	  </Content>
+	  <Content Update="wwwroot\assets\images\upload-file-icon.svg">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
 	</ItemGroup>
 
 </Project>
