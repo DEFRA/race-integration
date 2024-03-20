@@ -125,11 +125,20 @@
                             </label>
                             <div class="upload-progress-container">
                                 @* <img class="upload-icon govuk-!-margin-top-3" src="images/upload file icon.svg" alt="Uploading file icon"> *@
-                                    
-                                <span style="font-size: 24pt; font-weight: 400; font-family: GDS Transport, arial, sans-serif; float:left;">
-                                    <img style="width:50px;height:50px;" src=@imageSource alt="Uploading file icon">
-                                    @uploadPerc% complete.
-                                </span>
+                                @if (uploadPerc < 100)    
+                                    {
+                                    <span style="font-size: 24pt; font-weight: 400; font-family: GDS Transport, arial, sans-serif; float:left;">
+                                        <img style="width:50px;height:50px;" src=@imageSourceProgress alt="Uploading file icon">
+                                        @uploadPerc% complete.
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span style="font-size: 24pt; font-weight: 400; font-family: GDS Transport, arial, sans-serif; float:left;">
+                                        <img style="width:50px;height:50px;" src=@imageSourceComplete alt="Uploading file icon">
+                                        100% complete.
+                                    </span>
+                                }
                             </div>
                         </div>
                     </div>
@@ -174,7 +183,8 @@
     public int uploadTimeElapsed { get; set; } = 0;
     public int uploadPerc { get; set; } = 0;
     public int timeToWait { get; set; } = 0;
-    private string? imageSource = $"assets/images/upload-file-icon.svg";
+    private string? imageSourceProgress = $"assets/images/upload-file-icon.svg";
+    private string? imageSourceComplete = $"assets/images/upload-complete-icon.svg";
 
     [CascadingParameter]
     public Task<AuthenticationState> AuthenticationStateTask { get; set; }
@@ -331,6 +341,7 @@
                             uploadTimeElapsed++;
                             uploadPerc = Convert.ToInt32((Convert.ToDouble(uploadTimeElapsed) / Convert.ToDouble(timeToWait)) * 100.0);
                             StateHasChanged();
+                            System.Threading.Thread.Sleep(2000);
                             goToNextPage();
                         }
                         else
