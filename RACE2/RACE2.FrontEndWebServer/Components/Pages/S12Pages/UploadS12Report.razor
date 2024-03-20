@@ -34,8 +34,13 @@
 
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-three-quarters">
+<<<<<<< HEAD
                @if (!FileUploadInProgress)
                 {
+=======
+                @*                 @if (!FileUploadInProgress)
+                { *@
+>>>>>>> 05eab72400c4e7c9e5300c704c260c42ee1b927f
                 <EditForm Model="@uploadFileData" OnSubmit="OnUploadSubmit">
                     @*                     @if (UploadFileData.FileIsEmpty)
                     {
@@ -343,9 +348,10 @@
                         Upload and send statement
                     </button>
                 </EditForm>
-                }
+                @*}
                 else
                 {
+<<<<<<< HEAD
                     <div class="govuk-panel govuk-panel--confirmation govuk-!-margin-top-9">
                         <div class="govuk-panel__title">
                             File upload in progress.
@@ -360,6 +366,11 @@
                         </div>
                     </p>
                 }
+=======
+                <p class="govuk-body">File upload in progress.</p>
+                <p class="govuk-body">This could take up to 20 seconds.</p>
+                } *@
+>>>>>>> 05eab72400c4e7c9e5300c704c260c42ee1b927f
             </div>
         </div>
     </main>
@@ -385,9 +396,12 @@
 
     public ReportSubmissionDataDto reportSubmissionData { get; set; }
 
+<<<<<<< HEAD
     public int uploadTimeElapsed { get; set; } = 0;
     public int timeToWait { get; set; } = 0;
 
+=======
+>>>>>>> 05eab72400c4e7c9e5300c704c260c42ee1b927f
     [CascadingParameter]
     public Task<AuthenticationState> AuthenticationStateTask { get; set; }
 
@@ -462,6 +476,12 @@
             {
                 try
                 {
+                    //FileUploadInProgress = true;
+                    //await InvokeAsync(() =>
+                    //{
+                    //    StateHasChanged();
+                    //});
+
                     //var containerName = UserName.Split("@")[0];
                     //if (containerName.Contains('.'))
                     //{
@@ -498,6 +518,7 @@
                         //_fileNameResult=await jsRuntime.InvokeAsync<string>("getFileName");
 
                         FileUploadInProgress = true;
+<<<<<<< HEAD
                         StateHasChanged();
                         timeToWait = Int32.Parse(_config["TimeToWaitForUpload"]);
                         uploadTimeElapsed = 0;
@@ -505,20 +526,27 @@
                         {
                             System.Threading.Thread.Sleep(1000);
                             uploadTimeElapsed++;
+=======
+                        await InvokeAsync(() =>
+                        {
+>>>>>>> 05eab72400c4e7c9e5300c704c260c42ee1b927f
                             StateHasChanged();
-                        }
+                        });
+                        //System.Threading.Thread.Sleep(20000);//wait for 20 seconds
+                        var timeToWait = Int32.Parse(_config["TimeToWaitForUpload"]);
+                        System.Threading.Thread.Sleep(timeToWait); //wait for timeToWait seconds
 
                         //For testing without virus scan, comment the next line and uncomment the next to next line
                         var containerNameToDownloadFrom = _config["CleanContainer"]; //"cleanfiles";
-                        //var containerNameToDownloadFrom = _config["UnscannedContainer"];
+                                                                                     //var containerNameToDownloadFrom = _config["UnscannedContainer"];
 
                         var RSTEmailAddress = String.IsNullOrEmpty(_config["RSTEmailAddress"]) ? userDetails.Email : _config["RSTEmailAddress"];
                         var bytes = await blobStorageService.GetBlobAsByteArray(containerNameToDownloadFrom, trustedFileNameForFileStorage);
-                        // if (bytes == null)
-                        // {
-                        //     System.Threading.Thread.Sleep(5000);//wait for 5 more seconds
-                        //     bytes = await blobStorageService.GetBlobAsByteArray(containerNameToDownloadFrom, trustedFileNameForFileStorage);
-                        // }
+                        if (bytes == null)
+                        {
+                            System.Threading.Thread.Sleep(5000);//wait for 5 more seconds
+                            bytes = await blobStorageService.GetBlobAsByteArray(containerNameToDownloadFrom, trustedFileNameForFileStorage);
+                        }
                         if (bytes != null)
                         {
                             await _notificationService.SendConfirmationMailtoSE(userDetails.Email, reportSubmissionData.ReservoirRegName);
@@ -539,8 +567,11 @@
                             documentDTO.SubmissionId = updatedStatus.Id;
                             await reservoirService.InsertDocumentRelatedTable(Int32.Parse(reportSubmissionData.ReservoirId), updatedStatus.Id, docID);
                             Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Information("File upload succeeded.");
+<<<<<<< HEAD
                             uploadTimeElapsed++;
                             StateHasChanged();
+=======
+>>>>>>> 05eab72400c4e7c9e5300c704c260c42ee1b927f
                             goToNextPage();
                         }
                         else
