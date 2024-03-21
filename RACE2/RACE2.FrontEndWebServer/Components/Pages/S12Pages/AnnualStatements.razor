@@ -24,6 +24,7 @@
 @inject IReservoirService reservoirService
 @inject IJSRuntime jsRuntime
 @inject NavigationManager NavigationManager
+@inject ProtectedSessionStorage ProtectedSessionStore
 
 @attribute [Authorize]
 
@@ -199,9 +200,6 @@
 
     [CascadingParameter]
     public Task<AuthenticationState> AuthenticationStateTask { get; set; }
-
-    [CascadingParameter]
-    private ReportSubmissionDataStateProvider? ReportSubmissionDataStateProvider { get; set; }
 
     protected async override Task OnInitializedAsync()
     {
@@ -500,16 +498,15 @@
     private async Task gotoSubmissionPage(ReservoirsLinkedToUserForDisplay Item)
     {
         ReportSubmissionDataDto reportSubmissionData = new ReportSubmissionDataDto
-        {
-            ReservoirId = Item.ReservoirID.ToString(),
-            ReservoirRegName = Item.ReservoirName,
-            UndertakerName = Item.UndertakerName,
-            UndertakerEmail = String.IsNullOrEmpty(Item.UndertakerEmail) ? " " : Item.UndertakerEmail,
-            SubmissionReference = Item.SubmissionReference,
-            YesNoValue = ""
-        };
-        ReportSubmissionDataStateProvider.CurrentReportSubmissionData = reportSubmissionData;
-        await ReportSubmissionDataStateProvider.SaveChangesAsync();
+            {
+                ReservoirId = Item.ReservoirID.ToString(),
+                ReservoirRegName = Item.ReservoirName,
+                UndertakerName = Item.UndertakerName,
+                UndertakerEmail = String.IsNullOrEmpty(Item.UndertakerEmail) ? " " : Item.UndertakerEmail,
+                SubmissionReference = Item.SubmissionReference,
+                YesNoValue = ""
+            };
+        await ProtectedSessionStore.SetAsync("CurrentReportSubmissionData", reportSubmissionData);
         bool forceLoad = false;
         string pagelink = $"/send-your-statement";
         NavigationManager.NavigateTo(pagelink, forceLoad);

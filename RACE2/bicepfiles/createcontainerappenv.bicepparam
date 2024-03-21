@@ -1,7 +1,7 @@
 using './createcontainerappenv.bicep'
 
-param race2appenv = 'race2containerappenv'
-param location = 'west europe'
-param lawsCustromerId = '92b64c2e-287a-423c-b3fe-14198a7f3fd5'
-param lawsSharedKey = '7i/WcjgjAq3sW0SyUtYvsyvEvVPcsmqtGYP5WOshZuSi5NhEyMoQNidaThq3nLYvpmQNR2RlRZbXW0s+qzKYoQ=='
+param race2appenv = 'POCRACINFAE1401'
+param location = 'uksouth'
+param lawsCustromerId = '35cfb691-df31-4bd8-aa9f-6f3d12434e97'
+param lawsSharedKey = 'qCnT2sHUtT0tRfJ3krySO+Hs5bPzeshaKgABxsSZSxIHWoqyEas2+s8qnq43CscG354bJ4MlAPuprBz/zKF76A=='
 param infrastructureSubnetId = ''

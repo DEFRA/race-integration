@@ -1,5 +1,4 @@
 ﻿<CascadingAuthenticationState>
-    <ReportSubmissionDataStateProvider>
         <Router AppAssembly="@typeof(Program).Assembly">
             <Found Context="routeData">
                 <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(Layout.MainLayout)">
@@ -7,12 +6,11 @@
                        <RedirectToLogin />
                     </NotAuthorized>
                 </AuthorizeRouteView>
-@*                 <FocusOnNavigate RouteData="@routeData" Selector="h1" /> *@
+            <FocusOnNavigate RouteData="@routeData" Selector="h7" />
             </Found>
             <NotFound>
                 <RedirectToPageNotFound />
             </NotFound>
         </Router>
-    </ReportSubmissionDataStateProvider>
 </CascadingAuthenticationState>
 

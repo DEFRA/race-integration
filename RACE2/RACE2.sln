@@ -35,6 +35,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.MultipleTriggerAzureF
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.BackendAPIIntegration", "RACE2.BackendAPIIntegration\RACE2.BackendAPIIntegration.csproj", "{FDDB1596-2EC3-4893-BA27-A1DEC2F2B527}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.AzFnAppWithMultiTriggeredFunctions", "RACE2.AzFnAppWithMultiTriggeredFunctions\RACE2.AzFnAppWithMultiTriggeredFunctions.csproj", "{12DD928D-4763-41B0-AADF-509EF3D08594}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -105,6 +107,11 @@ Global
 		{FDDB1596-2EC3-4893-BA27-A1DEC2F2B527}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FDDB1596-2EC3-4893-BA27-A1DEC2F2B527}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FDDB1596-2EC3-4893-BA27-A1DEC2F2B527}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12DD928D-4763-41B0-AADF-509EF3D08594}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12DD928D-4763-41B0-AADF-509EF3D08594}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12DD928D-4763-41B0-AADF-509EF3D08594}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12DD928D-4763-41B0-AADF-509EF3D08594}.Release|Any CPU.Build.0 = Release|Any CPU
+
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
