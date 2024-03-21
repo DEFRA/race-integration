@@ -33,7 +33,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.FrontEndWebServer", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.MultipleTriggerAzureFunctionApp", "RACE2VirusCureSqlTriggerFnApp\RACE2.MultipleTriggerAzureFunctionApp.csproj", "{7FE13EE9-D2EE-420C-9907-FA4C762A81B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RACE2.BackendIntegrationAPI", "RACE2.BackendIntegrationAPI\RACE2.BackendIntegrationAPI.csproj", "{D08E99C2-484C-4E97-8FEF-4CEFA7FF6D4A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.BackendAPIIntegration", "RACE2.BackendAPIIntegration\RACE2.BackendAPIIntegration.csproj", "{FDDB1596-2EC3-4893-BA27-A1DEC2F2B527}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -101,10 +101,10 @@ Global
 		{7FE13EE9-D2EE-420C-9907-FA4C762A81B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7FE13EE9-D2EE-420C-9907-FA4C762A81B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7FE13EE9-D2EE-420C-9907-FA4C762A81B6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D08E99C2-484C-4E97-8FEF-4CEFA7FF6D4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D08E99C2-484C-4E97-8FEF-4CEFA7FF6D4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D08E99C2-484C-4E97-8FEF-4CEFA7FF6D4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D08E99C2-484C-4E97-8FEF-4CEFA7FF6D4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FDDB1596-2EC3-4893-BA27-A1DEC2F2B527}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDDB1596-2EC3-4893-BA27-A1DEC2F2B527}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDDB1596-2EC3-4893-BA27-A1DEC2F2B527}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDDB1596-2EC3-4893-BA27-A1DEC2F2B527}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

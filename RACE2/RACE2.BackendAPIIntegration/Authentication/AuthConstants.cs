@@ -1,4 +1,4 @@
-﻿namespace RACE2.BackendIntegrationAPI.Authentication
+﻿namespace RACE2.BackendAPIIntegration.Authentication
 {
     public static class AuthConstants
     {

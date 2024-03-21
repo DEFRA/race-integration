@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace RACE2.BackendIntegrationAPI.Authentication
+namespace RACE2.BackendAPIIntegration.Authentication
 {
     public class ApiKeyAuthFilter : Attribute, IAuthorizationFilter
     {

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using RACE2.BackendIntegrationAPI.Authentication;
+using RACE2.BackendAPIIntegration.Authentication;
 
-namespace RACE2.BackendIntegrationAPI.Controllers
+namespace RACE2.BackendAPIIntegration.Controllers
 {
     [ApiController]
     [Route("[controller]")]
@@ -19,8 +19,8 @@ namespace RACE2.BackendIntegrationAPI.Controllers
             _logger = logger;
         }
 
-        [HttpGet(Name = "GetWeatherForecast")]
         [ApiKeyAuthFilter]
+        [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
