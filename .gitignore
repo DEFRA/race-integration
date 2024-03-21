@@ -473,3 +473,4 @@ FodyWeavers.xsd
 *.json
 >>>>>>> ca0a7afbfa64e4a00bfbf117f0b343aad0fbc9b0
 /RACE2
+/RACE2/RACE2VirusCureSqlTriggerFnApp/Properties/serviceDependencies.json
