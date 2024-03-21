@@ -1,4 +1,4 @@
-﻿@page "/upload-your-template"
+@page "/upload-your-template"
 @using Microsoft.AspNetCore.Authorization;
 @using Microsoft.AspNetCore.Components
 @using Microsoft.AspNetCore.Components.Authorization
@@ -34,253 +34,9 @@
 
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-three-quarters">
-                @*                 @if (!FileUploadInProgress)
-                { *@
-                <EditForm Model="@uploadFileData" OnSubmit="OnUploadSubmit">
-                    @*                     @if (UploadFileData.FileIsEmpty)
-                    {
-                    <div class="govuk-error-summary" data-module="govuk-error-summary">
-                    <div role="alert">
-                    <h2 class="govuk-error-summary__title">
-                    There is a problem
-                    </h2>
-                    <div class="govuk-error-summary__body">
-                    <ul class="govuk-list govuk-error-summary__list">
-                    <li>
-                    <a href="#">  The selected file is empty</a>
-                    </li>
-                    </ul>
-                    </div>
-                    </div>
-                    </div>
-                    <div class="govuk-form-group govuk-form-group--error">
-                    <label class="govuk-label" for="file-upload">
-                    <div class="govuk-heading-xl govuk-!-margin-bottom-5">
-                    Upload your statement
-                    </div>
-                    </label>
-                    <div id="file-upload-hint" class="govuk-hint">
-                    You can upload your statement as a PDF or Word document. It can be up to 30MB.
-                    </div>
-                    <br />
-                    <p id="file-upload-error" class="govuk-error-message">
-                    <span class="govuk-visually-hidden">Error:</span>  The selected file is empty
-                    </p>
-                    <InputFile class="govuk-file-upload govuk-file-upload--error" id="file-upload" name="fileUpload" type="file"
-                    aria-describedby="file-upload-error" OnChange="OnInputFileChange" multiple />
-                    <p class="govuk-body" style="margin-top:25px;">We’ll check the statement when you upload it.</p>
-                    <p class="govuk-body">This could take up to 20 seconds.</p>
-                    </div>
-                    }
-                    else if (UploadFileData.FileUploadFailed)
-                    {
-                    <div class="govuk-error-summary" data-module="govuk-error-summary">
-                    <div role="alert">
-                    <h2 class="govuk-error-summary__title">
-                    There is a problem
-                    </h2>
-                    <div class="govuk-error-summary__body">
-                    <ul class="govuk-list govuk-error-summary__list">
-                    <li>
-                    <a href="#"> The selected file could not be uploaded - try again</a>
-                    </li>
-                    </ul>
-                    </div>
-                    </div>
-                    </div>
-                    <div class="govuk-form-group govuk-form-group--error">
-                    <label class="govuk-label" for="file-upload">
-                    <div class="govuk-heading-xl govuk-!-margin-bottom-5">
-                    Upload your statement
-                    </div>
-                    </label>
-                    <div id="file-upload-hint" class="govuk-hint">
-                    You can upload your statement as a PDF or Word document. It can be up to 30MB.
-                    </div>
-                    <br />
-                    <p id="file-upload-error" class="govuk-error-message">
-                    <span class="govuk-visually-hidden">Error:</span> The selected file could not be uploaded - try again
-                    </p>
-                    <InputFile class="govuk-file-upload govuk-file-upload--error" id="file-upload" name="fileUpload" type="file"
-                    aria-describedby="file-upload-error" OnChange="OnInputFileChange" multiple />
-                    <p class="govuk-body" style="margin-top:25px;">We’ll check the statement when you upload it.</p>
-                    <p class="govuk-body">This could take up to 20 seconds.</p>
-                    </div>
-                    }
-                    else if (UploadFileData.NoFileSelected)
-                    {
-                    <div class="govuk-error-summary" data-module="govuk-error-summary">
-                    <div role="alert">
-                    <h2 class="govuk-error-summary__title">
-                    There is a problem
-                    </h2>
-                    <div class="govuk-error-summary__body">
-                    <ul class="govuk-list govuk-error-summary__list">
-                    <li>
-                    <a href="#"> Select a file</a>
-                    </li>
-                    </ul>
-                    </div>
-                    </div>
-                    </div>
-                    <div class="govuk-form-group govuk-form-group--error">
-                    <label class="govuk-label" for="file-upload">
-                    <div class="govuk-heading-xl govuk-!-margin-bottom-5">
-                    Upload your statement
-                    </div>
-                    </label>
-                    <div id="file-upload-hint" class="govuk-hint">
-                    You can upload your statement as a PDF or Word document. It can be up to 30MB.
-                    </div>
-                    <br />
-                    <p id="file-upload-error" class="govuk-error-message">
-                    <span class="govuk-visually-hidden">Error:</span> Select a file
-                    </p>
-                    <InputFile class="govuk-file-upload govuk-file-upload--error" id="file-upload" name="fileUpload" type="file"
-                    aria-describedby="file-upload-error" OnChange="OnInputFileChange" multiple />
-                    <p class="govuk-body" style="margin-top:25px;">We’ll check the statement when you upload it.</p>
-                    <p class="govuk-body">This could take up to 20 seconds.</p>
-                    </div>
-                    }
-                    else if (UploadFileData.MoreThanOneFileSelected)
-                    {
-                    <div class="govuk-error-summary" data-module="govuk-error-summary">
-                    <div role="alert">
-                    <h2 class="govuk-error-summary__title">
-                    There is a problem
-                    </h2>
-                    <div class="govuk-error-summary__body">
-                    <ul class="govuk-list govuk-error-summary__list">
-                    <li>
-                    <a href="#">You can only select up to 1 file at the same time</a>
-                    </li>
-                    </ul>
-                    </div>
-                    </div>
-                    </div>
-                    <div class="govuk-form-group govuk-form-group--error">
-                    <label class="govuk-label" for="file-upload">
-                    <div class="govuk-heading-xl govuk-!-margin-bottom-5">
-                    Upload your statement
-                    </div>
-                    </label>
-                    <div id="file-upload-hint" class="govuk-hint">
-                    You can upload your statement as a PDF or Word document. It can be up to 30MB.
-                    </div>
-                    <br />
-                    <p id="file-upload-error" class="govuk-error-message">
-                    <span class="govuk-visually-hidden">Error:</span> You can only select up to 1 file at the same time
-                    </p>
-                    <InputFile class="govuk-file-upload govuk-file-upload--error" id="file-upload" name="fileUpload" type="file"
-                    aria-describedby="file-upload-error" OnChange="OnInputFileChange" multiple />
-                    <p class="govuk-body" style="margin-top:25px;">We’ll check the statement when you upload it.</p>
-                    <p class="govuk-body">This could take up to 20 seconds.</p>
-                    </div>
-                    }
-                    else if (UploadFileData.WrongExtensionSelected)
-                    {
-                    <div class="govuk-error-summary" data-module="govuk-error-summary">
-                    <div role="alert">
-                    <h2 class="govuk-error-summary__title">
-                    There is a problem
-                    </h2>
-                    <div class="govuk-error-summary__body">
-                    <ul class="govuk-list govuk-error-summary__list">
-                    <li>
-                    <a href="#"> The selected file must be a PDF or a Word document</a>
-                    </li>
-                    </ul>
-                    </div>
-                    </div>
-                    </div>
-                    <div class="govuk-form-group govuk-form-group--error">
-                    <label class="govuk-label" for="file-upload">
-                    <div class="govuk-heading-xl govuk-!-margin-bottom-5">
-                    Upload your statement
-                    </div>
-                    </label>
-                    <div id="file-upload-hint" class="govuk-hint">
-                    You can upload your statement as a PDF or Word document. It can be up to 30MB.
-                    </div>
-                    <br />
-                    <p id="file-upload-error" class="govuk-error-message">
-                    <span class="govuk-visually-hidden">Error:</span> The selected file must be a PDF or a Word document
-                    </p>
-                    <InputFile class="govuk-file-upload govuk-file-upload--error" id="file-upload" name="fileUpload" type="file"
-                    aria-describedby="file-upload-error" OnChange="OnInputFileChange" multiple />
-                    <p class="govuk-body" style="margin-top:25px;">We’ll check the statement when you upload it.</p>
-                    <p class="govuk-body">This could take up to 20 seconds.</p>
-                    </div>
-                    }
-                    else if (UploadFileData.MaxFileSizeExceeded)
-                    {
-                    <div class="govuk-error-summary" data-module="govuk-error-summary">
-                    <div role="alert">
-                    <h2 class="govuk-error-summary__title">
-                    There is a problem
-                    </h2>
-                    <div class="govuk-error-summary__body">
-                    <ul class="govuk-list govuk-error-summary__list">
-                    <li>
-                    <a href="#">The selected file must be smaller than 30MB</a>
-                    </li>
-                    </ul>
-                    </div>
-                    </div>
-                    </div>
-                    <div class="govuk-form-group govuk-form-group--error">
-                    <label class="govuk-label" for="file-upload">
-                    <div class="govuk-heading-xl govuk-!-margin-bottom-5">Upload your statement
-                    </div>
-                    </label>
-                    <div id="file-upload-hint" class="govuk-hint">
-                    You can upload your statement as a PDF or Word document. It can be up to 30MB.
-                    </div>
-                    <br/>
-                    <p id="file-upload-error" class="govuk-error-message">
-                    <span class="govuk-visually-hidden">Error:</span>The selected file must be smaller than 30MB
-                    </p>
-                    <InputFile class="govuk-file-upload govuk-file-upload--error" id="file-upload" name="fileUpload" type="file"
-                    aria-describedby="file-upload-error" OnChange="OnInputFileChange" multiple />
-                    <p class="govuk-body" style="margin-top:25px;">We’ll check the statement when you upload it.</p>
-                    <p class="govuk-body">This could take up to 20 seconds.</p>
-                    </div>
-                    }
-                    else if (UploadFileData.FileContainsVirus)
-                    {
-                    <div class="govuk-error-summary" data-module="govuk-error-summary">
-                    <div role="alert">
-                    <h2 class="govuk-error-summary__title">
-                    There is a problem
-                    </h2>
-                    <div class="govuk-error-summary__body">
-                    <ul class="govuk-list govuk-error-summary__list">
-                    <li>
-                    <a href="#">The selected file contains a virus</a>
-                    </li>
-                    </ul>
-                    </div>
-                    </div>
-                    </div>
-                    <div class="govuk-form-group govuk-form-group--error">
-                    <label class="govuk-label" for="file-upload">
-                    <div class="govuk-heading-xl govuk-!-margin-bottom-5">
-                    Upload your statement
-                    </div>
-                    </label>
-                    <div id="file-upload-hint" class="govuk-hint">
-                    You can upload your statement as a PDF or Word document. It can be up to 30MB.
-                    </div>
-                    <br />
-                    <p id="file-upload-error" class="govuk-error-message">
-                    <span class="govuk-visually-hidden">Error:</span>The selected file contains a virus
-                    </p>
-                    <InputFile class="govuk-file-upload govuk-file-upload--error" id="file-upload" name="fileUpload" type="file"
-                    aria-describedby="file-upload-error" OnChange="OnInputFileChange" multiple />
-                    <p class="govuk-body" style="margin-top:25px;">We’ll check the statement when you upload it.</p>
-                    <p class="govuk-body">This could take up to 20 seconds.</p>
-                    </div>
-                    } *@
+               @if (!FileUploadInProgress)
+                {
+                <EditForm Model="@uploadFileData" OnSubmit="OnUploadSubmit">                   
                     @if (ValidationErrors.Count > 0)
                     {
                         <div class="govuk-error-summary" data-module="govuk-error-summary">
@@ -316,10 +72,6 @@
                                     <span class="govuk-visually-hidden">Error:</span>@error
                                 </p>
                             }
-                            <InputFile class="govuk-file-upload govuk-file-upload--error" id="file-upload" name="fileUpload" type="file"
-                                       aria-describedby="file-upload-error" OnChange="OnInputFileChange" multiple />
-                            <p class="govuk-body" style="margin-top:25px;">We’ll check the statement when you upload it.</p>
-                            <p class="govuk-body">This could take up to 20 seconds.</p>
                         </div>
                     }
                     else
@@ -332,23 +84,77 @@
                                 You can upload your statement as a PDF or Word document. It can be up to 30MB.
                             </div>
                             <br />
-                            <InputFile id="file-upload" name="file-upload" class="govuk-file-upload" OnChange="OnInputFileChange" multiple />
-                            <p class="govuk-body" style="margin-top:25px;">We’ll check the statement when you upload it.</p>
-                            <p class="govuk-body">This could take up to 20 seconds.</p>
                         </div>
                     }
+                    <InputFile id="file-upload" name="file-upload" class="govuk-file-upload" OnChange="OnInputFileChange" multiple />
+                    <p class="govuk-body" style="margin-top:25px;">We’ll check the statement when you upload it.</p>
+                    <p class="govuk-body">This could take up to 20 seconds.</p>
                     <button type="submit" draggable="false"
                             class="govuk-button govuk-!-margin-top-6 govuk-!-margin-bottom-6 govuk-!-margin-right-4"
                             data-module="govuk-button">
                         Upload and send statement
                     </button>
                 </EditForm>
-                @*}
+                }
                 else
                 {
-                <p class="govuk-body">File upload in progress.</p>
-                <p class="govuk-body">This could take up to 20 seconds.</p>
-                } *@
+                    @if (ValidationErrors.Count > 0)
+                    {
+                        <div class="govuk-error-summary" data-module="govuk-error-summary">
+                            <div role="alert">
+                                <h2 class="govuk-error-summary__title">
+                                    There is a problem
+                                </h2>
+                                @foreach (var error in ValidationErrors.Values)
+                                {
+                                    <div class="govuk-error-summary__body">
+                                        <ul class="govuk-list govuk-error-summary__list">
+                                            <li>
+                                                <a href="#">@error</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                    <div class="govuk-grid-row">                        
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="file-upload-1">
+                                <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">Uploading your statement</h1>
+                            </label>
+                            <div class="upload-progress-container">
+                                @* <img class="upload-icon govuk-!-margin-top-3" src="images/upload file icon.svg" alt="Uploading file icon"> *@
+                                @if (uploadPerc < 100)    
+                                    {
+                                    <span style="font-size: 24pt; font-weight: 400; font-family: GDS Transport, arial, sans-serif; float:left;">
+                                        <img style="width:50px;height:50px;" src=@imageSourceProgress alt="Uploading file icon">
+                                        @uploadPerc% complete.
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span style="font-size: 24pt; font-weight: 400; font-family: GDS Transport, arial, sans-serif; float:left;">
+                                        <img style="width:50px;height:50px;" src=@imageSourceComplete alt="Uploading file icon">
+                                        100% complete.
+                                    </span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+@*                     <div class="govuk-panel govuk-panel--confirmation govuk-!-margin-top-9">
+                        <div class="govuk-panel__title">
+                            File upload in progress.
+                        </div>
+                    </div>
+                      <p class="govuk-body">
+                        This could take up to 20 seconds.<br /><br />
+                        <div> Progress:<br /></div>
+                        <div>
+                            <progress max=@timeToWait value=@uploadTimeElapsed ></progress><span style="color:black;margin-left:10px;">@uploadPerc% complete</span>
+                        </div>
+                    </p>                    
+ *@                }
             </div>
         </div>
     </main>
@@ -364,8 +170,8 @@
     private UserSpecificDto userDetails { get; set; }
     public string ReservoirName { get; set; } = default!;
     private IBrowserFile loadedFile;
-    IBrowserFile selectedFile;
-    List<IBrowserFile> selectedFiles;
+    private IBrowserFile selectedFile;
+    private List<IBrowserFile> selectedFiles { get; set; } = new List<IBrowserFile>();
     private UploadFileData uploadFileData { get; set; } = new UploadFileData();
     private List<FileUploadViewModel> fileUploadViewModels = new();
     DocumentDTO documentDTO = new DocumentDTO();
@@ -373,6 +179,12 @@
     public Dictionary<string, string> ValidationErrors = new Dictionary<string, string>();
 
     public ReportSubmissionDataDto reportSubmissionData { get; set; }
+
+    public int uploadTimeElapsed { get; set; } = 0;
+    public int uploadPerc { get; set; } = 0;
+    public int timeToWait { get; set; } = 0;
+    private string? imageSourceProgress = $"assets/images/upload-file-icon.svg";
+    private string? imageSourceComplete = $"assets/images/upload-complete-icon.svg";
 
     [CascadingParameter]
     public Task<AuthenticationState> AuthenticationStateTask { get; set; }
@@ -419,7 +231,7 @@
         }
         else
         {
-            selectedFile = selectedFiles[0];
+            selectedFile = selectedFiles.FirstOrDefault();
             var fileExtns = selectedFile.Name.Split('.');
             int totalExtns = fileExtns.Length;
             fileExtn = selectedFile.Name.Split('.')[totalExtns - 1];
@@ -448,20 +260,14 @@
             {
                 try
                 {
-                    //FileUploadInProgress = true;
-                    //await InvokeAsync(() =>
-                    //{
-                    //    StateHasChanged();
-                    //});
-
                     //var containerName = UserName.Split("@")[0];
                     //if (containerName.Contains('.'))
                     //{
                     //    containerName = containerName.Split('.')[0];
                     //}
                     var containerNameToUplodTo = _config["UnscannedContainer"];//"unscannedcontent";
-                                                                               //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + "."+ extn;
-                                                                               //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + SubmissionReference + "." + fileExtn;
+                    //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + "."+ extn;
+                    //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + SubmissionReference + "." + fileExtn;
                     var trustedFileNameForFileStorage = reportSubmissionData.SubmissionReference + "_" + DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + DateTime.Now.Hour + DateTime.Now.Minute + DateTime.Now.Second + "." + fileExtn;
                     //Store the uploaded document information
                     documentDTO.FileName = selectedFile.Name.Split('.')[0];
@@ -490,25 +296,28 @@
                         //_fileNameResult=await jsRuntime.InvokeAsync<string>("getFileName");
 
                         FileUploadInProgress = true;
-                        await InvokeAsync(() =>
+                        StateHasChanged();
+                        timeToWait = Int32.Parse(_config["TimeToWaitForUpload"]);
+                        uploadTimeElapsed = 0;
+                        while (uploadTimeElapsed <= timeToWait-2)
                         {
+                            System.Threading.Thread.Sleep(1000);
+                            uploadTimeElapsed++;
+                            uploadPerc = Convert.ToInt32((Convert.ToDouble(uploadTimeElapsed) / Convert.ToDouble(timeToWait)) * 100.0);
                             StateHasChanged();
-                        });
-                        //System.Threading.Thread.Sleep(20000);//wait for 20 seconds
-                        var timeToWait = Int32.Parse(_config["TimeToWaitForUpload"]);
-                        System.Threading.Thread.Sleep(timeToWait); //wait for timeToWait seconds
+                        }
 
                         //For testing without virus scan, comment the next line and uncomment the next to next line
                         var containerNameToDownloadFrom = _config["CleanContainer"]; //"cleanfiles";
-                                                                                     //var containerNameToDownloadFrom = _config["UnscannedContainer"];
+                        //var containerNameToDownloadFrom = _config["UnscannedContainer"];
 
                         var RSTEmailAddress = String.IsNullOrEmpty(_config["RSTEmailAddress"]) ? userDetails.Email : _config["RSTEmailAddress"];
                         var bytes = await blobStorageService.GetBlobAsByteArray(containerNameToDownloadFrom, trustedFileNameForFileStorage);
-                        if (bytes == null)
-                        {
-                            System.Threading.Thread.Sleep(5000);//wait for 5 more seconds
-                            bytes = await blobStorageService.GetBlobAsByteArray(containerNameToDownloadFrom, trustedFileNameForFileStorage);
-                        }
+                        // if (bytes == null)
+                        // {
+                        //     System.Threading.Thread.Sleep(5000);//wait for 5 more seconds
+                        //     bytes = await blobStorageService.GetBlobAsByteArray(containerNameToDownloadFrom, trustedFileNameForFileStorage);
+                        // }
                         if (bytes != null)
                         {
                             await _notificationService.SendConfirmationMailtoSE(userDetails.Email, reportSubmissionData.ReservoirRegName);
@@ -529,6 +338,10 @@
                             documentDTO.SubmissionId = updatedStatus.Id;
                             await reservoirService.InsertDocumentRelatedTable(Int32.Parse(reportSubmissionData.ReservoirId), updatedStatus.Id, docID);
                             Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Information("File upload succeeded.");
+                            uploadTimeElapsed++;
+                            uploadPerc = Convert.ToInt32((Convert.ToDouble(uploadTimeElapsed) / Convert.ToDouble(timeToWait)) * 100.0);
+                            StateHasChanged();
+                            System.Threading.Thread.Sleep(2000);
                             goToNextPage();
                         }
                         else
@@ -569,6 +382,8 @@
                             {
                                 Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File not scanned for virus.");
                                 FileUploadFailed();
+                                await reservoirService.UpdateReservoirStatus(Int32.Parse(reportSubmissionData.ReservoirId), userDetails.Id, "In progress");
+
                                 await InvokeAsync(() =>
                                 {
                                     StateHasChanged();
@@ -590,6 +405,7 @@
                     {
                         Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File upload failed.");
                         FileUploadFailed();
+                        await reservoirService.UpdateReservoirStatus(Int32.Parse(reportSubmissionData.ReservoirId), userDetails.Id, "In progress");
                         await InvokeAsync(() =>
                         {
                             StateHasChanged();
@@ -600,6 +416,7 @@
                 {
                     Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File upload failed : " + ex.Message);
                     FileUploadFailed();
+                    await reservoirService.UpdateReservoirStatus(Int32.Parse(reportSubmissionData.ReservoirId), userDetails.Id, "In progress");
                     await InvokeAsync(() =>
                     {
                         StateHasChanged();
