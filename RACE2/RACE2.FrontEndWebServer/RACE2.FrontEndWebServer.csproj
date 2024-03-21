@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <None Remove="Components\App.razor.css" />
-    <None Remove="Components\Pages\S12Pages\UploadS12Report.razor.css" />
   </ItemGroup>
 
   <ItemGroup>
@@ -16,7 +15,6 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Include="Components\Pages\S12Pages\UploadS12Report.razor.css" />
   </ItemGroup>
 
 	<ItemGroup>
