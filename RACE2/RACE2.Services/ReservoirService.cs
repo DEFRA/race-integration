@@ -153,11 +153,11 @@ namespace RACE2.Services
         }
 
 
-        public async Task<SubmissionStatus> UpdateReservoirStatus(int reservoirid, int userid, string reportStatus)
+        public async Task<SubmissionStatus> UpdateReservoirStatus(int reservoirid, int userid, string reportStatus, bool isRevision, string revisionSummary)
         {
             try
             {
-                return await _reservoirRepository.UpdateReservoirStatus(reservoirid, userid, reportStatus);
+                return await _reservoirRepository.UpdateReservoirStatus(reservoirid, userid, reportStatus, isRevision, revisionSummary);
             }
             catch (Exception ex)
             {
