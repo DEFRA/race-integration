@@ -70,7 +70,7 @@
                             </th>
                             <th scope="col" class="govuk-table__header app-custom-class" width="20%">
                                 <button aria-label="Sort by Due date" type="button" class="icon-sort-button"
-                                        onclick="@(() => SortTable("DueDate"))">
+                                        onclick="@(() => SortTable("SubmittedDateTime"))">
                                     Last sent
                                     <div class="icon-sort"></div>
                                 </button>
@@ -85,7 +85,7 @@
                             <tr class="govuk-table__row">
                                 <td scope="row" class="govuk-table__cell" width="35%">@reservoir.ReservoirName</td>
                                 <td class="govuk-table__cell" width="35%">@reservoir.UndertakerName</td>
-                                <td class="govuk-table__cell" width="20%">@reservoir.DueDate</td>                                
+                                <td class="govuk-table__cell" width="20%">@reservoir.SubmittedDateTime</td>
                                 <td class="govuk-table__cell" width="10%" style="text-align:left;">
                                     <a class="govuk-link govuk-link--no-visited-state" style="cursor:pointer;" @onclick="()=>DownloadTemplateFile(reservoir)">
                                         Download
@@ -279,7 +279,7 @@
                     SubmissionStatus = SubmissionStatusList.Where(s => s.RegisteredName == reservoir.RegisteredName).FirstOrDefault();
                     reservoirsLinkedToUser.SubmissionReference = SubmissionStatus.SubmissionReference;
                     reservoirsLinkedToUser.DueDate = SubmissionStatus.DueDate != DateTime.MinValue ? SubmissionStatus.DueDate.ToString("dd MMMMM yyyy") : String.Empty;
-                    reservoirsLinkedToUser.LastSent = SubmissionStatus.DueDate != DateTime.MinValue ? SubmissionStatus.DueDate.ToString("dd MMMMM yyyy") : String.Empty;
+                    reservoirsLinkedToUser.SubmittedDateTime = SubmissionStatus.SubmittedDateTime != DateTime.MinValue ? SubmissionStatus.SubmittedDateTime.ToString("dd MMMMM yyyy") : String.Empty;
                     reservoirsLinkedToUser.Status = SubmissionStatus.Status != null ? SubmissionStatus.Status : String.Empty;
 
                     ReservoirsLinkedToUserForDisplay.Add(reservoirsLinkedToUser);
@@ -314,7 +314,7 @@
             SubmissionStatus = SubmissionStatusList.Where(s => s.RegisteredName == reservoir.RegisteredName).FirstOrDefault();
             var Undertakers = await reservoirService.GetOperatorsforReservoir(reservoir.Id, reservoir.OperatorType);
 
-            SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(reservoir.Id, userDetails.Id, "In progress");
+            SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(reservoir.Id, userDetails.Id, "In progress",false,"");
 
             var blobName = updatedStatus.OverrideTemplateName + ".docx";
             //var blobName = "S12ReportTemplate.docx";
