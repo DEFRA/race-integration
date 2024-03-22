@@ -25,7 +25,7 @@ namespace RACE2.DataAccess.Repository
 
         public Task<List<UndertakerDTO>> GetUndertakerforReservoir(int id);
 
-        public Task<SubmissionStatus> UpdateReservoirStatus(int reservoirid, int userid, string reportStatus);
+        public Task<SubmissionStatus> UpdateReservoirStatus(int reservoirid, int userid, string reportStatus, bool IsRevision, string revisionSummary);
 
         public Task<int> InsertUploadDocumentDetails(DocumentDTO document);
 
