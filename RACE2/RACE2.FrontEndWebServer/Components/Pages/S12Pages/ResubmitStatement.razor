@@ -30,8 +30,8 @@
                 @if (!NoReasonError)
                 {
                     <div class="govuk-form-group">
-                        <EditForm Model="@ReasonForResubmission" OnSubmit="GoToNextPage">
-                            <InputTextArea class="govuk-textarea govuk-!-margin-top-6" id="more-detail" name="moreDetail" rows="5" aria-describedby="more-detail-hint" @bind-Value=@ReasonForResubmission></InputTextArea>
+                        <EditForm Model="Model" OnSubmit="GoToNextPage">
+                            <InputTextArea class="govuk-textarea govuk-!-margin-top-6" id="more-detail" name="moreDetail" rows="5" aria-describedby="more-detail-hint" @bind-Value="Model.ReasonForResubmission"></InputTextArea>
                             <button type="submit" draggable="false"
                                     class="govuk-button govuk-!-margin-top-3 govuk-!-margin-bottom-6 govuk-!-margin-right-4"
                                     data-module="govuk-button">
@@ -56,8 +56,8 @@
                             </div>
                         </div>
                     </div>
-                    <EditForm Model="@ReasonForResubmission" OnSubmit="GoToNextPage">
-                        <InputTextArea class="govuk-textarea govuk-!-margin-top-6" id="more-detail" name="moreDetail" rows="5" Value-describedby="more-detail-hint" @bind-Value=@ReasonForResubmission></InputTextArea>
+                    <EditForm Model="Model" OnSubmit="GoToNextPage">
+                        <InputTextArea class="govuk-textarea govuk-!-margin-top-6" id="more-detail" name="moreDetail" rows="5" Value-describedby="more-detail-hint" @bind-Value="Model.ReasonForResubmission"></InputTextArea>
                         <button type="submit" draggable="false"
                                 class="govuk-button govuk-!-margin-top-3 govuk-!-margin-bottom-6 govuk-!-margin-right-4"
                                 data-module="govuk-button">
@@ -78,17 +78,19 @@
 
     public ReportSubmissionDataDto reportSubmissionData { get; set; } = new ReportSubmissionDataDto();
 
+    private bool NoReasonError { get; set; } = false;
+    public FormModel Model = new FormModel();
+
     protected async override Task OnInitializedAsync()
     {
         AuthenticationState authState = await AuthenticationStateTask;// AuthenticationStateProvider.GetAuthenticationStateAsync();
+        Model.ReasonForResubmission = "";
         await base.OnInitializedAsync();
     }
-    private bool NoReasonError { get; set; } = false;
-    private string ReasonForResubmission = "";
 
     public async Task GoToNextPage()
     {
-        if (String.IsNullOrEmpty(ReasonForResubmission.Trim()))
+        if (String.IsNullOrEmpty(Model.ReasonForResubmission.Trim()))
         {
             NoReasonError = true;
             StateHasChanged();
@@ -117,5 +119,10 @@
         bool forceLoad = true;
         string pagelink = "/annual-statements";
         NavigationManager.NavigateTo(pagelink, forceLoad);
-    }    
+    } 
+
+    public class FormModel
+    {
+        public string ReasonForResubmission { get; set; }
+    }
 }
