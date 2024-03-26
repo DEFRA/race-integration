@@ -98,6 +98,9 @@
         else
         {
             NoReasonError = false;
+            var savedReportSubmissionData = await ProtectedSessionStore.GetAsync<ReportSubmissionDataDto>("CurrentReportSubmissionData");
+            savedReportSubmissionData.Value.ResubmitReason = Model.ReasonForResubmission.Trim();
+            await ProtectedSessionStore.SetAsync("CurrentReportSubmissionData", savedReportSubmissionData.Value);
             bool forceLoad = false;
             NavigationManager.NavigateTo("/send-your-statement", forceLoad);
         }

@@ -266,8 +266,8 @@
                     //    containerName = containerName.Split('.')[0];
                     //}
                     var containerNameToUplodTo = _config["UnscannedContainer"];//"unscannedcontent";
-                    //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + "."+ extn;
-                    //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + SubmissionReference + "." + fileExtn;
+                                                                               //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + "."+ extn;
+                                                                               //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + SubmissionReference + "." + fileExtn;
                     var trustedFileNameForFileStorage = reportSubmissionData.SubmissionReference + "_" + DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + DateTime.Now.Hour + DateTime.Now.Minute + DateTime.Now.Second + "." + fileExtn;
                     //Store the uploaded document information
                     documentDTO.FileName = selectedFile.Name.Split('.')[0];
@@ -292,7 +292,16 @@
                             };
 
                         fileUploadViewModels.Add(fileUploadViewModel);
-                        SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(Int32.Parse(reportSubmissionData.ReservoirId), userDetails.Id, "Sent",false,"");
+                        var savedReportSubmissionData = await ProtectedSessionStore.GetAsync<ReportSubmissionDataDto>("CurrentReportSubmissionData");
+                        SubmissionStatus updatedStatus = new SubmissionStatus();
+                        if (savedReportSubmissionData.Value.SendResendValue=="Send")
+                        {
+                            updatedStatus = await reservoirService.UpdateReservoirStatus(Int32.Parse(reportSubmissionData.ReservoirId), userDetails.Id, "Sent", false, "");
+                        }
+                        else
+                        {
+                            updatedStatus = await reservoirService.UpdateReservoirStatus(Int32.Parse(reportSubmissionData.ReservoirId), userDetails.Id, "Sent", true, savedReportSubmissionData.Value.ResubmitReason);
+                        }
                         //_fileNameResult=await jsRuntime.InvokeAsync<string>("getFileName");
 
                         FileUploadInProgress = true;
