@@ -15,6 +15,8 @@ namespace RACE2.Dto
         public string UndertakerEmail { get; set; } = "";
         public string SubmissionReference { get; set; } = "";
         public string YesNoValue { get; set; } = "";
+        public string SendResendValue { get; set; } = "";
+        public string ResubmitReason { get; set; } = "";
 
     }
 }
