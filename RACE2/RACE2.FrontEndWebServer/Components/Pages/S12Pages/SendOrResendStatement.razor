@@ -145,6 +145,9 @@
                 NavigationManager.NavigateTo("/send-your-statement", forceLoad);
             else
             {
+                var savedReportSubmissionData = await ProtectedSessionStore.GetAsync<ReportSubmissionDataDto>("CurrentReportSubmissionData");
+                savedReportSubmissionData.Value.SendResendValue = _sendresend.SendRsendOptions.ToString();
+                await ProtectedSessionStore.SetAsync("CurrentReportSubmissionData", savedReportSubmissionData.Value);
                 NavigationManager.NavigateTo("/resubmit-statement", forceLoad);
             }
         }
