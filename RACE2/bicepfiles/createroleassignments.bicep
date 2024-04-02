@@ -147,6 +147,48 @@ resource keyVaultSecretsOfficerRoleAssignment 'Microsoft.Authorization/roleAssig
   }
 }
 
+resource keyVaultKeysUserRoleDefinition 'Microsoft.Authorization/roleDefinitions@2022-05-01-preview' existing = {
+  scope: resourceGroup()
+  name: '12338af0-0e69-4776-bea7-57ae8d297424'
+}
+
+resource keyVaultKeysUserRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name:  guid(resourceGroup().id, mi.id, keyVaultKeysUserRoleDefinition.id)
+  properties: {
+    roleDefinitionId: keyVaultKeysUserRoleDefinition.id
+    principalId: mi.properties.principalId
+    principalType: 'ServicePrincipal'
+  }
+}
+
+resource keyVaultKeysOfficerRoleDefinition 'Microsoft.Authorization/roleDefinitions@2022-05-01-preview' existing = {
+  scope: resourceGroup()
+  name: '14b46e9e-c2b7-41b4-b07b-48a6ebf60603'
+}
+
+resource keyVaultKeysOfficerRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name:  guid(resourceGroup().id, mi.id, keyVaultKeysOfficerRoleDefinition.id)
+  properties: {
+    roleDefinitionId: keyVaultKeysOfficerRoleDefinition.id
+    principalId: mi.properties.principalId
+    principalType: 'ServicePrincipal'
+  }
+}
+
+resource keyVaultCertificatesUserRoleDefinition 'Microsoft.Authorization/roleDefinitions@2022-05-01-preview' existing = {
+  scope: resourceGroup()
+  name: 'db79e9a7-68ee-4b58-9aeb-b90e7c24fcba'
+}
+
+resource keyVaultCertificatesUserRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name:  guid(resourceGroup().id, mi.id, keyVaultCertificatesUserRoleDefinition.id)
+  properties: {
+    roleDefinitionId: keyVaultCertificatesUserRoleDefinition.id
+    principalId: mi.properties.principalId
+    principalType: 'ServicePrincipal'
+  }
+}
+
 resource keyVaultCertificatesOfficerRoleDefinition 'Microsoft.Authorization/roleDefinitions@2022-05-01-preview' existing = {
   scope: resourceGroup()
   name: 'a4417e6f-fecd-4de8-b567-7b0420556985'

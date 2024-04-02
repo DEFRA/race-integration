@@ -1,0 +1,179 @@
+﻿@page "/send-or-resend-statement"
+@using Microsoft.AspNetCore.Authorization
+@using RACE2.FrontEndWebServer.Components
+@using RACE2.Dto
+@inject NavigationManager NavigationManager
+@inject ProtectedSessionStorage ProtectedSessionStore
+
+@attribute [Authorize]
+
+<PageTitle>Send or resend a statement - Send a supervising engineer's annual statement - GOV.UK</PageTitle>
+
+<HeaderWithBanner />
+
+<div class="govuk-width-container" style="min-height: 69vh;">
+
+    <FeedbackBannerSignOut />
+
+    <a class="govuk-back-link" @onclick="GoToPrevPage" style="color:black">Back</a>
+
+    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+
+        <div class="govuk-grid-row">
+
+            <div class="govuk-grid-column-two-thirds">
+                @if (!SendResendError)
+                {
+                    <div class="govuk-form-group">
+
+                        <legend id="which-idea" class="govuk-fieldset__legend govuk-fieldset__legend govuk-fieldset__legend--xl govuk-!-margin-bottom-4">
+                            <h1 class="govuk-fieldset__heading">
+                                Send or resend a statement
+                            </h1>
+                        </legend>
+
+                        <EditForm Model="@_sendresend" OnSubmit="GoToNextPage">
+                            <div class="govuk-radios govuk-!-margin-bottom-6" data-module="govuk-radios">
+                                <fieldset class="govuk-fieldset">                                    
+                                    <InputRadioGroup Name="sendresend" @bind-Value="_sendresend.SendRsendOptions">
+                                        @foreach (Enum value in Enum.GetValues(typeof(SendResendClass.SendRsendEnum)))
+                                        {
+                                            <div class="govuk-radios__item">
+                                                <InputRadio Value="@value" class="govuk-radios__input" />
+                                                @if (value.ToString() =="Send")
+                                                {
+                                                    <span class="govuk-label govuk-radios__label">Send a new statement</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="govuk-label govuk-radios__label">Send a revised statement</span>
+                                                }
+                                            </div>
+                                        }
+                                    </InputRadioGroup>                                   
+                                </fieldset>
+                            </div>
+                            <button type="submit" draggable="false"
+                                    class="govuk-button govuk-!-margin-top-5 govuk-!-margin-bottom-6 govuk-!-margin-right-4" data-module="govuk-button">
+                                Continue
+                            </button>
+                        </EditForm>
+                    </div>
+                }
+                else
+                {
+                    <div class="govuk-error-summary" data-module="govuk-error-summary">
+                        <div role="alert">
+                            <h2 class="govuk-error-summary__title">
+                                There is a problem
+                            </h2>
+                            <div class="govuk-error-summary__body">
+                                <ul class="govuk-list govuk-error-summary__list">
+                                    <li>
+                                        <a href="#">Select one of send or resend options</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <legend id="which-idea" class="govuk-fieldset__legend govuk-fieldset__legend govuk-fieldset__legend--xl govuk-!-margin-bottom-4">
+                        <h1 class="govuk-fieldset__heading">
+                            Send or resend a statement
+                        </h1>
+                    </legend>
+
+                    <EditForm Model="@_sendresend" OnSubmit="GoToNextPage">
+                        <fieldset class="govuk-fieldset">
+                            <div class="govuk-radios__item" data-module="govuk-radios">
+                                <InputRadioGroup Name="sendresend" @bind-Value="_sendresend.SendRsendOptions">
+                                    @foreach (Enum value in Enum.GetValues(typeof(SendResendClass.SendRsendEnum)))
+                                    {
+                                        <div class="govuk-radios__item">
+                                            <InputRadio Value="@value" class="govuk-radios__input" />
+                                            @if (value.ToString() == "Send")
+                                            {
+                                            <span class="govuk-label govuk-radios__label">Send a new statement</span>
+                                            }
+                                            else
+                                            {
+                                            <span class="govuk-label govuk-radios__label">Send a revised statement</span>
+                                            }
+                                        </div>
+                                    }
+                                </InputRadioGroup>
+                            </div>
+                        </fieldset>
+                        <button type="submit" draggable="false"
+                                class="govuk-button govuk-!-margin-top-5 govuk-!-margin-bottom-6 govuk-!-margin-right-4" data-module="govuk-button">
+                            Continue
+                        </button>
+                    </EditForm>
+                }
+            </div>
+        </div>
+    </main>
+</div>
+
+<Footer />
+
+@code {
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthenticationStateTask { get; set; }
+
+    public ReportSubmissionDataDto reportSubmissionData { get; set; } = new ReportSubmissionDataDto();
+
+    protected async override Task OnInitializedAsync()
+    {
+        AuthenticationState authState = await AuthenticationStateTask;// AuthenticationStateProvider.GetAuthenticationStateAsync();
+        await base.OnInitializedAsync();
+    }
+    private SendResendClass _sendresend = new SendResendClass();
+    private bool SendResendError { get; set; } = false;
+
+    public async Task GoToNextPage()
+    {
+        if (_sendresend.SendRsendOptions == 0)
+        {
+            SendResendError = true;
+            StateHasChanged();
+        }
+        else
+        {
+            SendResendError = false;
+            bool forceLoad = false;
+            if (_sendresend.SendRsendOptions.ToString() == "Send")
+                NavigationManager.NavigateTo("/send-your-statement", forceLoad);
+            else
+            {
+                var savedReportSubmissionData = await ProtectedSessionStore.GetAsync<ReportSubmissionDataDto>("CurrentReportSubmissionData");
+                savedReportSubmissionData.Value.SendResendValue = _sendresend.SendRsendOptions.ToString();
+                await ProtectedSessionStore.SetAsync("CurrentReportSubmissionData", savedReportSubmissionData.Value);
+                NavigationManager.NavigateTo("/resubmit-statement", forceLoad);
+            }
+        }
+    }
+    public void GoToMyAccountPage()
+    {
+        bool forceLoad = true;
+        string pagelink = "/my-account";
+        NavigationManager.NavigateTo(pagelink, forceLoad);
+    }
+    public void GoToPrevPage()
+    {
+        bool forceLoad = true;
+        string pagelink = "/annual-statements";
+        NavigationManager.NavigateTo(pagelink, forceLoad);
+    }
+    public void GoToAnnualStatementsPage()
+    {
+        bool forceLoad = true;
+        string pagelink = "/annual-statements";
+        NavigationManager.NavigateTo(pagelink, forceLoad);
+    }
+
+    public class SendResendClass
+    {
+        public enum SendRsendEnum { Send = 1, Resend = 2 };
+        public SendRsendEnum SendRsendOptions = 0;
+    }
+}
