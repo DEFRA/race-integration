@@ -1,4 +1,4 @@
-namespace SFA.DAS.GovUK.Auth.Configuration
+namespace RACE2.GovUK.OneloginAuth.Configuration
 {
     public class GovUkOidcConfiguration
     {

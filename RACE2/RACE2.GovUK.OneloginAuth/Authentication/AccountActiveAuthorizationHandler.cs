@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Configuration;
-using SFA.DAS.GovUK.Auth.Extensions;
+using RACE2.GovUK.OneloginAuth.Extensions;
 
-namespace SFA.DAS.GovUK.Auth.Authentication
+namespace RACE2.GovUK.OneloginAuth.Authentication
 {
     public class AccountActiveAuthorizationHandler : AuthorizationHandler<AccountActiveRequirement>
     {

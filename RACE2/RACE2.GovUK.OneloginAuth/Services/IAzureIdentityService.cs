@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace SFA.DAS.GovUK.Auth.Services
+namespace RACE2.GovUK.OneloginAuth.Services
 {
     public interface IAzureIdentityService
     {

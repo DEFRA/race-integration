@@ -3,7 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 
-namespace SFA.DAS.GovUK.Auth.Services
+namespace RACE2.GovUK.OneloginAuth.Services
 {
     public interface ICustomClaims
     {

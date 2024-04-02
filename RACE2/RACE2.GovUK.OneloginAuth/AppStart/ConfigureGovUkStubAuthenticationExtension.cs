@@ -9,10 +9,11 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using SFA.DAS.GovUK.Auth.Configuration;
-using SFA.DAS.GovUK.Auth.Services;
+using RACE2.GovUK.OneloginAuth.Configuration;
+using RACE2.GovUK.OneloginAuth.Services;
 
-namespace SFA.DAS.GovUK.Auth.AppStart
+
+namespace RACE2.GovUK.OneloginAuth.AppStart
 {
     internal static class ConfigureGovUkStubAuthenticationExtension
     {

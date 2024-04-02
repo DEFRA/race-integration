@@ -1,9 +1,10 @@
 using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SFA.DAS.GovUK.Auth.Extensions;
+using RACE2.GovUK.OneloginAuth.Extensions;
 
-namespace SFA.DAS.GovUK.Auth.AppStart
+
+namespace RACE2.GovUK.OneloginAuth.AppStart
 {
     public static class AddAndConfigureGovUkAuthenticationExtension
     {

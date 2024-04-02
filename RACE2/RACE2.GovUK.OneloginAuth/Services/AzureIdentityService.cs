@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 
-namespace SFA.DAS.GovUK.Auth.Services
+namespace RACE2.GovUK.OneloginAuth.Services
 {
     internal class AzureIdentityService : IAzureIdentityService
     {

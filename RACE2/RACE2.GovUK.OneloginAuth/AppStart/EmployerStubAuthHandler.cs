@@ -10,11 +10,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using SFA.DAS.GovUK.Auth.Configuration;
-using SFA.DAS.GovUK.Auth.Models;
-using SFA.DAS.GovUK.Auth.Services;
+using RACE2.GovUK.OneloginAuth.Configuration;
+using RACE2.GovUK.OneloginAuth.Models;
+using RACE2.GovUK.OneloginAuth.Services;
 
-namespace SFA.DAS.GovUK.Auth.AppStart
+
+namespace RACE2.GovUK.OneloginAuth.AppStart
 {
     internal class EmployerStubAuthHandler : AuthenticationHandler<AuthenticationSchemeOptions>
     {

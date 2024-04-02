@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
-using SFA.DAS.GovUK.Auth.Models;
+using RACE2.GovUK.OneloginAuth.Models;
 
-namespace SFA.DAS.GovUK.Auth.Services
+namespace RACE2.GovUK.OneloginAuth.Services
 {
     public interface IOidcService
     {

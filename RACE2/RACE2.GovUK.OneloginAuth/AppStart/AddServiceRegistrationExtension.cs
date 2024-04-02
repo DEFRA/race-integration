@@ -5,11 +5,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using SFA.DAS.GovUK.Auth.Authentication;
-using SFA.DAS.GovUK.Auth.Configuration;
-using SFA.DAS.GovUK.Auth.Services;
+using RACE2.GovUK.OneloginAuth.Authentication;
+using RACE2.GovUK.OneloginAuth.Configuration;
+using RACE2.GovUK.OneloginAuth.Services;
 
-namespace SFA.DAS.GovUK.Auth.AppStart
+
+namespace RACE2.GovUK.OneloginAuth.AppStart
 {
     internal static class AddServiceRegistrationExtension
     {

@@ -1,7 +1,7 @@
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 
-namespace SFA.DAS.GovUK.Auth.Services
+namespace RACE2.GovUK.OneloginAuth.Services
 {
     public interface IJwtSecurityTokenService
     {

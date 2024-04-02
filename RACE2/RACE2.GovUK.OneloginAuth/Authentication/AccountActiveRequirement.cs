@@ -2,7 +2,7 @@
 
 using Microsoft.AspNetCore.Authorization;
 
-namespace SFA.DAS.GovUK.Auth.Authentication
+namespace RACE2.GovUK.OneloginAuth.Authentication
 {
     public class AccountActiveRequirement : IAuthorizationRequirement
     {

@@ -12,12 +12,12 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.KeyVaultExtensions;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
-using SFA.DAS.GovUK.Auth.Configuration;
-using SFA.DAS.GovUK.Auth.Models;
+using RACE2.GovUK.OneloginAuth.Configuration;
+using RACE2.GovUK.OneloginAuth.Models;
 
-[assembly: InternalsVisibleTo("SFA.DAS.GovUK.Auth.UnitTests")]
 
-namespace SFA.DAS.GovUK.Auth.Services
+
+namespace RACE2.GovUK.OneloginAuth.Services
 {
     internal class OidcService : IOidcService
     {

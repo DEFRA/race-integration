@@ -9,11 +9,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.KeyVaultExtensions;
 using Microsoft.IdentityModel.Tokens;
-using SFA.DAS.GovUK.Auth.Configuration;
-using SFA.DAS.GovUK.Auth.Extensions;
-using SFA.DAS.GovUK.Auth.Services;
+using RACE2.GovUK.OneloginAuth.Configuration;
+using RACE2.GovUK.OneloginAuth.Services;
 
-namespace SFA.DAS.GovUK.Auth.AppStart
+
+namespace RACE2.GovUK.OneloginAuth.AppStart
 {
     internal static class ConfigureGovUkAuthenticationExtension
     {

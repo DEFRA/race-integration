@@ -4,9 +4,10 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Options;
-using SFA.DAS.GovUK.Auth.Configuration;
+using RACE2.GovUK.OneloginAuth.Configuration;
 
-namespace SFA.DAS.GovUK.Auth.Services
+
+namespace RACE2.GovUK.OneloginAuth.Services
 {
     public class AuthenticationTicketStore : ITicketStore
     {

@@ -1,4 +1,4 @@
-namespace SFA.DAS.GovUK.Auth.Extensions
+namespace RACE2.GovUK.OneloginAuth.Extensions
 {
     public static class RedirectExtension
     {

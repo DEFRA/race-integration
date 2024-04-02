@@ -1,4 +1,4 @@
-namespace SFA.DAS.GovUK.Auth.Models
+namespace RACE2.GovUK.OneloginAuth.Models
 {
     public class StubAuthUserDetails
     {

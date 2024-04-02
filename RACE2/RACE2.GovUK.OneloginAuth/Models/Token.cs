@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace SFA.DAS.GovUK.Auth.Models
+namespace RACE2.GovUK.OneloginAuth.Models
 {
     public class Token
     {
