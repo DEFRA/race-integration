@@ -367,7 +367,7 @@
                             if (maliciousbytes != null)
                             {
                                 Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File infected by virus.");
-                                FileVirusScanFailed();
+                                FileContainsVirus();
                                 await InvokeAsync(() =>
                                 {
                                     StateHasChanged();
