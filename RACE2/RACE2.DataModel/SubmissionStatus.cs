@@ -25,6 +25,7 @@ namespace RACE2.DataModel
 
         public bool  IsCurrent { get; set; }
         public bool IsLegacySubmission { get; set; }
+     
 
         public DateTime DueDate { get; set; }
         [Required]
@@ -39,7 +40,11 @@ namespace RACE2.DataModel
         public DateTime SubmittedDateTime { get; set; }
         [Required]
         public UserDetail SubmittedByUser { get; set;}  = new UserDetail();
-
         public string? OverrideTemplateName { get; set; } 
+        public string RevisionSummary {  get; set; }
+
+        [Required]
+        public bool IsRevision { get; set; }
+
     }
 }
