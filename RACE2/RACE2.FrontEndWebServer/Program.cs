@@ -23,13 +23,6 @@ using Serilog.Sinks.MSSqlServer;
 using RACE2.Notification;
 using RACE2.FrontEndWebServer.ExceptionGlobalErrorHandling;
 using RACE2.FrontEndWebServer.Components;
-using SFA.DAS.GovUK.Auth.Configuration;
-using RACE2.FrontEndWebServer.AppStart;
-using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
-using SFA.DAS.GovUK.Auth.Authentication;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Microsoft.AspNetCore.Mvc.Routing;
-using SFA.DAS.GovUK.Auth.Services;
 
 Serilog.Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Information()
@@ -62,8 +55,6 @@ try
         .Select(KeyFilter.Any, Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"))
         .UseFeatureFlags();
     });
-    builder.Services.Configure<GovUkOidcConfiguration>(builder.Configuration.GetSection(nameof(GovUkOidcConfiguration)));
-   
     var blazorClientURL = builder.Configuration["RACE2FrontEndURL"];
     var RACE2WebApiURL = builder.Configuration["RACE2WebApiURL"];
     var RACE2IDPURL = builder.Configuration["RACE2SecurityProviderURL"];
@@ -91,16 +82,16 @@ try
     // Add services to the container.
     builder.Services.AddRazorComponents()
         .AddInteractiveServerComponents();
-        //.AddHubOptions(options =>
-        //    {
-        //        options.ClientTimeoutInterval = TimeSpan.FromSeconds(30);//.FromSeconds(30); 
-        //        options.EnableDetailedErrors = true;
-        //        options.HandshakeTimeout = TimeSpan.FromSeconds(15); //FromSeconds(15); 
-        //        options.KeepAliveInterval = TimeSpan.FromSeconds(15);//.FromSeconds(15);  
-        //        options.MaximumParallelInvocationsPerClient = 1;
-        //        options.MaximumReceiveMessageSize = 128 * 1024; //32*1024;
-        //        options.StreamBufferCapacity = 10;
-        //    });
+    //.AddHubOptions(options =>
+    //    {
+    //        options.ClientTimeoutInterval = TimeSpan.FromSeconds(30);//.FromSeconds(30); 
+    //        options.EnableDetailedErrors = true;
+    //        options.HandshakeTimeout = TimeSpan.FromSeconds(15); //FromSeconds(15); 
+    //        options.KeepAliveInterval = TimeSpan.FromSeconds(15);//.FromSeconds(15);  
+    //        options.MaximumParallelInvocationsPerClient = 1;
+    //        options.MaximumReceiveMessageSize = 128 * 1024; //32*1024;
+    //        options.StreamBufferCapacity = 10;
+    //    });
     builder.Services.AddRazorPages();
 
     builder.Services.Configure<CookiePolicyOptions>(options =>
@@ -197,28 +188,8 @@ try
             ValidationAlgorithm = ValidationAlgorithm.HMACSHA256
         });
     builder.Services.AddScoped<INotification, RaceNotification>();
-    builder.Services.AddAuthorization(options =>
-    {
-        options.AddPolicy(
-            PolicyNames.IsAuthenticated, policy =>
-            {
-                policy.Requirements.Add(new AccountActiveRequirement());
-                policy.RequireAuthenticatedUser();
-            });
-        options.AddPolicy(
-            PolicyNames.IsActiveAccount, policy =>
-            {
-                policy.Requirements.Add(new AccountActiveRequirement());
-                policy.RequireAuthenticatedUser();
-            });
-    });
-    builder.Services.AddHttpContextAccessor();
-    builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
-    builder.Services.AddSingleton<IUrlHelperFactory, UrlHelperFactory>();
-    builder.Services.AddSingleton<IStubAuthenticationService, StubAuthenticationService>();
 
     var app = builder.Build();
-
     app.UseForwardedHeaders();
     // Configure the HTTP request pipeline.
     if (!app.Environment.IsDevelopment())
