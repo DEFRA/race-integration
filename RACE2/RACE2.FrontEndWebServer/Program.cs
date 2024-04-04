@@ -100,7 +100,6 @@ try
         options.CheckConsentNeeded = context => true;
         options.MinimumSameSitePolicy = SameSiteMode.None;
     });
-    builder.Services.AddHttpContextAccessor();
 
     bool requireHttpsMetadata = builder.Environment.IsProduction();
     
