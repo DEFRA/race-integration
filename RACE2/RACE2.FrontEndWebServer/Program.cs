@@ -95,6 +95,8 @@ try
     // Add services to the container.
     builder.Services.AddRazorComponents()
         .AddInteractiveServerComponents();
+
+    builder.Services.AddRazorPages().WithRazorPagesRoot("/Pages");
   
     builder.Services.Configure<CookiePolicyOptions>(options =>
     {
@@ -135,11 +137,12 @@ try
     app.UseStaticFiles();
 
     app.UseAntiforgery();
-    app.SetupEndpoints();
+    //app.SetupEndpoints();
 
     app.UseAuthentication();
     app.UseAuthorization();
 
+    app.MapRazorPages();
     app.MapRazorComponents<App>()
         .AddInteractiveServerRenderMode();
 
