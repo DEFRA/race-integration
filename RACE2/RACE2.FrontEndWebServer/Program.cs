@@ -30,6 +30,8 @@ using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 using Microsoft.IdentityModel.KeyVaultExtensions;
 using Microsoft.IdentityModel.Tokens;
 using RACE2.GovUK.OneloginAuth.Services;
+using Microsoft.AspNetCore.Authorization;
+using RACE2.FrontEndWebServer;
 
 Serilog.Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Information()
@@ -117,8 +119,12 @@ try
             ValidationAlgorithm = ValidationAlgorithm.HMACSHA256
         });
     builder.Services.AddScoped<INotification, RaceNotification>();
+    builder.Services.AddSingleton<IAuthorizationMiddlewareResultHandler, BlazorAuthorizationMiddlewareResultHandler>();
+    builder.Services.AddSingleton<BaseUrlProvider>();
+    builder.Services.AddHttpContextAccessor();
 
     var app = builder.Build();
+
     app.UseForwardedHeaders();
     // Configure the HTTP request pipeline.
     if (!app.Environment.IsDevelopment())
@@ -141,6 +147,8 @@ try
     app.UseStaticFiles();
 
     app.UseAntiforgery();
+    app.SetupEndpoints();
+
     app.UseAuthentication();
     app.UseAuthorization();
 
