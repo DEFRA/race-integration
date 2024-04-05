@@ -95,8 +95,7 @@ try
     // Add services to the container.
     builder.Services.AddRazorComponents()
         .AddInteractiveServerComponents();
-    builder.Services.AddRazorPages();
-
+  
     builder.Services.Configure<CookiePolicyOptions>(options =>
     {
         options.CheckConsentNeeded = context => true;
@@ -112,20 +111,14 @@ try
     builder.Services.AddScoped<IBlobStorageService, BlobStorageService>();
     builder.Services.AddScoped<IOpenXMLUtilitiesService, OpenXMLUtilitiesService>();
     builder.Services.AddScoped<CustomErrorBoundary>();
-    builder.Services.AddDataProtection()
-        .UseCryptographicAlgorithms(new AuthenticatedEncryptorConfiguration
-        {
-            EncryptionAlgorithm = EncryptionAlgorithm.AES_256_CBC,
-            ValidationAlgorithm = ValidationAlgorithm.HMACSHA256
-        });
     builder.Services.AddScoped<INotification, RaceNotification>();
+
     builder.Services.AddSingleton<IAuthorizationMiddlewareResultHandler, BlazorAuthorizationMiddlewareResultHandler>();
     builder.Services.AddSingleton<BaseUrlProvider>();
     builder.Services.AddHttpContextAccessor();
 
     var app = builder.Build();
 
-    app.UseForwardedHeaders();
     // Configure the HTTP request pipeline.
     if (!app.Environment.IsDevelopment())
     {
@@ -139,11 +132,6 @@ try
     app.UseSerilogRequestLogging();
     app.UseHttpsRedirection();
 
-    app.UseCookiePolicy(new CookiePolicyOptions
-    {
-        MinimumSameSitePolicy = SameSiteMode.Lax
-    });
-
     app.UseStaticFiles();
 
     app.UseAntiforgery();
@@ -154,8 +142,6 @@ try
 
     app.MapRazorComponents<App>()
         .AddInteractiveServerRenderMode();
-
-    app.MapRazorPages();
 
     app.Run();
 }
