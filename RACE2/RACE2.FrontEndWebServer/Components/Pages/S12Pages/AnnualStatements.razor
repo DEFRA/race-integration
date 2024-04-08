@@ -162,7 +162,6 @@
         try
         {
             var authState = await AuthenticationStateTask;
-            //UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
             UserEmail = authState.User.Claims.FirstOrDefault(c => c.Type.Equals(ClaimTypes.Email))?.Value;
             userDetails = await userService.GetUserByEmailID(UserEmail);           
 

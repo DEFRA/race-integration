@@ -12,6 +12,7 @@
 @inject IBlobStorageService blobStorageService
 @inject IUserService userService
 @inject IJSRuntime jsRuntime
+@inject ProtectedSessionStorage ProtectedSessionStore
 
 @attribute [Authorize]
 
@@ -91,7 +92,7 @@
 
 @code {
     private int UserId { get; set; } = 0;
-    private string UserName { get; set; } = "Unknown";
+    private string UserEmail { get; set; } = "";
     private UserDetail UserDetail { get; set; }
     private string warninngMessage = "";
     private string displayMessage = "";
@@ -107,13 +108,13 @@
     public Task<AuthenticationState> AuthenticationStateTask { get; set; }
     protected async override Task OnInitializedAsync()
     {
-        AuthenticationState authState = await AuthenticationStateTask; // AuthenticationStateProvider.GetAuthenticationStateAsync();
-        UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
-        var userDetails = await userService.GetUserByEmailID(UserName);
+        var userEmailDataState = await ProtectedSessionStore.GetAsync<ReportSubmissionDataDto>("UserEmail");
+        UserEmail = userEmailDataState.Value.ToString();
+        var userDetails = await userService.GetUserByEmailID(UserEmail);
         UserId = userDetails.Id;
         UserDetail = new UserDetail()
             {
-                UserName = UserName,
+                UserName = UserEmail,
                 Id = UserId,
                 Email = userDetails.Email,
                 cFirstName = userDetails.cFirstName,
