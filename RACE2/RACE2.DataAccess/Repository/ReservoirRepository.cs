@@ -16,6 +16,7 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using Microsoft.Data.SqlClient;
 using System.Reflection.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 
 namespace RACE2.DataAccess.Repository
 {
@@ -951,6 +952,115 @@ namespace RACE2.DataAccess.Repository
                     var result = await conn.QueryAsync<Comment>("sp_GetComments", parameters, commandType: CommandType.StoredProcedure);
                     return result.FirstOrDefault();
 
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return null;
+            }
+        }
+
+        public async Task<int> InsertSubmissionDetails(SubmissionStatus submissionStatus)
+        {
+            _logger.LogInformation("Insert new Submission for reservoir" + submissionStatus.ReservoirId );
+            try
+            {
+                using (var conn = Connection)
+                {
+                    var parameters = new DynamicParameters();
+                    parameters.Add("@reservoirid", submissionStatus.ReservoirId, DbType.Int32);
+                    parameters.Add("@submissionreference", submissionStatus.SubmissionReference, DbType.String);
+                    parameters.Add("@lastmodifiedtime", submissionStatus.LastModifiedDateTime, DbType.DateTime);
+                    parameters.Add("@userid", submissionStatus.LastModifiedByUserId, DbType.Int32);
+                    parameters.Add("@userid", submissionStatus.SubmittedByUserId, DbType.Int32);
+                    parameters.Add("@isRevision", submissionStatus.IsRevision, DbType.Boolean);
+                    parameters.Add("@revisionSummary", submissionStatus.RevisionSummary, DbType.String);
+                    parameters.Add("@serviceid", submissionStatus.ServiceId, DbType.Int32);
+                    parameters.Add("@submitteddatetime", submissionStatus.SubmittedDateTime, DbType.DateTime);
+                    parameters.Add("@status", submissionStatus.Status, DbType.String);
+
+                    var result = await conn.ExecuteAsync("sp_InsertSubmissionRecord", parameters, commandType: CommandType.StoredProcedure);
+
+                    return 1;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return 0;
+            }
+            
+        }
+
+        public string GenerateSubmissionReference(int reservoirid, DateTime submitteddatetime,int serviceid)
+        {
+            string submissionreference = "100000";
+            _logger.LogInformation("Generate Submission Reference");
+            try
+            {
+                if (reservoirid != 0)
+                {
+                    int length = Convert.ToString(reservoirid).Length;
+                    submissionreference = submissionreference.Remove(submissionreference.Length - length) + Convert.ToString(reservoirid);
+
+                    submissionreference = String.Concat(submissionreference, Convert.ToString(serviceid), "_", submitteddatetime.Year, submitteddatetime.Month, submitteddatetime.Date.ToString("dd"), "_", submitteddatetime.Hour, submitteddatetime.Minute, submitteddatetime.Second);
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return null;
+            }
+
+
+            return submissionreference;
+        }
+
+        public async Task<DateTime> GetLastSubmittedDateforReservoir(int reservoirid)
+        {
+            DateTime lastsent = new DateTime();
+            _logger.LogInformation("GEt Last submitted date" + reservoirid);
+            try
+            {
+                using (var conn = Connection)
+                {
+                    if (reservoirid != 0)
+                    {
+                        var parameters = new DynamicParameters();
+                        parameters.Add("@reservoirid", reservoirid, DbType.Int32);
+                        parameters.Add("@submittedtime", dbType: DbType.DateTime, direction: ParameterDirection.Output);
+                        await conn.ExecuteAsync("sp_GetLastSubmittedDateforReservoir", parameters, commandType: CommandType.StoredProcedure);
+
+                        lastsent = parameters.Get<DateTime>("@submittedtime");
+                        return lastsent;
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return new DateTime();
+            }
+           return lastsent;
+        }
+
+
+        public async Task<DocumentTemplate> GetDocumentTemplate(int reservoirid)
+        {
+            try
+            {
+                using(var conn = Connection)
+                {
+                    var parameters = new DynamicParameters();
+                    parameters.Add("@reservoirid", reservoirid, DbType.Int32);
+                    var result = await conn.QueryAsync<DocumentTemplate>("sp_GetTemplateName", parameters, commandType: CommandType.StoredProcedure);
+                    return result.FirstOrDefault();
                 }
             }
             catch (Exception ex)

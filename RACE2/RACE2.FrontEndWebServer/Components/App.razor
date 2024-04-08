@@ -21,23 +21,6 @@
 
 <body>
     <Routes @rendermode="new InteractiveServerRenderMode(prerender: false)" />
-    <div id="reconnect-modal" class="reconnect-modal components-reconnect-hide">
-        <div class="show">
-            <p>
-                Attempting to connect to server.....
-            </p>
-        </div>
-        <div class="failed">
-            <p>
-                Failed to connect.....
-            </p>
-        </div>
-        <div class="rejected">
-            <p>
-                Refused to connect.....
-            </p>
-        </div>
-    </div>
     <script src="_framework/blazor.web.js" autostart="false"></script>
     <script src="/js/boot.js"></script>
     <script src="/js/utilityfunctions.js"></script>

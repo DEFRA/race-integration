@@ -64,5 +64,14 @@ namespace RACE2.Services
 
         public Task<Comment> GetExisitngComments(string relatestoobject, int relatestorecordid);
 
+
+        public string GenerateSubmissionReference(int reservoirid, DateTime duedate, int serviceid);
+
+        public Task<int> InsertSubmissionDetails(SubmissionStatus submissionStatus);
+
+        public Task<DateTime> GetLastSubmittedDateforReservoir(int reservoirid);
+
+        public Task<DocumentTemplate> GetDocumentTemplate(int reservoirid);
+
     }
 }
