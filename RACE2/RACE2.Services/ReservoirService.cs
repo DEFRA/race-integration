@@ -383,5 +383,55 @@ namespace RACE2.Services
                 return new Comment();
             }
         }
+
+
+        public string GenerateSubmissionReference(int reservoirid, DateTime duedate, int serviceid)
+        {
+            try
+            {
+                return _reservoirRepository.GenerateSubmissionReference(reservoirid,duedate,serviceid);
+            }
+            catch (Exception ex)
+            {
+                return "";
+            }
+        }
+
+
+        public async Task<int> InsertSubmissionDetails(SubmissionStatus submissionStatus)
+        {
+            try
+            {
+                return await _reservoirRepository.InsertSubmissionDetails(submissionStatus);
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+        }
+
+        public async Task<DateTime> GetLastSubmittedDateforReservoir(int reservoirid)
+        {
+            try
+            {
+                return await _reservoirRepository.GetLastSubmittedDateforReservoir(reservoirid);
+            }
+            catch (Exception ex)
+            {
+                return new DateTime();
+            }
+        }
+
+        public async Task<DocumentTemplate> GetDocumentTemplate(int reservoirid)
+        {
+            try
+            {
+                return await _reservoirRepository.GetDocumentTemplate(reservoirid);
+            }
+            catch (Exception ex)
+            {
+                return new DocumentTemplate();
+            }
+        }
     }
 }

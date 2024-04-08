@@ -27,7 +27,7 @@ using RACE2.GovUK.OneloginAuth.Configuration;
 using RACE2.FrontEndWebServer.AppStart;
 using System.Configuration;
 using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
-using Microsoft.IdentityModel.KeyVaultExtensions;
+//using Microsoft.IdentityModel.KeyVaultExtensions;
 using Microsoft.IdentityModel.Tokens;
 using RACE2.GovUK.OneloginAuth.Services;
 using Microsoft.AspNetCore.Authorization;
