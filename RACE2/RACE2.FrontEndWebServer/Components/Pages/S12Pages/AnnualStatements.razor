@@ -131,7 +131,7 @@
 @code {
     bool IsAdmin = false;
     bool IsFirstTimeUser = false;
-    private string UserName { get; set; } = "Unknown";
+    private string UserEmail { get; set; } = "Unknown";
     private List<Reservoir> ReservoirsLinkedToUser { get; set; } = new List<Reservoir>();
     private List<ReservoirDetailsDTO> ReservoirDetailsLinkedToUser { get; set; } = new List<ReservoirDetailsDTO>();
     private List<ReservoirsLinkedToUserForDisplay> ReservoirsLinkedToUserForDisplay { get; set; } = new List<ReservoirsLinkedToUserForDisplay>();
@@ -163,31 +163,18 @@
         {
             var authState = await AuthenticationStateTask;
             //UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
-            UserName = authState.User.Claims.FirstOrDefault(c => c.Type.Equals(ClaimTypes.Email))?.Value;
-            userDetails = await userService.GetUserByEmailID(UserName);
-            //userDetailsWithRoles = await userService.GetUserWithRoles(UserName);
-            // foreach (var role in userDetails.roles)
-            // {
-            //     if (role.Name == "System Administrator")
-            //     {
-            //         IsAdmin = true;
-            //         break;
-            //     }
-            // }
-            // if (IsAdmin)
-            // {
-            //     NavigationManager.NavigateTo("/race2-admin", true);
-            // }
+            UserEmail = authState.User.Claims.FirstOrDefault(c => c.Type.Equals(ClaimTypes.Email))?.Value;
+            userDetails = await userService.GetUserByEmailID(UserEmail);           
 
             if ((bool)userDetails.cIsFirstTimeUser)
             {
                 IsFirstTimeUser = true;
                 bool forceLoad = true;
-                string pagelink = _config["RACE2SecurityProviderURL"] + "/Identity/Account/CreatePassword?userEmail=" + UserName;
+                string pagelink = _config["RACE2SecurityProviderURL"] + "/Identity/Account/CreatePassword?userEmail=" + UserEmail;
                 NavigationManager.NavigateTo(pagelink, forceLoad);
             }
 
-            Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement").Information(UserName + " accessed S12 template generation.");
+            Serilog.Log.Logger.ForContext("User", UserEmail).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement").Information(UserEmail + " accessed S12 template generation.");
 
             ReservoirDetailsLinkedToUser = await reservoirService.GetReservoirsByUserId(userDetails.Id);
 
@@ -235,7 +222,7 @@
         catch (Exception ex)
         {
             //Log.Logger.Fatal("Error getting data from backend services : "+ex.Message);
-            Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement OnInitializedAsync").Fatal("Error getting data from backend services : " + ex.Message);
+            Serilog.Log.Logger.ForContext("User", UserEmail).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement OnInitializedAsync").Fatal("Error getting data from backend services : " + ex.Message);
             //throw new ApplicationException("Error loading annual statement data.");
             bool forceLoad = false;
             string pagelink = "/ProblemWithService";
@@ -299,7 +286,7 @@
         catch (Exception ex)
         {
             //Log.Logger.Fatal("Error loading reservoir data : " + ex.Message);
-            Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement PopulateReservoirsToDisplay").Fatal("Error loading reservoir data : " + ex.Message);
+            Serilog.Log.Logger.ForContext("User", UserEmail).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement PopulateReservoirsToDisplay").Fatal("Error loading reservoir data : " + ex.Message);
             //throw new ApplicationException("Error loading reservoir data.");
             bool forceLoad = false;
             string pagelink = "/ProblemWithService";
@@ -415,7 +402,7 @@
         catch (Exception ex)
         {
             //Log.Logger.Fatal("Error downloading S12ReportTemplate for the reservoir : " + ex.Message);
-            Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement DownloadReportTemplate").Fatal("Error downloading S12ReportTemplate for the reservoir : " + ex.Message);
+            Serilog.Log.Logger.ForContext("User", UserEmail).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement DownloadReportTemplate").Fatal("Error downloading S12ReportTemplate for the reservoir : " + ex.Message);
             //throw new ApplicationException("Error downloading S12ReportTemplate for the reservoir.");
             bool forceLoad = false;
             string pagelink = "/ProblemWithService";
@@ -457,6 +444,7 @@
     {
         ReportSubmissionDataDto reportSubmissionData = new ReportSubmissionDataDto
             {
+                UserEmail = UserEmail,
                 ReservoirId = Item.ReservoirID.ToString(),
                 ReservoirRegName = Item.ReservoirName,
                 UndertakerName = Item.UndertakerName,
