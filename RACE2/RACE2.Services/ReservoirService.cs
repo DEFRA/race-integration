@@ -126,18 +126,18 @@ namespace RACE2.Services
 
         }
 
-        public async Task<List<SubmissionStatusDTO>> GetReservoirStatusByUserId(int id)
-        {
-            try
-            {
-                return await _reservoirRepository.GetReservoirStatusByUserId(id);
-            }
-            catch (Exception ex)
-            {
-                return new List<SubmissionStatusDTO>();
-            }
+        //public async Task<List<SubmissionStatusDTO>> GetReservoirStatusByUserId(int id)
+        //{
+        //    try
+        //    {
+        //        return await _reservoirRepository.GetReservoirStatusByUserId(id);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new List<SubmissionStatusDTO>();
+        //    }
 
-        }
+        //}
 
         public async Task<List<UndertakerDTO>> GetUndertakerforReservoir(int id)
         {
@@ -153,18 +153,18 @@ namespace RACE2.Services
         }
 
 
-        public async Task<SubmissionStatus> UpdateReservoirStatus(int reservoirid, int userid, string reportStatus, bool isRevision, string revisionSummary)
-        {
-            try
-            {
-                return await _reservoirRepository.UpdateReservoirStatus(reservoirid, userid, reportStatus, isRevision, revisionSummary);
-            }
-            catch (Exception ex)
-            {
-                return new SubmissionStatus();
-            }
+        //public async Task<SubmissionStatus> UpdateReservoirStatus(int reservoirid, int userid, string reportStatus, bool isRevision, string revisionSummary)
+        //{
+        //    try
+        //    {
+        //        return await _reservoirRepository.UpdateReservoirStatus(reservoirid, userid, reportStatus, isRevision, revisionSummary);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new SubmissionStatus();
+        //    }
 
-        }
+        //}
 
         public async Task<int> InsertUploadDocumentDetails(DocumentDTO document)
         {

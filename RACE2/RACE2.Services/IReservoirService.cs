@@ -24,11 +24,11 @@ namespace RACE2.Services
 
         public Task<List<OperatorDTO>> GetOperatorsforReservoir(int reservoirid, string operatortype);
 
-        public Task<List<SubmissionStatusDTO>> GetReservoirStatusByUserId(int id);
+       // public Task<List<SubmissionStatusDTO>> GetReservoirStatusByUserId(int id);
 
         public Task<List<UndertakerDTO>> GetUndertakerforReservoir(int id);
 
-        public Task<SubmissionStatus> UpdateReservoirStatus(int reservoirid, int userid, string reportStatus, bool isRevision, string revisionSummary);
+       // public Task<SubmissionStatus> UpdateReservoirStatus(int reservoirid, int userid, string reportStatus, bool isRevision, string revisionSummary);
 
         public Task<int> InsertUploadDocumentDetails(DocumentDTO document);
 
@@ -65,7 +65,7 @@ namespace RACE2.Services
         public Task<Comment> GetExisitngComments(string relatestoobject, int relatestorecordid);
 
 
-        public string GenerateSubmissionReference(int reservoirid, DateTime duedate, int serviceid);
+        public string GenerateSubmissionReference(int reservoirid, DateTime submissiondate, int serviceid);
 
         public Task<int> InsertSubmissionDetails(SubmissionStatus submissionStatus);
 
