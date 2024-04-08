@@ -162,21 +162,22 @@
         try
         {
             var authState = await AuthenticationStateTask;
-            UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
+            //UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
+            UserName = authState.User.Claims.FirstOrDefault(c => c.Type.Equals(ClaimTypes.Email))?.Value;
             userDetails = await userService.GetUserByEmailID(UserName);
             //userDetailsWithRoles = await userService.GetUserWithRoles(UserName);
-            foreach (var role in userDetails.roles)
-            {
-                if (role.Name == "System Administrator")
-                {
-                    IsAdmin = true;
-                    break;
-                }
-            }
-            if (IsAdmin)
-            {
-                NavigationManager.NavigateTo("/race2-admin", true);
-            }
+            // foreach (var role in userDetails.roles)
+            // {
+            //     if (role.Name == "System Administrator")
+            //     {
+            //         IsAdmin = true;
+            //         break;
+            //     }
+            // }
+            // if (IsAdmin)
+            // {
+            //     NavigationManager.NavigateTo("/race2-admin", true);
+            // }
 
             if ((bool)userDetails.cIsFirstTimeUser)
             {

@@ -32,6 +32,9 @@ using Microsoft.IdentityModel.Tokens;
 using RACE2.GovUK.OneloginAuth.Services;
 using Microsoft.AspNetCore.Authorization;
 using RACE2.FrontEndWebServer;
+using RACE2.GovUK.OneloginAuth.Authentication;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Mvc.Routing;
 
 Serilog.Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Information()
@@ -115,10 +118,26 @@ try
     builder.Services.AddScoped<CustomErrorBoundary>();
     builder.Services.AddScoped<INotification, RaceNotification>();
 
+    builder.Services.AddHttpContextAccessor();
+    builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+    builder.Services.AddSingleton<IUrlHelperFactory, UrlHelperFactory>();
     builder.Services.AddSingleton<IAuthorizationMiddlewareResultHandler, BlazorAuthorizationMiddlewareResultHandler>();
     builder.Services.AddSingleton<BaseUrlProvider>();
-    builder.Services.AddHttpContextAccessor();
-
+    builder.Services.AddAuthorization(options =>
+    {
+        options.AddPolicy(
+            PolicyNames.IsAuthenticated, policy =>
+            {
+                policy.Requirements.Add(new AccountActiveRequirement());
+                policy.RequireAuthenticatedUser();
+            });
+        options.AddPolicy(
+            PolicyNames.IsActiveAccount, policy =>
+            {
+                policy.Requirements.Add(new AccountActiveRequirement());
+                policy.RequireAuthenticatedUser();
+            });
+    });
     var app = builder.Build();
 
     // Configure the HTTP request pipeline.
@@ -132,7 +151,7 @@ try
     //    configure.MessageTemplate = "HTTP {RequestMethod} {RequestPath} ({UserId}) responded {StatusCode} in {Elapsed:0.0000}ms";
     //}); // We want to log all HTTP requests
     app.UseSerilogRequestLogging();
-    app.UseHttpsRedirection();
+    //app.UseHttpsRedirection();
 
     app.UseStaticFiles();
 
