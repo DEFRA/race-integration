@@ -37,8 +37,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.BackendIntegrationAPI
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.GovUK.OneloginAuth", "RACE2.GovUK.OneloginAuth\RACE2.GovUK.OneloginAuth.csproj", "{CCDB00F2-4B64-49A4-BC16-8DE75CE8269D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RACE2.WebFrontEndAppOneloginMvc", "RACE2.WebFrontEndAppOneloginMvc\RACE2.WebFrontEndAppOneloginMvc.csproj", "{C093A610-0D2B-4541-A7EE-CE41A8CAAE20}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -113,10 +111,6 @@ Global
 		{CCDB00F2-4B64-49A4-BC16-8DE75CE8269D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CCDB00F2-4B64-49A4-BC16-8DE75CE8269D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CCDB00F2-4B64-49A4-BC16-8DE75CE8269D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C093A610-0D2B-4541-A7EE-CE41A8CAAE20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C093A610-0D2B-4541-A7EE-CE41A8CAAE20}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C093A610-0D2B-4541-A7EE-CE41A8CAAE20}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C093A610-0D2B-4541-A7EE-CE41A8CAAE20}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
