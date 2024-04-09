@@ -92,7 +92,8 @@ namespace RACE2.WebApi.Types
             try
             {
                 _logger.LogInformation("calling GetReservoirStatusById");
-                return await _reservoirService.GetReservoirStatusByUserId(id);
+                //return await _reservoirService.GetReservoirStatusByUserId(id);
+                return null;
             }
             catch (Exception ex)
             {

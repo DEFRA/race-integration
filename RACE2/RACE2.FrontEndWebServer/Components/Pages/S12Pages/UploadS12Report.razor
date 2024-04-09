@@ -358,8 +358,8 @@
 
                             //Check this.......
                             //Store the uploaded document information
-                            documentDTO.SubmissionId = res; 
-                            await reservoirService.InsertDocumentRelatedTable(Int32.Parse(reportSubmissionData.ReservoirId), res, docID);
+                            documentDTO.SubmissionId = res.Id; 
+                            await reservoirService.InsertDocumentRelatedTable(Int32.Parse(reportSubmissionData.ReservoirId), res.Id, docID);
                             Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Information("File upload succeeded.");
                             uploadTimeElapsed++;
                             uploadPerc = Convert.ToInt32((Convert.ToDouble(uploadTimeElapsed) / Convert.ToDouble(timeToWait)) * 100.0);
