@@ -9,22 +9,29 @@ namespace RACE2.FrontEndWebServer.Pages
 {
   public class LogoutModel : PageModel
   {
-    public async Task<IActionResult> OnGetAsync()
-    {
+    public async Task OnGetAsync()
+    //public async Task<ActionResult> OnGetAsync()
+        {
         // just to remove compiler warning
-        await Task.CompletedTask;
+        //await Task.CompletedTask;
         var idToken = await HttpContext.GetTokenAsync("id_token");
 
         var authenticationProperties = new AuthenticationProperties();
         authenticationProperties.Parameters.Clear();
         authenticationProperties.Parameters.Add("id_token", idToken);
 
-        return SignOut(
-            authenticationProperties,
-            new[] {
-            CookieAuthenticationDefaults.AuthenticationScheme,
-            OpenIdConnectDefaults.AuthenticationScheme
-            });
+        //return SignOut(
+        //    authenticationProperties,
+        //    new[] {
+        //CookieAuthenticationDefaults.AuthenticationScheme,
+        //OpenIdConnectDefaults.AuthenticationScheme
+        //    });
+
+        //HttpContext.Response.Cookies.Delete(".AspNetCore.Cookies");
+        // just to remove compiler warning
+        //return SignOut(OpenIdConnectDefaults.AuthenticationScheme, CookieAuthenticationDefaults.AuthenticationScheme);
+        Response.Redirect("https://oidc.integration.account.gov.uk/logout");
+
         }
   }
 }

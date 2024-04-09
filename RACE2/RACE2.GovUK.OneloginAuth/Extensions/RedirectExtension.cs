@@ -24,8 +24,9 @@ namespace RACE2.GovUK.OneloginAuth.Extensions
             {
                 return redirectUri;
             }
-            
-            return $"https://employerprofiles.{"".GetEnvironmentAndDomain(environment)}/service/user-signed-out";
+
+            //return $"https://employerprofiles.{"".GetEnvironmentAndDomain(environment)}/service/user-signed-out";
+            return "https://oidc.integration.account.gov.uk/logout";
         }
 
         public static string GetAccountSuspendedRedirectUrl(string environment)

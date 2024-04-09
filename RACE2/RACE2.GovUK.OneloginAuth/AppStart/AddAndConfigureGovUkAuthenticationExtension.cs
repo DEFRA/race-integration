@@ -23,7 +23,7 @@ namespace RACE2.GovUK.OneloginAuth.AppStart
             else
             {
                 //services.ConfigureGovUkAuthentication(configuration , signedOutRedirectUrl.GetSignedOutRedirectUrl(configuration["ResourceEnvironmentName"]),cookieDomain.GetEnvironmentAndDomain(configuration["ResourceEnvironmentName"]));
-                services.ConfigureGovUkAuthentication(configuration, "https://localhost:5003/signed-out", cookieDomain.GetEnvironmentAndDomain(configuration["ResourceEnvironmentName"]));
+                services.ConfigureGovUkAuthentication(configuration, "https://oidc.integration.account.gov.uk/logout", "");
 
             }
 
