@@ -318,10 +318,11 @@
             //SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(reservoir.Id, userDetails.Id, "In progress",false,"");
 
             // var blobName = updatedStatus.OverrideTemplateName + ".docx";
-            
+
             //int result = await reservoirService.InsertSubmissionDetails(SubmissionStatus);
 
-            var blobName = await reservoirService.GetDocumentTemplate(reservoir.Id) + ".docx";
+            var result = await reservoirService.GetDocumentTemplate(reservoir.Id);
+            var blobName = result.TemplateName + ".docx";
 
             //var blobName = "S12ReportTemplate.docx";
             //var blobName = "TestWithTags.docx";
