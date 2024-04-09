@@ -293,15 +293,27 @@
 
                         fileUploadViewModels.Add(fileUploadViewModel);
                         var savedReportSubmissionData = await ProtectedSessionStore.GetAsync<ReportSubmissionDataDto>("CurrentReportSubmissionData");
-                        SubmissionStatus updatedStatus = new SubmissionStatus();
-                        if (savedReportSubmissionData.Value.SendResendValue=="Send")
-                        {
-                            updatedStatus = await reservoirService.UpdateReservoirStatus(Int32.Parse(reportSubmissionData.ReservoirId), userDetails.Id, "Sent", false, "");
-                        }
-                        else
-                        {
-                            updatedStatus = await reservoirService.UpdateReservoirStatus(Int32.Parse(reportSubmissionData.ReservoirId), userDetails.Id, "Sent", true, savedReportSubmissionData.Value.ResubmitReason);
-                        }
+                        SubmissionStatus insertStatus = new SubmissionStatus(); 
+                        insertStatus.ReservoirId = Int32.Parse(reportSubmissionData.ReservoirId);
+                        insertStatus.LastModifiedByUserId = userDetails.Id;
+                        insertStatus.SubmittedByUserId = userDetails.Id;
+                        insertStatus.Status = "Sent";
+                        insertStatus.ServiceId = 1;
+                        insertStatus.SubmittedDateTime = DateTime.Now;
+                        insertStatus.LastModifiedDateTime = DateTime.Now;
+                        insertStatus.RevisionSummary = savedReportSubmissionData.Value==null?"":savedReportSubmissionData.Value.ResubmitReason;
+                        insertStatus.IsRevision = savedReportSubmissionData.Value == null ? false : true;
+                        insertStatus.SubmissionReference = reservoirService.GenerateSubmissionReference(Int32.Parse(reportSubmissionData.ReservoirId), insertStatus.SubmittedDateTime, insertStatus.ServiceId);
+                        var res = await reservoirService.InsertSubmissionDetails(insertStatus);
+                        // if (savedReportSubmissionData.Value.SendResendValue=="Send")
+                        // {
+                        //     updatedStatus = await reservoirService.UpdateReservoirStatus(Int32.Parse(reportSubmissionData.ReservoirId), userDetails.Id, "Sent", false, "");
+
+                        // }
+                        // else
+                        // {
+                        //     updatedStatus = await reservoirService.UpdateReservoirStatus(Int32.Parse(reportSubmissionData.ReservoirId), userDetails.Id, "Sent", true, savedReportSubmissionData.Value.ResubmitReason);
+                        // }
                         //_fileNameResult=await jsRuntime.InvokeAsync<string>("getFileName");
 
                         FileUploadInProgress = true;
@@ -318,7 +330,7 @@
 
                         //For testing without virus scan, comment the next line and uncomment the next to next line
                         var containerNameToDownloadFrom = _config["CleanContainer"]; //"cleanfiles";
-                        //var containerNameToDownloadFrom = _config["UnscannedContainer"];
+                                                                                     //var containerNameToDownloadFrom = _config["UnscannedContainer"];
 
                         var RSTEmailAddress = String.IsNullOrEmpty(_config["RSTEmailAddress"]) ? userDetails.Email : _config["RSTEmailAddress"];
                         var bytes = await blobStorageService.GetBlobAsByteArray(containerNameToDownloadFrom, trustedFileNameForFileStorage);
@@ -343,9 +355,11 @@
                                 var internalEmail = _config["InternalEmailAddress"];
                                 await _notificationService.SendInternalMail(internalEmail, reportSubmissionData.ReservoirRegName, reportSubmissionData.UndertakerEmail, reportSubmissionData.YesNoValue);
                             }
+
+                            //Check this.......
                             //Store the uploaded document information
-                            documentDTO.SubmissionId = updatedStatus.Id;
-                            await reservoirService.InsertDocumentRelatedTable(Int32.Parse(reportSubmissionData.ReservoirId), updatedStatus.Id, docID);
+                            documentDTO.SubmissionId = res; 
+                            await reservoirService.InsertDocumentRelatedTable(Int32.Parse(reportSubmissionData.ReservoirId), res, docID);
                             Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Information("File upload succeeded.");
                             uploadTimeElapsed++;
                             uploadPerc = Convert.ToInt32((Convert.ToDouble(uploadTimeElapsed) / Convert.ToDouble(timeToWait)) * 100.0);
@@ -391,7 +405,7 @@
                             {
                                 Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File not scanned for virus.");
                                 FileUploadFailed();
-                                await reservoirService.UpdateReservoirStatus(Int32.Parse(reportSubmissionData.ReservoirId), userDetails.Id, "In progress",false,"");
+                                //await reservoirService.UpdateReservoirStatus(Int32.Parse(reportSubmissionData.ReservoirId), userDetails.Id, "In progress",false,"");
 
                                 await InvokeAsync(() =>
                                 {
@@ -414,7 +428,7 @@
                     {
                         Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File upload failed.");
                         FileUploadFailed();
-                        await reservoirService.UpdateReservoirStatus(Int32.Parse(reportSubmissionData.ReservoirId), userDetails.Id, "In progress",false,"");
+                        //await reservoirService.UpdateReservoirStatus(Int32.Parse(reportSubmissionData.ReservoirId), userDetails.Id, "In progress",false,"");
                         await InvokeAsync(() =>
                         {
                             StateHasChanged();
@@ -425,7 +439,7 @@
                 {
                     Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File upload failed : " + ex.Message);
                     FileUploadFailed();
-                    await reservoirService.UpdateReservoirStatus(Int32.Parse(reportSubmissionData.ReservoirId), userDetails.Id, "In progress",false,"");
+                    //await reservoirService.UpdateReservoirStatus(Int32.Parse(reportSubmissionData.ReservoirId), userDetails.Id, "In progress",false,"");
                     await InvokeAsync(() =>
                     {
                         StateHasChanged();
