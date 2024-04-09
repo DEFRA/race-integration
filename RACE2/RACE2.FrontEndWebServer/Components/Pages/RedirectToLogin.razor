@@ -12,6 +12,6 @@
             returnUrl = "/";
         }
 
-        NavigationManager.NavigateTo("/account/login?returnUrl=" + HttpUtility.UrlEncode(returnUrl), forceLoad: true);
+        NavigationManager.NavigateTo("/login?returnUrl=" + HttpUtility.UrlEncode(returnUrl), forceLoad: true);
     }
 }
