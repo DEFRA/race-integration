@@ -398,7 +398,7 @@ namespace RACE2.Services
         }
 
 
-        public async Task<int> InsertSubmissionDetails(SubmissionStatus submissionStatus)
+        public async Task<SubmissionStatus> InsertSubmissionDetails(SubmissionStatus submissionStatus)
         {
             try
             {
