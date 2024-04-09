@@ -961,7 +961,7 @@ namespace RACE2.DataAccess.Repository
             }
         }
 
-        public async Task<int> InsertSubmissionDetails(SubmissionStatus submissionStatus)
+        public async Task<SubmissionStatus> InsertSubmissionDetails(SubmissionStatus submissionStatus)
         {
             _logger.LogInformation("Insert new Submission for reservoir" + submissionStatus.ReservoirId );
             try
