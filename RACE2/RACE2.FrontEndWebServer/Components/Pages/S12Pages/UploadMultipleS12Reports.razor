@@ -104,12 +104,13 @@
     IReadOnlyList<IBrowserFile> selectedFiles;
     private List<FileUploadViewModel> fileUploadViewModels = new();
     public Reservoir CurrentReservoir { get; set; } = new Reservoir();
-    [CascadingParameter]
-    public Task<AuthenticationState> AuthenticationStateTask { get; set; }
+    public ReportSubmissionDataDto reportSubmissionData { get; set; }
+
     protected async override Task OnInitializedAsync()
     {
-        var userEmailDataState = await ProtectedSessionStore.GetAsync<ReportSubmissionDataDto>("UserEmail");
-        UserEmail = userEmailDataState.Value.ToString();
+        var reportSubmissionDataState = await ProtectedSessionStore.GetAsync<ReportSubmissionDataDto>("CurrentReportSubmissionData");
+        reportSubmissionData = reportSubmissionDataState.Value;
+        UserEmail = reportSubmissionData.UserEmail;
         var userDetails = await userService.GetUserByEmailID(UserEmail);
         UserId = userDetails.Id;
         UserDetail = new UserDetail()

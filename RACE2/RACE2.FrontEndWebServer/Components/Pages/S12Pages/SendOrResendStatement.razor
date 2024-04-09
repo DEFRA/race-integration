@@ -117,14 +117,10 @@
 <Footer />
 
 @code {
-    [CascadingParameter]
-    public Task<AuthenticationState> AuthenticationStateTask { get; set; }
-
     public ReportSubmissionDataDto reportSubmissionData { get; set; } = new ReportSubmissionDataDto();
 
     protected async override Task OnInitializedAsync()
     {
-        AuthenticationState authState = await AuthenticationStateTask;// AuthenticationStateProvider.GetAuthenticationStateAsync();
         await base.OnInitializedAsync();
     }
     private SendResendClass _sendresend = new SendResendClass();
