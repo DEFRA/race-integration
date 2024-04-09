@@ -67,7 +67,7 @@ namespace RACE2.Services
 
         public string GenerateSubmissionReference(int reservoirid, DateTime submissiondate, int serviceid);
 
-        public Task<int> InsertSubmissionDetails(SubmissionStatus submissionStatus);
+        public Task<SubmissionStatus> InsertSubmissionDetails(SubmissionStatus submissionStatus);
 
         public Task<DateTime> GetLastSubmittedDateforReservoir(int reservoirid);
 
