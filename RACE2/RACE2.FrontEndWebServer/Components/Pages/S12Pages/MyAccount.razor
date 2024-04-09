@@ -179,6 +179,7 @@
     private string UserEmail { get; set; } = "Unknown";
     private UserDetail UserDetail { get; set; } = new UserDetail();
     private Address UserAddress { get; set; } = new Address();
+    public ReportSubmissionDataDto reportSubmissionData { get; set; }
 
     private string changePasswordUrl = "";
     protected async override Task OnInitializedAsync()
@@ -186,8 +187,9 @@
         try
         {
             changePasswordUrl = _config["RACE2SecurityProviderURL"] + "/Identity/Account/ChangeYourPassword";
-            var userEmailDataState = await ProtectedSessionStore.GetAsync<ReportSubmissionDataDto>("UserEmail");
-            UserEmail = userEmailDataState.Value.ToString();
+            var reportSubmissionDataState = await ProtectedSessionStore.GetAsync<ReportSubmissionDataDto>("CurrentReportSubmissionData");
+            reportSubmissionData = reportSubmissionDataState.Value;
+            UserEmail = reportSubmissionData.UserEmail;
             UserSpecificDto userDetails = await userService.GetUserByEmailID(UserEmail);
             UserAddress = userDetails.addresses[0];
             UserDetail = new UserDetail()
