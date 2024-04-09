@@ -189,9 +189,8 @@
     protected async override Task OnInitializedAsync()
     {
         var reportSubmissionDataState = await ProtectedSessionStore.GetAsync<ReportSubmissionDataDto>("CurrentReportSubmissionData");
-        reportSubmissionData = reportSubmissionDataState.Value;
-        var userEmailDataState = await ProtectedSessionStore.GetAsync<ReportSubmissionDataDto>("UserEmail");
-        UserEmail = userEmailDataState.Value.ToString();
+        reportSubmissionData = reportSubmissionDataState.Value;        
+        UserEmail = reportSubmissionData.UserEmail;
         userDetails = await userService.GetUserByEmailID(UserEmail);
         FileUploadInProgress = false;
         await InvokeAsync(() =>

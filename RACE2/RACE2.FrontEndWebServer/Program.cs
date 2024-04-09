@@ -67,7 +67,7 @@ try
         .UseFeatureFlags();
     });
 
-    builder.Services.Configure<GovUkOidcConfiguration>(builder.Configuration.GetSection(nameof(GovUkOidcConfiguration)));
+    //builder.Services.Configure<GovUkOidcConfiguration>(builder.Configuration.GetSection(nameof(GovUkOidcConfiguration)));
     builder.Services.AddServiceRegistration(builder.Configuration);
 
     var blazorClientURL = builder.Configuration["RACE2FrontEndURL"];
