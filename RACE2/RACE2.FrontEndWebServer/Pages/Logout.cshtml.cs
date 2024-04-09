@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Mvc;
@@ -10,10 +11,20 @@ namespace RACE2.FrontEndWebServer.Pages
   {
     public async Task<IActionResult> OnGetAsync()
     {
-      // just to remove compiler warning
-      await Task.CompletedTask;
-      return SignOut(OpenIdConnectDefaults.AuthenticationScheme,
-                     CookieAuthenticationDefaults.AuthenticationScheme);
-    }
+        // just to remove compiler warning
+        await Task.CompletedTask;
+        var idToken = await HttpContext.GetTokenAsync("id_token");
+
+        var authenticationProperties = new AuthenticationProperties();
+        authenticationProperties.Parameters.Clear();
+        authenticationProperties.Parameters.Add("id_token", idToken);
+
+        return SignOut(
+            authenticationProperties,
+            new[] {
+            CookieAuthenticationDefaults.AuthenticationScheme,
+            OpenIdConnectDefaults.AuthenticationScheme
+            });
+        }
   }
 }
