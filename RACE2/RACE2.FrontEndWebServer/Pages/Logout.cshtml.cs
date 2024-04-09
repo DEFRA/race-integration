@@ -15,10 +15,12 @@ namespace RACE2.FrontEndWebServer.Pages
         // just to remove compiler warning
         //await Task.CompletedTask;
         var idToken = await HttpContext.GetTokenAsync("id_token");
+        var accessToken = await HttpContext.GetTokenAsync("access_token");
 
         var authenticationProperties = new AuthenticationProperties();
         authenticationProperties.Parameters.Clear();
         authenticationProperties.Parameters.Add("id_token", idToken);
+        authenticationProperties.Parameters.Add("access_token", accessToken);
 
         //return SignOut(
         //    authenticationProperties,
@@ -28,7 +30,6 @@ namespace RACE2.FrontEndWebServer.Pages
         //    });
 
         //HttpContext.Response.Cookies.Delete(".AspNetCore.Cookies");
-        // just to remove compiler warning
         //return SignOut(OpenIdConnectDefaults.AuthenticationScheme, CookieAuthenticationDefaults.AuthenticationScheme);
         Response.Redirect("https://oidc.integration.account.gov.uk/logout");
 
