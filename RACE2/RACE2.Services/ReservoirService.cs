@@ -406,7 +406,7 @@ namespace RACE2.Services
             }
             catch (Exception ex)
             {
-                return 0;
+                return new SubmissionStatus() ;
             }
         }
 

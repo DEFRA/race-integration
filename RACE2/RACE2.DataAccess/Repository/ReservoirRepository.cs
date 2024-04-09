@@ -980,16 +980,16 @@ namespace RACE2.DataAccess.Repository
                     parameters.Add("@submitteddatetime", submissionStatus.SubmittedDateTime, DbType.DateTime);
                     parameters.Add("@status", submissionStatus.Status, DbType.String);
 
-                    var result = await conn.ExecuteAsync("sp_InsertSubmissionRecord", parameters, commandType: CommandType.StoredProcedure);
+                    var result = await conn.QueryAsync<SubmissionStatus>("sp_InsertSubmissionRecord", parameters, commandType: CommandType.StoredProcedure);
 
-                    return 1;
+                    return result.FirstOrDefault();
 
                 }
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ex.Message);
-                return 0;
+                return null;
             }
             
         }
