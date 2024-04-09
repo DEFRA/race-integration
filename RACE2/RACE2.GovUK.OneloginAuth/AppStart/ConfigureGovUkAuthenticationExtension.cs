@@ -26,7 +26,8 @@ namespace RACE2.GovUK.OneloginAuth.AppStart
                     sharedOptions.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                     sharedOptions.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
                     sharedOptions.DefaultSignOutScheme = OpenIdConnectDefaults.AuthenticationScheme;
-                }).AddOpenIdConnect(options =>
+                })
+                .AddOpenIdConnect(options =>
                 {
                     var govUkConfiguration = configuration.GetSection(nameof(GovUkOidcConfiguration));
 
@@ -57,9 +58,7 @@ namespace RACE2.GovUK.OneloginAuth.AppStart
                         }
 
                         return Task.CompletedTask;
-                    };
-
-                    
+                    };                    
                 })
                 .AddCookie(options =>
                 {
@@ -76,8 +75,7 @@ namespace RACE2.GovUK.OneloginAuth.AppStart
                     options.Cookie.SameSite = SameSiteMode.Lax;
                     options.CookieManager = new ChunkingCookieManager { ChunkSize = 3000 };
                     options.LogoutPath = "/home/signed-out";
-                })
-                ;
+                });
             services
                 .AddOptions<OpenIdConnectOptions>(OpenIdConnectDefaults.AuthenticationScheme)
                 .Configure<IOidcService, IAzureIdentityService, ICustomClaims, GovUkOidcConfiguration, ITicketStore>(
@@ -91,6 +89,7 @@ namespace RACE2.GovUK.OneloginAuth.AppStart
                                 azureIdentityService.AuthenticationCallback),
                             ValidateIssuerSigningKey = true,
                             ValidateIssuer = true,
+                            ValidIssuer = govUkConfiguration.BaseUrl + @"/",
                             ValidateAudience = true,
                             SaveSigninToken = true
                         };

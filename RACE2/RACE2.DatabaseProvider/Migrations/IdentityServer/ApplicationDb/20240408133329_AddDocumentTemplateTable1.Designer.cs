@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RACE2.DatabaseProvider.Data;
 
@@ -11,9 +12,11 @@ using RACE2.DatabaseProvider.Data;
 namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240408133329_AddDocumentTemplateTable1")]
+    partial class AddDocumentTemplateTable1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -605,13 +608,13 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                     b.Property<bool>("IsDefaultTemplate")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("OrganisationId")
+                    b.Property<int>("OrganisationId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ReservoirId")
+                    b.Property<int>("ReservoirId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ServiceId")
+                    b.Property<int>("ServiceId")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("TemplateEndDate")
@@ -634,7 +637,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -2482,19 +2485,27 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                 {
                     b.HasOne("RACE2.DataModel.Organisation", "Organisation")
                         .WithMany()
-                        .HasForeignKey("OrganisationId");
+                        .HasForeignKey("OrganisationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("RACE2.DataModel.Reservoir", "Reservoir")
                         .WithMany()
-                        .HasForeignKey("ReservoirId");
+                        .HasForeignKey("ReservoirId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("RACE2.DataModel.FeatureFunction", "FeatureFunction")
                         .WithMany()
-                        .HasForeignKey("ServiceId");
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("RACE2.DataModel.UserDetail", "UserDetail")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("FeatureFunction");
 

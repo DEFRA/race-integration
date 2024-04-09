@@ -92,6 +92,8 @@ namespace RACE2.DatabaseProvider.Data
 
         public DbSet<ActionsChangeHistory> ActionsChangeHistory { get; set; }
 
+        public DbSet<DocumentTemplate> DocumentTemplate { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

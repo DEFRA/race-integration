@@ -22,8 +22,8 @@ namespace RACE2.GovUK.OneloginAuth.AppStart
             }
             else
             {
-                //services.ConfigureGovUkAuthentication(configuration , signedOutRedirectUrl.GetSignedOutRedirectUrl(configuration["ResourceEnvironmentName"]),cookieDomain.GetEnvironmentAndDomain(configuration["ResourceEnvironmentName"]));
-                services.ConfigureGovUkAuthentication(configuration, "https://race2frontendwebserver.thankfulriver-924773ad.uksouth.azurecontainerapps.io/signin-oidc", cookieDomain.GetEnvironmentAndDomain(configuration["ResourceEnvironmentName"]));
+                services.ConfigureGovUkAuthentication(configuration , signedOutRedirectUrl.GetSignedOutRedirectUrl(configuration["ResourceEnvironmentName"]),cookieDomain.GetEnvironmentAndDomain(configuration["ResourceEnvironmentName"]));
+                //services.ConfigureGovUkAuthentication(configuration, "https://localhost:5001/signout-callback-oidc", cookieDomain.GetEnvironmentAndDomain(configuration["ResourceEnvironmentName"]));
 
             }
 
