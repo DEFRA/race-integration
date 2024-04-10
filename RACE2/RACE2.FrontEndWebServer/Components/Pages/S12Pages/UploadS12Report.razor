@@ -303,7 +303,7 @@
                         insertStatus.LastModifiedDateTime = DateTime.Now;
                         insertStatus.RevisionSummary = savedReportSubmissionData.Value==null?"":savedReportSubmissionData.Value.ResubmitReason;
                         //insertStatus.IsRevision = savedReportSubmissionData.Value == null ? false : true;
-                        insertStatus.IsRevision = reportSubmissionData.YesNoValue == "Yes" ? true : false;
+                        insertStatus.IsRevision = reportSubmissionData.SendResendValue == "1" ? false : true;
                         insertStatus.SubmissionReference = reservoirService.GenerateSubmissionReference(Int32.Parse(reportSubmissionData.ReservoirId), insertStatus.SubmittedDateTime, insertStatus.ServiceId);
                         var res = await reservoirService.InsertSubmissionDetails(insertStatus);
                         // if (savedReportSubmissionData.Value.SendResendValue=="Send")
