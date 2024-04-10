@@ -971,7 +971,7 @@ namespace RACE2.DataAccess.Repository
                     var parameters = new DynamicParameters();
                     parameters.Add("@reservoirid", submissionStatus.ReservoirId, DbType.Int32);
                     parameters.Add("@submissionreference", submissionStatus.SubmissionReference, DbType.String);
-                    parameters.Add("@lastmodifiedtime", submissionStatus.LastModifiedDateTime, DbType.DateTime);
+                    parameters.Add("@lastmodifiedtime", submissionStatus.LastModifiedDateTime, DbType.DateTime);                   
                     parameters.Add("@userid", submissionStatus.SubmittedByUserId, DbType.Int32);
                     parameters.Add("@isRevision", submissionStatus.IsRevision, DbType.Boolean);
                     parameters.Add("@revisionSummary", submissionStatus.RevisionSummary, DbType.String);
