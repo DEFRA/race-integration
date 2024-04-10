@@ -141,13 +141,13 @@
         {
             SendResendError = false;
             bool forceLoad = false;
+            var savedReportSubmissionData = await ProtectedSessionStore.GetAsync<ReportSubmissionDataDto>("CurrentReportSubmissionData");
+            savedReportSubmissionData.Value.SendResendValue = _sendresend.SendRsendOptions.ToString();
+            await ProtectedSessionStore.SetAsync("CurrentReportSubmissionData", savedReportSubmissionData.Value);
             if (_sendresend.SendRsendOptions.ToString() == "Send")
                 NavigationManager.NavigateTo("/send-your-statement", forceLoad);
             else
             {
-                var savedReportSubmissionData = await ProtectedSessionStore.GetAsync<ReportSubmissionDataDto>("CurrentReportSubmissionData");
-                savedReportSubmissionData.Value.SendResendValue = _sendresend.SendRsendOptions.ToString();
-                await ProtectedSessionStore.SetAsync("CurrentReportSubmissionData", savedReportSubmissionData.Value);
                 NavigationManager.NavigateTo("/resubmit-statement", forceLoad);
             }
         }
