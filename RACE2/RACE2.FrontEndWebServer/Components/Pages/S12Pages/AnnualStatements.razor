@@ -165,13 +165,13 @@
             UserEmail = authState.User.Claims.FirstOrDefault(c => c.Type.Equals(ClaimTypes.Email))?.Value;
             userDetails = await userService.GetUserByEmailID(UserEmail);           
 
-            if ((bool)userDetails.cIsFirstTimeUser)
-            {
-                IsFirstTimeUser = true;
-                bool forceLoad = true;
-                string pagelink = _config["RACE2SecurityProviderURL"] + "/Identity/Account/CreatePassword?userEmail=" + UserEmail;
-                NavigationManager.NavigateTo(pagelink, forceLoad);
-            }
+            // if ((bool)userDetails.cIsFirstTimeUser)
+            // {
+            //     IsFirstTimeUser = true;
+            //     bool forceLoad = true;
+            //     string pagelink = _config["RACE2SecurityProviderURL"] + "/Identity/Account/CreatePassword?userEmail=" + UserEmail;
+            //     NavigationManager.NavigateTo(pagelink, forceLoad);
+            // }
 
             Serilog.Log.Logger.ForContext("User", UserEmail).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement").Information(UserEmail + " accessed S12 template generation.");
 
