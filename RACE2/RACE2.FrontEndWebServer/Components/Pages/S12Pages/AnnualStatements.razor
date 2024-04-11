@@ -262,13 +262,14 @@
                             reservoirsLinkedToUser.UndertakerEmail = "";
                         }
                     }
-                    SubmissionStatusList = await reservoirService.GetReservoirStatusByUserId(userDetails.Id);
-                    SubmissionStatus = SubmissionStatusList.Where(s => s.RegisteredName == reservoir.RegisteredName).FirstOrDefault();
-                    reservoirsLinkedToUser.SubmissionReference = SubmissionStatus.SubmissionReference;
-                    reservoirsLinkedToUser.DueDate = SubmissionStatus.DueDate != DateTime.MinValue ? SubmissionStatus.DueDate.ToString("dd MMMMM yyyy") : String.Empty;
-                    reservoirsLinkedToUser.SubmittedDateTime = SubmissionStatus.SubmittedDateTime != DateTime.MinValue ? SubmissionStatus.SubmittedDateTime.ToString("dd MMMMM yyyy") : String.Empty;
-                    reservoirsLinkedToUser.Status = SubmissionStatus.Status != null ? SubmissionStatus.Status : String.Empty;
-
+                    //SubmissionStatusList = await reservoirService.GetReservoirStatusByUserId(userDetails.Id);
+                    // SubmissionStatus = SubmissionStatusList.Where(s => s.RegisteredName == reservoir.RegisteredName).FirstOrDefault();
+                    // reservoirsLinkedToUser.SubmissionReference = SubmissionStatus.SubmissionReference;
+                    // reservoirsLinkedToUser.DueDate = SubmissionStatus.DueDate != DateTime.MinValue ? SubmissionStatus.DueDate.ToString("dd MMMMM yyyy") : String.Empty;
+                    // reservoirsLinkedToUser.SubmittedDateTime = SubmissionStatus.SubmittedDateTime != DateTime.MinValue ? SubmissionStatus.SubmittedDateTime.ToString("dd MMMMM yyyy") : String.Empty;
+                    // reservoirsLinkedToUser.Status = SubmissionStatus.Status != null ? SubmissionStatus.Status : String.Empty;
+                    DateTime submissionDateTime = await reservoirService.GetLastSubmittedDateforReservoir(reservoir.Id);
+                    reservoirsLinkedToUser.SubmittedDateTime = submissionDateTime != DateTime.MinValue ? submissionDateTime.ToString("dd MMMMM yyyy") : String.Empty;
                     ReservoirsLinkedToUserForDisplay.Add(reservoirsLinkedToUser);
                 }
                 catch (Exception ex)
@@ -298,12 +299,18 @@
         try
         {
             var reservoir = ReservoirsLinkedToUser.Where(r => r.RegisteredName == item.ReservoirName).FirstOrDefault();
-            SubmissionStatus = SubmissionStatusList.Where(s => s.RegisteredName == reservoir.RegisteredName).FirstOrDefault();
+            //SubmissionStatus = SubmissionStatusList.Where(s => s.RegisteredName == reservoir.RegisteredName).FirstOrDefault();
             var Undertakers = await reservoirService.GetOperatorsforReservoir(reservoir.Id, reservoir.OperatorType);
 
-            SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(reservoir.Id, userDetails.Id, "In progress",false,"");
+            //SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(reservoir.Id, userDetails.Id, "In progress",false,"");
 
-            var blobName = updatedStatus.OverrideTemplateName + ".docx";
+            // var blobName = updatedStatus.OverrideTemplateName + ".docx";
+
+            //int result = await reservoirService.InsertSubmissionDetails(SubmissionStatus);
+
+            var result = await reservoirService.GetDocumentTemplate(reservoir.Id);
+            var blobName = result.TemplateName + ".docx";
+
             //var blobName = "S12ReportTemplate.docx";
             //var blobName = "TestWithTags.docx";
             Stream response = await blobStorageService.GetBlobFileStream(blobName);
@@ -392,7 +399,7 @@
             string downloadedFileName = reservoir.RegisteredName + " S12.docx";
             await jsRuntime.InvokeVoidAsync("downloadFileFromStream", downloadedFileName, streamRef);
             var reservoirLinkedToUser = ReservoirsLinkedToUserForDisplay.Where(r => r.ReservoirName == reservoir.RegisteredName).FirstOrDefault();
-            reservoirLinkedToUser.Status = updatedStatus.Status;
+            //reservoirLinkedToUser.Status = updatedStatus.Status;
             await InvokeAsync(() =>
             {
                 StateHasChanged();
