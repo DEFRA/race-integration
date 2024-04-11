@@ -22,22 +22,22 @@ namespace RACE2.FrontEndWebServer.Pages
         authenticationProperties.Parameters.Add("id_token", idToken);
         authenticationProperties.Parameters.Add("access_token", accessToken);
 
-            //return SignOut(
-            //    authenticationProperties,
-            //    new[] {
-            //CookieAuthenticationDefaults.AuthenticationScheme,
-            //OpenIdConnectDefaults.AuthenticationScheme
-            //    });
+        //return SignOut(
+        //    authenticationProperties,
+        //    new[] {
+        //CookieAuthenticationDefaults.AuthenticationScheme,
+        //OpenIdConnectDefaults.AuthenticationScheme
+        //    });
 
-            //HttpContext.Response.Cookies.Delete(".AspNetCore.Cookies");
-            //return SignOut(OpenIdConnectDefaults.AuthenticationScheme, CookieAuthenticationDefaults.AuthenticationScheme);
+        //HttpContext.Response.Cookies.Delete(".AspNetCore.Cookies");
+        //return SignOut(OpenIdConnectDefaults.AuthenticationScheme, CookieAuthenticationDefaults.AuthenticationScheme);
             
-            foreach (var cookie in HttpContext.Request.Cookies.Keys)
-            {
-                HttpContext.Response.Cookies.Delete(cookie);
-            }
-            Response.Redirect("https://oidc.integration.account.gov.uk/logout");
-
+        foreach (var cookie in HttpContext.Request.Cookies.Keys)
+        {
+            HttpContext.Response.Cookies.Delete(cookie);
         }
+        Response.Redirect("https://oidc.integration.account.gov.uk/logout");
+
+    }
   }
 }
