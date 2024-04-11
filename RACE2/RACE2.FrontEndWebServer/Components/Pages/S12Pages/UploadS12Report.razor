@@ -34,67 +34,67 @@
 
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-three-quarters">
-               @if (!FileUploadInProgress)
+                @if (!FileUploadInProgress)
                 {
-                <EditForm Model="@uploadFileData" OnSubmit="OnUploadSubmit">                   
-                    @if (ValidationErrors.Count > 0)
-                    {
-                        <div class="govuk-error-summary" data-module="govuk-error-summary">
-                            <div role="alert">
-                                <h2 class="govuk-error-summary__title">
-                                    There is a problem
-                                </h2>
+                    <EditForm Model="@uploadFileData" OnSubmit="OnUploadSubmit">
+                        @if (ValidationErrors.Count > 0)
+                        {
+                            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                                <div role="alert">
+                                    <h2 class="govuk-error-summary__title">
+                                        There is a problem
+                                    </h2>
+                                    @foreach (var error in ValidationErrors.Values)
+                                    {
+                                        <div class="govuk-error-summary__body">
+                                            <ul class="govuk-list govuk-error-summary__list">
+                                                <li>
+                                                    <a href="#">@error</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            <div class="govuk-form-group govuk-form-group--error">
+                                <label class="govuk-label" for="file-upload">
+                                    <div class="govuk-heading-xl govuk-!-margin-bottom-5">
+                                        Upload your statement
+                                    </div>
+                                </label>
+                                <div id="file-upload-hint" class="govuk-hint">
+                                    You can upload your statement as a PDF or Word document. It can be up to 30MB.
+                                </div>
+                                <br />
                                 @foreach (var error in ValidationErrors.Values)
                                 {
-                                    <div class="govuk-error-summary__body">
-                                        <ul class="govuk-list govuk-error-summary__list">
-                                            <li>
-                                                <a href="#">@error</a>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                    <p id="file-upload-error" class="govuk-error-message">
+                                        <span class="govuk-visually-hidden">Error:</span>@error
+                                    </p>
                                 }
                             </div>
-                        </div>
-                        <div class="govuk-form-group govuk-form-group--error">
-                            <label class="govuk-label" for="file-upload">
-                                <div class="govuk-heading-xl govuk-!-margin-bottom-5">
-                                    Upload your statement
+                        }
+                        else
+                        {
+                            <div class="govuk-form-group">
+                                <label class="govuk-label" for="file-upload">
+                                    <div class="govuk-heading-xl govuk-!-margin-bottom-5">Upload your statement</div>
+                                </label>
+                                <div id="file-upload-hint" class="govuk-hint">
+                                    You can upload your statement as a PDF or Word document. It can be up to 30MB.
                                 </div>
-                            </label>
-                            <div id="file-upload-hint" class="govuk-hint">
-                                You can upload your statement as a PDF or Word document. It can be up to 30MB.
+                                <br />
                             </div>
-                            <br />
-                            @foreach (var error in ValidationErrors.Values)
-                            {
-                                <p id="file-upload-error" class="govuk-error-message">
-                                    <span class="govuk-visually-hidden">Error:</span>@error
-                                </p>
-                            }
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="govuk-form-group">
-                            <label class="govuk-label" for="file-upload">
-                                <div class="govuk-heading-xl govuk-!-margin-bottom-5">Upload your statement</div>
-                            </label>
-                            <div id="file-upload-hint" class="govuk-hint">
-                                You can upload your statement as a PDF or Word document. It can be up to 30MB.
-                            </div>
-                            <br />
-                        </div>
-                    }
-                    <InputFile id="file-upload" name="file-upload" class="govuk-file-upload" OnChange="OnInputFileChange" multiple />
-                    <p class="govuk-body" style="margin-top:25px;">We’ll check the statement when you upload it.</p>
-                    <p class="govuk-body">This could take up to 20 seconds.</p>
-                    <button type="submit" draggable="false"
-                            class="govuk-button govuk-!-margin-top-6 govuk-!-margin-bottom-6 govuk-!-margin-right-4"
-                            data-module="govuk-button">
-                        Upload and send statement
-                    </button>
-                </EditForm>
+                        }
+                        <InputFile id="file-upload" name="file-upload" class="govuk-file-upload" OnChange="OnInputFileChange" multiple />
+                        <p class="govuk-body" style="margin-top:25px;">We’ll check the statement when you upload it.</p>
+                        <p class="govuk-body">This could take up to 20 seconds.</p>
+                        <button type="submit" draggable="false"
+                                class="govuk-button govuk-!-margin-top-6 govuk-!-margin-bottom-6 govuk-!-margin-right-4"
+                                data-module="govuk-button">
+                            Upload and send statement
+                        </button>
+                    </EditForm>
                 }
                 else
                 {
@@ -118,15 +118,15 @@
                             </div>
                         </div>
                     }
-                    <div class="govuk-grid-row">                        
+                    <div class="govuk-grid-row">
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="file-upload-1">
                                 <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">Uploading your statement</h1>
                             </label>
                             <div class="upload-progress-container">
                                 @* <img class="upload-icon govuk-!-margin-top-3" src="images/upload file icon.svg" alt="Uploading file icon"> *@
-                                @if (uploadPerc < 100)    
-                                    {
+                                @if (uploadPerc < 100)
+                                {
                                     <span style="font-size: 24pt; font-weight: 400; font-family: GDS Transport, arial, sans-serif; float:left;">
                                         <img style="width:50px;height:50px;" src=@imageSourceProgress alt="Uploading file icon">
                                         @uploadPerc% complete.
@@ -142,19 +142,19 @@
                             </div>
                         </div>
                     </div>
-@*                     <div class="govuk-panel govuk-panel--confirmation govuk-!-margin-top-9">
-                        <div class="govuk-panel__title">
-                            File upload in progress.
-                        </div>
-                    </div>
-                      <p class="govuk-body">
-                        This could take up to 20 seconds.<br /><br />
-                        <div> Progress:<br /></div>
-                        <div>
-                            <progress max=@timeToWait value=@uploadTimeElapsed ></progress><span style="color:black;margin-left:10px;">@uploadPerc% complete</span>
-                        </div>
-                    </p>                    
- *@                }
+                    @*                     <div class="govuk-panel govuk-panel--confirmation govuk-!-margin-top-9">
+                <div class="govuk-panel__title">
+                File upload in progress.
+                </div>
+                </div>
+                <p class="govuk-body">
+                This could take up to 20 seconds.<br /><br />
+                <div> Progress:<br /></div>
+                <div>
+                <progress max=@timeToWait value=@uploadTimeElapsed ></progress><span style="color:black;margin-left:10px;">@uploadPerc% complete</span>
+                </div>
+                </p>
+                *@                }
             </div>
         </div>
     </main>
@@ -166,7 +166,7 @@
     private bool FileUploadInProgress { get; set; } = false;
     private string _fileNameResult;
     public string fileExtn = String.Empty;
-    private string UserEmail { get; set; } = "Unknown";
+    private string UserName { get; set; } = "Unknown";
     private UserSpecificDto userDetails { get; set; }
     public string ReservoirName { get; set; } = default!;
     private IBrowserFile loadedFile;
@@ -186,12 +186,17 @@
     private string? imageSourceProgress = $"assets/images/upload-file-icon.svg";
     private string? imageSourceComplete = $"assets/images/upload-complete-icon.svg";
 
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthenticationStateTask { get; set; }
+
     protected async override Task OnInitializedAsync()
     {
         var reportSubmissionDataState = await ProtectedSessionStore.GetAsync<ReportSubmissionDataDto>("CurrentReportSubmissionData");
-        reportSubmissionData = reportSubmissionDataState.Value;        
-        UserEmail = reportSubmissionData.UserEmail;
-        userDetails = await userService.GetUserByEmailID(UserEmail);
+        reportSubmissionData = reportSubmissionDataState.Value;
+
+        AuthenticationState authState = await AuthenticationStateTask; // AuthenticationStateProvider.GetAuthenticationStateAsync();
+        UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
+        userDetails = await userService.GetUserByEmailID(UserName);
         FileUploadInProgress = false;
         await InvokeAsync(() =>
         {
@@ -255,7 +260,7 @@
             {
                 try
                 {
-                    //var containerName = UserEmail.Split("@")[0];
+                    //var containerName = UserName.Split("@")[0];
                     //if (containerName.Contains('.'))
                     //{
                     //    containerName = containerName.Split('.')[0];
@@ -263,15 +268,30 @@
                     var containerNameToUplodTo = _config["UnscannedContainer"];//"unscannedcontent";
                                                                                //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + "."+ extn;
                                                                                //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + SubmissionReference + "." + fileExtn;
-                    var trustedFileNameForFileStorage = reportSubmissionData.SubmissionReference + "_" + DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + DateTime.Now.Hour + DateTime.Now.Minute + DateTime.Now.Second + "." + fileExtn;
+                    var savedReportSubmissionData = await ProtectedSessionStore.GetAsync<ReportSubmissionDataDto>("CurrentReportSubmissionData");
+                    // var trustedFileNameForFileStorage = reportSubmissionData.SubmissionReference + "_" + DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + DateTime.Now.Hour + DateTime.Now.Minute + DateTime.Now.Second + "." + fileExtn;
+
+                    SubmissionStatus insertStatus = new SubmissionStatus();
+                    insertStatus.ReservoirId = Int32.Parse(reportSubmissionData.ReservoirId);
+                    insertStatus.LastModifiedByUserId = userDetails.Id;
+                    insertStatus.SubmittedByUserId = userDetails.Id;
+                    insertStatus.Status = "Sent";
+                    insertStatus.ServiceId = 1;
+                    insertStatus.SubmittedDateTime = DateTime.UtcNow;
+                    insertStatus.LastModifiedDateTime = DateTime.UtcNow;
+                    insertStatus.RevisionSummary = savedReportSubmissionData.Value == null ? "" : savedReportSubmissionData.Value.ResubmitReason;
+                    // insertStatus.IsRevision = savedReportSubmissionData.Value == null ? false : true;
+                    insertStatus.IsRevision = reportSubmissionData.SendResendValue == "Send" ? false : true;
+                    insertStatus.SubmissionReference = reservoirService.GenerateSubmissionReference(Int32.Parse(reportSubmissionData.ReservoirId), insertStatus.SubmittedDateTime, insertStatus.ServiceId);
+                    var trustedFileNameForFileStorage = insertStatus.SubmissionReference;
                     //Store the uploaded document information
                     documentDTO.FileName = selectedFile.Name.Split('.')[0];
                     documentDTO.FileType = fileExtn;
-                    documentDTO.DateSent = DateTime.Now;
+                    documentDTO.DateSent = DateTime.UtcNow;
                     documentDTO.FileLocation = selectedFile.Name;
                     documentDTO.ReservoirId = Int32.Parse(reportSubmissionData.ReservoirId);
                     documentDTO.SuppliedViaService = 1;
-                    documentDTO.BlobStorageFileName = trustedFileNameForFileStorage;
+                    documentDTO.BlobStorageFileName = insertStatus.SubmissionReference;
                     documentDTO.DocumentType = "S12";
                     documentDTO.SuppliedBy = userDetails.Id;
                     var docID = await reservoirService.InsertUploadDocumentDetails(documentDTO);
@@ -287,23 +307,25 @@
                             };
 
                         fileUploadViewModels.Add(fileUploadViewModel);
-                        var savedReportSubmissionData = await ProtectedSessionStore.GetAsync<ReportSubmissionDataDto>("CurrentReportSubmissionData");
-                        SubmissionStatus updatedStatus = new SubmissionStatus();
-                        if (savedReportSubmissionData.Value.SendResendValue=="Send")
-                        {
-                            updatedStatus = await reservoirService.UpdateReservoirStatus(Int32.Parse(reportSubmissionData.ReservoirId), userDetails.Id, "Sent", false, "");
-                        }
-                        else
-                        {
-                            updatedStatus = await reservoirService.UpdateReservoirStatus(Int32.Parse(reportSubmissionData.ReservoirId), userDetails.Id, "Sent", true, savedReportSubmissionData.Value.ResubmitReason);
-                        }
+
+
+                        var res = await reservoirService.InsertSubmissionDetails(insertStatus);
+                        // if (savedReportSubmissionData.Value.SendResendValue=="Send")
+                        // {
+                        //     updatedStatus = await reservoirService.UpdateReservoirStatus(Int32.Parse(reportSubmissionData.ReservoirId), userDetails.Id, "Sent", false, "");
+
+                        // }
+                        // else
+                        // {
+                        //     updatedStatus = await reservoirService.UpdateReservoirStatus(Int32.Parse(reportSubmissionData.ReservoirId), userDetails.Id, "Sent", true, savedReportSubmissionData.Value.ResubmitReason);
+                        // }
                         //_fileNameResult=await jsRuntime.InvokeAsync<string>("getFileName");
 
                         FileUploadInProgress = true;
                         StateHasChanged();
                         timeToWait = Int32.Parse(_config["TimeToWaitForUpload"]);
                         uploadTimeElapsed = 0;
-                        while (uploadTimeElapsed <= timeToWait-2)
+                        while (uploadTimeElapsed <= timeToWait - 2)
                         {
                             System.Threading.Thread.Sleep(1000);
                             uploadTimeElapsed++;
@@ -313,7 +335,7 @@
 
                         //For testing without virus scan, comment the next line and uncomment the next to next line
                         var containerNameToDownloadFrom = _config["CleanContainer"]; //"cleanfiles";
-                        //var containerNameToDownloadFrom = _config["UnscannedContainer"];
+                                                                                     //var containerNameToDownloadFrom = _config["UnscannedContainer"];
 
                         var RSTEmailAddress = String.IsNullOrEmpty(_config["RSTEmailAddress"]) ? userDetails.Email : _config["RSTEmailAddress"];
                         var bytes = await blobStorageService.GetBlobAsByteArray(containerNameToDownloadFrom, trustedFileNameForFileStorage);
@@ -338,10 +360,12 @@
                                 var internalEmail = _config["InternalEmailAddress"];
                                 await _notificationService.SendInternalMail(internalEmail, reportSubmissionData.ReservoirRegName, reportSubmissionData.UndertakerEmail, reportSubmissionData.YesNoValue);
                             }
+
+                            //Check this.......
                             //Store the uploaded document information
-                            documentDTO.SubmissionId = updatedStatus.Id;
-                            await reservoirService.InsertDocumentRelatedTable(Int32.Parse(reportSubmissionData.ReservoirId), updatedStatus.Id, docID);
-                            Serilog.Log.Logger.ForContext("User", UserEmail).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Information("File upload succeeded.");
+                            documentDTO.SubmissionId = res.Id;
+                            await reservoirService.InsertDocumentRelatedTable(Int32.Parse(reportSubmissionData.ReservoirId), res.Id, docID);
+                            Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Information("File upload succeeded.");
                             uploadTimeElapsed++;
                             uploadPerc = Convert.ToInt32((Convert.ToDouble(uploadTimeElapsed) / Convert.ToDouble(timeToWait)) * 100.0);
                             StateHasChanged();
@@ -361,7 +385,7 @@
                             //}
                             if (maliciousbytes != null)
                             {
-                                Serilog.Log.Logger.ForContext("User", UserEmail).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File infected by virus.");
+                                Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File infected by virus.");
                                 FileContainsVirus();
                                 await InvokeAsync(() =>
                                 {
@@ -384,9 +408,9 @@
                             }
                             if (notScanned)
                             {
-                                Serilog.Log.Logger.ForContext("User", UserEmail).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File not scanned for virus.");
+                                Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File not scanned for virus.");
                                 FileUploadFailed();
-                                await reservoirService.UpdateReservoirStatus(Int32.Parse(reportSubmissionData.ReservoirId), userDetails.Id, "In progress",false,"");
+                                //await reservoirService.UpdateReservoirStatus(Int32.Parse(reportSubmissionData.ReservoirId), userDetails.Id, "In progress",false,"");
 
                                 await InvokeAsync(() =>
                                 {
@@ -395,7 +419,7 @@
                             }
                             //else if (!cleanFile)
                             //{
-                            //    Serilog.Log.Logger.ForContext("User", UserEmail).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File infected by virus.");
+                            //    Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File infected by virus.");
                             //    FileVirusScanFailed();
                             //    await InvokeAsync(() =>
                             //    {
@@ -407,9 +431,9 @@
                     }
                     else
                     {
-                        Serilog.Log.Logger.ForContext("User", UserEmail).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File upload failed.");
+                        Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File upload failed.");
                         FileUploadFailed();
-                        await reservoirService.UpdateReservoirStatus(Int32.Parse(reportSubmissionData.ReservoirId), userDetails.Id, "In progress",false,"");
+                        //await reservoirService.UpdateReservoirStatus(Int32.Parse(reportSubmissionData.ReservoirId), userDetails.Id, "In progress",false,"");
                         await InvokeAsync(() =>
                         {
                             StateHasChanged();
@@ -418,9 +442,9 @@
                 }
                 catch (Exception ex)
                 {
-                    Serilog.Log.Logger.ForContext("User", UserEmail).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File upload failed : " + ex.Message);
+                    Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File upload failed : " + ex.Message);
                     FileUploadFailed();
-                    await reservoirService.UpdateReservoirStatus(Int32.Parse(reportSubmissionData.ReservoirId), userDetails.Id, "In progress",false,"");
+                    //await reservoirService.UpdateReservoirStatus(Int32.Parse(reportSubmissionData.ReservoirId), userDetails.Id, "In progress",false,"");
                     await InvokeAsync(() =>
                     {
                         StateHasChanged();
@@ -504,4 +528,5 @@
             NotifyServiceFileAttachmentLimit = 2 * 1024 * 1024;
         }
     }
+}
 }
