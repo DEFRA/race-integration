@@ -190,6 +190,19 @@ namespace RACE2.Services
             }
         }
 
+
+        public async Task<UserSpecificDto> GetAuthorizedUser(string email, string mobilenumber)
+        {
+            try
+            {
+                return await _userRepository.GetAuthorizedUser(email,mobilenumber);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
     }
 
 }
