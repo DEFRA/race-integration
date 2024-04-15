@@ -1,0 +1,131 @@
+﻿@page "/resubmit-statement"
+@using Microsoft.AspNetCore.Authorization
+@using RACE2.FrontEndWebServer.Components
+@using RACE2.Dto
+@inject NavigationManager NavigationManager
+@inject ProtectedSessionStorage ProtectedSessionStore
+
+@attribute [Authorize]
+
+<PageTitle>Who the statement will go to - Send a supervising engineer's annual statement - GOV.UK</PageTitle>
+
+<HeaderWithBanner />
+
+<div class="govuk-width-container" style="min-height: 69vh;">
+
+    <FeedbackBannerSignOut />
+
+    <a class="govuk-back-link" @onclick="GoToPrevPage" style="color:black">Back</a>
+
+    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+
+        <div class="govuk-grid-row">
+
+            <div class="govuk-grid-column-two-thirds">
+                <div class="govuk-label-wrapper">
+                    <label class="govuk-label govuk-label--xl" for="more-detail">
+                        Tell us what’s changed
+                    </label>
+                </div>
+                @if (!NoReasonError)
+                {
+                    <div class="govuk-form-group">
+                        <EditForm Model="Model" OnSubmit="GoToNextPage">
+                            <InputTextArea class="govuk-textarea govuk-!-margin-top-6" id="more-detail" name="moreDetail" rows="5" aria-describedby="more-detail-hint" @bind-Value="Model.ReasonForResubmission"></InputTextArea>
+                            <button type="submit" draggable="false"
+                                    class="govuk-button govuk-!-margin-top-3 govuk-!-margin-bottom-6 govuk-!-margin-right-4"
+                                    data-module="govuk-button">
+                                Continue
+                            </button>
+                        </EditForm>
+                    </div>
+                }
+                else
+                {
+                    <div class="govuk-error-summary" data-module="govuk-error-summary">
+                        <div role="alert">
+                            <h2 class="govuk-error-summary__title">
+                                There is a problem
+                            </h2>
+                            <div class="govuk-error-summary__body">
+                                <ul class="govuk-list govuk-error-summary__list">
+                                    <li>
+                                        <a href="#">You must tell us what has changed.</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <EditForm Model="Model" OnSubmit="GoToNextPage">
+                        <InputTextArea class="govuk-textarea govuk-!-margin-top-6" id="more-detail" name="moreDetail" rows="5" Value-describedby="more-detail-hint" @bind-Value="Model.ReasonForResubmission"></InputTextArea>
+                        <button type="submit" draggable="false"
+                                class="govuk-button govuk-!-margin-top-3 govuk-!-margin-bottom-6 govuk-!-margin-right-4"
+                                data-module="govuk-button">
+                            Continue
+                        </button>
+                    </EditForm>
+                }
+            </div>
+        </div>
+    </main>
+</div>
+
+<Footer />
+
+@code {
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthenticationStateTask { get; set; }
+
+    public ReportSubmissionDataDto reportSubmissionData { get; set; } = new ReportSubmissionDataDto();
+
+    private bool NoReasonError { get; set; } = false;
+    public FormModel Model = new FormModel();
+
+    protected async override Task OnInitializedAsync()
+    {
+        AuthenticationState authState = await AuthenticationStateTask;// AuthenticationStateProvider.GetAuthenticationStateAsync();
+        Model.ReasonForResubmission = "";
+        await base.OnInitializedAsync();
+    }
+
+    public async Task GoToNextPage()
+    {
+        if (String.IsNullOrEmpty(Model.ReasonForResubmission.Trim()))
+        {
+            NoReasonError = true;
+            StateHasChanged();
+        }
+        else
+        {
+            NoReasonError = false;
+            var savedReportSubmissionData = await ProtectedSessionStore.GetAsync<ReportSubmissionDataDto>("CurrentReportSubmissionData");
+            savedReportSubmissionData.Value.ResubmitReason = Model.ReasonForResubmission.Trim();
+            await ProtectedSessionStore.SetAsync("CurrentReportSubmissionData", savedReportSubmissionData.Value);
+            bool forceLoad = false;
+            NavigationManager.NavigateTo("/send-your-statement", forceLoad);
+        }
+    }
+    public void GoToMyAccountPage()
+    {
+        bool forceLoad = true;
+        string pagelink = "/my-account";
+        NavigationManager.NavigateTo(pagelink, forceLoad);
+    }
+    public void GoToPrevPage()
+    {
+        bool forceLoad = true;
+        string pagelink = "/send-or-resend-statement";
+        NavigationManager.NavigateTo(pagelink, forceLoad);
+    }
+    public void GoToAnnualStatementsPage()
+    {
+        bool forceLoad = true;
+        string pagelink = "/annual-statements";
+        NavigationManager.NavigateTo(pagelink, forceLoad);
+    } 
+
+    public class FormModel
+    {
+        public string ReasonForResubmission { get; set; }
+    }
+}

@@ -23,14 +23,14 @@
   <ItemGroup>
 	<PackageReference Include="IdentityServer4.AspNetIdentity" Version="4.1.2" />
 	<PackageReference Include="IdentityServer4.EntityFramework" Version="4.1.2" />
-	<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.3" />
-	<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.3" />
-	<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.3">
+	<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.4" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.4" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.4">
 	  <PrivateAssets>all</PrivateAssets>
 	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	</PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.6" />
-	  <PackageReference Include="Azure.Identity" Version="1.10.4" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.20.1" />
+	  <PackageReference Include="Azure.Identity" Version="1.11.0" />
 	  <PackageReference Include="Microsoft.Azure.AppConfiguration.AspNetCore" Version="7.1.0" />
   </ItemGroup>
 

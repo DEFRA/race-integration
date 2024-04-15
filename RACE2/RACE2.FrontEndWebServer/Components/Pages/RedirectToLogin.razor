@@ -1,26 +1,17 @@
-﻿@inject NavigationManager Navigation
+﻿@using System.Web
+@attribute [AllowAnonymous]
+@inject NavigationManager NavigationManager
 
 @code {
-    protected override void OnInitialized()
+
+    protected override async Task OnInitializedAsync()
     {
-        Navigation.NavigateTo("/PageTimedOut", true);
-        //Navigation.NavigateTo("/Logout", true);
-        //Navigation.NavigateTo($"/login?returnUrl={Uri.EscapeDataString(Navigation.Uri)}");
+        var returnUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+        if (string.IsNullOrEmpty(returnUrl))
+        {
+            returnUrl = "/";
+        }
 
-        // Navigation.NavigateTo($"/login?returnUrl={Uri.EscapeDataString(Navigation.Uri)}");
-
-        // var authenticationState = await AuthenticationStateTask;
-        // if (authenticationState?.User?.Identity is null || !authenticationState.User.Identity.IsAuthenticated)
-        // {
-        //     var returnUri = Navigation.ToBaseRelativePath(Navigation.Uri);
-        //     if (string.IsNullOrWhiteSpace(returnUri))
-        //     {
-        //         Navigation.NavigateTo("/login", true);
-        //     }
-        //     else
-        //     {
-        //         Navigation.NavigateTo($"/login?returnUrl={Uri.EscapeDataString(Navigation.Uri)}");
-        //     }
-        // }
+        NavigationManager.NavigateTo("/login?returnUrl=" + HttpUtility.UrlEncode(returnUrl), forceLoad: true);
     }
 }
