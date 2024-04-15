@@ -4,7 +4,7 @@ namespace RACE2.GovUK.OneloginAuth.Extensions
     {
         public static string GetEnvironmentAndDomain(this string redirectUri, string environment)
         {
-            if (environment.ToLower() == "local")
+            if (environment.ToLower() == "development")
             {
                 return "";
             }
@@ -12,8 +12,8 @@ namespace RACE2.GovUK.OneloginAuth.Extensions
             {
                 return redirectUri;
             }
-            var environmentPart = environment.ToLower() == "prd" ? "manage-apprenticeships" : $"{environment.ToLower()}-eas.apprenticeships";
-            var domainPart = environment.ToLower() == "prd" ?  "service" : "education";
+            var environmentPart = environment.ToLower() == "production" ? "manage-apprenticeships" : $"{environment.ToLower()}-eas.apprenticeships";
+            var domainPart = environment.ToLower() == "production" ?  "service" : "education";
 
             return $"{environmentPart}.{domainPart}.gov.uk";
         }
@@ -36,7 +36,7 @@ namespace RACE2.GovUK.OneloginAuth.Extensions
     
         public static string GetStubSignInRedirectUrl(this string redirectUrl, string environment)
         {
-            if (environment.ToLower() == "local" || environment.ToLower() == "prd")
+            if (environment.ToLower() == "development" || environment.ToLower() == "production")
             {
                 return string.Empty;
             }

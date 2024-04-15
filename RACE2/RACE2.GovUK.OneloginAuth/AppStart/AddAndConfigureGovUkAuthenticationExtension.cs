@@ -13,7 +13,7 @@ namespace RACE2.GovUK.OneloginAuth.AppStart
         {
             bool.TryParse(configuration["StubAuth"],out var stubAuth);
             services.AddServiceRegistration(configuration, customClaims);
-            if (stubAuth && configuration["ResourceEnvironmentName"].ToUpper() != "PRD")
+            if (stubAuth && configuration["ResourceEnvironmentName"].ToUpper() != "PRODUCTION")
             {
                 services.AddEmployerStubAuthentication(signedOutRedirectUrl.GetSignedOutRedirectUrl(configuration["ResourceEnvironmentName"]),
                     loginRedirect.GetStubSignInRedirectUrl(configuration["ResourceEnvironmentName"]),
