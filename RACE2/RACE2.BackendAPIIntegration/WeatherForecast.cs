@@ -1,4 +1,4 @@
-namespace RACE2.WebApiExternal
+namespace RACE2.BackendAPIIntegration
 {
     public class WeatherForecast
     {
