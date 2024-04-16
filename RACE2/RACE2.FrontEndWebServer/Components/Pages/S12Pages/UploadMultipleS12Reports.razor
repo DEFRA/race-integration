@@ -12,6 +12,7 @@
 @inject IBlobStorageService blobStorageService
 @inject IUserService userService
 @inject IJSRuntime jsRuntime
+@inject ProtectedSessionStorage ProtectedSessionStore
 
 @attribute [Authorize]
 
@@ -91,7 +92,7 @@
 
 @code {
     private int UserId { get; set; } = 0;
-    private string UserName { get; set; } = "Unknown";
+    private string UserEmail { get; set; } = "";
     private UserDetail UserDetail { get; set; }
     private string warninngMessage = "";
     private string displayMessage = "";
@@ -103,17 +104,18 @@
     IReadOnlyList<IBrowserFile> selectedFiles;
     private List<FileUploadViewModel> fileUploadViewModels = new();
     public Reservoir CurrentReservoir { get; set; } = new Reservoir();
-    [CascadingParameter]
-    public Task<AuthenticationState> AuthenticationStateTask { get; set; }
+    public ReportSubmissionDataDto reportSubmissionData { get; set; }
+
     protected async override Task OnInitializedAsync()
     {
-        AuthenticationState authState = await AuthenticationStateTask; // AuthenticationStateProvider.GetAuthenticationStateAsync();
-        UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
-        var userDetails = await userService.GetUserByEmailID(UserName);
+        var reportSubmissionDataState = await ProtectedSessionStore.GetAsync<ReportSubmissionDataDto>("CurrentReportSubmissionData");
+        reportSubmissionData = reportSubmissionDataState.Value;
+        UserEmail = reportSubmissionData.UserEmail;
+        var userDetails = await userService.GetUserByEmailID(UserEmail);
         UserId = userDetails.Id;
         UserDetail = new UserDetail()
             {
-                UserName = UserName,
+                UserName = UserEmail,
                 Id = UserId,
                 Email = userDetails.Email,
                 cFirstName = userDetails.cFirstName,

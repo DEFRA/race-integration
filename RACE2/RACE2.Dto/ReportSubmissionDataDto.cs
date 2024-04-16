@@ -9,6 +9,7 @@ namespace RACE2.Dto
 {
     public class ReportSubmissionDataDto
     {
+        public string UserEmail { get; set; } = "";
         public string ReservoirId { get; set; }  = "";
         public string ReservoirRegName { get; set; } = "";
         public string UndertakerName { get; set; } = "";

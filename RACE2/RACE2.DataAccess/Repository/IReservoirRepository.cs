@@ -64,7 +64,7 @@ namespace RACE2.DataAccess.Repository
 
         public Task<Comment> GetExisitngComments(string relatestoobject, int relatestorecordid);
 
-        public string GenerateSubmissionReference(int reservoirid, DateTime duedate,int serviceid);
+        public string GenerateSubmissionReference(int reservoirid, DateTime duedate, int serviceid);
 
         public Task<SubmissionStatus> InsertSubmissionDetails(SubmissionStatus submissionStatus);
 

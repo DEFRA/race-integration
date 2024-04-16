@@ -389,7 +389,7 @@ namespace RACE2.Services
         {
             try
             {
-                return _reservoirRepository.GenerateSubmissionReference(reservoirid,duedate,serviceid);
+                return _reservoirRepository.GenerateSubmissionReference(reservoirid, duedate, serviceid);
             }
             catch (Exception ex)
             {
@@ -406,7 +406,7 @@ namespace RACE2.Services
             }
             catch (Exception ex)
             {
-                return new SubmissionStatus() ;
+                return new SubmissionStatus();
             }
         }
 

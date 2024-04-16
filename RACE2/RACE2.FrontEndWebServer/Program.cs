@@ -23,6 +23,17 @@ using Serilog.Sinks.MSSqlServer;
 using RACE2.Notification;
 using RACE2.FrontEndWebServer.ExceptionGlobalErrorHandling;
 using RACE2.FrontEndWebServer.Components;
+using RACE2.GovUK.OneloginAuth.Configuration;
+using RACE2.FrontEndWebServer.AppStart;
+using System.Configuration;
+using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
+using Microsoft.IdentityModel.Tokens;
+using RACE2.GovUK.OneloginAuth.Services;
+using Microsoft.AspNetCore.Authorization;
+using RACE2.FrontEndWebServer;
+using RACE2.GovUK.OneloginAuth.Authentication;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Mvc.Routing;
 
 Serilog.Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Information()
@@ -55,6 +66,10 @@ try
         .Select(KeyFilter.Any, Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"))
         .UseFeatureFlags();
     });
+
+    //builder.Services.Configure<GovUkOidcConfiguration>(builder.Configuration.GetSection(nameof(GovUkOidcConfiguration)));
+    builder.Services.AddServiceRegistration(builder.Configuration);
+
     var blazorClientURL = builder.Configuration["RACE2FrontEndURL"];
     var RACE2WebApiURL = builder.Configuration["RACE2WebApiURL"];
     var RACE2IDPURL = builder.Configuration["RACE2SecurityProviderURL"];
@@ -82,18 +97,9 @@ try
     // Add services to the container.
     builder.Services.AddRazorComponents()
         .AddInteractiveServerComponents();
-    //.AddHubOptions(options =>
-    //    {
-    //        options.ClientTimeoutInterval = TimeSpan.FromSeconds(30);//.FromSeconds(30); 
-    //        options.EnableDetailedErrors = true;
-    //        options.HandshakeTimeout = TimeSpan.FromSeconds(15); //FromSeconds(15); 
-    //        options.KeepAliveInterval = TimeSpan.FromSeconds(15);//.FromSeconds(15);  
-    //        options.MaximumParallelInvocationsPerClient = 1;
-    //        options.MaximumReceiveMessageSize = 128 * 1024; //32*1024;
-    //        options.StreamBufferCapacity = 10;
-    //    });
-    builder.Services.AddRazorPages();
 
+    builder.Services.AddRazorPages().WithRazorPagesRoot("/Pages");
+  
     builder.Services.Configure<CookiePolicyOptions>(options =>
     {
         options.CheckConsentNeeded = context => true;
@@ -102,76 +108,27 @@ try
     builder.Services.AddHttpContextAccessor();
 
     bool requireHttpsMetadata = builder.Environment.IsProduction();
-    builder.Services.AddAuthentication(options =>
+
+    builder.Services.AddCascadingAuthenticationState();
+    builder.Services.AddHttpContextAccessor();
+    builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+    builder.Services.AddSingleton<IUrlHelperFactory, UrlHelperFactory>();
+    builder.Services.AddSingleton<IAuthorizationMiddlewareResultHandler, BlazorAuthorizationMiddlewareResultHandler>();
+    builder.Services.AddSingleton<BaseUrlProvider>();
+    builder.Services.AddAuthorization(options =>
     {
-        options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-        options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
-    })
-    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
-    //.AddCookie(options =>
-    //{
-    //    options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
-    //    options.Cookie.MaxAge = options.ExpireTimeSpan; // optional
-    //    options.SlidingExpiration = true;
-    //    options.LoginPath = "/login";
-    //    options.LogoutPath = "/logout";
-    //})
-    .AddOpenIdConnect(
-        OpenIdConnectDefaults.AuthenticationScheme,
-        options =>
-        {
-            //options.Events.OnTicketReceived = async (Context) =>
-            //{
-            //    Context.Properties.ExpiresUtc = DateTime.UtcNow.AddMinutes(20);
-            //};
-            //options.Events.OnRedirectToIdentityProvider = context =>
-            //{
-            //    context.ProtocolMessage.Prompt = "login";
-            //    return Task.CompletedTask;
-            //};
-            options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            options.SignOutScheme = OpenIdConnectDefaults.AuthenticationScheme;
-            options.Authority = RACE2IDPURL;
-            options.ClientId = "blazorServer";
-            options.ClientSecret = clientSecret;
-            // When set to code, the middleware will use PKCE protection
-            options.ResponseType = "code id_token";
-            // Save the tokens we receive from the IDP
-            options.SaveTokens = true; // default false
-            // It's recommended to always get claims from the UserInfoEndpoint during the flow.
-            options.GetClaimsFromUserInfoEndpoint = true;
-            options.Scope.Add("race2WebApi");
-            options.RequireHttpsMetadata = requireHttpsMetadata;
-            options.Events = new OpenIdConnectEvents
+        options.AddPolicy(
+            PolicyNames.IsAuthenticated, policy =>
             {
-                OnAccessDenied = context =>
-                {
-                    context.HandleResponse();
-                    context.Response.Redirect("/");
-                    return Task.CompletedTask;
-                },
-                OnRemoteFailure = (ctx) =>
-                {
-                    if (ctx.Failure?.Message == "Correlation failed.")
-                    {
-                        ctx.Response.Redirect("/");
-                        ctx.HandleResponse();
-                    }
-
-                    return Task.CompletedTask;
-                },
-                OnAuthenticationFailed = (ctx) => {
-                    ctx.Response.Redirect("/");
-                    ctx.HandleResponse();
-                    return Task.CompletedTask;
-                }
-            };
-        });
-
-    builder.Services.Configure<ForwardedHeadersOptions>(options =>
-    {
-        options.ForwardedHeaders =
-            ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+                policy.Requirements.Add(new AccountActiveRequirement());
+                policy.RequireAuthenticatedUser();
+            });
+        options.AddPolicy(
+            PolicyNames.IsActiveAccount, policy =>
+            {
+                policy.Requirements.Add(new AccountActiveRequirement());
+                policy.RequireAuthenticatedUser();
+            });
     });
 
     builder.Services.AddScoped<IUserService, UserService>();
@@ -197,12 +154,13 @@ try
         app.UseExceptionHandler("/Error");
         app.UseHsts();
     }
+    app.UseHttpsRedirection();
+
     //app.UseSerilogRequestLogging(configure =>
     //{
     //    configure.MessageTemplate = "HTTP {RequestMethod} {RequestPath} ({UserId}) responded {StatusCode} in {Elapsed:0.0000}ms";
     //}); // We want to log all HTTP requests
     app.UseSerilogRequestLogging();
-    app.UseHttpsRedirection();
 
     app.UseCookiePolicy(new CookiePolicyOptions
     {
@@ -210,11 +168,15 @@ try
     });
 
     app.UseStaticFiles();
+    app.UseRouting();   
 
-    app.UseAntiforgery();
     app.UseAuthentication();
     app.UseAuthorization();
 
+    app.UseAntiforgery();
+    //app.SetupEndpoints();
+
+    app.MapRazorPages();
     app.MapRazorComponents<App>()
         .AddInteractiveServerRenderMode();
     //app.MapBlazorHub(options =>
