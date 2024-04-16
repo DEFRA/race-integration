@@ -25,8 +25,8 @@ namespace RACE2.FrontEndWebServer.Pages
         //return SignOut(
         //    authenticationProperties,
         //    new[] {
-        //CookieAuthenticationDefaults.AuthenticationScheme,
-        //OpenIdConnectDefaults.AuthenticationScheme
+        //       CookieAuthenticationDefaults.AuthenticationScheme,
+        //       OpenIdConnectDefaults.AuthenticationScheme
         //    });
 
         //HttpContext.Response.Cookies.Delete(".AspNetCore.Cookies");

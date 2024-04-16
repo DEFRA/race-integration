@@ -31,6 +31,7 @@ namespace RACE2.GovUK.OneloginAuth.AppStart
                 {
                     var govUkConfiguration = configuration.GetSection(nameof(GovUkOidcConfiguration));
 
+                    options.SignInScheme=CookieAuthenticationDefaults.AuthenticationScheme;
                     options.ClientId = govUkConfiguration["ClientId"];
                     options.MetadataAddress = $"{govUkConfiguration["BaseUrl"]}/.well-known/openid-configuration";
                     options.ResponseType = "code";
@@ -39,15 +40,14 @@ namespace RACE2.GovUK.OneloginAuth.AppStart
                     options.SignedOutCallbackPath = "/signed-out";
                     options.CallbackPath = "/sign-in";
                     options.ResponseMode = string.Empty;
-
                     options.SaveTokens = true;
-
                     var scopes = "openid email phone".Split(' ');
                     options.Scope.Clear();
                     foreach (var scope in scopes)
                     {
                         options.Scope.Add(scope);
                     }
+                    options.GetClaimsFromUserInfoEndpoint = true;
 
                     options.Events.OnRemoteFailure = c =>
                     {
