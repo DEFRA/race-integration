@@ -1,3 +1,5 @@
+param azureTenanatId string
+param location string
 param resourcegroup string
 param managedidentity string
 param race2appenvName string
@@ -17,11 +19,15 @@ param aspnetCoreEnv string
 param tag string
 param minReplicas int
 param maxReplicas int
+param transport string
+param allowInsecure bool
 
 module createfrontendwebservercontainerappmodule 'createfrontendwebservercontainerapp.bicep' = {
   scope: resourceGroup(resourcegroup)
   name: 'frontendcontainerwebserverappdeploy'
   params: {
+    azureTenanatId: azureTenanatId
+    location: location
     race2appenv: race2appenvName
     containerAppName: frontEndWebServerContainerAppName
     registryName: registryName
@@ -35,6 +41,8 @@ module createfrontendwebservercontainerappmodule 'createfrontendwebservercontain
     tag: tag
     minReplicas: minReplicas
     maxReplicas: maxReplicas
+    transport: transport
+    allowInsecure: allowInsecure
   }
 }
 
@@ -42,6 +50,8 @@ module createsecurityprovidercontainerappmodule 'createsecurityprovidercontainer
   scope: resourceGroup(resourcegroup)
   name: 'securityprovidercontainerappdeploy'
   params: {
+    azureTenanatId: azureTenanatId
+    location: location
     race2appenv: race2appenvName
     containerAppName: securityProviderContainerAppName
     registryName: registryName
@@ -55,12 +65,16 @@ module createsecurityprovidercontainerappmodule 'createsecurityprovidercontainer
     tag: tag
     minReplicas: minReplicas
     maxReplicas: maxReplicas
+    transport: transport
+    allowInsecure: allowInsecure
   }
 }
 module createwebapicontainerappmodule 'createwebapicontainerapp.bicep' = {
   scope: resourceGroup(resourcegroup)
   name: 'webapicontainerappdeploy'
   params: {
+    azureTenanatId: azureTenanatId
+    location: location
     race2appenv: race2appenvName
     containerAppName: webApiContainerAppName
     registryName: registryName
@@ -74,12 +88,16 @@ module createwebapicontainerappmodule 'createwebapicontainerapp.bicep' = {
     tag: tag
     minReplicas: minReplicas
     maxReplicas: maxReplicas
+    transport: transport
+    allowInsecure: allowInsecure
   }
 }
 module createwebapiexternalcontainerappmodule 'createwebapiexternalcontainerapp.bicep' = {
   scope: resourceGroup(resourcegroup)
   name: 'webapiexternalcontainerappdeploy'
   params: {
+    azureTenanatId: azureTenanatId
+    location: location
     race2appenv: race2appenvName
     containerAppName: webApiExternalContainerAppName
     registryName: registryName
@@ -93,5 +111,7 @@ module createwebapiexternalcontainerappmodule 'createwebapiexternalcontainerapp.
     tag: tag
     minReplicas: minReplicas
     maxReplicas: maxReplicas
+    transport: transport
+    allowInsecure: allowInsecure
   }
 }

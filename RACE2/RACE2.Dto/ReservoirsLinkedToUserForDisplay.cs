@@ -14,6 +14,7 @@ namespace RACE2.Dto
         public string UndertakerName { get; set; }
         public string UndertakerEmail { get; set; }
         public string DueDate { get; set; }
+        public string SubmittedDateTime { get; set; }
         public string Status { get; set; }
 
     }

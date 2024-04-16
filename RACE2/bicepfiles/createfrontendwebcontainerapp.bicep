@@ -14,6 +14,8 @@ param aspnetCoreEnv string
 param azureClientId string
 param tag string
 var tagVal=json(tag)
+param transport string
+param allowInsecure bool
 
 resource registry 'Microsoft.ContainerRegistry/registries@2023-11-01-preview' existing = {
   name: registryName
@@ -46,6 +48,8 @@ resource containerFrontEndWebApp 'Microsoft.App/containerApps@2022-01-01-preview
       ingress: {
         external: useExternalIngress
         targetPort: containerPort
+        transport: transport
+        allowInsecure: allowInsecure
       }
     }
     template: {

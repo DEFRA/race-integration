@@ -1,7 +1,3 @@
-# Docker
-# Build a Docker image
-# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
-
 trigger:
 - none
 pr:
@@ -99,5 +95,4 @@ stages:
         scriptLocation: inlineScript
         useGlobalConfig: false    
         inlineScript: |
-          az --version
           az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) -p @$(parameterfile) tag='{tag:$(tag)}'

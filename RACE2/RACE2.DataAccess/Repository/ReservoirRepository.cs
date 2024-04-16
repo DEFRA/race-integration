@@ -16,10 +16,11 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using Microsoft.Data.SqlClient;
 using System.Reflection.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 
 namespace RACE2.DataAccess.Repository
 {
-    public class ReservoirRepository: IReservoirRepository
+    public class ReservoirRepository : IReservoirRepository
     {
         private readonly ILogger<UserRepository> _logger;
         private readonly IConfiguration _configuration;
@@ -70,10 +71,10 @@ namespace RACE2.DataAccess.Repository
                     else
                     {
                         return null;
-                    }                    
+                    }
                 }
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 string err = ex.Message;
                 return null;
@@ -123,9 +124,9 @@ namespace RACE2.DataAccess.Repository
 
                         var parameters = new DynamicParameters();
                         parameters.Add("id", id, DbType.String);
-                        var reservoirs = await conn.QueryAsync<ReservoirDetailsDTO,UserDetail, ReservoirDetailsDTO>("sp_GetReservoirsbyUserId", (reservoir,userdetail) =>
+                        var reservoirs = await conn.QueryAsync<ReservoirDetailsDTO, UserDetail, ReservoirDetailsDTO>("sp_GetReservoirsbyUserId", (reservoir, userdetail) =>
                         {
-                           // reservoir.Address = address;
+                            // reservoir.Address = address;
                             reservoir.UserDetail = userdetail;
 
                             return reservoir;
@@ -146,7 +147,7 @@ namespace RACE2.DataAccess.Repository
             }
         }
 
-        public async Task<DataModel.Action> GetActionsListByReservoirIdAndCategory(int reservoirid, int category,string reference)
+        public async Task<DataModel.Action> GetActionsListByReservoirIdAndCategory(int reservoirid, int category, string reference)
         {
             var strCategory = (Category)category;
             using (var conn = Connection)
@@ -171,7 +172,7 @@ namespace RACE2.DataAccess.Repository
         //        var actionlist = await conn.QueryAsync<SafetyMeasure>("sp_GetSafetyMeasuresListByReservoirId", parameters, commandType: CommandType.StoredProcedure);
         //        return actionlist.ToList();
         //    }
-       // }
+        // }
 
         public async Task<Address> GetAddressByReservoirId(int reservoirid, string operatortype)
         {
@@ -310,9 +311,9 @@ namespace RACE2.DataAccess.Repository
 
                         return operatorlist.ToList();
                     }
-                   else
+                    else
                     {
-                        _logger.LogInformation($"The input is not valid {id}",id);
+                        _logger.LogInformation($"The input is not valid {id}", id);
                         return null;
                     }
 
@@ -329,7 +330,7 @@ namespace RACE2.DataAccess.Repository
         }
 
 
-        public async Task<SubmissionStatus> UpdateReservoirStatus(int reservoirid, int userid, string reportStatus)
+        public async Task<SubmissionStatus> UpdateReservoirStatus(int reservoirid, int userid, string reportStatus, bool isRevision, string revisionSummary)
         {
             _logger.LogInformation("Updating reservoir status for the reservoir  {reservoirid} by the {userid}  ", reservoirid, userid);
             try
@@ -341,6 +342,8 @@ namespace RACE2.DataAccess.Repository
                     parameters.Add("reservoirid", reservoirid, DbType.Int64);
                     parameters.Add("userid", userid, DbType.Int64);
                     parameters.Add("reportStatus", reportStatus, DbType.String);
+                    parameters.Add("isRevision", isRevision, DbType.Boolean);
+                    parameters.Add("revisionSummary", revisionSummary, DbType.String);
                     if (reservoirid != 0)
                     {
 
@@ -368,7 +371,7 @@ namespace RACE2.DataAccess.Repository
         public async Task<int> InsertUploadDocumentDetails(DocumentDTO document)
         {
             int result = 0;
-            _logger.LogInformation("Inserting uploaded document details for the reservoir" );
+            _logger.LogInformation("Inserting uploaded document details for the reservoir");
             try
             {
 
@@ -386,12 +389,12 @@ namespace RACE2.DataAccess.Repository
                     //parameters.Add("submissionid", document.SubmissionId, DbType.Int64);
                     //parameters.Add("documentName",document.DocumentName,DbType.String);
                     parameters.Add("blobStorageFileName", document.BlobStorageFileName, DbType.String);
-                     parameters.Add("newid", dbType: DbType.Int32, direction: ParameterDirection.Output);
+                    parameters.Add("newid", dbType: DbType.Int32, direction: ParameterDirection.Output);
                     if (document != null)
                     {
-                        result  = await conn.ExecuteAsync("sp_InsertDocumentUpload", parameters, commandType: CommandType.StoredProcedure);
+                        result = await conn.ExecuteAsync("sp_InsertDocumentUpload", parameters, commandType: CommandType.StoredProcedure);
                         var id = parameters.Get<int>("newid");
-                        return id;                     
+                        return id;
 
                     }
                     else
@@ -411,7 +414,7 @@ namespace RACE2.DataAccess.Repository
         }
 
 
-        public async Task<int> UpdateScannedDocumentResult(DateTime scanneddatetime, bool isClean, string uploadblobpath , string blobStorageFileName)
+        public async Task<int> UpdateScannedDocumentResult(DateTime scanneddatetime, bool isClean, string uploadblobpath, string blobStorageFileName)
         {
             _logger.LogInformation("Updating scan result for the reservoir  {documentName}  ", blobStorageFileName);
             try
@@ -427,7 +430,7 @@ namespace RACE2.DataAccess.Repository
                     if (blobStorageFileName != null)
                     {
 
-                         await conn.ExecuteAsync("sp_UpdateScannedDocumentResult", parameters, commandType: CommandType.StoredProcedure);
+                        await conn.ExecuteAsync("sp_UpdateScannedDocumentResult", parameters, commandType: CommandType.StoredProcedure);
 
                         return 1;
                     }
@@ -457,8 +460,8 @@ namespace RACE2.DataAccess.Repository
                 using (var conn = Connection)
                 {
                     var parameters = new DynamicParameters();
-                    parameters.Add("docid",id, DbType.Int64);
-                    
+                    parameters.Add("docid", id, DbType.Int64);
+
                     if (id != 0)
                     {
 
@@ -552,9 +555,9 @@ namespace RACE2.DataAccess.Repository
                     parameters.Add("description", action.Description, DbType.String);
                     parameters.Add("mandatory", action.IsMandatory, DbType.Boolean);
                     parameters.Add("priority", action.Priority, DbType.String);
-                    parameters.Add("reservoirid",action.ReservoirId , DbType.Int64);
+                    parameters.Add("reservoirid", action.ReservoirId, DbType.Int64);
                     var result = await conn.ExecuteAsync("sp_InsertActionFromExtract", parameters, commandType: CommandType.StoredProcedure);
-        
+
                 }
             }
             catch (Exception ex)
@@ -629,7 +632,7 @@ namespace RACE2.DataAccess.Repository
 
         public async Task<int> InsertorUpdateSafetyMeasuresFromExtract(SafetyMeasure safetyMeasure, Comment comment)
         {
-            _logger.LogInformation("Insert Safety Measure and comment table from Data extraction for {userid} ",comment.CreatedByUserId);
+            _logger.LogInformation("Insert Safety Measure and comment table from Data extraction for {userid} ", comment.CreatedByUserId);
             try
             {
 
@@ -639,7 +642,7 @@ namespace RACE2.DataAccess.Repository
                     parameters.Add("reference", safetyMeasure.Reference, DbType.String);
                     parameters.Add("description", safetyMeasure.Description, DbType.String);
                     parameters.Add("targetdate", safetyMeasure.TargetDate, DbType.DateTime);
-                    parameters.Add("createddate", safetyMeasure.CreatedDate,DbType.DateTime);
+                    parameters.Add("createddate", safetyMeasure.CreatedDate, DbType.DateTime);
                     parameters.Add("status", safetyMeasure.Status, DbType.String);
                     parameters.Add("comment", comment.CommentText, DbType.String);
                     parameters.Add("isqualitycheckrequired", comment.IsQualityCheckRequired, DbType.Boolean);
@@ -659,7 +662,7 @@ namespace RACE2.DataAccess.Repository
             return 1;
         }
 
-        public async Task<SafetyMeasure> GetSafetyMeasuresByReservoir(int reservoirid,string reference)
+        public async Task<SafetyMeasure> GetSafetyMeasuresByReservoir(int reservoirid, string reference)
         {
             _logger.LogInformation("Getting safety Measure for the reservoir {id}", reservoirid);
             try
@@ -708,18 +711,18 @@ namespace RACE2.DataAccess.Repository
 
                         var parameters = new DynamicParameters();
                         parameters.Add("reservoirid", change.ReservoirId, DbType.Int32);
-                        parameters.Add("submissionid", change.SourceSubmissionId, DbType.Int32);                       
+                        parameters.Add("submissionid", change.SourceSubmissionId, DbType.Int32);
                         parameters.Add("measureId", change.MeasureId, DbType.Int32);
                         parameters.Add("fieldName", change.FieldName, DbType.String);
                         parameters.Add("oldValue", change.OldValue, DbType.String);
-                        parameters.Add("newValue", change.NewValue == null ?string.Empty:change.NewValue, DbType.String);
+                        parameters.Add("newValue", change.NewValue == null ? string.Empty : change.NewValue, DbType.String);
                         parameters.Add("changeDateTime", change.ChangeDateTime, DbType.DateTime2);
                         parameters.Add("isBackendChange", change.IsBackEndChange, DbType.Boolean);
                         parameters.Add("userId", change.ChangeByUserId, DbType.Int32);
 
                         var result = await conn.ExecuteAsync("sp_InsertSafetyMeasuresChangeHistory", parameters, commandType: CommandType.StoredProcedure);
 
-                        
+
                     }
 
                     return 1;
@@ -809,7 +812,7 @@ namespace RACE2.DataAccess.Repository
                 using (var conn = Connection)
                 {
                     var parameters = new DynamicParameters();
-                   
+
                     parameters.Add("@documentid", statementDetails.DocumentId);
                     parameters.Add("@statementType", statementDetails.StatementType);
                     parameters.Add("@periodStartdate", statementDetails.PeriodStartDate == null ? DBNull.Value : statementDetails.PeriodStartDate);
@@ -881,7 +884,7 @@ namespace RACE2.DataAccess.Repository
                     }
                     else
                     {
-                        _logger.LogInformation("The input is not valid " );
+                        _logger.LogInformation("The input is not valid ");
                         return 0;
                     }
 
@@ -958,7 +961,113 @@ namespace RACE2.DataAccess.Repository
             }
         }
 
+        public async Task<SubmissionStatus> InsertSubmissionDetails(SubmissionStatus submissionStatus)
+        {
+            _logger.LogInformation("Insert new Submission for reservoir" + submissionStatus.ReservoirId );
+            try
+            {
+                using (var conn = Connection)
+                {
+                    var parameters = new DynamicParameters();
+                    parameters.Add("@reservoirid", submissionStatus.ReservoirId, DbType.Int32);
+                    parameters.Add("@submissionreference", submissionStatus.SubmissionReference, DbType.String);
+                    parameters.Add("@lastmodifiedtime", submissionStatus.LastModifiedDateTime, DbType.DateTime);                   
+                    parameters.Add("@userid", submissionStatus.SubmittedByUserId, DbType.Int32);
+                    parameters.Add("@isRevision", submissionStatus.IsRevision, DbType.Boolean);
+                    parameters.Add("@revisionSummary", submissionStatus.RevisionSummary, DbType.String);
+                    parameters.Add("@serviceid", submissionStatus.ServiceId, DbType.Int32);
+                    parameters.Add("@submitteddatetime", submissionStatus.SubmittedDateTime, DbType.DateTime);
+                    parameters.Add("@status", submissionStatus.Status, DbType.String);
 
+                    var result = await conn.QueryAsync<SubmissionStatus>("sp_InsertSubmissionRecord", parameters, commandType: CommandType.StoredProcedure);
+
+                    return result.FirstOrDefault();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return null;
+            }
+            
+        }
+
+        public string GenerateSubmissionReference(int reservoirid, DateTime submitteddatetime,int serviceid)
+        {
+            string submissionreference = "100000";
+            _logger.LogInformation("Generate Submission Reference");
+            try
+            {
+                if (reservoirid != 0)
+                {
+                    int length = Convert.ToString(reservoirid).Length;
+                    submissionreference = submissionreference.Remove(submissionreference.Length - length) + Convert.ToString(reservoirid);
+
+                    submissionreference = String.Concat(submissionreference, serviceid.ToString("00"), "_", submitteddatetime.Year, submitteddatetime.Month, submitteddatetime.Date.ToString("dd"), "_", submitteddatetime.Hour, submitteddatetime.Minute, submitteddatetime.Second);
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return null;
+            }
+
+
+            return submissionreference;
+        }
+
+        public async Task<DateTime> GetLastSubmittedDateforReservoir(int reservoirid)
+        {
+            DateTime lastsent = new DateTime();
+            _logger.LogInformation("GEt Last submitted date" + reservoirid);
+            try
+            {
+                using (var conn = Connection)
+                {
+                    if (reservoirid != 0)
+                    {
+                        var parameters = new DynamicParameters();
+                        parameters.Add("@reservoirid", reservoirid, DbType.Int32);
+                        parameters.Add("@submittedtime", dbType: DbType.DateTime, direction: ParameterDirection.Output);
+                        await conn.ExecuteAsync("sp_GetLastSubmittedDateforReservoir", parameters, commandType: CommandType.StoredProcedure);
+
+                        lastsent = parameters.Get<DateTime>("@submittedtime");
+                        return lastsent;
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return new DateTime();
+            }
+           return lastsent;
+        }
+
+
+        public async Task<DocumentTemplate> GetDocumentTemplate(int reservoirid)
+        {
+            try
+            {
+                using(var conn = Connection)
+                {
+                    var parameters = new DynamicParameters();
+                    parameters.Add("@reservoirid", reservoirid, DbType.Int32);
+                    var result = await conn.QueryAsync<DocumentTemplate>("sp_GetTemplateName", parameters, commandType: CommandType.StoredProcedure);
+                    return result.FirstOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return null;
+            }
+        }
 
     }
 }

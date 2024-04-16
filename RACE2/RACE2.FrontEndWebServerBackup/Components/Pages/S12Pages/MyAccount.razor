@@ -1,0 +1,181 @@
+﻿@page "/my-account"
+@using Microsoft.AspNetCore.Authorization
+@using RACE2.FrontEndWebServer.Components
+@using RACE2.DataModel
+@using RACE2.Dto
+@using RACE2.Services
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IConfiguration _config
+@inject IUserService userService
+@inject NavigationManager NavigationManager
+@attribute [Authorize]
+
+<HeaderWithBanner />
+
+<div class="govuk-width-container ">
+
+    <FeedbackBannerSignOut />
+
+    <a class="govuk-back-link" href="javascript:history.back()">Back</a>
+
+    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-three-quarters">
+
+                <h1 class="govuk-heading-xl">
+                    Your account
+                </h1>
+
+            </div>
+
+            <div class="govuk-grid-column-three-quarters">
+
+                <h2 class="govuk-heading-m">Your details</h2>
+                <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            Name
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            @UserDetail.c_first_name @UserDetail.c_last_name
+                        </dd>
+                        <dd class="govuk-summary-list__actions">
+                            <a class="govuk-link" href="#">
+                                Change<span class="govuk-visually-hidden"> name</span>
+                            </a>
+                        </dd>
+                    </div>
+
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            Company address
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            @UserAddress.AddressLine1
+                            @if (!String.IsNullOrEmpty(UserAddress.AddressLine2)){
+                                <br>@UserAddress.AddressLine2
+                            }
+                            @if (!String.IsNullOrEmpty(UserAddress.Town))
+                            {
+                                <br>@UserAddress.Town
+                            }
+                            @if (!String.IsNullOrEmpty(UserAddress.County))
+                            {
+                                <br>@UserAddress.County
+                            }
+                            @if (!String.IsNullOrEmpty(UserAddress.Postcode))
+                            {
+                                <br>@UserAddress.Postcode
+                            }
+                        </dd>
+                        <dd class="govuk-summary-list__actions">
+                            <a class="govuk-link" href="#">
+                                Change<span class="govuk-visually-hidden"> company address</span>
+                            </a>
+                        </dd>
+                    </div>
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            Phone number
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            <p class="govuk-body">
+                                @if (!String.IsNullOrEmpty(UserDetail.c_mobile))
+                                {
+                                    @UserDetail.c_mobile
+                                }
+                                else if (!String.IsNullOrEmpty(UserDetail.PhoneNumber))
+                                {
+                                    @UserDetail.PhoneNumber
+                                }
+                                else {
+                                    <span>N/A</span>
+                                }
+                            </p>
+                            </dd>
+                        <dd class="govuk-summary-list__actions">
+                            <a class="govuk-link" href="#">
+                                Change<span class="govuk-visually-hidden"> phone number</span>
+                            </a>
+                        </dd>
+                    </div>
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            Email
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            <p class="govuk-body">@UserDetail.Email</p>
+                        </dd>
+                        <dd class="govuk-summary-list__actions">
+                            <a class="govuk-link" href="#">
+                                Change<span class="govuk-visually-hidden"> email</span>
+                            </a>
+                        </dd>
+                    </div>
+                    <div class="govuk-summary-list__row" id="paperless">
+                        <dt class="govuk-summary-list__key">
+                            Password
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            ******************
+                        </dd>
+                        <dd class="govuk-summary-list__actions">
+
+                            <a class="govuk-link govuk-link--no-visited-state" href=@changePasswordUrl>
+
+                                Change
+                                <span class="govuk-visually-hidden">how we contact you</span>
+
+                            </a>
+
+                        </dd>
+                    </div>
+
+                </dl>
+
+            </div>
+        </div>
+    </main>
+</div>
+
+@code {
+    private string UserName { get; set; } = "Unknown";
+    private UserDetail UserDetail { get; set; } = new UserDetail();
+    private Address UserAddress { get; set; } = new Address();
+
+    private string changePasswordUrl = "";
+    protected override async void OnInitialized()
+    {
+        changePasswordUrl = _config["RACE2SecurityProviderURL"] + "/Identity/Account/ChangeYourPassword";
+        AuthenticationState authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
+        UserSpecificDto userDetails = await userService.GetUserByEmailID(UserName);
+        UserDetail = new UserDetail()
+            {
+                UserName = UserName,
+                Id = userDetails.Id,
+                Email = userDetails.Email,
+                c_first_name = userDetails.c_first_name,
+                c_last_name = userDetails.c_last_name
+            };
+        UserAddress = userDetails.addresses[0];
+        await InvokeAsync(() =>
+        {
+            StateHasChanged();
+        });
+        base.OnInitializedAsync();
+    }
+
+    public async void GoToNextPage()
+    {
+        bool forceLoad = true;
+        NavigationManager.NavigateTo("/annual-statements", forceLoad);
+    }
+
+    private void goback()
+    {
+        bool forceLoad = true;
+        NavigationManager.NavigateTo("/annual-statements", forceLoad);
+    }
+}

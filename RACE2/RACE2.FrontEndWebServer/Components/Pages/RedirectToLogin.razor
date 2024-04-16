@@ -1,0 +1,17 @@
+﻿@using System.Web
+@attribute [AllowAnonymous]
+@inject NavigationManager NavigationManager
+
+@code {
+
+    protected override async Task OnInitializedAsync()
+    {
+        var returnUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+        if (string.IsNullOrEmpty(returnUrl))
+        {
+            returnUrl = "/";
+        }
+
+        NavigationManager.NavigateTo("/login?returnUrl=" + HttpUtility.UrlEncode(returnUrl), forceLoad: true);
+    }
+}

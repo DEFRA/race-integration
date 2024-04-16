@@ -1,0 +1,35 @@
+﻿@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@using RACE2.Dto
+@inject ProtectedSessionStorage ProtectedSessionStore
+
+@if (isLoaded)
+{
+    <CascadingValue Value="this">
+        @ChildContent
+    </CascadingValue>
+}
+else
+{
+    <p>Loading...</p>
+}
+
+@code {
+    private bool isLoaded;
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    public ReportSubmissionDataDto CurrentReportSubmissionData { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await ProtectedSessionStore.GetAsync<ReportSubmissionDataDto>("currentReportSubmissionData");
+        CurrentReportSubmissionData = result.Success ? result.Value : new ReportSubmissionDataDto();
+        isLoaded = true;
+    }
+
+    public async Task SaveChangesAsync()
+    {
+        await ProtectedSessionStore.SetAsync("currentReportSubmissionData", CurrentReportSubmissionData);
+    }
+}

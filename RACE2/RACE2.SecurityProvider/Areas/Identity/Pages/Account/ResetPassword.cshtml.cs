@@ -79,6 +79,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
 
         public IActionResult OnGet(string code = null)
         {
+            ViewData["Title"] = "Reset password";
             WebAppUrl = _config["RACE2FrontEndURL"];
             if (code == null)
             {
