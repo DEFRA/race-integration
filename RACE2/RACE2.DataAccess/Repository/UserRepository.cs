@@ -512,8 +512,9 @@ namespace RACE2.DataAccess.Repository
                     parameters.Add("@mobilenumber", mobilenumber, DbType.String);
                     parameters.Add("@result", dbType: DbType.Int32, direction: ParameterDirection.Output);
 
-                    int validuser = parameters.Get<Int32>("@result");
+                   
                     var userresult = await conn.QueryAsync<UserSpecificDto>("sp_GetUserWithRoles", parameters, commandType: CommandType.StoredProcedure);
+                    int validuser = parameters.Get<Int32>("@result");
                     UserSpecificDto authorisedUser = new UserSpecificDto();
                     authorisedUser = userresult.FirstOrDefault();
                     authorisedUser.IsValiduser = validuser;

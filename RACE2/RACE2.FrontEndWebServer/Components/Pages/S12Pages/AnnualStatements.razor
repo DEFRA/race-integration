@@ -172,7 +172,7 @@
             UserEmail = authState.User.Claims.FirstOrDefault(c => c.Type.Equals(ClaimTypes.Email))?.Value;
             var UserTelephoneNumber = authState.User.Claims.FirstOrDefault(c => c.Type.Equals(ClaimTypes.MobilePhone))?.Value;
             userDetails = await userService.GetUserByEmailID(UserEmail);
-            var userDetails1 = await userService.GetAuthorizedUser(UserEmail, "07875111223");
+            var userDetails1 = await userService.GetAuthorizedUser(UserEmail, "0787511122");
 
             // if ((bool)userDetails.cIsFirstTimeUser)
             // {
