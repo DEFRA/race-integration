@@ -18,7 +18,7 @@ namespace RACE2.DataModel
         [StringLength(64)]
         [Required]
         public string? RelatesToObject { get; set; }
-       public int RelatesToRecordId { get; set; }
+        public int RelatesToRecordId { get; set; }
         [Required]
         public int CreatedByUserId { get; set; }
         [ForeignKey("CreatedByUserId")]

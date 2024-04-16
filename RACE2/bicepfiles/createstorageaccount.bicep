@@ -8,33 +8,48 @@ param containerNames array = [
   'maliciousfiles'
 ]
 
-resource storageAccount_resource 'Microsoft.Storage/storageAccounts@2022-09-01' = {
+resource storageAccount_resource 'Microsoft.Storage/storageAccounts@2023-01-01' = {
   name: storageAccountname
   location: location
-  tags: {
-    ServiceCode: 'RAC'
-  }
-  sku: {
-    name: 'Standard_ZRS'
-  }
   kind: 'StorageV2'
-  properties: {
+  sku: {
+    name: 'Standard_LRS'
+  } 
+  properties: { 
     dnsEndpointType: 'Standard'
     defaultToOAuthAuthentication: false
     publicNetworkAccess: 'Enabled'
-    allowCrossTenantReplication: true
+    allowCrossTenantReplication: false
     minimumTlsVersion: 'TLS1_2'
-    allowBlobPublicAccess: true
+    allowBlobPublicAccess: false
     allowSharedKeyAccess: true
     networkAcls: {
       bypass: 'None'
       virtualNetworkRules: []
       ipRules: []
-      defaultAction: 'Allow'
+      defaultAction: 'Deny'
     }
     supportsHttpsTrafficOnly: true
     encryption: {
-      requireInfrastructureEncryption: false      
+      requireInfrastructureEncryption: false
+      services: {
+        file: {
+          keyType: 'Account'
+          enabled: true
+        }
+        blob: {
+          keyType: 'Account'
+          enabled: true
+        }
+        table: {
+          keyType: 'Account'
+          enabled: true
+        }
+        queue: {
+          keyType: 'Account'
+          enabled: true
+        }
+      }
       keySource: 'Microsoft.Storage'
     }
     accessTier: 'Hot'
@@ -51,7 +66,7 @@ resource storageContainers 'Microsoft.Storage/storageAccounts/blobServices/conta
   name: containerNames[i]
   parent: blobServices
   properties: {
-    publicAccess: 'Container'
+    publicAccess: 'None'
     metadata: {}
   }
 }]

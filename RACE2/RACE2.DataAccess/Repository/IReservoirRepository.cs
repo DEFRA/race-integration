@@ -13,8 +13,8 @@ namespace RACE2.DataAccess.Repository
         public Task<Reservoir> GetReservoirById(int id);
         public Task<Reservoir> UpdateReservoir(ReservoirUpdateDetailsDTO updatedReservoir);
         public Task<List<ReservoirDetailsDTO>> GetReservoirsByUserId(int id);
-        
-      
+
+
         public Task<Address> GetAddressByReservoirId(int reservoirid, string operatortype);
 
         public Task<List<OperatorDTO>> GetOperatorsforReservoir(int reservoirid, string operatortype);
@@ -25,7 +25,7 @@ namespace RACE2.DataAccess.Repository
 
         public Task<List<UndertakerDTO>> GetUndertakerforReservoir(int id);
 
-        public Task<SubmissionStatus> UpdateReservoirStatus(int reservoirid, int userid, string reportStatus);
+        public Task<SubmissionStatus> UpdateReservoirStatus(int reservoirid, int userid, string reportStatus, bool IsRevision, string revisionSummary);
 
         public Task<int> InsertUploadDocumentDetails(DocumentDTO document);
 
@@ -48,7 +48,7 @@ namespace RACE2.DataAccess.Repository
         public Task<DataModel.Action> GetActionsListByReservoirIdAndCategory(int reservoirid, int category, string reference);
 
         public Task<int> InsertSafetyMeasureChangeHistory(List<SafetyMeasuresChangeHistory> changeHistory);
-        
+
         public Task<int> InsertActionChangeHistory(List<ActionsChangeHistory> changeHistory);
 
         public Task<int> UpdateReservoirDetailsFromExtract(Reservoir reservoir);
@@ -61,7 +61,16 @@ namespace RACE2.DataAccess.Repository
 
         public Task<int> InsertCommentChangeHistory(List<CommentsChangeHistory> changeHistory);
 
+
         public Task<Comment> GetExisitngComments(string relatestoobject, int relatestorecordid);
+
+        public string GenerateSubmissionReference(int reservoirid, DateTime duedate,int serviceid);
+
+        public Task<SubmissionStatus> InsertSubmissionDetails(SubmissionStatus submissionStatus);
+
+        public Task<DateTime> GetLastSubmittedDateforReservoir(int reservoirid);
+
+        public Task<DocumentTemplate> GetDocumentTemplate(int reservoirid);
 
 
     }

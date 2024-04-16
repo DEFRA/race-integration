@@ -92,7 +92,8 @@ namespace RACE2.WebApi.Types
             try
             {
                 _logger.LogInformation("calling GetReservoirStatusById");
-                return await _reservoirService.GetReservoirStatusByUserId(id);
+                //return await _reservoirService.GetReservoirStatusByUserId(id);
+                return null;
             }
             catch (Exception ex)
             {
@@ -120,7 +121,7 @@ namespace RACE2.WebApi.Types
 
                 var connectionString = _configuration["StorageAccountConnectionString"];
                 var containerName = _configuration["StorageAccountContainer"];
-                
+
                 // create a client with the connection
 
                 BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
@@ -128,7 +129,7 @@ namespace RACE2.WebApi.Types
                 BlobClient blobClient = container.GetBlobClient(blobName);
 
                 ms.Position = 0;
-                blobClient.Upload(ms,true);
+                blobClient.Upload(ms, true);
             }
             return "Success";
         }
@@ -149,7 +150,7 @@ namespace RACE2.WebApi.Types
             return "Success";
         }
 
-        public string UploadToBlobFromLocalFile(string blobName,string fileName)
+        public string UploadToBlobFromLocalFile(string blobName, string fileName)
         {
             var connectionString = _configuration["StorageAccountConnectionString"];
             var containerName = _configuration["StorageAccountContainer"];
@@ -279,7 +280,7 @@ namespace RACE2.WebApi.Types
 
                 // create a client with the connection
 
-                BlobContainerClient container = new BlobContainerClient("DefaultEndpointsProtocol=https;AccountName=race2storageaccount;AccountKey=+voxyaI7i37XXY89mgL3FAg/1JhvSezh1ENdokcV5GMwCOycBYNfYY15aUak3iD+DMvG0Z4kOc6u+ASt0Rq3ZA==;EndpointSuffix=core.windows.net","race2webapicontainer");
+                BlobContainerClient container = new BlobContainerClient("DefaultEndpointsProtocol=https;AccountName=race2storageaccount;AccountKey=+voxyaI7i37XXY89mgL3FAg/1JhvSezh1ENdokcV5GMwCOycBYNfYY15aUak3iD+DMvG0Z4kOc6u+ASt0Rq3ZA==;EndpointSuffix=core.windows.net", "race2webapicontainer");
 
                 // container name which we created                
 
@@ -292,14 +293,14 @@ namespace RACE2.WebApi.Types
                 //blobClient.Upload(ms, blobHttpHeader); // can use memory stream or file stream or Direct File path
                 ms.Position = 0;
                 blobClient.Upload(ms);
-                
-                var u=blobClient.Uri.AbsoluteUri;
+
+                var u = blobClient.Uri.AbsoluteUri;
                 //return blobClient.Uri.AbsoluteUri;
                 Stream file = File.OpenWrite(@"c:\temp\testdata11.docx");
                 blobClient.DownloadTo(file);
                 file.Dispose();
             }
-            }
+        }
 
 
 
@@ -317,6 +318,6 @@ namespace RACE2.WebApi.Types
             }
         }
 
-       
+
     }
 }

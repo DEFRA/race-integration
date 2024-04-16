@@ -5,6 +5,12 @@
       "resourcegroup": {
         "value": "DEVRACINFRG1401"
       },
+      "location":{
+        "value": "uksouth"
+      }, 
+      "azureTenanatId":{
+        "value": "770a2450-0227-4c62-90c7-4e38537f1102"
+      },
       "managedidentity": {
         "value": "DEVRACINFMI1401"
       },
@@ -24,14 +30,20 @@
         "value": true
       },
       "containerPort": {
-        "value": 80
+        "value": 8080
       },  
       "minReplicas": {
         "value": 1
       },
       "maxReplicas": {
-        "value": 2
-      },    
+        "value": 1
+      },
+      "transport": {
+        "value": "http"
+      },
+      "allowInsecure": {
+        "value": false
+      },       
       "frontEndWebServerContainerAppName": {
         "value":"race2frontendwebserver"
       },

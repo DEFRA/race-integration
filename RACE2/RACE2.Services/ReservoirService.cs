@@ -75,11 +75,11 @@ namespace RACE2.Services
 
         }
 
-        public async Task<DataModel.Action> GetActionsListByReservoirIdAndCategory(int reservoirid, int category,string reference)
+        public async Task<DataModel.Action> GetActionsListByReservoirIdAndCategory(int reservoirid, int category, string reference)
         {
             try
             {
-                return await _reservoirRepository.GetActionsListByReservoirIdAndCategory(reservoirid, category,reference);
+                return await _reservoirRepository.GetActionsListByReservoirIdAndCategory(reservoirid, category, reference);
             }
             catch (Exception ex)
             {
@@ -126,18 +126,18 @@ namespace RACE2.Services
 
         }
 
-        public async Task<List<SubmissionStatusDTO>> GetReservoirStatusByUserId(int id)
-        {
-            try
-            {
-                return await _reservoirRepository.GetReservoirStatusByUserId(id);
-            }
-            catch (Exception ex)
-            {
-                return new List<SubmissionStatusDTO>();
-            }
+        //public async Task<List<SubmissionStatusDTO>> GetReservoirStatusByUserId(int id)
+        //{
+        //    try
+        //    {
+        //        return await _reservoirRepository.GetReservoirStatusByUserId(id);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new List<SubmissionStatusDTO>();
+        //    }
 
-        }
+        //}
 
         public async Task<List<UndertakerDTO>> GetUndertakerforReservoir(int id)
         {
@@ -153,18 +153,18 @@ namespace RACE2.Services
         }
 
 
-        public async Task<SubmissionStatus> UpdateReservoirStatus(int reservoirid, int userid, string reportStatus)
-        {
-            try
-            {
-                return await _reservoirRepository.UpdateReservoirStatus(reservoirid, userid, reportStatus);
-            }
-            catch (Exception ex)
-            {
-                return new SubmissionStatus();
-            }
+        //public async Task<SubmissionStatus> UpdateReservoirStatus(int reservoirid, int userid, string reportStatus, bool isRevision, string revisionSummary)
+        //{
+        //    try
+        //    {
+        //        return await _reservoirRepository.UpdateReservoirStatus(reservoirid, userid, reportStatus, isRevision, revisionSummary);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new SubmissionStatus();
+        //    }
 
-        }
+        //}
 
         public async Task<int> InsertUploadDocumentDetails(DocumentDTO document)
         {
@@ -244,7 +244,7 @@ namespace RACE2.Services
         {
             try
             {
-                return await _reservoirRepository.InsertorUpdateMaintenanceMeasureFromExtract(action,comment);
+                return await _reservoirRepository.InsertorUpdateMaintenanceMeasureFromExtract(action, comment);
             }
             catch (Exception ex)
             {
@@ -280,7 +280,7 @@ namespace RACE2.Services
         {
             try
             {
-                return await _reservoirRepository.GetSafetyMeasuresByReservoir(reservoirid,reference);
+                return await _reservoirRepository.GetSafetyMeasuresByReservoir(reservoirid, reference);
             }
             catch (Exception ex)
             {
@@ -376,11 +376,61 @@ namespace RACE2.Services
         {
             try
             {
-                return await _reservoirRepository.GetExisitngComments(relatestoobject,relatestorecordid);
+                return await _reservoirRepository.GetExisitngComments(relatestoobject, relatestorecordid);
             }
             catch (Exception ex)
             {
                 return new Comment();
+            }
+        }
+
+
+        public string GenerateSubmissionReference(int reservoirid, DateTime duedate, int serviceid)
+        {
+            try
+            {
+                return _reservoirRepository.GenerateSubmissionReference(reservoirid,duedate,serviceid);
+            }
+            catch (Exception ex)
+            {
+                return "";
+            }
+        }
+
+
+        public async Task<SubmissionStatus> InsertSubmissionDetails(SubmissionStatus submissionStatus)
+        {
+            try
+            {
+                return await _reservoirRepository.InsertSubmissionDetails(submissionStatus);
+            }
+            catch (Exception ex)
+            {
+                return new SubmissionStatus() ;
+            }
+        }
+
+        public async Task<DateTime> GetLastSubmittedDateforReservoir(int reservoirid)
+        {
+            try
+            {
+                return await _reservoirRepository.GetLastSubmittedDateforReservoir(reservoirid);
+            }
+            catch (Exception ex)
+            {
+                return new DateTime();
+            }
+        }
+
+        public async Task<DocumentTemplate> GetDocumentTemplate(int reservoirid)
+        {
+            try
+            {
+                return await _reservoirRepository.GetDocumentTemplate(reservoirid);
+            }
+            catch (Exception ex)
+            {
+                return new DocumentTemplate();
             }
         }
     }

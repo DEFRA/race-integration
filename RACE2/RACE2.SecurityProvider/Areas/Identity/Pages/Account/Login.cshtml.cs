@@ -96,7 +96,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
         {
             try
             {
-
+                ViewData["Title"] = "Sign in";
 
                 if (!string.IsNullOrEmpty(ErrorMessage))
                 {

@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "RACE2.FrontEndWebapp": {
+        "commandName": "Project",
+        "dotnetRunMessages": true,
+        "launchBrowser": true,
+        "applicationUrl": "https://localhost:5001",
+        "environmentVariables": {
+          "ASPNETCORE_ENVIRONMENT": "Development",
+          "AzureAppConfigURL": "https://race2appconfig.azconfig.io/"
+          //"AzureAppConfigURL": "https://devracinfac1401.azconfig.io/"
+          //"AzureAppConfigURL": "https://tstracinfac1401.azconfig.io/"
+        }
+    }
+  }
+  }

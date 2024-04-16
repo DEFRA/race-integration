@@ -18,8 +18,9 @@ namespace RACE2.WebApi.Types.Mutation
         {
             try
             {
-              //  _logger.LogInformation("calling UpdateReservoirStatus");
-                return await _reservoirService.UpdateReservoirStatus(reservoirid, userid, reportStatus);
+                //  _logger.LogInformation("calling UpdateReservoirStatus");
+                //return await _reservoirService.UpdateReservoirStatus(reservoirid, userid, reportStatus,false,"");
+                return null;
             }
             catch (Exception ex)
             {

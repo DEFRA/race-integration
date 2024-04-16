@@ -7,9 +7,9 @@ name: Deploy All Resources
 
 variables:
   vmImageName: 'ubuntu-latest'
-  resourceGroupName: 'POCRACINFRG1402'
-  azureServiceConnection: 'AZD-RAC-POC1'
-  managedIdentityName: 'POCRACINFMI1402'
+  resourceGroupName: 'POCRACINFRG1401'
+  azureServiceConnection: 'AZR-RAC-POC1'
+  managedIdentityName: 'POCRACINFMI1401'
   templateFileRoleAssignments: './RACE2/bicepfiles/createroleassignments.bicep'
 pool:
   vmImage: $(vmImageName)

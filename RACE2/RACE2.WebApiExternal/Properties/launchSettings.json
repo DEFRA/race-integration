@@ -1,18 +1,21 @@
 ﻿{
-  "$schema": "https://json.schemastore.org/launchsettings.json",
   "profiles": {
-    "RACE2.WebApiExternal": {
+    "RACE2.FrontEndWebServer": {
       "commandName": "Project",
-      "dotnetRunMessages": true,
       "launchBrowser": true,
-      "launchUrl": "swagger",
-      "applicationUrl": "https://localhost:5003",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
+        "AZURE_TENANT_ID": "770a2450-0227-4c62-90c7-4e38537f1102",
+        "ManagedIdenityClientId": "ed22ed2e-445d-470f-989c-4f9d3d1f7a20",
         "AzureAppConfigURL": "https://pocracinfac1401.azconfig.io/"
+        //"AZURE_TENANT_ID": "6f504113-6b64-43f2-ade9-242e05780007",
+        //"ManagedIdenityClientId": "80026cc9-216c-4002-8d7c-f4648af0f20f",
+        //"AzureAppConfigURL": "https://pocracinfac1402.azconfig.io/"
         //"AzureAppConfigURL": "https://devracinfac1401.azconfig.io/"
         //"AzureAppConfigURL": "https://tstracinfac1401.azconfig.io/"
-      }
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "https://localhost:5003"
     }
   }
 }

@@ -1,0 +1,43 @@
+﻿@page "/ProblemWithService"
+@page "/ProblemWithService/{ErrorMessage}"
+@using RACE2.FrontEndWebServer.Components
+
+<PageTitle>There is a problem - Send a supervising engineer's annual statement - GOV.UK</PageTitle>
+
+<HeaderWithBanner />
+
+<div class="govuk-width-container" style="min-height: 69vh;">
+
+    <FeedbackBanner/>
+
+    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+
+                <div class="govuk-panel govuk-panel-dropout govuk-!-margin-top-4 govuk-!-margin-bottom-9">
+                    <div class="govuk-panel__title">
+                        Sorry, there is a problem with the service
+                    </div>
+                </div>
+
+                <p class="govuk-body">Try again later.</p>
+                <p class="govuk-body">
+                    If you need to talk to someone about your annual statement, contact the Environment Agency.
+                </p>
+                <p class="govuk-body">Email <a href="#" class="govuk-link">s12statement@environment-agency.gov.uk</a></p>
+                <p class="govuk-body">
+                    Staff monitor emails from 9am to 5pm, Monday to Friday.
+                </p>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<Footer />
+
+@code {
+    [Parameter]
+    public string ErrorMessage { get; set; }
+}

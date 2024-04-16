@@ -1,0 +1,554 @@
+@page "/annual-statements"
+@using Microsoft.AspNetCore.Authorization
+@using RACE2.FrontEndWebServer.Components
+@using RACE2.Dto;
+@using RACE2.DataModel;
+@using RACE2.Services;
+@using DocumentFormat.OpenXml.InkML;
+@using DocumentFormat.OpenXml.Spreadsheet;
+@using Microsoft.AspNetCore.Components;
+@using Microsoft.AspNetCore.Components.Authorization;
+@using Microsoft.AspNetCore.Components.Web;
+@using Microsoft.AspNetCore.Identity;
+@using System.Collections.Generic;
+@using System.Data;
+@using System.Globalization;
+@using System.Linq;
+@using System.Runtime.CompilerServices;
+@using System.Security.Claims;
+@using System.Text;
+@inject IConfiguration _config
+@inject IBlobStorageService blobStorageService
+@inject IOpenXMLUtilitiesService openXMLUtilitiesService
+@inject IUserService userService
+@inject IReservoirService reservoirService
+@inject IJSRuntime jsRuntime
+@inject NavigationManager NavigationManager
+@inject ProtectedSessionStorage ProtectedSessionStore
+
+@attribute [Authorize]
+
+<PageTitle>Your annual statements - Send a supervising engineer's annual statement - GOV.UK</PageTitle>
+
+<HeaderWithBanner />
+
+<div class="govuk-width-container" style="min-height: 69vh;">
+
+    <FeedbackBannerSignOut />
+
+    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+                <div class="govuk-heading-xl govuk-!-margin-bottom-6">
+                    Annual statement templates
+                </div>
+                <p class="govuk-body">Templates are Word documents.</p>
+                <div class="govuk-grid-row govuk-!-margin-top-8">
+                    <div class="govuk-grid-column-two-thirds">
+                        <h2 class="govuk-heading-m govuk-!-margin-bottom-6">
+                            Templates
+                        </h2>
+                    </div>
+                </div>
+                <table class="govuk-table govuk-!-margin-top-4">
+                    <thead class="govuk-table__head" style="width:100%;">
+                        <tr class="govuk-table__row govuk-body govuk-!-font-size-16">
+                            <th scope="col" class="govuk-table__header app-custom-class" width="35%">
+                                <button aria-label="Sort by Reservoir" type="button" class="icon-sort-button"
+                                        onclick="@(() => SortTable("ReservoirName"))">
+                                    Reservoir
+                                    <div class="icon-sort"></div>
+                                </button>
+                            </th>
+                            <th scope="col" class="govuk-table__header app-custom-class" width="35%">
+                                <button aria-label="Sort by Undertaker" type="button" class="icon-sort-button"
+                                        onclick="@(() => SortTable("UndertakerName"))">
+                                    Undertaker
+                                    <div class="icon-sort"></div>
+                                </button>
+                            </th>
+                            <th scope="col" class="govuk-table__header app-custom-class" width="20%">
+                                <button aria-label="Sort by Due date" type="button" class="icon-sort-button"
+                                        onclick="@(() => SortTable("SubmittedDateTime"))">
+                                    Last sent
+                                    <div class="icon-sort"></div>
+                                </button>
+                            </th>
+                            <th scope="col" class="govuk-table__header govuk-table__header" width="10%">Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="govuk-table__body govuk-body govuk-!-font-size-16" style="width:100%;">
+                        @foreach (var reservoir in ReservoirsLinkedToUserForDisplay)
+                        {
+                            <tr class="govuk-table__row">
+                                <td scope="row" class="govuk-table__cell" width="35%">@reservoir.ReservoirName</td>
+                                <td class="govuk-table__cell" width="35%">@reservoir.UndertakerName</td>
+                                <td class="govuk-table__cell" width="20%">@reservoir.SubmittedDateTime</td>
+                                <td class="govuk-table__cell" width="10%" style="text-align:left;">
+                                    <a class="govuk-link govuk-link--no-visited-state" style="cursor:pointer;" @onclick="()=>DownloadTemplateFile(reservoir)">
+                                        Download
+                                        <span class="govuk-visually-hidden">template</span>
+                                    </a>
+                                    <br /><br />
+                                    <a class="govuk-link govuk-link--no-visited-state" style="cursor:pointer;" @onclick="()=>gotoSubmissionPage(reservoir)">
+                                        Send
+                                        <span class="govuk-visually-hidden">template</span>
+                                    </a>
+                                </td>                               
+                            </tr>
+                            <input type="hidden" value="@reservoir.ReservoirID" />
+                            <input type="hidden" value="@reservoir.UndertakerEmail" />
+                            <input type="hidden" value="@reservoir.SubmissionReference" />
+                        }
+                    </tbody>
+                </table>
+                <details class="govuk-details govuk-!-margin-bottom-9">
+                    <summary class="govuk-details__summary">
+                        <span class="govuk-details__summary-text">
+                            Reservoir not listed
+                        </span>
+                    </summary>
+                    <div class="govuk-details__text">
+
+                        <p class="govuk-body">Contact the Environment Agency.</p>
+
+                        <p class="govuk-body">Email &nbsp;<a class="govuk-link govuk-link--no-visited-state" href="#">s12statement@environment-agency.gov.uk</a>.</p>
+
+                        <p class="govuk-body">Staff monitor emails from 9am to 5pm, Monday to Friday.</p>
+
+                    </div>
+                </details>
+            </div>
+
+        </div>
+
+    </main>
+</div>
+<Footer />
+
+@code {
+    bool IsAdmin = false;
+    bool IsFirstTimeUser = false;
+    private string UserName { get; set; } = "Unknown";
+    private List<Reservoir> ReservoirsLinkedToUser { get; set; } = new List<Reservoir>();
+    private List<ReservoirDetailsDTO> ReservoirDetailsLinkedToUser { get; set; } = new List<ReservoirDetailsDTO>();
+    private List<ReservoirsLinkedToUserForDisplay> ReservoirsLinkedToUserForDisplay { get; set; } = new List<ReservoirsLinkedToUserForDisplay>();
+    private List<ReservoirsLinkedToUserForDisplay> ReservoirsLinkedToUserForDisplayOnStart { get; set; } = new List<ReservoirsLinkedToUserForDisplay>();
+    private IEnumerable<Claim> Claims { get; set; }
+    private List<OperatorDTO> Undertakers { get; set; }
+    private string _searchString;
+    private bool _sortNameByLength;
+    private List<string> _events = new();
+    CultureInfo en = CultureInfo.GetCultureInfo("en-US");
+    int selectedReservoirId = 0;
+
+    //We need a field to tell us which direction the table is currently sorted by
+    private bool IsSortedAscending;
+
+    //We also need a field to tell us which column the table is sorted by.
+    private string CurrentSortColumn;
+    UserSpecificDto userDetails { get; set; }
+    UserSpecificDto userDetailsWithRoles { get; set; }
+    List<SubmissionStatusDTO> SubmissionStatusList { get; set; }
+    SubmissionStatusDTO SubmissionStatus { get; set; }
+
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthenticationStateTask { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+        try
+        {
+            var authState = await AuthenticationStateTask;
+            UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
+            userDetails = await userService.GetUserByEmailID(UserName);
+            //userDetailsWithRoles = await userService.GetUserWithRoles(UserName);
+            foreach (var role in userDetails.roles)
+            {
+                if (role.Name == "System Administrator")
+                {
+                    IsAdmin = true;
+                    break;
+                }
+            }
+            if (IsAdmin)
+            {
+                NavigationManager.NavigateTo("/race2-admin", true);
+            }
+
+            if ((bool)userDetails.cIsFirstTimeUser)
+            {
+                IsFirstTimeUser = true;
+                bool forceLoad = true;
+                string pagelink = _config["RACE2SecurityProviderURL"] + "/Identity/Account/CreatePassword?userEmail=" + UserName;
+                NavigationManager.NavigateTo(pagelink, forceLoad);
+            }
+
+            Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement").Information(UserName + " accessed S12 template generation.");
+
+            ReservoirDetailsLinkedToUser = await reservoirService.GetReservoirsByUserId(userDetails.Id);
+
+            foreach (var rn in ReservoirDetailsLinkedToUser)
+            {
+                try
+                {
+                    var r = new Reservoir()
+                        {
+                            Id = rn.Id,
+                            BackEndReservoirId = rn.RaceReservoirId,
+                            PublicName = rn.PublicName,
+                            RegisteredName = rn.RegisteredName,
+                            NearestTown = rn.NearestTown,
+                            GridReference = rn.GridReference,
+                            OperatorType = rn.OperatorType,
+                            LastInspectionByUser = rn.UserDetail,
+                            NextInspectionDate102 = rn.NextInspectionDate102,
+                            NextInspectionDate103 = rn.NextInspectionDate103,
+                            LastInspectionDate = rn.LastInspectionDate,
+                            LastCertificationDate = rn.LastCertificationDate
+
+                        };
+                    //r.Address = new Address()
+                    //{
+                    //    AddressLine1 = rn.Address.AddressLine1,
+                    //    AddressLine2 = rn.Address.AddressLine2,
+                    //    Town = rn.Address.Town,
+                    //    County = rn.Address.County,
+                    //    Postcode = rn.Address.Postcode
+                    //};
+                    ReservoirsLinkedToUser.Add(r);
+                }
+                catch (Exception ex)
+                {
+                    Serilog.Log.Logger.Fatal("On init for Reservoir :" + rn.Id.ToString() + " Error getting data from backend services : " + ex.Message);
+                }
+            }
+            PopulateReservoirsToDisplay(ReservoirsLinkedToUser);
+            await InvokeAsync(() =>
+            {
+                StateHasChanged();
+            });
+        }
+        catch (Exception ex)
+        {
+            //Log.Logger.Fatal("Error getting data from backend services : "+ex.Message);
+            Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement OnInitializedAsync").Fatal("Error getting data from backend services : " + ex.Message);
+            //throw new ApplicationException("Error loading annual statement data.");
+            bool forceLoad = false;
+            string pagelink = "/ProblemWithService";
+            NavigationManager.NavigateTo(pagelink, forceLoad);
+        }
+        finally
+        {
+            await base.OnInitializedAsync();
+        };
+    }
+
+    private async void PopulateReservoirsToDisplay(List<Reservoir> reservoirs)
+    {
+        try
+        {
+            foreach (var reservoir in reservoirs)
+            {
+                try
+                {
+                    Undertakers = await reservoirService.GetOperatorsforReservoir(reservoir.Id, reservoir.OperatorType);
+                    ReservoirsLinkedToUserForDisplay reservoirsLinkedToUser = new ReservoirsLinkedToUserForDisplay();
+                    reservoirsLinkedToUser.ReservoirID = reservoir.Id;
+                    reservoirsLinkedToUser.ReservoirName = reservoir.RegisteredName;
+                    if (Undertakers != null && Undertakers.Count() > 0)
+                    {
+                        if (!String.IsNullOrEmpty(Undertakers[0].OrgName))
+                            reservoirsLinkedToUser.UndertakerName = Undertakers[0].OrgName;
+                        else if (!String.IsNullOrEmpty(Undertakers[0].OperatorFirstName))
+                            reservoirsLinkedToUser.UndertakerName = Undertakers[0].OperatorFirstName + " " + Undertakers[0].OperatorLastName;
+                        else
+                            reservoirsLinkedToUser.UndertakerName = "";
+                        if (!String.IsNullOrEmpty(Undertakers[0].Email))
+                        {
+                            reservoirsLinkedToUser.UndertakerEmail = Undertakers[0].Email;
+                        }
+                        else
+                        {
+                            reservoirsLinkedToUser.UndertakerEmail = "";
+                        }
+                    }
+                    //SubmissionStatusList = await reservoirService.GetReservoirStatusByUserId(userDetails.Id);
+                    // SubmissionStatus = SubmissionStatusList.Where(s => s.RegisteredName == reservoir.RegisteredName).FirstOrDefault();
+                    // reservoirsLinkedToUser.SubmissionReference = SubmissionStatus.SubmissionReference;
+                    // reservoirsLinkedToUser.DueDate = SubmissionStatus.DueDate != DateTime.MinValue ? SubmissionStatus.DueDate.ToString("dd MMMMM yyyy") : String.Empty;
+                    // reservoirsLinkedToUser.SubmittedDateTime = SubmissionStatus.SubmittedDateTime != DateTime.MinValue ? SubmissionStatus.SubmittedDateTime.ToString("dd MMMMM yyyy") : String.Empty;
+                    // reservoirsLinkedToUser.Status = SubmissionStatus.Status != null ? SubmissionStatus.Status : String.Empty;
+                    DateTime submissionDateTime = await reservoirService.GetLastSubmittedDateforReservoir(reservoir.Id);
+                    reservoirsLinkedToUser.SubmittedDateTime = submissionDateTime != DateTime.MinValue ? submissionDateTime.ToString("dd MMMMM yyyy") : String.Empty;
+                    ReservoirsLinkedToUserForDisplay.Add(reservoirsLinkedToUser);
+                }
+                catch (Exception ex)
+                {
+                    Serilog.Log.Logger.Fatal("On PopulateReservoirsToDisplay for Reservoir :" + reservoir.Id.ToString() + " Error getting data from backend services : " + ex.Message);
+                }
+            }
+            ReservoirsLinkedToUserForDisplayOnStart = ReservoirsLinkedToUserForDisplay;
+            await InvokeAsync(() =>
+            {
+                StateHasChanged();
+            });
+        }
+        catch (Exception ex)
+        {
+            //Log.Logger.Fatal("Error loading reservoir data : " + ex.Message);
+            Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement PopulateReservoirsToDisplay").Fatal("Error loading reservoir data : " + ex.Message);
+            //throw new ApplicationException("Error loading reservoir data.");
+            bool forceLoad = false;
+            string pagelink = "/ProblemWithService";
+            NavigationManager.NavigateTo(pagelink, forceLoad);
+        };
+    }
+
+    private async void DownloadReportTemplate(ReservoirsLinkedToUserForDisplay item)
+    {
+        try
+        {
+            var reservoir = ReservoirsLinkedToUser.Where(r => r.RegisteredName == item.ReservoirName).FirstOrDefault();
+            //SubmissionStatus = SubmissionStatusList.Where(s => s.RegisteredName == reservoir.RegisteredName).FirstOrDefault();
+            var Undertakers = await reservoirService.GetOperatorsforReservoir(reservoir.Id, reservoir.OperatorType);
+
+            //SubmissionStatus updatedStatus = await reservoirService.UpdateReservoirStatus(reservoir.Id, userDetails.Id, "In progress",false,"");
+
+            // var blobName = updatedStatus.OverrideTemplateName + ".docx";
+
+            //int result = await reservoirService.InsertSubmissionDetails(SubmissionStatus);
+
+            var result = await reservoirService.GetDocumentTemplate(reservoir.Id);
+            var blobName = result.TemplateName + ".docx";
+
+            //var blobName = "S12ReportTemplate.docx";
+            //var blobName = "TestWithTags.docx";
+            Stream response = await blobStorageService.GetBlobFileStream(blobName);
+            S12PrePopulationFields s12PrePopulationFields = new S12PrePopulationFields();
+            s12PrePopulationFields.ReservoirName = reservoir.RegisteredName;
+            s12PrePopulationFields.ReservoirNearestTown = reservoir.NearestTown != null ? reservoir.NearestTown : "";
+            s12PrePopulationFields.ReservoirGridRef = reservoir.GridReference != null ? reservoir.GridReference : "";
+            s12PrePopulationFields.SupervisingEngineerName = userDetails.cFirstName + " " + userDetails.cLastName;
+            var companyDetails = await userService.GetCompanyNameByUserId(userDetails.Id);
+            s12PrePopulationFields.SupervisingEngineerCompanyName = companyDetails.OrgName == null ? " " : companyDetails.OrgName;
+            Address address = userDetails.addresses.FirstOrDefault();
+            s12PrePopulationFields.SupervisingEngineerAddress = address.AddressLine1;
+            if (!String.IsNullOrEmpty(address.AddressLine2))
+                s12PrePopulationFields.SupervisingEngineerAddress = s12PrePopulationFields.SupervisingEngineerAddress + ", " + address.AddressLine2;
+            if (!String.IsNullOrEmpty(address.Town))
+                s12PrePopulationFields.SupervisingEngineerAddress = s12PrePopulationFields.SupervisingEngineerAddress + ", " + address.Town;
+            if (!String.IsNullOrEmpty(address.County))
+                s12PrePopulationFields.SupervisingEngineerAddress = s12PrePopulationFields.SupervisingEngineerAddress + ", " + address.County;
+            if (!String.IsNullOrEmpty(address.Postcode))
+                s12PrePopulationFields.SupervisingEngineerAddress = s12PrePopulationFields.SupervisingEngineerAddress + ", " + address.Postcode;
+            s12PrePopulationFields.SupervisingEngineerEmail = userDetails.Email;
+            if (!String.IsNullOrEmpty(userDetails.cMobile))
+                s12PrePopulationFields.SupervisingEngineerPhoneNumber = userDetails.cMobile;
+            else if (!String.IsNullOrEmpty(userDetails.cAlternativeMobile))
+                s12PrePopulationFields.SupervisingEngineerPhoneNumber = userDetails.cAlternativeMobile;
+            else if (!String.IsNullOrEmpty(userDetails.cAlternativePhone))
+                s12PrePopulationFields.SupervisingEngineerPhoneNumber = userDetails.cAlternativePhone;
+            else if (!String.IsNullOrEmpty(userDetails.cAlternativeEmergencyPhone))
+                s12PrePopulationFields.SupervisingEngineerPhoneNumber = userDetails.cAlternativeEmergencyPhone;
+            else
+                s12PrePopulationFields.SupervisingEngineerPhoneNumber = userDetails.PhoneNumber != null ? userDetails.PhoneNumber : "";
+            Undertakers = await reservoirService.GetOperatorsforReservoir(reservoir.Id, reservoir.OperatorType);
+            s12PrePopulationFields.UndertakerName = item.UndertakerName;
+            s12PrePopulationFields.UndertakerEmail = Undertakers[0].Email;
+            s12PrePopulationFields.UndertakerAddress = Undertakers[0].AddressLine1;
+            if (!String.IsNullOrEmpty(Undertakers[0].AddressLine2))
+                s12PrePopulationFields.UndertakerAddress = s12PrePopulationFields.UndertakerAddress + ", " + Undertakers[0].AddressLine2;
+            if (!String.IsNullOrEmpty(Undertakers[0].Town))
+                s12PrePopulationFields.UndertakerAddress = s12PrePopulationFields.UndertakerAddress + ", " + Undertakers[0].Town;
+            if (!String.IsNullOrEmpty(Undertakers[0].County))
+                s12PrePopulationFields.UndertakerAddress = s12PrePopulationFields.UndertakerAddress + ", " + Undertakers[0].County;
+            if (!String.IsNullOrEmpty(Undertakers[0].Postcode))
+                s12PrePopulationFields.UndertakerAddress = s12PrePopulationFields.UndertakerAddress + ",  " + Undertakers[0].Postcode;
+            if (!String.IsNullOrEmpty(Undertakers[0].cMobile))
+                s12PrePopulationFields.UndertakerPhoneNumber = Undertakers[0].cMobile;
+            else if (!String.IsNullOrEmpty(Undertakers[0].cAlternativeMobile))
+                s12PrePopulationFields.UndertakerPhoneNumber = Undertakers[0].cAlternativeMobile;
+            else if (!String.IsNullOrEmpty(Undertakers[0].cAlternativePhone))
+                s12PrePopulationFields.UndertakerPhoneNumber = Undertakers[0].cAlternativePhone;
+            else if (!String.IsNullOrEmpty(Undertakers[0].cAlternativeEmergencyPhone))
+                s12PrePopulationFields.UndertakerPhoneNumber = Undertakers[0].cAlternativeEmergencyPhone;
+            else
+                s12PrePopulationFields.UndertakerPhoneNumber = "";
+            if (reservoir.NextInspectionDate103 != DateTime.MinValue)
+            {
+                s12PrePopulationFields.NextInspectionDate = (reservoir.NextInspectionDate103 != DateTime.MinValue) && (reservoir.LastCertificationDate.HasValue) ? reservoir.NextInspectionDate103.Value.ToString("dd MMMM yyyy") : " ";
+            }
+            else
+            {
+                s12PrePopulationFields.NextInspectionDate = (reservoir.NextInspectionDate102 != DateTime.MinValue) && (reservoir.LastCertificationDate.HasValue) ? reservoir.NextInspectionDate102.Value.ToString("dd MMMM yyyy") : " ";
+            }
+            s12PrePopulationFields.LastCertificationDate = (reservoir.LastCertificationDate != DateTime.MinValue) && (reservoir.LastCertificationDate.HasValue) ? reservoir.LastCertificationDate.Value.ToString("dd MMMM yyyy") : " ";
+            s12PrePopulationFields.LastInspectionDate = (reservoir.LastInspectionDate != DateTime.MinValue) && (reservoir.LastInspectionDate.HasValue) ? reservoir.LastInspectionDate.Value.ToString("dd MMMM yyyy") : " ";
+            if ((reservoir.LastInspectionByUser.Id != 0) && (reservoir.LastInspectionByUser != null))
+            {
+                s12PrePopulationFields.LastInspectingEngineerName = !String.IsNullOrEmpty(reservoir.LastInspectionByUser.cFirstName) && !String.IsNullOrEmpty(reservoir.LastInspectionByUser.cLastName) ? reservoir.LastInspectionByUser.cFirstName + " " + reservoir.LastInspectionByUser.cLastName : " ";
+                if (!String.IsNullOrEmpty(reservoir.LastInspectionByUser.cMobile))
+                    s12PrePopulationFields.LastInspectingEngineerPhoneNumber = reservoir.LastInspectionByUser.cMobile;
+                else if (!String.IsNullOrEmpty(reservoir.LastInspectionByUser.cAlternativeMobile))
+                    s12PrePopulationFields.LastInspectingEngineerPhoneNumber = reservoir.LastInspectionByUser.cAlternativeMobile;
+                else if (!String.IsNullOrEmpty(reservoir.LastInspectionByUser.cAlternativePhone))
+                    s12PrePopulationFields.LastInspectingEngineerPhoneNumber = reservoir.LastInspectionByUser.cAlternativePhone;
+                else if (!String.IsNullOrEmpty(reservoir.LastInspectionByUser.cAlternativeEmergencyPhone))
+                    s12PrePopulationFields.LastInspectingEngineerPhoneNumber = reservoir.LastInspectionByUser.cAlternativeEmergencyPhone;
+                else
+                    s12PrePopulationFields.LastInspectingEngineerPhoneNumber = "";
+            }
+            else
+            {
+                s12PrePopulationFields.LastInspectingEngineerName = !String.IsNullOrEmpty(reservoir.LastInspectionEngineerName) ? reservoir.LastInspectionEngineerName : " ";
+                s12PrePopulationFields.LastInspectingEngineerPhoneNumber = !String.IsNullOrEmpty(reservoir.LastInspectionEngineerPhone) ? reservoir.LastInspectionEngineerPhone : " ";
+            }
+            MemoryStream processedStream = openXMLUtilitiesService.SearchAndReplace(response, s12PrePopulationFields);
+            processedStream.Position = 0;
+            var streamRef = new DotNetStreamReference(stream: processedStream);
+            string downloadedFileName = reservoir.RegisteredName + " S12.docx";
+            await jsRuntime.InvokeVoidAsync("downloadFileFromStream", downloadedFileName, streamRef);
+            var reservoirLinkedToUser = ReservoirsLinkedToUserForDisplay.Where(r => r.ReservoirName == reservoir.RegisteredName).FirstOrDefault();
+            //reservoirLinkedToUser.Status = updatedStatus.Status;
+            await InvokeAsync(() =>
+            {
+                StateHasChanged();
+            });
+        }
+        catch (Exception ex)
+        {
+            //Log.Logger.Fatal("Error downloading S12ReportTemplate for the reservoir : " + ex.Message);
+            Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement DownloadReportTemplate").Fatal("Error downloading S12ReportTemplate for the reservoir : " + ex.Message);
+            //throw new ApplicationException("Error downloading S12ReportTemplate for the reservoir.");
+            bool forceLoad = false;
+            string pagelink = "/ProblemWithService";
+            NavigationManager.NavigateTo(pagelink, forceLoad);
+        };
+    }
+
+    private void DownloadTemplateFile(ReservoirsLinkedToUserForDisplay Item)
+    {
+        DownloadReportTemplate(Item);
+    }
+    public async void GoToNextPage()
+    {
+        bool forceLoad = false;
+        string pagelink = "/choose-a-reservoir";
+        NavigationManager.NavigateTo(pagelink, forceLoad);
+    }
+
+    private void goback()
+    {
+        bool forceLoad = false;
+        string pagelink = "/";
+        NavigationManager.NavigateTo(pagelink, forceLoad);
+    }
+
+    private void gotoPage(SubmissionStatusDTO reservoirStatus)
+    {
+        var reservoir = ReservoirsLinkedToUser.Where(s => s.RegisteredName == reservoirStatus.RegisteredName).FirstOrDefault();
+        bool forceLoad = false;
+        string pagelink = "/reservoir-details";
+        if (reservoirStatus.Status.ToUpper() == "DRAFT SENT")
+        {
+            pagelink = "/s12-statement-confirmation-draft-sent";
+        }
+        NavigationManager.NavigateTo(pagelink, forceLoad);
+    }
+
+    private async Task gotoSubmissionPage(ReservoirsLinkedToUserForDisplay Item)
+    {
+        ReportSubmissionDataDto reportSubmissionData = new ReportSubmissionDataDto
+            {
+                ReservoirId = Item.ReservoirID.ToString(),
+                ReservoirRegName = Item.ReservoirName,
+                UndertakerName = Item.UndertakerName,
+                UndertakerEmail = String.IsNullOrEmpty(Item.UndertakerEmail) ? " " : Item.UndertakerEmail,
+                SubmissionReference = Item.SubmissionReference,
+                YesNoValue = ""
+            };
+        await ProtectedSessionStore.SetAsync("CurrentReportSubmissionData", reportSubmissionData);
+        bool forceLoad = false;
+        string pagelink = $"/send-or-resend-statement";
+        NavigationManager.NavigateTo(pagelink, forceLoad);
+    }
+
+    private async void SearchOnEnter(KeyboardEventArgs e)
+    {
+        if (e.Code == "Enter" || e.Code == "NumpadEnter")
+        {
+            FilterData(_searchString);
+            //if (!string.IsNullOrEmpty(_searchString))
+            //{
+            //    ReservoirsLinkedToUserForDisplay = ReservoirsLinkedToUserForDisplay.Where(r => r.ReservoirName.ToLower().Contains(_searchString.ToLower())).ToList();
+            //    await InvokeAsync(() =>
+            //    {
+            //        StateHasChanged();
+            //    });
+            //}
+            //else
+            //{
+            //    ReservoirsLinkedToUserForDisplay = ReservoirsLinkedToUserForDisplayOnStart;
+            //}
+        }
+    }
+    private async void FilterData(string searchTerm)
+    {
+        if (!string.IsNullOrEmpty(searchTerm))
+        {
+            ReservoirsLinkedToUserForDisplay = ReservoirsLinkedToUserForDisplay.Where(r => r.ReservoirName.ToLower().Contains(searchTerm.ToLower())).ToList();
+            await InvokeAsync(() =>
+            {
+                StateHasChanged();
+            });
+        }
+        else
+        {
+            ReservoirsLinkedToUserForDisplay = ReservoirsLinkedToUserForDisplayOnStart;
+        }
+    }
+
+    private void SortTable(string columnName)
+    {
+        //Sorting against a column that is not currently sorted against.
+        if (columnName != CurrentSortColumn)
+        {
+            //We need to force order by ascending on the new column
+            //This line uses reflection and will probably
+            //perform inefficiently in a production environment.
+            ReservoirsLinkedToUserForDisplay = ReservoirsLinkedToUserForDisplay.OrderBy(x =>
+                                    x.GetType()
+                                     .GetProperty(columnName)
+                                     .GetValue(x, null))
+                          .ToList();
+            CurrentSortColumn = columnName;
+            IsSortedAscending = true;
+
+        }
+        else //Sorting against same column but in different direction
+        {
+            if (IsSortedAscending)
+            {
+                ReservoirsLinkedToUserForDisplay = ReservoirsLinkedToUserForDisplay.OrderByDescending(x =>
+                                                  x.GetType()
+                                                   .GetProperty(columnName)
+                                                   .GetValue(x, null))
+                             .ToList();
+            }
+            else
+            {
+                ReservoirsLinkedToUserForDisplay = ReservoirsLinkedToUserForDisplay.OrderBy(x =>
+                                        x.GetType()
+                                         .GetProperty(columnName)
+                                         .GetValue(x, null))
+                                         .ToList();
+            }
+
+            //Toggle this boolean
+            IsSortedAscending = !IsSortedAscending;
+        }
+    }
+}

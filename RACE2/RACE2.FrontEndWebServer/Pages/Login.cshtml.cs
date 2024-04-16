@@ -24,6 +24,8 @@ namespace RACE2.FrontEndWebServer.Pages
                 Response.Redirect(redirectUri);
             }
 
+            Serilog.Log.Logger.Information("User intitiated login process");
+
             return Challenge(new AuthenticationProperties
             {
                 RedirectUri = redirectUri

@@ -63,6 +63,7 @@ namespace RACE2.SecurityProvider.Areas.Identity.Pages.Account
 
         public IActionResult OnGet(string userEmail)
         {
+            ViewData["Title"] = "Create password";
             WebAppUrl = _config["RACE2FrontEndURL"];
             Input =new InputModel { Email = userEmail };
             return Page();

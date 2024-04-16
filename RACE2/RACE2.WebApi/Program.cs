@@ -25,8 +25,13 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddAzureAppConfiguration(options =>
 {
+    //var connectionString = builder.Configuration["AZURE_APPCONFIGURATION_CONNECTIONSTRING"];
     var azureAppConfigUrl = builder.Configuration["AzureAppConfigURL"];
-    var credential = new DefaultAzureCredential();
+    var azureTenantId = builder.Configuration["AZURE_TENANT_ID"];
+    var managedIdenityClientId = builder.Configuration["ManagedIdenityClientId"];
+    var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions { TenantId = azureTenantId, ManagedIdentityClientId = managedIdenityClientId, VisualStudioTenantId = azureTenantId });
+
+    //options.Connect(connectionString)      
     options.Connect(new Uri(azureAppConfigUrl), credential)
     .ConfigureKeyVault(options =>
     {
