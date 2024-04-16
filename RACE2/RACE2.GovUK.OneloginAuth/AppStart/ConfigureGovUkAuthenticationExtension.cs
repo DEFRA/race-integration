@@ -74,7 +74,7 @@ namespace RACE2.GovUK.OneloginAuth.AppStart
                     
                     options.Cookie.SameSite = SameSiteMode.Lax;
                     options.CookieManager = new ChunkingCookieManager { ChunkSize = 3000 };
-                    options.LogoutPath = "/home/signed-out";
+                    options.LogoutPath = "/logout";
                 });
             services
                 .AddOptions<OpenIdConnectOptions>(OpenIdConnectDefaults.AuthenticationScheme)
