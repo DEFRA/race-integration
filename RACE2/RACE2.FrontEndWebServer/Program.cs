@@ -107,16 +107,8 @@ try
     });
 
     bool requireHttpsMetadata = builder.Environment.IsProduction();
-    
-    builder.Services.AddScoped<IUserService, UserService>();
-    builder.Services.AddScoped<IReservoirService, ReservoirService>();
-    builder.Services.AddScoped<IUserRepository, UserRepository>();
-    builder.Services.AddScoped<IReservoirRepository, ReservoirRepository>();
-    builder.Services.AddScoped<IBlobStorageService, BlobStorageService>();
-    builder.Services.AddScoped<IOpenXMLUtilitiesService, OpenXMLUtilitiesService>();
-    builder.Services.AddScoped<CustomErrorBoundary>();
-    builder.Services.AddScoped<INotification, RaceNotification>();
 
+    builder.Services.AddCascadingAuthenticationState();
     builder.Services.AddHttpContextAccessor();
     builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
     builder.Services.AddSingleton<IUrlHelperFactory, UrlHelperFactory>();
@@ -137,6 +129,16 @@ try
                 policy.RequireAuthenticatedUser();
             });
     });
+
+    builder.Services.AddScoped<IUserService, UserService>();
+    builder.Services.AddScoped<IReservoirService, ReservoirService>();
+    builder.Services.AddScoped<IUserRepository, UserRepository>();
+    builder.Services.AddScoped<IReservoirRepository, ReservoirRepository>();
+    builder.Services.AddScoped<IBlobStorageService, BlobStorageService>();
+    builder.Services.AddScoped<IOpenXMLUtilitiesService, OpenXMLUtilitiesService>();
+    builder.Services.AddScoped<CustomErrorBoundary>();
+    builder.Services.AddScoped<INotification, RaceNotification>();
+
     var app = builder.Build();
 
     // Configure the HTTP request pipeline.
@@ -145,20 +147,22 @@ try
         app.UseExceptionHandler("/Error");
         app.UseHsts();
     }
+    app.UseHttpsRedirection();
+
     //app.UseSerilogRequestLogging(configure =>
     //{
     //    configure.MessageTemplate = "HTTP {RequestMethod} {RequestPath} ({UserId}) responded {StatusCode} in {Elapsed:0.0000}ms";
     //}); // We want to log all HTTP requests
     app.UseSerilogRequestLogging();
-    //app.UseHttpsRedirection();
 
     app.UseStaticFiles();
-
-    app.UseAntiforgery();
-    //app.SetupEndpoints();
+    app.UseRouting();   
 
     app.UseAuthentication();
     app.UseAuthorization();
+
+    app.UseAntiforgery();
+    //app.SetupEndpoints();
 
     app.MapRazorPages();
     app.MapRazorComponents<App>()

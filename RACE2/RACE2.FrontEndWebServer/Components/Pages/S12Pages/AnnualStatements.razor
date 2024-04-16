@@ -162,7 +162,15 @@
         try
         {
             var authState = await AuthenticationStateTask;
+            var claims = authState.User.Claims.ToList();
+            foreach (var claim in claims)
+            {
+                var var = claim.Value;
+                var vartype=claim.Type;
+            }
+
             UserEmail = authState.User.Claims.FirstOrDefault(c => c.Type.Equals(ClaimTypes.Email))?.Value;
+            var UserTelephoneNumber = authState.User.Claims.FirstOrDefault(c => c.Type.Equals(ClaimTypes.MobilePhone))?.Value;
             userDetails = await userService.GetUserByEmailID(UserEmail);           
 
             // if ((bool)userDetails.cIsFirstTimeUser)
