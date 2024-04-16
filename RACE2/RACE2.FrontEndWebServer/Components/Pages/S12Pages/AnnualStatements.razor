@@ -171,14 +171,17 @@
             switch (userIsValid.IsValiduser)
             {
                 case 0: //user does not exist
+                    Serilog.Log.Logger.ForContext("User", UserEmail).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement").Error(UserEmail + " does not exist.");
                     NavigationManager.NavigateTo("/UserNotAuthenticated", true);
                     break;
                 case 1: //active user
                     break;
                 case 2: //email exists but phone number does not match
+                    Serilog.Log.Logger.ForContext("User", UserEmail).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement").Error(UserEmail + " has wrong telephone number.");
                     NavigationManager.NavigateTo("/UserNotAuthenticated", true);
                     break;
                 case 3: //email and phone number match but role is not supervising engineer
+                    Serilog.Log.Logger.ForContext("User", UserEmail).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement").Error(UserEmail + " is not a supervising engineer.");
                     NavigationManager.NavigateTo("/UserNotAuthenticated", true);
                     break;
                 default:
