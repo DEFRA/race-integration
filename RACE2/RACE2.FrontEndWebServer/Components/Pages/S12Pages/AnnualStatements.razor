@@ -172,15 +172,23 @@
             UserEmail = authState.User.Claims.FirstOrDefault(c => c.Type.Equals(ClaimTypes.Email))?.Value;
             var UserTelephoneNumber = authState.User.Claims.FirstOrDefault(c => c.Type.Equals(ClaimTypes.MobilePhone))?.Value;
             userDetails = await userService.GetUserByEmailID(UserEmail);
-            var userDetails1 = await userService.GetAuthorizedUser(UserEmail, "0787511122");
-
-            // if ((bool)userDetails.cIsFirstTimeUser)
-            // {
-            //     IsFirstTimeUser = true;
-            //     bool forceLoad = true;
-            //     string pagelink = _config["RACE2SecurityProviderURL"] + "/Identity/Account/CreatePassword?userEmail=" + UserEmail;
-            //     NavigationManager.NavigateTo(pagelink, forceLoad);
-            // }
+            var userIsValid = await userService.GetAuthorizedUser(UserEmail, "07875111223");
+            switch (userIsValid.IsValiduser)
+            {
+                case 0: //user does not exist
+                    NavigationManager.NavigateTo("/UserNotAuthenticated", true);
+                    break;
+                case 1: //active user
+                    break;
+                case 2: //email exists but phone number does not match
+                    NavigationManager.NavigateTo("/UserNotAuthenticated", true);
+                    break;
+                case 3: //email and phone number match but role is not supervising engineer
+                    NavigationManager.NavigateTo("/UserNotAuthenticated", true);
+                    break;
+                default:
+                    break;
+            }
 
             Serilog.Log.Logger.ForContext("User", UserEmail).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement").Information(UserEmail + " accessed S12 template generation.");
 
