@@ -499,5 +499,33 @@ namespace RACE2.DataAccess.Repository
                 return null;
             }
         }
+
+
+        public async Task<UserSpecificDto> GetAuthorizedUser(string email, string mobilenumber)
+        {
+            try
+            {
+                using (var conn = Connection)
+                {
+                    var parameters = new DynamicParameters();
+                    parameters.Add("@email", email, DbType.String);
+                    parameters.Add("@mobilenumber", mobilenumber, DbType.String);
+                    parameters.Add("@result", dbType: DbType.Int32, direction: ParameterDirection.Output);
+
+                    int validuser = parameters.Get<Int32>("@result");
+                    var userresult = await conn.QueryAsync<UserSpecificDto>("sp_GetUserWithRoles", parameters, commandType: CommandType.StoredProcedure);
+                    UserSpecificDto authorisedUser = new UserSpecificDto();
+                    authorisedUser = userresult.FirstOrDefault();
+                    authorisedUser.IsValiduser = validuser;
+                    return authorisedUser;
+                    
+                }
+            }
+            catch(Exception ex) 
+            {
+                _logger.LogError(ex, ex.Message);
+                return null;
+            }
+        }
     }
 }

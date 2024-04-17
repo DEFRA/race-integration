@@ -1004,7 +1004,7 @@ namespace RACE2.DataAccess.Repository
                     int length = Convert.ToString(reservoirid).Length;
                     submissionreference = submissionreference.Remove(submissionreference.Length - length) + Convert.ToString(reservoirid);
 
-                    submissionreference = String.Concat(submissionreference, Convert.ToString(serviceid), "_", submitteddatetime.Year, submitteddatetime.Month, submitteddatetime.Date.ToString("dd"), "_", submitteddatetime.Hour, submitteddatetime.Minute, submitteddatetime.Second);
+                    submissionreference = String.Concat(submissionreference, serviceid.ToString("00"), "_", submitteddatetime.Year, submitteddatetime.Month, submitteddatetime.Date.ToString("dd"), "_", submitteddatetime.Hour, submitteddatetime.Minute, submitteddatetime.Second);
 
                 }
 
