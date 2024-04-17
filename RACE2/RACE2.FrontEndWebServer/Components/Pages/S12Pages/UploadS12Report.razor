@@ -252,8 +252,8 @@
                     //    containerName = containerName.Split('.')[0];
                     //}
                     var containerNameToUplodTo = _config["UnscannedContainer"];//"unscannedcontent";
-                                                                               //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + "."+ extn;
-                                                                               //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + SubmissionReference + "." + fileExtn;
+                    //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + "."+ extn;
+                    //var trustedFileNameForFileStorage = ReservoirRegName + "_S12_" + SubmissionReference + "." + fileExtn;
                     var savedReportSubmissionData = await ProtectedSessionStore.GetAsync<ReportSubmissionDataDto>("CurrentReportSubmissionData");
                     // var trustedFileNameForFileStorage = reportSubmissionData.SubmissionReference + "_" + DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + DateTime.Now.Hour + DateTime.Now.Minute + DateTime.Now.Second + "." + fileExtn;
 
@@ -266,7 +266,7 @@
                     insertStatus.SubmittedDateTime = DateTime.UtcNow;
                     insertStatus.LastModifiedDateTime = DateTime.UtcNow;
                     insertStatus.RevisionSummary = savedReportSubmissionData.Value == null ? "" : savedReportSubmissionData.Value.ResubmitReason;
-                   // insertStatus.IsRevision = savedReportSubmissionData.Value == null ? false : true;
+                    // insertStatus.IsRevision = savedReportSubmissionData.Value == null ? false : true;
                     insertStatus.IsRevision = reportSubmissionData.SendResendValue == "Send" ? false : true;
                     insertStatus.SubmissionReference = reservoirService.GenerateSubmissionReference(Int32.Parse(reportSubmissionData.ReservoirId), insertStatus.SubmittedDateTime, insertStatus.ServiceId);
                     var trustedFileNameForFileStorage = insertStatus.SubmissionReference;
@@ -321,15 +321,28 @@
 
                         //For testing without virus scan, comment the next line and uncomment the next to next line
                         var containerNameToDownloadFrom = _config["CleanContainer"]; //"cleanfiles";
-                                                                                     //var containerNameToDownloadFrom = _config["UnscannedContainer"];
+                        //var containerNameToDownloadFrom = _config["UnscannedContainer"];
 
                         var RSTEmailAddress = String.IsNullOrEmpty(_config["RSTEmailAddress"]) ? userDetails.Email : _config["RSTEmailAddress"];
                         var bytes = await blobStorageService.GetBlobAsByteArray(containerNameToDownloadFrom, trustedFileNameForFileStorage);
-                        // if (bytes == null)
-                        // {
-                        //     System.Threading.Thread.Sleep(5000);//wait for 5 more seconds
-                        //     bytes = await blobStorageService.GetBlobAsByteArray(containerNameToDownloadFrom, trustedFileNameForFileStorage);
-                        // }
+
+                        //try again up to 3 times to check if bytes is not null, waiting for 5 seconds each time
+                        if (bytes == null)
+                        {
+                            for (int i = 1; i < 4; i++)
+                            {
+                                System.Threading.Thread.Sleep(5000);//wait for 5 more seconds
+                                bytes = await blobStorageService.GetBlobAsByteArray(containerNameToDownloadFrom, trustedFileNameForFileStorage);
+                                if (bytes != null)
+                                {
+                                    break;
+                                }
+                                else
+                                {
+                                    continue;
+                                }
+                            }
+                        }
                         if (bytes != null)
                         {
                             await _notificationService.SendConfirmationMailtoSE(userDetails.Email, reportSubmissionData.ReservoirRegName);
@@ -347,7 +360,6 @@
                                 await _notificationService.SendInternalMail(internalEmail, reportSubmissionData.ReservoirRegName, reportSubmissionData.UndertakerEmail, reportSubmissionData.YesNoValue);
                             }
 
-                            //Check this.......
                             //Store the uploaded document information
                             documentDTO.SubmissionId = res.Id;
                             await reservoirService.InsertDocumentRelatedTable(Int32.Parse(reportSubmissionData.ReservoirId), res.Id, docID);
