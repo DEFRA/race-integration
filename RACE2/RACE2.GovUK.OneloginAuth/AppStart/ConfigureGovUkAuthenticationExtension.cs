@@ -39,6 +39,7 @@ namespace RACE2.GovUK.OneloginAuth.AppStart
                     options.SignedOutRedirectUri = "/";
                     options.SignedOutCallbackPath = "/signed-out";
                     options.CallbackPath = "/sign-in";
+                    options.RemoteSignOutPath= "/signed-out";
                     options.ResponseMode = string.Empty;
                     options.SaveTokens = true;
                     var scopes = "openid email phone".Split(' ');
