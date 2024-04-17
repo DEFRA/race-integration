@@ -13,7 +13,8 @@ public class CustomClaims : ICustomClaims
         return new List<Claim>
         {
             new Claim("EmployerAccountId",$"Kris-{value}"),
-            new Claim(ClaimTypes.Name,$"Kris Sahoo")
+            new Claim(ClaimTypes.Name,"Kris Sahoo"),
+            new Claim(ClaimTypes.MobilePhone,"07875111223")
         };
     }
 }

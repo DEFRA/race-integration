@@ -167,7 +167,7 @@
             var UserTelephoneNumber = claims.FirstOrDefault(c => c.Type.Equals(ClaimTypes.MobilePhone))?.Value;
 
             userDetails = await userService.GetUserByEmailID(UserEmail);
-            var userIsValid = await userService.GetAuthorizedUser(UserEmail, "07875111223");
+            var userIsValid = await userService.GetAuthorizedUser(UserEmail, UserTelephoneNumber);
             switch (userIsValid.IsValiduser)
             {
                 case 0: //user does not exist
