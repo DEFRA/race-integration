@@ -15,5 +15,7 @@ namespace RACE2.Dto
         public List<Address> addresses { get; set; } = new List<Address>();
 
         public string? OrganisationName { get; set; } 
+
+        public int IsValiduser { get; set; }
     }
 }
