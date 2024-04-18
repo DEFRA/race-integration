@@ -5,9 +5,10 @@
 @if (IsLoggedIn)
 {
     <div class="govuk-width-container" style="min-height: 69vh;">
+
         <FeedbackBannerSignOut />
- 
-            <a class="govuk-back-link govuk-!-margin-top-0 govuk-!-margin-bottom-0" href="javascript:history.back()">Back</a>
+        <a class="govuk-back-link govuk-!-margin-top-0 govuk-!-margin-bottom-0" href="javascript:history.back()">Back</a>
+         <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
 
             <div class="govuk-grid-row">
 
@@ -184,12 +185,14 @@
                     <p class="govuk-body">If these changes affect how your personal data is processed the Environment Agency will take reasonable steps to let you know.</p>
                 </div>
             </div>
+         </main>
     </div>
 }
 else
 {
     <div class="govuk-width-container ">
         <FeedbackBannerSignIn />
+        <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
             <a class="govuk-back-link govuk-!-margin-top-0 govuk-!-margin-bottom-0" href="javascript:history.back()">Back</a>
 
             <div class="govuk-grid-row">
@@ -367,6 +370,7 @@ else
                     <p class="govuk-body">If these changes affect how your personal data is processed the Environment Agency will take reasonable steps to let you know.</p>
                 </div>
             </div>
+        </main>
     </div>
 }
 <Footer />
