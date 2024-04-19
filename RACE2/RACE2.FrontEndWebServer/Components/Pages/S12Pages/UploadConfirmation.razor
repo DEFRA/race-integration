@@ -17,15 +17,14 @@
     <FeedbackBannerSignOut />
     <a class="govuk-back-link" @onclick="GoToPrevPage" style="color:black">Back</a>
     <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
-
         <div class="govuk-grid-row">
 
             <div class="govuk-grid-column-two-thirds">
 
                 <div class="govuk-panel govuk-panel--confirmation">
-                    <div class="govuk-panel__title">
+                    <h1 class="govuk-panel__title">
                         Statement for @reportSubmissionData.ReservoirRegName sent
-                    </div>
+                    </h1>
                 </div>
                 <br>
                 <p class="govuk-body">We have sent you a confirmation email.</p>
@@ -37,7 +36,7 @@
                 </p>
 
                 <p class="govuk-body">
-                    You can go back to <a class="govuk-link govuk-link--no-visited-state" style="cursor:pointer" @onclick="GoToAnnualStatementsPage">your annual statements</a> or go to your <a class="govuk-link govuk-link--no-visited-state" style="cursor:pointer" @onclick="GoToMyAccountPage">account</a> to manage your information.
+                    You can go back to <a href="#" class="govuk-link govuk-link--no-visited-state" style="cursor:pointer" @onclick="GoToAnnualStatementsPage">your annual statements</a> or go to your <a href="#" class="govuk-link govuk-link--no-visited-state" style="cursor:pointer" @onclick="GoToMyAccountPage">account</a> to manage your information.
                 </p>
 
                 <p class="govuk-!-margin-top-8">
@@ -49,7 +48,6 @@
             </div>
         </div>
     </main>
-
 </div>
 
 <Footer />

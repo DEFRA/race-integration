@@ -31,7 +31,7 @@ namespace RACE2.Services
             {
                 return new List<UserDetail>();
             }
-            
+
         }
 
         public async Task<UserDetail> GetUserById(int id)
@@ -44,7 +44,7 @@ namespace RACE2.Services
             {
                 return new UserDetail();
             }
-            
+
         }
 
         public async Task<UserSpecificDto> GetUserByEmailID(string email)
@@ -57,7 +57,7 @@ namespace RACE2.Services
             {
                 return new UserSpecificDto();
             }
-           
+
         }
 
         public async Task<UserSpecificDto> GetUserWithRoles(string email)
@@ -70,7 +70,7 @@ namespace RACE2.Services
             {
                 return new UserSpecificDto();
             }
-            
+
         }
 
         //public async Task<UserDetail> CreateUser(UserDetail newuser)
@@ -83,7 +83,7 @@ namespace RACE2.Services
         //    {
         //        return new UserDetail();
         //    }
-            
+
         //}
 
         //public async Task<UserDetail> ValidateUser(UserDetail loginuser)
@@ -96,7 +96,7 @@ namespace RACE2.Services
         //    {
         //        return new UserDetail();
         //    }
-            
+
         //}
 
         public async Task<UserDetail> MatchUserWithEmailAndPasswordHash(string email, string passwordhash)
@@ -109,7 +109,7 @@ namespace RACE2.Services
             {
                 return new UserDetail();
             }
-            
+
         }
 
         public async Task<UserDetail> UpdatePasswordHashForUser(int id, string passwordhash)
@@ -122,9 +122,9 @@ namespace RACE2.Services
             {
                 return new UserDetail();
             }
-            
+
         }
-       
+
 
         public async Task<IEnumerable<FeatureFunction>> GetFeaturePermissionForRole(int roleid)
         {
@@ -136,7 +136,7 @@ namespace RACE2.Services
             {
                 return new List<FeatureFunction>();
             }
-            
+
         }
 
         public async Task<OrganisationDTO> GetOrganisationAddressbyId(int userId)
@@ -149,20 +149,20 @@ namespace RACE2.Services
             {
                 return new OrganisationDTO();
             }
-            
+
         }
 
         public async Task<int> UpdateFirstTimeUserLogin(string email, bool val)
         {
             try
             {
-                return await _userRepository.UpdateFirstTimeUserLogin(email,val);
+                return await _userRepository.UpdateFirstTimeUserLogin(email, val);
             }
             catch (Exception ex)
             {
                 return 0;
             }
-            
+
         }
 
         public async Task<int> ResetUserLockout(string email)
