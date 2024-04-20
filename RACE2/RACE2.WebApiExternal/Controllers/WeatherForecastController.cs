@@ -18,7 +18,7 @@ namespace RACE2.WebApiExternal.Controllers
             _serilogLogger = serilogLogger;
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {

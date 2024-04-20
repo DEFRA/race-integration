@@ -74,20 +74,21 @@ try
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
 
-    var authority = builder.Configuration["RACE2SecurityProviderURL"];
+    //var authority = builder.Configuration["RACE2SecurityProviderURL"];
+    var authority = "https://oidc.integration.account.gov.uk";
     JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
     builder.Services.AddAuthentication("Bearer")
                 .AddJwtBearer(jwtBearerOptions =>
                 {
                     jwtBearerOptions.Authority = authority;
                     jwtBearerOptions.RequireHttpsMetadata = false;
-                    jwtBearerOptions.Audience = "race2WebApi";
-                    jwtBearerOptions.TokenValidationParameters =
-                        new TokenValidationParameters
-                        {
-                            RoleClaimType = "role"
-                        };
-                    jwtBearerOptions.TokenValidationParameters.ValidateAudience = true;
+                    //jwtBearerOptions.Audience = "openid";
+                    //jwtBearerOptions.TokenValidationParameters =
+                    //    new TokenValidationParameters
+                    //    {
+                    //        RoleClaimType = "role"
+                    //    };
+                    jwtBearerOptions.TokenValidationParameters.ValidateAudience = false;
                     jwtBearerOptions.TokenValidationParameters.ValidateIssuer = true;
                     jwtBearerOptions.TokenValidationParameters.ValidateIssuerSigningKey = true;
                 });
