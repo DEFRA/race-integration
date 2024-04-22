@@ -20,7 +20,7 @@ variables:
   - name: dockerfile_frontendwebserver
     value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_FrontEndWebServer'
   - name: repository_webapiexternal
-    value: 'race2backendapiintegration'
+    value: 'race2webapiexternal'
   - name: dockerfile_webapiexternal
     value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_BackendAPIIntegration'  
   - name: containerRegistry
