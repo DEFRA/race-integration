@@ -1,6 +1,7 @@
-using RACE2.BackendAPIIntegration.Data;
-using RACE2.BackendAPIIntegration.Services;
+
+//using RACE2.BackendAPIIntegration.Services;
 using RACE2.DataAccess.Repository;
+
 using RACE2.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,8 +11,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 //builder.Services.AddDbContext<DbContextClass>();
-builder.Services.AddTransient<IFileService, FileService>();
-builder.Services.AddTransient<IFileRepository, FileRepository>();
+//builder.Services.AddTransient<IFileService, FileService>();
+//builder.Services.AddTransient<IFileRepository, FileRepository>();
 builder.Services.AddTransient<IRACEIntegrationRepository, RACEIntegrationRepository>();
 builder.Services.AddTransient<IRACEIntegrationService , RACEIntegrationService>();
 
