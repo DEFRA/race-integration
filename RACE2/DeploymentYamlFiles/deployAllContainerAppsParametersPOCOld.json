@@ -60,7 +60,7 @@
       "value": "pocracinfcr1401.azurecr.io/race2webapi"
     },
     "webapiexternalcontainerImage": {
-      "value":"pocracinfcr1401.azurecr.io/race2webapiexternal"
+      "value":"pocracinfcr1401.azurecr.io/race2backendapiintegration"
     } 
   }
 }
