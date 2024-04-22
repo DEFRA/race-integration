@@ -1,10 +1,34 @@
 
 //using RACE2.BackendAPIIntegration.Services;
+using Azure.Identity;
+using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using RACE2.DataAccess.Repository;
 
 using RACE2.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Configuration.AddAzureAppConfiguration(options =>
+{
+    //var connectionString = builder.Configuration["AZURE_APPCONFIGURATION_CONNECTIONSTRING"];
+    var azureAppConfigUrl = builder.Configuration["AzureAppConfigURL"];
+    var azureTenantId = builder.Configuration["AZURE_TENANT_ID"];
+    var managedIdenityClientId = builder.Configuration["ManagedIdenityClientId"];
+    var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions { TenantId = azureTenantId, ManagedIdentityClientId = managedIdenityClientId, VisualStudioTenantId = azureTenantId });
+
+    //options.Connect(connectionString)      
+    options.Connect(new Uri(azureAppConfigUrl), credential)
+    .ConfigureKeyVault(options =>
+    {
+        options.SetCredential(credential);
+    })
+    .ConfigureRefresh(refreshOptions =>
+            refreshOptions.Register("refreshAll", refreshAll: true))
+    .Select(KeyFilter.Any, LabelFilter.Null)
+    // Override with any configuration values specific to current hosting env
+    .Select(KeyFilter.Any, Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"))
+    .UseFeatureFlags();
+});
 // Add services to the container.
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -16,7 +40,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<IRACEIntegrationRepository, RACEIntegrationRepository>();
 builder.Services.AddTransient<IRACEIntegrationService , RACEIntegrationService>();
 
-
+builder.Services.AddApplicationInsightsTelemetry(options =>
+{
+    options.ConnectionString = builder.Configuration["AppInsightsConnectionString"];
+});
 var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

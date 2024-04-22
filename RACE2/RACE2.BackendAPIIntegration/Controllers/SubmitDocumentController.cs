@@ -11,10 +11,12 @@ namespace RACE2.BackendAPIIntegration.Controllers
     public class SubmitDocumentController : Controller
     {
         private readonly IRACEIntegrationService _uploadService;
+        private readonly ILogger<SubmitDocumentController> _logger;
 
-        public SubmitDocumentController(IRACEIntegrationService uploadService)
-        {
+        public SubmitDocumentController(IRACEIntegrationService uploadService,ILogger<SubmitDocumentController> logger)
+        { 
             _uploadService = uploadService;
+            _logger = logger;
         }
     
 
@@ -25,6 +27,7 @@ namespace RACE2.BackendAPIIntegration.Controllers
             if (submitS12Statement == null)
             {
                  integrationResponseModel.StatusCode = System.Net.HttpStatusCode.BadRequest;
+
                 return integrationResponseModel;
             }
 
