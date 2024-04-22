@@ -6,7 +6,7 @@ WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
 
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build[]
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 COPY ["RACE2.BackendAPIIntegration/RACE2.BackendAPIIntegration.csproj", "RACE2.BackendAPIIntegration/"]
 COPY ["RACE2.Infrastructure/RACE2.Infrastructure.csproj", "RACE2.Infrastructure/"]
