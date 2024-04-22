@@ -20,7 +20,7 @@ namespace RACE2APIExample.Controllers
             _logger = logger;
         }
 
-        
+        [Authorize]
         [HttpGet(Name = "GetWeatherForecast")]
         [ApiKeyAuthFilter]
         public IEnumerable<WeatherForecast> Get()

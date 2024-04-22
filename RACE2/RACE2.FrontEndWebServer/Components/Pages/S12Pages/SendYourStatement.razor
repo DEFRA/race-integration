@@ -26,13 +26,9 @@
                 {
                     <div class="govuk-form-group">
 
-                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-
-                            <div class="govuk-fieldset__heading">
-                                Who the statement will go to
-                            </div>
-
-                        </legend>
+                        <h1 class="govuk-fieldset__heading">
+                            Who the statement will go to
+                        </h1>
 
                         <p class="govuk-body govuk-!-padding-top-4">
                             The statement will go to the Environment Agency but you can use this service to send it to the undertaker too.
@@ -76,9 +72,9 @@
                         <EditForm Model="@_yesno" OnSubmit="GoToNextPage">
                             <div class="govuk-form-group govuk-!-margin-top-6 govuk-!-padding-top-8 govuk-!-margin-bottom-4">
                                 <fieldset class="govuk-fieldset" aria-describedby="send-to-undertaker">
-                                    <legend id="send-to-undertaker" class="govuk-fieldset__legend govuk-fieldset__legend govuk-fieldset__legend--m">
+                                    <h2 id="send-to-undertaker" class="govuk-fieldset__legend govuk-fieldset__legend govuk-fieldset__legend--m">
                                         Do you want to send the statement to the undertaker too?
-                                    </legend>
+                                    </h2>
 
                                     <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
                                         <InputRadioGroup Name="yesno" @bind-Value="_yesno.YesNoOptions">
@@ -122,9 +118,9 @@
 
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
 
-                        <div class="govuk-fieldset__heading">
+                        <h1 class="govuk-fieldset__heading">
                             Who the statement will go to
-                        </div>
+                        </h1>
 
                     </legend>
 
@@ -172,9 +168,9 @@
                         <div class="govuk-form-group govuk-form-group--error govuk-!-margin-top-8 govuk-!-margin-bottom-4">
                             <fieldset class="govuk-fieldset" aria-describedby="where-do-you-live-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                                    <div class="govuk-fieldset__heading">
+                                    <h2 class="govuk-fieldset__heading">
                                         Do you want to send the statement to the undertaker too?
-                                    </div>
+                                    </h2>
                                 </legend>
                                 <p id="where-do-you-live-error" class="govuk-error-message">
                                     <span class="govuk-visually-hidden">Error:</span>Select yes if you want to send the
