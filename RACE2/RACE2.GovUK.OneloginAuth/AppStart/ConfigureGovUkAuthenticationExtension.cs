@@ -67,6 +67,7 @@ namespace RACE2.GovUK.OneloginAuth.AppStart
                         // WARNING: This might change based on what type of Authentication Provider you are using
                         var accessToken = eventArgs.ProtocolMessage.AccessToken;
                         var idToken = eventArgs.ProtocolMessage.IdToken;
+                        var refreshToken= eventArgs.ProtocolMessage.RefreshToken;
                         eventArgs.Principal.AddIdentity(new ClaimsIdentity(
                             new Claim[]
                             {
@@ -74,6 +75,7 @@ namespace RACE2.GovUK.OneloginAuth.AppStart
                                 // We will use it in an Authentication Service for look up.
                                 new Claim("access_token", accessToken),
                                 new Claim("id_token", idToken),
+                                new Claim("refresh_token", refreshToken)
                             }
                         ));
 
