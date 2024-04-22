@@ -164,8 +164,9 @@
             var authState = await AuthenticationStateTask;
             var claims = authState.User.Claims.ToList();         
             UserEmail = claims.FirstOrDefault(c => c.Type.Equals(ClaimTypes.Email))?.Value;
-            var UserTelephoneNumber = claims.FirstOrDefault(c => c.Type.Equals(ClaimTypes.MobilePhone))?.Value;
-
+            var UserTelephoneNumber = claims.FirstOrDefault(c => c.Type.Equals(ClaimTypes.MobilePhone))?.Value; //check
+            var accessToken = authState.User.Claims.Where(a => a.Type == "access_token").FirstOrDefault()?.Value;
+            var identityToken = authState.User.Claims.Where(a => a.Type == "id_token").FirstOrDefault()?.Value; //check
             userDetails = await userService.GetUserByEmailID(UserEmail);
             var userIsValid = await userService.GetAuthorizedUser(UserEmail, UserTelephoneNumber);
             switch (userIsValid.IsValiduser)
