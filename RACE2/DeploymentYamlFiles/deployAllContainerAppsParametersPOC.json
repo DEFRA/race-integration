@@ -46,10 +46,7 @@
     },        
     "frontEndWebServerContainerAppName": {
       "value":"race2frontendwebserver"
-    },
-    "securityProviderContainerAppName": {
-      "value":"race2securityprovider"
-    },
+    },    
     "webApiContainerAppName": {
       "value":"race2webapi"
     },
@@ -58,10 +55,7 @@
     },
     "frontendwebservercontainerImage": {
       "value":"pocracinfcr1402.azurecr.io/race2frontendwebserver"
-    },
-    "securityprovidercontainerImage": {
-      "value": "pocracinfcr1402.azurecr.io/race2securityprovider"
-    },
+    },    
     "webapicontainerImage": {
       "value": "pocracinfcr1402.azurecr.io/race2webapi"
     },
