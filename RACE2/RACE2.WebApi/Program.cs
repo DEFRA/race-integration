@@ -1,4 +1,4 @@
-using HotChocolate.Execution.Processing;
+    using HotChocolate.Execution.Processing;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;

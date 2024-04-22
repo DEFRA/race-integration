@@ -1,33 +1,30 @@
-﻿{
-  "$schema": "http://json.schemastore.org/launchsettings.json",
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://localhost:60309",
-      "sslPort": 44395
-    }
-  },
+{
   "profiles": {
     "http": {
       "commandName": "Project",
-      "dotnetRunMessages": true,
       "launchBrowser": true,
       "launchUrl": "swagger",
-      "applicationUrl": "http://localhost:5033",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+        "ASPNETCORE_ENVIRONMENT": "Production",
+        "AZURE_TENANT_ID": "770a2450-0227-4c62-90c7-4e38537f1102",
+        "ManagedIdenityClientId": "ed22ed2e-445d-470f-989c-4f9d3d1f7a20",
+        "AzureAppConfigURL": "https://pocracinfac1401.azconfig.io/"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "http://localhost:5033"
     },
     "https": {
       "commandName": "Project",
-      "dotnetRunMessages": true,
       "launchBrowser": true,
       "launchUrl": "swagger",
-      "applicationUrl": "https://localhost:7211;http://localhost:5033",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+        "ASPNETCORE_ENVIRONMENT": "Production",
+        "AZURE_TENANT_ID": "770a2450-0227-4c62-90c7-4e38537f1102",
+        "ManagedIdenityClientId": "ed22ed2e-445d-470f-989c-4f9d3d1f7a20",
+        "AzureAppConfigURL": "https://pocracinfac1402.azconfig.io/"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "https://localhost:7211;http://localhost:5033"
     },
     "IIS Express": {
       "commandName": "IISExpress",
@@ -36,6 +33,26 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
+      "environmentVariables": {
+        "ASPNETCORE_HTTPS_PORTS": "8081",
+        "ASPNETCORE_HTTP_PORTS": "8080"
+      },
+      "publishAllPorts": true,
+      "useSSL": true
+    }
+  },
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:60309",
+      "sslPort": 44395
     }
   }
 }
