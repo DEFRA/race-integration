@@ -14,8 +14,10 @@
 <div class="govuk-width-container" style="min-height: 69vh;">
 
     <FeedbackBannerSignOut />
-    <a class="govuk-back-link" @onclick="GoToPrevPage" style="color:black">Back</a>
-    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+
+    <main class="govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+
+        <a class="govuk-back-link" @onclick="GoToPrevPage" style="color:black">Back</a>
 
         <div class="govuk-grid-row">
 
@@ -23,10 +25,10 @@
                 @if (!YesNoError)
                 {
                     <div class="govuk-form-group">
-                        <h1 class="govuk-fieldset__legend govuk-fieldset__legend--xl govuk-fieldset__heading">
+                        <h1 href="#main-header" class="govuk-heading-xl">
                             Who the statement will go to
                         </h1>
-                        <p class="govuk-body govuk-!-padding-top-4">
+                        <p class="govuk-body">
                             The statement will go to the Environment Agency but you can use this service to send it to the undertaker too.
                         </p>
                         <p class="govuk-body">
