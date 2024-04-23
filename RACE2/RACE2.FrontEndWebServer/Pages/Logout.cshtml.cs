@@ -37,6 +37,8 @@ namespace RACE2.FrontEndWebServer.Pages
                 HttpContext.Response.Cookies.Delete(cookie);
             }
             Response.Redirect("https://oidc.integration.account.gov.uk/logout");
+            //SignOut(OpenIdConnectDefaults.AuthenticationScheme, CookieAuthenticationDefaults.AuthenticationScheme);
+            //Response.Redirect("/");
         }
   }
 }
