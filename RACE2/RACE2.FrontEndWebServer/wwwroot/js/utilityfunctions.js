@@ -48,3 +48,7 @@ function initializeInactivityTimer(dotnetHelper) {
         }, 20*60*1000); 
     }    
 }
+
+function hideLink() {
+    document.getElementById("skip-to-main-content").style.cssText = "visibility:hidden;";
+}
