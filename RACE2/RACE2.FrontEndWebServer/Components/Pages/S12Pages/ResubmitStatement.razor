@@ -14,15 +14,18 @@
 <div class="govuk-width-container" style="min-height: 69vh;">
 
     <FeedbackBannerSignOut />
-    <a class="govuk-back-link" @onclick="GoToPrevPage" style="color:black">Back</a>
-    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+
+    <main class="govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+
+        <a class="govuk-back-link" @onclick="GoToPrevPage" style="color:black">Back</a>
+
         <div class="govuk-grid-row">
 
             <div class="govuk-grid-column-two-thirds">
                 <div class="govuk-label-wrapper">
-                    <label class="govuk-label govuk-label--xl" for="more-detail">
+                    <h1 href="#main-header" class="govuk-heading-xl">
                         Tell us what’s changed
-                    </label>
+                    </h1>
                 </div>
                 @if (!NoReasonError)
                 {

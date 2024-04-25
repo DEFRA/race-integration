@@ -27,8 +27,11 @@
 <div class="govuk-width-container" style="min-height: 69vh;">
 
     <FeedbackBannerSignOut />
-    <a class="govuk-back-link" @onclick="goback" style="color:black">Back</a>
-    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+
+    <main class="govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+
+        <a class="govuk-back-link" @onclick="goback" style="color:black">Back</a>
+
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-three-quarters">
                 @if (!FileUploadInProgress)
@@ -55,14 +58,13 @@
                             </div>
                             <div class="govuk-form-group govuk-form-group--error">
                                 <label class="govuk-label" for="file-upload">
-                                    <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">
+                                    <h1 href="#main-header" class="govuk-heading-xl govuk-!-margin-bottom-5">
                                         Upload your statement
                                     </h1>
                                 </label>
                                 <div id="file-upload-hint" class="govuk-hint">
                                     You can upload your statement as a PDF or Word document. It can be up to 30MB.
                                 </div>
-                                <br />
                                 @foreach (var error in ValidationErrors.Values)
                                 {
                                     <p id="file-upload-error" class="govuk-error-message">
@@ -75,12 +77,11 @@
                         {
                             <div class="govuk-form-group">
                                 <label class="govuk-label" for="file-upload">
-                                    <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">Upload your statement</h1>
+                                    <h1 href="#main-header" class="govuk-heading-xl govuk-!-margin-bottom-5">Upload your statement</h1>
                                 </label>
                                 <div id="file-upload-hint" class="govuk-hint">
                                     You can upload your statement as a PDF or Word document. It can be up to 30MB.
                                 </div>
-                                <br />
                             </div>
                         }
                         <InputFile id="file-upload" name="file-upload" class="govuk-file-upload" OnChange="OnInputFileChange" multiple />
