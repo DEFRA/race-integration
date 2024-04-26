@@ -17,6 +17,7 @@ using Microsoft.Data.SqlClient;
 using System.Reflection.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+using Microsoft.ApplicationInsights;
 
 namespace RACE2.DataAccess.Repository
 {
@@ -24,10 +25,12 @@ namespace RACE2.DataAccess.Repository
     {
         private readonly ILogger<UserRepository> _logger;
         private readonly IConfiguration _configuration;
-        public ReservoirRepository(IConfiguration configuration, ILogger<UserRepository> logger)
+        private readonly TelemetryClient _telemetryClient;
+        public ReservoirRepository(IConfiguration configuration, ILogger<UserRepository> logger,TelemetryClient telemetryClient)
         {
             _configuration = configuration;
             _logger = logger;
+            _telemetryClient = telemetryClient;
         }
 
         private IDbConnection Connection
@@ -131,6 +134,7 @@ namespace RACE2.DataAccess.Repository
 
                             return reservoir;
                         }, parameters, null, true, splitOn: "ReservoirId", commandType: CommandType.StoredProcedure);
+
                         return reservoirs.ToList();
                     }
                 }
@@ -1059,7 +1063,10 @@ namespace RACE2.DataAccess.Repository
                     var parameters = new DynamicParameters();
                     parameters.Add("@reservoirid", reservoirid, DbType.Int32);
                     var result = await conn.QueryAsync<DocumentTemplate>("sp_GetTemplateName", parameters, commandType: CommandType.StoredProcedure);
+                    _telemetryClient.TrackEvent("Download");
+                    _telemetryClient.Flush();
                     return result.FirstOrDefault();
+                   
                 }
             }
             catch (Exception ex)

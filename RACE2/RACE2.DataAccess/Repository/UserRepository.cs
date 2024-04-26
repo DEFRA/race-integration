@@ -17,6 +17,7 @@ using Microsoft.Extensions.Logging;
 using RACE2.Common;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
+using Microsoft.ApplicationInsights;
 
 
 namespace RACE2.DataAccess.Repository
@@ -25,10 +26,12 @@ namespace RACE2.DataAccess.Repository
     {
         private readonly ILogger<UserRepository> _logger;
         private readonly IConfiguration _configuration;
-        public UserRepository(IConfiguration configuration, ILogger<UserRepository> logger)
+        private readonly TelemetryClient _telemetryClient;
+        public UserRepository(IConfiguration configuration, ILogger<UserRepository> logger,TelemetryClient telemetryClient)
         {
             _configuration = configuration;
             _logger = logger;
+            _telemetryClient = telemetryClient;
         }
 
         private IDbConnection Connection
@@ -518,6 +521,13 @@ namespace RACE2.DataAccess.Repository
                     UserSpecificDto authorisedUser = new UserSpecificDto();
                     authorisedUser = userresult.FirstOrDefault();
                     authorisedUser.IsValiduser = validuser;
+                    _telemetryClient.Context.User.AuthenticatedUserId = email;
+
+                    
+                    _telemetryClient.TrackEvent("AuthorisedUser");
+
+                    _telemetryClient.Flush();
+                    
                     return authorisedUser;
 
                 }

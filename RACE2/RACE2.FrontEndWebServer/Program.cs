@@ -34,6 +34,7 @@ using RACE2.FrontEndWebServer;
 using RACE2.GovUK.OneloginAuth.Authentication;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.ApplicationInsights.AspNetCore.Extensions;
 
 Serilog.Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Information()
@@ -145,6 +146,11 @@ try
             ValidationAlgorithm = ValidationAlgorithm.HMACSHA256
         });
     builder.Services.AddScoped<INotification, RaceNotification>();
+
+
+    var options = new ApplicationInsightsServiceOptions { ConnectionString = builder.Configuration["AppInsightsConnectionString"] };
+
+        builder.Services.AddApplicationInsightsTelemetry(options: options);
 
     var app = builder.Build();
     app.UseForwardedHeaders();
