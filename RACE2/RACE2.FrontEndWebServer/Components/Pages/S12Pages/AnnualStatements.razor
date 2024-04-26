@@ -51,9 +51,9 @@
                         </h2>
                     </div>
                 </div>
-                <table class="govuk-table govuk-!-margin-top-4">
+                <table class="govuk-table govuk-!-margin-top-4" style="font-size:19px;padding:20px 20px 10px 0px">
                     <thead class="govuk-table__head" style="width:100%;">
-                        <tr class="govuk-table__row govuk-body govuk-!-font-size-16">
+                        <tr class="govuk-table__row govuk-body">
                             <th scope="col" class="govuk-table__header app-custom-class" width="35%">
                                 <button aria-label="Sort by Reservoir" type="button" class="icon-sort-button"
                                         onclick="@(() => SortTable("ReservoirName"))">
@@ -79,10 +79,10 @@
                         </tr>
                     </thead>
 
-                    <tbody class="govuk-table__body govuk-body govuk-!-font-size-16" style="width:100%;">
+                    <tbody class="govuk-table__body govuk-body" style="width:100%;">
                         @foreach (var reservoir in ReservoirsLinkedToUserForDisplay)
                         {
-                            <tr class="govuk-table__row" style="font-size:19px;padding:20px 20px 10px 0px">
+                            <tr class="govuk-table__row" >
                                 <td scope="row" class="govuk-table__cell" width="35%">@reservoir.ReservoirName</td>
                                 <td class="govuk-table__cell" width="35%">@reservoir.UndertakerName</td>
                                 <td class="govuk-table__cell" width="20%">@reservoir.SubmittedDateTime</td>
