@@ -1,0 +1,110 @@
+﻿@page "/enter-emails"
+@using Microsoft.AspNetCore.Authorization;
+@using RACE2.FrontEndWebServer.Components
+@inject NavigationManager NavigationManager
+
+<PageTitle>Enet Emails - Send a supervising engineer's annual statement - GOV.UK</PageTitle>
+
+<HeaderWithBanner />
+
+<div class="govuk-width-container" style="min-height: 70vh;">
+
+    <FeedbackBanner />
+
+    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+        <a class="govuk-back-link" @onclick="GoToPrevPage" style="color:black">Back</a>
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+                <EditForm Model="@EmailAddresses" OnSubmit="GoToNextPage">
+                    <div class="govuk-form-group">
+                        <fieldset class="govuk-fieldset">
+                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+                                <h1 class="govuk-fieldset__heading">
+                                    Enter the email addresses you want to send the statement to
+                                </h1>
+                            </legend>
+
+                            <p class="govuk-body govuk-!-padding-top-4">
+                                You can send your statement to one or more people.
+                            </p>
+
+                            <div class="govuk-form-group govuk-!-margin-top-8">
+                                <label class="govuk-label" for="email1">
+                                    Email address
+                                </label>
+                                <InputText class="govuk-input" id="email1" name="email1" autocomplete="email1" @bind-Value="@EmailAddresses[0]">
+                                </InputText>
+                            </div>
+
+                            <div class="govuk-form-group">
+                                <label class="govuk-label" for="email2">
+                                    Email address (optional)
+                                </label>
+                                <InputText class="govuk-input" id="email2" name="email2" autocomplete="email2" @bind-Value="@EmailAddresses[1]">
+                                </InputText>
+                            </div>
+
+                            <div class="govuk-form-group">
+                                <label class="govuk-label" for="email3">
+                                    Email address (optional)
+                                </label>
+                                <InputText class="govuk-input" id="email3" name="email3" autocomplete="email3" @bind-Value="@EmailAddresses[2]">
+                                </InputText>
+                            </div>
+
+                            <div class="govuk-form-group">
+                                <label class="govuk-label" for="email4">
+                                    Email address (optional)
+                                </label>
+                                <InputText class="govuk-input" id="email4" name="email4" autocomplete="email4" @bind-Value="@EmailAddresses[3]">
+                                </InputText>
+                            </div>
+
+                            <div class="govuk-form-group">
+                                <label class="govuk-label" for="email5">
+                                    Email address (optional)
+                                </label>
+                                <InputText class="govuk-input" id="email5" name="email5" autocomplete="email5" @bind-Value="@EmailAddresses[4]">
+                                </InputText>
+                            </div>
+
+                        </fieldset>
+                    </div>
+
+                    <button type="submit" draggable="false"
+                            class="govuk-button govuk-!-margin-top-3 govuk-!-margin-bottom-6 govuk-!-margin-right-4"
+                            data-module="govuk-button">
+                        Continue
+                    </button>
+                </EditForm>                
+            </div>
+        </div>
+    </main>
+</div>
+
+<Footer />
+
+@code {
+    public List<string> EmailAddresses { get; set; } = new List<string>();
+    protected async override Task OnInitializedAsync()
+    {
+        for (int i = 0; i < 5; i++)
+            EmailAddresses.Add("");
+        await base.OnInitializedAsync();
+    }
+
+    public async Task GoToNextPage()
+    {
+        var emails = EmailAddresses;
+        bool forceLoad = true;
+        NavigationManager.NavigateTo("/upload-your-template", forceLoad);
+            
+    }
+
+    public void GoToPrevPage()
+    {
+        bool forceLoad = true;
+        string pagelink = "/send-your-statement-to-someone-also";
+        NavigationManager.NavigateTo(pagelink, forceLoad);
+    }
+}

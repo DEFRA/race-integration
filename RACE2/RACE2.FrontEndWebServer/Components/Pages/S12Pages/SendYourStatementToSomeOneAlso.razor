@@ -148,7 +148,10 @@
             savedReportSubmissionData.Value.YesNoValueSomeoneAlso = _yesno.YesNoOptions.ToString();
             await ProtectedSessionStore.SetAsync("CurrentReportSubmissionData", savedReportSubmissionData.Value);
             bool forceLoad = false;
-            NavigationManager.NavigateTo("/upload-your-template", forceLoad);
+            if (_yesno.YesNoOptions.ToString()=="No")
+                NavigationManager.NavigateTo("/upload-your-template", forceLoad);
+            else
+                NavigationManager.NavigateTo("/enter-emails", forceLoad);
         }
     }
     public void GoToMyAccountPage()

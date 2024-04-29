@@ -62,7 +62,7 @@
                             <div class="govuk-form-group govuk-!-margin-top-6 govuk-!-padding-top-8 govuk-!-margin-bottom-4">
                                 <fieldset class="govuk-fieldset" aria-describedby="send-to-undertaker">
                                     <h2 id="send-to-undertaker" class="govuk-fieldset__legend govuk-fieldset__legend govuk-fieldset__legend--m">
-                                        Do you want to send the statement to the undertaker too?
+                                        Do you want to send the statement to @reportSubmissionData.UndertakerName?
                                     </h2>
 
                                     <div class="govuk-radios" data-module="govuk-radios">
@@ -107,7 +107,7 @@
                             <div class="govuk-error-summary__body">
                                 <ul class="govuk-list govuk-error-summary__list">
                                     <li>
-                                        <a href="#">Select yes if you want to send the statement to the undertaker too</a>
+                                        <a href="#">Select yes if you want to send the statement to @reportSubmissionData.UndertakerName or no</a>
                                     </li>
                                 </ul>
                             </div>
@@ -172,7 +172,7 @@
                                 </legend>
                                 <p id="where-do-you-live-error" class="govuk-error-message">
                                     <span class="govuk-visually-hidden">Error:</span>Select yes if you want to send the
-                                    statement to the undertaker too
+                                    statement to @reportSubmissionData.UndertakerName or no
                                 </p>
 
                                 <div class="govuk-radios" data-module="govuk-radios">
