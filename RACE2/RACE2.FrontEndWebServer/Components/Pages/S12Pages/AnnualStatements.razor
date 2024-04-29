@@ -51,38 +51,38 @@
                         </h2>
                     </div>
                 </div>
-                <table class="govuk-table govuk-!-margin-top-4">
+                <table class="govuk-table govuk-!-margin-top-4" style="font-size:19px;padding:20px 20px 10px 0px">
                     <thead class="govuk-table__head" style="width:100%;">
-                        <tr class="govuk-table__row govuk-body govuk-!-font-size-16">
+                        <tr class="govuk-table__row govuk-body">
                             <th scope="col" class="govuk-table__header app-custom-class" width="35%">
                                 <button aria-label="Sort by Reservoir" type="button" class="icon-sort-button"
                                         onclick="@(() => SortTable("ReservoirName"))">
-                                    Reservoir
+                                    <span style="font-size:19px;">Reservoir</span>
                                     <div class="icon-sort"></div>
                                 </button>
                             </th>
                             <th scope="col" class="govuk-table__header app-custom-class" width="35%">
                                 <button aria-label="Sort by Undertaker" type="button" class="icon-sort-button"
                                         onclick="@(() => SortTable("UndertakerName"))">
-                                    Undertaker
+                                    <span style="font-size:19px;">Undertaker</span>
                                     <div class="icon-sort"></div>
                                 </button>
                             </th>
                             <th scope="col" class="govuk-table__header app-custom-class" width="20%">
                                 <button aria-label="Sort by Due date" type="button" class="icon-sort-button"
                                         onclick="@(() => SortTable("SubmittedDateTime"))">
-                                    Last sent
+                                    <span style="font-size:19px;">Last sent</span>
                                     <div class="icon-sort"></div>
                                 </button>
                             </th>
-                            <th scope="col" class="govuk-table__header govuk-table__header" width="10%">Actions</th>
+                            <th scope="col" class="govuk-table__header govuk-table__header" width="10%" style="font-size:19px;">Actions</th>
                         </tr>
                     </thead>
 
-                    <tbody class="govuk-table__body govuk-body govuk-!-font-size-16" style="width:100%;">
+                    <tbody class="govuk-table__body govuk-body" style="width:100%;">
                         @foreach (var reservoir in ReservoirsLinkedToUserForDisplay)
                         {
-                            <tr class="govuk-table__row">
+                            <tr class="govuk-table__row" >
                                 <td scope="row" class="govuk-table__cell" width="35%">@reservoir.ReservoirName</td>
                                 <td class="govuk-table__cell" width="35%">@reservoir.UndertakerName</td>
                                 <td class="govuk-table__cell" width="20%">@reservoir.SubmittedDateTime</td>

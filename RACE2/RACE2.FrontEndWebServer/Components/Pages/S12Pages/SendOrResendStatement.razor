@@ -17,9 +17,9 @@
 
     <main class="govuk-main-wrapper--auto-spacing" id="main-content" role="main">
 
-        <a class="govuk-back-link" @onclick="GoToPrevPage" style="color:black">Back</a>
+        <a href="#" class="govuk-back-link" @onclick="GoToPrevPage" style="color:black;">Back</a>
 
-        <div class="govuk-grid-row">
+        <div class="govuk-grid-row" style="padding-top:40px;">
 
             <div class="govuk-grid-column-two-thirds">
                 @if (!SendResendError)
@@ -31,7 +31,7 @@
                         </h1>
 
                         <EditForm Model="@_sendresend" OnSubmit="GoToNextPage">
-                            <div class="govuk-radios govuk-!-margin-bottom-6" data-module="govuk-radios">
+                            <div class="govuk-radios govuk-!-margin-bottom-6" data-module="govuk-radios" style="margin-top:20px;">
                                 <fieldset class="govuk-fieldset">                                    
                                     <InputRadioGroup Name="sendresend" @bind-Value="_sendresend.SendRsendOptions">
                                         @foreach (Enum value in Enum.GetValues(typeof(SendResendClass.SendRsendEnum)))
