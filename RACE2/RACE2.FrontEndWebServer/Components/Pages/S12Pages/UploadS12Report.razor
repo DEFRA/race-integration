@@ -347,7 +347,7 @@
                             if (selectedFile.Size < uploadFileData.NotifyServiceFileAttachmentLimit)
                             {
                                 await _notificationService.SendConfirmationMailtoRST(RSTEmailAddress, reportSubmissionData.ReservoirRegName, bytes, userDetails.cFirstName + " " + userDetails.cLastName, reportSubmissionData.UndertakerName);
-                                if (reportSubmissionData.YesNoValue == "Yes")
+                                if (reportSubmissionData.YesNoValueUndertaker == "Yes")
                                 {
                                     await _notificationService.SendConfirmationMailWithAttachment(bytes, reportSubmissionData.UndertakerEmail, reportSubmissionData.ReservoirRegName);
                                 }
@@ -355,7 +355,7 @@
                             else
                             {
                                 var internalEmail = _config["InternalEmailAddress"];
-                                await _notificationService.SendInternalMail(internalEmail, reportSubmissionData.ReservoirRegName, reportSubmissionData.UndertakerEmail, reportSubmissionData.YesNoValue);
+                                await _notificationService.SendInternalMail(internalEmail, reportSubmissionData.ReservoirRegName, reportSubmissionData.UndertakerEmail, reportSubmissionData.YesNoValueUndertaker);
                             }
 
                             //Store the uploaded document information

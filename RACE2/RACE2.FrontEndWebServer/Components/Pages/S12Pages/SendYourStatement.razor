@@ -32,23 +32,14 @@
                             The statement will go to the Environment Agency but you can use this service to send it to the undertaker too.
                         </p>
                         <p class="govuk-body">
-                            These are the details we hold for the undertaker.
+                            Here are the contact details we hold for the undertaker of @reportSubmissionData.ReservoirRegName.
                         </p>
 
                         <dl class="govuk-summary-list govuk-!-margin-top-4">
-
+                            
                             <div class="govuk-summary-list__row">
                                 <dt class="govuk-summary-list__key">
-                                    Reservoir
-                                </dt>
-                                <dd class="govuk-summary-list__value govuk-!-padding-left-9" for="reservoir-named-undertaker"
-                                    id="reservoir-named-undertaker" name="reservoir-named-undertaker">
-                                    @reportSubmissionData.ReservoirRegName
-                                </dd>
-                            </div>
-                            <div class="govuk-summary-list__row">
-                                <dt class="govuk-summary-list__key">
-                                    Undertaker
+                                    Undertaker contact
                                 </dt>
                                 <dd class="govuk-summary-list__value govuk-!-padding-left-9" for="reservoir-named-undertaker"
                                     id="reservoir-named-undertaker" name="reservoir-named-undertaker">
@@ -74,16 +65,25 @@
                                         Do you want to send the statement to the undertaker too?
                                     </h2>
 
-                                    <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
+                                    <div class="govuk-radios" data-module="govuk-radios">
                                         <InputRadioGroup Name="yesno" @bind-Value="_yesno.YesNoOptions">
                                             @foreach (Enum value in Enum.GetValues(typeof(YesNoClass.YesNoEnum)))
                                             {
-                                                <div class="govuk-radios__item">
-                                                    <InputRadio Value="@value" class="govuk-radios__input" />
-                                                    <span class="govuk-label govuk-radios__label">@value</span>
-                                                </div>
+                                                if (value.ToString() == "UndertakerDetailsStatus")
+                                                {
+                                                    <div class="govuk-radios__item">
+                                                        <InputRadio Value="@value" class="govuk-radios__input" />
+                                                        <span class="govuk-label govuk-radios__label">No, the undertaker's details are wrong</span>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="govuk-radios__item">
+                                                        <InputRadio Value="@value" class="govuk-radios__input" />
+                                                        <span class="govuk-label govuk-radios__label">@value</span>
+                                                    </div>
+                                                }
                                             }
-
                                         </InputRadioGroup>
                                     </div>
                                 </fieldset>
@@ -175,14 +175,24 @@
                                     statement to the undertaker too
                                 </p>
 
-                                <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
+                                <div class="govuk-radios" data-module="govuk-radios">
                                     <InputRadioGroup Name="yesno" @bind-Value="_yesno.YesNoOptions">
                                         @foreach (Enum value in Enum.GetValues(typeof(YesNoClass.YesNoEnum)))
                                         {
-                                            <div class="govuk-radios__item">
-                                                <InputRadio Value="@value" class="govuk-radios__input" />
-                                                <span class="govuk-label govuk-radios__label">@value</span>
-                                            </div>
+                                            if (value.ToString() == "UndertakerDetailsStatus")
+                                            {
+                                                <div class="govuk-radios__item">
+                                                    <InputRadio Value="@value" class="govuk-radios__input" />
+                                                    <span class="govuk-label govuk-radios__label">No, the undertaker's details are wrong</span>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="govuk-radios__item">
+                                                    <InputRadio Value="@value" class="govuk-radios__input" />
+                                                    <span class="govuk-label govuk-radios__label">@value</span>
+                                                </div>
+                                            }                                            
                                         }
 
                                     </InputRadioGroup>
@@ -234,10 +244,17 @@
         {
             YesNoError = false;
             var savedReportSubmissionData = await ProtectedSessionStore.GetAsync<ReportSubmissionDataDto>("CurrentReportSubmissionData");
-            savedReportSubmissionData.Value.YesNoValue = _yesno.YesNoOptions.ToString();
+            savedReportSubmissionData.Value.YesNoValueUndertaker = _yesno.YesNoOptions.ToString();
             await ProtectedSessionStore.SetAsync("CurrentReportSubmissionData", savedReportSubmissionData.Value);
             bool forceLoad = false;
-            NavigationManager.NavigateTo("/upload-your-template", forceLoad);
+            if (_yesno.YesNoOptions.ToString() == "Yes")
+            {
+                NavigationManager.NavigateTo("/send-your-statement-to-someone-also", forceLoad);
+            }
+            else
+            {
+                NavigationManager.NavigateTo("/send-your-statement-to-someone-else", forceLoad);
+            }            
         }
     }
     public void GoToMyAccountPage()
@@ -261,7 +278,7 @@
 
     public class YesNoClass
     {
-        public enum YesNoEnum { Yes = 1, No = 2 };
+        public enum YesNoEnum { Yes = 1, No = 2, UndertakerDetailsStatus = 3 };
         public YesNoEnum YesNoOptions = 0;
     }
 }
