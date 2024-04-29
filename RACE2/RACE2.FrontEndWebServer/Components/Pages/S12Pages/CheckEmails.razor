@@ -1,0 +1,105 @@
+﻿@page "/check-emails"
+@using Microsoft.AspNetCore.Authorization;
+@using RACE2.FrontEndWebServer.Components
+@inject NavigationManager NavigationManager
+
+<PageTitle>Enet Emails - Send a supervising engineer's annual statement - GOV.UK</PageTitle>
+
+<HeaderWithBanner />
+
+<div class="govuk-width-container" style="min-height: 70vh;">
+
+    <FeedbackBanner />
+
+    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+        <a class="govuk-back-link" @onclick="GoToPrevPage" style="color:black">Back</a>
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+                <EditForm Model="@EmailAddresses" OnSubmit="GoToNextPage">
+                    <div class="govuk-form-group">
+                        <fieldset class="govuk-fieldset">
+                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+                                <h1 class="govuk-fieldset__heading">
+                                    Check email addresses
+                                </h1>
+                            </legend>
+                            <dl class="govuk-summary-list">
+
+                                <div class="govuk-summary-list__row">
+                                    <dt class="govuk-summary-list__key">
+                                        Email address 1
+                                    </dt>
+                                    <dd class="govuk-summary-list__value" for="reservoir-town-old" id="reservoir-town-old" name="reservoir-town-old">
+                                        sample1@sample1.co.uk
+                                    </dd>
+                                    <dd class="govuk-summary-list__actions">
+                                        <ul class="govuk-summary-list__actions-list">
+                                            <li class="govuk-summary-list__actions-list-item">
+                                                <a class="govuk-link govuk-link--no-visited-state" href="/Beta/Private/submit-s12/V19/change-email-1">Edit<span class="govuk-visually-hidden">email address</span></a>
+                                            </li>
+                                            <li class="govuk-summary-list__actions-list-item">
+                                                <a class="govuk-link govuk-link--no-visited-state" href="/Beta/Private/submit-s12/V19/delete-email">Delete<span class="govuk-visually-hidden">email address</span></a>
+                                            </li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                                <div class="govuk-summary-list__row">
+                                    <dt class="govuk-summary-list__key">
+                                        Email address 2
+                                    </dt>
+                                    <dd class="govuk-summary-list__value" for="reservoir-town-old" id="reservoir-town-old" name="reservoir-town-old">
+                                        sample2@sample2.co.uk
+                                    </dd>
+                                    <dd class="govuk-summary-list__actions">
+                                        <ul class="govuk-summary-list__actions-list">
+                                            <li class="govuk-summary-list__actions-list-item">
+                                                <a class="govuk-link govuk-link--no-visited-state" href="#">Edit<span class="govuk-visually-hidden">email address</span></a>
+                                            </li>
+                                            <li class="govuk-summary-list__actions-list-item">
+                                                <a class="govuk-link govuk-link--no-visited-state" href="#">Delete<span class="govuk-visually-hidden">email address</span></a>
+                                            </li>
+                                        </ul>
+                                    </dd>
+
+                                </div>
+                            </dl>
+                        </fieldset>
+                    </div>
+
+                    <button type="submit" draggable="false"
+                            class="govuk-button govuk-!-margin-top-3 govuk-!-margin-bottom-6 govuk-!-margin-right-4"
+                            data-module="govuk-button">
+                        Continue
+                    </button>
+                </EditForm>                
+            </div>
+        </div>
+    </main>
+</div>
+
+<Footer />
+
+@code {
+    public List<string> EmailAddresses { get; set; } = new List<string>();
+    protected async override Task OnInitializedAsync()
+    {
+        for (int i = 0; i < 5; i++)
+            EmailAddresses.Add("");
+        await base.OnInitializedAsync();
+    }
+
+    public async Task GoToNextPage()
+    {
+        var emails = EmailAddresses;
+        bool forceLoad = true;
+        NavigationManager.NavigateTo("/upload-your-template", forceLoad);
+            
+    }
+
+    public void GoToPrevPage()
+    {
+        bool forceLoad = true;
+        string pagelink = "/enter-emails";
+        NavigationManager.NavigateTo(pagelink, forceLoad);
+    }
+}
