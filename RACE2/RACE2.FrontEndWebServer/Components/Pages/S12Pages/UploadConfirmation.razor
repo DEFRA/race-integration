@@ -58,14 +58,14 @@
 @code {
     [CascadingParameter]
     public Task<AuthenticationState> AuthenticationStateTask { get; set; }
-
+    public List<string> EmailAddresses { get; set; } = new List<string>();
     public ReportSubmissionDataDto reportSubmissionData { get; set; } = new ReportSubmissionDataDto();
 
     protected async override Task OnInitializedAsync()
     {
         var reportSubmissionDataState = await ProtectedSessionStore.GetAsync<ReportSubmissionDataDto>("CurrentReportSubmissionData");
         reportSubmissionData = reportSubmissionDataState.Value;
-
+        EmailAddresses = reportSubmissionData.EmailListToSomeOne;
         AuthenticationState authState = await AuthenticationStateTask;// AuthenticationStateProvider.GetAuthenticationStateAsync();
         await InvokeAsync(() =>
              {
