@@ -9,23 +9,23 @@
 @attribute [Authorize]
 
 <PageTitle>Statement sent - Send a supervising engineer's annual statement - GOV.UK</PageTitle>
-
+<a id="skip-to-main-content" href="#main-content4" class="govuk-skip-link" data-module="govuk-skip-link" onclick="hideLink();">Skip to main content</a>
 <HeaderWithBanner />
 
 <div class="govuk-width-container" style="min-height: 69vh;">
 
     <FeedbackBannerSignOut />
 
-    <main class="govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+    <main class="govuk-main-wrapper--auto-spacing" role="main">
 
-        <a class="govuk-back-link" @onclick="GoToPrevPage" style="color:black">Back</a>
+        <a id="main-content4" class="govuk-back-link" @onclick="GoToPrevPage" style="color:black">Back</a>
 
         <div class="govuk-grid-row">
 
             <div class="govuk-grid-column-two-thirds">
 
                 <div class="govuk-panel govuk-panel--confirmation">
-                    <h1 href="#main-header" class="govuk-panel__title">
+                    <h1 class="govuk-panel__title">
                         Statement for @reportSubmissionData.ReservoirRegName sent
                     </h1>
                 </div>

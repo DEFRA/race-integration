@@ -51,5 +51,7 @@ function initializeInactivityTimer(dotnetHelper) {
 
 function hideLink() {
     //document.body.scrollTo(0, document.getElementsByTagName("h1").offsetTop);
-    document.getElementById("skip-to-main-content").style.cssText = "visibility:hidden;";    
+    document.getElementById("skip-to-main-content").style.cssText = "visibility:hidden;"; 
+    return false;
 }
+
