@@ -1,7 +1,10 @@
 ﻿@page "/check-emails"
 @using Microsoft.AspNetCore.Authorization;
 @using RACE2.FrontEndWebServer.Components
+@using RACE2.Dto
+@using System.Text.RegularExpressions;
 @inject NavigationManager NavigationManager
+@inject ProtectedSessionStorage ProtectedSessionStore
 
 <PageTitle>Enet Emails - Send a supervising engineer's annual statement - GOV.UK</PageTitle>
 
@@ -81,19 +84,84 @@
 
 @code {
     public List<string> EmailAddresses { get; set; } = new List<string>();
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthenticationStateTask { get; set; }
+    private bool IsEmail1Empty { get; set; } = false;
+    private bool IsValidEmail1 { get; set; } = false;
+    private bool IsValidEmail2 { get; set; } = false;
+    private bool IsValidEmail3 { get; set; } = false;
+    private bool IsValidEmail4 { get; set; } = false;
+    private bool IsValidEmail5 { get; set; } = false;
+    private bool EmailError { get; set; } = false;
+    public ReportSubmissionDataDto reportSubmissionData { get; set; } = new ReportSubmissionDataDto();
     protected async override Task OnInitializedAsync()
     {
-        for (int i = 0; i < 5; i++)
-            EmailAddresses.Add("");
+        AuthenticationState authState = await AuthenticationStateTask;// AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var reportSubmissionDataState = await ProtectedSessionStore.GetAsync<ReportSubmissionDataDto>("CurrentReportSubmissionData");
+        reportSubmissionData = reportSubmissionDataState.Value;
+        EmailAddresses = reportSubmissionData.EmailListToSomeOne;
+        await InvokeAsync(() =>
+            {
+                StateHasChanged();
+            });
         await base.OnInitializedAsync();
     }
 
     public async Task GoToNextPage()
     {
-        var emails = EmailAddresses;
-        bool forceLoad = true;
-        NavigationManager.NavigateTo("/upload-your-template", forceLoad);
-            
+        EmailError = false;
+        IsValidEmail1 = false;
+        IsValidEmail2 = false;
+        IsValidEmail3 = false;
+        IsValidEmail4 = false;
+        IsValidEmail5 = false;
+
+        if (String.IsNullOrEmpty(EmailAddresses[0]))
+        {
+            IsEmail1Empty = true;
+            EmailError = true;
+        }
+        else
+        {
+            if (!IsValid(EmailAddresses[0]))
+            {
+                IsValidEmail1 = true;
+                EmailError = true;
+            }
+            if (!String.IsNullOrEmpty(EmailAddresses[1]) && !IsValid(EmailAddresses[1]))
+            {
+                IsValidEmail2 = true;
+                EmailError = true;
+            }
+            if (!String.IsNullOrEmpty(EmailAddresses[2]) && !IsValid(EmailAddresses[2]))
+            {
+                IsValidEmail3 = true;
+                EmailError = true;
+            }
+            if (!String.IsNullOrEmpty(EmailAddresses[3]) && !IsValid(EmailAddresses[3]))
+            {
+                IsValidEmail4 = true;
+                EmailError = true;
+            }
+            if (!String.IsNullOrEmpty(EmailAddresses[4]) && !IsValid(EmailAddresses[4]))
+            {
+                IsValidEmail5 = true;
+                EmailError = true;
+            }
+        }
+        if (!EmailError) {
+            reportSubmissionData.EmailListToSomeOne = EmailAddresses;
+            await ProtectedSessionStore.SetAsync("CurrentReportSubmissionData", reportSubmissionData);
+            bool forceLoad = true;
+            NavigationManager.NavigateTo("/upload-your-template", forceLoad);
+        }
+        else
+        {
+            await InvokeAsync(() =>
+           {
+               StateHasChanged();
+           });
+        }
     }
 
     public void GoToPrevPage()
@@ -101,5 +169,12 @@
         bool forceLoad = true;
         string pagelink = "/enter-emails";
         NavigationManager.NavigateTo(pagelink, forceLoad);
+    }
+
+    private static bool IsValid(string email)
+    {
+        string regex = @"^[^@\s]+@[^@\s]+\.(com|net|org|gov)$";
+
+        return Regex.IsMatch(email, regex, RegexOptions.IgnoreCase);
     }
 }

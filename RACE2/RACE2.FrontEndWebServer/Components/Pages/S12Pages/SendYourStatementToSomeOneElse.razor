@@ -146,6 +146,7 @@
             YesNoError = false;
             var savedReportSubmissionData = await ProtectedSessionStore.GetAsync<ReportSubmissionDataDto>("CurrentReportSubmissionData");
             savedReportSubmissionData.Value.YesNoValueSomeoneElse = _yesno.YesNoOptions.ToString();
+            savedReportSubmissionData.Value.YesNoValueSomeoneAlso = "0";
             await ProtectedSessionStore.SetAsync("CurrentReportSubmissionData", savedReportSubmissionData.Value);
             bool forceLoad = false;
             if (_yesno.YesNoOptions.ToString() == "No")
