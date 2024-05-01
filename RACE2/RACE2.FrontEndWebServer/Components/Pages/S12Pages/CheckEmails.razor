@@ -42,10 +42,10 @@
                                         <dd class="govuk-summary-list__actions">
                                             <ul class="govuk-summary-list__actions-list">
                                                 <li class="govuk-summary-list__actions-list-item">
-                                                    <a class="govuk-link govuk-link--no-visited-state" href="/Beta/Private/submit-s12/V19/change-email-1">Edit<span class="govuk-visually-hidden">email address</span></a>
+                                                    <a class="govuk-link govuk-link--no-visited-state" href="#" @onclick="()=>EditEmail(email)" @onclick:preventDefault>Edit<span class="govuk-visually-hidden">email address</span></a>
                                                 </li>
                                                 <li class="govuk-summary-list__actions-list-item">
-                                                    <a class="govuk-link govuk-link--no-visited-state" href="/Beta/Private/submit-s12/V19/delete-email">Delete<span class="govuk-visually-hidden">email address</span></a>
+                                                    <a class="govuk-link govuk-link--no-visited-state" href="#" @onclick="()=>DeleteEmail(email)" @onclick:preventDefault>Delete<span class="govuk-visually-hidden">email address</span></a>
                                                 </li>
                                             </ul>
                                         </dd>
@@ -86,7 +86,7 @@
         AuthenticationState authState = await AuthenticationStateTask;// AuthenticationStateProvider.GetAuthenticationStateAsync();
         var reportSubmissionDataState = await ProtectedSessionStore.GetAsync<ReportSubmissionDataDto>("CurrentReportSubmissionData");
         reportSubmissionData = reportSubmissionDataState.Value;
-        EmailAddresses = reportSubmissionData.EmailListToSomeOne;
+        EmailAddresses = reportSubmissionData.EmailListToSomeOne.Where(e=>!String.IsNullOrEmpty(e)).Select(e=>e).ToList();
         await InvokeAsync(() =>
             {
                 StateHasChanged();
@@ -155,6 +155,24 @@
     {
         bool forceLoad = true;
         string pagelink = "/enter-emails";
+        NavigationManager.NavigateTo(pagelink, forceLoad);
+    }
+
+    private async Task EditEmail(string Email)
+    {
+        reportSubmissionData.EmailEditDelete = Email;
+        await ProtectedSessionStore.SetAsync("CurrentReportSubmissionData", reportSubmissionData);
+        bool forceLoad = true;
+        string pagelink = "/edit-email";
+        NavigationManager.NavigateTo(pagelink, forceLoad);
+    }
+
+    private async Task DeleteEmail(string Email)
+    {
+        reportSubmissionData.EmailEditDelete = Email;
+        await ProtectedSessionStore.SetAsync("CurrentReportSubmissionData", reportSubmissionData);
+        bool forceLoad = true;
+        string pagelink = "/delete-email";
         NavigationManager.NavigateTo(pagelink, forceLoad);
     }
 

@@ -471,7 +471,8 @@
                 YesNoValueUndertaker = "",
                 YesNoValueSomeoneAlso = "",
                 YesNoValueSomeoneElse = "",
-                EmailListToSomeOne = new List<String>()
+                EmailListToSomeOne = new List<String>(),
+                EmailEditDelete = ""
             };
         await ProtectedSessionStore.SetAsync("CurrentReportSubmissionData", reportSubmissionData);
         bool forceLoad = false;

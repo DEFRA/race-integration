@@ -20,6 +20,7 @@ namespace RACE2.Dto
         public string SendResendValue { get; set; } = "";
         public string ResubmitReason { get; set; } = "";
         public List<String> EmailListToSomeOne {get;set;} =new List<String>();
+        public string EmailEditDelete { get; set; } = "";
 
     }
 }
