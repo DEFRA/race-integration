@@ -293,7 +293,7 @@
                         fileUploadViewModels.Add(fileUploadViewModel);
 
 
-                        var res = await reservoirService.InsertSubmissionDetails(insertStatus);
+                        //var res = await reservoirService.InsertSubmissionDetails(insertStatus);
                         // if (savedReportSubmissionData.Value.SendResendValue=="Send")
                         // {
                         //     updatedStatus = await reservoirService.UpdateReservoirStatus(Int32.Parse(reportSubmissionData.ReservoirId), userDetails.Id, "Sent", false, "");
@@ -358,6 +358,7 @@
                                 await _notificationService.SendInternalMail(internalEmail, reportSubmissionData.ReservoirRegName, reportSubmissionData.UndertakerEmail, reportSubmissionData.YesNoValueUndertaker);
                             }
 
+                            var res = await reservoirService.InsertSubmissionDetails(insertStatus);
                             //Store the uploaded document information
                             documentDTO.SubmissionId = res.Id;
                             await reservoirService.InsertDocumentRelatedTable(Int32.Parse(reportSubmissionData.ReservoirId), res.Id, docID);

@@ -16,11 +16,11 @@
 
     <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
         <a class="govuk-back-link" @onclick="GoToPrevPage" style="color:black">Back</a>
-        @if (!EmailError)
+        @if (ValidationErrors.Count == 0)
         {
             <div class="govuk-grid-row">
-                <div class="govuk-grid-column-two-thirds">
-                <EditForm Model="@EmailAddresses" OnSubmit="GoToNextPage">
+                <div class="govuk-grid-column-three-quarters">
+                    <EditForm Model="@EmailAddresses" OnSubmit="GoToNextPage">
                     <div class="govuk-form-group">
                         <fieldset class="govuk-fieldset">
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
@@ -82,7 +82,7 @@
                         Continue
                     </button>
                 </EditForm>                
-            </div>
+                </div>
             </div>
         }
         else
@@ -92,17 +92,20 @@
                     <h2 class="govuk-error-summary__title">
                         There is a problem
                     </h2>
-                    <div class="govuk-error-summary__body">
-                        <ul class="govuk-list govuk-error-summary__list">
-                            <li>
-                                <a href="#">First Email is empty or one or more Emails are not in correct format</a>
-                            </li>
-                        </ul>
-                    </div>
+                    @foreach (var error in ValidationErrors.Values)
+                    {
+                        <div class="govuk-error-summary__body">
+                            <ul class="govuk-list govuk-error-summary__list">
+                                <li>
+                                    <a href="#">@error</a>
+                                </li>
+                            </ul>
+                        </div>
+                    }
                 </div>
             </div>
             <div class="govuk-grid-row">
-                <div class="govuk-grid-column-two-thirds">
+                <div class="govuk-grid-column-three-quarters">
                     <EditForm Model="@EmailAddresses" OnSubmit="GoToNextPage">
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
@@ -178,13 +181,7 @@
     public Task<AuthenticationState> AuthenticationStateTask { get; set; }
     public List<string> EmailAddresses { get; set; } = new List<string>();
     public ReportSubmissionDataDto reportSubmissionData { get; set; } = new ReportSubmissionDataDto();
-    private bool IsEmail1Empty { get; set; } = false;
-    private bool IsValidEmail1 { get; set; } = false;
-    private bool IsValidEmail2 { get; set; } = false;
-    private bool IsValidEmail3 { get; set; } = false;
-    private bool IsValidEmail4 { get; set; } = false;
-    private bool IsValidEmail5 { get; set; } = false;
-    private bool EmailError { get; set; } = false;
+    public Dictionary<string, string> ValidationErrors = new Dictionary<string, string>();
 
     protected async override Task OnInitializedAsync()
     {
@@ -202,47 +199,32 @@
 
     public async Task GoToNextPage()
     {
-        EmailError = false;
-        IsValidEmail1 = false;
-        IsValidEmail2 = false;
-        IsValidEmail3 = false;
-        IsValidEmail4 = false;
-        IsValidEmail5 = false;
-
+        ValidationErrors.Clear();
         if (String.IsNullOrEmpty(EmailAddresses[0]))
         {
-            IsEmail1Empty = true;
-            EmailError = true;
+            ValidationErrors.Add("Email1Empty", "First Email cannot be empty");            
         }
-        else
+        if (!String.IsNullOrEmpty(EmailAddresses[0]) && !IsValid(EmailAddresses[0]))
         {
-            if (!IsValid(EmailAddresses[0]))
-            {
-                IsValidEmail1 = true;
-                EmailError = true;
-            }
-            if (!String.IsNullOrEmpty(EmailAddresses[1]) && !IsValid(EmailAddresses[1]))
-            {
-                IsValidEmail2 = true;
-                EmailError = true;
-            }
-            if (!String.IsNullOrEmpty(EmailAddresses[2]) && !IsValid(EmailAddresses[2]))
-            {
-                IsValidEmail3 = true;
-                EmailError = true;
-            }
-            if (!String.IsNullOrEmpty(EmailAddresses[3]) && !IsValid(EmailAddresses[3]))
-            {
-                IsValidEmail4 = true;
-                EmailError = true;
-            }
-            if (!String.IsNullOrEmpty(EmailAddresses[4]) && !IsValid(EmailAddresses[4]))
-            {
-                IsValidEmail5 = true;
-                EmailError = true;
-            }
+            ValidationErrors.Add("Email1Invalid", "First Email is not in right email format");
         }
-        if (!EmailError)
+        if (!String.IsNullOrEmpty(EmailAddresses[1]) && !IsValid(EmailAddresses[1]))
+        {
+            ValidationErrors.Add("Email2Invalid", "Second Email is not in right email format");
+        }
+        if (!String.IsNullOrEmpty(EmailAddresses[2]) && !IsValid(EmailAddresses[2]))
+        {
+            ValidationErrors.Add("Email3Invalid", "Third Email is not in right email format");
+        }
+        if (!String.IsNullOrEmpty(EmailAddresses[3]) && !IsValid(EmailAddresses[3]))
+        {
+            ValidationErrors.Add("Email4Invalid", "Fourth Email is not in right email format");
+        }
+        if (!String.IsNullOrEmpty(EmailAddresses[4]) && !IsValid(EmailAddresses[4]))
+        {
+            ValidationErrors.Add("Email5Invalid", "Fifth Email is not in right email format");
+        }  
+        if (ValidationErrors.Count == 0)
         {
             reportSubmissionData.EmailListToSomeOne = EmailAddresses;
             await ProtectedSessionStore.SetAsync("CurrentReportSubmissionData", reportSubmissionData);
