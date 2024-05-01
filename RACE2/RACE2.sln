@@ -33,8 +33,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.MultipleTriggerAzureF
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.BackendAPIIntegration", "RACE2.BackendAPIIntegration\RACE2.BackendAPIIntegration.csproj", "{FDDB1596-2EC3-4893-BA27-A1DEC2F2B527}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.AzFnAppWithMultiTriggeredFunctions", "RACE2.AzFnAppWithMultiTriggeredFunctions\RACE2.AzFnAppWithMultiTriggeredFunctions.csproj", "{12DD928D-4763-41B0-AADF-509EF3D08594}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.SecurityProvider", "RACE2.SecurityProvider\RACE2.SecurityProvider.csproj", "{22216E3D-2951-4C1C-BBF2-4F71F6425E53}"
 EndProject
 Global
@@ -103,10 +101,6 @@ Global
 		{FDDB1596-2EC3-4893-BA27-A1DEC2F2B527}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FDDB1596-2EC3-4893-BA27-A1DEC2F2B527}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FDDB1596-2EC3-4893-BA27-A1DEC2F2B527}.Release|Any CPU.Build.0 = Release|Any CPU
-		{12DD928D-4763-41B0-AADF-509EF3D08594}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{12DD928D-4763-41B0-AADF-509EF3D08594}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{12DD928D-4763-41B0-AADF-509EF3D08594}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{12DD928D-4763-41B0-AADF-509EF3D08594}.Release|Any CPU.Build.0 = Release|Any CPU
 		{22216E3D-2951-4C1C-BBF2-4F71F6425E53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{22216E3D-2951-4C1C-BBF2-4F71F6425E53}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22216E3D-2951-4C1C-BBF2-4F71F6425E53}.Release|Any CPU.ActiveCfg = Release|Any CPU
