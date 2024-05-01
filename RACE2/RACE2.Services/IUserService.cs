@@ -32,5 +32,7 @@ namespace RACE2.Services
 
         public Task<UserSpecificDto> GetAuthorizedUser(string email, string mobilenumber);
 
+        public Task<int> InsertUndertakerEmails(List<SubmissionEmailNotification> submissionEmailNotification);
+
     }
 }
