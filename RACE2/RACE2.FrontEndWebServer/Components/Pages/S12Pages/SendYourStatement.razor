@@ -8,14 +8,13 @@
 @attribute [Authorize]
 
 <PageTitle>Who the statement will go to - Send a supervising engineer's annual statement - GOV.UK</PageTitle>
-
 <HeaderWithBanner />
 
 <div class="govuk-width-container" style="min-height: 69vh;">
 
     <FeedbackBannerSignOut />
 
-    <main class="govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+    <main id="main-content" class="govuk-main-wrapper--auto-spacing" role="main">
 
         <a class="govuk-back-link" @onclick="GoToPrevPage" style="color:black">Back</a>
 
@@ -25,7 +24,7 @@
                 @if (!YesNoError)
                 {
                     <div class="govuk-form-group">
-                        <h1 href="#main-header" class="govuk-heading-xl">
+                        <h1 class="govuk-heading-xl">
                             Who the statement will go to
                         </h1>
                         <p class="govuk-body">
