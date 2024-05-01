@@ -203,6 +203,18 @@ namespace RACE2.Services
             }
         }
 
+        public async Task<int> InsertUndertakerEmails(List<SubmissionEmailNotification> submissionEmailNotification)
+        {
+            try
+            {
+                return await _userRepository.InsertUndertakerEmails(submissionEmailNotification);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
     }
 
 }
