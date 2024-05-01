@@ -29,8 +29,8 @@
         </div>
         <CustomErrorBoundary Context="exception" @ref="_customErrorBoundary">
             <ChildContent>  
-                <a id="skip-to-main-content" href="#main-content" class="govuk-skip-link" onclick="hideLink();return false;">Skip to main content</a>
-                @Body
+@*                 <a id="skip-to-main-content" href="#main-content" class="govuk-skip-link" onclick="hideLink();return false;">Skip to main content</a>
+ *@                @Body
             </ChildContent>
             <ErrorContent Context="exception">
                 <ApplicationErrorPage ErrorMessage="@exception.Message" />
