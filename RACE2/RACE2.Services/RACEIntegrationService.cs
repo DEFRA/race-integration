@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static RACE2.Dto.DocumentDetails;
 
 namespace RACE2.Services
 {
@@ -18,6 +19,18 @@ namespace RACE2.Services
         public async Task<IntegrationResponseModel> GetEngineerReservoirByUUID(string uuid)
         {
             return await _IntegrationRepository.GetEngineerReservoirByUUID(uuid);
+        }
+
+        public async Task<IntegrationResponseModel> SubmitDocumentToBackend(SubmitS12Statement submitS12Statement)
+        {
+            try
+            {
+                return await _IntegrationRepository.SubmitDocumentToBackend(submitS12Statement);
+            }
+            catch
+            {
+                throw;
+            }
         }
     }
 }
