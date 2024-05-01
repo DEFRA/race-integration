@@ -21,14 +21,13 @@
 @attribute [Authorize]
 
 <PageTitle>Upload your statement - Send a supervising engineer's annual statement - GOV.UK</PageTitle>
-
 <HeaderWithBanner />
 
 <div class="govuk-width-container" style="min-height: 69vh;">
 
     <FeedbackBannerSignOut />
 
-    <main class="govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+    <main id="main-content" class="govuk-main-wrapper--auto-spacing" role="main">
 
         <a class="govuk-back-link" @onclick="goback" style="color:black">Back</a>
 
@@ -58,7 +57,7 @@
                             </div>
                             <div class="govuk-form-group govuk-form-group--error">
                                 <label class="govuk-label" for="file-upload">
-                                    <h1 href="#main-header" class="govuk-heading-xl govuk-!-margin-bottom-5">
+                                    <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">
                                         Upload your statement
                                     </h1>
                                 </label>
@@ -293,7 +292,7 @@
                         fileUploadViewModels.Add(fileUploadViewModel);
 
 
-                        var res = await reservoirService.InsertSubmissionDetails(insertStatus);
+                        //var res = await reservoirService.InsertSubmissionDetails(insertStatus);
                         // if (savedReportSubmissionData.Value.SendResendValue=="Send")
                         // {
                         //     updatedStatus = await reservoirService.UpdateReservoirStatus(Int32.Parse(reportSubmissionData.ReservoirId), userDetails.Id, "Sent", false, "");
@@ -358,6 +357,7 @@
                                 await _notificationService.SendInternalMail(internalEmail, reportSubmissionData.ReservoirRegName, reportSubmissionData.UndertakerEmail, reportSubmissionData.YesNoValue);
                             }
 
+                            var res = await reservoirService.InsertSubmissionDetails(insertStatus);
                             //Store the uploaded document information
                             documentDTO.SubmissionId = res.Id;
                             await reservoirService.InsertDocumentRelatedTable(Int32.Parse(reportSubmissionData.ReservoirId), res.Id, docID);
