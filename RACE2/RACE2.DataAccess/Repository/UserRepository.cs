@@ -527,5 +527,35 @@ namespace RACE2.DataAccess.Repository
                 return null;
             }
         }
+
+        public async Task<int> InsertUndertakerEmails(List<SubmissionEmailNotification> submissionEmailNotification)
+        {
+
+            _logger.LogInformation("Adding Undertaker Email ");
+            try
+            {
+
+                using (var conn = Connection)
+                {
+                    foreach (var email in submissionEmailNotification)
+                    {
+                        var parameters = new DynamicParameters();
+                        parameters.Add("@submissionstatusid", email.SubmissionStatusId, DbType.Int32);
+                        parameters.Add("@email", email.Email, DbType.String);
+                        parameters.Add("@isoverrideprimarycontact", email.IsOverridePrimaryContact, DbType.Boolean);
+                        parameters.Add("@contactType", email.ContactType, DbType.String);
+                        var result = await conn.ExecuteAsync("sp_InsertUndertakerEmails", parameters, commandType: CommandType.StoredProcedure);
+                    }
+
+                    return 1;
+
+                }
+            }
+           
+            catch (SqlException e)
+            {
+                throw new Exception($"Failed to insert undertaker email: {e.Message}", e);
+            }
+        }
     }
 }
