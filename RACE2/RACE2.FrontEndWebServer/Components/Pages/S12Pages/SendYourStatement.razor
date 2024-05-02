@@ -134,16 +134,7 @@
 
                             <div class="govuk-summary-list__row">
                                 <dt class="govuk-summary-list__key">
-                                    Reservoir
-                                </dt>
-                                <dd class="govuk-summary-list__value govuk-!-padding-left-9" for="reservoir-named-undertaker"
-                                    id="reservoir-named-undertaker" name="reservoir-named-undertaker">
-                                    @reportSubmissionData.ReservoirRegName
-                                </dd>
-                            </div>
-                            <div class="govuk-summary-list__row">
-                                <dt class="govuk-summary-list__key">
-                                    Undertaker
+                                    Undertaker Contact
                                 </dt>
                                 <dd class="govuk-summary-list__value govuk-!-padding-left-9" for="reservoir-named-undertaker"
                                     id="reservoir-named-undertaker" name="reservoir-named-undertaker">
@@ -166,7 +157,7 @@
                             <fieldset class="govuk-fieldset" aria-describedby="where-do-you-live-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                                     <h2 class="govuk-fieldset__heading">
-                                        Do you want to send the statement to the undertaker too?
+                                        Do you want to send the statement to @reportSubmissionData.UndertakerName?
                                     </h2>
                                 </legend>
                                 <p id="where-do-you-live-error" class="govuk-error-message">
