@@ -2,6 +2,7 @@
 @using Microsoft.AspNetCore.Authorization;
 @using RACE2.FrontEndWebServer.Components
 @using RACE2.Dto
+@using System.Text.RegularExpressions;
 @inject NavigationManager NavigationManager
 @inject ProtectedSessionStorage ProtectedSessionStore
 
@@ -13,25 +14,65 @@
 
     <FeedbackBanner />
 
-    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" style="padding-top:20px;padding-bottom:20px; role=" main">
         <a class="govuk-back-link" @onclick="GoToPrevPage" style="color:black">Back</a>
         <div class="govuk-grid-row">
-            <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-column-three-fourths">
                 <h1 class="govuk-heading-xl">Edit email address</h1>
-
-                <EditForm Model="@emailEditDelete" OnSubmit="UpdateEmail">
-                    <div class="govuk-form-group">
-                        <label class="govuk-label govuk-label--m" for="email-1">
-                            Email address
-                        </label>
-                        <InputText class="govuk-textarea govuk-!-margin-top-6" id="more-detail" name="moreDetail" rows="5" Value-describedby="more-detail-hint" @bind-Value="emailEditDelete"></InputText>
+                @if (IsValidEmail)
+                {
+                    <EditForm Model="@emailEditDelete" OnSubmit="UpdateEmail">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-label--m" for="email-1">
+                                Email address
+                            </label>
+                            <InputText class="govuk-textarea govuk-!-margin-top-6" id="more-detail" name="moreDetail" rows="5" Value-describedby="more-detail-hint" @bind-Value="emailEditDelete"></InputText>
+                        </div>
+                        <button type="submit" draggable="false"
+                        class="govuk-button govuk-!-margin-top-3 govuk-!-margin-bottom-6 govuk-!-margin-right-4"
+                        data-module="govuk-button">
+                            Continue
+                        </button>
+                    </EditForm>
+                }
+                else
+                {
+                    <div class="govuk-error-summary" data-module="govuk-error-summary">
+                        <div role="alert">
+                            <h2 class="govuk-error-summary__title">
+                                There is a problem
+                            </h2>
+                            <div class="govuk-error-summary__body">
+                                <ul class="govuk-list govuk-error-summary__list">
+                                    <li>
+                                        <a href="#">Email cannot be empty and must be in valid email format</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                    <button type="submit" draggable="false"
-                            class="govuk-button govuk-!-margin-top-3 govuk-!-margin-bottom-6 govuk-!-margin-right-4"
-                            data-module="govuk-button">
-                        Continue
-                    </button>
-                </EditForm>
+                    <EditForm Model="@emailEditDelete" OnSubmit="UpdateEmail">
+                        <div class="govuk-form-group govuk-form-group--error govuk-!-margin-top-8 govuk-!-margin-bottom-4">
+                        <fieldset class="govuk-fieldset" aria-describedby="where-do-you-live-error">
+                            <div class="govuk-form-group">
+                                <label class="govuk-label govuk-label--m" for="email-1">
+                                    Email address
+                                </label>
+                                <p id="where-do-you-live-error" class="govuk-error-message">
+                                    <span class="govuk-visually-hidden">Error:</span>
+                                    Email cannot be empty and must be in valid email format
+                                </p>
+                                <InputText class="govuk-textarea govuk-!-margin-top-6" id="more-detail" name="moreDetail" rows="5" Value-describedby="more-detail-hint" @bind-Value="emailEditDelete"></InputText>
+                            </div>
+                        </fieldset>
+                        </div>
+                        <button type="submit" draggable="false"
+                                class="govuk-button govuk-!-margin-top-3 govuk-!-margin-bottom-6 govuk-!-margin-right-4"
+                                data-module="govuk-button">
+                            Continue
+                        </button>
+                    </EditForm>
+                }
             </div>
         </div>
     </main>
@@ -41,12 +82,18 @@
 
 @code {
     public ReportSubmissionDataDto reportSubmissionData { get; set; } = new ReportSubmissionDataDto();
+    public List<string> EmailAddresses { get; set; } = new List<string>();
     private string emailEditDelete { get; set; } = "";
+    private bool IsValidEmail { get; set; } = true;
+    private string emailEditDeleteOriginal { get; set; } = "";
+
     protected async override Task OnInitializedAsync()
     {
         var reportSubmissionDataState = await ProtectedSessionStore.GetAsync<ReportSubmissionDataDto>("CurrentReportSubmissionData");
         reportSubmissionData = reportSubmissionDataState.Value;
-        emailEditDelete = reportSubmissionData.EmailEditDelete;
+        EmailAddresses = reportSubmissionData.EmailListToSomeOne.Where(e => !String.IsNullOrEmpty(e)).Select(e => e).ToList();
+        emailEditDeleteOriginal = emailEditDelete = reportSubmissionData.EmailEditDelete;
+        IsValidEmail = true;
         await base.OnInitializedAsync();
     }
 
@@ -59,6 +106,30 @@
 
     public void UpdateEmail()
     {
-        var changedEmail = emailEditDelete;
+        if (!String.IsNullOrEmpty(emailEditDelete) && !IsValid(emailEditDelete))
+        {
+            IsValidEmail = false;
+        }
+        if (IsValidEmail)
+        {
+            if (emailEditDelete != emailEditDeleteOriginal)
+            {
+
+            }
+            bool forceLoad = true;
+            string pagelink = "/check-emails";
+            NavigationManager.NavigateTo(pagelink, forceLoad);
+        }
+        else
+        {
+            StateHasChanged();
+        }
     }
- }
+
+    private static bool IsValid(string email)
+    {
+        string regex = @"^[^@\s]+@[^@\s]+\.(com|net|org|gov)$";
+
+        return Regex.IsMatch(email, regex, RegexOptions.IgnoreCase);
+    }
+}

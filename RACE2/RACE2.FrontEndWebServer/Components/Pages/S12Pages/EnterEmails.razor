@@ -14,7 +14,7 @@
 
     <FeedbackBanner />
 
-    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" style="padding-top:20px;padding-bottom:20px; role=" main">
         <a class="govuk-back-link" @onclick="GoToPrevPage" style="color:black">Back</a>
         @if (ValidationErrors.Count == 0)
         {
@@ -107,8 +107,8 @@
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-three-quarters">
                     <EditForm Model="@EmailAddresses" OnSubmit="GoToNextPage">
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset">
+                        <div class="govuk-form-group govuk-form-group--error govuk-!-margin-top-8 govuk-!-margin-bottom-4">
+                            <fieldset class="govuk-fieldset" aria-describedby="where-do-you-live-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
                                     <h1 class="govuk-fieldset__heading">
                                         Enter the email addresses you want to send the statement to

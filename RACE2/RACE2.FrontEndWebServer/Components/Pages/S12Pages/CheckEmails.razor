@@ -14,9 +14,11 @@
 
     <FeedbackBanner />
 
-    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" style="padding-top:20px;padding-bottom:20px; role=" main">
         <a class="govuk-back-link" @onclick="GoToPrevPage" style="color:black">Back</a>
-        <div class="govuk-grid-row">
+        @if (ValidationErrors.Count == 0)
+        {
+            <div class="govuk-grid-row">
             <div class="govuk-grid-column-two-thirds">
                 <EditForm Model="@EmailAddresses" OnSubmit="GoToNextPage">
                     <div class="govuk-form-group">
@@ -63,7 +65,76 @@
                     </button>
                 </EditForm>                
             </div>
-        </div>
+            </div>
+        }
+        else
+        {
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title">
+                        There is a problem
+                    </h2>
+                    @foreach (var error in ValidationErrors.Values)
+                    {
+                        <div class="govuk-error-summary__body">
+                            <ul class="govuk-list govuk-error-summary__list">
+                                <li>
+                                    <a href="#">@error</a>
+                                </li>
+                            </ul>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-two-thirds">
+                    <EditForm Model="@EmailAddresses" OnSubmit="GoToNextPage">
+                        <div class="govuk-form-group govuk-form-group--error govuk-!-margin-top-8 govuk-!-margin-bottom-4">
+                            <fieldset class="govuk-fieldset" aria-describedby="where-do-you-live-error">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+                                    <h1 class="govuk-fieldset__heading">
+                                        Check email addresses
+                                    </h1>
+                                </legend>
+                                @{
+                                    int emailcount = 1;
+                                }
+                                @foreach (var email in EmailAddresses)
+                                {
+                                    <dl class="govuk-summary-list">
+                                        <div class="govuk-summary-list__row">
+                                            <dt class="govuk-summary-list__key">
+                                                Email address @emailcount
+                                            </dt>
+                                            <dd class="govuk-summary-list__value" for="reservoir-town-old" id="reservoir-town-old" name="reservoir-town-old">
+                                                @email
+                                            </dd>
+                                            <dd class="govuk-summary-list__actions">
+                                                <ul class="govuk-summary-list__actions-list">
+                                                    <li class="govuk-summary-list__actions-list-item">
+                                                        <a class="govuk-link govuk-link--no-visited-state" href="#" @onclick="()=>EditEmail(email)" @onclick:preventDefault>Edit<span class="govuk-visually-hidden">email address</span></a>
+                                                    </li>
+                                                    <li class="govuk-summary-list__actions-list-item">
+                                                        <a class="govuk-link govuk-link--no-visited-state" href="#" @onclick="()=>DeleteEmail(email)" @onclick:preventDefault>Delete<span class="govuk-visually-hidden">email address</span></a>
+                                                    </li>
+                                                </ul>
+                                            </dd>
+                                        </div>
+                                    </dl>
+                                    emailcount++;
+                                }
+                            </fieldset>
+                        </div>
+
+                        <button type="submit" draggable="false"
+                                class="govuk-button govuk-!-margin-top-3 govuk-!-margin-bottom-6 govuk-!-margin-right-4"
+                                data-module="govuk-button">
+                            Continue
+                        </button>
+                    </EditForm>
+                </div>
+            </div>
+        }
     </main>
 </div>
 
@@ -73,14 +144,9 @@
     public List<string> EmailAddresses { get; set; } = new List<string>();
     [CascadingParameter]
     public Task<AuthenticationState> AuthenticationStateTask { get; set; }
-    private bool IsEmail1Empty { get; set; } = false;
-    private bool IsValidEmail1 { get; set; } = false;
-    private bool IsValidEmail2 { get; set; } = false;
-    private bool IsValidEmail3 { get; set; } = false;
-    private bool IsValidEmail4 { get; set; } = false;
-    private bool IsValidEmail5 { get; set; } = false;
-    private bool EmailError { get; set; } = false;
+    public Dictionary<string, string> ValidationErrors = new Dictionary<string, string>();
     public ReportSubmissionDataDto reportSubmissionData { get; set; } = new ReportSubmissionDataDto();
+
     protected async override Task OnInitializedAsync()
     {
         AuthenticationState authState = await AuthenticationStateTask;// AuthenticationStateProvider.GetAuthenticationStateAsync();
@@ -96,47 +162,24 @@
 
     public async Task GoToNextPage()
     {
-        EmailError = false;
-        IsValidEmail1 = false;
-        IsValidEmail2 = false;
-        IsValidEmail3 = false;
-        IsValidEmail4 = false;
-        IsValidEmail5 = false;
-
+        ValidationErrors.Clear();
         if (String.IsNullOrEmpty(EmailAddresses[0]))
         {
-            IsEmail1Empty = true;
-            EmailError = true;
+            ValidationErrors.Add("Email1Empty", "First Email cannot be empty");
         }
-        else
+        if (!String.IsNullOrEmpty(EmailAddresses[0]) && !IsValid(EmailAddresses[0]))
         {
-            if (!IsValid(EmailAddresses[0]))
-            {
-                IsValidEmail1 = true;
-                EmailError = true;
-            }
-            if (!String.IsNullOrEmpty(EmailAddresses[1]) && !IsValid(EmailAddresses[1]))
-            {
-                IsValidEmail2 = true;
-                EmailError = true;
-            }
-            if (!String.IsNullOrEmpty(EmailAddresses[2]) && !IsValid(EmailAddresses[2]))
-            {
-                IsValidEmail3 = true;
-                EmailError = true;
-            }
-            if (!String.IsNullOrEmpty(EmailAddresses[3]) && !IsValid(EmailAddresses[3]))
-            {
-                IsValidEmail4 = true;
-                EmailError = true;
-            }
-            if (!String.IsNullOrEmpty(EmailAddresses[4]) && !IsValid(EmailAddresses[4]))
-            {
-                IsValidEmail5 = true;
-                EmailError = true;
-            }
+            ValidationErrors.Add("Email1Invalid", "First Email is not in right email format");
         }
-        if (!EmailError) {
+        for (int i = 1; i < EmailAddresses.Count(); i++)
+        {            
+            if (!String.IsNullOrEmpty(EmailAddresses[i]) && !IsValid(EmailAddresses[i]))
+            {
+                ValidationErrors.Add("Email"+i.ToString()+"Invalid", "Email "+i.ToString()+" is not in right email format");
+            }            
+        }
+        if (ValidationErrors.Count == 0)
+        {
             reportSubmissionData.EmailListToSomeOne = EmailAddresses;
             await ProtectedSessionStore.SetAsync("CurrentReportSubmissionData", reportSubmissionData);
             bool forceLoad = true;

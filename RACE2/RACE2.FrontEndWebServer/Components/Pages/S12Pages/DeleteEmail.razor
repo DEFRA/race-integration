@@ -13,10 +13,10 @@
 
     <FeedbackBanner />
 
-    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" style="padding-top:20px;padding-bottom:20px;" role="main">
         <a class="govuk-back-link" @onclick="GoToPrevPage" style="color:black">Back</a>
         <div class="govuk-grid-row">
-            <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-column-three-fourths">
                 @if (!YesNoError)
                 {
                 <EditForm Model="@_yesno" OnSubmit="DeleteSelectedEmail">
@@ -28,7 +28,6 @@
                                     Delete @emailEditDelete
                                 </h1>
                             </legend>
-
                             <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
                                 <InputRadioGroup Name="yesno" @bind-Value="_yesno.YesNoOptions">
                                     @foreach (Enum value in Enum.GetValues(typeof(YesNoClass.YesNoEnum)))
@@ -40,7 +39,6 @@
                                     }
                                 </InputRadioGroup>
                             </div>
-
                         </fieldset>
                     </div>
                     <button type="submit" draggable="false"
@@ -60,22 +58,25 @@
                             <div class="govuk-error-summary__body">
                                 <ul class="govuk-list govuk-error-summary__list">
                                     <li>
-                                        <a href="#">Select yes if you want to send the statement to someone else as well or no</a>
+                                        <a href="#">Select yes if you want to delete the email or no</a>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                     <EditForm Model="@_yesno" OnSubmit="DeleteSelectedEmail">
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" aria-describedby="">
+                        <div class="govuk-form-group govuk-form-group--error govuk-!-margin-top-8 govuk-!-margin-bottom-4">
+                            <fieldset class="govuk-fieldset" aria-describedby="where-do-you-live-error">
                                 <legend id="which-idea"
                                         class="govuk-fieldset__legend govuk-fieldset__legend govuk-fieldset__legend--xl govuk-!-margin-bottom-4">
                                     <h1 class="govuk-fieldset__heading">
                                         Delete @emailEditDelete
                                     </h1>
                                 </legend>
-
+                                <p id="where-do-you-live-error" class="govuk-error-message">
+                                    <span class="govuk-visually-hidden">Error:</span>
+                                    Select yes if you want to delete the email or no
+                                </p>
                                 <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
                                     <InputRadioGroup Name="yesno" @bind-Value="_yesno.YesNoOptions">
                                         @foreach (Enum value in Enum.GetValues(typeof(YesNoClass.YesNoEnum)))
@@ -87,7 +88,6 @@
                                         }
                                     </InputRadioGroup>
                                 </div>
-
                             </fieldset>
                         </div>
                         <button type="submit" draggable="false"
@@ -136,6 +136,9 @@
         {
             YesNoError = false;
             var changedEmail = emailEditDelete;
+            bool forceLoad = true;
+            string pagelink = "/check-emails";
+            NavigationManager.NavigateTo(pagelink, forceLoad);
         }
     }
 
