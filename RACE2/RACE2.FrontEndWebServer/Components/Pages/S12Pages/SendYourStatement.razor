@@ -106,7 +106,7 @@
                             <div class="govuk-error-summary__body">
                                 <ul class="govuk-list govuk-error-summary__list">
                                     <li>
-                                        <a href="#">Select yes if you want to send the statement to @reportSubmissionData.UndertakerName</a>
+                                        <a href="#" onclick="return false;">Select yes if you want to send the statement to @reportSubmissionData.UndertakerName</a>
                                     </li>
                                 </ul>
                             </div>
@@ -160,10 +160,13 @@
                                         Do you want to send the statement to @reportSubmissionData.UndertakerName?
                                     </h2>
                                 </legend>
-                                <p id="where-do-you-live-error" class="govuk-error-message">
-                                    <span class="govuk-visually-hidden">Error:</span>Select yes if you want to send the
-                                    statement to @reportSubmissionData.UndertakerName
-                                </p>
+                                <div class="govuk-error-summary__body">
+                                    <ul class="govuk-list govuk-error-summary__list">
+                                        <li>
+                                            <a href="#" onclick="return false;">Select yes if you want to send the statement to @reportSubmissionData.UndertakerName</a>
+                                        </li>
+                                    </ul>
+                                </div>
 
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <InputRadioGroup Name="yesno" @bind-Value="_yesno.YesNoOptions">
