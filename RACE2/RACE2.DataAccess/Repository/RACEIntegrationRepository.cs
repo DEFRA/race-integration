@@ -96,7 +96,7 @@ namespace RACE2.DataAccess.Repository
                 };
                 RestClient client = new RestClient(options);
                 var request = new RestRequest("submission", Method.Post);
-                request.AddHeader("RACE_REST_API_KEY", "X-1WqgoknrasibGI3f9vFSCAU6aEPU3H");
+                request.AddHeader("RACE_REST_API_KEY", _configuration["DocumentumAPIKey"]);
                 request.RequestFormat = DataFormat.Json;
                 request.AddJsonBody(body);
                 RestResponse response = await client.ExecuteAsync(request);
