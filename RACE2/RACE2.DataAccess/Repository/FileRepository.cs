@@ -31,45 +31,45 @@ namespace RACE2.BackendAPIIntegration.Services
 
         public async Task PostFileAsync(IFormFile fileData, FileType fileType)
         {
-            try
-            {
-                var fileDetails = new DocumentDetails()
-                {
-                    name = fileData.FileName,
-                    document_date = DateTime.Now.ToShortDateString(),
-                     protective_marking = "Official"
-                    //ID = 0,
-                    //FileName = fileData.FileName,
-                    //FileType = fileType,
-                };
+            //try
+            //{
+            //    var fileDetails = new DocumentDetails()
+            //    {
+            //        name = fileData.FileName,
+            //        document_date = DateTime.Now.ToShortDateString(),
+            //         protective_marking = "Official"
+            //        //ID = 0,
+            //        //FileName = fileData.FileName,
+            //        //FileType = fileType,
+            //    };
 
-                using (var stream = new MemoryStream())
-                {
-                    fileData.CopyTo(stream);
-                    fileDetails.content = stream.ToArray();
-                }
+            //    using (var stream = new MemoryStream())
+            //    {
+            //        fileData.CopyTo(stream);
+            //        fileDetails.content = stream.ToArray();
+            //    }
 
-                using(var conn = Connection)
-                {
+            //    using(var conn = Connection)
+            //    {
 
-                    var query = "INSERT INTO FileDetails (FileName,FileData) VALUES (@name,@content)"
-               + "SELECT CAST(SCOPE_IDENTITY() as int)";
+            //        var query = "INSERT INTO FileDetails (FileName,FileData) VALUES (@name,@content)"
+            //   + "SELECT CAST(SCOPE_IDENTITY() as int)";
 
-                    var parameters = new DynamicParameters();
-                    parameters.Add("name", fileDetails.name, DbType.String);
-                    parameters.Add("content", fileDetails.content, DbType.Binary);
-                   // parameters.Add("type", 1, DbType.Int32);
+            //        var parameters = new DynamicParameters();
+            //        parameters.Add("name", fileDetails.name, DbType.String);
+            //        parameters.Add("content", fileDetails.content, DbType.Binary);
+            //       // parameters.Add("type", 1, DbType.Int32);
 
-                    int id = await conn.ExecuteScalarAsync<int>(query, fileDetails);
+            //        int id = await conn.ExecuteScalarAsync<int>(query, fileDetails);
 
-                }
+            //    }
 
                 
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            //}
+            //catch (Exception)
+            //{
+            //    throw;
+            //}
         }
 
     }

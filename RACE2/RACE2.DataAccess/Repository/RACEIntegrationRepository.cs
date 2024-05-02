@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static RACE2.Dto.DocumentDetails;
+
 
 namespace RACE2.DataAccess.Repository
 {
@@ -81,11 +81,11 @@ namespace RACE2.DataAccess.Repository
         }
 
 
-        public async Task<IntegrationResponseModel> SubmitDocumentToBackend(SubmitS12Statement submitS12Statement)
+        public async Task<IntegrationResponseModel> SubmitDocumentToBackend(AnnualSubmissionDocumentDetails submitS12Statement)
         {
 
             IntegrationResponseModel integrationResponseModel = new IntegrationResponseModel();
-            string baseuri = "https://eadev.synapps-solutions.com/integration-poc/";
+            string baseuri = "https://eadev.synapps-solutions.com/EA-API/";
             _logger.LogInformation("Entering the document details");
             try
             {
@@ -95,7 +95,8 @@ namespace RACE2.DataAccess.Repository
                     RemoteCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true
                 };
                 RestClient client = new RestClient(options);
-                var request = new RestRequest("submission/written-statement", Method.Post);
+                var request = new RestRequest("submission", Method.Post);
+                request.AddHeader("RACE_REST_API_KEY", "X-1WqgoknrasibGI3f9vFSCAU6aEPU3H");
                 request.RequestFormat = DataFormat.Json;
                 request.AddJsonBody(body);
                 RestResponse response = await client.ExecuteAsync(request);

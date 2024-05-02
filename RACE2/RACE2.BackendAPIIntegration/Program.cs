@@ -1,5 +1,7 @@
 using Microsoft.OpenApi.Models;
 using RACE2.BackendAPIIntegration.Authentication;
+using RACE2.DataAccess.Repository;
+using RACE2.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +37,9 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 builder.Services.AddScoped<ApiKeyAuthFilter>();
+
+builder.Services.AddTransient<IRACEIntegrationRepository, RACEIntegrationRepository>();
+builder.Services.AddTransient<IRACEIntegrationService, RACEIntegrationService>();
 
 var app = builder.Build();
 

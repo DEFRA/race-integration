@@ -2,7 +2,7 @@
 using RACE2.BackendAPIIntegration.Services;
 using RACE2.Dto;
 using RACE2.Services;
-using static RACE2.Dto.DocumentDetails;
+
 
 namespace RACE2.BackendAPIIntegration.Controllers
 {
@@ -21,7 +21,7 @@ namespace RACE2.BackendAPIIntegration.Controllers
     
 
         [HttpPost("SubmitStatement")]
-        public async Task<IntegrationResponseModel> SubmitStatement([FromForm]SubmitS12Statement submitS12Statement)
+        public async Task<IntegrationResponseModel> SubmitStatement([FromBody]AnnualSubmissionDocumentDetails submitS12Statement)
         {
             IntegrationResponseModel integrationResponseModel = new IntegrationResponseModel();
             if (submitS12Statement == null)
