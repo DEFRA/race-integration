@@ -82,14 +82,14 @@
                     <EditForm Model="@_sendresend" OnSubmit="GoToNextPage">
                         <div class="govuk-form-group govuk-form-group--error govuk-!-margin-top-8 govuk-!-margin-bottom-4">
                             <fieldset class="govuk-fieldset" aria-describedby="where-do-you-live-error">
-                                <div class="govuk-radios__item" data-module="govuk-radios">
-                                    <div class="govuk-error-summary__body">
-                                        <ul class="govuk-list govuk-error-summary__list">
-                                            <li>
-                                                <a href="#">Select if you want to send or resend a statement</a>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                <div class="govuk-error-summary__body">
+                                    <ul class="govuk-list govuk-error-summary__list">
+                                        <li>
+                                            <a href="#">Select if you want to send or resend a statement</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="govuk-radios" data-module="govuk-radios">
                                     <InputRadioGroup Name="sendresend" @bind-Value="_sendresend.SendRsendOptions">
                                         @foreach (Enum value in Enum.GetValues(typeof(SendResendClass.SendRsendEnum)))
                                         {
