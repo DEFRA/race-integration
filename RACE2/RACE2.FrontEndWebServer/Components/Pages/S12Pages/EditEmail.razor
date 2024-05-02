@@ -26,11 +26,10 @@
                             <label class="govuk-label govuk-label--m" for="email-1">
                                 Email address
                             </label>
-                            <InputText class="govuk-textarea govuk-!-margin-top-6" id="more-detail" name="moreDetail" rows="5" Value-describedby="more-detail-hint" @bind-Value="emailEditDelete"></InputText>
+                            <InputText class="govuk-textarea govuk-!-margin-top-6 govuk-input govuk-!-width-two-thirds" id="edit-emaill" name="edit-emaill" Value-describedby="edit-emaill-hint" @bind-Value="@emailEditDelete"></InputText>
                         </div>
                         <button type="submit" draggable="false"
-                        class="govuk-button govuk-!-margin-top-3 govuk-!-margin-bottom-6 govuk-!-margin-right-4"
-                        data-module="govuk-button">
+                            class="govuk-button govuk-!-margin-top-3 govuk-!-margin-bottom-6 govuk-!-margin-right-4" data-module="govuk-button">
                             Continue
                         </button>
                     </EditForm>
@@ -45,7 +44,7 @@
                             <div class="govuk-error-summary__body">
                                 <ul class="govuk-list govuk-error-summary__list">
                                     <li>
-                                        <a href="#">Email cannot be empty and must be in valid email format</a>
+                                        <a href="#" onclick="return false;">Email cannot be empty and must be in valid format</a>
                                     </li>
                                 </ul>
                             </div>
@@ -58,17 +57,19 @@
                                 <label class="govuk-label govuk-label--m" for="email-1">
                                     Email address
                                 </label>
-                                <p id="where-do-you-live-error" class="govuk-error-message">
-                                    <span class="govuk-visually-hidden">Error:</span>
-                                    Email cannot be empty and must be in valid email format
-                                </p>
-                                <InputText class="govuk-textarea govuk-!-margin-top-6" id="more-detail" name="moreDetail" rows="5" Value-describedby="more-detail-hint" @bind-Value="emailEditDelete"></InputText>
+                                <div class="govuk-error-summary__body">
+                                    <ul class="govuk-list govuk-error-summary__list">
+                                        <li>
+                                            <a href="#" onclick="return false;"> Email cannot be empty and must be in valid format</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <InputText class="govuk-textarea govuk-!-margin-top-6 govuk-input govuk-!-width-two-thirds" id="edit-emaill" name="edit-emaill" Value-describedby="edit-emaill-hint" @bind-Value="emailEditDelete"></InputText>
                             </div>
                         </fieldset>
                         </div>
                         <button type="submit" draggable="false"
-                                class="govuk-button govuk-!-margin-top-3 govuk-!-margin-bottom-6 govuk-!-margin-right-4"
-                                data-module="govuk-button">
+                            class="govuk-button govuk-!-margin-top-3 govuk-!-margin-bottom-6 govuk-!-margin-right-4" data-module="govuk-button">
                             Continue
                         </button>
                     </EditForm>
@@ -104,7 +105,7 @@
         NavigationManager.NavigateTo(pagelink, forceLoad);
     }
 
-    public void UpdateEmail()
+    public async Task UpdateEmail()
     {
         if (!String.IsNullOrEmpty(emailEditDelete) && !IsValid(emailEditDelete))
         {
@@ -122,7 +123,10 @@
         }
         else
         {
-            StateHasChanged();
+            await InvokeAsync(() =>
+             {
+                 StateHasChanged();
+             });
         }
     }
 

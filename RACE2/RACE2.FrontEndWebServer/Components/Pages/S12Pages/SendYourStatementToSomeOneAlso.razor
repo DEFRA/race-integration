@@ -81,10 +81,13 @@
                     <EditForm Model="@_yesno" OnSubmit="GoToNextPage">
                         <div class="govuk-form-group govuk-form-group--error govuk-!-margin-bottom-4">
                             <fieldset class="govuk-fieldset" aria-describedby="where-do-you-live-error">
-                                <p id="where-do-you-live-error" class="govuk-error-message">
-                                    <span class="govuk-visually-hidden">Error:</span>
-                                    Select yes if you want to send the statement to someone else as well or no
-                                </p>
+                                <div class="govuk-error-summary__body">
+                                    <ul class="govuk-list govuk-error-summary__list">
+                                        <li>
+                                            <a href="#" onclick="return false;">Select yes if you want to send the statement to someone else as well or no</a>
+                                        </li>
+                                    </ul>
+                                </div>
                                 <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
                                     <InputRadioGroup Name="yesno" @bind-Value="_yesno.YesNoOptions">
                                         @foreach (Enum value in Enum.GetValues(typeof(YesNoClass.YesNoEnum)))
