@@ -128,7 +128,7 @@
         NavigationManager.NavigateTo(pagelink, forceLoad);
     }
 
-    public void DeleteSelectedEmail()
+    public async Task DeleteSelectedEmail()
     {        
         if (_yesno.YesNoOptions == 0)
         {
@@ -138,7 +138,9 @@
         else
         {
             YesNoError = false;
-            var changedEmail = emailEditDelete;
+            int idx = reportSubmissionData.EmailListToSomeOne.FindIndex(a => a == emailEditDelete);
+            reportSubmissionData.EmailListToSomeOne.RemoveAt(idx);
+            await ProtectedSessionStore.SetAsync("CurrentReportSubmissionData", reportSubmissionData);
             bool forceLoad = true;
             string pagelink = "/check-emails";
             NavigationManager.NavigateTo(pagelink, forceLoad);

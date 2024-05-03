@@ -21,7 +21,7 @@
                 <h1 class="govuk-heading-xl">Edit email address</h1>
                 @if (IsValidEmail)
                 {
-                    <EditForm Model="@emailEditDelete" OnSubmit="UpdateEmail">
+                    <EditForm Model="@EmailAddresses" OnSubmit="UpdateEmail">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-label--m" for="email-1">
                                 Email address
@@ -50,23 +50,23 @@
                             </div>
                         </div>
                     </div>
-                    <EditForm Model="@emailEditDelete" OnSubmit="UpdateEmail">
+                    <EditForm Model="@EmailAddresses" OnSubmit="UpdateEmail">
                         <div class="govuk-form-group govuk-form-group--error govuk-!-margin-top-8 govuk-!-margin-bottom-4">
-                        <fieldset class="govuk-fieldset" aria-describedby="where-do-you-live-error">
-                            <div class="govuk-form-group">
-                                <label class="govuk-label govuk-label--m" for="email-1">
-                                    Email address
-                                </label>
-                                <div class="govuk-error-summary__body">
-                                    <ul class="govuk-list govuk-error-summary__list">
-                                        <li>
-                                            <a href="#" onclick="return false;"> Email cannot be empty and must be in valid format</a>
-                                        </li>
-                                    </ul>
+                            <fieldset class="govuk-fieldset" aria-describedby="where-do-you-live-error">
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label govuk-label--m" for="email-1">
+                                        Email address
+                                    </label>
+                                    <div class="govuk-error-summary__body">
+                                        <ul class="govuk-list govuk-error-summary__list">
+                                            <li>
+                                                <a href="#" onclick="return false;"> Email cannot be empty and must be in valid format</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <InputText class="govuk-textarea govuk-!-margin-top-6 govuk-input govuk-!-width-two-thirds" id="edit-emaill" name="edit-emaill" Value-describedby="edit-emaill-hint" @bind-Value="emailEditDelete"></InputText>
                                 </div>
-                                <InputText class="govuk-textarea govuk-!-margin-top-6 govuk-input govuk-!-width-two-thirds" id="edit-emaill" name="edit-emaill" Value-describedby="edit-emaill-hint" @bind-Value="emailEditDelete"></InputText>
-                            </div>
-                        </fieldset>
+                            </fieldset>
                         </div>
                         <button type="submit" draggable="false"
                             class="govuk-button govuk-!-margin-top-3 govuk-!-margin-bottom-6 govuk-!-margin-right-4" data-module="govuk-button">
@@ -92,7 +92,7 @@
     {
         var reportSubmissionDataState = await ProtectedSessionStore.GetAsync<ReportSubmissionDataDto>("CurrentReportSubmissionData");
         reportSubmissionData = reportSubmissionDataState.Value;
-        EmailAddresses = reportSubmissionData.EmailListToSomeOne.Where(e => !String.IsNullOrEmpty(e)).Select(e => e).ToList();
+        EmailAddresses = reportSubmissionData.EmailListToSomeOne;
         emailEditDeleteOriginal = emailEditDelete = reportSubmissionData.EmailEditDelete;
         IsValidEmail = true;
         await base.OnInitializedAsync();
@@ -115,7 +115,10 @@
         {
             if (emailEditDelete != emailEditDeleteOriginal)
             {
-
+                int idx = EmailAddresses.FindIndex(a => a == emailEditDeleteOriginal);
+                EmailAddresses[idx] = emailEditDelete;
+                reportSubmissionData.EmailListToSomeOne = EmailAddresses;
+                await ProtectedSessionStore.SetAsync("CurrentReportSubmissionData", reportSubmissionData);
             }
             bool forceLoad = true;
             string pagelink = "/check-emails";
