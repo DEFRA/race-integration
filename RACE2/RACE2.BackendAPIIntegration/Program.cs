@@ -2,8 +2,34 @@ using Microsoft.OpenApi.Models;
 using RACE2.BackendAPIIntegration.Authentication;
 using RACE2.DataAccess.Repository;
 using RACE2.Services;
+using Microsoft.Extensions.Configuration;
+using Azure.Identity;
+using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Configuration.AddAzureAppConfiguration(options =>
+{
+    //var connectionString = builder.Configuration["AZURE_APPCONFIGURATION_CONNECTIONSTRING"];
+    var azureAppConfigUrl = builder.Configuration["AzureAppConfigURL"];
+    var azureTenantId = builder.Configuration["AZURE_TENANT_ID"];
+    var managedIdenityClientId = builder.Configuration["ManagedIdenityClientId"];
+    var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions { TenantId = azureTenantId, ManagedIdentityClientId = managedIdenityClientId, VisualStudioTenantId = azureTenantId });
+
+    //options.Connect(connectionString)      
+    options.Connect(new Uri(azureAppConfigUrl), credential)
+    .ConfigureKeyVault(options =>
+    {
+        options.SetCredential(credential);
+    })
+    .ConfigureRefresh(refreshOptions =>
+            refreshOptions.Register("refreshAll", refreshAll: true))
+    .Select(KeyFilter.Any, LabelFilter.Null)
+    // Override with any configuration values specific to current hosting env
+    .Select(KeyFilter.Any, Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"))
+    .UseFeatureFlags();
+});
+var blazorClientURL = builder.Configuration["RACE2FrontEndURL"];
 
 // Add services to the container.
 
