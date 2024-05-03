@@ -104,7 +104,7 @@ namespace RACE2.DataAccess.Repository
                 integrationResponseModel.StatusCode = response.StatusCode;
                 integrationResponseModel.Status = response.StatusDescription;
                 integrationResponseModel.Reason = response.ErrorMessage;
-                integrationResponseModel.ResponseData = response.Content.ToString();
+                integrationResponseModel.ResponseData = response.Content != null? response.Content.ToString(): "";
                 return integrationResponseModel;
             }
             catch (Exception ex)
