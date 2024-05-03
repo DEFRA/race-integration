@@ -111,7 +111,7 @@ namespace RACE2.DataAccess.Repository
             {
                 _logger.LogError(ex, ex.Message);
                 integrationResponseModel.StatusCode = System.Net.HttpStatusCode.BadRequest;
-                integrationResponseModel.Status = "Bad REquest";
+                integrationResponseModel.Status = "Bad Request";
                 integrationResponseModel.Reason = ex.Message;
                 return integrationResponseModel;
             }
