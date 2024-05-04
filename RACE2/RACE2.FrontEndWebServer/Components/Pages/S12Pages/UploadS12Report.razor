@@ -370,8 +370,8 @@
                                 foreach (var addr in reportSubmissionData.EmailListToSomeOne)
                                 {
                                     SubmissionEmailNotification submissionEmailNotification = new SubmissionEmailNotification();
-                                    submissionEmailNotification.SubmissionStatusId = insertStatus.Id;
-                                    submissionEmailNotification.SubmissionStatus = insertStatus;
+                                    submissionEmailNotification.SubmissionStatusId = res.Id;
+                                    submissionEmailNotification.SubmissionStatus = res;
                                     submissionEmailNotification.IsOverridePrimaryContact = false;
                                     submissionEmailNotification.ContactType = "Undertaker";
                                     submissionEmailNotification.Email = addr;
