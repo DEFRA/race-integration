@@ -35,7 +35,7 @@
                         </p>
 
                         <dl class="govuk-summary-list govuk-!-margin-top-4">
-                            
+
                             <div class="govuk-summary-list__row">
                                 <dt class="govuk-summary-list__key">
                                     Undertaker contact
@@ -106,7 +106,7 @@
                             <div class="govuk-error-summary__body">
                                 <ul class="govuk-list govuk-error-summary__list">
                                     <li>
-                                        <a href="#" onclick="return false;">Select yes if you want to send the statement to @reportSubmissionData.UndertakerName</a>
+                                        <a href="#">Select yes if you want to send the statement to @reportSubmissionData.UndertakerName</a>
                                     </li>
                                 </ul>
                             </div>
@@ -134,7 +134,16 @@
 
                             <div class="govuk-summary-list__row">
                                 <dt class="govuk-summary-list__key">
-                                    Undertaker contact
+                                    Reservoir
+                                </dt>
+                                <dd class="govuk-summary-list__value govuk-!-padding-left-9" for="reservoir-named-undertaker"
+                                    id="reservoir-named-undertaker" name="reservoir-named-undertaker">
+                                    @reportSubmissionData.ReservoirRegName
+                                </dd>
+                            </div>
+                            <div class="govuk-summary-list__row">
+                                <dt class="govuk-summary-list__key">
+                                    Undertaker
                                 </dt>
                                 <dd class="govuk-summary-list__value govuk-!-padding-left-9" for="reservoir-named-undertaker"
                                     id="reservoir-named-undertaker" name="reservoir-named-undertaker">
@@ -157,16 +166,13 @@
                             <fieldset class="govuk-fieldset" aria-describedby="where-do-you-live-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                                     <h2 class="govuk-fieldset__heading">
-                                        Do you want to send the statement to @reportSubmissionData.UndertakerName?
+                                        Do you want to send the statement to the undertaker too?
                                     </h2>
                                 </legend>
-                                <div class="govuk-error-summary__body">
-                                    <ul class="govuk-list govuk-error-summary__list">
-                                        <li>
-                                            <a href="#" onclick="return false;">Select yes if you want to send the statement to @reportSubmissionData.UndertakerName</a>
-                                        </li>
-                                    </ul>
-                                </div>
+                                <p id="where-do-you-live-error" class="govuk-error-message">
+                                    <span class="govuk-visually-hidden">Error:</span>Select yes if you want to send the
+                                    statement to @reportSubmissionData.UndertakerName
+                                </p>
 
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <InputRadioGroup Name="yesno" @bind-Value="_yesno.YesNoOptions">
@@ -185,6 +191,7 @@
                                                     <InputRadio Value="@value" class="govuk-radios__input" />
                                                     <span class="govuk-label govuk-radios__label">@value</span>
                                                 </div>
+                                            }
                                         }
 
                                     </InputRadioGroup>
@@ -246,6 +253,7 @@
             else
             {
                 NavigationManager.NavigateTo("/send-your-statement-to-someone-else", forceLoad);
+            }
         }
     }
     public void GoToMyAccountPage()
