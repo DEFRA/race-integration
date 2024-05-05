@@ -1,0 +1,265 @@
+﻿@page "/enter-emails"
+@using Microsoft.AspNetCore.Authorization;
+@using RACE2.FrontEndWebServer.Components
+@using RACE2.Dto
+@using System.Text.RegularExpressions;
+@inject NavigationManager NavigationManager
+@inject ProtectedSessionStorage ProtectedSessionStore
+
+<PageTitle>Enet Emails - Send a supervising engineer's annual statement - GOV.UK</PageTitle>
+
+<HeaderWithBanner />
+
+<div class="govuk-width-container" style="min-height: 70vh;">
+
+    <FeedbackBanner />
+
+    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" style="padding-top:20px;padding-bottom:20px;" role=" main">
+        <a class="govuk-back-link" @onclick="GoToPrevPage" style="color:black">Back</a>
+        @if (ValidationErrors.Count == 0)
+        {
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-three-quarters">
+                    <EditForm Model="@EmailAddresses" OnSubmit="GoToNextPage">
+                    <div class="govuk-form-group">
+                        <fieldset class="govuk-fieldset">
+                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+                                <h1 class="govuk-fieldset__heading">
+                                    Enter the email addresses you want to send the statement to
+                                </h1>
+                            </legend>
+
+                            <p class="govuk-body govuk-!-padding-top-4">
+                                You can send your statement to one or more people.
+                            </p>
+
+                            <div class="govuk-form-group govuk-!-margin-top-8">
+                                <label class="govuk-label" for="email1">
+                                    Email address
+                                </label>
+                                <InputText class="govuk-input" id="email1" name="email1" autocomplete="email1" @bind-Value="@EmailAddresses[0]">
+                                </InputText>
+                            </div>
+
+                            <div class="govuk-form-group">
+                                <label class="govuk-label" for="email2">
+                                    Email address (optional)
+                                </label>
+                                <InputText class="govuk-input" id="email2" name="email2" autocomplete="email2" @bind-Value="@EmailAddresses[1]">
+                                </InputText>
+                            </div>
+
+                            <div class="govuk-form-group">
+                                <label class="govuk-label" for="email3">
+                                    Email address (optional)
+                                </label>
+                                <InputText class="govuk-input" id="email3" name="email3" autocomplete="email3" @bind-Value="@EmailAddresses[2]">
+                                </InputText>
+                            </div>
+
+                            <div class="govuk-form-group">
+                                <label class="govuk-label" for="email4">
+                                    Email address (optional)
+                                </label>
+                                <InputText class="govuk-input" id="email4" name="email4" autocomplete="email4" @bind-Value="@EmailAddresses[3]">
+                                </InputText>
+                            </div>
+
+                            <div class="govuk-form-group">
+                                <label class="govuk-label" for="email5">
+                                    Email address (optional)
+                                </label>
+                                <InputText class="govuk-input" id="email5" name="email5" autocomplete="email5" @bind-Value="@EmailAddresses[4]">
+                                </InputText>
+                            </div>
+
+                        </fieldset>
+                    </div>
+
+                    <button type="submit" draggable="false"
+                            class="govuk-button govuk-!-margin-top-3 govuk-!-margin-bottom-6 govuk-!-margin-right-4"
+                            data-module="govuk-button">
+                        Continue
+                    </button>
+                </EditForm>                
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title">
+                        There is a problem
+                    </h2>
+                    @foreach (var error in ValidationErrors.Values)
+                    {
+                        <div class="govuk-error-summary__body">
+                            <ul class="govuk-list govuk-error-summary__list">
+                                <li>
+                                    <a href="#">@error</a>
+                                </li>
+                            </ul>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-three-quarters">
+                    <EditForm Model="@EmailAddresses" OnSubmit="GoToNextPage">
+                        <div class="govuk-form-group govuk-form-group--error govuk-!-margin-top-8 govuk-!-margin-bottom-4">
+                            <fieldset class="govuk-fieldset" aria-describedby="where-do-you-live-error">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+                                    <h1 class="govuk-fieldset__heading">
+                                        Enter the email addresses you want to send the statement to
+                                    </h1>
+                                </legend>
+                                @foreach (var error in ValidationErrors.Values)
+                                {
+                                    <div class="govuk-error-summary__body">
+                                        <ul class="govuk-list govuk-error-summary__list">
+                                            <li>
+                                                <a href="#">@error</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                }
+                                <p class="govuk-body govuk-!-padding-top-4">
+                                    You can send your statement to one or more people.
+                                </p>
+
+                                <div class="govuk-form-group govuk-!-margin-top-8">
+                                    <label class="govuk-label" for="email1">
+                                        Email address
+                                    </label>
+                                    <InputText class="govuk-input" id="email1" name="email1" autocomplete="email1" @bind-Value="@EmailAddresses[0]">
+                                    </InputText>
+                                </div>
+
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label" for="email2">
+                                        Email address (optional)
+                                    </label>
+                                    <InputText class="govuk-input" id="email2" name="email2" autocomplete="email2" @bind-Value="@EmailAddresses[1]">
+                                    </InputText>
+                                </div>
+
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label" for="email3">
+                                        Email address (optional)
+                                    </label>
+                                    <InputText class="govuk-input" id="email3" name="email3" autocomplete="email3" @bind-Value="@EmailAddresses[2]">
+                                    </InputText>
+                                </div>
+
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label" for="email4">
+                                        Email address (optional)
+                                    </label>
+                                    <InputText class="govuk-input" id="email4" name="email4" autocomplete="email4" @bind-Value="@EmailAddresses[3]">
+                                    </InputText>
+                                </div>
+
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label" for="email5">
+                                        Email address (optional)
+                                    </label>
+                                    <InputText class="govuk-input" id="email5" name="email5" autocomplete="email5" @bind-Value="@EmailAddresses[4]">
+                                    </InputText>
+                                </div>
+
+                            </fieldset>
+                        </div>
+
+                        <button type="submit" draggable="false"
+                                class="govuk-button govuk-!-margin-top-3 govuk-!-margin-bottom-6 govuk-!-margin-right-4"
+                                data-module="govuk-button">
+                            Continue
+                        </button>
+                    </EditForm>
+                </div>
+            </div>
+        }
+    </main>
+</div>
+
+<Footer />
+
+@code {
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthenticationStateTask { get; set; }
+    public List<string> EmailAddresses { get; set; } = new List<string>();
+    public ReportSubmissionDataDto reportSubmissionData { get; set; } = new ReportSubmissionDataDto();
+    public Dictionary<string, string> ValidationErrors = new Dictionary<string, string>();
+
+    protected async override Task OnInitializedAsync()
+    {
+        for (int i = 0; i < 5; i++)
+            EmailAddresses.Add("");
+        AuthenticationState authState = await AuthenticationStateTask;// AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var reportSubmissionDataState = await ProtectedSessionStore.GetAsync<ReportSubmissionDataDto>("CurrentReportSubmissionData");
+        reportSubmissionData = reportSubmissionDataState.Value;
+        await InvokeAsync(() =>
+            {
+                StateHasChanged();
+            });
+        await base.OnInitializedAsync();
+    }
+
+    public async Task GoToNextPage()
+    {
+        ValidationErrors.Clear();
+        if (String.IsNullOrEmpty(EmailAddresses[0]))
+        {
+            ValidationErrors.Add("Email1Empty", "First Email cannot be empty");            
+        }
+        if (!String.IsNullOrEmpty(EmailAddresses[0]) && !IsValid(EmailAddresses[0]))
+        {
+            ValidationErrors.Add("Email1Invalid", "First Email is not in right email format");
+        }
+        if (!String.IsNullOrEmpty(EmailAddresses[1]) && !IsValid(EmailAddresses[1]))
+        {
+            ValidationErrors.Add("Email2Invalid", "Second Email is not in right email format");
+        }
+        if (!String.IsNullOrEmpty(EmailAddresses[2]) && !IsValid(EmailAddresses[2]))
+        {
+            ValidationErrors.Add("Email3Invalid", "Third Email is not in right email format");
+        }
+        if (!String.IsNullOrEmpty(EmailAddresses[3]) && !IsValid(EmailAddresses[3]))
+        {
+            ValidationErrors.Add("Email4Invalid", "Fourth Email is not in right email format");
+        }
+        if (!String.IsNullOrEmpty(EmailAddresses[4]) && !IsValid(EmailAddresses[4]))
+        {
+            ValidationErrors.Add("Email5Invalid", "Fifth Email is not in right email format");
+        }  
+        if (ValidationErrors.Count == 0)
+        {
+            reportSubmissionData.EmailListToSomeOne = EmailAddresses.Where(e => !String.IsNullOrEmpty(e)).Select(e => e).Distinct().ToList();
+            await ProtectedSessionStore.SetAsync("CurrentReportSubmissionData", reportSubmissionData);
+            bool forceLoad = true;
+            NavigationManager.NavigateTo("/check-emails", forceLoad);  
+        }
+        else
+        {
+            await InvokeAsync(() =>
+           {
+               StateHasChanged();
+           });
+        }
+    }
+
+    public void GoToPrevPage()
+    {
+        bool forceLoad = true;
+        string pagelink = "/send-your-statement-to-someone-also";
+        NavigationManager.NavigateTo(pagelink, forceLoad);
+    }
+    
+    private static bool IsValid(string email)
+    {
+        string regex = @"^[^@\s]+@[^@\s]+\.(com|net|org|gov)$";
+
+        return Regex.IsMatch(email, regex, RegexOptions.IgnoreCase);
+    }
+}
