@@ -114,7 +114,16 @@
                                         Enter the email addresses you want to send the statement to
                                     </h1>
                                 </legend>
-
+                                @foreach (var error in ValidationErrors.Values)
+                                {
+                                    <div class="govuk-error-summary__body">
+                                        <ul class="govuk-list govuk-error-summary__list">
+                                            <li>
+                                                <a href="#">@error</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                }
                                 <p class="govuk-body govuk-!-padding-top-4">
                                     You can send your statement to one or more people.
                                 </p>
