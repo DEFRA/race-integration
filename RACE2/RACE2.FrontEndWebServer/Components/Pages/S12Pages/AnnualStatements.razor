@@ -467,7 +467,11 @@
                 UndertakerName = Item.UndertakerName,
                 UndertakerEmail = String.IsNullOrEmpty(Item.UndertakerEmail) ? " " : Item.UndertakerEmail,
                 SubmissionReference = Item.SubmissionReference,
-                YesNoValue = ""
+                YesNoValueUndertaker = "",
+                YesNoValueSomeoneAlso = "",
+                YesNoValueSomeoneElse = "",
+                EmailListToSomeOne = new List<String>(),
+                EmailEditDelete = ""
             };
         await ProtectedSessionStore.SetAsync("CurrentReportSubmissionData", reportSubmissionData);
         bool forceLoad = false;

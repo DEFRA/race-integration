@@ -36,50 +36,72 @@ namespace RACE2.Dto
     }
 
 
-    public class S12StatementDetails
+    public class submission
     {
-        public string breach_of_act { get; set; }
-
-        public string date_of_breach { get; set; }
-
-        public string statement_type { get; set; }
-
-        public string dir_under_section_126 { get; set; }
-
-        public string recommend_inspection_sec_10 { get; set; }
-
-
+        public int statusId { get; set; }
+        public string reference { get; set; }
+        public string submittedDate { get; set; }
+        public int submittedBy { get; set; }
+        public string type { get; set; }
+        public string source { get; set; }
     }
 
-    public class DocumentDetails
+    public class writtenStatement
     {
-        public string name { get; set; }
+        public string type { get; set; }
+        public string date { get; set; }
 
+        public bool visualInspectionDirection { get; set; }
+        public bool recommendInspectionS10 { get; set;}
+        public string nextInspectionDate { get; set; }
+        public string expectedNextStatementDate { get; set; }
+        public string notificationEmailAddresses { get; set; }
+    }
+
+    public class reservoir
+    {
+        public string backEndId { get; set; }
+        public string referenceNumber { get; set; }
+
+     }
+
+    public class engineer
+    {
+        public int id { get; set; }
+        public string backEndPrimaryReference { get; set; }
+
+        public string backEndSecondaryReference { get; set; }
+    }
+    public class breach
+    {
+    public string act { get; set; }
+    public string date { get; set; }
+
+    }
+     public class document
+    {
+        public int id { get; set; }
+        public string uploadFileName { get; set; }
+        public string mimeType { get; set; }
+        public string protectiveMarking { get; set; }
+        public string templateType { get; set; }   
+        public string templateVersion { get; set; }
+        public string blobStorageFileName { get; set; }
         public byte[] content { get; set; }
 
-        public string protective_marking { get; set; }
+        
+    }
 
-        public string document_date { get; set; }
+    public class AnnualSubmissionDocumentDetails
+    {
+       public submission submission { get; set; }
+        public writtenStatement writtenStatement { get; set; }
+        public reservoir reservoir { get; set; }
+        public engineer engineer { get; set; }
+         public breach breach { get; set; }
 
-        public class SubmitWrittenStatement
-        {
-            public string? uuid { get; set; }
-            public string? reservoir_ref { get; set; }
-            public string? engineer_ref { get; set; }
+        public document document { get; set; }
 
-            public S12StatementDetails statement { get; set; } = new S12StatementDetails();
-
-            public DocumentDetails document { get; set; } = new DocumentDetails();
-
-        }
-
-        public class SubmitS12Statement
-        {
-            // [JsonProperty(PropertyName = "submit-written-statement")]
-
-            [BindProperty(Name = "submit-written-statement")]
-            public SubmitWrittenStatement submitwrittenstatement { get; set; } = new SubmitWrittenStatement();
-        }
 
     }
 }

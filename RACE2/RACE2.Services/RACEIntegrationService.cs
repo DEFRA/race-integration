@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static RACE2.Dto.DocumentDetails;
+
 
 namespace RACE2.Services
 {
@@ -21,7 +21,7 @@ namespace RACE2.Services
             return await _IntegrationRepository.GetEngineerReservoirByUUID(uuid);
         }
 
-        public async Task<IntegrationResponseModel> SubmitDocumentToBackend(SubmitS12Statement submitS12Statement)
+        public async Task<IntegrationResponseModel> SubmitDocumentToBackend(AnnualSubmissionDocumentDetails submitS12Statement)
         {
             try
             {
