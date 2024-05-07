@@ -128,19 +128,26 @@
         NavigationManager.NavigateTo(pagelink, forceLoad);
     }
 
-    public async Task DeleteSelectedEmail()
-    {        
+    public async Task DeleteSelectedEmail()    
+    {
         if (_yesno.YesNoOptions == 0)
         {
             YesNoError = true;
             StateHasChanged();
         }
-        else
+        else if (_yesno.YesNoOptions.ToString() == "Yes")
         {
             YesNoError = false;
             int idx = reportSubmissionData.EmailListToSomeOne.FindIndex(a => a == emailEditDelete);
             reportSubmissionData.EmailListToSomeOne.RemoveAt(idx);
             await ProtectedSessionStore.SetAsync("CurrentReportSubmissionData", reportSubmissionData);
+            bool forceLoad = true;
+            string pagelink = "/check-emails";
+            NavigationManager.NavigateTo(pagelink, forceLoad);
+        }
+        else
+        {
+            YesNoError = false;            
             bool forceLoad = true;
             string pagelink = "/check-emails";
             NavigationManager.NavigateTo(pagelink, forceLoad);
