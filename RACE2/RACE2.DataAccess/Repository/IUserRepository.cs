@@ -28,6 +28,11 @@ namespace RACE2.DataAccess.Repository
 
         public Task<OrganisationDTO> GetCompanyNameByUserId(int userId);
 
+        public Task<UserSpecificDto> GetAuthorizedUser(string  email, string mobilenumber);       
+
+        public Task<int> InsertUndertakerEmails(List<SubmissionEmailNotification> submissionEmailNotification);
+
+
         
     }
 }

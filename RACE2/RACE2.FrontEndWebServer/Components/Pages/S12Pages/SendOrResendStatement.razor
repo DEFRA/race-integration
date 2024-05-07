@@ -15,22 +15,20 @@
 
     <FeedbackBannerSignOut />
 
-    <a class="govuk-back-link" @onclick="GoToPrevPage" style="color:black">Back</a>
+    <main class="govuk-main-wrapper--auto-spacing" id="main-content" role="main">
 
-    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+        <a href="#" class="govuk-back-link" @onclick="GoToPrevPage" style="color:black;">Back</a>
 
-        <div class="govuk-grid-row">
+        <div class="govuk-grid-row" style="padding-top:40px;">
 
             <div class="govuk-grid-column-two-thirds">
                 @if (!SendResendError)
                 {
                     <div class="govuk-form-group">
 
-                        <legend id="which-idea" class="govuk-fieldset__legend govuk-fieldset__legend govuk-fieldset__legend--xl govuk-!-margin-bottom-4">
-                            <h1 class="govuk-fieldset__heading">
-                                Send or resend a statement
-                            </h1>
-                        </legend>
+                        <h1 href="#main-header" class="govuk-heading-xl" style="margin-bottom:20px;">
+                            Send or resend a statement
+                        </h1>
 
                         <EditForm Model="@_sendresend" OnSubmit="GoToNextPage">
                             <div class="govuk-radios govuk-!-margin-bottom-6" data-module="govuk-radios">
@@ -70,7 +68,7 @@
                             <div class="govuk-error-summary__body">
                                 <ul class="govuk-list govuk-error-summary__list">
                                     <li>
-                                        <a href="#">Select if you want to send or resend a statement</a>
+                                        <a href="#" onclick="return false;">Select if you want to send or resend a statement</a>
                                     </li>
                                 </ul>
                             </div>
@@ -81,30 +79,37 @@
                             Send or resend a statement
                         </h1>
                     </legend>
-
                     <EditForm Model="@_sendresend" OnSubmit="GoToNextPage">
-                        <fieldset class="govuk-fieldset">
-                            <div class="govuk-radios__item" data-module="govuk-radios">
-                                <InputRadioGroup Name="sendresend" @bind-Value="_sendresend.SendRsendOptions">
-                                    @foreach (Enum value in Enum.GetValues(typeof(SendResendClass.SendRsendEnum)))
-                                    {
-                                        <div class="govuk-radios__item">
-                                            <InputRadio Value="@value" class="govuk-radios__input" />
-                                            @if (value.ToString() == "Send")
-                                            {
-                                            <span class="govuk-label govuk-radios__label">Send a new statement</span>
-                                            }
-                                            else
-                                            {
-                                            <span class="govuk-label govuk-radios__label">Send a revised statement</span>
-                                            }
-                                        </div>
-                                    }
-                                </InputRadioGroup>
-                            </div>
-                        </fieldset>
-                        <button type="submit" draggable="false"
-                                class="govuk-button govuk-!-margin-top-5 govuk-!-margin-bottom-6 govuk-!-margin-right-4" data-module="govuk-button">
+                        <div class="govuk-form-group govuk-form-group--error govuk-!-margin-top-8 govuk-!-margin-bottom-4">
+                            <fieldset class="govuk-fieldset" aria-describedby="where-do-you-live-error">
+                                <div class="govuk-error-summary__body">
+                                    <ul class="govuk-list govuk-error-summary__list">
+                                        <li>
+                                            <a href="#" onclick="return false;">Select if you want to send or resend a statement</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <InputRadioGroup Name="sendresend" @bind-Value="_sendresend.SendRsendOptions">
+                                        @foreach (Enum value in Enum.GetValues(typeof(SendResendClass.SendRsendEnum)))
+                                        {
+                                            <div class="govuk-radios__item">
+                                                <InputRadio Value="@value" class="govuk-radios__input" />
+                                                @if (value.ToString() == "Send")
+                                                {
+                                                    <span class="govuk-label govuk-radios__label">Send a new statement</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="govuk-label govuk-radios__label">Send a revised statement</span>
+                                                }
+                                            </div>
+                                        }
+                                    </InputRadioGroup>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" draggable="false" class="govuk-button govuk-!-margin-top-5 govuk-!-margin-bottom-6 govuk-!-margin-right-4" data-module="govuk-button">
                             Continue
                         </button>
                     </EditForm>

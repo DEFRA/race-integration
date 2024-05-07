@@ -17,7 +17,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.3")
+                .HasAnnotation("ProductVersion", "8.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -1767,6 +1767,37 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                     b.ToTable("StatementDetails");
                 });
 
+            modelBuilder.Entity("RACE2.DataModel.SubmissionEmailNotification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ContactType")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<bool>("IsOverridePrimaryContact")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("SubmissionStatusId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SubmissionStatusId");
+
+                    b.ToTable("SubmissionEmailNotification");
+                });
+
             modelBuilder.Entity("RACE2.DataModel.SubmissionStatus", b =>
                 {
                     b.Property<int>("Id")
@@ -2729,6 +2760,17 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                         .IsRequired();
 
                     b.Navigation("Document");
+                });
+
+            modelBuilder.Entity("RACE2.DataModel.SubmissionEmailNotification", b =>
+                {
+                    b.HasOne("RACE2.DataModel.SubmissionStatus", "SubmissionStatus")
+                        .WithMany()
+                        .HasForeignKey("SubmissionStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("SubmissionStatus");
                 });
 
             modelBuilder.Entity("RACE2.DataModel.SubmissionStatus", b =>

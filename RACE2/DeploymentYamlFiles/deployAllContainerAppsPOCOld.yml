@@ -26,7 +26,7 @@ variables:
   - name: repository_webapiexternal
     value: 'race2webapiexternal'
   - name: dockerfile_webapiexternal
-    value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_WebApiExternal'  
+    value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_BackendAPIIntegration'  
   - name: containerRegistry
     value: 'AZR-RAC-POC1-ACR'
   - name: tag

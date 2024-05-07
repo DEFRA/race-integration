@@ -34,8 +34,14 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+         "AZURE_TENANT_ID": "770a2450-0227-4c62-90c7-4e38537f1102",
+         "ManagedIdenityClientId": "ed22ed2e-445d-470f-989c-4f9d3d1f7a20",
+         "AzureAppConfigURL": "https://pocracinfac1401.azconfig.io/"
+          //"AzureAppConfigURL": "https://devracinfac1401.azconfig.io/"
+          //"AzureAppConfigURL": "https://tstracinfac1401.azconfig.io/",
+
+        }
       }
-    }
   }
 }
