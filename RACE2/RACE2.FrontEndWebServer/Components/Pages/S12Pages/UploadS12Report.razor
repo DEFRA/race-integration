@@ -344,41 +344,49 @@
                         if (bytes != null)
                         {
                             await _notificationService.SendConfirmationMailtoSE(userDetails.Email, reportSubmissionData.ReservoirRegName);
-                            if (selectedFile.Size < uploadFileData.NotifyServiceFileAttachmentLimit)
-                            {
-                                await _notificationService.SendConfirmationMailtoRST(RSTEmailAddress, reportSubmissionData.ReservoirRegName, bytes, userDetails.cFirstName + " " + userDetails.cLastName, reportSubmissionData.UndertakerName);
-                                if (reportSubmissionData.YesNoValueUndertaker == "Yes")
-                                {
-                                    await _notificationService.SendConfirmationMailWithAttachment(bytes, reportSubmissionData.UndertakerEmail, reportSubmissionData.ReservoirRegName);
-                                }
-                            }
-                            else
-                            {
-                                var internalEmail = _config["InternalEmailAddress"];
-                                await _notificationService.SendInternalMail(internalEmail, reportSubmissionData.ReservoirRegName, reportSubmissionData.UndertakerEmail, reportSubmissionData.YesNoValueUndertaker);
-                            }
+                            await _notificationService.SendConfirmationMailtoRST(RSTEmailAddress, reportSubmissionData.ReservoirRegName, bytes, userDetails.cFirstName + " " + userDetails.cLastName, reportSubmissionData.UndertakerName);
+                            // if (selectedFile.Size < uploadFileData.NotifyServiceFileAttachmentLimit)
+                            // {
+                            //     await _notificationService.SendConfirmationMailtoRST(RSTEmailAddress, reportSubmissionData.ReservoirRegName, bytes, userDetails.cFirstName + " " + userDetails.cLastName, reportSubmissionData.UndertakerName);
+                            //     if (reportSubmissionData.YesNoValueUndertaker == "Yes")
+                            //     {
+                            //         await _notificationService.SendConfirmationMailWithAttachment(bytes, reportSubmissionData.UndertakerEmail, reportSubmissionData.ReservoirRegName);
+                            //     }
+                            // }
+                            // else
+                            // {
+                            //     var internalEmail = _config["InternalEmailAddress"];
+                            //     await _notificationService.SendInternalMail(internalEmail, reportSubmissionData.ReservoirRegName, reportSubmissionData.UndertakerEmail, reportSubmissionData.YesNoValueUndertaker);
+                            // }
 
                             var res = await reservoirService.InsertSubmissionDetails(insertStatus);
-                            
+
                             //Store the uploaded document information
                             documentDTO.SubmissionId = res.Id;
                             await reservoirService.InsertDocumentRelatedTable(Int32.Parse(reportSubmissionData.ReservoirId), res.Id, docID);
-                            
-                            if (reportSubmissionData.EmailListToSomeOne.Count > 0)
+                            List<string> additionalEmailList = reportSubmissionData.EmailListToSomeOne.Select(a=>a).Distinct().ToList();
+                            List<SubmissionEmailNotification> submissionEmailNotifications = new List<SubmissionEmailNotification>();
+                            if (reportSubmissionData.YesNoValueUndertaker == "Yes")
                             {
-                                List<SubmissionEmailNotification> submissionEmailNotifications = new List<SubmissionEmailNotification>();
-                                foreach (var addr in reportSubmissionData.EmailListToSomeOne)
+                                additionalEmailList.Add(reportSubmissionData.UndertakerEmail);
+                                additionalEmailList = additionalEmailList.Select(a => a).Distinct().ToList();
+                            }
+                            if (additionalEmailList.Count > 0)
+                            {                                
+                                for (int i = 0; i < additionalEmailList.Count; i++)
                                 {
                                     SubmissionEmailNotification submissionEmailNotification = new SubmissionEmailNotification();
                                     submissionEmailNotification.SubmissionStatusId = res.Id;
                                     submissionEmailNotification.SubmissionStatus = res;
-                                    submissionEmailNotification.IsOverridePrimaryContact = false;
+                                    await reservoirService.InsertDocumentRelatedTable(Int32.Parse(reportSubmissionData.ReservoirId), res.Id, docID);
+                                    submissionEmailNotification.IsOverridePrimaryContact = i == 0 && reportSubmissionData.YesNoValueUndertaker == "UndertakerDetailsStatus" ? true : false;
                                     submissionEmailNotification.ContactType = "Undertaker";
-                                    submissionEmailNotification.Email = addr;
+                                    submissionEmailNotification.Email = additionalEmailList[i];
                                     submissionEmailNotifications.Add(submissionEmailNotification);
                                 }
-                                userService.InsertUndertakerEmails(submissionEmailNotifications);
+                                await userService.InsertUndertakerEmails(submissionEmailNotifications);
                             }
+
                             Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Information("File upload succeeded.");
                             uploadTimeElapsed++;
                             uploadPerc = Convert.ToInt32((Convert.ToDouble(uploadTimeElapsed) / Convert.ToDouble(timeToWait)) * 100.0);
