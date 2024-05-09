@@ -1,13 +1,20 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
+using Microsoft.SqlServer.Server;
+
 using RACE2.Dto;
 using RestSharp;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Microsoft.IdentityModel.Tokens;
+
 
 
 namespace RACE2.DataAccess.Repository
@@ -89,7 +96,15 @@ namespace RACE2.DataAccess.Repository
             _logger.LogInformation("Entering the document details");
             try
             {
-                string body = JsonConvert.SerializeObject(submitS12Statement);
+                //JsonSerializerOptions jsonoptions = new()
+                //{
+                //    DefaultIgnoreCondition = JsonIgnoreCondition.Always
+                //};
+
+                string uploadPayloadJson =
+                    System.Text.Json.JsonSerializer.Serialize(submitS12Statement);
+
+                //string body = JsonConvert.SerializeObject(submitS12Statement);
                 var options = new RestClientOptions(baseuri)
                 {
                     RemoteCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true
@@ -98,7 +113,7 @@ namespace RACE2.DataAccess.Repository
                 var request = new RestRequest("submission", Method.Post);
                 request.AddHeader("RACE_REST_API_KEY", _configuration["DocumentumAPIKey"]);
                 request.RequestFormat = DataFormat.Json;
-                request.AddJsonBody(body);
+                request.AddJsonBody(uploadPayloadJson);
                 RestResponse response = await client.ExecuteAsync(request);
                 //var stringOutput = JsonConvert.DeserializeObject<dynamic>(response.Content);
                 integrationResponseModel.StatusCode = response.StatusCode;
@@ -116,6 +131,95 @@ namespace RACE2.DataAccess.Repository
                 return integrationResponseModel;
             }
 
+        }
+
+        public AnnualSubmissionDocumentDetails GenerateSubmitPayloadJSON(int submittedBy, string submissionreference,string notificationemailaddress,string reservoirbackendid, 
+            string reservoirreferencenumber,Stream filestream,int documentid,string uploadfilename,string blobstoragefilename, int engineerid,string backendprimaryref,string backendsecondref)
+        {
+            AnnualSubmissionDocumentDetails uploadPayload = new AnnualSubmissionDocumentDetails();
+            //submission detaile
+            uploadPayload.submission.statusId = 1;
+            uploadPayload.submission.reference = submissionreference;
+            string format = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
+            string strDate = DateTime.UtcNow.ToString(format, DateTimeFormatInfo.InvariantInfo);
+            uploadPayload.submission.submittedDate = strDate;
+            uploadPayload.submission.submittedBy = submittedBy;
+            uploadPayload.submission.type = "Annual Statement";
+            uploadPayload.submission.source = "S12 Digital Service";
+
+            //written statement details
+            uploadPayload.writtenStatement.type = "12(2) Written statement";
+            uploadPayload.writtenStatement.date = "";
+            uploadPayload.writtenStatement.visualInspectionDirection = true;
+            uploadPayload.writtenStatement.recommendInspectionS10 = true;
+            uploadPayload.writtenStatement.nextInspectionDate = "";
+            uploadPayload.writtenStatement.expectedNextStatementDate = "";
+            uploadPayload.writtenStatement.notificationEmailAddresses = notificationemailaddress;
+
+            //reservoir details
+            uploadPayload.reservoir.backEndId = reservoirbackendid;
+            uploadPayload.reservoir.referenceNumber = reservoirreferencenumber;
+
+            //engineer details
+
+            uploadPayload.engineer.id = engineerid;
+            uploadPayload.engineer.backEndPrimaryReference = backendprimaryref;
+            uploadPayload.engineer.backEndSecondaryReference = backendsecondref;
+
+            //breach details
+
+
+            //document details  
+            uploadPayload.document.id = documentid;
+            uploadPayload.document.uploadFileName = uploadfilename;
+            if (!uploadfilename.IsNullOrEmpty())
+            {
+                var fileExtns = uploadfilename.Split('.');
+                int totalExtns = fileExtns.Length;
+                var fileExtn = uploadfilename.Split('.')[totalExtns - 1];
+                if (fileExtn == "docx")
+                    uploadPayload.document.mimeType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+                if (fileExtn == "doc")
+                    uploadPayload.document.mimeType = "application/msword";
+                if (fileExtn == "pdf")
+                    uploadPayload.document.mimeType = "application/pdf";
+            }
+
+            uploadPayload.document.protectiveMarking = "Official Sensitive";
+            uploadPayload.document.templateType = "";
+            uploadPayload.document.templateVersion = "";
+            uploadPayload.document.blobStorageFileName = blobstoragefilename;
+            uploadPayload.document.content = ConvertToBase64(filestream);
+
+
+          
+
+            return uploadPayload;
+        }
+
+        public string ConvertToBase64(Stream instream)
+        {
+            string filecontent = string.Empty;
+
+            try
+            {
+                if (instream != null)
+                {
+                    byte[] bytes = new byte[instream.Length];
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        instream.CopyTo(ms);
+                        filecontent = Convert.ToBase64String(ms.ToArray());
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("There is a problem with file content - {0}" + ex.Message);
+            }
+
+            return filecontent;
+           
         }
     }
 }

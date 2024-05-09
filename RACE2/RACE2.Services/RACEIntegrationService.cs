@@ -32,5 +32,18 @@ namespace RACE2.Services
                 throw;
             }
         }
+
+        public AnnualSubmissionDocumentDetails GenerateSubmitPayloadJSON(int submittedBy, string submissionreference, string notificationemailaddress, string reservoirbackendid,
+            string reservoirreferencenumber, Stream filestream, int documentid, string uploadfilename, string blobstoragefilename, int engineerid, string backendprimaryref, string backendsecondref)
+        {
+            try
+            {
+                return  _IntegrationRepository.GenerateSubmitPayloadJSON(submittedBy, submissionreference, notificationemailaddress, reservoirbackendid, reservoirreferencenumber, filestream, documentid, uploadfilename, blobstoragefilename, engineerid, backendprimaryref, backendsecondref);
+            }
+            catch
+            {
+                throw;
+            }
+        }
     }
 }

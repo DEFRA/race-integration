@@ -1,13 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net;
 using System.Text;
 using System.Text.Json.Nodes;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace RACE2.Dto
@@ -87,7 +91,7 @@ namespace RACE2.Dto
         public string templateType { get; set; }   
         public string templateVersion { get; set; }
         public string blobStorageFileName { get; set; }
-        public byte[] content { get; set; }
+        public string content { get; set; }
 
         
     }
@@ -98,7 +102,8 @@ namespace RACE2.Dto
         public writtenStatement writtenStatement { get; set; }
         public reservoir reservoir { get; set; }
         public engineer engineer { get; set; }
-         public breach breach { get; set; }
+        [System.Text.Json.Serialization.JsonIgnore]
+        public breach? breach { get; set; }
 
         public document document { get; set; }
 
