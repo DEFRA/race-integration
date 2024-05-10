@@ -211,27 +211,27 @@
         ValidationErrors.Clear();
         if (String.IsNullOrEmpty(EmailAddresses[0]))
         {
-            ValidationErrors.Add("Email1Empty", "First Email cannot be empty");            
+            ValidationErrors.Add("Email1Empty", "Enter an email address");
         }
         if (!String.IsNullOrEmpty(EmailAddresses[0]) && !IsValid(EmailAddresses[0]))
         {
-            ValidationErrors.Add("Email1Invalid", "First Email is not in right email format");
+            ValidationErrors.Add("Email1Invalid", EmailAddresses[0]+" is not in right email format");
         }
         if (!String.IsNullOrEmpty(EmailAddresses[1]) && !IsValid(EmailAddresses[1]))
         {
-            ValidationErrors.Add("Email2Invalid", "Second Email is not in right email format");
+            ValidationErrors.Add("Email2Invalid", EmailAddresses[1] + " is not in right email format");
         }
         if (!String.IsNullOrEmpty(EmailAddresses[2]) && !IsValid(EmailAddresses[2]))
         {
-            ValidationErrors.Add("Email3Invalid", "Third Email is not in right email format");
+            ValidationErrors.Add("Email3Invalid", EmailAddresses[2] + " is not in right email format");
         }
         if (!String.IsNullOrEmpty(EmailAddresses[3]) && !IsValid(EmailAddresses[3]))
         {
-            ValidationErrors.Add("Email4Invalid", "Fourth Email is not in right email format");
+            ValidationErrors.Add("Email4Invalid", EmailAddresses[3] + " is not in right email format");
         }
         if (!String.IsNullOrEmpty(EmailAddresses[4]) && !IsValid(EmailAddresses[4]))
         {
-            ValidationErrors.Add("Email5Invalid", "Fifth Email is not in right email format");
+            ValidationErrors.Add("Email5Invalid", EmailAddresses[4] + " is not in right email format");
         }  
         if (ValidationErrors.Count == 0)
         {
@@ -258,7 +258,7 @@
     
     private static bool IsValid(string email)
     {
-        string regex = @"^[^@\s]+@[^@\s]+\.(com|net|org|gov)$";
+        string regex = @"^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$";
 
         return Regex.IsMatch(email, regex, RegexOptions.IgnoreCase);
     }
