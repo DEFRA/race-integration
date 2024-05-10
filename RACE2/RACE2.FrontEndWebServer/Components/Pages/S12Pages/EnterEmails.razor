@@ -258,7 +258,7 @@
     
     private static bool IsValid(string email)
     {
-        string regex = @"/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/";
+        string regex = @"^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$";
 
         return Regex.IsMatch(email, regex, RegexOptions.IgnoreCase);
     }
