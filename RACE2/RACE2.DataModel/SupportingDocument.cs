@@ -16,8 +16,8 @@ namespace RACE2.DataModel
     {
         [Key, Required]
         public int Id { get; set; }
-        [StringLength(64)]
-        public string RaceDocumentId { get; set; }
+        [StringLength(16)]
+        public string BackEndDocumentId { get; set; }
         [Required,StringLength(100)]
         public string UploadFileName { get; set; }    
         [StringLength(1024)]
