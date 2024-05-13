@@ -165,11 +165,11 @@
         ValidationErrors.Clear();
         if (String.IsNullOrEmpty(EmailAddresses[0]))
         {
-            ValidationErrors.Add("Email1Empty", "First Email cannot be empty");
+            ValidationErrors.Add("Email1Empty", "Enter an email address");
         }
         if (!String.IsNullOrEmpty(EmailAddresses[0]) && !IsValid(EmailAddresses[0]))
         {
-            ValidationErrors.Add("Email1Invalid", "First Email is not in right email format");
+            ValidationErrors.Add("Email1Invalid", EmailAddresses[0] + " is not in right email format");
         }
         for (int i = 1; i < EmailAddresses.Count(); i++)
         {            
@@ -221,7 +221,7 @@
 
     private static bool IsValid(string email)
     {
-        string regex = @"^[^@\s]+@[^@\s]+\.(com|net|org|gov)$";
+        string regex = @"^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$";
 
         return Regex.IsMatch(email, regex, RegexOptions.IgnoreCase);
     }

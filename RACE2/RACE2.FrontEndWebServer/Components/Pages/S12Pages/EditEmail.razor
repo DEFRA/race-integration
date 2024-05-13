@@ -135,7 +135,7 @@
 
     private static bool IsValid(string email)
     {
-        string regex = @"^[^@\s]+@[^@\s]+\.(com|net|org|gov)$";
+        string regex = @"^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$";
 
         return Regex.IsMatch(email, regex, RegexOptions.IgnoreCase);
     }
