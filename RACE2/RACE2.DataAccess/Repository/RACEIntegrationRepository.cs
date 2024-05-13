@@ -208,7 +208,8 @@ namespace RACE2.DataAccess.Repository
                     byte[] bytes = new byte[instream.Length];
                     using (MemoryStream ms = new MemoryStream())
                     {
-                        instream.CopyTo(ms);
+                        //await e.File.OpenReadStream().CopyToAsync(ms);
+                        instream.CopyToAsync(ms);
                         filecontent = Convert.ToBase64String(ms.ToArray());
                     }
                 }

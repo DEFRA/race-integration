@@ -98,14 +98,14 @@ namespace RACE2.Dto
 
     public class AnnualSubmissionDocumentDetails
     {
-       public submission submission { get; set; }
-        public writtenStatement writtenStatement { get; set; }
-        public reservoir reservoir { get; set; }
-        public engineer engineer { get; set; }
+       public submission submission { get; set; } = new submission();
+        public writtenStatement writtenStatement { get; set; } = new writtenStatement();
+        public reservoir reservoir { get; set; } = new reservoir();
+        public engineer engineer { get; set; }  = new engineer();
         [System.Text.Json.Serialization.JsonIgnore]
-        public breach? breach { get; set; }
+        public breach? breach { get; set; } = new breach();
 
-        public document document { get; set; }
+        public document document { get; set; } = new document();
 
 
     }
