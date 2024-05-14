@@ -6,20 +6,20 @@
 @inject NavigationManager NavigationManager
 @inject ProtectedSessionStorage ProtectedSessionStore
 
-<PageTitle>Enet Emails - Send a supervising engineer's annual statement - GOV.UK</PageTitle>
+<PageTitle>Enter the email addresses you want the statement to go to - Send a supervising engineer's annual statement - GOV.UK</PageTitle>
 
 <HeaderWithBanner />
 
 <div class="govuk-width-container" style="min-height: 70vh;">
 
-    <FeedbackBanner />
+    <FeedbackBannerSignOut />
 
-    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" style="padding-top:20px;padding-bottom:20px;" role=" main">
+    <main class="govuk-main-wrapper--auto-spacing" id="main-content" role="main">
         <a class="govuk-back-link" @onclick="GoToPrevPage" style="color:black">Back</a>
         @if (ValidationErrors.Count == 0)
         {
             <div class="govuk-grid-row">
-                <div class="govuk-grid-column-three-quarters">
+                <div class="govuk-grid-column-two-thirds">
                     <EditForm Model="@EmailAddresses" OnSubmit="GoToNextPage">
                     <div class="govuk-form-group">
                         <fieldset class="govuk-fieldset">
@@ -105,7 +105,7 @@
                 </div>
             </div>
             <div class="govuk-grid-row">
-                <div class="govuk-grid-column-three-quarters">
+                <div class="govuk-grid-column-two-thirds">
                     <EditForm Model="@EmailAddresses" OnSubmit="GoToNextPage">
                         <div class="govuk-form-group govuk-form-group--error govuk-!-margin-top-8 govuk-!-margin-bottom-4">
                             <fieldset class="govuk-fieldset" aria-describedby="where-do-you-live-error">

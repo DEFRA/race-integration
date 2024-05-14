@@ -20,15 +20,15 @@
         <a class="govuk-back-link" @onclick="GoToPrevPage" style="color:black">Back</a>
 
         <div class="govuk-grid-row">
-
-            <div class="govuk-grid-column-three-fourths">
+            <div class="govuk-grid-column-two-thirds">
                 @if (!YesNoError)
                 {
                     <div class="govuk-form-group">
-                        <h1 href="#main-header" class="govuk-heading-xl">
-                            Send the statement to someone else as well
-                        </h1>                       
-
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+                            <h1 class="govuk-fieldset__heading">
+                                Send the statement to someone else as well
+                            </h1>
+                        </legend>
                         <EditForm Model="@_yesno" OnSubmit="GoToNextPage">
                             <div class="govuk-form-group govuk-!-margin-top-6 govuk-!-margin-bottom-4">
                                 <fieldset class="govuk-fieldset" aria-describedby="send-to-undertaker">
@@ -52,7 +52,6 @@
                                 Continue
                             </button>
                         </EditForm>
-
                     </div>
                 }
                 else
@@ -71,43 +70,42 @@
                             </div>
                         </div>
                     </div>
-
-                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-
-                        <h1 class="govuk-fieldset__heading">
-                            Send the statement to someone else as well
-                        </h1>
-                    </legend>          
-                    <EditForm Model="@_yesno" OnSubmit="GoToNextPage">
-                        <div class="govuk-form-group govuk-form-group--error govuk-!-margin-bottom-4">
-                            <fieldset class="govuk-fieldset" aria-describedby="where-do-you-live-error">
-                                <div class="govuk-error-summary__body">
-                                    <ul class="govuk-list govuk-error-summary__list">
-                                        <li>
-                                            <a href="#" onclick="return false;">Select yes if you want to send the statement to someone else as well or no</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
-                                    <InputRadioGroup Name="yesno" @bind-Value="_yesno.YesNoOptions">
-                                        @foreach (Enum value in Enum.GetValues(typeof(YesNoClass.YesNoEnum)))
-                                        {
-                                            <div class="govuk-radios__item">
-                                                <InputRadio Value="@value" class="govuk-radios__input" />
-                                                <span class="govuk-label govuk-radios__label">@value</span>
-                                            </div>
-                                        }
-
-                                    </InputRadioGroup>
-                                </div>
-                            </fieldset>
-                        </div>
-                        <button type="submit" draggable="false"
-                                class="govuk-button govuk-!-margin-top-3 govuk-!-margin-bottom-6 govuk-!-margin-right-4"
-                                data-module="govuk-button">
-                            Continue
-                        </button>
-                    </EditForm>
+                    <div class="govuk-form-group">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+                            <h1 class="govuk-fieldset__heading">
+                                Send the statement to someone else as well
+                            </h1>
+                        </legend>          
+                        <EditForm Model="@_yesno" OnSubmit="GoToNextPage">
+                            <div class="govuk-form-group govuk-form-group--error govuk-!-margin-bottom-4">
+                                <fieldset class="govuk-fieldset" aria-describedby="where-do-you-live-error">
+                                    <div class="govuk-error-summary__body">
+                                        <ul class="govuk-list govuk-error-summary__list">
+                                            <li>
+                                                <a href="#" onclick="return false;">Select yes if you want to send the statement to someone else as well or no</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
+                                        <InputRadioGroup Name="yesno" @bind-Value="_yesno.YesNoOptions">
+                                            @foreach (Enum value in Enum.GetValues(typeof(YesNoClass.YesNoEnum)))
+                                            {
+                                                <div class="govuk-radios__item">
+                                                    <InputRadio Value="@value" class="govuk-radios__input" />
+                                                    <span class="govuk-label govuk-radios__label">@value</span>
+                                                </div>
+                                            }
+                                        </InputRadioGroup>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <button type="submit" draggable="false"
+                                    class="govuk-button govuk-!-margin-top-3 govuk-!-margin-bottom-6 govuk-!-margin-right-4"
+                                    data-module="govuk-button">
+                                Continue
+                            </button>
+                        </EditForm>
+                    </div>
                 }
             </div>
         </div>
