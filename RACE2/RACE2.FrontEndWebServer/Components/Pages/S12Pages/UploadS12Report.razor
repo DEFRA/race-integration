@@ -377,7 +377,7 @@
                                     submissionEmailNotification.Email = addr;
                                     submissionEmailNotifications.Add(submissionEmailNotification);
                                 }
-                                userService.InsertUndertakerEmails(submissionEmailNotifications);
+                                await userService.InsertUndertakerEmails(submissionEmailNotifications);
                             }
                             Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Information("File upload succeeded.");
                             uploadTimeElapsed++;
