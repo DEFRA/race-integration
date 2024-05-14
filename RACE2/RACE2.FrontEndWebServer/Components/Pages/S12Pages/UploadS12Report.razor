@@ -33,7 +33,7 @@
         <a class="govuk-back-link" @onclick="goback" style="color:black">Back</a>
 
         <div class="govuk-grid-row">
-            <div class="govuk-grid-column-three-quarters">
+            <div class="govuk-grid-column-two-thirds">
                 @if (!FileUploadInProgress)
                 {
                     <EditForm Model="@uploadFileData" OnSubmit="OnUploadSubmit">
@@ -138,7 +138,8 @@
                                 }
                             </div>
                         </div>
-                    </div>              }
+                    </div>              
+                }
             </div>
         </div>
     </main>
