@@ -28,12 +28,12 @@
 
     <FeedbackBannerSignOut />
 
-    <main id="main-content" class="govuk-main-wrapper--auto-spacing" role="main">
+    <a class="govuk-back-link" @onclick="goback" style="color:black">Back</a>
 
-        <a class="govuk-back-link" @onclick="goback" style="color:black">Back</a>
+    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
 
         <div class="govuk-grid-row">
-            <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-column-three-quarters">
                 @if (!FileUploadInProgress)
                 {
                     <EditForm Model="@uploadFileData" OnSubmit="OnUploadSubmit">
@@ -85,8 +85,8 @@
                             </div>
                         }
                         <InputFile id="file-upload" name="file-upload" class="govuk-file-upload" OnChange="OnInputFileChange" multiple />
-                        <p class="govuk-body" style="margin-top:25px;">We’ll check the statement when you upload it.</p>
-                        <p class="govuk-body">This could take up to 20 seconds.</p>
+                        <p class="govuk-body" style="margin-top:25px;">We'll check the statement to make sure it's safe to send.</p>
+                        <p class="govuk-body">This could take up to a minute.</p>
                         <button type="submit" draggable="false"
                                 class="govuk-button govuk-!-margin-top-6 govuk-!-margin-bottom-6 govuk-!-margin-right-4"
                                 data-module="govuk-button">
