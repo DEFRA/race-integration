@@ -12,11 +12,12 @@
 <div class="govuk-width-container" style="min-height: 70vh;">
 
     <FeedbackBannerSignOut />
+    
+    <a class="govuk-back-link" @onclick="GoToPrevPage" style="color:black">Back</a>
 
-    <main class="govuk-main-wrapper--auto-spacing" id="main-content" role="main">
-        <a class="govuk-back-link" @onclick="GoToPrevPage" style="color:black">Back</a>
+    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
         <div class="govuk-grid-row">
-            <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-column-full">
                 @if (!YesNoError)
                 {
                 <EditForm Model="@_yesno" OnSubmit="DeleteSelectedEmail">
