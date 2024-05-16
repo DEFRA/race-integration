@@ -19,15 +19,15 @@
     <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-two-thirds">
-                <h1 class="govuk-heading-xl">Edit email address</h1>
+                <h1 class="govuk-heading-l">Edit email address</h1>
                 @if (IsValidEmail)
                 {
                     <EditForm Model="@EmailAddresses" OnSubmit="UpdateEmail">
                         <div class="govuk-form-group">
-                            <label class="govuk-label govuk-label--m" for="email-1">
+                            <label class="govuk-label govuk-label--m" for="edit-email">
                                 Email address
                             </label>
-                            <InputText class="govuk-textarea govuk-!-margin-top-6 govuk-input govuk-!-width-two-thirds" id="edit-emaill" name="edit-emaill" Value-describedby="edit-emaill-hint" @bind-Value="@emailEditDelete"></InputText>
+                            <InputText class="govuk-input govuk-!-width-two-thirds" id="edit-email" name="edit-email" @bind-Value="@emailEditDelete"></InputText>
                         </div>
                         <button type="submit" draggable="false"
                                 class="govuk-button govuk-!-margin-top-6 govuk-!-margin-bottom-6" data-module="govuk-button">
@@ -45,7 +45,14 @@
                             <div class="govuk-error-summary__body">
                                 <ul class="govuk-list govuk-error-summary__list">
                                     <li>
-                                        <a href="#" onclick="return false;">Email cannot be empty and must be in valid format</a>
+                                        @if (IsEmailEmpty)
+                                        {
+                                            <a href="#" onclick="return false;">Enter an email address</a>
+                                        }
+                                        @if (IsEmailFormatWrong)
+                                        {
+                                            <a href="#" onclick="return false;">@emailEditDelete is not in correct format</a>
+                                        }
                                     </li>
                                 </ul>
                             </div>
@@ -55,17 +62,24 @@
                         <div class="govuk-form-group govuk-form-group--error govuk-!-margin-top-8 govuk-!-margin-bottom-4">
                             <fieldset class="govuk-fieldset" aria-describedby="where-do-you-live-error">
                                 <div class="govuk-form-group">
-                                    <label class="govuk-label govuk-label--m" for="email-1">
+                                    <label class="govuk-label govuk-label--m" for="edit-email">
                                         Email address
                                     </label>
                                     <div class="govuk-error-summary__body">
                                         <ul class="govuk-list govuk-error-summary__list">
                                             <li>
-                                                <a href="#" onclick="return false;"> Email cannot be empty and must be in valid format</a>
+                                                @if (IsEmailEmpty)
+                                                {
+                                                    <a href="#" onclick="return false;">Enter an email address</a>
+                                                }
+                                                @if (IsEmailFormatWrong)
+                                                {
+                                                    <a href="#" onclick="return false;">@emailEditDelete is not in correct format</a>
+                                                }
                                             </li>
                                         </ul>
                                     </div>
-                                    <InputText class="govuk-textarea govuk-!-margin-top-6 govuk-input govuk-!-width-two-thirds" id="edit-emaill" name="edit-emaill" Value-describedby="edit-emaill-hint" @bind-Value="emailEditDelete"></InputText>
+                                    <InputText class="govuk-input govuk-!-width-two-thirds" id="edit-email" name="edit-email" @bind-Value="emailEditDelete"></InputText>
                                 </div>
                             </fieldset>
                         </div>
@@ -87,6 +101,8 @@
     public List<string> EmailAddresses { get; set; } = new List<string>();
     private string emailEditDelete { get; set; } = "";
     private bool IsValidEmail { get; set; } = true;
+    private bool IsEmailEmpty { get; set; } = false;
+    private bool IsEmailFormatWrong { get; set; } = false;
     private string emailEditDeleteOriginal { get; set; } = "";
 
     protected async override Task OnInitializedAsync()
@@ -95,7 +111,6 @@
         reportSubmissionData = reportSubmissionDataState.Value;
         EmailAddresses = reportSubmissionData.EmailListToSomeOne;
         emailEditDeleteOriginal = emailEditDelete = reportSubmissionData.EmailEditDelete;
-        IsValidEmail = true;
         await base.OnInitializedAsync();
     }
 
@@ -108,10 +123,21 @@
 
     public async Task UpdateEmail()
     {
-        if (!String.IsNullOrEmpty(emailEditDelete) && !IsValid(emailEditDelete))
+        IsValidEmail = true;
+        IsEmailEmpty = false;
+        IsEmailFormatWrong = false;
+
+        if (String.IsNullOrEmpty(emailEditDelete))
         {
             IsValidEmail = false;
+            IsEmailEmpty = true;
         }
+        else if (!IsValid(emailEditDelete))
+        {
+            IsValidEmail = false;
+            IsEmailFormatWrong = true;
+        }
+
         if (IsValidEmail)
         {
             if (emailEditDelete != emailEditDeleteOriginal)
