@@ -11,41 +11,42 @@
 
 <div class="govuk-width-container" style="min-height: 70vh;">
 
-    <FeedbackBanner />
+    <FeedbackBannerSignOut />
+    
+    <a class="govuk-back-link" @onclick="GoToPrevPage" style="color:black">Back</a>
 
-    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" style="padding-top:20px;padding-bottom:20px;" role="main">
-        <a class="govuk-back-link" @onclick="GoToPrevPage" style="color:black">Back</a>
+    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
         <div class="govuk-grid-row">
-            <div class="govuk-grid-column-three-fourths">
+            <div class="govuk-grid-column-full">
                 @if (!YesNoError)
                 {
-                <EditForm Model="@_yesno" OnSubmit="DeleteSelectedEmail">
-                    <div class="govuk-form-group">
-                        <fieldset class="govuk-fieldset" aria-describedby="">
-                            <legend id="which-idea"
-                                    class="govuk-fieldset__legend govuk-fieldset__legend govuk-fieldset__legend--xl govuk-!-margin-bottom-4">
-                                <h1 class="govuk-fieldset__heading">
-                                    Delete @emailEditDelete
-                                </h1>
-                            </legend>
-                            <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
-                                <InputRadioGroup Name="yesno" @bind-Value="_yesno.YesNoOptions">
-                                    @foreach (Enum value in Enum.GetValues(typeof(YesNoClass.YesNoEnum)))
-                                    {
-                                        <div class="govuk-radios__item">
-                                            <InputRadio Value="@value" class="govuk-radios__input" />
-                                            <span class="govuk-label govuk-radios__label">@value</span>
-                                        </div>
-                                    }
-                                </InputRadioGroup>
-                            </div>
-                        </fieldset>
-                    </div>
-                    <button type="submit" draggable="false"
-                            class="govuk-button govuk-!-margin-top-3 govuk-!-margin-bottom-6 govuk-!-margin-right-4"
-                            data-module="govuk-button">
-                        Continue
-                    </button>
+                    <EditForm Model="@_yesno" OnSubmit="DeleteSelectedEmail">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset" aria-describedby="">
+                                <legend id="which-idea"
+                                        class="govuk-fieldset__legend govuk-fieldset__legend govuk-fieldset__legend--xl govuk-!-margin-bottom-4">
+                                    <h1 class="govuk-fieldset__heading">
+                                        Delete @emailEditDelete
+                                    </h1>
+                                </legend>
+                                <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
+                                    <InputRadioGroup Name="yesno" @bind-Value="_yesno.YesNoOptions">
+                                        @foreach (Enum value in Enum.GetValues(typeof(YesNoClass.YesNoEnum)))
+                                        {
+                                            <div class="govuk-radios__item">
+                                                <InputRadio Value="@value" class="govuk-radios__input" />
+                                                <span class="govuk-label govuk-radios__label">@value</span>
+                                            </div>
+                                        }
+                                    </InputRadioGroup>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" draggable="false"
+                                class="govuk-button govuk-!-margin-top-3 govuk-!-margin-bottom-6 govuk-!-margin-right-4"
+                                data-module="govuk-button">
+                            Continue
+                        </button>
                     </EditForm>
                 }
                 else
@@ -128,7 +129,7 @@
         NavigationManager.NavigateTo(pagelink, forceLoad);
     }
 
-    public async Task DeleteSelectedEmail()    
+    public async Task DeleteSelectedEmail()
     {
         if (_yesno.YesNoOptions == 0)
         {
@@ -147,7 +148,7 @@
         }
         else
         {
-            YesNoError = false;            
+            YesNoError = false;
             bool forceLoad = true;
             string pagelink = "/check-emails";
             NavigationManager.NavigateTo(pagelink, forceLoad);
