@@ -12,8 +12,5 @@ namespace RACE2.BackendAPIIntegration.Models
         public List<IntegrateOrganisatioAddressdto> OrganisationAddress { get; set; } = new List<IntegrateOrganisatioAddressdto>();
         public List<IntegrateMembershipDetails> userMembership { get; set; } = new List<IntegrateMembershipDetails>();
 
-
-      
-      
     }
 }
