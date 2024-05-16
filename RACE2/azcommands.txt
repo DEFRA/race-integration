@@ -30,18 +30,21 @@ az acr run --registry POCRACINFCR1401 --cmd 'acr purge --filter race2securitypro
 az acr run --registry POCRACINFCR1401 --cmd 'acr purge --filter race2frontendwebserver:.*  --ago 0d --keep 1' /dev/null
 az acr run --registry POCRACINFCR1401 --cmd 'acr purge --filter race2webapi:.*  --ago 0d --keep 1' /dev/null
 az acr run --registry POCRACINFCR1401 --cmd 'acr purge --filter race2webapiexternal:.*  --ago 0d --keep 1' /dev/null
+az acr run --registry POCRACINFCR1401 --cmd 'acr purge --filter race2backendapiintegration:.*  --ago 0d --keep 1' /dev/null
 
 az account set -s AZR-RAC-DEV1 //97ea02ef-73bc-4ee9-b320-b38a6b41b4d7
 az acr run --registry DEVRACINFCR1401 --cmd 'acr purge --filter race2securityprovider:.*  --ago 0d --keep 1' /dev/null
 az acr run --registry DEVRACINFCR1401 --cmd 'acr purge --filter race2frontendwebserver:.*  --ago 0d --keep 1' /dev/null
 az acr run --registry DEVRACINFCR1401 --cmd 'acr purge --filter race2webapi:.*  --ago 0d --keep 1' /dev/null
 az acr run --registry DEVRACINFCR1401 --cmd 'acr purge --filter race2webapiexternal:.*  --ago 0d --keep 1' /dev/null
+az acr run --registry DEVRACINFCR1401 --cmd 'acr purge --filter race2backendapiintegration:.*  --ago 0d --keep 1' /dev/null
 
 az account set -s AZR-RAC-TST1  //9327c8db-cebb-445d-9933-1bca1a76b82e
 az acr run --registry TSTRACINFCR1401 --cmd 'acr purge --filter race2securityprovider:.*  --ago 0d --keep 1' /dev/null
 az acr run --registry TSTRACINFCR1401 --cmd 'acr purge --filter race2frontendwebserver:.*  --ago 0d --keep 1' /dev/null
 az acr run --registry TSTRACINFCR1401 --cmd 'acr purge --filter race2webapi:.*  --ago 0d --keep 1' /dev/null
 az acr run --registry TSTRACINFCR1401 --cmd 'acr purge --filter race2webapiexternal:.*  --ago 0d --keep 1' /dev/null
+az acr run --registry TSTRACINFCR1401 --cmd 'acr purge --filter race2backendapiintegration:.*  --ago 0d --keep 1' /dev/null
 
 //sync kris branch with main
 git checkout kris
