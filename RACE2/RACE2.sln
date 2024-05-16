@@ -162,6 +162,46 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DeploymentYamlFiles", "Depl
 		DeploymentYamlFiles\manifest.json = DeploymentYamlFiles\manifest.json
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UtilityFiles", "UtilityFiles", "{2EF5387F-AF94-457B-AF3D-8D08F72D741E}"
+	ProjectSection(SolutionItems) = preProject
+		azcommands.txt = azcommands.txt
+		ContainerAppDeployPOC.ps1 = ContainerAppDeployPOC.ps1
+		ContainerAppWorkspaceDeployDEV.ps1 = ContainerAppWorkspaceDeployDEV.ps1
+		ContainerAppWorkspaceDeployPOC.ps1 = ContainerAppWorkspaceDeployPOC.ps1
+		databasecreation.txt = databasecreation.txt
+		deploylogAnalyticsWorkspace.yml = deploylogAnalyticsWorkspace.yml
+		Dockerfile = Dockerfile
+		Dockerfile_BackendAPIIntegration = Dockerfile_BackendAPIIntegration
+		Dockerfile_FrontEnd = Dockerfile_FrontEnd
+		Dockerfile_FrontEndWeb = Dockerfile_FrontEndWeb
+		Dockerfile_FrontEndWebServer = Dockerfile_FrontEndWebServer
+		Dockerfile_IdentityProvider = Dockerfile_IdentityProvider
+		Dockerfile_SecurityFunction = Dockerfile_SecurityFunction
+		Dockerfile_SecurityProvider = Dockerfile_SecurityProvider
+		Dockerfile_WebApi = Dockerfile_WebApi
+		Dockerfile_WebApiExternal = Dockerfile_WebApiExternal
+		FrontEndDeployPOC.ps1 = FrontEndDeployPOC.ps1
+		FrontEndWebServerDeployDEV.ps1 = FrontEndWebServerDeployDEV.ps1
+		FrontEndWebServerDeployPOC.ps1 = FrontEndWebServerDeployPOC.ps1
+		SecurtyProviderDeployDEV.ps1 = SecurtyProviderDeployDEV.ps1
+		SecurtyProviderDeployPOC.ps1 = SecurtyProviderDeployPOC.ps1
+		SecurtyProviderDeployTST.ps1 = SecurtyProviderDeployTST.ps1
+		sp_GetActionsListByReservoirId.sql = sp_GetActionsListByReservoirId.sql
+		sp_GetAddressForReservoir.sql = sp_GetAddressForReservoir.sql
+		sp_GetOrganisationAddressbyId.sql = sp_GetOrganisationAddressbyId.sql
+		sp_GetSafetyMeasuresListByReservoirId.sql = sp_GetSafetyMeasuresListByReservoirId.sql
+		sp_GetUndertakerforReservoir.sql = sp_GetUndertakerforReservoir.sql
+		sp_GetUserByEmailID.sql = sp_GetUserByEmailID.sql
+		sp_GetUserWithRoles.sql = sp_GetUserWithRoles.sql
+		sp_UpdateFirstTimeUser.sql = sp_UpdateFirstTimeUser.sql
+		ValidateUser.txt = ValidateUser.txt
+		WebApiDeployDEV.ps1 = WebApiDeployDEV.ps1
+		WebApiDeployPOC.ps1 = WebApiDeployPOC.ps1
+		WebApiExternalDeployPOC.ps1 = WebApiExternalDeployPOC.ps1
+		webapp.istioinaction.io.cert.pem = webapp.istioinaction.io.cert.pem
+		webapp.istioinaction.io.key.pem = webapp.istioinaction.io.key.pem
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
