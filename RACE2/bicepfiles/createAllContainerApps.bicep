@@ -7,8 +7,8 @@ param securityProviderContainerAppName string
 param securityprovidercontainerImage string
 param webApiContainerAppName string
 param webapicontainerImage string
-param webApiExternalContainerAppName string
-param webapiexternalcontainerImage string
+param backendapiintegrationContainerAppName string
+param backendapiintegrationcontainerImage string
 param frontEndWebServerContainerAppName string
 param frontendwebservercontainerImage string
 param registryName string
@@ -92,19 +92,19 @@ module createwebapicontainerappmodule 'createwebapicontainerapp.bicep' = {
     allowInsecure: allowInsecure
   }
 }
-module createwebapiexternalcontainerappmodule 'createwebapiexternalcontainerapp.bicep' = {
+module createbackendapiintegrationcontainerappmodule 'createbackendapiintegrationcontainerapp.bicep' = {
   scope: resourceGroup(resourcegroup)
-  name: 'webapiexternalcontainerappdeploy'
+  name: 'backendapiintegrationcontainerappdeploy'
   params: {
     azureTenanatId: azureTenanatId
     location: location
     race2appenv: race2appenvName
-    containerAppName: webApiExternalContainerAppName
+    containerAppName: backendapiintegrationContainerAppName
     registryName: registryName
     resourcegroup: resourcegroup
     useExternalIngress: useExternalIngress
     containerPort: containerPort
-    containerImage: webapiexternalcontainerImage
+    containerImage: backendapiintegrationcontainerImage
     managedidentity: managedidentity
     appConfigURL: appConfigURL
     aspnetCoreEnv: aspnetCoreEnv
