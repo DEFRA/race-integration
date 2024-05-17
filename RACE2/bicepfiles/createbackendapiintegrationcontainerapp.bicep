@@ -66,7 +66,7 @@ resource containerBackendApiIntegrationApp 'Microsoft.App/containerApps@2023-08-
               value: managedIdentity_resource.properties.clientId
             }
             {
-              name: 'ManagedIdenityClientId'
+              name: 'ManagedIdentityClientId'
               value: managedIdentity_resource.properties.clientId
             }
           ]          
