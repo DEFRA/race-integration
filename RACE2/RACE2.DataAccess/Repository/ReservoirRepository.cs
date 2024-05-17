@@ -963,7 +963,7 @@ namespace RACE2.DataAccess.Repository
 
         public async Task<SubmissionStatus> InsertSubmissionDetails(SubmissionStatus submissionStatus)
         {
-            _logger.LogInformation("Insert new Submission for reservoir" + submissionStatus.ReservoirId);
+            _logger.LogInformation("Insert new Submission for reservoir" + submissionStatus.ReservoirId );
             try
             {
                 using (var conn = Connection)
@@ -971,7 +971,7 @@ namespace RACE2.DataAccess.Repository
                     var parameters = new DynamicParameters();
                     parameters.Add("@reservoirid", submissionStatus.ReservoirId, DbType.Int32);
                     parameters.Add("@submissionreference", submissionStatus.SubmissionReference, DbType.String);
-                    parameters.Add("@lastmodifiedtime", submissionStatus.LastModifiedDateTime, DbType.DateTime);
+                    parameters.Add("@lastmodifiedtime", submissionStatus.LastModifiedDateTime, DbType.DateTime);                   
                     parameters.Add("@userid", submissionStatus.SubmittedByUserId, DbType.Int32);
                     parameters.Add("@isRevision", submissionStatus.IsRevision, DbType.Boolean);
                     parameters.Add("@revisionSummary", submissionStatus.RevisionSummary, DbType.String);
@@ -990,10 +990,10 @@ namespace RACE2.DataAccess.Repository
                 _logger.LogError(ex, ex.Message);
                 return null;
             }
-
+            
         }
 
-        public string GenerateSubmissionReference(int reservoirid, DateTime submitteddatetime, int serviceid)
+        public string GenerateSubmissionReference(int reservoirid, DateTime submitteddatetime,int serviceid)
         {
             string submissionreference = "100000";
             _logger.LogInformation("Generate Submission Reference");
@@ -1046,7 +1046,7 @@ namespace RACE2.DataAccess.Repository
                 _logger.LogError(ex, ex.Message);
                 return new DateTime();
             }
-            return lastsent;
+           return lastsent;
         }
 
 
@@ -1054,7 +1054,7 @@ namespace RACE2.DataAccess.Repository
         {
             try
             {
-                using (var conn = Connection)
+                using(var conn = Connection)
                 {
                     var parameters = new DynamicParameters();
                     parameters.Add("@reservoirid", reservoirid, DbType.Int32);

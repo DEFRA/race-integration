@@ -11,13 +11,13 @@ namespace RACE2.DataModel
     [Table("DocumentTemplate")]
     public class DocumentTemplate
     {
-        [Key, Required]
+        [Key,Required]
         public int Id { get; set; }
-        [Required, StringLength(64)]
+        [Required,StringLength(64)]
         public string TemplateType { get; set; }
-        [Required, StringLength(260)]
+        [Required,StringLength(260)]
         public string TemplateName { get; set; }
-        [StringLength(64)]
+        [StringLength (64)]
         public string TemplateVersion { get; set; }
         public DateTime? TemplateStartDate { get; set; }
         public DateTime? TemplateEndDate { get; set; }
@@ -28,7 +28,7 @@ namespace RACE2.DataModel
 
         public int? UserId { get; set; }
         [ForeignKey("UserId")]
-        public virtual UserDetail UserDetail { get; set; }
+        public virtual UserDetail UserDetail { get; set; } 
 
         public int? OrganisationId { get; set; }
         [ForeignKey("OrganisationId")]

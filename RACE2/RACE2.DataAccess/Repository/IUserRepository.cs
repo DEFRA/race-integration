@@ -18,7 +18,7 @@ namespace RACE2.DataAccess.Repository
         //public Task<UserDetail> ValidateUser(UserDetail loginuser);
         public Task<UserSpecificDto> GetUserWithRoles(string email);
         public Task<UserDetail> MatchUserWithEmailAndPasswordHash(string email, string passwordhash);
-        public Task<UserDetail> UpdatePasswordHashForUser(int id, string passwordhash);
+        public Task<UserDetail> UpdatePasswordHashForUser(int id, string passwordhash);          
 
         public Task<IEnumerable<FeatureFunction>> GetFeaturePermissionForRole(int roleid);
         public Task<OrganisationDTO> GetOrganisationAddressbyId(int orgId);
@@ -28,8 +28,11 @@ namespace RACE2.DataAccess.Repository
 
         public Task<OrganisationDTO> GetCompanyNameByUserId(int userId);
 
-        public Task<UserSpecificDto> GetAuthorizedUser(string email, string mobilenumber);
+        public Task<UserSpecificDto> GetAuthorizedUser(string  email, string mobilenumber);       
+
+        public Task<int> InsertUndertakerEmails(List<SubmissionEmailNotification> submissionEmailNotification);
 
 
+        
     }
 }

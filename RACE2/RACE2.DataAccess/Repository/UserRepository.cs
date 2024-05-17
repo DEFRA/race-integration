@@ -116,12 +116,12 @@ namespace RACE2.DataAccess.Repository
                     var result = users.GroupBy(u => u.Id).Select(g =>
                     {
                         var groupedUser = g.First();
-                        groupedUser.roles = g.Select(u => u.roles.Single()).ToList();
+                       groupedUser.roles = g.Select(u => u.roles.Single()).ToList();
                         return groupedUser;
                     });
                     return result.FirstOrDefault();
 
-
+                   
                 }
             }
             catch (Exception ex)
@@ -320,7 +320,7 @@ namespace RACE2.DataAccess.Repository
             }
         }
 
-
+        
 
         public async Task<IEnumerable<FeatureFunction>> GetFeaturePermissionForRole(int roleid)
         {
@@ -355,20 +355,20 @@ namespace RACE2.DataAccess.Repository
         {
             using (var conn = Connection)
             {
-
+                
                 var parameters = new DynamicParameters();
                 parameters.Add("orgId", orgId, DbType.Int64);
 
-                var OrgAddress = await conn.QueryAsync<OrganisationDTO, Address, OrganisationDTO>("sp_GetOrganisationAddressbyId", (organisation, address) =>
-                {
+                var OrgAddress = await conn.QueryAsync<OrganisationDTO, Address, OrganisationDTO>("sp_GetOrganisationAddressbyId", (organisation,address) =>
+                { 
                     organisation.Addresses.Add(address);
                     return organisation;
-
-                }, parameters, splitOn: "Addressid,OrganisationId", commandType: CommandType.StoredProcedure);
+                 
+                }, parameters,splitOn: "Addressid,OrganisationId", commandType: CommandType.StoredProcedure);
                 var result = OrgAddress.GroupBy(u => u.Id).Select(g =>
                 {
                     var groupedOrg = g.First();
-                    groupedOrg.Addresses = g.Select(u => u.Addresses.Single()).ToList();
+                   groupedOrg.Addresses= g.Select(u => u.Addresses.Single()).ToList();
                     return groupedOrg;
                 });
 
@@ -392,17 +392,17 @@ namespace RACE2.DataAccess.Repository
                             var parameters = new DynamicParameters();
                             parameters.Add("@email", email, DbType.String);
                             parameters.Add("@changeFirstTimeUserValue", val, DbType.Boolean);
-                            await conn.ExecuteAsync("sp_UpdateFirstTimeUser", parameters, commandType: CommandType.StoredProcedure);
+                            await conn.ExecuteAsync("sp_UpdateFirstTimeUser", parameters,commandType:CommandType.StoredProcedure);
                             //await conn.ExecuteAsync("Update AspNetUsers SET c_IsFirstTimeUser=0 WHERE email=@email",param:new{email=email});
                             return 1;
 
                         }
                     }
-                    catch
+                    catch 
                     {
                         _logger.LogInformation("Exception thrown");
                         return 0;
-                    }
+                    }                    
                 }
                 else
                 {
@@ -467,8 +467,8 @@ namespace RACE2.DataAccess.Repository
                     parameters.Add("userid", userId, DbType.String);
 
 
-                    var user = await conn.QueryAsync<OrganisationDTO>("sp_GetCompanyNameByUserId", parameters, commandType: CommandType.StoredProcedure);
-
+                    var user = await conn.QueryAsync<OrganisationDTO>("sp_GetCompanyNameByUserId",parameters, commandType: CommandType.StoredProcedure);
+                   
                     return user.FirstOrDefault();
 
                 }
@@ -512,20 +512,49 @@ namespace RACE2.DataAccess.Repository
                     parameters.Add("@mobilenumber", mobilenumber, DbType.String);
                     parameters.Add("@result", dbType: DbType.Int32, direction: ParameterDirection.Output);
 
-                   
-                    var userresult = await conn.QueryAsync<UserSpecificDto>("sp_GetUserWithRoles", parameters, commandType: CommandType.StoredProcedure);
                     int validuser = parameters.Get<Int32>("@result");
+                    var userresult = await conn.QueryAsync<UserSpecificDto>("sp_GetUserWithRoles", parameters, commandType: CommandType.StoredProcedure);
                     UserSpecificDto authorisedUser = new UserSpecificDto();
                     authorisedUser = userresult.FirstOrDefault();
                     authorisedUser.IsValiduser = validuser;
                     return authorisedUser;
-
+                    
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex) 
             {
                 _logger.LogError(ex, ex.Message);
                 return null;
+            }
+        }
+
+        public async Task<int> InsertUndertakerEmails(List<SubmissionEmailNotification> submissionEmailNotification)
+        {
+
+            _logger.LogInformation("Adding Undertaker Email ");
+            try
+            {
+
+                using (var conn = Connection)
+                {
+                    foreach (var email in submissionEmailNotification)
+                    {
+                        var parameters = new DynamicParameters();
+                        parameters.Add("@submissionstatusid", email.SubmissionStatusId, DbType.Int32);
+                        parameters.Add("@email", email.Email, DbType.String);
+                        parameters.Add("@isoverrideprimarycontact", email.IsOverridePrimaryContact, DbType.Boolean);
+                        parameters.Add("@contactType", email.ContactType, DbType.String);
+                        var result = await conn.ExecuteAsync("sp_InsertUndertakerEmails", parameters, commandType: CommandType.StoredProcedure);
+                    }
+
+                    return 1;
+
+                }
+            }
+           
+            catch (SqlException e)
+            {
+                throw new Exception($"Failed to insert undertaker email: {e.Message}", e);
             }
         }
     }

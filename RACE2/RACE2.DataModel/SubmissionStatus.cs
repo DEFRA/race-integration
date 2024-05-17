@@ -17,7 +17,7 @@ namespace RACE2.DataModel
         [Required]
         [Column(TypeName = "varchar")]
         [MaxLength(64)]
-        public string SubmissionReference { get; set; }
+        public string SubmissionReference {  get; set; }
         [Required]
         public int ServiceId { get; set; }
         [ForeignKey("ServiceId")]
@@ -26,19 +26,19 @@ namespace RACE2.DataModel
         [ForeignKey("ReservoirId")]
         public virtual Reservoir Reservoir { get; set; }
 
-        public bool IsCurrent { get; set; }
+        public bool  IsCurrent { get; set; }
         public bool IsLegacySubmission { get; set; }
-
+     
 
         public DateTime DueDate { get; set; }
         [Required]
         public string? Status { get; set; }
-        [Required]
+        [Required]  
         public DateTime LastModifiedDateTime { get; set; }
         [Required]
         public int LastModifiedByUserId { get; set; }
         [ForeignKey("LastModifiedByUserId")]
-        public virtual UserDetail LastModifiedUserDetail { get; set; }
+        public virtual UserDetail LastModifiedUserDetail { get; set; }        
         [Required]
         public int? LastModifiedScreenId { get; set; }
         [Required]
@@ -47,9 +47,9 @@ namespace RACE2.DataModel
         public int SubmittedByUserId { get; set; }
         [ForeignKey("SubmittedByUserId")]
         public virtual UserDetail SubmittedUserDetail { get; set; }
-
-        public string? OverrideTemplateName { get; set; }
-        public string RevisionSummary { get; set; }
+       
+        public string? OverrideTemplateName { get; set; } 
+        public string RevisionSummary {  get; set; }
 
         [Required]
         public bool IsRevision { get; set; }

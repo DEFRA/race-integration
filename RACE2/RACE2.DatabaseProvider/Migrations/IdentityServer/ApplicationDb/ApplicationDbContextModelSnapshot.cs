@@ -17,7 +17,7 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.3")
+                .HasAnnotation("ProductVersion", "8.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -592,6 +592,62 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                     b.HasIndex("SubmissionId");
 
                     b.ToTable("DocumentSubmission");
+                });
+
+            modelBuilder.Entity("RACE2.DataModel.DocumentTemplate", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("IsDefaultTemplate")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("OrganisationId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ReservoirId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ServiceId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("TemplateEndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TemplateName")
+                        .IsRequired()
+                        .HasMaxLength(260)
+                        .HasColumnType("nvarchar(260)");
+
+                    b.Property<DateTime?>("TemplateStartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TemplateType")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("TemplateVersion")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrganisationId");
+
+                    b.HasIndex("ReservoirId");
+
+                    b.HasIndex("ServiceId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("DocumentTemplate");
                 });
 
             modelBuilder.Entity("RACE2.DataModel.EarlyInspection", b =>
@@ -1711,6 +1767,37 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                     b.ToTable("StatementDetails");
                 });
 
+            modelBuilder.Entity("RACE2.DataModel.SubmissionEmailNotification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ContactType")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<bool>("IsOverridePrimaryContact")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("SubmissionStatusId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SubmissionStatusId");
+
+                    b.ToTable("SubmissionEmailNotification");
+                });
+
             modelBuilder.Entity("RACE2.DataModel.SubmissionStatus", b =>
                 {
                     b.Property<int>("Id")
@@ -2422,6 +2509,33 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                     b.Navigation("Submission");
                 });
 
+            modelBuilder.Entity("RACE2.DataModel.DocumentTemplate", b =>
+                {
+                    b.HasOne("RACE2.DataModel.Organisation", "Organisation")
+                        .WithMany()
+                        .HasForeignKey("OrganisationId");
+
+                    b.HasOne("RACE2.DataModel.Reservoir", "Reservoir")
+                        .WithMany()
+                        .HasForeignKey("ReservoirId");
+
+                    b.HasOne("RACE2.DataModel.FeatureFunction", "FeatureFunction")
+                        .WithMany()
+                        .HasForeignKey("ServiceId");
+
+                    b.HasOne("RACE2.DataModel.UserDetail", "UserDetail")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("FeatureFunction");
+
+                    b.Navigation("Organisation");
+
+                    b.Navigation("Reservoir");
+
+                    b.Navigation("UserDetail");
+                });
+
             modelBuilder.Entity("RACE2.DataModel.EarlyInspection", b =>
                 {
                     b.HasOne("RACE2.DataModel.Reservoir", "Reservoir")
@@ -2648,9 +2762,20 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                     b.Navigation("Document");
                 });
 
+            modelBuilder.Entity("RACE2.DataModel.SubmissionEmailNotification", b =>
+                {
+                    b.HasOne("RACE2.DataModel.SubmissionStatus", "SubmissionStatus")
+                        .WithMany()
+                        .HasForeignKey("SubmissionStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("SubmissionStatus");
+                });
+
             modelBuilder.Entity("RACE2.DataModel.SubmissionStatus", b =>
                 {
-                    b.HasOne("RACE2.DataModel.UserDetail", "LastModifiedByUser")
+                    b.HasOne("RACE2.DataModel.UserDetail", "LastModifiedUserDetail")
                         .WithMany()
                         .HasForeignKey("LastModifiedByUserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -2668,19 +2793,19 @@ namespace RACE2.DatabaseProvider.Migrations.IdentityServer.ApplicationDb
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("RACE2.DataModel.UserDetail", "SubmittedByUser")
+                    b.HasOne("RACE2.DataModel.UserDetail", "SubmittedUserDetail")
                         .WithMany()
                         .HasForeignKey("SubmittedByUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("LastModifiedByUser");
+                    b.Navigation("LastModifiedUserDetail");
 
                     b.Navigation("Reservoir");
 
                     b.Navigation("Service");
 
-                    b.Navigation("SubmittedByUser");
+                    b.Navigation("SubmittedUserDetail");
                 });
 
             modelBuilder.Entity("RACE2.DataModel.SupportingDocument", b =>
