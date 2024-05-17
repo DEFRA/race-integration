@@ -29,9 +29,9 @@
                             @{
                                 int emailcount = 1;
                             }
-                            @foreach (var email in EmailAddresses)
-                            {
-                                <dl class="govuk-summary-list">
+                            <dl class="govuk-summary-list">
+                                @foreach (var email in EmailAddresses)
+                                {
                                     <div class="govuk-summary-list__row">
                                         <dt class="govuk-summary-list__key">
                                             Email address @emailcount
@@ -50,9 +50,10 @@
                                             </ul>
                                         </dd>
                                     </div>
-                                </dl>
-                                emailcount++;
-                            }
+
+                                    emailcount++;
+                                }
+                            </dl>
                         </div>
 
                         <button type="submit" draggable="false"
@@ -93,9 +94,10 @@
                             @{
                                 int emailcount = 1;
                             }
-                            @foreach (var email in EmailAddresses)
-                            {
-                                <dl class="govuk-summary-list">
+                            <dl class="govuk-summary-list">
+                                @foreach (var email in EmailAddresses)
+                                {
+
                                     <div class="govuk-summary-list__row">
                                         <dt class="govuk-summary-list__key">
                                             Email address @emailcount
@@ -113,10 +115,10 @@
                                                 </li>
                                             </ul>
                                         </dd>
-                                    </div>
-                                </dl>
-                                emailcount++;
-                            }
+                                    </div>                                
+                                    emailcount++;
+                                }
+                            </dl>
                         </div>
 
                         <button type="submit" draggable="false"
