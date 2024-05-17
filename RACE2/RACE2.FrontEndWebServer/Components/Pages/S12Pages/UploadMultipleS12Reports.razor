@@ -12,14 +12,11 @@
 @inject IBlobStorageService blobStorageService
 @inject IUserService userService
 @inject IJSRuntime jsRuntime
-@inject ProtectedSessionStorage ProtectedSessionStore
 
 @attribute [Authorize]
 
 <div class="govuk-width-container ">
-
     <a class="govuk-back-link" @onclick="goback">Back</a>
-
     <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
 
         <div class="govuk-grid-row">
@@ -92,7 +89,7 @@
 
 @code {
     private int UserId { get; set; } = 0;
-    private string UserEmail { get; set; } = "";
+    private string UserName { get; set; } = "Unknown";
     private UserDetail UserDetail { get; set; }
     private string warninngMessage = "";
     private string displayMessage = "";
@@ -104,18 +101,17 @@
     IReadOnlyList<IBrowserFile> selectedFiles;
     private List<FileUploadViewModel> fileUploadViewModels = new();
     public Reservoir CurrentReservoir { get; set; } = new Reservoir();
-    public ReportSubmissionDataDto reportSubmissionData { get; set; }
-
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthenticationStateTask { get; set; }
     protected async override Task OnInitializedAsync()
     {
-        var reportSubmissionDataState = await ProtectedSessionStore.GetAsync<ReportSubmissionDataDto>("CurrentReportSubmissionData");
-        reportSubmissionData = reportSubmissionDataState.Value;
-        UserEmail = reportSubmissionData.UserEmail;
-        var userDetails = await userService.GetUserByEmailID(UserEmail);
+        AuthenticationState authState = await AuthenticationStateTask; // AuthenticationStateProvider.GetAuthenticationStateAsync();
+        UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
+        var userDetails = await userService.GetUserByEmailID(UserName);
         UserId = userDetails.Id;
         UserDetail = new UserDetail()
             {
-                UserName = UserEmail,
+                UserName = UserName,
                 Id = UserId,
                 Email = userDetails.Email,
                 cFirstName = userDetails.cFirstName,

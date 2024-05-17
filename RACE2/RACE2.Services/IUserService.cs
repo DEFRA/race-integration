@@ -17,7 +17,7 @@ namespace RACE2.Services
         //public Task<UserDetail> ValidateUser(UserDetail loginuser);
         public Task<UserSpecificDto> GetUserWithRoles(string email);
         public Task<UserDetail> MatchUserWithEmailAndPasswordHash(string email, string passwordhash);
-        public Task<UserDetail> UpdatePasswordHashForUser(int id, string passwordhash);
+        public Task<UserDetail> UpdatePasswordHashForUser(int id, string passwordhash);      
 
         public Task<OrganisationDTO> GetOrganisationAddressbyId(int userId);
 
@@ -31,6 +31,8 @@ namespace RACE2.Services
         public Task<OrganisationDTO> GetCompanyNameByUserId(int userId);
 
         public Task<UserSpecificDto> GetAuthorizedUser(string email, string mobilenumber);
+
+        public Task<int> InsertUndertakerEmails(List<SubmissionEmailNotification> submissionEmailNotification);
 
     }
 }

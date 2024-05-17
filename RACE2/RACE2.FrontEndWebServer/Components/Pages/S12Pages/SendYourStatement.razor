@@ -8,7 +8,6 @@
 @attribute [Authorize]
 
 <PageTitle>Who the statement will go to - Send a supervising engineer's annual statement - GOV.UK</PageTitle>
-
 <HeaderWithBanner />
 
 <div class="govuk-width-container" style="min-height: 69vh;">
@@ -17,7 +16,7 @@
 
     <a class="govuk-back-link" @onclick="GoToPrevPage" style="color:black">Back</a>
 
-    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">        
 
         <div class="govuk-grid-row">
 
@@ -25,32 +24,21 @@
                 @if (!YesNoError)
                 {
                     <div class="govuk-form-group">
-
                         <h1 class="govuk-heading-xl">
                             Who the statement will go to
                         </h1>
-
-                        <p class="govuk-body govuk-!-padding-top-4">
+                        <p class="govuk-body">
                             The statement will go to the Environment Agency but you can use this service to send it to the undertaker too.
                         </p>
                         <p class="govuk-body">
-                            These are the details we hold for the undertaker.
+                            Here are the contact details we hold for the undertaker of @reportSubmissionData.ReservoirRegName.
                         </p>
 
                         <dl class="govuk-summary-list govuk-!-margin-top-4">
 
                             <div class="govuk-summary-list__row">
                                 <dt class="govuk-summary-list__key">
-                                    Reservoir
-                                </dt>
-                                <dd class="govuk-summary-list__value govuk-!-padding-left-9" for="reservoir-named-undertaker"
-                                    id="reservoir-named-undertaker" name="reservoir-named-undertaker">
-                                    @reportSubmissionData.ReservoirRegName
-                                </dd>
-                            </div>
-                            <div class="govuk-summary-list__row">
-                                <dt class="govuk-summary-list__key">
-                                    Undertaker
+                                    Undertaker contact
                                 </dt>
                                 <dd class="govuk-summary-list__value govuk-!-padding-left-9" for="reservoir-named-undertaker"
                                     id="reservoir-named-undertaker" name="reservoir-named-undertaker">
@@ -73,19 +61,28 @@
                             <div class="govuk-form-group govuk-!-margin-top-6 govuk-!-padding-top-8 govuk-!-margin-bottom-4">
                                 <fieldset class="govuk-fieldset" aria-describedby="send-to-undertaker">
                                     <h2 id="send-to-undertaker" class="govuk-fieldset__legend govuk-fieldset__legend govuk-fieldset__legend--m">
-                                        Do you want to send the statement to the undertaker too?
+                                        Do you want to send the statement to @reportSubmissionData.UndertakerName?
                                     </h2>
 
-                                    <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
+                                    <div class="govuk-radios" data-module="govuk-radios">
                                         <InputRadioGroup Name="yesno" @bind-Value="_yesno.YesNoOptions">
                                             @foreach (Enum value in Enum.GetValues(typeof(YesNoClass.YesNoEnum)))
                                             {
-                                                <div class="govuk-radios__item">
-                                                    <InputRadio Value="@value" class="govuk-radios__input" />
-                                                    <span class="govuk-label govuk-radios__label">@value</span>
-                                                </div>
+                                                if (value.ToString() == "UndertakerDetailsStatus")
+                                                {
+                                                    <div class="govuk-radios__item">
+                                                        <InputRadio Value="@value" class="govuk-radios__input" />
+                                                        <span class="govuk-label govuk-radios__label">No, the undertaker's details are wrong</span>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="govuk-radios__item">
+                                                        <InputRadio Value="@value" class="govuk-radios__input" />
+                                                        <span class="govuk-label govuk-radios__label">@value</span>
+                                                    </div>
+                                                }
                                             }
-
                                         </InputRadioGroup>
                                     </div>
                                 </fieldset>
@@ -109,7 +106,7 @@
                             <div class="govuk-error-summary__body">
                                 <ul class="govuk-list govuk-error-summary__list">
                                     <li>
-                                        <a href="#">Select yes if you want to send the statement to the undertaker too</a>
+                                        <a href="#" onclick="return false;">Select yes if you want to send the statement to @reportSubmissionData.UndertakerName</a>
                                     </li>
                                 </ul>
                             </div>
@@ -137,16 +134,7 @@
 
                             <div class="govuk-summary-list__row">
                                 <dt class="govuk-summary-list__key">
-                                    Reservoir
-                                </dt>
-                                <dd class="govuk-summary-list__value govuk-!-padding-left-9" for="reservoir-named-undertaker"
-                                    id="reservoir-named-undertaker" name="reservoir-named-undertaker">
-                                    @reportSubmissionData.ReservoirRegName
-                                </dd>
-                            </div>
-                            <div class="govuk-summary-list__row">
-                                <dt class="govuk-summary-list__key">
-                                    Undertaker
+                                    Undertaker contact
                                 </dt>
                                 <dd class="govuk-summary-list__value govuk-!-padding-left-9" for="reservoir-named-undertaker"
                                     id="reservoir-named-undertaker" name="reservoir-named-undertaker">
@@ -169,22 +157,35 @@
                             <fieldset class="govuk-fieldset" aria-describedby="where-do-you-live-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                                     <h2 class="govuk-fieldset__heading">
-                                        Do you want to send the statement to the undertaker too?
+                                        Do you want to send the statement to @reportSubmissionData.UndertakerName?
                                     </h2>
                                 </legend>
-                                <p id="where-do-you-live-error" class="govuk-error-message">
-                                    <span class="govuk-visually-hidden">Error:</span>Select yes if you want to send the
-                                    statement to the undertaker too
-                                </p>
+                                <div class="govuk-error-summary__body">
+                                    <ul class="govuk-list govuk-error-summary__list">
+                                        <li>
+                                            <a href="#" onclick="return false;">Select yes if you want to send the statement to @reportSubmissionData.UndertakerName</a>
+                                        </li>
+                                    </ul>
+                                </div>
 
-                                <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
+                                <div class="govuk-radios" data-module="govuk-radios">
                                     <InputRadioGroup Name="yesno" @bind-Value="_yesno.YesNoOptions">
                                         @foreach (Enum value in Enum.GetValues(typeof(YesNoClass.YesNoEnum)))
                                         {
-                                            <div class="govuk-radios__item">
-                                                <InputRadio Value="@value" class="govuk-radios__input" />
-                                                <span class="govuk-label govuk-radios__label">@value</span>
-                                            </div>
+                                            if (value.ToString() == "UndertakerDetailsStatus")
+                                            {
+                                                <div class="govuk-radios__item">
+                                                    <InputRadio Value="@value" class="govuk-radios__input" />
+                                                    <span class="govuk-label govuk-radios__label">No, the undertaker's details are wrong</span>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="govuk-radios__item">
+                                                    <InputRadio Value="@value" class="govuk-radios__input" />
+                                                    <span class="govuk-label govuk-radios__label">@value</span>
+                                                </div>
+                                            }
                                         }
 
                                     </InputRadioGroup>
@@ -236,10 +237,17 @@
         {
             YesNoError = false;
             var savedReportSubmissionData = await ProtectedSessionStore.GetAsync<ReportSubmissionDataDto>("CurrentReportSubmissionData");
-            savedReportSubmissionData.Value.YesNoValue = _yesno.YesNoOptions.ToString();
+            savedReportSubmissionData.Value.YesNoValueUndertaker = _yesno.YesNoOptions.ToString();
             await ProtectedSessionStore.SetAsync("CurrentReportSubmissionData", savedReportSubmissionData.Value);
             bool forceLoad = false;
-            NavigationManager.NavigateTo("/upload-your-template", forceLoad);
+            if (_yesno.YesNoOptions.ToString() == "Yes")
+            {
+                NavigationManager.NavigateTo("/send-your-statement-to-someone-also", forceLoad);
+            }
+            else
+            {
+                NavigationManager.NavigateTo("/send-your-statement-to-someone-else", forceLoad);
+            }
         }
     }
     public void GoToMyAccountPage()
@@ -263,7 +271,7 @@
 
     public class YesNoClass
     {
-        public enum YesNoEnum { Yes = 1, No = 2 };
+        public enum YesNoEnum { Yes = 1, No = 2, UndertakerDetailsStatus = 3 };
         public YesNoEnum YesNoOptions = 0;
     }
 }

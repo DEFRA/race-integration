@@ -195,11 +195,23 @@ namespace RACE2.Services
         {
             try
             {
-                return await _userRepository.GetAuthorizedUser(email, mobilenumber);
+                return await _userRepository.GetAuthorizedUser(email,mobilenumber);
             }
             catch (Exception ex)
             {
                 return null;
+            }
+        }
+
+        public async Task<int> InsertUndertakerEmails(List<SubmissionEmailNotification> submissionEmailNotification)
+        {
+            try
+            {
+                return await _userRepository.InsertUndertakerEmails(submissionEmailNotification);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 
