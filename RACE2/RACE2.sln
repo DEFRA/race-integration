@@ -181,6 +181,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UtilityFiles", "UtilityFile
 		FrontEndDeployPOC.ps1 = FrontEndDeployPOC.ps1
 		FrontEndWebServerDeployDEV.ps1 = FrontEndWebServerDeployDEV.ps1
 		FrontEndWebServerDeployPOC.ps1 = FrontEndWebServerDeployPOC.ps1
+		GetUser.txt = GetUser.txt
 		SecurtyProviderDeployDEV.ps1 = SecurtyProviderDeployDEV.ps1
 		SecurtyProviderDeployPOC.ps1 = SecurtyProviderDeployPOC.ps1
 		SecurtyProviderDeployTST.ps1 = SecurtyProviderDeployTST.ps1
