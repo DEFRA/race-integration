@@ -52,6 +52,9 @@
     },
     "webApiContainerAppName": {
       "value":"race2webapi"
+    },
+    "backendapiintegrationContainerAppName": {
+      "value": "race2backendapiintegration"
     },    
     "frontendwebservercontainerImage": {
       "value":"pocracinfcr1402.azurecr.io/race2frontendwebserver"
@@ -61,6 +64,9 @@
     },
     "webapicontainerImage": {
       "value": "pocracinfcr1402.azurecr.io/race2webapi"
+    },
+    "backendapiintegrationcontainerImage": {
+      "value": "pocracinfcr1402.azurecr.io/race2backendapiintegration"
     }
   }
 }
