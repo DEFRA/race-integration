@@ -31,9 +31,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.MultipleTriggerAzureF
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.AzFnAppWithMultiTriggeredFunctions", "RACE2.AzFnAppWithMultiTriggeredFunctions\RACE2.AzFnAppWithMultiTriggeredFunctions.csproj", "{12DD928D-4763-41B0-AADF-509EF3D08594}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.BackendIntegrationAPI", "RACE2.BackendIntegrationAPI\RACE2.BackendIntegrationAPI.csproj", "{D40BE9E4-D49B-45E9-97EE-0EA243707363}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.GovUK.OneloginAuth", "RACE2.GovUK.OneloginAuth\RACE2.GovUK.OneloginAuth.csproj", "{CCDB00F2-4B64-49A4-BC16-8DE75CE8269D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.BackendAPIIntegration", "RACE2.BackendAPIIntegration\RACE2.BackendAPIIntegration.csproj", "{7D552E12-1D6F-4A5D-8837-AA1DE8B3DAB2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -97,14 +97,14 @@ Global
 		{12DD928D-4763-41B0-AADF-509EF3D08594}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12DD928D-4763-41B0-AADF-509EF3D08594}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12DD928D-4763-41B0-AADF-509EF3D08594}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D40BE9E4-D49B-45E9-97EE-0EA243707363}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D40BE9E4-D49B-45E9-97EE-0EA243707363}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D40BE9E4-D49B-45E9-97EE-0EA243707363}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D40BE9E4-D49B-45E9-97EE-0EA243707363}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CCDB00F2-4B64-49A4-BC16-8DE75CE8269D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CCDB00F2-4B64-49A4-BC16-8DE75CE8269D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CCDB00F2-4B64-49A4-BC16-8DE75CE8269D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CCDB00F2-4B64-49A4-BC16-8DE75CE8269D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D552E12-1D6F-4A5D-8837-AA1DE8B3DAB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D552E12-1D6F-4A5D-8837-AA1DE8B3DAB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D552E12-1D6F-4A5D-8837-AA1DE8B3DAB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D552E12-1D6F-4A5D-8837-AA1DE8B3DAB2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
