@@ -1,0 +1,169 @@
+﻿@page "/edit-email"
+@using Microsoft.AspNetCore.Authorization;
+@using RACE2.FrontEndWebServer.Components
+@using RACE2.Dto
+@using System.Text.RegularExpressions;
+@inject NavigationManager NavigationManager
+@inject ProtectedSessionStorage ProtectedSessionStore
+
+<PageTitle>Edit email address - Send a supervising engineer's annual statement - GOV.UK</PageTitle>
+
+<HeaderWithBanner />
+
+<div class="govuk-width-container" style="min-height: 70vh;">
+
+    <FeedbackBannerSignOut />
+    
+    <a class="govuk-back-link" @onclick="GoToPrevPage" style="color:black">Back</a>
+
+    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+                <h1 class="govuk-heading-l">Edit email address</h1>
+                @if (IsValidEmail)
+                {
+                    <EditForm Model="@EmailAddresses" OnSubmit="UpdateEmail">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-label--m" for="edit-email">
+                                Email address
+                            </label>
+                            <InputText class="govuk-input govuk-!-width-two-thirds" id="edit-email" name="edit-email" @bind-Value="@emailEditDelete"></InputText>
+                        </div>
+                        <button type="submit" draggable="false"
+                                class="govuk-button govuk-!-margin-top-6 govuk-!-margin-bottom-6" data-module="govuk-button">
+                            Continue
+                        </button>
+                    </EditForm>
+                }
+                else
+                {
+                    <div class="govuk-error-summary" data-module="govuk-error-summary">
+                        <div role="alert">
+                            <h2 class="govuk-error-summary__title">
+                                There is a problem
+                            </h2>
+                            <div class="govuk-error-summary__body">
+                                <ul class="govuk-list govuk-error-summary__list">
+                                    <li>
+                                        @if (IsEmailEmpty)
+                                        {
+                                            <a href="#" onclick="return false;">Enter an email address</a>
+                                        }
+                                        @if (IsEmailFormatWrong)
+                                        {
+                                            <a href="#" onclick="return false;">@emailEditDelete is not in correct format</a>
+                                        }
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <EditForm Model="@EmailAddresses" OnSubmit="UpdateEmail">
+                        <div class="govuk-form-group govuk-form-group--error govuk-!-margin-top-8 govuk-!-margin-bottom-4">
+                            <fieldset class="govuk-fieldset" aria-describedby="where-do-you-live-error">
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label govuk-label--m" for="edit-email">
+                                        Email address
+                                    </label>
+                                    <div class="govuk-error-summary__body">
+                                        <ul class="govuk-list govuk-error-summary__list">
+                                            <li>
+                                                @if (IsEmailEmpty)
+                                                {
+                                                    <a href="#" onclick="return false;">Enter an email address</a>
+                                                }
+                                                @if (IsEmailFormatWrong)
+                                                {
+                                                    <a href="#" onclick="return false;">@emailEditDelete is not in correct format</a>
+                                                }
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <InputText class="govuk-input govuk-!-width-two-thirds" id="edit-email" name="edit-email" @bind-Value="emailEditDelete"></InputText>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" draggable="false"
+                                class="govuk-button govuk-!-margin-top-6 govuk-!-margin-bottom-6" data-module="govuk-button">
+                            Continue
+                        </button>
+                    </EditForm>
+                }
+            </div>
+        </div>
+    </main>
+</div>
+
+<Footer />
+
+@code {
+    public ReportSubmissionDataDto reportSubmissionData { get; set; } = new ReportSubmissionDataDto();
+    public List<string> EmailAddresses { get; set; } = new List<string>();
+    private string emailEditDelete { get; set; } = "";
+    private bool IsValidEmail { get; set; } = true;
+    private bool IsEmailEmpty { get; set; } = false;
+    private bool IsEmailFormatWrong { get; set; } = false;
+    private string emailEditDeleteOriginal { get; set; } = "";
+
+    protected async override Task OnInitializedAsync()
+    {
+        var reportSubmissionDataState = await ProtectedSessionStore.GetAsync<ReportSubmissionDataDto>("CurrentReportSubmissionData");
+        reportSubmissionData = reportSubmissionDataState.Value;
+        EmailAddresses = reportSubmissionData.EmailListToSomeOne;
+        emailEditDeleteOriginal = emailEditDelete = reportSubmissionData.EmailEditDelete;
+        await base.OnInitializedAsync();
+    }
+
+    public void GoToPrevPage()
+    {
+        bool forceLoad = true;
+        string pagelink = "/check-emails";
+        NavigationManager.NavigateTo(pagelink, forceLoad);
+    }
+
+    public async Task UpdateEmail()
+    {
+        IsValidEmail = true;
+        IsEmailEmpty = false;
+        IsEmailFormatWrong = false;
+
+        if (String.IsNullOrEmpty(emailEditDelete))
+        {
+            IsValidEmail = false;
+            IsEmailEmpty = true;
+        }
+        else if (!IsValid(emailEditDelete))
+        {
+            IsValidEmail = false;
+            IsEmailFormatWrong = true;
+        }
+
+        if (IsValidEmail)
+        {
+            if (emailEditDelete != emailEditDeleteOriginal)
+            {
+                int idx = EmailAddresses.FindIndex(a => a == emailEditDeleteOriginal);
+                EmailAddresses[idx] = emailEditDelete;
+                reportSubmissionData.EmailListToSomeOne = EmailAddresses;
+                await ProtectedSessionStore.SetAsync("CurrentReportSubmissionData", reportSubmissionData);
+            }
+            bool forceLoad = true;
+            string pagelink = "/check-emails";
+            NavigationManager.NavigateTo(pagelink, forceLoad);
+        }
+        else
+        {
+            await InvokeAsync(() =>
+             {
+                 StateHasChanged();
+             });
+        }
+    }
+
+    private static bool IsValid(string email)
+    {
+        string regex = @"^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$";
+
+        return Regex.IsMatch(email, regex, RegexOptions.IgnoreCase);
+    }
+}

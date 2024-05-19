@@ -1,0 +1,163 @@
+﻿@page "/delete-email"
+@using Microsoft.AspNetCore.Authorization;
+@using RACE2.FrontEndWebServer.Components
+@using RACE2.Dto
+@inject NavigationManager NavigationManager
+@inject ProtectedSessionStorage ProtectedSessionStore
+
+<PageTitle>Delete email address - Send a supervising engineer's annual statement - GOV.UK</PageTitle>
+
+<HeaderWithBanner />
+
+<div class="govuk-width-container" style="min-height: 70vh;">
+
+    <FeedbackBannerSignOut />
+    
+    <a class="govuk-back-link" @onclick="GoToPrevPage" style="color:black">Back</a>
+
+    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+                @if (!YesNoError)
+                {
+                <EditForm Model="@_yesno" OnSubmit="DeleteSelectedEmail">
+                    <div class="govuk-form-group">
+                        <fieldset class="govuk-fieldset" aria-describedby="">
+                            <legend id="which-idea"
+                                    class="govuk-fieldset__legend govuk-fieldset__legend govuk-fieldset__legend--xl govuk-!-margin-bottom-4">
+                                <h1 class="govuk-fieldset__heading">
+                                    Delete @emailEditDelete
+                                </h1>
+                            </legend>
+                            <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
+                                <InputRadioGroup Name="yesno" @bind-Value="_yesno.YesNoOptions">
+                                    @foreach (Enum value in Enum.GetValues(typeof(YesNoClass.YesNoEnum)))
+                                    {
+                                        <div class="govuk-radios__item">
+                                            <InputRadio Value="@value" class="govuk-radios__input" />
+                                            <span class="govuk-label govuk-radios__label">@value</span>
+                                        </div>
+                                    }
+                                </InputRadioGroup>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <button type="submit" draggable="false"
+                            class="govuk-button govuk-!-margin-top-3 govuk-!-margin-bottom-6 govuk-!-margin-right-4"
+                            data-module="govuk-button">
+                        Continue
+                    </button>
+                    </EditForm>
+                }
+                else
+                {
+                    <div class="govuk-error-summary" data-module="govuk-error-summary">
+                        <div role="alert">
+                            <h2 class="govuk-error-summary__title">
+                                There is a problem
+                            </h2>
+                            <div class="govuk-error-summary__body">
+                                <ul class="govuk-list govuk-error-summary__list">
+                                    <li>
+                                        <a href="#" onclick="return false;">Select yes to delete @emailEditDelete</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <EditForm Model="@_yesno" OnSubmit="DeleteSelectedEmail">
+                        <div class="govuk-form-group govuk-form-group--error govuk-!-margin-top-8 govuk-!-margin-bottom-4">
+                            <fieldset class="govuk-fieldset" aria-describedby="where-do-you-live-error">
+                                <legend id="which-idea"
+                                        class="govuk-fieldset__legend govuk-fieldset__legend govuk-fieldset__legend--xl govuk-!-margin-bottom-4">
+                                    <h1 class="govuk-fieldset__heading">
+                                        Delete @emailEditDelete
+                                    </h1>
+                                </legend>
+                                <div class="govuk-error-summary__body">
+                                    <ul class="govuk-list govuk-error-summary__list">
+                                        <li>
+                                            <a href="#" onclick="return false;"> Select yes if you want to delete the email or no</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
+                                    <InputRadioGroup Name="yesno" @bind-Value="_yesno.YesNoOptions">
+                                        @foreach (Enum value in Enum.GetValues(typeof(YesNoClass.YesNoEnum)))
+                                        {
+                                            <div class="govuk-radios__item">
+                                                <InputRadio Value="@value" class="govuk-radios__input" />
+                                                <span class="govuk-label govuk-radios__label">@value</span>
+                                            </div>
+                                        }
+                                    </InputRadioGroup>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" draggable="false"
+                                class="govuk-button govuk-!-margin-top-3 govuk-!-margin-bottom-6 govuk-!-margin-right-4"
+                                data-module="govuk-button">
+                            Continue
+                        </button>
+                    </EditForm>
+                }
+            </div>
+        </div>
+    </main>
+</div>
+
+<Footer />
+
+@code {
+    public ReportSubmissionDataDto reportSubmissionData { get; set; } = new ReportSubmissionDataDto();
+    private string emailEditDelete { get; set; } = "";
+    private YesNoClass _yesno = new YesNoClass();
+    private bool YesNoError { get; set; } = false;
+
+    protected async override Task OnInitializedAsync()
+    {
+        var reportSubmissionDataState = await ProtectedSessionStore.GetAsync<ReportSubmissionDataDto>("CurrentReportSubmissionData");
+        reportSubmissionData = reportSubmissionDataState.Value;
+        emailEditDelete = reportSubmissionData.EmailEditDelete;
+        await base.OnInitializedAsync();
+    }
+
+    public void GoToPrevPage()
+    {
+        bool forceLoad = true;
+        string pagelink = "/check-emails";
+        NavigationManager.NavigateTo(pagelink, forceLoad);
+    }
+
+    public async Task DeleteSelectedEmail()
+    {
+        if (_yesno.YesNoOptions == 0)
+        {
+            YesNoError = true;
+            StateHasChanged();
+        }
+        else if (_yesno.YesNoOptions.ToString() == "Yes")
+        {
+            YesNoError = false;
+            int idx = reportSubmissionData.EmailListToSomeOne.FindIndex(a => a == emailEditDelete);
+            reportSubmissionData.EmailListToSomeOne.RemoveAt(idx);
+            await ProtectedSessionStore.SetAsync("CurrentReportSubmissionData", reportSubmissionData);
+            bool forceLoad = true;
+            string pagelink = "/check-emails";
+            NavigationManager.NavigateTo(pagelink, forceLoad);
+        }
+        else
+        {
+            YesNoError = false;
+            bool forceLoad = true;
+            string pagelink = "/check-emails";
+            NavigationManager.NavigateTo(pagelink, forceLoad);
+        }
+    }
+
+    public class YesNoClass
+    {
+        public enum YesNoEnum { Yes = 1, No = 2 };
+        public YesNoEnum YesNoOptions = 0;
+    }
+}
