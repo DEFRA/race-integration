@@ -10,7 +10,11 @@ pr:
 resources:
 - repo: self
 
-variables:  
+variables:
+  - name: repository_securityprovider
+    value: 'race2securityprovider'
+  - name: dockerfile_securityprovider
+    value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_SecurityProvider'
   - name: repository_webapi
     value: 'race2webapi'
   - name: dockerfile_webapi
@@ -22,7 +26,7 @@ variables:
   - name: repository_webapiexternal
     value: 'race2webapiexternal'
   - name: dockerfile_webapiexternal
-    value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_WebApiExternal'  
+    value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_BackendAPIIntegration'  
   - name: containerRegistry
     value: 'AZR-RAC-POC1-ACR'
   - name: tag
@@ -44,7 +48,15 @@ stages:
     displayName: Build and Push images
     pool:
       vmImage: ubuntu-latest
-    steps:   
+    steps:
+    - task: Docker@2
+      displayName: Build and push an image - securityProvider
+      inputs:
+        command: buildAndPush
+        repository: ${{ variables.repository_securityprovider }}
+        dockerfile: ${{ variables.dockerfile_securityprovider }}
+        containerRegistry: ${{ variables.containerRegistry }}
+        tags: ${{ variables.tag }}
     - task: Docker@2
       displayName: Build and push an image - WebApi
       inputs:
