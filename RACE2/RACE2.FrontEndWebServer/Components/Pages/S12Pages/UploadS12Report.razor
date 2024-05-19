@@ -2,6 +2,7 @@
 @using Microsoft.AspNetCore.Authorization;
 @using Microsoft.AspNetCore.Components
 @using Microsoft.AspNetCore.Components.Authorization
+@using System.Security.Claims;
 @using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.JSInterop
@@ -129,7 +130,7 @@
     private bool FileUploadInProgress { get; set; } = false;
     private string _fileNameResult;
     public string fileExtn = String.Empty;
-    private string UserName { get; set; } = "Unknown";
+    private string UserEmail { get; set; } = "Unknown";
     private UserSpecificDto userDetails { get; set; }
     public string ReservoirName { get; set; } = default!;
     private IBrowserFile loadedFile;
@@ -157,9 +158,10 @@
         var reportSubmissionDataState = await ProtectedSessionStore.GetAsync<ReportSubmissionDataDto>("CurrentReportSubmissionData");
         reportSubmissionData = reportSubmissionDataState.Value;
 
-        AuthenticationState authState = await AuthenticationStateTask; // AuthenticationStateProvider.GetAuthenticationStateAsync();
-        UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
-        userDetails = await userService.GetUserByEmailID(UserName);
+        var authState = await AuthenticationStateTask;
+        var claims = authState.User.Claims.ToList();
+        UserEmail = claims.FirstOrDefault(c => c.Type.Equals(ClaimTypes.Email))?.Value;
+        userDetails = await userService.GetUserByEmailID(UserEmail);
         FileUploadInProgress = false;
         await InvokeAsync(() =>
         {
@@ -358,7 +360,7 @@
                                 }
                                 await userService.InsertUndertakerEmails(submissionEmailNotifications);
                             }
-                            Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Information("File upload succeeded.");
+                            Serilog.Log.Logger.ForContext("User", UserEmail).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Information("File upload succeeded.");
                             uploadTimeElapsed++;
                             uploadPerc = Convert.ToInt32((Convert.ToDouble(uploadTimeElapsed) / Convert.ToDouble(timeToWait)) * 100.0);
                             StateHasChanged();
@@ -378,7 +380,7 @@
                             //}
                             if (maliciousbytes != null)
                             {
-                                Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File infected by virus.");
+                                Serilog.Log.Logger.ForContext("User", UserEmail).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File infected by virus.");
                                 FileContainsVirus();
                                 await InvokeAsync(() =>
                                 {
@@ -401,7 +403,7 @@
                             }
                             if (notScanned)
                             {
-                                Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File not scanned for virus.");
+                                Serilog.Log.Logger.ForContext("User", UserEmail).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File not scanned for virus.");
                                 FileUploadFailed();
                                 //await reservoirService.UpdateReservoirStatus(Int32.Parse(reportSubmissionData.ReservoirId), userDetails.Id, "In progress",false,"");
 
@@ -424,7 +426,7 @@
                     }
                     else
                     {
-                        Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File upload failed.");
+                        Serilog.Log.Logger.ForContext("User", UserEmail).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File upload failed.");
                         FileUploadFailed();
                         //await reservoirService.UpdateReservoirStatus(Int32.Parse(reportSubmissionData.ReservoirId), userDetails.Id, "In progress",false,"");
                         await InvokeAsync(() =>
@@ -435,7 +437,7 @@
                 }
                 catch (Exception ex)
                 {
-                    Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File upload failed : " + ex.Message);
+                    Serilog.Log.Logger.ForContext("User", UserEmail).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File upload failed : " + ex.Message);
                     FileUploadFailed();
                     //await reservoirService.UpdateReservoirStatus(Int32.Parse(reportSubmissionData.ReservoirId), userDetails.Id, "In progress",false,"");
                     await InvokeAsync(() =>

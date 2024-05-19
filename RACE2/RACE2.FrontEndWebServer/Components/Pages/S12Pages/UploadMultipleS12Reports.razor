@@ -2,6 +2,7 @@
 @using Microsoft.AspNetCore.Authorization;
 @using Microsoft.AspNetCore.Components
 @using Microsoft.AspNetCore.Components.Authorization
+@using System.Security.Claims;
 @using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.JSInterop
@@ -89,7 +90,7 @@
 
 @code {
     private int UserId { get; set; } = 0;
-    private string UserName { get; set; } = "Unknown";
+    private string UserEmail { get; set; } = "Unknown";
     private UserDetail UserDetail { get; set; }
     private string warninngMessage = "";
     private string displayMessage = "";
@@ -105,13 +106,14 @@
     public Task<AuthenticationState> AuthenticationStateTask { get; set; }
     protected async override Task OnInitializedAsync()
     {
-        AuthenticationState authState = await AuthenticationStateTask; // AuthenticationStateProvider.GetAuthenticationStateAsync();
-        UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
-        var userDetails = await userService.GetUserByEmailID(UserName);
+        var authState = await AuthenticationStateTask;
+        var claims = authState.User.Claims.ToList();
+        UserEmail = claims.FirstOrDefault(c => c.Type.Equals(ClaimTypes.Email))?.Value;
+        var userDetails = await userService.GetUserByEmailID(UserEmail);
         UserId = userDetails.Id;
         UserDetail = new UserDetail()
             {
-                UserName = UserName,
+                UserName = UserEmail,
                 Id = UserId,
                 Email = userDetails.Email,
                 cFirstName = userDetails.cFirstName,
