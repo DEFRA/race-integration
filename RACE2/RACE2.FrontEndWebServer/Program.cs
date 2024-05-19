@@ -139,6 +139,18 @@ try
     builder.Services.AddScoped<CustomErrorBoundary>();
     builder.Services.AddScoped<INotification, RaceNotification>();
 
+    builder.Services.AddCors(options =>
+    {
+        options.AddPolicy("CorsPolicy",
+            builder =>
+            {
+                builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+            });
+    });
+
     var app = builder.Build();
 
     // Configure the HTTP request pipeline.
@@ -148,6 +160,8 @@ try
         app.UseHsts();
     }
     app.UseHttpsRedirection();
+
+    app.UseCors("CorsPolicy");
 
     //app.UseSerilogRequestLogging(configure =>
     //{
