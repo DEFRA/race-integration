@@ -147,6 +147,7 @@ try
             ValidationAlgorithm = ValidationAlgorithm.HMACSHA256
         });
     builder.Services.AddScoped<INotification, RaceNotification>();
+   
 
     var backendurl = builder.Configuration["RACE2BackendAPIURL"];
     builder.Services.AddHttpClient("BackendAPI", httpClient =>
