@@ -2,35 +2,33 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Threading.Tasks;
 
 namespace RACE2.FrontEndWebServer.Pages
 {
-    public class LoginModel : PageModel
+  public class LoginModel : PageModel
+  {
+    public async Task<IActionResult> OnGetAsync(string redirectUri)
     {
-        public async Task<IActionResult> OnGetAsync(string redirectUri)
-        {
-            // just to remove compiler warning
-            await Task.CompletedTask;
+      // just to remove compiler warning
+      await Task.CompletedTask;
 
-            if (string.IsNullOrWhiteSpace(redirectUri))
-            {
-                redirectUri = Url.Content("~/annual-statements");
-            }
+      if (string.IsNullOrWhiteSpace(redirectUri))
+      {
+        redirectUri = Url.Content("~/annual-statements");
+      }
 
-            // If user is already logged in, we can redirect directly...
-            if (HttpContext.User.Identity!.IsAuthenticated)
-            {
-                Response.Redirect(redirectUri);
-            }
+      // If user is already logged in, we can redirect directly...
+      if (HttpContext.User.Identity!.IsAuthenticated)
+      {
+        redirectUri= Url.Content("~/annual-statements");
+        Response.Redirect(redirectUri);
+      }
 
-            Serilog.Log.Logger.Information("User intitiated login process");
-
-            return Challenge(new AuthenticationProperties
-            {
-                RedirectUri = redirectUri
-            },
-            OpenIdConnectDefaults.AuthenticationScheme);
-        }
+      return Challenge(new AuthenticationProperties
+      {
+        RedirectUri = redirectUri
+      },
+      OpenIdConnectDefaults.AuthenticationScheme);
     }
+  }
 }

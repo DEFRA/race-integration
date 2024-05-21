@@ -10,11 +10,7 @@ pr:
 resources:
 - repo: self
 
-variables:
-  - name: repository_securityprovider
-    value: 'race2securityprovider'
-  - name: dockerfile_securityprovider
-    value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_SecurityProvider'
+variables: 
   - name: repository_webapi
     value: 'race2webapi'
   - name: dockerfile_webapi
@@ -49,14 +45,6 @@ stages:
     pool:
       vmImage: ubuntu-latest
     steps:
-    - task: Docker@2
-      displayName: Build and push an image - securityProvider
-      inputs:
-        command: buildAndPush
-        repository: ${{ variables.repository_securityprovider }}
-        dockerfile: ${{ variables.dockerfile_securityprovider }}
-        containerRegistry: ${{ variables.containerRegistry }}
-        tags: ${{ variables.tag }}
     - task: Docker@2
       displayName: Build and push an image - WebApi
       inputs:

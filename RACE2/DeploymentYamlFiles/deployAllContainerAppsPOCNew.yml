@@ -10,11 +10,7 @@ pr:
 resources:
 - repo: self
 
-variables:
-  - name: repository_securityprovider
-    value: 'race2securityprovider'
-  - name: dockerfile_securityprovider
-    value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_SecurityProvider'
+variables: 
   - name: repository_frontendwebserver
     value: 'race2frontendwebserver'
   - name: dockerfile_frontendwebserver
@@ -22,7 +18,11 @@ variables:
   - name: repository_webapi
     value: 'race2webapi'
   - name: dockerfile_webapi
-    value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_WebApi'    
+    value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_WebApi'  
+  - name: repository_backendapiintegration
+    value: 'race2backendapiintegration'
+  - name: dockerfile_backendapiintegration
+    value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_BackendAPIIntegration'  
   - name: containerRegistry
     value: 'AZD-RAC-POC1-ACR'
   - name: tag
@@ -44,15 +44,7 @@ stages:
     displayName: Build and Push images
     pool:
       vmImage: ubuntu-latest
-    steps:
-    - task: Docker@2
-      displayName: Build and push an image - securityProvider
-      inputs:
-        command: buildAndPush
-        repository: ${{ variables.repository_securityprovider }}
-        dockerfile: ${{ variables.dockerfile_securityprovider }}
-        containerRegistry: ${{ variables.containerRegistry }}
-        tags: ${{ variables.tag }}     
+    steps:    
     - task: Docker@2
       displayName: Build and push an image - FrontEndWebServer
       inputs:
@@ -68,7 +60,15 @@ stages:
         repository: ${{ variables.repository_webapi }}
         dockerfile: ${{ variables.dockerfile_webapi }}
         containerRegistry: ${{ variables.containerRegistry }}
-        tags: ${{ variables.tag }}       
+        tags: ${{ variables.tag }} 
+    - task: Docker@2
+      displayName: Build and push an image - BackendApiIntegration
+      inputs:
+        command: buildAndPush
+        repository: ${{ variables.repository_backendapiintegration }}
+        dockerfile: ${{ variables.dockerfile_backendapiintegration }}
+        containerRegistry: ${{ variables.containerRegistry }}
+        tags: ${{ variables.tag }}   
 - stage : DeployContainerApps
   displayName: Deploy Container Apps to Azure Portal
   jobs:  

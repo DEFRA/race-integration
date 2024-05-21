@@ -47,9 +47,6 @@
     "frontEndWebServerContainerAppName": {
       "value": "race2frontendwebserver"
     },
-    "securityProviderContainerAppName": {
-      "value": "race2securityprovider"
-    },
     "webApiContainerAppName": {
       "value": "race2webapi"
     },
@@ -58,9 +55,6 @@
     },
     "frontendwebservercontainerImage": {
       "value": "devracinfcr1401.azurecr.io/race2frontendwebserver"
-    },
-    "securityprovidercontainerImage": {
-      "value": "devracinfcr1401.azurecr.io/race2securityprovider"
     },
     "webapicontainerImage": {
       "value": "devracinfcr1401.azurecr.io/race2webapi"

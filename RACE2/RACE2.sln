@@ -31,9 +31,25 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.MultipleTriggerAzureF
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.BackendAPIIntegration", "RACE2.BackendAPIIntegration\RACE2.BackendAPIIntegration.csproj", "{FDDB1596-2EC3-4893-BA27-A1DEC2F2B527}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.SecurityProvider", "RACE2.SecurityProvider\RACE2.SecurityProvider.csproj", "{22216E3D-2951-4C1C-BBF2-4F71F6425E53}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.GovUK.OneloginAuth", "RACE2.GovUK.OneloginAuth\RACE2.GovUK.OneloginAuth.csproj", "{CCDB00F2-4B64-49A4-BC16-8DE75CE8269D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bicepfiles", "bicepfiles", "{914852AD-A9E4-4461-93A7-55925E04A522}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACE2.BackendAPIIntegration", "RACE2.BackendAPIIntegration\RACE2.BackendAPIIntegration.csproj", "{7D552E12-1D6F-4A5D-8837-AA1DE8B3DAB2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CE3CF53E-4432-4A91-B7D5-284752E08986}"
+	ProjectSection(SolutionItems) = preProject
+		Dockerfile = Dockerfile
+		Dockerfile_BackendAPIIntegration = Dockerfile_BackendAPIIntegration
+		Dockerfile_FrontEnd = Dockerfile_FrontEnd
+		Dockerfile_FrontEndWeb = Dockerfile_FrontEndWeb
+		Dockerfile_FrontEndWebServer = Dockerfile_FrontEndWebServer
+		Dockerfile_IdentityProvider = Dockerfile_IdentityProvider
+		Dockerfile_SecurityFunction = Dockerfile_SecurityFunction
+		Dockerfile_SecurityProvider = Dockerfile_SecurityProvider
+		Dockerfile_WebApi = Dockerfile_WebApi
+		Dockerfile_WebApiExternal = Dockerfile_WebApiExternal
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bicepfiles", "bicepfiles", "{405EE6B7-80FA-4A0A-9638-75EEAD9945A2}"
 	ProjectSection(SolutionItems) = preProject
 		bicepfiles\createAllContainerApps.bicep = bicepfiles\createAllContainerApps.bicep
 		bicepfiles\createAllContainerApps1.bicep = bicepfiles\createAllContainerApps1.bicep
@@ -100,7 +116,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bicepfiles", "bicepfiles", 
 		bicepfiles\test.bicep = bicepfiles\test.bicep
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DeploymentYamlFiles", "DeploymentYamlFiles", "{36B8405C-54F6-451F-AB4C-4DC0AD7F2F28}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DeploymentYamlFiles", "DeploymentYamlFiles", "{C38A9020-A2FF-4CFF-A0A1-67F5E58D51E3}"
 	ProjectSection(SolutionItems) = preProject
 		DeploymentYamlFiles\Add-AdAppRegistrations.ps1 = DeploymentYamlFiles\Add-AdAppRegistrations.ps1
 		DeploymentYamlFiles\deployAllContainerAppsDEV.yml = DeploymentYamlFiles\deployAllContainerAppsDEV.yml
@@ -158,47 +174,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DeploymentYamlFiles", "Depl
 		DeploymentYamlFiles\deployVnet.yml = DeploymentYamlFiles\deployVnet.yml
 		DeploymentYamlFiles\deployWebApiContainerApp.yml = DeploymentYamlFiles\deployWebApiContainerApp.yml
 		DeploymentYamlFiles\manifest.json = DeploymentYamlFiles\manifest.json
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UtilityFiles", "UtilityFiles", "{2EF5387F-AF94-457B-AF3D-8D08F72D741E}"
-	ProjectSection(SolutionItems) = preProject
-		azcommands.txt = azcommands.txt
-		ContainerAppDeployPOC.ps1 = ContainerAppDeployPOC.ps1
-		ContainerAppWorkspaceDeployDEV.ps1 = ContainerAppWorkspaceDeployDEV.ps1
-		ContainerAppWorkspaceDeployPOC.ps1 = ContainerAppWorkspaceDeployPOC.ps1
-		databasecreation.txt = databasecreation.txt
-		deploylogAnalyticsWorkspace.yml = deploylogAnalyticsWorkspace.yml
-		Dockerfile = Dockerfile
-		Dockerfile_BackendAPIIntegration = Dockerfile_BackendAPIIntegration
-		Dockerfile_FrontEnd = Dockerfile_FrontEnd
-		Dockerfile_FrontEndWeb = Dockerfile_FrontEndWeb
-		Dockerfile_FrontEndWebServer = Dockerfile_FrontEndWebServer
-		Dockerfile_IdentityProvider = Dockerfile_IdentityProvider
-		Dockerfile_SecurityFunction = Dockerfile_SecurityFunction
-		Dockerfile_SecurityProvider = Dockerfile_SecurityProvider
-		Dockerfile_WebApi = Dockerfile_WebApi
-		Dockerfile_WebApiExternal = Dockerfile_WebApiExternal
-		FrontEndDeployPOC.ps1 = FrontEndDeployPOC.ps1
-		FrontEndWebServerDeployDEV.ps1 = FrontEndWebServerDeployDEV.ps1
-		FrontEndWebServerDeployPOC.ps1 = FrontEndWebServerDeployPOC.ps1
-		GetUser.txt = GetUser.txt
-		SecurtyProviderDeployDEV.ps1 = SecurtyProviderDeployDEV.ps1
-		SecurtyProviderDeployPOC.ps1 = SecurtyProviderDeployPOC.ps1
-		SecurtyProviderDeployTST.ps1 = SecurtyProviderDeployTST.ps1
-		sp_GetActionsListByReservoirId.sql = sp_GetActionsListByReservoirId.sql
-		sp_GetAddressForReservoir.sql = sp_GetAddressForReservoir.sql
-		sp_GetOrganisationAddressbyId.sql = sp_GetOrganisationAddressbyId.sql
-		sp_GetSafetyMeasuresListByReservoirId.sql = sp_GetSafetyMeasuresListByReservoirId.sql
-		sp_GetUndertakerforReservoir.sql = sp_GetUndertakerforReservoir.sql
-		sp_GetUserByEmailID.sql = sp_GetUserByEmailID.sql
-		sp_GetUserWithRoles.sql = sp_GetUserWithRoles.sql
-		sp_UpdateFirstTimeUser.sql = sp_UpdateFirstTimeUser.sql
-		ValidateUser.txt = ValidateUser.txt
-		WebApiDeployDEV.ps1 = WebApiDeployDEV.ps1
-		WebApiDeployPOC.ps1 = WebApiDeployPOC.ps1
-		WebApiExternalDeployPOC.ps1 = WebApiExternalDeployPOC.ps1
-		webapp.istioinaction.io.cert.pem = webapp.istioinaction.io.cert.pem
-		webapp.istioinaction.io.key.pem = webapp.istioinaction.io.key.pem
 	EndProjectSection
 EndProject
 Global
@@ -259,14 +234,18 @@ Global
 		{7FE13EE9-D2EE-420C-9907-FA4C762A81B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7FE13EE9-D2EE-420C-9907-FA4C762A81B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7FE13EE9-D2EE-420C-9907-FA4C762A81B6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FDDB1596-2EC3-4893-BA27-A1DEC2F2B527}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FDDB1596-2EC3-4893-BA27-A1DEC2F2B527}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FDDB1596-2EC3-4893-BA27-A1DEC2F2B527}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FDDB1596-2EC3-4893-BA27-A1DEC2F2B527}.Release|Any CPU.Build.0 = Release|Any CPU
-		{22216E3D-2951-4C1C-BBF2-4F71F6425E53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{22216E3D-2951-4C1C-BBF2-4F71F6425E53}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{22216E3D-2951-4C1C-BBF2-4F71F6425E53}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{22216E3D-2951-4C1C-BBF2-4F71F6425E53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12DD928D-4763-41B0-AADF-509EF3D08594}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12DD928D-4763-41B0-AADF-509EF3D08594}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12DD928D-4763-41B0-AADF-509EF3D08594}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12DD928D-4763-41B0-AADF-509EF3D08594}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCDB00F2-4B64-49A4-BC16-8DE75CE8269D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCDB00F2-4B64-49A4-BC16-8DE75CE8269D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCDB00F2-4B64-49A4-BC16-8DE75CE8269D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCDB00F2-4B64-49A4-BC16-8DE75CE8269D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D552E12-1D6F-4A5D-8837-AA1DE8B3DAB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D552E12-1D6F-4A5D-8837-AA1DE8B3DAB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D552E12-1D6F-4A5D-8837-AA1DE8B3DAB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D552E12-1D6F-4A5D-8837-AA1DE8B3DAB2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

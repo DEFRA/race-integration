@@ -236,13 +236,13 @@
         else if (!String.IsNullOrEmpty(EmailAddresses[4]) && !IsValid(EmailAddresses[4]))
         {
             ValidationErrors.Add("Email5Invalid", "Enter an email address in the correct format, like name@example.com");
-        }  
+        }
         if (ValidationErrors.Count == 0)
         {
             reportSubmissionData.EmailListToSomeOne = EmailAddresses.Where(e => !String.IsNullOrEmpty(e)).Select(e => e).Distinct().ToList();
             await ProtectedSessionStore.SetAsync("CurrentReportSubmissionData", reportSubmissionData);
             bool forceLoad = true;
-            NavigationManager.NavigateTo("/check-emails", forceLoad);  
+            NavigationManager.NavigateTo("/check-emails", forceLoad);
         }
         else
         {

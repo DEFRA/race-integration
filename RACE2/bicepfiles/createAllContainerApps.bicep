@@ -3,8 +3,6 @@ param location string
 param resourcegroup string
 param managedidentity string
 param race2appenvName string
-param securityProviderContainerAppName string
-param securityprovidercontainerImage string
 param webApiContainerAppName string
 param webapicontainerImage string
 param backendapiintegrationContainerAppName string
@@ -35,30 +33,6 @@ module createfrontendwebservercontainerappmodule 'createfrontendwebservercontain
     useExternalIngress: useExternalIngress
     containerPort: containerPort
     containerImage: frontendwebservercontainerImage
-    managedidentity: managedidentity
-    appConfigURL: appConfigURL
-    aspnetCoreEnv: aspnetCoreEnv
-    tag: tag
-    minReplicas: minReplicas
-    maxReplicas: maxReplicas
-    transport: transport
-    allowInsecure: allowInsecure
-  }
-}
-
-module createsecurityprovidercontainerappmodule 'createsecurityprovidercontainerapp.bicep' = {
-  scope: resourceGroup(resourcegroup)
-  name: 'securityprovidercontainerappdeploy'
-  params: {
-    azureTenanatId: azureTenanatId
-    location: location
-    race2appenv: race2appenvName
-    containerAppName: securityProviderContainerAppName
-    registryName: registryName
-    resourcegroup: resourcegroup
-    useExternalIngress: useExternalIngress
-    containerPort: containerPort
-    containerImage: securityprovidercontainerImage
     managedidentity: managedidentity
     appConfigURL: appConfigURL
     aspnetCoreEnv: aspnetCoreEnv

@@ -11,7 +11,7 @@ namespace RACE2.GovUK.OneloginAuth.Configuration
 
     public static class GovUkConstants
     {
-        public const string StubAuthCookieName = "SFA.Apprenticeships.StubAuthCookie";
-        public const string AuthCookieName = "SFA.Apprenticeships.AuthCookie";
+        public const string StubAuthCookieName = "Race2App.StubAuthCookie";
+        public const string AuthCookieName = "Race2App.AuthCookie";
     }
 }
