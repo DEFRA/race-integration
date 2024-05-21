@@ -39,8 +39,8 @@ try
         //var connectionString = builder.Configuration["AZURE_APPCONFIGURATION_CONNECTIONSTRING"];
         var azureAppConfigUrl = builder.Configuration["AzureAppConfigURL"];
         var azureTenantId = builder.Configuration["AZURE_TENANT_ID"];
-        var managedIdenityClientId = builder.Configuration["ManagedIdenityClientId"];
-        var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions { TenantId = azureTenantId, ManagedIdentityClientId = managedIdenityClientId, VisualStudioTenantId = azureTenantId });
+        var managedIdentityClientId = builder.Configuration["ManagedIdentityClientId"];
+        var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions { TenantId = azureTenantId, ManagedIdentityClientId = managedIdentityClientId, VisualStudioTenantId = azureTenantId });
 
         //options.Connect(connectionString)      
         options.Connect(new Uri(azureAppConfigUrl), credential)
@@ -179,6 +179,8 @@ try
     builder.Services.AddScoped<IUserRepository, UserRepository>();
     builder.Services.AddScoped<IReservoirRepository, ReservoirRepository>();
     builder.Services.AddScoped<IBlobStorageService, BlobStorageService>();
+    builder.Services.AddScoped<IRACEIntegrationService, RACEIntegrationService>();
+    builder.Services.AddScoped<IRACEIntegrationRepository, RACEIntegrationRepository>();
     builder.Services.AddScoped<IOpenXMLUtilitiesService, OpenXMLUtilitiesService>();
     builder.Services.AddScoped<CustomErrorBoundary>();
     builder.Services.AddDataProtection()
@@ -188,6 +190,12 @@ try
             ValidationAlgorithm = ValidationAlgorithm.HMACSHA256
         });
     builder.Services.AddScoped<INotification, RaceNotification>();
+
+
+    builder.Services.AddHttpClient("BackendAPI", httpClient =>
+    {
+        httpClient.BaseAddress = new Uri("https://localhost:7211/");
+    });
 
     var app = builder.Build();
     app.UseForwardedHeaders();

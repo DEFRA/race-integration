@@ -5,6 +5,8 @@ using RACE2.Services;
 using Microsoft.Extensions.Configuration;
 using Azure.Identity;
 using Microsoft.Extensions.Configuration.AzureAppConfiguration;
+using Microsoft.EntityFrameworkCore;
+using RACE2.BackendAPIIntegration.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,8 +15,8 @@ builder.Configuration.AddAzureAppConfiguration(options =>
     //var connectionString = builder.Configuration["AZURE_APPCONFIGURATION_CONNECTIONSTRING"];
     var azureAppConfigUrl = builder.Configuration["AzureAppConfigURL"];
     var azureTenantId = builder.Configuration["AZURE_TENANT_ID"];
-    var managedIdenityClientId = builder.Configuration["ManagedIdenityClientId"];
-    var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions { TenantId = azureTenantId, ManagedIdentityClientId = managedIdenityClientId, VisualStudioTenantId = azureTenantId });
+    var managedIdentityClientId = builder.Configuration["ManagedIdentityClientId"]; 
+    var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions { TenantId = azureTenantId, ManagedIdentityClientId = managedIdentityClientId, VisualStudioTenantId = azureTenantId });
 
     //options.Connect(connectionString)      
     options.Connect(new Uri(azureAppConfigUrl), credential)
@@ -66,6 +68,9 @@ builder.Services.AddScoped<ApiKeyAuthFilter>();
 
 builder.Services.AddTransient<IRACEIntegrationRepository, RACEIntegrationRepository>();
 builder.Services.AddTransient<IRACEIntegrationService, RACEIntegrationService>();
+
+var connectionString = builder.Configuration["SqlConnectionString"];
+builder.Services.AddDbContext<Pocracinfdb1402Context>(option => option.UseSqlServer(connectionString));
 
 var app = builder.Build();
 

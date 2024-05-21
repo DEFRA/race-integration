@@ -66,7 +66,7 @@ resource containerFrontEndApp 'Microsoft.App/containerApps@2023-05-01' = {
               value: managedIdentity_resource.properties.clientId
             }
             {
-              name: 'ManagedIdenityClientId'
+              name: 'ManagedIdentityClientId'
               value: managedIdentity_resource.properties.clientId
             }
             {

@@ -53,12 +53,16 @@ namespace RACE2.Dto
     public class writtenStatement
     {
         public string type { get; set; }
-        public string date { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string? date { get; set; }
 
         public bool visualInspectionDirection { get; set; }
         public bool recommendInspectionS10 { get; set;}
-        public string nextInspectionDate { get; set; }
-        public string expectedNextStatementDate { get; set; }
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string? nextInspectionDate { get; set; }
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string? expectedNextStatementDate { get; set; }
         public string notificationEmailAddresses { get; set; }
     }
 
@@ -102,8 +106,8 @@ namespace RACE2.Dto
         public writtenStatement writtenStatement { get; set; } = new writtenStatement();
         public reservoir reservoir { get; set; } = new reservoir();
         public engineer engineer { get; set; }  = new engineer();
-        [System.Text.Json.Serialization.JsonIgnore]
-        public breach? breach { get; set; } = new breach();
+        //[System.Text.Json.Serialization.JsonIgnore]
+        //public breach? breach { get; set; } = new breach();
 
         public document document { get; set; } = new document();
 

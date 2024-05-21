@@ -16,6 +16,10 @@ namespace RACE2.Dto
             public int fronrEndUserId { get; set; }
             [Required, MaxLength(64)]
             public string backEndUserId { get; set; } = string.Empty;
+            [Required, MaxLength(12)]
+            public string backEndUserPrimaryRef { get; set; } = string.Empty;
+            [Required]
+            public string backEndUserSecondaryRef { get;set; } = string.Empty;  
             [Required]
             public bool isEngineer { get; set; }
             [Required]
@@ -30,7 +34,7 @@ namespace RACE2.Dto
             public string title { get; set; } = string.Empty;
             [Required, MaxLength(64)]
             public string firstName { get; set; } = string.Empty;
-            [Required]
+            [Required, MaxLength(64)]
             public string lastName { get; set; } = string.Empty;
             [MaxLength(80)]
             public string jobTitle { get; set; } = string.Empty;
@@ -50,7 +54,17 @@ namespace RACE2.Dto
             public string emergencyPhone { get; set; } = string.Empty;
             [MaxLength(64)]
             public string alternativeEmergencyPhone { get; set; } = string.Empty;
+            [MaxLength(64)]
+            public string paon { get; set; } = string.Empty;
+            [MaxLength(64)]
+            public string secondaryPaon { get; set; } = string.Empty;
+            [MaxLength(64)]
+            public string saon { get; set; } = string.Empty;
+            [MaxLength(64)]
+            public string secondarySaon { get; set; } = string.Empty;
 
+            [MaxLength(64)]
+            public string status { get; set; } = string.Empty;
 
         }
     }

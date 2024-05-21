@@ -7,7 +7,7 @@
 
 @attribute [Authorize]
 
-<PageTitle>Who the statement will go to - Send a supervising engineer's annual statement - GOV.UK</PageTitle>
+<PageTitle>Send the statement to someone else - Send a supervising engineer's annual statement - GOV.UK</PageTitle>
 
 <HeaderWithBanner />
 
@@ -15,10 +15,9 @@
 
     <FeedbackBannerSignOut />
 
-    <main class="govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+    <a class="govuk-back-link" @onclick="GoToPrevPage" style="color:black">Back</a>
 
-        <a class="govuk-back-link" @onclick="GoToPrevPage" style="color:black">Back</a>
-
+    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-two-thirds">
                 @if (!YesNoError)
@@ -64,7 +63,7 @@
                             <div class="govuk-error-summary__body">
                                 <ul class="govuk-list govuk-error-summary__list">
                                     <li>
-                                        <a href="#">Select yes if you want to send the statement to someone else as well or no</a>
+                                        <a href="#">Select yes if you want to send the statement to someone else as well</a>
                                     </li>
                                 </ul>
                             </div>
@@ -82,7 +81,7 @@
                                     <div class="govuk-error-summary__body">
                                         <ul class="govuk-list govuk-error-summary__list">
                                             <li>
-                                                <a href="#" onclick="return false;">Select yes if you want to send the statement to someone else as well or no</a>
+                                                <a href="#" onclick="return false;">Select yes if you want to send the statement to someone else as well</a>
                                             </li>
                                         </ul>
                                     </div>

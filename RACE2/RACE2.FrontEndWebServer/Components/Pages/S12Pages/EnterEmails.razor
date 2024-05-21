@@ -14,8 +14,9 @@
 
     <FeedbackBannerSignOut />
 
-    <main class="govuk-main-wrapper--auto-spacing" id="main-content" role="main">
-        <a class="govuk-back-link" @onclick="GoToPrevPage" style="color:black">Back</a>
+    <a class="govuk-back-link" @onclick="GoToPrevPage" style="color:black">Back</a>
+
+    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">        
         @if (ValidationErrors.Count == 0)
         {
             <div class="govuk-grid-row">
@@ -75,12 +76,13 @@
 
                         </fieldset>
                     </div>
-
-                    <button type="submit" draggable="false"
-                            class="govuk-button govuk-!-margin-top-3 govuk-!-margin-bottom-6 govuk-!-margin-right-4"
-                            data-module="govuk-button">
-                        Continue
-                    </button>
+                    <div>
+                        <button type="submit" draggable="false"
+                                class="govuk-button govuk-!-margin-top-6 govuk-!-margin-bottom-6"
+                                data-module="govuk-button">
+                            Continue
+                        </button>
+                    </div>
                 </EditForm>                
                 </div>
             </div>
@@ -171,11 +173,13 @@
                             </fieldset>
                         </div>
 
-                        <button type="submit" draggable="false"
-                                class="govuk-button govuk-!-margin-top-3 govuk-!-margin-bottom-6 govuk-!-margin-right-4"
-                                data-module="govuk-button">
-                            Continue
-                        </button>
+                        <div>
+                            <button type="submit" draggable="false"
+                                    class="govuk-button govuk-!-margin-top-7 govuk-!-margin-bottom-6"
+                                    data-module="govuk-button">
+                                Continue
+                            </button>
+                        </div>
                     </EditForm>
                 </div>
             </div>
@@ -215,23 +219,23 @@
         }
         if (!String.IsNullOrEmpty(EmailAddresses[0]) && !IsValid(EmailAddresses[0]))
         {
-            ValidationErrors.Add("Email1Invalid", EmailAddresses[0]+" is not in right email format");
+            ValidationErrors.Add("Email1Invalid", "Enter an email address in the correct format, like name@example.com");
         }
-        if (!String.IsNullOrEmpty(EmailAddresses[1]) && !IsValid(EmailAddresses[1]))
+        else if (!String.IsNullOrEmpty(EmailAddresses[1]) && !IsValid(EmailAddresses[1]))
         {
-            ValidationErrors.Add("Email2Invalid", EmailAddresses[1] + " is not in right email format");
+            ValidationErrors.Add("Email2Invalid", "Enter an email address in the correct format, like name@example.com");
         }
-        if (!String.IsNullOrEmpty(EmailAddresses[2]) && !IsValid(EmailAddresses[2]))
+        else if (!String.IsNullOrEmpty(EmailAddresses[2]) && !IsValid(EmailAddresses[2]))
         {
-            ValidationErrors.Add("Email3Invalid", EmailAddresses[2] + " is not in right email format");
+            ValidationErrors.Add("Email3Invalid", "Enter an email address in the correct format, like name@example.com");
         }
-        if (!String.IsNullOrEmpty(EmailAddresses[3]) && !IsValid(EmailAddresses[3]))
+        else if (!String.IsNullOrEmpty(EmailAddresses[3]) && !IsValid(EmailAddresses[3]))
         {
-            ValidationErrors.Add("Email4Invalid", EmailAddresses[3] + " is not in right email format");
+            ValidationErrors.Add("Email4Invalid", "Enter an email address in the correct format, like name@example.com");
         }
-        if (!String.IsNullOrEmpty(EmailAddresses[4]) && !IsValid(EmailAddresses[4]))
+        else if (!String.IsNullOrEmpty(EmailAddresses[4]) && !IsValid(EmailAddresses[4]))
         {
-            ValidationErrors.Add("Email5Invalid", EmailAddresses[4] + " is not in right email format");
+            ValidationErrors.Add("Email5Invalid", "Enter an email address in the correct format, like name@example.com");
         }  
         if (ValidationErrors.Count == 0)
         {

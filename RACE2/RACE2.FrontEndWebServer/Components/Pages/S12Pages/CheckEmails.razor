@@ -6,7 +6,7 @@
 @inject NavigationManager NavigationManager
 @inject ProtectedSessionStorage ProtectedSessionStore
 
-<PageTitle>Enet Emails - Send a supervising engineer's annual statement - GOV.UK</PageTitle>
+<PageTitle>Check email address - Send a supervising engineer's annual statement - GOV.UK</PageTitle>
 
 <HeaderWithBanner />
 
@@ -14,52 +14,50 @@
 
     <FeedbackBannerSignOut />
 
-    <main class="govuk-main-wrapper--auto-spacing" id="main-content" role="main">
-        <a class="govuk-back-link" @onclick="GoToPrevPage" style="color:black">Back</a>
+    <a class="govuk-back-link" @onclick="GoToPrevPage" style="color:black">Back</a>
+
+    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
         @if (ValidationErrors.Count == 0)
         {
             <div class="govuk-grid-row">
-                <div class="govuk-grid-column-two-thirds">
+                <div class="govuk-grid-column-three-quarters">
                     <EditForm Model="@EmailAddresses" OnSubmit="GoToNextPage">
                         <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-                                    <h1 class="govuk-fieldset__heading">
-                                        Check email addresses
-                                    </h1>
-                                </legend>
-                                @{
-                                    int emailcount = 1;
-                                }
+                            <h1 class="govuk-heading-l govuk-!-margin-bottom-6">
+                                Check email addresses
+                            </h1>
+                            @{
+                                int emailcount = 1;
+                            }
+                            <dl class="govuk-summary-list">
                                 @foreach (var email in EmailAddresses)
                                 {
-                                    <dl class="govuk-summary-list">
-                                        <div class="govuk-summary-list__row">
-                                            <dt class="govuk-summary-list__key">
-                                                Email address @emailcount
-                                            </dt>
-                                            <dd class="govuk-summary-list__value" for="reservoir-town-old" id="reservoir-town-old" name="reservoir-town-old">
-                                                @email
-                                            </dd>
-                                            <dd class="govuk-summary-list__actions">
-                                                <ul class="govuk-summary-list__actions-list">
-                                                    <li class="govuk-summary-list__actions-list-item">
-                                                        <a class="govuk-link govuk-link--no-visited-state" href="#" @onclick="()=>EditEmail(email)" @onclick:preventDefault>Edit<span class="govuk-visually-hidden">email address</span></a>
-                                                    </li>
-                                                    <li class="govuk-summary-list__actions-list-item">
-                                                        <a class="govuk-link govuk-link--no-visited-state" href="#" @onclick="()=>DeleteEmail(email)" @onclick:preventDefault>Delete<span class="govuk-visually-hidden">email address</span></a>
-                                                    </li>
-                                                </ul>
-                                            </dd>
-                                        </div>
-                                    </dl>
+                                    <div class="govuk-summary-list__row">
+                                        <dt class="govuk-summary-list__key">
+                                            Email address @emailcount
+                                        </dt>
+                                        <dd class="govuk-summary-list__value" for="reservoir-town-old" id="reservoir-town-old" name="reservoir-town-old">
+                                            @email
+                                        </dd>
+                                        <dd class="govuk-summary-list__actions">
+                                            <ul class="govuk-summary-list__actions-list">
+                                                <li class="govuk-summary-list__actions-list-item">
+                                                    <a class="govuk-link govuk-link--no-visited-state" href="#" @onclick="()=>EditEmail(email)" @onclick:preventDefault>Edit<span class="govuk-visually-hidden">email address</span></a>
+                                                </li>
+                                                <li class="govuk-summary-list__actions-list-item">
+                                                    <a class="govuk-link govuk-link--no-visited-state" href="#" @onclick="()=>DeleteEmail(email)" @onclick:preventDefault>Delete<span class="govuk-visually-hidden">email address</span></a>
+                                                </li>
+                                            </ul>
+                                        </dd>
+                                    </div>
+
                                     emailcount++;
                                 }
-                            </fieldset>
+                            </dl>
                         </div>
 
                         <button type="submit" draggable="false"
-                                class="govuk-button govuk-!-margin-top-3 govuk-!-margin-bottom-6 govuk-!-margin-right-4"
+                                class="govuk-button govuk-!-margin-top-6 govuk-!-margin-bottom-6 govuk-!-margin-right-4"
                                 data-module="govuk-button">
                             Continue
                         </button>
@@ -87,47 +85,44 @@
                 </div>
             </div>
             <div class="govuk-grid-row">
-                <div class="govuk-grid-column-two-thirds">
+                <div class="govuk-grid-column-three-quarters">
                     <EditForm Model="@EmailAddresses" OnSubmit="GoToNextPage">
                         <div class="govuk-form-group govuk-form-group--error govuk-!-margin-top-8 govuk-!-margin-bottom-4">
-                            <fieldset class="govuk-fieldset" aria-describedby="where-do-you-live-error">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-                                    <h1 class="govuk-fieldset__heading">
-                                        Check email addresses
-                                    </h1>
-                                </legend>
-                                @{
-                                    int emailcount = 1;
-                                }
+                            <h1 class="govuk-heading-l govuk-!-margin-bottom-6">
+                                Check email addresses
+                            </h1>
+                            @{
+                                int emailcount = 1;
+                            }
+                            <dl class="govuk-summary-list">
                                 @foreach (var email in EmailAddresses)
                                 {
-                                    <dl class="govuk-summary-list">
-                                        <div class="govuk-summary-list__row">
-                                            <dt class="govuk-summary-list__key">
-                                                Email address @emailcount
-                                            </dt>
-                                            <dd class="govuk-summary-list__value" for="reservoir-town-old" id="reservoir-town-old" name="reservoir-town-old">
-                                                @email
-                                            </dd>
-                                            <dd class="govuk-summary-list__actions">
-                                                <ul class="govuk-summary-list__actions-list">
-                                                    <li class="govuk-summary-list__actions-list-item">
-                                                        <a class="govuk-link govuk-link--no-visited-state" href="#" @onclick="()=>EditEmail(email)" @onclick:preventDefault>Edit<span class="govuk-visually-hidden">email address</span></a>
-                                                    </li>
-                                                    <li class="govuk-summary-list__actions-list-item">
-                                                        <a class="govuk-link govuk-link--no-visited-state" href="#" @onclick="()=>DeleteEmail(email)" @onclick:preventDefault>Delete<span class="govuk-visually-hidden">email address</span></a>
-                                                    </li>
-                                                </ul>
-                                            </dd>
-                                        </div>
-                                    </dl>
+
+                                    <div class="govuk-summary-list__row">
+                                        <dt class="govuk-summary-list__key">
+                                            Email address @emailcount
+                                        </dt>
+                                        <dd class="govuk-summary-list__value" for="reservoir-town-old" id="reservoir-town-old" name="reservoir-town-old">
+                                            @email
+                                        </dd>
+                                        <dd class="govuk-summary-list__actions">
+                                            <ul class="govuk-summary-list__actions-list">
+                                                <li class="govuk-summary-list__actions-list-item">
+                                                    <a class="govuk-link govuk-link--no-visited-state" href="#" @onclick="()=>EditEmail(email)" @onclick:preventDefault>Edit<span class="govuk-visually-hidden">email address</span></a>
+                                                </li>
+                                                <li class="govuk-summary-list__actions-list-item">
+                                                    <a class="govuk-link govuk-link--no-visited-state" href="#" @onclick="()=>DeleteEmail(email)" @onclick:preventDefault>Delete<span class="govuk-visually-hidden">email address</span></a>
+                                                </li>
+                                            </ul>
+                                        </dd>
+                                    </div>                                
                                     emailcount++;
                                 }
-                            </fieldset>
+                            </dl>
                         </div>
 
                         <button type="submit" draggable="false"
-                                class="govuk-button govuk-!-margin-top-3 govuk-!-margin-bottom-6 govuk-!-margin-right-4"
+                                class="govuk-button govuk-!-margin-top-6 govuk-!-margin-bottom-6 govuk-!-margin-right-4"
                                 data-module="govuk-button">
                             Continue
                         </button>

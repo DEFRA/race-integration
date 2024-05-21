@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace RACE2.Dto
 {
-    public class BackendOrganisationDetails
+    public class IntegrateOrganisationdto
     {
+
         public int frontEndOrganisationId { get; set; }
         [MaxLength(16)]
         public string backEndOrganisationId { get; set; } = string.Empty;
@@ -19,8 +20,9 @@ namespace RACE2.Dto
         [MaxLength(100)]
         public string tradingName { get; set; } = string.Empty;
         [MaxLength(64)]
-        public string type { get; set; } = string.Empty;
+        public string type { get;set; } = string.Empty;
         [MaxLength(64)]
         public string companyNumber { get; set; } = string.Empty;
+
     }
 }
