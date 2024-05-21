@@ -358,12 +358,11 @@
                                     SubmissionEmailNotification submissionEmailNotification = new SubmissionEmailNotification();
                                     submissionEmailNotification.SubmissionStatusId = res.Id;
                                     submissionEmailNotification.SubmissionStatus = res;
-                                    await reservoirService.InsertDocumentRelatedTable(Int32.Parse(reportSubmissionData.ReservoirId), res.Id, docID);
-                                    submissionEmailNotification.IsOverridePrimaryContact = i == 0 && reportSubmissionData.YesNoValueUndertaker == "UndertakerDetailsStatus" ? true : false;
+                                    submissionEmailNotification.IsOverridePrimaryContact = false;
                                     submissionEmailNotification.ContactType = "Undertaker";
-                                    submissionEmailNotification.Email = additionalEmailList[i];
+                                    submissionEmailNotification.Email = addr;
                                     submissionEmailNotifications.Add(submissionEmailNotification);
-                                    undertakeremaillist += additionalEmailList[i] + ";";
+                                    undertakeremaillist += addr + ";";
                                 }
                                 await userService.InsertUndertakerEmails(submissionEmailNotifications);
                             }
@@ -388,7 +387,7 @@
                             response.EnsureSuccessStatusCode();
 
 
-                            Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Information("File upload succeeded.");
+                            Serilog.Log.Logger.ForContext("User", UserEmail).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Information("File upload succeeded.");
                             uploadTimeElapsed++;
                             uploadPerc = Convert.ToInt32((Convert.ToDouble(uploadTimeElapsed) / Convert.ToDouble(timeToWait)) * 100.0);
                             StateHasChanged();
