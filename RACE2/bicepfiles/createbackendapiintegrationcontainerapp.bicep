@@ -26,7 +26,7 @@ resource managedIdentity_resource 'Microsoft.ManagedIdentity/userAssignedIdentit
   name: managedidentity 
 }
 
-resource containerWebApiApp 'Microsoft.App/containerApps@2023-08-01-preview' = {
+resource containerBackendApiIntegrationApp 'Microsoft.App/containerApps@2023-08-01-preview' = {
   name: containerAppName
   location: location
   properties: {

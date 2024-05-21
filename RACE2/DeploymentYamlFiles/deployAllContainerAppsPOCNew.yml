@@ -15,30 +15,26 @@ variables:
     value: 'race2securityprovider'
   - name: dockerfile_securityprovider
     value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_SecurityProvider'
-  - name: repository_webapi
-    value: 'race2webapi'
-  - name: dockerfile_webapi
-    value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_WebApi'  
   - name: repository_frontendwebserver
     value: 'race2frontendwebserver'
   - name: dockerfile_frontendwebserver
     value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_FrontEndWebServer'
-  - name: repository_backendapiintegration
-    value: 'race2backendapiintegration'
-  - name: dockerfile_backendapiintegration
-    value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_BackendAPIIntegration'  
+  - name: repository_webapi
+    value: 'race2webapi'
+  - name: dockerfile_webapi
+    value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_WebApi'    
   - name: containerRegistry
-    value: 'AZR-RAC-POC1-ACR'
+    value: 'AZD-RAC-POC1-ACR'
   - name: tag
     value: '$(Build.BuildId)'
   - name: azureServiceConnection
-    value: 'AZR-RAC-POC1'
+    value: 'AZD-RAC-POC1'
   - name: resourceGroupName
-    value: 'POCRACINFRG1401'
+    value: 'POCRACINFRG1402'
   - name: templateFile
     value: '$(Build.SourcesDirectory)/RACE2/bicepfiles/createAllContainerApps.bicep'
   - name: parameterfile
-    value: '$(Build.SourcesDirectory)/RACE2/DeploymentYamlFiles/deployAllContainerAppsParametersPOC.json'
+    value: '$(Build.SourcesDirectory)/RACE2/DeploymentYamlFiles/deployAllContainerAppsParametersPOCNew.json'
 
 stages:
 - stage: BuildAndPush
@@ -56,15 +52,7 @@ stages:
         repository: ${{ variables.repository_securityprovider }}
         dockerfile: ${{ variables.dockerfile_securityprovider }}
         containerRegistry: ${{ variables.containerRegistry }}
-        tags: ${{ variables.tag }}
-    - task: Docker@2
-      displayName: Build and push an image - WebApi
-      inputs:
-        command: buildAndPush
-        repository: ${{ variables.repository_webapi }}
-        dockerfile: ${{ variables.dockerfile_webapi }}
-        containerRegistry: ${{ variables.containerRegistry }}
-        tags: ${{ variables.tag }}    
+        tags: ${{ variables.tag }}     
     - task: Docker@2
       displayName: Build and push an image - FrontEndWebServer
       inputs:
@@ -74,14 +62,13 @@ stages:
         containerRegistry: ${{ variables.containerRegistry }}
         tags: ${{ variables.tag }}
     - task: Docker@2
-      displayName: Build and push an image - BackendApiIntegration
+      displayName: Build and push an image - WebApi
       inputs:
         command: buildAndPush
-        repository: ${{ variables.repository_backendapiintegration }}
-        dockerfile: ${{ variables.dockerfile_backendapiintegration }}
+        repository: ${{ variables.repository_webapi }}
+        dockerfile: ${{ variables.dockerfile_webapi }}
         containerRegistry: ${{ variables.containerRegistry }}
-        tags: ${{ variables.tag }}   
-
+        tags: ${{ variables.tag }}       
 - stage : DeployContainerApps
   displayName: Deploy Container Apps to Azure Portal
   jobs:  
@@ -98,5 +85,4 @@ stages:
         scriptLocation: inlineScript
         useGlobalConfig: false    
         inlineScript: |
-          az --version
           az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) -p @$(parameterfile) tag='{tag:$(tag)}'

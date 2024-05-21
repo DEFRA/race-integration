@@ -5,16 +5,17 @@
 @inject NavigationManager NavigationManager
 @inject ProtectedSessionStorage ProtectedSessionStore
 
-<PageTitle>Delete Email - Statement sent - Send a supervising engineer's annual statement - GOV.UK</PageTitle>
+<PageTitle>Delete email address - Send a supervising engineer's annual statement - GOV.UK</PageTitle>
 
 <HeaderWithBanner />
 
 <div class="govuk-width-container" style="min-height: 70vh;">
 
     <FeedbackBannerSignOut />
+    
+    <a class="govuk-back-link" @onclick="GoToPrevPage" style="color:black">Back</a>
 
-    <main class="govuk-main-wrapper--auto-spacing" id="main-content" role="main">
-        <a class="govuk-back-link" @onclick="GoToPrevPage" style="color:black">Back</a>
+    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-two-thirds">
                 @if (!YesNoError)
