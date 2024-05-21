@@ -148,10 +148,10 @@ try
         });
     builder.Services.AddScoped<INotification, RaceNotification>();
 
-
+    var backendurl = builder.Configuration["RACE2BackendAPIURL"];
     builder.Services.AddHttpClient("BackendAPI", httpClient =>
     {
-        httpClient.BaseAddress = new Uri("https://localhost:7211/");
+        httpClient.BaseAddress = new Uri(backendurl);
     });
     builder.Services.AddScoped<INotification, RaceNotification>();    
 
