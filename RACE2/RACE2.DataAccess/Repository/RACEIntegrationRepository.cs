@@ -102,7 +102,10 @@ namespace RACE2.DataAccess.Repository
                 //};
 
                 string uploadPayloadJson =
-                    System.Text.Json.JsonSerializer.Serialize(submitS12Statement);
+                    System.Text.Json.JsonSerializer.Serialize(submitS12Statement,new JsonSerializerOptions
+                    {
+                        DefaultIgnoreCondition =JsonIgnoreCondition.WhenWritingNull
+                    });
 
                 //string body = JsonConvert.SerializeObject(submitS12Statement);
                 var options = new RestClientOptions(baseuri)
@@ -142,29 +145,29 @@ namespace RACE2.DataAccess.Repository
             uploadPayload.submission.reference = submissionreference;
             string format = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
             string strDate = DateTime.UtcNow.ToString(format, DateTimeFormatInfo.InvariantInfo);
-            uploadPayload.submission.submittedDate = strDate;
+            uploadPayload.submission.submittedDate = "2024-05-20T00:00:00.000+0100";//strDate;
             uploadPayload.submission.submittedBy = submittedBy;
             uploadPayload.submission.type = "Annual Statement";
             uploadPayload.submission.source = "S12 Digital Service";
 
             //written statement details
             uploadPayload.writtenStatement.type = "12(2) Written statement";
-            uploadPayload.writtenStatement.date = "";
+            uploadPayload.writtenStatement.date = null;
             uploadPayload.writtenStatement.visualInspectionDirection = true;
             uploadPayload.writtenStatement.recommendInspectionS10 = true;
-            uploadPayload.writtenStatement.nextInspectionDate = "";
-            uploadPayload.writtenStatement.expectedNextStatementDate = "";
+            uploadPayload.writtenStatement.nextInspectionDate = null;
+            uploadPayload.writtenStatement.expectedNextStatementDate = null;
             uploadPayload.writtenStatement.notificationEmailAddresses = notificationemailaddress;
 
             //reservoir details
-            uploadPayload.reservoir.backEndId = reservoirbackendid;
-            uploadPayload.reservoir.referenceNumber = reservoirreferencenumber;
+            uploadPayload.reservoir.backEndId =  reservoirbackendid;//"0801117180035e68";
+            uploadPayload.reservoir.referenceNumber = "0801117180035e68";//reservoirreferencenumber;
 
             //engineer details
 
             uploadPayload.engineer.id = engineerid;
-            uploadPayload.engineer.backEndPrimaryReference = backendprimaryref;
-            uploadPayload.engineer.backEndSecondaryReference = backendsecondref;
+            uploadPayload.engineer.backEndPrimaryReference = backendprimaryref;// "08011171800069ee"; //backendprimaryref;
+            uploadPayload.engineer.backEndSecondaryReference = backendsecondref;// "08011171800069ef";// ;
 
             //breach details
 

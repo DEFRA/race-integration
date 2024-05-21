@@ -14,9 +14,9 @@ namespace RACE2.DataModel
     {
         [StringLength(16)]
         public string? cBackEndUserId { get; set; }
-        [StringLength(12)]
+        [StringLength(16)]
         public string? BackEndPrimaryRef { get; set; }
-        [StringLength(12)]
+        [StringLength(16)]
         public string? BackEndSecondaryRef { get; set; }
         [StringLength(64)]
         public string? cDefraId { get; set; }
