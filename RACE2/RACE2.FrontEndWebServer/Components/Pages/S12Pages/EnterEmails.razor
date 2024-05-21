@@ -219,23 +219,23 @@
         }
         if (!String.IsNullOrEmpty(EmailAddresses[0]) && !IsValid(EmailAddresses[0]))
         {
-            ValidationErrors.Add("Email1Invalid", EmailAddresses[0]+" is not in right email format");
+            ValidationErrors.Add("Email1Invalid", "Enter an email address in the correct format, like name@example.com");
         }
-        if (!String.IsNullOrEmpty(EmailAddresses[1]) && !IsValid(EmailAddresses[1]))
+        else if (!String.IsNullOrEmpty(EmailAddresses[1]) && !IsValid(EmailAddresses[1]))
         {
-            ValidationErrors.Add("Email2Invalid", EmailAddresses[1] + " is not in right email format");
+            ValidationErrors.Add("Email2Invalid", "Enter an email address in the correct format, like name@example.com");
         }
-        if (!String.IsNullOrEmpty(EmailAddresses[2]) && !IsValid(EmailAddresses[2]))
+        else if (!String.IsNullOrEmpty(EmailAddresses[2]) && !IsValid(EmailAddresses[2]))
         {
-            ValidationErrors.Add("Email3Invalid", EmailAddresses[2] + " is not in right email format");
+            ValidationErrors.Add("Email3Invalid", "Enter an email address in the correct format, like name@example.com");
         }
-        if (!String.IsNullOrEmpty(EmailAddresses[3]) && !IsValid(EmailAddresses[3]))
+        else if (!String.IsNullOrEmpty(EmailAddresses[3]) && !IsValid(EmailAddresses[3]))
         {
-            ValidationErrors.Add("Email4Invalid", EmailAddresses[3] + " is not in right email format");
+            ValidationErrors.Add("Email4Invalid", "Enter an email address in the correct format, like name@example.com");
         }
-        if (!String.IsNullOrEmpty(EmailAddresses[4]) && !IsValid(EmailAddresses[4]))
+        else if (!String.IsNullOrEmpty(EmailAddresses[4]) && !IsValid(EmailAddresses[4]))
         {
-            ValidationErrors.Add("Email5Invalid", EmailAddresses[4] + " is not in right email format");
+            ValidationErrors.Add("Email5Invalid", "Enter an email address in the correct format, like name@example.com");
         }  
         if (ValidationErrors.Count == 0)
         {
