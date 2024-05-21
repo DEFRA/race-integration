@@ -25,8 +25,8 @@ namespace RACE2.GovUK.OneloginAuth.Services
 
         public async Task<string> AuthenticationCallback(string authority, string resource, string scope)
         {
-            var chainedTokenCredential = new DefaultAzureCredential();
-            var token = await chainedTokenCredential.GetTokenAsync(
+            var credential = new DefaultAzureCredential();
+            var token = await credential.GetTokenAsync(
                 new TokenRequestContext(scopes: new[] { "https://vault.azure.net/.default" }));
 
             return token.Token;
