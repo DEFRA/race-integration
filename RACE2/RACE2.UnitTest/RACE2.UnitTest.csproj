@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
-    <PackageReference Include="Moq" Version="4.20.70" />
     <PackageReference Include="xunit" Version="2.8.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.8.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -24,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RACE2.DataAccess\RACE2.DataAccess.csproj" />
+    <ProjectReference Include="..\RACE2.DataModel\RACE2.DataModel.csproj" />
     <ProjectReference Include="..\RACE2.Services\RACE2.Services.csproj" />
   </ItemGroup>
 
