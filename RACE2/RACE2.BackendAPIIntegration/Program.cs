@@ -17,7 +17,7 @@ builder.Configuration.AddAzureAppConfiguration(options =>
     var azureTenantId = builder.Configuration["AZURE_TENANT_ID"];
     var managedIdentityClientId = builder.Configuration["ManagedIdentityClientId"]; 
     var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions { TenantId = azureTenantId, ManagedIdentityClientId = managedIdentityClientId, VisualStudioTenantId = azureTenantId });
-    var appinsightsConnString = builder.Configuration["AppInsightsConnectionString"];
+   
 
     //options.Connect(connectionString)      
     options.Connect(new Uri(azureAppConfigUrl), credential)
@@ -66,7 +66,7 @@ builder.Services.AddSwaggerGen(c =>
     var requirement = new OpenApiSecurityRequirement { { key, new List<string>() } };
     c.AddSecurityRequirement(requirement);
 });
-
+var appinsightsConnString = builder.Configuration["AppInsightsConnectionString"];
 builder.Services.AddApplicationInsightsTelemetry(options =>
 {
     options.ConnectionString = appinsightsConnString;
