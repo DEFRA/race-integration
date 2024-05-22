@@ -93,7 +93,7 @@ namespace RACE2.DataAccess.Repository
         {
 
             IntegrationResponseModel integrationResponseModel = new IntegrationResponseModel();
-            string baseuri = "https://eadev.synapps-solutions.com/EA-API/";
+            string baseuri = _configuration["DocumentumURL"];
             _logger.LogInformation("Entering the document details");
             try
             {
@@ -151,7 +151,7 @@ namespace RACE2.DataAccess.Repository
                 uploadPayload.submission.reference = submissionreference;
                 string format = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
                 string strDate = DateTime.UtcNow.ToString(format, DateTimeFormatInfo.InvariantInfo);
-                uploadPayload.submission.submittedDate = "2024-05-22T00:00:00.000+0100";//strDate;
+                uploadPayload.submission.submittedDate = "2024-05-23T00:00:00.000+0100";//strDate;
                 uploadPayload.submission.submittedBy = submittedBy;
                 uploadPayload.submission.type = "Annual Statement";
                 uploadPayload.submission.source = "S12 Digital Service";

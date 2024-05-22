@@ -7,6 +7,7 @@ using Azure.Identity;
 using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using Microsoft.EntityFrameworkCore;
 using RACE2.BackendAPIIntegration.Data;
+using RACE2.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +33,9 @@ builder.Configuration.AddAzureAppConfiguration(options =>
     .UseFeatureFlags();
 });
 var blazorClientURL = builder.Configuration["RACE2FrontEndURL"];
+
+builder.Services.AddLoggingServices(builder.Configuration);
+
 
 // Add services to the container.
 
