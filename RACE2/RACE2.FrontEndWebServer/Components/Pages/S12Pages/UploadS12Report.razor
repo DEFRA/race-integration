@@ -391,11 +391,7 @@
                                 await _notificationService.SendConfirmationMailtoSE(userDetails.Email, reportSubmissionData.ReservoirRegName);
                                 if (selectedFile.Size < uploadFileData.NotifyServiceFileAttachmentLimit)
                                 {
-                                    await _notificationService.SendConfirmationMailtoRST(RSTEmailAddress, reportSubmissionData.ReservoirRegName, bytes, userDetails.cFirstName + " " + userDetails.cLastName, reportSubmissionData.UndertakerName);
-                                    if (reportSubmissionData.YesNoValueUndertaker == "Yes")
-                                    {
-                                        await _notificationService.SendConfirmationMailWithAttachment(bytes, reportSubmissionData.UndertakerEmail, reportSubmissionData.ReservoirRegName);
-                                    }
+                                    await _notificationService.SendConfirmationMailtoRST(RSTEmailAddress, reportSubmissionData.ReservoirRegName, bytes, userDetails.cFirstName + " " + userDetails.cLastName, reportSubmissionData.UndertakerName);                                
                                 }
                                 else
                                 {
