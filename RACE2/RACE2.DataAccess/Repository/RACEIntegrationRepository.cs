@@ -124,6 +124,8 @@ namespace RACE2.DataAccess.Repository
                 integrationResponseModel.Status = response.StatusDescription;
                 integrationResponseModel.Reason = response.ErrorMessage;
                 integrationResponseModel.ResponseData = response.Content != null? response.Content.ToString(): "";
+                _logger.LogInformation("Documentum Status code" + integrationResponseModel.StatusCode);
+                _logger.LogInformation("Documentum Response" + integrationResponseModel.ResponseData);
                 return integrationResponseModel;
             }
             catch (Exception ex)
