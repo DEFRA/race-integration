@@ -140,65 +140,76 @@ namespace RACE2.DataAccess.Repository
         public AnnualSubmissionDocumentDetails GenerateSubmitPayloadJSON(int submittedBy, string submissionreference,string notificationemailaddress,string reservoirbackendid, 
             string reservoirreferencenumber,Stream filestream,int documentid,string uploadfilename,string blobstoragefilename, int engineerid,string backendprimaryref,string backendsecondref)
         {
-            AnnualSubmissionDocumentDetails uploadPayload = new AnnualSubmissionDocumentDetails();
-            //submission detaile
-            uploadPayload.submission.statusId = 1;
-            uploadPayload.submission.reference = submissionreference;
-            string format = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
-            string strDate = DateTime.UtcNow.ToString(format, DateTimeFormatInfo.InvariantInfo);
-            uploadPayload.submission.submittedDate = "2024-05-22T00:00:00.000+0100";//strDate;
-            uploadPayload.submission.submittedBy = submittedBy;
-            uploadPayload.submission.type = "Annual Statement";
-            uploadPayload.submission.source = "S12 Digital Service";
-
-            //written statement details
-            uploadPayload.writtenStatement.type = "12(2) Written statement";
-            uploadPayload.writtenStatement.date = null;
-            uploadPayload.writtenStatement.visualInspectionDirection = true;
-            uploadPayload.writtenStatement.recommendInspectionS10 = true;
-            uploadPayload.writtenStatement.nextInspectionDate = null;
-            uploadPayload.writtenStatement.expectedNextStatementDate = null;
-            uploadPayload.writtenStatement.notificationEmailAddresses = notificationemailaddress;
-
-            //reservoir details
-            uploadPayload.reservoir.backEndId =  reservoirbackendid;//"0801117180035e68";
-            uploadPayload.reservoir.referenceNumber = reservoirreferencenumber;
-
-            //engineer details
-
-            uploadPayload.engineer.id = engineerid;
-            uploadPayload.engineer.backEndPrimaryReference = backendprimaryref;// "08011171800069ee"; //backendprimaryref;
-            uploadPayload.engineer.backEndSecondaryReference = backendsecondref;// "08011171800069ef";// ;
-
-            //breach details
-
-
-            //document details  
-            uploadPayload.document.id = documentid;
-            uploadPayload.document.uploadFileName = uploadfilename;
-            if (!uploadfilename.IsNullOrEmpty())
+            try
             {
-                var fileExtns = uploadfilename.Split('.');
-                int totalExtns = fileExtns.Length;
-                var fileExtn = uploadfilename.Split('.')[totalExtns - 1];
-                if (fileExtn == "docx")
-                    uploadPayload.document.mimeType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
-                if (fileExtn == "doc")
-                    uploadPayload.document.mimeType = "application/msword";
-                if (fileExtn == "pdf")
-                    uploadPayload.document.mimeType = "application/pdf";
+                _logger.LogInformation("Adding Submission Payload");
+                AnnualSubmissionDocumentDetails uploadPayload = new AnnualSubmissionDocumentDetails();
+                //submission detaile
+                uploadPayload.submission.statusId = 1;
+                uploadPayload.submission.reference = submissionreference;
+                string format = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
+                string strDate = DateTime.UtcNow.ToString(format, DateTimeFormatInfo.InvariantInfo);
+                uploadPayload.submission.submittedDate = "2024-05-22T00:00:00.000+0100";//strDate;
+                uploadPayload.submission.submittedBy = submittedBy;
+                uploadPayload.submission.type = "Annual Statement";
+                uploadPayload.submission.source = "S12 Digital Service";
+
+                _logger.LogInformation("Adding Written Statement Payload");
+                //written statement details
+                uploadPayload.writtenStatement.type = "12(2) Written statement";
+                uploadPayload.writtenStatement.date = null;
+                uploadPayload.writtenStatement.visualInspectionDirection = true;
+                uploadPayload.writtenStatement.recommendInspectionS10 = true;
+                uploadPayload.writtenStatement.nextInspectionDate = null;
+                uploadPayload.writtenStatement.expectedNextStatementDate = null;
+                uploadPayload.writtenStatement.notificationEmailAddresses = notificationemailaddress;
+
+                _logger.LogInformation("Adding Reservoir Details Payload");
+                //reservoir details
+                uploadPayload.reservoir.backEndId = reservoirbackendid;//"0801117180035e68";
+                uploadPayload.reservoir.referenceNumber = reservoirreferencenumber;
+
+                //engineer details
+                _logger.LogInformation("Adding Engineer Details Payload");
+                uploadPayload.engineer.id = engineerid;
+                uploadPayload.engineer.backEndPrimaryReference = backendprimaryref;// "08011171800069ee"; //backendprimaryref;
+                uploadPayload.engineer.backEndSecondaryReference = backendsecondref;// "08011171800069ef";// ;
+
+                //breach details
+
+                _logger.LogInformation("Adding Document details Payload");
+                //document details  
+                uploadPayload.document.id = documentid;
+                uploadPayload.document.uploadFileName = uploadfilename;
+                if (!uploadfilename.IsNullOrEmpty())
+                {
+                    var fileExtns = uploadfilename.Split('.');
+                    int totalExtns = fileExtns.Length;
+                    var fileExtn = uploadfilename.Split('.')[totalExtns - 1];
+                    if (fileExtn == "docx")
+                        uploadPayload.document.mimeType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+                    if (fileExtn == "doc")
+                        uploadPayload.document.mimeType = "application/msword";
+                    if (fileExtn == "pdf")
+                        uploadPayload.document.mimeType = "application/pdf";
+                }
+
+                uploadPayload.document.protectiveMarking = "Official Sensitive";
+                uploadPayload.document.templateType = "";
+                uploadPayload.document.templateVersion = "";
+                uploadPayload.document.blobStorageFileName = blobstoragefilename;
+                uploadPayload.document.content = ConvertToBase64(filestream);
+                return uploadPayload;
             }
 
-            uploadPayload.document.protectiveMarking = "Official Sensitive";
-            uploadPayload.document.templateType = "";
-            uploadPayload.document.templateVersion = "";
-            uploadPayload.document.blobStorageFileName = blobstoragefilename;
-            uploadPayload.document.content = ConvertToBase64(filestream);
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return null;
+               
+            }
 
-
-          
-
-            return uploadPayload;
+           // return uploadPayload;
         }
 
         public string ConvertToBase64(Stream instream)

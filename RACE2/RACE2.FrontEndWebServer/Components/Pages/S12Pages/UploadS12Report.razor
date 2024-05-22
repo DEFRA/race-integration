@@ -407,7 +407,7 @@
                             }
                             catch (Exception ex)
                             {
-                                Serilog.Log.Logger.ForContext("User", UserEmail).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Error("GenerateSubmitPayloadJSON: Resulted in error.");
+                                Serilog.Log.Logger.ForContext("User", UserEmail).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Error("GenerateSubmitPayloadJSON: Resulted in error " + ex.Message);
                                 bool forceLoad = true;
                                 string pagelink = "/ProblemWithService";
                                 NavigationManager.NavigateTo(pagelink, forceLoad);
