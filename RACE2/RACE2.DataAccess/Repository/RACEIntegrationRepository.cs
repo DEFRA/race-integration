@@ -146,7 +146,7 @@ namespace RACE2.DataAccess.Repository
             uploadPayload.submission.reference = submissionreference;
             string format = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
             string strDate = DateTime.UtcNow.ToString(format, DateTimeFormatInfo.InvariantInfo);
-            uploadPayload.submission.submittedDate = "2024-05-20T00:00:00.000+0100";//strDate;
+            uploadPayload.submission.submittedDate = "2024-05-22T00:00:00.000+0100";//strDate;
             uploadPayload.submission.submittedBy = submittedBy;
             uploadPayload.submission.type = "Annual Statement";
             uploadPayload.submission.source = "S12 Digital Service";
@@ -162,7 +162,7 @@ namespace RACE2.DataAccess.Repository
 
             //reservoir details
             uploadPayload.reservoir.backEndId =  reservoirbackendid;//"0801117180035e68";
-            uploadPayload.reservoir.referenceNumber = "0801117180035e68";//reservoirreferencenumber;
+            uploadPayload.reservoir.referenceNumber = "0801117180035e6";//reservoirreferencenumber;
 
             //engineer details
 

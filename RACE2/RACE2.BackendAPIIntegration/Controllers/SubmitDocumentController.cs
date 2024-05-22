@@ -21,21 +21,32 @@ namespace RACE2.BackendAPIIntegration.Controllers
     
 
         [HttpPost("SubmitStatement")]
-        public async Task<IntegrationResponseModel> SubmitStatement([FromBody]AnnualSubmissionDocumentDetails submitS12Statement)
+        public async Task<IActionResult> SubmitStatement([FromBody]AnnualSubmissionDocumentDetails submitS12Statement)
         {
             IntegrationResponseModel integrationResponseModel = new IntegrationResponseModel();
             if (submitS12Statement == null)
             {
                  integrationResponseModel.StatusCode = System.Net.HttpStatusCode.BadRequest;
 
-                return integrationResponseModel;
+                return BadRequest();
             }
 
             try
             {
                 integrationResponseModel =  await _uploadService.SubmitDocumentToBackend(submitS12Statement);
+                _logger.LogInformation("API REsults" + integrationResponseModel.StatusCode);
+                _logger.LogInformation("Reason" + integrationResponseModel.ResponseData);
+                if((integrationResponseModel.StatusCode == System.Net.HttpStatusCode.OK) && (integrationResponseModel.ResponseData == "200 OK Submission Accepted")) 
+                    {
+                    return Ok();
+                }
 
-                return integrationResponseModel;
+                else
+                {
+                    return BadRequest();
+                }
+
+               
             }
             catch (Exception)
             {

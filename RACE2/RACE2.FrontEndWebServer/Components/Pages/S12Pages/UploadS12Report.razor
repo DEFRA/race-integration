@@ -382,9 +382,11 @@
                             request.Headers.Add("RACE_REST_API_KEY", _config["DocumentumAPIKey"]);
                             request.Content = new StringContent(company, Encoding.UTF8);
                           //  request.Content = new StringContent(JsonConvert.SerializeObject(uploadPayload), Encoding.UTF8, "application/json");
-                            request.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                            
+                          request.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                            
                             var response = await _httpClient.SendAsync(request);
-                            response.EnsureSuccessStatusCode();
+                          
 
 
                             Serilog.Log.Logger.ForContext("User", UserEmail).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Information("File upload succeeded.");

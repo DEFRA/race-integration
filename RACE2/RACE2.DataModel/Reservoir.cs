@@ -21,7 +21,7 @@ namespace RACE2.DataModel
         public string? PublicName { get; set; }
         [StringLength(200),Required]
         public string? RegisteredName { get;set; }
-        [StringLength(12)]
+        [StringLength(16)]
         public string? ReferenceNumber { get; set; }
         [StringLength(64)]
         public string? PublicCategory { get; set; }
