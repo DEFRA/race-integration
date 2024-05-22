@@ -381,20 +381,13 @@
                             request.Headers.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                             request.Headers.Add("RACE_REST_API_KEY", _config["DocumentumAPIKey"]);
                             request.Content = new StringContent(company, Encoding.UTF8);
-                          //  request.Content = new StringContent(JsonConvert.SerializeObject(uploadPayload), Encoding.UTF8, "application/json");
+                            //  request.Content = new StringContent(JsonConvert.SerializeObject(uploadPayload), Encoding.UTF8, "application/json");
                             request.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-                            var response = await _httpClient.SendAsync(request);
-                            response.EnsureSuccessStatusCode();
 
-                            if (!response.IsSuccessStatusCode)
+                            try
                             {
-                                Serilog.Log.Logger.ForContext("User", UserEmail).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Error("GenerateSubmitPayloadJSON: Resulted in error.");
-                                bool forceLoad = true;
-                                string pagelink = "/ProblemWithService";
-                                NavigationManager.NavigateTo(pagelink, forceLoad);
-                            }
-                            else
-                            {
+                                var response = await _httpClient.SendAsync(request);
+                                response.EnsureSuccessStatusCode();   
                                 await _notificationService.SendConfirmationMailtoSE(userDetails.Email, reportSubmissionData.ReservoirRegName);
                                 if (selectedFile.Size < uploadFileData.NotifyServiceFileAttachmentLimit)
                                 {
@@ -414,8 +407,15 @@
                                 uploadPerc = Convert.ToInt32((Convert.ToDouble(uploadTimeElapsed) / Convert.ToDouble(timeToWait)) * 100.0);
                                 StateHasChanged();
                                 System.Threading.Thread.Sleep(2000);
-                                goToNextPage();
+                                goToNextPage();                                
                             }
+                            catch (Exception ex)
+                            {
+                                Serilog.Log.Logger.ForContext("User", UserEmail).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Error("GenerateSubmitPayloadJSON: Resulted in error.");
+                                bool forceLoad = true;
+                                string pagelink = "/ProblemWithService";
+                                NavigationManager.NavigateTo(pagelink, forceLoad);
+                            }                        
                         }
                         else
                         {
