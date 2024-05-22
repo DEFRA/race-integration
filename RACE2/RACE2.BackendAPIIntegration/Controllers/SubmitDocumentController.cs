@@ -33,11 +33,12 @@ namespace RACE2.BackendAPIIntegration.Controllers
 
             try
             {
+                _logger.LogInformation("Calling the Backend API..");
                 integrationResponseModel =  await _uploadService.SubmitDocumentToBackend(submitS12Statement);
                 _logger.LogInformation("API REsults" + integrationResponseModel.StatusCode);
                 _logger.LogInformation("Reason" + integrationResponseModel.ResponseData);
                 if((integrationResponseModel.StatusCode == System.Net.HttpStatusCode.OK) && (integrationResponseModel.ResponseData == "200 OK Submission Accepted")) 
-                    {
+                {
                     return Ok();
                 }
 
@@ -48,8 +49,9 @@ namespace RACE2.BackendAPIIntegration.Controllers
 
                
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError("Error in Backend API" + ex.Message);
                 throw;
             }
         }
