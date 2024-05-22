@@ -17,6 +17,7 @@ builder.Configuration.AddAzureAppConfiguration(options =>
     var azureTenantId = builder.Configuration["AZURE_TENANT_ID"];
     var managedIdentityClientId = builder.Configuration["ManagedIdentityClientId"]; 
     var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions { TenantId = azureTenantId, ManagedIdentityClientId = managedIdentityClientId, VisualStudioTenantId = azureTenantId });
+   
 
     //options.Connect(connectionString)      
     options.Connect(new Uri(azureAppConfigUrl), credential)
@@ -32,6 +33,8 @@ builder.Configuration.AddAzureAppConfiguration(options =>
     .UseFeatureFlags();
 });
 var blazorClientURL = builder.Configuration["RACE2FrontEndURL"];
+
+
 
 // Add services to the container.
 
@@ -63,7 +66,11 @@ builder.Services.AddSwaggerGen(c =>
     var requirement = new OpenApiSecurityRequirement { { key, new List<string>() } };
     c.AddSecurityRequirement(requirement);
 });
-
+var appinsightsConnString = builder.Configuration["AppInsightsConnectionString"];
+builder.Services.AddApplicationInsightsTelemetry(options =>
+{
+    options.ConnectionString = appinsightsConnString;
+});
 builder.Services.AddScoped<ApiKeyAuthFilter>();
 
 builder.Services.AddTransient<IRACEIntegrationRepository, RACEIntegrationRepository>();
