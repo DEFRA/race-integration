@@ -345,7 +345,7 @@
                             }
 
                             var res = await reservoirService.InsertSubmissionDetails(insertStatus);
-                            
+
                             //Store the uploaded document information
                             documentDTO.SubmissionId = res.Id;
                             await reservoirService.InsertDocumentRelatedTable(Int32.Parse(reportSubmissionData.ReservoirId), res.Id, docID);
@@ -368,7 +368,7 @@
                             }
                             Stream stream = new MemoryStream(bytes);
                             AnnualSubmissionDocumentDetails uploadPayload = new AnnualSubmissionDocumentDetails();
-                            uploadPayload = _integrationService.GenerateSubmitPayloadJSON(userDetails.Id, insertStatus.SubmissionReference, undertakeremaillist, reportSubmissionData.ReservoirId, reportSubmissionData.ReservoirRegName,
+                            uploadPayload = _integrationService.GenerateSubmitPayloadJSON(userDetails.Id, insertStatus.SubmissionReference, undertakeremaillist, reportSubmissionData.BackEndReservoirId, reportSubmissionData.ReferenceNumber,
                                 stream, docID, selectedFile.Name, documentDTO.BlobStorageFileName, userDetails.Id, userDetails.BackEndPrimaryRef, userDetails.BackEndSecondaryRef);
 
 
@@ -381,18 +381,29 @@
                             request.Headers.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                             request.Headers.Add("RACE_REST_API_KEY", _config["DocumentumAPIKey"]);
                             request.Content = new StringContent(company, Encoding.UTF8);
-                          //  request.Content = new StringContent(JsonConvert.SerializeObject(uploadPayload), Encoding.UTF8, "application/json");
+                            //  request.Content = new StringContent(JsonConvert.SerializeObject(uploadPayload), Encoding.UTF8, "application/json");
                             request.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                            IntegrationResponseModel integrationResponseModel = new IntegrationResponseModel();
                             var response = await _httpClient.SendAsync(request);
+
                             response.EnsureSuccessStatusCode();
-
-
-                            Serilog.Log.Logger.ForContext("User", UserEmail).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Information("File upload succeeded.");
-                            uploadTimeElapsed++;
-                            uploadPerc = Convert.ToInt32((Convert.ToDouble(uploadTimeElapsed) / Convert.ToDouble(timeToWait)) * 100.0);
-                            StateHasChanged();
-                            System.Threading.Thread.Sleep(2000);
-                            goToNextPage();
+                            //if (response.Content != "200 OK Submission Accepted")
+                            if (false)
+                            {
+                                Serilog.Log.Logger.ForContext("User", UserEmail).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Error("GenerateSubmitPayloadJSON: Resulted in error.");
+                                bool forceLoad = true;
+                                string pagelink = "/ProblemWithService";
+                                NavigationManager.NavigateTo(pagelink, forceLoad);
+                            }
+                            else
+                            {
+                                Serilog.Log.Logger.ForContext("User", UserEmail).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Information("File upload succeeded.");
+                                uploadTimeElapsed++;
+                                uploadPerc = Convert.ToInt32((Convert.ToDouble(uploadTimeElapsed) / Convert.ToDouble(timeToWait)) * 100.0);
+                                StateHasChanged();
+                                System.Threading.Thread.Sleep(2000);
+                                goToNextPage();
+                            }
                         }
                         else
                         {
