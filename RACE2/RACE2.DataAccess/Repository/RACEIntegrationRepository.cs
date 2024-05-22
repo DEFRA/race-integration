@@ -162,7 +162,7 @@ namespace RACE2.DataAccess.Repository
 
             //reservoir details
             uploadPayload.reservoir.backEndId =  reservoirbackendid;//"0801117180035e68";
-            uploadPayload.reservoir.referenceNumber = "0801117180035e6";//reservoirreferencenumber;
+            uploadPayload.reservoir.referenceNumber = reservoirreferencenumber;
 
             //engineer details
 
