@@ -386,6 +386,23 @@
                             var response = await _httpClient.SendAsync(request);
                             response.EnsureSuccessStatusCode();
 
+                            if (false)
+                            {
+                                Serilog.Log.Logger.ForContext("User", UserEmail).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Error("GenerateSubmitPayloadJSON: Resulted in error.");
+                                bool forceLoad = true;
+                                string pagelink = "/ProblemWithService";
+                                NavigationManager.NavigateTo(pagelink, forceLoad);
+                            }
+                            else
+                            {
+                                Serilog.Log.Logger.ForContext("User", UserEmail).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Information("File upload succeeded.");
+                                uploadTimeElapsed++;
+                                uploadPerc = Convert.ToInt32((Convert.ToDouble(uploadTimeElapsed) / Convert.ToDouble(timeToWait)) * 100.0);
+                                StateHasChanged();
+                                System.Threading.Thread.Sleep(2000);
+                                goToNextPage();
+                            }
+
 
                             Serilog.Log.Logger.ForContext("User", UserEmail).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Information("File upload succeeded.");
                             uploadTimeElapsed++;
