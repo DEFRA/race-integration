@@ -350,6 +350,10 @@
                             documentDTO.SubmissionId = res.Id;
                             await reservoirService.InsertDocumentRelatedTable(Int32.Parse(reportSubmissionData.ReservoirId), res.Id, docID);
                             string undertakeremaillist = string.Empty;
+                            if (reportSubmissionData.YesNoValueUndertaker == "Yes")
+                            {
+                                reportSubmissionData.EmailListToSomeOne.Add(reportSubmissionData.UndertakerEmail);
+                            }
                             if (reportSubmissionData.EmailListToSomeOne.Count > 0)
                             {
                                 List<SubmissionEmailNotification> submissionEmailNotifications = new List<SubmissionEmailNotification>();
