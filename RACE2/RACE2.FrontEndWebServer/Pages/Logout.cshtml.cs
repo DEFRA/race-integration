@@ -10,35 +10,17 @@ namespace RACE2.FrontEndWebServer.Pages
   public class LogoutModel : PageModel
   {
     public async Task OnGetAsync()
-    //public async Task<ActionResult> OnGetAsync()
+    {
+        // just to remove compiler warning
+        await Task.CompletedTask;
+
+        foreach (var cookie in HttpContext.Request.Cookies.Keys)
         {
-            // just to remove compiler warning
-            await Task.CompletedTask;
-
-            //var idToken = await HttpContext.GetTokenAsync("id_token");
-            //var accessToken = await HttpContext.GetTokenAsync("access_token");
-            //var authenticationProperties = new AuthenticationProperties();
-            //authenticationProperties.Parameters.Clear();
-            //authenticationProperties.Parameters.Add("id_token", idToken);
-            //authenticationProperties.Parameters.Add("access_token", accessToken);
-
-            //return SignOut(
-            //    authenticationProperties,
-            //    new[] {
-            //    CookieAuthenticationDefaults.AuthenticationScheme,
-            //    OpenIdConnectDefaults.AuthenticationScheme
-            //    });
-
-            //HttpContext.Response.Cookies.Delete(".AspNetCore.Cookies");
-            //return SignOut(OpenIdConnectDefaults.AuthenticationScheme, CookieAuthenticationDefaults.AuthenticationScheme);
-
-            foreach (var cookie in HttpContext.Request.Cookies.Keys)
-            {
-                HttpContext.Response.Cookies.Delete(cookie);
-            }
-            Response.Redirect("https://oidc.integration.account.gov.uk/logout");
-            //SignOut(OpenIdConnectDefaults.AuthenticationScheme, CookieAuthenticationDefaults.AuthenticationScheme);
-            //Response.Redirect("/");
+            HttpContext.Response.Cookies.Delete(cookie);
         }
+        //Response.Redirect("https://oidc.integration.account.gov.uk/logout");
+        SignOut(OpenIdConnectDefaults.AuthenticationScheme, CookieAuthenticationDefaults.AuthenticationScheme);
+        Response.Redirect("/");
+    }
   }
 }
