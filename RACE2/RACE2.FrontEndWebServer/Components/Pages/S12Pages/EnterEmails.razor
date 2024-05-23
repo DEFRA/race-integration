@@ -116,9 +116,14 @@
                                         Enter the email addresses you want to send the statement to
                                     </h1>
                                 </legend>
+                                
+                                <p class="govuk-body govuk-!-padding-top-4">
+                                    You can send your statement to one or more people.
+                                </p>
+
                                 @foreach (var error in ValidationErrors.Values)
                                 {
-                                    <div class="govuk-error-summary__body">
+                                    <div class="govuk-error-summary__body" style="margin-bottom:15px;">
                                         <ul class="govuk-list govuk-error-summary__list">
                                             <li>
                                                 <a href="#">@error</a>
@@ -126,48 +131,85 @@
                                         </ul>
                                     </div>
                                 }
-                                <p class="govuk-body govuk-!-padding-top-4">
-                                    You can send your statement to one or more people.
-                                </p>
 
                                 <div class="govuk-form-group govuk-!-margin-top-8">
                                     <label class="govuk-label" for="email1">
                                         Email address
                                     </label>
-                                    <InputText class="govuk-input" id="email1" name="email1" autocomplete="email1" @bind-Value="@EmailAddresses[0]">
-                                    </InputText>
+                                    @if (String.IsNullOrEmpty(EmailAddresses[0]) || (!String.IsNullOrEmpty(EmailAddresses[0]) && !IsValid(EmailAddresses[0])))
+                                    {
+                                        <InputText class="govuk-input" style="border-color:#d4351c;" id="email1" name="email1" autocomplete="email1" @bind-Value="@EmailAddresses[0]">
+                                        </InputText>
+                                    }
+                                    else
+                                    {
+                                        <InputText class="govuk-input" id="email1" name="email1" autocomplete="email1" @bind-Value="@EmailAddresses[0]">
+                                        </InputText>
+                                    }
                                 </div>
 
                                 <div class="govuk-form-group">
                                     <label class="govuk-label" for="email2">
                                         Email address (optional)
                                     </label>
-                                    <InputText class="govuk-input" id="email2" name="email2" autocomplete="email2" @bind-Value="@EmailAddresses[1]">
-                                    </InputText>
+                                    @if (!String.IsNullOrEmpty(EmailAddresses[1]) && !IsValid(EmailAddresses[1]))
+                                    {
+                                        <InputText class="govuk-input" style="border-color:#d4351c;" id="email2" name="email2" autocomplete="email2" @bind-Value="@EmailAddresses[1]">
+                                        </InputText>
+                                    }
+                                    else
+                                    {
+                                        <InputText class="govuk-input" id="email2" name="email2" autocomplete="email2" @bind-Value="@EmailAddresses[1]">
+                                        </InputText>
+                                    }
                                 </div>
 
                                 <div class="govuk-form-group">
                                     <label class="govuk-label" for="email3">
                                         Email address (optional)
                                     </label>
-                                    <InputText class="govuk-input" id="email3" name="email3" autocomplete="email3" @bind-Value="@EmailAddresses[2]">
-                                    </InputText>
+                                    @if (!String.IsNullOrEmpty(EmailAddresses[2]) && !IsValid(EmailAddresses[2]))
+                                    {
+                                        <InputText class="govuk-input" style="border-color:#d4351c;" id="email3" name="email3" autocomplete="email3" @bind-Value="@EmailAddresses[2]">
+                                        </InputText>
+                                    }
+                                    else
+                                    {
+                                        <InputText class="govuk-input" id="email3" name="email3" autocomplete="email3" @bind-Value="@EmailAddresses[2]">
+                                        </InputText>
+                                    }
                                 </div>
 
                                 <div class="govuk-form-group">
                                     <label class="govuk-label" for="email4">
                                         Email address (optional)
                                     </label>
-                                    <InputText class="govuk-input" id="email4" name="email4" autocomplete="email4" @bind-Value="@EmailAddresses[3]">
-                                    </InputText>
+                                    @if (!String.IsNullOrEmpty(EmailAddresses[3]) && !IsValid(EmailAddresses[3]))
+                                    {
+                                        <InputText class="govuk-input" style="border-color:#d4351c;" id="email4" name="email4" autocomplete="email4" @bind-Value="@EmailAddresses[3]">
+                                        </InputText>
+                                    }
+                                    else
+                                    {
+                                        <InputText class="govuk-input" id="email4" name="email4" autocomplete="email4" @bind-Value="@EmailAddresses[3]">
+                                        </InputText>
+                                    }
                                 </div>
 
                                 <div class="govuk-form-group">
                                     <label class="govuk-label" for="email5">
                                         Email address (optional)
                                     </label>
-                                    <InputText class="govuk-input" id="email5" name="email5" autocomplete="email5" @bind-Value="@EmailAddresses[4]">
-                                    </InputText>
+                                    @if (!String.IsNullOrEmpty(EmailAddresses[4]) && !IsValid(EmailAddresses[4]))
+                                    {
+                                        <InputText class="govuk-input" style="border-color:#d4351c;" id="email5" name="email5" autocomplete="email5" @bind-Value="@EmailAddresses[4]">
+                                        </InputText>
+                                    }
+                                    else
+                                    {
+                                        <InputText class="govuk-input" id="email5" name="email5" autocomplete="email5" @bind-Value="@EmailAddresses[4]">
+                                        </InputText>
+                                    }
                                 </div>
 
                             </fieldset>
