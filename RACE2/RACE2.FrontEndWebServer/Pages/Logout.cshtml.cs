@@ -11,6 +11,7 @@ using static System.Net.WebRequestMethods;
 using System.Net.Http;
 using Microsoft.Net.Http.Headers;
 using IdentityModel.Client;
+using System.Net.Http.Headers;
 
 namespace RACE2.FrontEndWebServer.Pages
 {
@@ -28,27 +29,36 @@ namespace RACE2.FrontEndWebServer.Pages
 
 
             string post_logout_redirect_uri = baseUrl;
-            string LogoutAPIurl = "https://oidc.integration.account.gov.uk?id_token_hint={0}&post_logout_redirect_uri={1}";  //&state=af0ifjsldkj
+            string LogoutAPIurl = "https://oidc.integration.account.gov.uk/logout?id_token_hint={0}&post_logout_redirect_uri={1}";  //&state=af0ifjsldkj
 
             string requestUri = string.Format(LogoutAPIurl, idToken, post_logout_redirect_uri);
+
+           // requestUri += "&Authorization=Bearer "+accessToken;
 
             foreach (var cookie in HttpContext.Request.Cookies.Keys)
             {
                 HttpContext.Response.Cookies.Delete(cookie);
             }
 
-           // using (var client = new HttpClient())
-           // {
-           //     using (HttpResponseMessage response = await client.GetAsync(requestUri))
-           //     {
-           //         var responseContent = response.Content.ReadAsStringAsync().Result;
-           //         response.EnsureSuccessStatusCode();
-           //     }
-           //}
+            //var request = new HttpRequestMessage(HttpMethod.Get, requestUri);
+            //request.Headers.Add("Authorization", "Bearer " + accessToken);
+
+            //using (var client = new HttpClient())
+            //{
+            //   // client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+            //    // client.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
+            //    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
+            //    using (HttpResponseMessage response = await client.GetAsync(requestUri))
+            //    {
+            //        var responseContent = response.Content.ReadAsStringAsync().Result;
+            //        response.EnsureSuccessStatusCode();
+            //    }
+            //}
 
 
             //working
-              Response.Redirect("https://oidc.integration.account.gov.uk/logout");
+            //  Response.Redirect("https://oidc.integration.account.gov.uk/logout");
+            Response.Redirect(requestUri);
 
             // try this otherwise
             //string logoutRedirectUri = "https://oidc.integration.account.gov.uk?id_token_hint=" + idToken + "&post_logout_redirect_uri=" + baseUrl + "&state=sadk8d4--lda%d";
