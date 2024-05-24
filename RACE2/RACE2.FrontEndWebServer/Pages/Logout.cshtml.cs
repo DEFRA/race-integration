@@ -33,7 +33,9 @@ namespace RACE2.FrontEndWebServer.Pages
 
             string requestUri = string.Format(LogoutAPIurl, idToken, post_logout_redirect_uri);
 
-           // requestUri += "&Authorization=Bearer "+accessToken;
+
+            Serilog.Log.Logger.ForContext("User", requestUri).ForContext("Application", "FrontEndWebServer").ForContext("Method", "Logout").Information(requestUri);
+            // requestUri += "&Authorization=Bearer "+accessToken;
 
             foreach (var cookie in HttpContext.Request.Cookies.Keys)
             {
@@ -59,6 +61,7 @@ namespace RACE2.FrontEndWebServer.Pages
             //working
             //  Response.Redirect("https://oidc.integration.account.gov.uk/logout");
             Response.Redirect(requestUri);
+            Serilog.Log.Logger.ForContext("User", requestUri).ForContext("Application", "FrontEndWebServer").ForContext("Method", "Logout").Information("User Logged out successfully");
 
             // try this otherwise
             //string logoutRedirectUri = "https://oidc.integration.account.gov.uk?id_token_hint=" + idToken + "&post_logout_redirect_uri=" + baseUrl + "&state=sadk8d4--lda%d";
