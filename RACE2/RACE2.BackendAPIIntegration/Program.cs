@@ -7,7 +7,6 @@ using Azure.Identity;
 using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using Microsoft.EntityFrameworkCore;
 using RACE2.BackendAPIIntegration.Data;
-using Serilog.Sinks.MSSqlServer;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.MSSqlServer;
