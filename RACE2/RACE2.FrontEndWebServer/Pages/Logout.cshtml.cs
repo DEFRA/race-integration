@@ -24,9 +24,8 @@ namespace RACE2.FrontEndWebServer.Pages
 
         var idToken = await HttpContext.GetTokenAsync("id_token");
         var accessToken = await HttpContext.GetTokenAsync("access_token");
-        var state = await HttpContext.GetTokenAsync("state");
-        var baseUrl = "https://"+Request.Host;
-        string post_logout_redirect_uri = baseUrl;
+            //var state = await HttpContext.GetTokenAsync("state");
+            string post_logout_redirect_uri = "https://race2frontendwebserver.proudbeach-8eb578a1.uksouth.azurecontainerapps.io";// "https://" + Request.Host;
         string LogoutAPIurl = "https://oidc.integration.account.gov.uk/logout?id_token_hint={0}&post_logout_redirect_uri={1}";  //&state=af0ifjsldkj
 
         string requestUri = string.Format(LogoutAPIurl, idToken, post_logout_redirect_uri);
