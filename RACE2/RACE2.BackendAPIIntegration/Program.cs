@@ -7,6 +7,11 @@ using Azure.Identity;
 using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using Microsoft.EntityFrameworkCore;
 using RACE2.BackendAPIIntegration.Data;
+using Serilog.Sinks.MSSqlServer;
+using Serilog;
+using Serilog.Events;
+using Serilog.Sinks.MSSqlServer;
+using Microsoft.ApplicationInsights.Extensibility;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,8 +38,6 @@ builder.Configuration.AddAzureAppConfiguration(options =>
     .UseFeatureFlags();
 });
 var blazorClientURL = builder.Configuration["RACE2FrontEndURL"];
-
-
 
 // Add services to the container.
 
@@ -67,6 +70,19 @@ builder.Services.AddSwaggerGen(c =>
     c.AddSecurityRequirement(requirement);
 });
 var appinsightsConnString = builder.Configuration["AppInsightsConnectionString"];
+var sqlConnectionString = builder.Configuration["SqlConnectionString"];
+
+//Serilog Use
+var tableName = "Logs";
+var columnOptions = new ColumnOptions();
+builder.Host.UseSerilog((ctx, lc) => lc
+    .MinimumLevel.Information()
+    .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+    .Enrich.FromLogContext()
+    .WriteTo.Console()
+    .WriteTo.MSSqlServer(sqlConnectionString, tableName, columnOptions: columnOptions)
+    .WriteTo.ApplicationInsights(new TelemetryConfiguration { ConnectionString = appinsightsConnString }, TelemetryConverter.Traces));
+
 builder.Services.AddApplicationInsightsTelemetry(options =>
 {
     options.ConnectionString = appinsightsConnString;
