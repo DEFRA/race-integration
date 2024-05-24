@@ -47,11 +47,11 @@
                                     <li>
                                         @if (IsEmailEmpty)
                                         {
-                                            <a href="#" onclick="return false;">Enter an email address</a>
+                                            <a href="#" style="margin-bottom:15px;text-decoration:none;" onclick="return false;">Enter an email address</a>
                                         }
                                         @if (IsEmailFormatWrong)
                                         {
-                                            <a href="#" onclick="return false;">Enter an email address in the correct format, like name@example.com</a>
+                                            <a href="#" style="margin-bottom:15px;text-decoration:none;" onclick="return false;">Enter an email address in the correct format, like name@example.com</a>
                                         }
                                     </li>
                                 </ul>
@@ -65,16 +65,16 @@
                                     <label class="govuk-label govuk-label--m" for="edit-email">
                                         Email address
                                     </label>
-                                    <div class="govuk-error-summary__body" style="margin-bottom:15px;">
+                                    <div class="govuk-error-summary__body">
                                         <ul class="govuk-list govuk-error-summary__list">
                                             <li>
                                                 @if (IsEmailEmpty)
                                                 {
-                                                    <a href="#" onclick="return false;">Enter an email address</a>
+                                                    <a href="#" style="margin-bottom:15px; text-decoration:none;" onclick="return false;">Enter an email address</a>
                                                 }
                                                 @if (IsEmailFormatWrong)
                                                 {
-                                                    <a href="#" onclick="return false;">Enter an email address in the correct format, like name@example.com</a>
+                                                    <a href="#" style="margin-bottom:15px; text-decoration:none;" onclick="return false;">Enter an email address in the correct format, like name@example.com</a>
                                                 }
                                             </li>
                                         </ul>

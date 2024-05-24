@@ -99,7 +99,7 @@
                         <div class="govuk-error-summary__body">
                             <ul class="govuk-list govuk-error-summary__list">
                                 <li>
-                                    <a href="#">@error</a>
+                                    <a href="#" style="margin-bottom:15px;text-decoration:none;">@error</a>
                                 </li>
                             </ul>
                         </div>
@@ -123,10 +123,10 @@
 
                                 @foreach (var error in ValidationErrors.Values)
                                 {
-                                    <div class="govuk-error-summary__body" style="margin-bottom:15px;">
+                                    <div class="govuk-error-summary__body">
                                         <ul class="govuk-list govuk-error-summary__list">
                                             <li>
-                                                <a href="#">@error</a>
+                                                <a href="#" style="margin-bottom:15px;text-decoration:none;">@error</a>
                                             </li>
                                         </ul>
                                     </div>
