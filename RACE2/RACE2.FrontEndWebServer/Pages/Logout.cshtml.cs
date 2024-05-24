@@ -35,9 +35,25 @@ namespace RACE2.FrontEndWebServer.Pages
             HttpContext.Response.Cookies.Delete(cookie);
         }       
 
-        //working
-        //Response.Redirect("https://oidc.integration.account.gov.uk/logout");
-        Response.Redirect(requestUri);
+            //var request = new HttpRequestMessage(HttpMethod.Get, requestUri);
+            //request.Headers.Add("Authorization", "Bearer " + accessToken);
+
+            //using (var client = new HttpClient())
+            //{
+            //   // client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+            //    // client.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
+            //    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
+            //    using (HttpResponseMessage response = await client.GetAsync(requestUri))
+            //    {
+            //        var responseContent = response.Content.ReadAsStringAsync().Result;
+            //        response.EnsureSuccessStatusCode();
+            //    }
+            //}
+
+
+            //working
+            //  Response.Redirect("https://oidc.integration.account.gov.uk/logout");
+            Response.Redirect(requestUri);
 
         //try this otherwise
         //SignOut(OpenIdConnectDefaults.AuthenticationScheme, CookieAuthenticationDefaults.AuthenticationScheme);
