@@ -23,15 +23,15 @@ namespace RACE2.FrontEndWebServer.Pages
              _configuration =configuration;
         }
         public async Task OnGetAsync()
-    {
-        // just to remove compiler warning
-        await Task.CompletedTask;
+        {
+            // just to remove compiler warning
+            await Task.CompletedTask;
 
-        var idToken = await HttpContext.GetTokenAsync("id_token");
-        var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var idToken = await HttpContext.GetTokenAsync("id_token");
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
             //var state = await HttpContext.GetTokenAsync("state");
-        string post_logout_redirect_uri = _configuration["RACE2FrontEndURL"];
-        string LogoutAPIurl = "https://oidc.integration.account.gov.uk/logout?id_token_hint={0}&post_logout_redirect_uri={1}";  //&state=af0ifjsldkj
+            string post_logout_redirect_uri = _configuration["RACE2FrontEndURL"];
+            string LogoutAPIurl = "https://oidc.integration.account.gov.uk/logout?id_token_hint={0}&post_logout_redirect_uri={1}";  //&state=af0ifjsldkj
           
             string requestUri = string.Format(LogoutAPIurl, idToken, post_logout_redirect_uri);
 
@@ -40,17 +40,17 @@ namespace RACE2.FrontEndWebServer.Pages
             Serilog.Log.Logger.ForContext("User", requestUri).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement").Information(requestUri);
 
             foreach (var cookie in HttpContext.Request.Cookies.Keys)
-        {
-            HttpContext.Response.Cookies.Delete(cookie);
-        }       
+            {
+                HttpContext.Response.Cookies.Delete(cookie);
+            }       
 
-        //working
-        //Response.Redirect("https://oidc.integration.account.gov.uk/logout");
-        Response.Redirect(requestUri);
+            //working
+            //Response.Redirect("https://oidc.integration.account.gov.uk/logout");
+            Response.Redirect(requestUri);
 
-        //try this otherwise
-        //SignOut(OpenIdConnectDefaults.AuthenticationScheme, CookieAuthenticationDefaults.AuthenticationScheme);
-        //Response.Redirect("/");
-    }
+            //try this otherwise
+            //SignOut(OpenIdConnectDefaults.AuthenticationScheme, CookieAuthenticationDefaults.AuthenticationScheme);
+            //Response.Redirect("/");
+        }
   }
 }
