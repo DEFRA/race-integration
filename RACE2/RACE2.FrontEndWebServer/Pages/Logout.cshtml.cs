@@ -22,6 +22,8 @@ namespace RACE2.FrontEndWebServer.Pages
         {
             HttpContext.Response.Cookies.Delete(cookie);
         }
+
+        //working
         Response.Redirect("https://oidc.integration.account.gov.uk/logout");
 
         // try this otherwise
