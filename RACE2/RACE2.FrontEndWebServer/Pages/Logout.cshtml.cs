@@ -17,20 +17,29 @@ namespace RACE2.FrontEndWebServer.Pages
 {
   public class LogoutModel : PageModel
   {
-    public async Task OnGetAsync()
+        private readonly IConfiguration _configuration;
+        public LogoutModel(IConfiguration configuration)
+        {
+             _configuration =configuration;
+        }
+        public async Task OnGetAsync()
     {
         // just to remove compiler warning
         await Task.CompletedTask;
 
         var idToken = await HttpContext.GetTokenAsync("id_token");
         var accessToken = await HttpContext.GetTokenAsync("access_token");
-        //var state = await HttpContext.GetTokenAsync("state");
-        string post_logout_redirect_uri = "https://race2frontendwebserver.proudbeach-8eb578a1.uksouth.azurecontainerapps.io";// "https://" + Request.Host;
+            //var state = await HttpContext.GetTokenAsync("state");
+        string post_logout_redirect_uri = _configuration["RACE2FrontEndURL"];
         string LogoutAPIurl = "https://oidc.integration.account.gov.uk/logout?id_token_hint={0}&post_logout_redirect_uri={1}";  //&state=af0ifjsldkj
+          
+            string requestUri = string.Format(LogoutAPIurl, idToken, post_logout_redirect_uri);
 
-        string requestUri = string.Format(LogoutAPIurl, idToken, post_logout_redirect_uri);
+            Serilog.Log.Logger.ForContext("User", requestUri).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement").Information(post_logout_redirect_uri);
 
-        foreach (var cookie in HttpContext.Request.Cookies.Keys)
+            Serilog.Log.Logger.ForContext("User", requestUri).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement").Information(requestUri);
+
+            foreach (var cookie in HttpContext.Request.Cookies.Keys)
         {
             HttpContext.Response.Cookies.Delete(cookie);
         }       
