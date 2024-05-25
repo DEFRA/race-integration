@@ -198,8 +198,9 @@
                     var r = new Reservoir()
                         {
                             Id = rn.Id,
-                            BackEndReservoirId = rn.RaceReservoirId,
+                            BackEndReservoirId = rn.BackEndReservoirId,
                             PublicName = rn.PublicName,
+                            ReferenceNumber=rn.ReferenceNumber,
                             RegisteredName = rn.RegisteredName,
                             NearestTown = rn.NearestTown,
                             GridReference = rn.GridReference,
@@ -258,6 +259,8 @@
                     Undertakers = await reservoirService.GetOperatorsforReservoir(reservoir.Id, reservoir.OperatorType);
                     ReservoirsLinkedToUserForDisplay reservoirsLinkedToUser = new ReservoirsLinkedToUserForDisplay();
                     reservoirsLinkedToUser.ReservoirID = reservoir.Id;
+                    reservoirsLinkedToUser.BackEndReservoirId = reservoir.BackEndReservoirId;
+                    reservoirsLinkedToUser.ReferenceNumber = reservoir.ReferenceNumber;
                     reservoirsLinkedToUser.ReservoirName = reservoir.RegisteredName;
                     if (Undertakers != null && Undertakers.Count() > 0)
                     {
@@ -417,7 +420,7 @@
             await InvokeAsync(() =>
             {
                 StateHasChanged();
-            });
+            });            
         }
         catch (Exception ex)
         {
@@ -473,7 +476,9 @@
                 YesNoValueSomeoneAlso = "",
                 YesNoValueSomeoneElse = "",
                 EmailListToSomeOne = new List<String>(),
-                EmailEditDelete = ""
+                EmailEditDelete = "",
+                BackEndReservoirId= Item.BackEndReservoirId,
+                ReferenceNumber = Item.ReferenceNumber
             };
         await ProtectedSessionStore.SetAsync("CurrentReportSubmissionData", reportSubmissionData);
         bool forceLoad = false;

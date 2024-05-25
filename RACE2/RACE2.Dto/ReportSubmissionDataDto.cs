@@ -10,6 +10,8 @@ namespace RACE2.Dto
     public class ReportSubmissionDataDto
     {
         public string ReservoirId { get; set; } = "";
+        public string BackEndReservoirId { get; set; } = "";
+        public string ReferenceNumber { get; set; } = "";
         public string ReservoirRegName { get; set; } = "";
         public string UndertakerName { get; set; } = "";
         public string UndertakerEmail { get; set; } = "";

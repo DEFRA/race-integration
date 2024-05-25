@@ -105,6 +105,7 @@ try
         options.CheckConsentNeeded = context => true;
         options.MinimumSameSitePolicy = SameSiteMode.None;
     });
+    builder.Services.AddHttpContextAccessor();
 
     bool requireHttpsMetadata = builder.Environment.IsProduction();
 
@@ -135,12 +136,28 @@ try
     builder.Services.AddScoped<IUserRepository, UserRepository>();
     builder.Services.AddScoped<IReservoirRepository, ReservoirRepository>();
     builder.Services.AddScoped<IBlobStorageService, BlobStorageService>();
+    builder.Services.AddScoped<IRACEIntegrationService, RACEIntegrationService>();
+    builder.Services.AddScoped<IRACEIntegrationRepository, RACEIntegrationRepository>();
     builder.Services.AddScoped<IOpenXMLUtilitiesService, OpenXMLUtilitiesService>();
     builder.Services.AddScoped<CustomErrorBoundary>();
+    builder.Services.AddDataProtection()
+        .UseCryptographicAlgorithms(new AuthenticatedEncryptorConfiguration
+        {
+            EncryptionAlgorithm = EncryptionAlgorithm.AES_256_CBC,
+            ValidationAlgorithm = ValidationAlgorithm.HMACSHA256
+        });
+    builder.Services.AddScoped<INotification, RaceNotification>();
+   
+
+    var backendurl = builder.Configuration["RACE2BackendAPIURL"];
+    builder.Services.AddHttpClient("BackendAPI", httpClient =>
+    {
+        httpClient.BaseAddress = new Uri(backendurl);
+    });
     builder.Services.AddScoped<INotification, RaceNotification>();    
 
     var app = builder.Build();
-
+    app.UseForwardedHeaders();
     // Configure the HTTP request pipeline.
     if (!app.Environment.IsDevelopment())
     {
@@ -155,6 +172,11 @@ try
     //}); // We want to log all HTTP requests
     app.UseSerilogRequestLogging();
 
+    app.UseCookiePolicy(new CookiePolicyOptions
+    {
+        MinimumSameSitePolicy = SameSiteMode.Lax
+    });
+
     app.UseStaticFiles();
     app.UseRouting();   
 
@@ -167,6 +189,11 @@ try
     app.MapRazorPages();
     app.MapRazorComponents<App>()
         .AddInteractiveServerRenderMode();
+    //app.MapBlazorHub(options =>
+    //{
+    //    options.CloseOnAuthenticationExpiration = true;
+    //});
+    app.MapRazorPages();
 
     app.Run();
 }

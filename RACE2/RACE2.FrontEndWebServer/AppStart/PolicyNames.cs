@@ -1,4 +1,4 @@
-namespace RACE2.FrontEndWebServer.AppStart;
+﻿namespace RACE2.FrontEndWebServer.AppStart;
 
 public static class PolicyNames
 {

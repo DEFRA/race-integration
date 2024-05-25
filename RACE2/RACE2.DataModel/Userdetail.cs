@@ -11,32 +11,37 @@ namespace RACE2.DataModel
 {
     [Table("UserDetails")]
     public  class UserDetail: IdentityUser<int>    
-    {    
+    {
+        [StringLength(16)]
+        public string? cBackEndUserId { get; set; }
+        [StringLength(16)]
+        public string? BackEndPrimaryRef { get; set; }
+        [StringLength(16)]
+        public string? BackEndSecondaryRef { get; set; }
+        [StringLength(64)]
+        public string? cDefraId { get; set; }
 
-            public string? cBackEndUserId { get; set; }
-            public string? cDefraId { get; set; }
-           
+        [StringLength(64)]
+        public string? cType { get; set; }
+        [StringLength(250)]
+        public string? cDisplayName { get; set; }
 
-            public string? cType { get; set; }     
-        
-            public string? cDisplayName { get; set; }
-
-
-            public string? cFirstName { get; set; }
-         
-            public string? cLastName { get; set; }
+        [StringLength(64)]
+        public string? cFirstName { get; set; }
+        [StringLength(64)]
+        public string? cLastName { get; set; }
 
         [StringLength(250)]
         public string? cFullName { get; set; }
 
            [StringLength(64)]
            public string? cAlternativeEmail { get; set; }
-
-           public string? cMobile { get; set; }
+        [StringLength(64)]
+        public string? cMobile { get; set; }
 
         [StringLength(64)]
         public string? cAlternativeMobile { get; set; }
-
+        [StringLength(64)]
         public string? cEmergencyPhone { get; set; }           
             
 
@@ -47,8 +52,8 @@ namespace RACE2.DataModel
             public string? cAlternativeEmergencyPhone { get; set; }
 
         // public string? c_organisation_id { get; set; }
-
-           public string? cJobTitle { get; set; }
+        [StringLength(64)]
+        public string? cJobTitle { get; set; }
           
             //public string? cCurrentPanel { get; set; }
           

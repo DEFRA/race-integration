@@ -6,10 +6,13 @@
 @using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.JSInterop
+@using Newtonsoft.Json
 @using RACE2.DataModel
 @using RACE2.Dto
 @using RACE2.Services
 @using RACE2.Notification
+@using System.Text
+@using System.Text.Json.Serialization
 @inject NavigationManager NavigationManager
 @inject IBlobStorageService blobStorageService
 @inject IUserService userService
@@ -19,6 +22,8 @@
 @inject IReservoirService reservoirService
 @inject INotification _notificationService
 @inject ProtectedSessionStorage ProtectedSessionStore
+@inject IRACEIntegrationService _integrationService
+@inject IHttpClientFactory ClientFactory
 
 @attribute [Authorize]
 
@@ -324,27 +329,31 @@
                         }
                         if (bytes != null)
                         {
-                            await _notificationService.SendConfirmationMailtoSE(userDetails.Email, reportSubmissionData.ReservoirRegName);
-                            if (selectedFile.Size < uploadFileData.NotifyServiceFileAttachmentLimit)
-                            {
-                                await _notificationService.SendConfirmationMailtoRST(RSTEmailAddress, reportSubmissionData.ReservoirRegName, bytes, userDetails.cFirstName + " " + userDetails.cLastName, reportSubmissionData.UndertakerName);
-                                if (reportSubmissionData.YesNoValueUndertaker == "Yes")
-                                {
-                                    await _notificationService.SendConfirmationMailWithAttachment(bytes, reportSubmissionData.UndertakerEmail, reportSubmissionData.ReservoirRegName);
-                                }
-                            }
-                            else
-                            {
-                                var internalEmail = _config["InternalEmailAddress"];
-                                await _notificationService.SendInternalMail(internalEmail, reportSubmissionData.ReservoirRegName, reportSubmissionData.UndertakerEmail, reportSubmissionData.YesNoValueUndertaker);
-                            }
+                            //await _notificationService.SendConfirmationMailtoSE(userDetails.Email, reportSubmissionData.ReservoirRegName);
+                            // if (selectedFile.Size < uploadFileData.NotifyServiceFileAttachmentLimit)
+                            // {
+                            //     await _notificationService.SendConfirmationMailtoRST(RSTEmailAddress, reportSubmissionData.ReservoirRegName, bytes, userDetails.cFirstName + " " + userDetails.cLastName, reportSubmissionData.UndertakerName);
+                            //     if (reportSubmissionData.YesNoValueUndertaker == "Yes")
+                            //     {
+                            //         await _notificationService.SendConfirmationMailWithAttachment(bytes, reportSubmissionData.UndertakerEmail, reportSubmissionData.ReservoirRegName);
+                            //     }
+                            // }
+                            // else
+                            // {
+                            //     var internalEmail = _config["InternalEmailAddress"];
+                            //     await _notificationService.SendInternalMail(internalEmail, reportSubmissionData.ReservoirRegName, reportSubmissionData.UndertakerEmail, reportSubmissionData.YesNoValueUndertaker);
+                            // }
 
                             var res = await reservoirService.InsertSubmissionDetails(insertStatus);
-                            
+
                             //Store the uploaded document information
                             documentDTO.SubmissionId = res.Id;
                             await reservoirService.InsertDocumentRelatedTable(Int32.Parse(reportSubmissionData.ReservoirId), res.Id, docID);
-                            
+                            string undertakeremaillist = string.Empty;
+                            if (reportSubmissionData.YesNoValueUndertaker == "Yes")
+                            {
+                                reportSubmissionData.EmailListToSomeOne.Add(reportSubmissionData.UndertakerEmail);
+                            }
                             if (reportSubmissionData.EmailListToSomeOne.Count > 0)
                             {
                                 List<SubmissionEmailNotification> submissionEmailNotifications = new List<SubmissionEmailNotification>();
@@ -357,15 +366,57 @@
                                     submissionEmailNotification.ContactType = "Undertaker";
                                     submissionEmailNotification.Email = addr;
                                     submissionEmailNotifications.Add(submissionEmailNotification);
+                                    undertakeremaillist += addr + ";";
                                 }
                                 await userService.InsertUndertakerEmails(submissionEmailNotifications);
                             }
-                            Serilog.Log.Logger.ForContext("User", UserEmail).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Information("File upload succeeded.");
-                            uploadTimeElapsed++;
-                            uploadPerc = Convert.ToInt32((Convert.ToDouble(uploadTimeElapsed) / Convert.ToDouble(timeToWait)) * 100.0);
-                            StateHasChanged();
-                            System.Threading.Thread.Sleep(2000);
-                            goToNextPage();
+                            Stream stream = new MemoryStream(bytes);
+                            AnnualSubmissionDocumentDetails uploadPayload = new AnnualSubmissionDocumentDetails();
+                            uploadPayload = _integrationService.GenerateSubmitPayloadJSON(userDetails.Id, insertStatus.SubmissionReference, undertakeremaillist, reportSubmissionData.BackEndReservoirId, reportSubmissionData.ReferenceNumber,
+                                stream, docID, selectedFile.Name, documentDTO.BlobStorageFileName, userDetails.Id, userDetails.BackEndPrimaryRef, userDetails.BackEndSecondaryRef);
+
+
+                            var _httpClient = ClientFactory.CreateClient("BackendAPI");
+                            var company = System.Text.Json.JsonSerializer.Serialize(uploadPayload, new System.Text.Json.JsonSerializerOptions
+                                {
+                                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+                                });
+                            var request = new HttpRequestMessage(HttpMethod.Post, "SubmitDocument/SubmitStatement");
+                            request.Headers.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                            request.Headers.Add("RACE_REST_API_KEY", _config["DocumentumAPIKey"]);
+                            Serilog.Log.Logger.ForContext("User", UserEmail).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Information("Documentum Payload ." + company);
+                            request.Content = new StringContent(company, Encoding.UTF8);
+                            //  request.Content = new StringContent(JsonConvert.SerializeObject(uploadPayload), Encoding.UTF8, "application/json");
+                            request.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+
+                            try
+                            {
+                                var response = await _httpClient.SendAsync(request);
+                                response.EnsureSuccessStatusCode();   
+                                await _notificationService.SendConfirmationMailtoSE(userDetails.Email, reportSubmissionData.ReservoirRegName);
+                                if (selectedFile.Size < uploadFileData.NotifyServiceFileAttachmentLimit)
+                                {
+                                    await _notificationService.SendConfirmationMailtoRST(RSTEmailAddress, reportSubmissionData.ReservoirRegName, bytes, userDetails.cFirstName + " " + userDetails.cLastName, reportSubmissionData.UndertakerName);                                
+                                }
+                                else
+                                {
+                                    var internalEmail = _config["InternalEmailAddress"];
+                                    await _notificationService.SendInternalMail(internalEmail, reportSubmissionData.ReservoirRegName, reportSubmissionData.UndertakerEmail, reportSubmissionData.YesNoValueUndertaker);
+                                }
+                                Serilog.Log.Logger.ForContext("User", UserEmail).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Information("File upload succeeded.");
+                                uploadTimeElapsed++;
+                                uploadPerc = Convert.ToInt32((Convert.ToDouble(uploadTimeElapsed) / Convert.ToDouble(timeToWait)) * 100.0);
+                                StateHasChanged();
+                                System.Threading.Thread.Sleep(2000);
+                                goToNextPage();                                
+                            }
+                            catch (Exception ex)
+                            {
+                                Serilog.Log.Logger.ForContext("User", UserEmail).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Error("GenerateSubmitPayloadJSON: Resulted in error " + ex.Message);
+                                bool forceLoad = true;
+                                string pagelink = "/ProblemWithService";
+                                NavigationManager.NavigateTo(pagelink, forceLoad);
+                            }                        
                         }
                         else
                         {

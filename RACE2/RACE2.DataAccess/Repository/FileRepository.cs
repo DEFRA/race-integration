@@ -33,21 +33,21 @@ namespace RACE2.BackendAPIIntegration.Services
         {
             //try
             //{
-            //    var fileDetails = new DocumentDetails()
-            //    {
-            //        name = fileData.FileName,
-            //        document_date = DateTime.Now.ToShortDateString(),
-            //         protective_marking = "Official"
-            //        //ID = 0,
-            //        //FileName = fileData.FileName,
-            //        //FileType = fileType,
-            //    };
+            //var fileDetails = new DocumentDetails()
+            //{
+            //    name = fileData.FileName,
+            //    document_date = DateTime.Now.ToShortDateString(),
+            //     protective_marking = "Official"
+            //    //ID = 0,
+            //    //FileName = fileData.FileName,
+            //    //FileType = fileType,
+            //};
 
-            //    using (var stream = new MemoryStream())
-            //    {
-            //        fileData.CopyTo(stream);
-            //        fileDetails.content = stream.ToArray();
-            //    }
+            //using (var stream = new MemoryStream())
+            //{
+            //    fileData.CopyTo(stream);
+            //    fileDetails.content = stream.ToArray();
+            //}
 
             //    using(var conn = Connection)
             //    {
@@ -64,7 +64,7 @@ namespace RACE2.BackendAPIIntegration.Services
 
             //    }
 
-                
+
             //}
             //catch (Exception)
             //{

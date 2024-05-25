@@ -47,11 +47,11 @@
                                     <li>
                                         @if (IsEmailEmpty)
                                         {
-                                            <a href="#" onclick="return false;">Enter an email address</a>
+                                            <a href="#" style="margin-bottom:15px;text-decoration:none;" onclick="return false;">Enter an email address</a>
                                         }
                                         @if (IsEmailFormatWrong)
                                         {
-                                            <a href="#" onclick="return false;">Enter an email address in the correct format, like name@example.com</a>
+                                            <a href="#" style="margin-bottom:15px;text-decoration:none;" onclick="return false;">Enter an email address in the correct format, like name@example.com</a>
                                         }
                                     </li>
                                 </ul>
@@ -70,16 +70,16 @@
                                             <li>
                                                 @if (IsEmailEmpty)
                                                 {
-                                                    <a href="#" onclick="return false;">Enter an email address</a>
+                                                    <a href="#" style="margin-bottom:15px; text-decoration:none;" onclick="return false;">Enter an email address</a>
                                                 }
                                                 @if (IsEmailFormatWrong)
                                                 {
-                                                    <a href="#" onclick="return false;">Enter an email address in the correct format, like name@example.com</a>
+                                                    <a href="#" style="margin-bottom:15px; text-decoration:none;" onclick="return false;">Enter an email address in the correct format, like name@example.com</a>
                                                 }
                                             </li>
                                         </ul>
                                     </div>
-                                    <InputText class="govuk-input govuk-!-width-two-thirds" id="edit-email" name="edit-email" @bind-Value="emailEditDelete"></InputText>
+                                    <InputText class="govuk-input govuk-!-width-two-thirds" style="border-color:#d4351c;" id="edit-email" name="edit-email" @bind-Value="emailEditDelete"></InputText>
                                 </div>
                             </fieldset>
                         </div>

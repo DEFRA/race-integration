@@ -46,7 +46,7 @@
                                 </label>
                                 <ValidationMessage For="() => emailModel.UserEmail" />
                                 <a id="email-error" style="text-decoration:none;">
-                                    <InputText @bind-Value="emailModel.UserEmail" class="govuk-input govuk-!-width-three-quarters" aria-required="true" aria-describedby="govGateUserId-hint" id="govGateUserEmail" name="govGateUserEmail"/>
+                                    <InputText @bind-Value="emailModel.UserEmail" class="govuk-input govuk-!-width-three-quarters" aria-required="true" aria-describedby="govGateUserId-hint" id="govGateUserEmail" name="govGateUserEmail" />
                                 </a>
                             </div>
                             <button type="submit" class="btn btn-success">
@@ -65,7 +65,7 @@
                                 </label>
                                 <ValidationMessage For="() => emailModel.UserEmail" />
                                 <a id="email-error" style="text-decoration:none;">
-                                    <InputText @bind-Value="emailModel.UserEmail" class="govuk-input govuk-!-width-three-quarters" aria-required="true" aria-describedby="govGateUserId-hint" id="govGateUsername" name="govGateUsername"/>
+                                    <InputText @bind-Value="emailModel.UserEmail" class="govuk-input govuk-!-width-three-quarters" aria-required="true" aria-describedby="govGateUserId-hint" id="govGateUsername" name="govGateUsername" />
                                 </a>
                             </div>
                             <button type="submit" class="btn btn-success">
@@ -78,7 +78,7 @@
                     </NavLink>
                 </nav>
             </div>
-         </div>
+        </div>
 
     </main>
 </div>
@@ -161,5 +161,5 @@
         NavigationManager.NavigateTo(pagelink, forceLoad);
     }
 }
-    
+
 }

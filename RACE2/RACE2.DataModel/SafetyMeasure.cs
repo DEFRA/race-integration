@@ -13,7 +13,7 @@ namespace RACE2.DataModel
     {
         [Key, Required]
         public int Id { get; set; }
-        [StringLength(64)]
+        [StringLength(16)]
         public string? BackEndSafetyMeasureId { get; set; }
         [StringLength(64)]
         public string? Reference { get; set; }

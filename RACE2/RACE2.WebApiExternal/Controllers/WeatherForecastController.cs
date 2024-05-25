@@ -1,6 +1,8 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-namespace RACE2.WebApiExternal.Controllers
+using RACE2.WebApiExternal;
+using RACE2.WebApiExternal.Authentication;
+
+namespace RACE2APIExample.Controllers
 {
     [ApiController]
     [Route("[controller]")]
@@ -8,30 +10,24 @@ namespace RACE2.WebApiExternal.Controllers
     {
         private static readonly string[] Summaries = new[]
         {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
+            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+        };
 
-        private readonly Serilog.ILogger _serilogLogger;
+        private readonly ILogger<WeatherForecastController> _logger;
 
-        public WeatherForecastController( Serilog.ILogger serilogLogger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger)
         {
-            _serilogLogger = serilogLogger;
+            _logger = logger;
         }
 
-        [Authorize]
+        
         [HttpGet(Name = "GetWeatherForecast")]
+        [ApiKeyAuthFilter]
         public IEnumerable<WeatherForecast> Get()
         {
-            // The following line demonstrates how we could use serilog's
-            // own abstraction. Offers more features than ASP.NET core logging.
-            _serilogLogger
-                .ForContext("Controller", nameof(WeatherForecastController))
-                .ForContext("Method", nameof(Get))
-                .Warning("Entered");
-
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
-                Date = DateTime.Now.AddDays(index),
+                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
                 TemperatureC = Random.Shared.Next(-20, 55),
                 Summary = Summaries[Random.Shared.Next(Summaries.Length)]
             })
