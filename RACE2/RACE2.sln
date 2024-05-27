@@ -162,6 +162,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DeploymentYamlFiles", "Depl
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UtilityFiles", "UtilityFiles", "{2EF5387F-AF94-457B-AF3D-8D08F72D741E}"
 	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
 		azcommands.txt = azcommands.txt
 		ContainerAppDeployPOC.ps1 = ContainerAppDeployPOC.ps1
 		ContainerAppWorkspaceDeployDEV.ps1 = ContainerAppWorkspaceDeployDEV.ps1
@@ -182,6 +183,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UtilityFiles", "UtilityFile
 		FrontEndWebServerDeployDEV.ps1 = FrontEndWebServerDeployDEV.ps1
 		FrontEndWebServerDeployPOC.ps1 = FrontEndWebServerDeployPOC.ps1
 		GetUser.txt = GetUser.txt
+		global.json = global.json
 		SecurtyProviderDeployDEV.ps1 = SecurtyProviderDeployDEV.ps1
 		SecurtyProviderDeployPOC.ps1 = SecurtyProviderDeployPOC.ps1
 		SecurtyProviderDeployTST.ps1 = SecurtyProviderDeployTST.ps1
@@ -197,8 +199,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UtilityFiles", "UtilityFile
 		WebApiDeployDEV.ps1 = WebApiDeployDEV.ps1
 		WebApiDeployPOC.ps1 = WebApiDeployPOC.ps1
 		WebApiExternalDeployPOC.ps1 = WebApiExternalDeployPOC.ps1
-		webapp.istioinaction.io.cert.pem = webapp.istioinaction.io.cert.pem
-		webapp.istioinaction.io.key.pem = webapp.istioinaction.io.key.pem
 	EndProjectSection
 EndProject
 Global
