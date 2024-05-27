@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using RACE2.Dto;
 using RestSharp;
 using System;
@@ -7,10 +9,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace RACE2.DataAccess.Repository
 {
     public class RACEIntegrationRepository : IRACEIntegrationRepository
     {
+
+        private readonly ILogger<RACEIntegrationRepository> _logger;
+        private readonly IConfiguration _configuration;
+
+        public RACEIntegrationRepository(IConfiguration configuration, ILogger<RACEIntegrationRepository> logger)
+        {
+            _configuration = configuration;
+            _logger = logger;
+        }
         public async Task<IntegrationResponseModel> GetEngineerReservoirByUUID(string uuid)
         {
             string baseuri = "https://eadev.synapps-solutions.com/integration-poc/";
@@ -64,6 +76,44 @@ namespace RACE2.DataAccess.Repository
                 };
                 return integrationResponseModel;
 
+            }
+
+        }
+
+
+        public async Task<IntegrationResponseModel> SubmitDocumentToBackend(AnnualSubmissionDocumentDetails submitS12Statement)
+        {
+
+            IntegrationResponseModel integrationResponseModel = new IntegrationResponseModel();
+            string baseuri = "https://eadev.synapps-solutions.com/EA-API/";
+            _logger.LogInformation("Entering the document details");
+            try
+            {
+                string body = JsonConvert.SerializeObject(submitS12Statement);
+                var options = new RestClientOptions(baseuri)
+                {
+                    RemoteCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true
+                };
+                RestClient client = new RestClient(options);
+                var request = new RestRequest("submission", Method.Post);
+                request.AddHeader("RACE_REST_API_KEY", _configuration["DocumentumAPIKey"]);
+                request.RequestFormat = DataFormat.Json;
+                request.AddJsonBody(body);
+                RestResponse response = await client.ExecuteAsync(request);
+                //var stringOutput = JsonConvert.DeserializeObject<dynamic>(response.Content);
+                integrationResponseModel.StatusCode = response.StatusCode;
+                integrationResponseModel.Status = response.StatusDescription;
+                integrationResponseModel.Reason = response.ErrorMessage;
+                integrationResponseModel.ResponseData = response.Content != null? response.Content.ToString(): "";
+                return integrationResponseModel;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                integrationResponseModel.StatusCode = System.Net.HttpStatusCode.BadRequest;
+                integrationResponseModel.Status = "Bad Request";
+                integrationResponseModel.Reason = ex.Message;
+                return integrationResponseModel;
             }
 
         }

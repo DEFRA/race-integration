@@ -15,7 +15,7 @@
 
     <FeedbackBannerSignOut />
 
-    <a class="govuk-back-link" @onclick="GoToPrevPage" style="color:black">Back</a>
+    <a href="#" class="govuk-back-link" @onclick="GoToPrevPage" style="color:black;">Back</a>
 
     <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
 
@@ -23,9 +23,9 @@
 
             <div class="govuk-grid-column-two-thirds">
                 <div class="govuk-label-wrapper">
-                    <label class="govuk-label govuk-label--xl" for="more-detail">
+                    <h1 id="main-header" class="govuk-heading-xl">
                         Tell us what’s changed
-                    </label>
+                    </h1>
                 </div>
                 @if (!NoReasonError)
                 {
@@ -50,7 +50,7 @@
                             <div class="govuk-error-summary__body">
                                 <ul class="govuk-list govuk-error-summary__list">
                                     <li>
-                                        <a href="#">You must tell us what has changed.</a>
+                                        <a href="#" onclick="return false;">You must tell us what has changed.</a>
                                     </li>
                                 </ul>
                             </div>

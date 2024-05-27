@@ -9,13 +9,14 @@
 @attribute [Authorize]
 
 <PageTitle>Statement sent - Send a supervising engineer's annual statement - GOV.UK</PageTitle>
-
 <HeaderWithBanner />
 
 <div class="govuk-width-container" style="min-height: 69vh;">
 
     <FeedbackBannerSignOut />
+
     <a class="govuk-back-link" @onclick="GoToPrevPage" style="color:black">Back</a>
+
     <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
 
         <div class="govuk-grid-row">
@@ -23,9 +24,9 @@
             <div class="govuk-grid-column-two-thirds">
 
                 <div class="govuk-panel govuk-panel--confirmation">
-                    <div class="govuk-panel__title">
+                    <h1 class="govuk-panel__title">
                         Statement for @reportSubmissionData.ReservoirRegName sent
-                    </div>
+                    </h1>
                 </div>
                 <br>
                 <p class="govuk-body">We have sent you a confirmation email.</p>
@@ -37,7 +38,7 @@
                 </p>
 
                 <p class="govuk-body">
-                    You can go back to <a class="govuk-link govuk-link--no-visited-state" style="cursor:pointer" @onclick="GoToAnnualStatementsPage">your annual statements</a> or go to your <a class="govuk-link govuk-link--no-visited-state" style="cursor:pointer" @onclick="GoToMyAccountPage">account</a> to manage your information.
+                    You can go back to <a href="#" class="govuk-link govuk-link--no-visited-state" style="cursor:pointer" @onclick="GoToAnnualStatementsPage">your annual statements</a> or go to your <a href="#" class="govuk-link govuk-link--no-visited-state" style="cursor:pointer" @onclick="GoToMyAccountPage">account</a> to manage your information.
                 </p>
 
                 <p class="govuk-!-margin-top-8">
@@ -49,7 +50,6 @@
             </div>
         </div>
     </main>
-
 </div>
 
 <Footer />
@@ -57,14 +57,14 @@
 @code {
     [CascadingParameter]
     public Task<AuthenticationState> AuthenticationStateTask { get; set; }
-
+    public List<string> EmailAddresses { get; set; } = new List<string>();
     public ReportSubmissionDataDto reportSubmissionData { get; set; } = new ReportSubmissionDataDto();
 
     protected async override Task OnInitializedAsync()
     {
         var reportSubmissionDataState = await ProtectedSessionStore.GetAsync<ReportSubmissionDataDto>("CurrentReportSubmissionData");
         reportSubmissionData = reportSubmissionDataState.Value;
-
+        EmailAddresses = reportSubmissionData.EmailListToSomeOne;
         AuthenticationState authState = await AuthenticationStateTask;// AuthenticationStateProvider.GetAuthenticationStateAsync();
         await InvokeAsync(() =>
              {
