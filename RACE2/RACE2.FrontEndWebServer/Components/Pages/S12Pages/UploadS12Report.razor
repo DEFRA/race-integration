@@ -183,7 +183,7 @@
     {
         clearAllUploadFileSettings();
         uploadFileData.EmptyFileSize = long.Parse(_config["EmptyFileSizeLimit"]);
-        if (selectedFiles == null)
+        if ((selectedFiles == null) || (selectedFiles.Count() == 0))
         {
             NoFileSelected();
             await InvokeAsync(() =>
@@ -329,6 +329,7 @@
                         }
                         if (bytes != null)
                         {
+
                             //await _notificationService.SendConfirmationMailtoSE(userDetails.Email, reportSubmissionData.ReservoirRegName);
                             // if (selectedFile.Size < uploadFileData.NotifyServiceFileAttachmentLimit)
                             // {
@@ -420,6 +421,7 @@
                         }
                         else
                         {
+                            FileUploadInProgress = false;
                             // bool cleanFile = false;
                             bool notScanned = false;
                             var containerNameforMaliciousFile = _config["MaliciousContainer"]; //"maliciousfiles";
@@ -433,6 +435,7 @@
                             {
                                 Serilog.Log.Logger.ForContext("User", UserEmail).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File infected by virus.");
                                 FileContainsVirus();
+                                uploadPerc = 0;
                                 await InvokeAsync(() =>
                                 {
                                     StateHasChanged();
