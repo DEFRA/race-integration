@@ -71,9 +71,9 @@ try
     builder.Services.AddServiceRegistration(builder.Configuration);
 
     var blazorClientURL = builder.Configuration["RACE2FrontEndURL"];
-    var RACE2WebApiURL = builder.Configuration["RACE2WebApiURL"];
-    var RACE2IDPURL = builder.Configuration["RACE2SecurityProviderURL"];
-    var clientSecret = builder.Configuration["ClientSecret"];
+    //var RACE2WebApiURL = builder.Configuration["RACE2WebApiURL"];
+    //var RACE2IDPURL = builder.Configuration["RACE2SecurityProviderURL"];
+    //var clientSecret = builder.Configuration["ClientSecret"];
     var appinsightsConnString = builder.Configuration["AppInsightsConnectionString"];
     var sqlConnectionString = builder.Configuration["SqlConnectionString"];
     //IConfiguration _configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../appsettings.json").Build();
