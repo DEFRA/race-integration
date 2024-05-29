@@ -25,12 +25,12 @@ namespace RACE2.GovUK.OneloginAuth.Services
 
         public async Task<string> AuthenticationCallback(string authority, string resource, string scope)
         {
-            var azureAppConfigUrl = "https://pocracinfac1401.azconfig.io/";
-            var azureTenantId = "770a2450-0227-4c62-90c7-4e38537f1102";
-            var managedIdentityClientId = "ed22ed2e-445d-470f-989c-4f9d3d1f7a20";
-            //var azureAppConfigUrl = "https://pocracinfac1402.azconfig.io/";
-            //var azureTenantId = "6f504113-6b64-43f2-ade9-242e05780007";
-            //var managedIdentityClientId = "80026cc9-216c-4002-8d7c-f4648af0f20f";
+            //var azureAppConfigUrl = "https://pocracinfac1401.azconfig.io/";
+            //var azureTenantId = "770a2450-0227-4c62-90c7-4e38537f1102";
+            //var managedIdentityClientId = "ed22ed2e-445d-470f-989c-4f9d3d1f7a20";
+            var azureAppConfigUrl = "https://pocracinfac1402.azconfig.io/";
+            var azureTenantId = "6f504113-6b64-43f2-ade9-242e05780007";
+            var managedIdentityClientId = "80026cc9-216c-4002-8d7c-f4648af0f20f";
             var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions { TenantId = azureTenantId, ManagedIdentityClientId = managedIdentityClientId, VisualStudioTenantId = azureTenantId });
 
             //var credential = new DefaultAzureCredential();
