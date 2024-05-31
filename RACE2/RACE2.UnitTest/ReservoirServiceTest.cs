@@ -11,7 +11,7 @@
 //    {
 //        private readonly Mock<IReservoirService> reservoirService;
 //        private readonly Mock<IReservoirRepository> reservoirRepository;
-        
+
 //        public ReservoirServiceTest()
 //        {
 //            reservoirService = new Mock<IReservoirService>();
@@ -19,7 +19,7 @@
 
 //        }
 //        [Fact]
-//        public void GetProductList_ProductList()
+//        public void GetUserByEmailID_Should_Return_Value()
 //        {
 //            //arrange
 //            var productList = GetProductsData();
@@ -35,7 +35,7 @@
 //            Assert.True(productList.Equals(productResult));
 //        }
 
-//        private List<UserSpecificDto>  GetUsers()
+//        private List<UserSpecificDto> GetUsers()
 //        {
 //            List<UserSpecificDto> usersData = new List<UserSpecificDto>()
 //            {
@@ -46,7 +46,7 @@
 //                     cLastName = "Name 1",
 //                     Email = "test.user1@race.test",
 //                     cBackEndUserId = "1",
-//                     cMobile = "01234567890"    
+//                     cMobile = "01234567890"
 //                },
 //                new UserSpecificDto
 //                {
@@ -64,9 +64,9 @@
 
 //        private List<reservoir> GetReservoirs()
 //        {
-//            List<Product> productsData = new List<Product>
+//            List<ReservoirDetailsDTO> reservoirData = new List<ReservoirDetailsDTO>
 //        {
-//            new Product
+//            new ReservoirDetailsDTO
 //            {
 //                ProductId = 1,
 //                ProductName = "IPhone",
@@ -74,7 +74,7 @@
 //                ProductPrice = 55000,
 //                ProductStock = 10
 //            },
-//             new Product
+//             new ReservoirDetailsDTO
 //            {
 //                ProductId = 2,
 //                ProductName = "Laptop",
@@ -82,7 +82,7 @@
 //                ProductPrice = 100000,
 //                ProductStock = 20
 //            },
-//             new Product
+//             new ReservoirDetailsDTO
 //            {
 //                ProductId = 3,
 //                ProductName = "TV",
@@ -91,7 +91,7 @@
 //                ProductStock = 30
 //            },
 //        };
-//            return productsData;
+//            return reservoirData;
 //        }
 
 //    }
