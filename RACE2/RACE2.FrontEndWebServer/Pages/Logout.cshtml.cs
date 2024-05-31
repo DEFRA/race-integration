@@ -29,24 +29,30 @@ namespace RACE2.FrontEndWebServer.Pages
 
             var idToken = await HttpContext.GetTokenAsync("id_token");
             var accessToken = await HttpContext.GetTokenAsync("access_token");
-            //var state = await HttpContext.GetTokenAsync("state");
-            string post_logout_redirect_uri = _configuration["RACE2FrontEndURL"];
-            string LogoutAPIurl = "https://oidc.integration.account.gov.uk/logout?id_token_hint={0}&post_logout_redirect_uri={1}";  //&state=af0ifjsldkj
-          
-            string requestUri = string.Format(LogoutAPIurl, idToken, post_logout_redirect_uri);
-
-            Serilog.Log.Logger.ForContext("User", requestUri).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement").Information(post_logout_redirect_uri);
-
-            Serilog.Log.Logger.ForContext("User", requestUri).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement").Information(requestUri);
-
-            foreach (var cookie in HttpContext.Request.Cookies.Keys)
+            if (idToken != null)
             {
-                HttpContext.Response.Cookies.Delete(cookie);
-            }       
+                string post_logout_redirect_uri = _configuration["RACE2FrontEndURL"];
+                string LogoutAPIurl = "https://oidc.integration.account.gov.uk/logout?id_token_hint={0}&post_logout_redirect_uri={1}";  //&state=af0ifjsldkj
 
-            //working
-            //Response.Redirect("https://oidc.integration.account.gov.uk/logout");
-            Response.Redirect(requestUri);
+                string requestUri = string.Format(LogoutAPIurl, idToken, post_logout_redirect_uri);
+
+                Serilog.Log.Logger.ForContext("User", requestUri).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement").Information(post_logout_redirect_uri);
+
+                Serilog.Log.Logger.ForContext("User", requestUri).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement").Information(requestUri);
+
+                foreach (var cookie in HttpContext.Request.Cookies.Keys)
+                {
+                    HttpContext.Response.Cookies.Delete(cookie);
+                }
+
+                //working
+                //Response.Redirect("https://oidc.integration.account.gov.uk/logout");
+                Response.Redirect(requestUri);
+            }
+            else
+            {
+                Response.Redirect("/");
+            }
 
             //try this otherwise
             //SignOut(OpenIdConnectDefaults.AuthenticationScheme, CookieAuthenticationDefaults.AuthenticationScheme);
