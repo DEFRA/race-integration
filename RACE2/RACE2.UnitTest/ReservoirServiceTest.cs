@@ -1,6 +1,8 @@
+//using Microsoft.EntityFrameworkCore;
 //using Microsoft.Extensions.Configuration;
 //using Moq;
 //using RACE2.DataAccess.Repository;
+//using RACE2.DatabaseProvider.Data;
 //using RACE2.Dto;
 //using RACE2.Services;
 //using System.IO;
@@ -9,40 +11,56 @@
 //{
 //    public class ReservoirServiceTest
 //    {
-//        private readonly Mock<IReservoirService> reservoirService;
-//        private readonly Mock<IReservoirRepository> reservoirRepository;
+//        private readonly Mock<IUserService> userService;
+//        private readonly Mock<IUserRepository> userRepository;
+//        private readonly IConfiguration configuration;
 
 //        public ReservoirServiceTest()
 //        {
-//            reservoirService = new Mock<IReservoirService>();
-//            reservoirRepository = new Mock<IReservoirRepository>();
-
+//            userRepository = new Mock<IUserRepository>();
+//            userService = new Mock<IUserService>();
 //        }
+
+
+
+//        //private UserRepository userRepository;
+//        //public  DbContextOptions<ApplicationDbContext> dbContextOptions { get; }
+//        //string connectionString = configuration["SqlConnectionString"];
+
+//        //public ReservoirServiceTest(IConfiguration _configuration)
+//        //{
+//        //    dbContextOptions = new DbContextOptionsBuilder<ApplicationDbContext>()
+//        //        .UseSqlServer8
+//        //        .Options;
+//        //}
+
 //        [Fact]
-//        public void GetUserByEmailID_Should_Return_Value()
+//        public async void GetUserByEmailID_Should_Return_Value()
 //        {
 //            //arrange
-//            var productList = GetProductsData();
-//            productService.Setup(x => x.GetProductList())
-//                .Returns(productList);
-//            var productController = new ProductController(productService.Object);
-//            //act
-//            var productResult = productController.ProductList();
-//            //assert
-//            Assert.NotNull(productResult);
-//            Assert.Equal(GetProductsData().Count(), productResult.Count());
-//            Assert.Equal(GetProductsData().ToString(), productResult.ToString());
-//            Assert.True(productList.Equals(productResult));
-//        }
+//            var userList =await GetUsers();
+//            userService.Setup(x => x.GetUserByEmailID("mahalakshmi.alagarsamy@capgemini.com")).Returns((Task<UserSpecificDto>)userList);
 
-//        private List<UserSpecificDto> GetUsers()
+//            //var result = userRepository.GetUserByEmailID("mahalakshmi.alagarsamy@capgemini.com");
+                
+//           //// var result  = userService.
+//           // //act
+//           // var productResult = productController.ProductList();
+//           // //assert
+//           // Assert.NotNull(productResult);
+//           // Assert.Equal(GetProductsData().Count(), productResult.Count());
+//           // Assert.Equal(GetProductsData().ToString(), productResult.ToString());
+//           // Assert.True(productList.Equals(productResult));
+//        }
+       
+//        private Task<IEnumerable<UserSpecificDto>> GetUsers()
 //        {
-//            List<UserSpecificDto> usersData = new List<UserSpecificDto>()
+//            IEnumerable<UserSpecificDto> usersData = new List<UserSpecificDto>()
 //            {
 //                new UserSpecificDto
 //                {
 //                     Id = 1,
-//                     cFirstName = "Test User",
+//                     cFirstName = "Test User1",
 //                     cLastName = "Name 1",
 //                     Email = "test.user1@race.test",
 //                     cBackEndUserId = "1",
@@ -50,8 +68,8 @@
 //                },
 //                new UserSpecificDto
 //                {
-//                     Id = 1,
-//                     cFirstName = "Test User",
+//                     Id = 2,
+//                     cFirstName = "Test User2",
 //                     cLastName = "Name 2",
 //                     Email = "test.user2@race.test",
 //                     cBackEndUserId = "2",
@@ -59,40 +77,40 @@
 //                }
 //            };
 
-//            return usersData;
+//            return Task.FromResult(usersData); ;
 //        }
 
-//        private List<reservoir> GetReservoirs()
-//        {
-//            List<ReservoirDetailsDTO> reservoirData = new List<ReservoirDetailsDTO>
-//        {
-//            new ReservoirDetailsDTO
-//            {
-//                ProductId = 1,
-//                ProductName = "IPhone",
-//                ProductDescription = "IPhone 12",
-//                ProductPrice = 55000,
-//                ProductStock = 10
-//            },
-//             new ReservoirDetailsDTO
-//            {
-//                ProductId = 2,
-//                ProductName = "Laptop",
-//                ProductDescription = "HP Pavilion",
-//                ProductPrice = 100000,
-//                ProductStock = 20
-//            },
-//             new ReservoirDetailsDTO
-//            {
-//                ProductId = 3,
-//                ProductName = "TV",
-//                ProductDescription = "Samsung Smart TV",
-//                ProductPrice = 35000,
-//                ProductStock = 30
-//            },
-//        };
-//            return reservoirData;
-//        }
+//        //private List<reservoir> GetReservoirs()
+//        //{
+//        //    List<ReservoirDetailsDTO> reservoirData = new List<ReservoirDetailsDTO>
+//        //{
+//        //    new ReservoirDetailsDTO
+//        //    {
+//        //        ProductId = 1,
+//        //        ProductName = "IPhone",
+//        //        ProductDescription = "IPhone 12",
+//        //        ProductPrice = 55000,
+//        //        ProductStock = 10
+//        //    },
+//        //     new ReservoirDetailsDTO
+//        //    {
+//        //        ProductId = 2,
+//        //        ProductName = "Laptop",
+//        //        ProductDescription = "HP Pavilion",
+//        //        ProductPrice = 100000,
+//        //        ProductStock = 20
+//        //    },
+//        //     new ReservoirDetailsDTO
+//        //    {
+//        //        ProductId = 3,
+//        //        ProductName = "TV",
+//        //        ProductDescription = "Samsung Smart TV",
+//        //        ProductPrice = 35000,
+//        //        ProductStock = 30
+//        //    },
+//        //};
+//        //    return reservoirData;
+//        //}
 
 //    }
 //}
