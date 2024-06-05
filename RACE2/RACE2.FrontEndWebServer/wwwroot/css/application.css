@@ -919,7 +919,8 @@ p + .govuk-heading-s,
 
 @media (min-width: 40.0625em) {
     .govuk-form-group {
-        margin-bottom: 30px;
+        margin-bottom: 60px;
+        margin-top:50px;
     }
 }
 
