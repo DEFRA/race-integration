@@ -7,6 +7,14 @@
                 <span class="govuk-visually-hidden">Support links</span>
 
                 <ul class="govuk-footer__inline-list">
+                    @if (IsLoggedIn)
+                    {
+                        <li class="govuk-footer__inline-list-item">
+                            <a class="govuk-footer__link" href="/accessibility-statement" target="_self">
+                                Accessibility statement
+                            </a>
+                        </li>
+                    }
                     <li class="govuk-footer__inline-list-item">
                         <a class="govuk-footer__link" href="/cookies-statement" target="_self">
                             Cookies
@@ -48,3 +56,21 @@
     </div>
 </footer>
 
+@code {
+    protected bool IsLoggedIn { get; set; } = false;
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthenticationStateTask { get; set; }
+    protected async override Task OnInitializedAsync()
+    {
+        AuthenticationState authState = await AuthenticationStateTask; // AuthenticationStateProvider.GetAuthenticationStateAsync();
+        if (authState.User.Claims.Count() == 0)
+            IsLoggedIn = false;
+        else
+            IsLoggedIn = true;
+        await InvokeAsync(() =>
+        {
+            StateHasChanged();
+        });
+        await base.OnInitializedAsync();
+    }
+}
