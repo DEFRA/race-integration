@@ -149,9 +149,10 @@ namespace RACE2.DataAccess.Repository
                 //submission detaile
                 uploadPayload.submission.statusId = 1;
                 uploadPayload.submission.reference = submissionreference;
-                string format = "yyyy-MM-dd'T'HH:mm:ss";
-                string strDate = DateTime.UtcNow.ToString(format, DateTimeFormatInfo.InvariantInfo);
-                uploadPayload.submission.submittedDate = "2024-05-28T00:00:00.000+0100"; //strDate
+                string format = "yyyyMMddTHHmmsszz";//"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";//"yyyy-MM-dd'T'HH:mm:ss";
+                string strDate = DateTime.Now.ToString("o"); 
+                string strdate1 = DateTime.UtcNow.ToString(format, DateTimeFormatInfo.InvariantInfo);
+                uploadPayload.submission.submittedDate = strDate; //"2024-06-10T00:00:00.000+0100"; //strDate
                 uploadPayload.submission.submittedBy = submittedBy;
                 uploadPayload.submission.type = "Annual Statement";
                 uploadPayload.submission.source = "S12 Digital Service";
