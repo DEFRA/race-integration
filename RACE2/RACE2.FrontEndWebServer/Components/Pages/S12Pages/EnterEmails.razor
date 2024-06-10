@@ -5,6 +5,7 @@
 @using System.Text.RegularExpressions;
 @inject NavigationManager NavigationManager
 @inject ProtectedSessionStorage ProtectedSessionStore
+@inject IJSRuntime JSRuntime
 
 <PageTitle>Enter the email addresses you want the statement to go to - Send a supervising engineer's annual statement - GOV.UK</PageTitle>
 
@@ -94,12 +95,12 @@
                     <h2 class="govuk-error-summary__title">
                         There is a problem
                     </h2>
-                    @foreach (var error in ValidationErrors.Values)
+                    @foreach (var error in ValidationErrors)
                     {
                         <div class="govuk-error-summary__body">
                             <ul class="govuk-list govuk-error-summary__list">
                                 <li>
-                                    <a href="#" style="margin-bottom:15px;text-decoration:none;">@error</a>
+                                    <a href="" @onclick:preventDefault @onclick="@(()=> Focus(@error.Key))" style="margin-bottom:15px;text-decoration:none;">@error.Value</a>
                                 </li>
                             </ul>
                         </div>
@@ -121,7 +122,7 @@
                                     You can send your statement to one or more people.
                                 </p>
 
-                                @foreach (var error in ValidationErrors.Values)
+                           @*      @foreach (var error in ValidationErrors.Values)
                                 {
                                     <div class="govuk-error-summary__body">
                                         <ul class="govuk-list govuk-error-summary__list">
@@ -130,15 +131,27 @@
                                             </li>
                                         </ul>
                                     </div>
-                                }
+                                } *@
 
                                 <div class="govuk-form-group govuk-!-margin-top-8">
                                     <label class="govuk-label" for="email1">
                                         Email address
                                     </label>
-                                    @if (String.IsNullOrEmpty(EmailAddresses[0]) || (!String.IsNullOrEmpty(EmailAddresses[0]) && !IsValid(EmailAddresses[0])))
+
+                                    @if (String.IsNullOrEmpty(EmailAddresses[0]))
                                     {
+                                        <p id="email-error" class="govuk-error-message">
+                                            <span class="govuk-visually-hidden">Error:</span> Enter an email address
+                                        </p>
                                         <InputText class="govuk-input" style="border-color:#d4351c;" id="email1" name="email1" autocomplete="email1" @bind-Value="@EmailAddresses[0]">
+                                        </InputText>
+                                    }
+                                    else if (!String.IsNullOrEmpty(EmailAddresses[0]) && !IsValid(EmailAddresses[0]))
+                                    {
+                                        <p id="email-error" class="govuk-error-message">
+                                            <span class="govuk-visually-hidden">Error:</span> Enter an email address in the correct format, like name@example.com
+                                        </p>
+                                        <InputText  class="govuk-input" style="border-color:#d4351c;" id="email1" name="email1" autocomplete="email1" @bind-Value="@EmailAddresses[0]">
                                         </InputText>
                                     }
                                     else
@@ -154,6 +167,9 @@
                                     </label>
                                     @if (!String.IsNullOrEmpty(EmailAddresses[1]) && !IsValid(EmailAddresses[1]))
                                     {
+                                        <p id="email-error" class="govuk-error-message">
+                                            <span class="govuk-visually-hidden">Error:</span> Enter an email address in the correct format, like name@example.com
+                                        </p>
                                         <InputText class="govuk-input" style="border-color:#d4351c;" id="email2" name="email2" autocomplete="email2" @bind-Value="@EmailAddresses[1]">
                                         </InputText>
                                     }
@@ -170,6 +186,9 @@
                                     </label>
                                     @if (!String.IsNullOrEmpty(EmailAddresses[2]) && !IsValid(EmailAddresses[2]))
                                     {
+                                        <p id="email-error" class="govuk-error-message">
+                                            <span class="govuk-visually-hidden">Error:</span> Enter an email address in the correct format, like name@example.com
+                                        </p>
                                         <InputText class="govuk-input" style="border-color:#d4351c;" id="email3" name="email3" autocomplete="email3" @bind-Value="@EmailAddresses[2]">
                                         </InputText>
                                     }
@@ -186,6 +205,9 @@
                                     </label>
                                     @if (!String.IsNullOrEmpty(EmailAddresses[3]) && !IsValid(EmailAddresses[3]))
                                     {
+                                        <p id="email-error" class="govuk-error-message">
+                                            <span class="govuk-visually-hidden">Error:</span> Enter an email address in the correct format, like name@example.com
+                                        </p>
                                         <InputText class="govuk-input" style="border-color:#d4351c;" id="email4" name="email4" autocomplete="email4" @bind-Value="@EmailAddresses[3]">
                                         </InputText>
                                     }
@@ -202,6 +224,9 @@
                                     </label>
                                     @if (!String.IsNullOrEmpty(EmailAddresses[4]) && !IsValid(EmailAddresses[4]))
                                     {
+                                        <p id="email-error" class="govuk-error-message">
+                                            <span class="govuk-visually-hidden">Error:</span> Enter an email address in the correct format, like name@example.com
+                                        </p>
                                         <InputText class="govuk-input" style="border-color:#d4351c;" id="email5" name="email5" autocomplete="email5" @bind-Value="@EmailAddresses[4]">
                                         </InputText>
                                     }
@@ -237,6 +262,21 @@
     public List<string> EmailAddresses { get; set; } = new List<string>();
     public ReportSubmissionDataDto reportSubmissionData { get; set; } = new ReportSubmissionDataDto();
     public Dictionary<string, string> ValidationErrors = new Dictionary<string, string>();
+    //InputText email1Ref;
+    //public string InputID = "email1";
+
+    public async Task Focus(string InputID)
+    {
+        await JSRuntime.InvokeVoidAsync("focusInput", InputID);
+    }
+
+    // private void HandleClick()
+    // {
+    //     if(email1Ref.Element.HasValue)
+    //     {
+    //         email1Ref.Element.Value.FocusAsync();
+    //     }
+    // }
 
     protected async override Task OnInitializedAsync()
     {
@@ -257,27 +297,27 @@
         ValidationErrors.Clear();
         if (String.IsNullOrEmpty(EmailAddresses[0]))
         {
-            ValidationErrors.Add("Email1Empty", "Enter an email address");
+            ValidationErrors.Add("email1", "Enter an email address");
         }
         if (!String.IsNullOrEmpty(EmailAddresses[0]) && !IsValid(EmailAddresses[0]))
         {
-            ValidationErrors.Add("Email1Invalid", "Enter an email address in the correct format, like name@example.com");
+            ValidationErrors.Add("email1", "Enter an email address in the correct format, like name@example.com");
         }
-        else if (!String.IsNullOrEmpty(EmailAddresses[1]) && !IsValid(EmailAddresses[1]))
+        if (!String.IsNullOrEmpty(EmailAddresses[1]) && !IsValid(EmailAddresses[1]))
         {
-            ValidationErrors.Add("Email2Invalid", "Enter an email address in the correct format, like name@example.com");
+            ValidationErrors.Add("email2", "Enter an email address in the correct format, like name@example.com");
         }
-        else if (!String.IsNullOrEmpty(EmailAddresses[2]) && !IsValid(EmailAddresses[2]))
+        if (!String.IsNullOrEmpty(EmailAddresses[2]) && !IsValid(EmailAddresses[2]))
         {
-            ValidationErrors.Add("Email3Invalid", "Enter an email address in the correct format, like name@example.com");
+            ValidationErrors.Add("email3", "Enter an email address in the correct format, like name@example.com");
         }
-        else if (!String.IsNullOrEmpty(EmailAddresses[3]) && !IsValid(EmailAddresses[3]))
+        if (!String.IsNullOrEmpty(EmailAddresses[3]) && !IsValid(EmailAddresses[3]))
         {
-            ValidationErrors.Add("Email4Invalid", "Enter an email address in the correct format, like name@example.com");
+            ValidationErrors.Add("email4", "Enter an email address in the correct format, like name@example.com");
         }
-        else if (!String.IsNullOrEmpty(EmailAddresses[4]) && !IsValid(EmailAddresses[4]))
+        if (!String.IsNullOrEmpty(EmailAddresses[4]) && !IsValid(EmailAddresses[4]))
         {
-            ValidationErrors.Add("Email5Invalid", "Enter an email address in the correct format, like name@example.com");
+            ValidationErrors.Add("email5", "Enter an email address in the correct format, like name@example.com");
         }
         if (ValidationErrors.Count == 0)
         {
@@ -288,11 +328,21 @@
         }
         else
         {
+            //await JSRuntime.InvokeVoidAsync("scrollToTop");
             await InvokeAsync(() =>
            {
                StateHasChanged();
            });
         }
+        if(ValidationErrors.Count > 0)
+        {
+            OnError();
+        }
+    }
+
+    private async void OnError()
+    {
+        await JSRuntime.InvokeVoidAsync("OnScrollEvent");
     }
 
     public void GoToPrevPage()
