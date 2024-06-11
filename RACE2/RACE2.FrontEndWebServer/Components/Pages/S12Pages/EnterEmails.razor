@@ -297,7 +297,7 @@
         ValidationErrors.Clear();
         if (String.IsNullOrEmpty(EmailAddresses[0]))
         {
-            ValidationErrors.Add("email1", "Enter an email address");
+            ValidationErrors.Add("email1", "Enter an email address in the correct format, like name@example.com");
         }
         if (!String.IsNullOrEmpty(EmailAddresses[0]) && !IsValid(EmailAddresses[0]))
         {
