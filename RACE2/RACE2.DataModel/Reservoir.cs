@@ -15,13 +15,13 @@ namespace RACE2.DataModel
     {
         [Key, Required]
         public int Id { get; set; }
-        [StringLength(64)]
+        [StringLength(16)]
         public string? BackEndReservoirId { get; set; }
         [StringLength(200)]
         public string? PublicName { get; set; }
         [StringLength(200),Required]
         public string? RegisteredName { get;set; }
-        [StringLength(8)]
+        [StringLength(16)]
         public string? ReferenceNumber { get; set; }
         [StringLength(64)]
         public string? PublicCategory { get; set; }
@@ -62,6 +62,10 @@ namespace RACE2.DataModel
 
         [StringLength(64)]
         public string? OperatorType { get; set; }
+
+
+        [StringLength(64)]
+        public string? PhysicalStatus { get; set; }
 
     }
 

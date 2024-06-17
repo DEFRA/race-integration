@@ -1,72 +1,72 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
-    "parameters": {
-      "resourcegroup": {
-        "value": "TSTRACINFRG1401"
-      },
-      "location":{
-        "value": "uksouth"
-      }, 
-      "azureTenanatId":{
-        "value": "770a2450-0227-4c62-90c7-4e38537f1102"
-      },
-      "managedidentity": {
-        "value": "TSTRACINFMI1401"
-      },
-      "race2appenvName": {
-        "value": "TSTRACINFAE1401"
-      },
-      "aspnetCoreEnv": {
-        "value": "Production"
-      },
-      "appConfigURL": {
-        "value": "https://tstracinfac1401.azconfig.io/"
-      },
-      "registryName": {
-        "value": "tstracinfcr1401"
-      },
-      "useExternalIngress": {
-        "value": true
-      },
-      "containerPort": {
-        "value": 8080
-      },
-      "minReplicas": {
-        "value": 1
-      },
-      "maxReplicas": {
-        "value": 1
-      },
-      "transport": {
-        "value": "http"
-      },
-      "allowInsecure": {
-        "value": false
-      },   
-      "frontEndWebServerContainerAppName": {
-        "value":"race2frontendwebserver"
-      },
-      "securityProviderContainerAppName": {
-        "value":"race2securityprovider"
-      },
-      "webApiContainerAppName": {
-        "value":"race2webapi"
-      },
-      "webApiExternalContainerAppName": {
-        "value":"race2webapiexternal"
-      },
-      "frontendwebservercontainerImage": {
-        "value":"tstracinfcr1401.azurecr.io/race2frontendwebserver"
-      },
-      "securityprovidercontainerImage": {
-        "value": "tstracinfcr1401.azurecr.io/race2securityprovider"
-      },
-      "webapicontainerImage": {
-        "value": "tstracinfcr1401.azurecr.io/race2webapi"
-      },
-      "webapiexternalcontainerImage": {
-        "value": "tstracinfcr1401.azurecr.io/race2webapiexternal"
-      } 
+  "parameters": {
+    "resourcegroup": {
+      "value": "TSTRACINFRG1401"
+    },
+    "location": {
+      "value": "uksouth"
+    },
+    "azureTenanatId": {
+      "value": "770a2450-0227-4c62-90c7-4e38537f1102"
+    },
+    "managedidentity": {
+      "value": "TSTRACINFMI1401"
+    },
+    "race2appenvName": {
+      "value": "TSTRACINFAE1401"
+    },
+    "aspnetCoreEnv": {
+      "value": "Production"
+    },
+    "appConfigURL": {
+      "value": "https://tstracinfac1401.azconfig.io/"
+    },
+    "registryName": {
+      "value": "tstracinfcr1401"
+    },
+    "useExternalIngress": {
+      "value": true
+    },
+    "containerPort": {
+      "value": 8080
+    },
+    "minReplicas": {
+      "value": 1
+    },
+    "maxReplicas": {
+      "value": 1
+    },
+    "transport": {
+      "value": "http"
+    },
+    "allowInsecure": {
+      "value": false
+    },
+    "frontEndWebServerContainerAppName": {
+      "value": "race2frontendwebserver"
+    },
+    "webApiContainerAppName": {
+      "value": "race2webapi"
+    },
+    "webApiExternalContainerAppName": {
+      "value": "race2webapiexternal"
+    },
+    "backendapiintegrationContainerAppName": {
+      "value": "race2backendapiintegration"
+    },
+    "frontendwebservercontainerImage": {
+      "value": "tstracinfcr1401.azurecr.io/race2frontendwebserver"
+    },
+    "webapicontainerImage": {
+      "value": "tstracinfcr1401.azurecr.io/race2webapi"
+    },
+    "webapiexternalcontainerImage": {
+      "value": "tstracinfcr1401.azurecr.io/race2webapiexternal"
+    },
+    "backendapiintegrationcontainerImage": {
+      "value": "pocracinfcr1401.azurecr.io/race2backendapiintegration"
     }
+  }
 }

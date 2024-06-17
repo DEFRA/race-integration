@@ -9,6 +9,8 @@ namespace RACE2.Dto
     public class ReservoirsLinkedToUserForDisplay
     {
         public int ReservoirID { get; set; }
+        public string BackEndReservoirId { get; set; } 
+        public string ReferenceNumber { get; set; }
         public string ReservoirName { get; set; }
         public string SubmissionReference { get; set; }
         public string UndertakerName { get; set; }

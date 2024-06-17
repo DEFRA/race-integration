@@ -1,13 +1,21 @@
 using System;
+using System.Globalization;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.KeyVaultExtensions;
+using Microsoft.IdentityModel.Logging;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
 using RACE2.GovUK.OneloginAuth.Configuration;
 using RACE2.GovUK.OneloginAuth.Services;
@@ -31,6 +39,7 @@ namespace RACE2.GovUK.OneloginAuth.AppStart
                 {
                     var govUkConfiguration = configuration.GetSection(nameof(GovUkOidcConfiguration));
 
+                    options.SignInScheme=CookieAuthenticationDefaults.AuthenticationScheme;
                     options.ClientId = govUkConfiguration["ClientId"];
                     options.MetadataAddress = $"{govUkConfiguration["BaseUrl"]}/.well-known/openid-configuration";
                     options.ResponseType = "code";
@@ -38,16 +47,20 @@ namespace RACE2.GovUK.OneloginAuth.AppStart
                     options.SignedOutRedirectUri = "/";
                     options.SignedOutCallbackPath = "/signed-out";
                     options.CallbackPath = "/sign-in";
+                    options.RemoteSignOutPath= "/signed-out";
                     options.ResponseMode = string.Empty;
-
                     options.SaveTokens = true;
-
+                   // options.ProtocolValidator.RequireState = true;
+                   // options.ProtocolValidator.RequireStateValidation = true;
+                  
+                    options.StateDataFormat = new PropertiesDataFormat(new MyDataProtector());
                     var scopes = "openid email phone".Split(' ');
                     options.Scope.Clear();
                     foreach (var scope in scopes)
                     {
                         options.Scope.Add(scope);
                     }
+                    options.GetClaimsFromUserInfoEndpoint = true;
 
                     options.Events.OnRemoteFailure = c =>
                     {
@@ -58,7 +71,34 @@ namespace RACE2.GovUK.OneloginAuth.AppStart
                         }
 
                         return Task.CompletedTask;
-                    };                    
+                    };
+                    options.Events.OnUserInformationReceived += eventArgs =>
+                    {
+                        // We get the AccessToken from the ProtocolMessage.
+                        // WARNING: This might change based on what type of Authentication Provider you are using
+                        var accessToken = eventArgs.ProtocolMessage.AccessToken;
+                        var idToken = eventArgs.ProtocolMessage.IdToken;
+                        eventArgs.Principal.AddIdentity(new ClaimsIdentity(
+                            new Claim[]
+                            {
+                                // Make note of the claim with the name "access_token"
+                                // We will use it in an Authentication Service for look up.
+                                new Claim("access_token", accessToken),
+                                new Claim("id_token", idToken)
+                            }
+                        ));
+
+                        // Here we take the accessToken and put all the claims into another
+                        // Identity on the users Principal, giving us access to them when needed.
+                        var jwtToken = new JwtSecurityToken(accessToken);
+                        eventArgs.Principal.AddIdentity(new ClaimsIdentity(
+                            jwtToken.Claims,
+                            "jwt",
+                            eventArgs.Options.TokenValidationParameters.NameClaimType,
+                            eventArgs.Options.TokenValidationParameters.RoleClaimType
+                        ));
+                        return Task.CompletedTask;
+                    };
                 })
                 .AddCookie(options =>
                 {
@@ -74,7 +114,7 @@ namespace RACE2.GovUK.OneloginAuth.AppStart
                     
                     options.Cookie.SameSite = SameSiteMode.Lax;
                     options.CookieManager = new ChunkingCookieManager { ChunkSize = 3000 };
-                    options.LogoutPath = "/home/signed-out";
+                    options.LogoutPath = "/logout";
                 });
             services
                 .AddOptions<OpenIdConnectOptions>(OpenIdConnectDefaults.AuthenticationScheme)
@@ -91,10 +131,20 @@ namespace RACE2.GovUK.OneloginAuth.AppStart
                             ValidateIssuer = true,
                             ValidIssuer = govUkConfiguration.BaseUrl + @"/",
                             ValidateAudience = true,
-                            SaveSigninToken = true
+                            SaveSigninToken = true,
+                            NameClaimType = "name",
+                            RoleClaimType = "role",
+                            
+                            
+                            
                         };
+                        //options.ProtocolValidator = new GovUkProtocalValidator();
+
+
+
                         options.Events.OnAuthorizationCodeReceived = async (ctx) =>
                         {
+
                             var token = await oidcService.GetToken(ctx.TokenEndpointRequest);
                             if (token?.AccessToken!=null && token.IdToken !=null)
                             {
@@ -108,7 +158,7 @@ namespace RACE2.GovUK.OneloginAuth.AppStart
                             c.HandleResponse();
                             return Task.CompletedTask;
                         };
-                        options.Events.OnTokenValidated = async ctx => await oidcService.PopulateAccountClaims(ctx);
+                        options.Events.OnTokenValidated = async ctx => await oidcService.PopulateAccountClaims(ctx);                        
                     });
             services
                 .AddOptions<CookieAuthenticationOptions>(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -119,6 +169,51 @@ namespace RACE2.GovUK.OneloginAuth.AppStart
                     options.SessionStore = ticketStore;
                 });
             
+        }
+    }
+
+    public sealed class GovUkProtocalValidator : OpenIdConnectProtocolValidator
+    {
+
+        protected override void ValidateState(OpenIdConnectProtocolValidationContext validationContext)
+        {
+            base.ValidateState(validationContext);
+        }
+
+        protected override void ValidateNonce(OpenIdConnectProtocolValidationContext validationContext)
+        {
+            base.ValidateNonce(validationContext);
+        }
+
+        public override string GenerateNonce()
+        {
+            
+            string nonce = Convert.ToBase64String(Encoding.UTF8.GetBytes(Guid.NewGuid().ToString() +
+                                                                        Guid.NewGuid().ToString()));
+            if (RequireTimeStampInNonce)
+            {
+                return DateTime.UtcNow.Ticks.ToString(CultureInfo.InvariantCulture) + "." + nonce;
+            }
+
+            return nonce;
+        }
+    }
+
+    public class MyDataProtector : IDataProtector
+    {
+        public IDataProtector CreateProtector(string purpose)
+        {
+            return new MyDataProtector();
+        }
+
+        public byte[] Protect(byte[] plaintext)
+        {
+            return plaintext;
+        }
+
+        public byte[] Unprotect(byte[] protectedData)
+        {
+            return protectedData;
         }
     }
 }

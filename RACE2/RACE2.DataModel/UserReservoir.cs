@@ -12,7 +12,7 @@ namespace RACE2.DataModel
     public class UserReservoir
     {
         public int Id { get; set; }
-        [StringLength(64)]
+        [StringLength(16)]
         public string? BackEndAppointmentId { get; set; }
         public UserDetail User { get; set; } = new UserDetail();
 

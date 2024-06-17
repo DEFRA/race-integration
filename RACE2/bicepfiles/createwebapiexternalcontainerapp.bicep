@@ -66,7 +66,7 @@ resource containerWebApiExternalApp 'Microsoft.App/containerApps@2023-08-01-prev
               value: managedIdentity_resource.properties.clientId
             }
             {
-              name: 'ManagedIdenityClientId'
+              name: 'ManagedIdentityClientId'
               value: managedIdentity_resource.properties.clientId
             }
           ]          

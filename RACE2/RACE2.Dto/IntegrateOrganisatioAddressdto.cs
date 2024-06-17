@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace RACE2.Dto
 {
-    public class BackendIndividualAddressDetails
+    public class IntegrateOrganisatioAddressdto
     {
-
         public int frontEndAddressId { get; set; }
         [MaxLength(64)]
         public string addressLine1 { get; set; } = string.Empty;
@@ -22,6 +21,6 @@ namespace RACE2.Dto
         [MaxLength(64)]
         public string postcode { get; set; } = string.Empty;
 
-        public bool isPrimaryAddress { get; set; }
+        public bool isRegistered { get; set; }
     }
 }

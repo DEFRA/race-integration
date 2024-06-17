@@ -1,8 +1,9 @@
 ﻿{
   "profiles": {
-    "RACE2.FrontEndWebServer": {
+    "RACE2.WebApiExternal": {
       "commandName": "Project",
-      "launchBrowser": true,
+      "launchBrowser": false,
+      "launchUrl": "weatherforecast",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "AZURE_TENANT_ID": "770a2450-0227-4c62-90c7-4e38537f1102",

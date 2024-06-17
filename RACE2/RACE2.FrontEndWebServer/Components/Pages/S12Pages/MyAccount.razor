@@ -4,6 +4,7 @@
 @inject IUserService userService
 @using Microsoft.AspNetCore.Components;
 @using Microsoft.AspNetCore.Components.Authorization;
+@using System.Security.Claims;
 @using Microsoft.AspNetCore.Identity;
 @using Microsoft.JSInterop;
 @using RACE2.DataModel;
@@ -35,9 +36,9 @@
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-three-quarters">
 
-                <div class="govuk-heading-xl">
+                <h1 href="#main-header" class="govuk-heading-xl">
                     Your account
-                </div>
+                </h1>
 
             </div>
 
@@ -154,17 +155,13 @@
                         <dd class="govuk-summary-list__value">
                             ******************
                         </dd>
-                        <dd class="govuk-summary-list__actions">
-
+@*                         <dd class="govuk-summary-list__actions">
                             <a class="govuk-link govuk-link--no-visited-state" href=@changePasswordUrl>
-
                                 Change
-                                <span class="govuk-visually-hidden">how we contact you</span>
-
+                                <span class="govuk-visually-hidden">password</span>
                             </a>
-
-                        </dd>
-                    </div>
+                        </dd> *@
+                    </div> 
 
                 </dl>
 
@@ -178,7 +175,7 @@
     [CascadingParameter]
     public Task<AuthenticationState> AuthenticationStateTask { get; set; }
     //private int UserId { get; set; } = 0;
-    private string UserName { get; set; } = "Unknown";
+    private string UserEmail { get; set; } = "Unknown";
     private UserDetail UserDetail { get; set; } = new UserDetail();
     private Address UserAddress { get; set; } = new Address();
 
@@ -188,13 +185,14 @@
         try
         {
             changePasswordUrl = _config["RACE2SecurityProviderURL"] + "/Identity/Account/ChangeYourPassword";
-            AuthenticationState authState = await AuthenticationStateTask; //AuthenticationStateProvider.GetAuthenticationStateAsync();
-            UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
-            UserSpecificDto userDetails = await userService.GetUserByEmailID(UserName);
+            AuthenticationState authState = await AuthenticationStateTask;// AuthenticationStateProvider.GetAuthenticationStateAsync();
+            var claims = authState.User.Claims.ToList();
+            UserEmail = claims.FirstOrDefault(c => c.Type.Equals(ClaimTypes.Email))?.Value;
+            UserSpecificDto userDetails = await userService.GetUserByEmailID(UserEmail);
             UserAddress = userDetails.addresses[0];
             UserDetail = new UserDetail()
                 {
-                    UserName = UserName,
+                    UserName = UserEmail,
                     Id = userDetails.Id,
                     Email = userDetails.Email,
                     PhoneNumber = userDetails.PhoneNumber,
@@ -212,7 +210,7 @@
         }
         catch (Exception ex)
         {
-            Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "MyAccount OnInitializedAsync").Fatal("Error getting data from backend services : " + ex.Message);
+            Serilog.Log.Logger.ForContext("User", UserEmail).ForContext("Application", "FrontEndWebServer").ForContext("Method", "MyAccount OnInitializedAsync").Fatal("Error getting data from backend services : " + ex.Message);
             throw new ApplicationException("Error loading my account page.");
         }
         finally

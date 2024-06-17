@@ -9,7 +9,7 @@
         var returnUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
         if (string.IsNullOrEmpty(returnUrl))
         {
-            returnUrl = "/";
+            returnUrl = "/annual-statement";
         }
 
         NavigationManager.NavigateTo("/login?returnUrl=" + HttpUtility.UrlEncode(returnUrl), forceLoad: true);

@@ -48,3 +48,16 @@ function initializeInactivityTimer(dotnetHelper) {
         }, 20*60*1000); 
     }    
 }
+
+function hideLink() {
+    //document.body.scrollTo(0, document.getElementsByTagName("h1").offsetTop);
+    document.getElementById("skip-to-main-content").style.cssText = "display:none;"; 
+}
+
+function focusInput(id) {
+    document.getElementById(id).focus();
+}
+
+function OnScrollEvent() {
+    document.documentElement.scrollTop = 0;
+}

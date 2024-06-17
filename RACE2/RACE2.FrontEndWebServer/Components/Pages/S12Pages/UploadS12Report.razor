@@ -2,26 +2,32 @@
 @using Microsoft.AspNetCore.Authorization;
 @using Microsoft.AspNetCore.Components
 @using Microsoft.AspNetCore.Components.Authorization
+@using System.Security.Claims;
 @using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.JSInterop
+@using Newtonsoft.Json
 @using RACE2.DataModel
 @using RACE2.Dto
 @using RACE2.Services
 @using RACE2.Notification
+@using System.Text
+@using System.Text.Json.Serialization
 @inject NavigationManager NavigationManager
 @inject IBlobStorageService blobStorageService
 @inject IUserService userService
 @inject IJSRuntime jsRuntime
 @inject IConfiguration _config
+@inject IUserService userService
 @inject IReservoirService reservoirService
 @inject INotification _notificationService
 @inject ProtectedSessionStorage ProtectedSessionStore
+@inject IRACEIntegrationService _integrationService
+@inject IHttpClientFactory ClientFactory
 
 @attribute [Authorize]
 
 <PageTitle>Upload your statement - Send a supervising engineer's annual statement - GOV.UK</PageTitle>
-
 <HeaderWithBanner />
 
 <div class="govuk-width-container" style="min-height: 69vh;">
@@ -58,14 +64,13 @@
                             </div>
                             <div class="govuk-form-group govuk-form-group--error">
                                 <label class="govuk-label" for="file-upload">
-                                    <div class="govuk-heading-xl govuk-!-margin-bottom-5">
+                                    <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">
                                         Upload your statement
-                                    </div>
+                                    </h1>
                                 </label>
                                 <div id="file-upload-hint" class="govuk-hint">
                                     You can upload your statement as a PDF or Word document. It can be up to 30MB.
                                 </div>
-                                <br />
                                 @foreach (var error in ValidationErrors.Values)
                                 {
                                     <p id="file-upload-error" class="govuk-error-message">
@@ -78,17 +83,16 @@
                         {
                             <div class="govuk-form-group">
                                 <label class="govuk-label" for="file-upload">
-                                    <div class="govuk-heading-xl govuk-!-margin-bottom-5">Upload your statement</div>
+                                    <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">Upload your statement</h1>
                                 </label>
                                 <div id="file-upload-hint" class="govuk-hint">
                                     You can upload your statement as a PDF or Word document. It can be up to 30MB.
                                 </div>
-                                <br />
                             </div>
                         }
                         <InputFile id="file-upload" name="file-upload" class="govuk-file-upload" OnChange="OnInputFileChange" multiple />
-                        <p class="govuk-body" style="margin-top:25px;">We’ll check the statement when you upload it.</p>
-                        <p class="govuk-body">This could take up to 20 seconds.</p>
+                        <p class="govuk-body" style="margin-top:25px;">We'll check the statement to make sure it's safe to send.</p>
+                        <p class="govuk-body">This could take up to a minute.</p>
                         <button type="submit" draggable="false"
                                 class="govuk-button govuk-!-margin-top-6 govuk-!-margin-bottom-6 govuk-!-margin-right-4"
                                 data-module="govuk-button">
@@ -98,63 +102,28 @@
                 }
                 else
                 {
-                    @if (ValidationErrors.Count > 0)
-                    {
-                        <div class="govuk-error-summary" data-module="govuk-error-summary">
-                            <div role="alert">
-                                <h2 class="govuk-error-summary__title">
-                                    There is a problem
+                    <div class="govuk-form-group">
+                        <label class="govuk-label" for="file-upload">
+                            <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">Uploading your statement</h1>
+                        </label>
+                        <div class="upload-progress-container">
+                            @if (uploadPerc < 100)
+                            {
+                                <h2 style="font-size: 24pt; font-weight: 400; font-family: GDS Transport, arial, sans-serif; float:left;">
+                                    <img style="width:50px;height:50px;" src=@imageSourceProgress alt="Uploading file icon">
+                                    @uploadPerc% complete.
                                 </h2>
-                                @foreach (var error in ValidationErrors.Values)
-                                {
-                                    <div class="govuk-error-summary__body">
-                                        <ul class="govuk-list govuk-error-summary__list">
-                                            <li>
-                                                <a href="#">@error</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                }
-                            </div>
+                            }
+                            else
+                            {
+                                <h2 style="font-size: 24pt; font-weight: 400; font-family: GDS Transport, arial, sans-serif; float:left;">
+                                    <img style="width:50px;height:50px;" src=@imageSourceComplete alt="Uploading file icon">
+                                    100% complete.
+                                </h2>
+                            }
                         </div>
-                    }
-                    <div class="govuk-grid-row">
-                        <div class="govuk-form-group">
-                            <label class="govuk-label" for="file-upload-1">
-                                <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">Uploading your statement</h1>
-                            </label>
-                            <div class="upload-progress-container">
-                                @* <img class="upload-icon govuk-!-margin-top-3" src="images/upload file icon.svg" alt="Uploading file icon"> *@
-                                @if (uploadPerc < 100)
-                                {
-                                    <span style="font-size: 24pt; font-weight: 400; font-family: GDS Transport, arial, sans-serif; float:left;">
-                                        <img style="width:50px;height:50px;" src=@imageSourceProgress alt="Uploading file icon">
-                                        @uploadPerc% complete.
-                                    </span>
-                                }
-                                else
-                                {
-                                    <span style="font-size: 24pt; font-weight: 400; font-family: GDS Transport, arial, sans-serif; float:left;">
-                                        <img style="width:50px;height:50px;" src=@imageSourceComplete alt="Uploading file icon">
-                                        100% complete.
-                                    </span>
-                                }
-                            </div>
-                        </div>
-                    </div>
-                    @*                     <div class="govuk-panel govuk-panel--confirmation govuk-!-margin-top-9">
-                <div class="govuk-panel__title">
-                File upload in progress.
-                </div>
-                </div>
-                <p class="govuk-body">
-                This could take up to 20 seconds.<br /><br />
-                <div> Progress:<br /></div>
-                <div>
-                <progress max=@timeToWait value=@uploadTimeElapsed ></progress><span style="color:black;margin-left:10px;">@uploadPerc% complete</span>
-                </div>
-                </p>
-                *@                }
+                    </div>         
+                }
             </div>
         </div>
     </main>
@@ -166,7 +135,7 @@
     private bool FileUploadInProgress { get; set; } = false;
     private string _fileNameResult;
     public string fileExtn = String.Empty;
-    private string UserName { get; set; } = "Unknown";
+    private string UserEmail { get; set; } = "Unknown";
     private UserSpecificDto userDetails { get; set; }
     public string ReservoirName { get; set; } = default!;
     private IBrowserFile loadedFile;
@@ -194,9 +163,10 @@
         var reportSubmissionDataState = await ProtectedSessionStore.GetAsync<ReportSubmissionDataDto>("CurrentReportSubmissionData");
         reportSubmissionData = reportSubmissionDataState.Value;
 
-        AuthenticationState authState = await AuthenticationStateTask; // AuthenticationStateProvider.GetAuthenticationStateAsync();
-        UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
-        userDetails = await userService.GetUserByEmailID(UserName);
+        var authState = await AuthenticationStateTask;
+        var claims = authState.User.Claims.ToList();
+        UserEmail = claims.FirstOrDefault(c => c.Type.Equals(ClaimTypes.Email))?.Value;
+        userDetails = await userService.GetUserByEmailID(UserEmail);
         FileUploadInProgress = false;
         await InvokeAsync(() =>
         {
@@ -213,7 +183,7 @@
     {
         clearAllUploadFileSettings();
         uploadFileData.EmptyFileSize = long.Parse(_config["EmptyFileSizeLimit"]);
-        if (selectedFiles == null)
+        if ((selectedFiles == null) || (selectedFiles.Count() == 0))
         {
             NoFileSelected();
             await InvokeAsync(() =>
@@ -280,7 +250,7 @@
                     insertStatus.SubmittedDateTime = DateTime.UtcNow;
                     insertStatus.LastModifiedDateTime = DateTime.UtcNow;
                     insertStatus.RevisionSummary = savedReportSubmissionData.Value == null ? "" : savedReportSubmissionData.Value.ResubmitReason;
-                   // insertStatus.IsRevision = savedReportSubmissionData.Value == null ? false : true;
+                    // insertStatus.IsRevision = savedReportSubmissionData.Value == null ? false : true;
                     insertStatus.IsRevision = reportSubmissionData.SendResendValue == "Send" ? false : true;
                     insertStatus.SubmissionReference = reservoirService.GenerateSubmissionReference(Int32.Parse(reportSubmissionData.ReservoirId), insertStatus.SubmittedDateTime, insertStatus.ServiceId);
                     var trustedFileNameForFileStorage = insertStatus.SubmissionReference;
@@ -309,7 +279,7 @@
                         fileUploadViewModels.Add(fileUploadViewModel);
 
 
-                        var res = await reservoirService.InsertSubmissionDetails(insertStatus);
+                        //var res = await reservoirService.InsertSubmissionDetails(insertStatus);
                         // if (savedReportSubmissionData.Value.SendResendValue=="Send")
                         // {
                         //     updatedStatus = await reservoirService.UpdateReservoirStatus(Int32.Parse(reportSubmissionData.ReservoirId), userDetails.Id, "Sent", false, "");
@@ -339,41 +309,119 @@
 
                         var RSTEmailAddress = String.IsNullOrEmpty(_config["RSTEmailAddress"]) ? userDetails.Email : _config["RSTEmailAddress"];
                         var bytes = await blobStorageService.GetBlobAsByteArray(containerNameToDownloadFrom, trustedFileNameForFileStorage);
-                        // if (bytes == null)
-                        // {
-                        //     System.Threading.Thread.Sleep(5000);//wait for 5 more seconds
-                        //     bytes = await blobStorageService.GetBlobAsByteArray(containerNameToDownloadFrom, trustedFileNameForFileStorage);
-                        // }
-                        if (bytes != null)
+
+                        //try again up to 3 times to check if bytes is not null, waiting for 5 seconds each time
+                        if (bytes == null)
                         {
-                            await _notificationService.SendConfirmationMailtoSE(userDetails.Email, reportSubmissionData.ReservoirRegName);
-                            if (selectedFile.Size < uploadFileData.NotifyServiceFileAttachmentLimit)
+                            for (int i = 1; i < 4; i++)
                             {
-                                await _notificationService.SendConfirmationMailtoRST(RSTEmailAddress, reportSubmissionData.ReservoirRegName, bytes, userDetails.cFirstName + " " + userDetails.cLastName, reportSubmissionData.UndertakerName);
-                                if (reportSubmissionData.YesNoValue == "Yes")
+                                System.Threading.Thread.Sleep(5000);//wait for 5 more seconds
+                                bytes = await blobStorageService.GetBlobAsByteArray(containerNameToDownloadFrom, trustedFileNameForFileStorage);
+                                if (bytes != null)
                                 {
-                                    await _notificationService.SendConfirmationMailWithAttachment(bytes, reportSubmissionData.UndertakerEmail, reportSubmissionData.ReservoirRegName);
+                                    break;
+                                }
+                                else
+                                {
+                                    continue;
                                 }
                             }
-                            else
-                            {
-                                var internalEmail = _config["InternalEmailAddress"];
-                                await _notificationService.SendInternalMail(internalEmail, reportSubmissionData.ReservoirRegName, reportSubmissionData.UndertakerEmail, reportSubmissionData.YesNoValue);
-                            }
+                        }
+                        if (bytes != null)
+                        {
 
-                            //Check this.......
+                            //await _notificationService.SendConfirmationMailtoSE(userDetails.Email, reportSubmissionData.ReservoirRegName);
+                            // if (selectedFile.Size < uploadFileData.NotifyServiceFileAttachmentLimit)
+                            // {
+                            //     await _notificationService.SendConfirmationMailtoRST(RSTEmailAddress, reportSubmissionData.ReservoirRegName, bytes, userDetails.cFirstName + " " + userDetails.cLastName, reportSubmissionData.UndertakerName);
+                            //     if (reportSubmissionData.YesNoValueUndertaker == "Yes")
+                            //     {
+                            //         await _notificationService.SendConfirmationMailWithAttachment(bytes, reportSubmissionData.UndertakerEmail, reportSubmissionData.ReservoirRegName);
+                            //     }
+                            // }
+                            // else
+                            // {
+                            //     var internalEmail = _config["InternalEmailAddress"];
+                            //     await _notificationService.SendInternalMail(internalEmail, reportSubmissionData.ReservoirRegName, reportSubmissionData.UndertakerEmail, reportSubmissionData.YesNoValueUndertaker);
+                            // }
+
+                            var res = await reservoirService.InsertSubmissionDetails(insertStatus);
+
                             //Store the uploaded document information
                             documentDTO.SubmissionId = res.Id;
                             await reservoirService.InsertDocumentRelatedTable(Int32.Parse(reportSubmissionData.ReservoirId), res.Id, docID);
-                            Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Information("File upload succeeded.");
-                            uploadTimeElapsed++;
-                            uploadPerc = Convert.ToInt32((Convert.ToDouble(uploadTimeElapsed) / Convert.ToDouble(timeToWait)) * 100.0);
-                            StateHasChanged();
-                            System.Threading.Thread.Sleep(2000);
-                            goToNextPage();
+                            string undertakeremaillist = string.Empty;
+                            if (reportSubmissionData.YesNoValueUndertaker == "Yes")
+                            {
+                                reportSubmissionData.EmailListToSomeOne.Add(reportSubmissionData.UndertakerEmail);
+                            }
+                            if (reportSubmissionData.EmailListToSomeOne.Count > 0)
+                            {
+                                List<SubmissionEmailNotification> submissionEmailNotifications = new List<SubmissionEmailNotification>();
+                                foreach (var addr in reportSubmissionData.EmailListToSomeOne)
+                                {
+                                    SubmissionEmailNotification submissionEmailNotification = new SubmissionEmailNotification();
+                                    submissionEmailNotification.SubmissionStatusId = res.Id;
+                                    submissionEmailNotification.SubmissionStatus = res;
+                                    submissionEmailNotification.IsOverridePrimaryContact = false;
+                                    submissionEmailNotification.ContactType = "Undertaker";
+                                    submissionEmailNotification.Email = addr;
+                                    submissionEmailNotifications.Add(submissionEmailNotification);
+                                    undertakeremaillist += addr + ";";
+                                }
+                                await userService.InsertUndertakerEmails(submissionEmailNotifications);
+                            }
+                            Stream stream = new MemoryStream(bytes);
+                            AnnualSubmissionDocumentDetails uploadPayload = new AnnualSubmissionDocumentDetails();
+                            uploadPayload = _integrationService.GenerateSubmitPayloadJSON(userDetails.Id, insertStatus.SubmissionReference, undertakeremaillist, reportSubmissionData.BackEndReservoirId, reportSubmissionData.ReferenceNumber,
+                                stream, docID, selectedFile.Name, documentDTO.BlobStorageFileName, userDetails.Id, userDetails.BackEndPrimaryRef, userDetails.BackEndSecondaryRef);
+
+
+                            var _httpClient = ClientFactory.CreateClient("BackendAPI");
+                            var company = System.Text.Json.JsonSerializer.Serialize(uploadPayload, new System.Text.Json.JsonSerializerOptions
+                                {
+                                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+                                });
+                            var request = new HttpRequestMessage(HttpMethod.Post, "SubmitDocument/SubmitStatement");
+                            request.Headers.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                            request.Headers.Add("RACE_REST_API_KEY", _config["DocumentumAPIKey"]);
+                            Serilog.Log.Logger.ForContext("User", UserEmail).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Information("Documentum Payload ." + company);
+                            request.Content = new StringContent(company, Encoding.UTF8);
+                            //  request.Content = new StringContent(JsonConvert.SerializeObject(uploadPayload), Encoding.UTF8, "application/json");
+                            request.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+
+                            try
+                            {
+                                var response = await _httpClient.SendAsync(request);
+                                response.EnsureSuccessStatusCode();   
+                                await _notificationService.SendConfirmationMailtoSE(userDetails.Email, reportSubmissionData.ReservoirRegName);
+                                if (selectedFile.Size < uploadFileData.NotifyServiceFileAttachmentLimit)
+                                {
+                                    await _notificationService.SendConfirmationMailtoRST(RSTEmailAddress, reportSubmissionData.ReservoirRegName, bytes, userDetails.cFirstName + " " + userDetails.cLastName, reportSubmissionData.UndertakerName);                                
+                                }
+                                else
+                                {
+                                    var internalEmail = _config["InternalEmailAddress"];
+                                    await _notificationService.SendInternalMail(internalEmail, reportSubmissionData.ReservoirRegName, reportSubmissionData.UndertakerEmail, reportSubmissionData.YesNoValueUndertaker);
+                                }
+                                Serilog.Log.Logger.ForContext("User", UserEmail).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Information("File upload succeeded.");
+                                uploadTimeElapsed++;
+                                uploadPerc = Convert.ToInt32((Convert.ToDouble(uploadTimeElapsed) / Convert.ToDouble(timeToWait)) * 100.0);
+                                StateHasChanged();
+                                System.Threading.Thread.Sleep(2000);
+                                goToNextPage();                                
+                            }
+                            catch (Exception ex)
+                            {
+                                Serilog.Log.Logger.ForContext("User", UserEmail).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Error("GenerateSubmitPayloadJSON: Resulted in error " + ex.Message);
+                                bool forceLoad = true;
+                                string pagelink = "/ProblemWithService";
+                                NavigationManager.NavigateTo(pagelink, forceLoad);
+                            }                        
                         }
                         else
                         {
+                            FileUploadInProgress = false;
                             // bool cleanFile = false;
                             bool notScanned = false;
                             var containerNameforMaliciousFile = _config["MaliciousContainer"]; //"maliciousfiles";
@@ -385,8 +433,9 @@
                             //}
                             if (maliciousbytes != null)
                             {
-                                Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File infected by virus.");
+                                Serilog.Log.Logger.ForContext("User", UserEmail).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File infected by virus.");
                                 FileContainsVirus();
+                                uploadPerc = 0;
                                 await InvokeAsync(() =>
                                 {
                                     StateHasChanged();
@@ -408,7 +457,7 @@
                             }
                             if (notScanned)
                             {
-                                Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File not scanned for virus.");
+                                Serilog.Log.Logger.ForContext("User", UserEmail).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File not scanned for virus.");
                                 FileUploadFailed();
                                 //await reservoirService.UpdateReservoirStatus(Int32.Parse(reportSubmissionData.ReservoirId), userDetails.Id, "In progress",false,"");
 
@@ -431,7 +480,7 @@
                     }
                     else
                     {
-                        Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File upload failed.");
+                        Serilog.Log.Logger.ForContext("User", UserEmail).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File upload failed.");
                         FileUploadFailed();
                         //await reservoirService.UpdateReservoirStatus(Int32.Parse(reportSubmissionData.ReservoirId), userDetails.Id, "In progress",false,"");
                         await InvokeAsync(() =>
@@ -442,7 +491,7 @@
                 }
                 catch (Exception ex)
                 {
-                    Serilog.Log.Logger.ForContext("User", UserName).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File upload failed : " + ex.Message);
+                    Serilog.Log.Logger.ForContext("User", UserEmail).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Fatal("File upload failed : " + ex.Message);
                     FileUploadFailed();
                     //await reservoirService.UpdateReservoirStatus(Int32.Parse(reportSubmissionData.ReservoirId), userDetails.Id, "In progress",false,"");
                     await InvokeAsync(() =>

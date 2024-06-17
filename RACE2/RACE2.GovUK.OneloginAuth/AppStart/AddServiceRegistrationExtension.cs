@@ -41,7 +41,7 @@ namespace RACE2.GovUK.OneloginAuth.AppStart
             
             var connection = configuration.GetSection(nameof(GovUkOidcConfiguration)).Get<GovUkOidcConfiguration>();
             bool.TryParse(configuration["StubAuth"],out var stubAuth);
-            if ((stubAuth && configuration["ResourceEnvironmentName"].ToUpper() != "PRD") || string.IsNullOrEmpty(connection.GovLoginSessionConnectionString))
+            if ((stubAuth && configuration["ResourceEnvironmentName"].ToUpper() != "PRODUCTION") || string.IsNullOrEmpty(connection.GovLoginSessionConnectionString))
             {
                 services.AddDistributedMemoryCache();
             }

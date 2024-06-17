@@ -11,6 +11,7 @@
 @inject IConfiguration _config
 @inject NavigationManager NavigationManager
 @inject IUserService userService
+@inject ProtectedSessionStorage ProtectedSessionStore
 @attribute [Authorize]
 
 <PageTitle>System Admin - Statement sent - Send a supervising engineer's annual statement - GOV.UK</PageTitle>
@@ -45,7 +46,7 @@
                                 </label>
                                 <ValidationMessage For="() => emailModel.UserEmail" />
                                 <a id="email-error" style="text-decoration:none;">
-                                    <InputText @bind-Value="emailModel.UserEmail" class="govuk-input govuk-!-width-three-quarters" aria-required="true" aria-describedby="govGateUserId-hint" id="govGateUserEmail" name="govGateUserEmail"/>
+                                    <InputText @bind-Value="emailModel.UserEmail" class="govuk-input govuk-!-width-three-quarters" aria-required="true" aria-describedby="govGateUserId-hint" id="govGateUserEmail" name="govGateUserEmail" />
                                 </a>
                             </div>
                             <button type="submit" class="btn btn-success">
@@ -64,7 +65,7 @@
                                 </label>
                                 <ValidationMessage For="() => emailModel.UserEmail" />
                                 <a id="email-error" style="text-decoration:none;">
-                                    <InputText @bind-Value="emailModel.UserEmail" class="govuk-input govuk-!-width-three-quarters" aria-required="true" aria-describedby="govGateUserId-hint" id="govGateUsername" name="govGateUsername"/>
+                                    <InputText @bind-Value="emailModel.UserEmail" class="govuk-input govuk-!-width-three-quarters" aria-required="true" aria-describedby="govGateUserId-hint" id="govGateUsername" name="govGateUsername" />
                                 </a>
                             </div>
                             <button type="submit" class="btn btn-success">
@@ -77,7 +78,7 @@
                     </NavLink>
                 </nav>
             </div>
-         </div>
+        </div>
 
     </main>
 </div>
@@ -89,7 +90,7 @@
         [EmailAddress]
         public string UserEmail { get; set; }
     }
-    private string UserName { get; set; } = "Unknown";
+    private string UserEmail { get; set; } = "Unknown";
     private UserDetail UserDetail { get; set; } = default!;
     UserSpecificDto userDetails { get; set; }
     EmailModel emailModel { get; set; }
@@ -97,17 +98,16 @@
     private bool IsFirstTimeUser = false;
     private bool IsUserLockedOut = false;
     private string enabled = "hidden";
-    [CascadingParameter]
-    public Task<AuthenticationState> AuthenticationStateTask { get; set; }
+ 
     protected async override Task OnInitializedAsync()
     {
         emailModel = new EmailModel();
         emailModel.UserEmail = "kriss.sahoo@capgemini.com";
         enabled = "visible";
-        var authState = await AuthenticationStateTask;
-        UserName = authState.User.Claims.ToList().FirstOrDefault(c => c.Type == "name").Value;
+        var userEmailDataState = await ProtectedSessionStore.GetAsync<ReportSubmissionDataDto>("UserEmail");
+        UserEmail = userEmailDataState.Value.ToString();
 
-        userDetails = await userService.GetUserWithRoles(UserName);
+        userDetails = await userService.GetUserWithRoles(UserEmail);
         foreach (var role in userDetails.roles)
         {
             if (role.Name == "System Administrator")
@@ -161,5 +161,5 @@
         NavigationManager.NavigateTo(pagelink, forceLoad);
     }
 }
-    
+
 }

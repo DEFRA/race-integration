@@ -13,7 +13,7 @@ namespace RACE2.GovUK.OneloginAuth.AppStart
         {
             bool.TryParse(configuration["StubAuth"],out var stubAuth);
             services.AddServiceRegistration(configuration, customClaims);
-            if (stubAuth && configuration["ResourceEnvironmentName"].ToUpper() != "PRD")
+            if (stubAuth && configuration["ResourceEnvironmentName"].ToUpper() != "PRODUCTION")
             {
                 services.AddEmployerStubAuthentication(signedOutRedirectUrl.GetSignedOutRedirectUrl(configuration["ResourceEnvironmentName"]),
                     loginRedirect.GetStubSignInRedirectUrl(configuration["ResourceEnvironmentName"]),
@@ -22,8 +22,8 @@ namespace RACE2.GovUK.OneloginAuth.AppStart
             }
             else
             {
-                services.ConfigureGovUkAuthentication(configuration , signedOutRedirectUrl.GetSignedOutRedirectUrl(configuration["ResourceEnvironmentName"]),cookieDomain.GetEnvironmentAndDomain(configuration["ResourceEnvironmentName"]));
-                //services.ConfigureGovUkAuthentication(configuration, "https://localhost:5001/signout-callback-oidc", cookieDomain.GetEnvironmentAndDomain(configuration["ResourceEnvironmentName"]));
+                //services.ConfigureGovUkAuthentication(configuration , signedOutRedirectUrl.GetSignedOutRedirectUrl(configuration["ResourceEnvironmentName"]),cookieDomain.GetEnvironmentAndDomain(configuration["ResourceEnvironmentName"]));
+                services.ConfigureGovUkAuthentication(configuration, "https://oidc.integration.account.gov.uk/logout", "");
 
             }
 
