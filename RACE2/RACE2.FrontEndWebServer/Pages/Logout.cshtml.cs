@@ -12,6 +12,8 @@ using System.Net.Http;
 using Microsoft.Net.Http.Headers;
 using IdentityModel.Client;
 using System.Net.Http.Headers;
+using RACE2.GovUK.OneloginAuth.Configuration;
+using System.Configuration;
 
 namespace RACE2.FrontEndWebServer.Pages
 {
@@ -26,14 +28,14 @@ namespace RACE2.FrontEndWebServer.Pages
         {
             // just to remove compiler warning
             await Task.CompletedTask;
-
+            var govUkConfiguration = _configuration.GetSection(nameof(GovUkOidcConfiguration));
             var idToken = await HttpContext.GetTokenAsync("id_token");
             var accessToken = await HttpContext.GetTokenAsync("access_token");
             if (idToken != null)
             {
                 string post_logout_redirect_uri = _configuration["RACE2FrontEndURL"];
-                string LogoutAPIurl = "https://oidc.integration.account.gov.uk/logout?id_token_hint={0}&post_logout_redirect_uri={1}";  //&state=af0ifjsldkj
-
+                //  string LogoutAPIurl = "https://oidc.integration.account.gov.uk/logout?id_token_hint={0}&post_logout_redirect_uri={1}";  //&state=af0ifjsldkj
+                string LogoutAPIurl = govUkConfiguration["BaseUrl"] + "/logout?id_token_hint={0}&post_logout_redirect_uri={1}";
                 string requestUri = string.Format(LogoutAPIurl, idToken, post_logout_redirect_uri);
 
                 Serilog.Log.Logger.ForContext("User", requestUri).ForContext("Application", "FrontEndWebServer").ForContext("Method", "AnnualStatement").Information(post_logout_redirect_uri);
