@@ -7,7 +7,8 @@ trigger:
 - none
 pr:
 - none
-
+pool:
+   vmImage: ubuntu-latest
 resources:
 - repo: self
 
@@ -31,14 +32,14 @@ stages:
       - task: JavaToolInstaller@0
         displayName: "Install JAVA for SonarCloud"
         inputs:
-          versionSpec: '17'
+          versionSpec: '21'
           jdkArchitectureOption: 'x64'
           jdkSourceOption: AzureStorage
           azureResourceManagerEndpoint: AZR-RAC-POC1
           azureStorageAccountName: pocacinfst1401
           azureContainerName: java
-          azureCommonVirtualFile: 'microsoft-jdk-17.0.9-windows-x64.zip'
-          jdkDestinationDirectory: '$(agent.toolsDirectory)/jdk17'
+          azureCommonVirtualFile: 'openlogic-openjdk-21.0.3+9-windows-x64.zip'
+          jdkDestinationDirectory: '$(agent.toolsDirectory)/jdk21'
           cleanDestinationDirectory: false
 
       - task: DotNetCoreCLI@2
