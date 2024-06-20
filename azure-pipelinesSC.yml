@@ -46,6 +46,7 @@ stages:
         inputs:
          packageType: sdk
          version: 8.0.302
+
       - task: DotNetCoreCLI@2
         displayName: 'Restore Projects'
         inputs:
