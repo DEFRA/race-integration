@@ -14,7 +14,7 @@ resources:
 
 
 variables:
-  projects: '**/*.csproj'
+  projects: '**/RACE2.FrontEndWebServer.csproj'
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
@@ -51,7 +51,7 @@ stages:
         displayName: 'Restore Projects'
         inputs:
           command: restore
-          projects: '$(projects)'
+          projects: '$(projects)'          
 
       - task: SonarCloudPrepare@1
         displayName: "Sonar Cloud Prepare"
