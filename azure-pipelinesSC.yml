@@ -14,7 +14,7 @@ resources:
 
 
 variables:
-  projects: '**/RACE2.FrontEndWebServer.csproj'
+  projects: '**/RACE2.BackendAPIIntegration.csproj'
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
@@ -65,6 +65,10 @@ stages:
            sonar.test.exclusions=**/obj/**,**/*.dll,**/Srabpi.Tests/**
             sonar.cs.vscoveragexml.reportsPaths=$(coverageReportPath)
             $(additionalSonarParams)
+      - task: UseDotNet@2
+        inputs:
+         packageType: sdk
+         version: 8.0.301
 
       - task: DotNetCoreCLI@2
         displayName: 'Build Projects'
