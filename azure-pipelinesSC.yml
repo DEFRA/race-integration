@@ -42,6 +42,10 @@ stages:
           jdkDestinationDirectory: '$(agent.toolsDirectory)/jdk21'
           cleanDestinationDirectory: false
 
+      - task: UseDotNet@2
+        inputs:
+         packageType: sdk
+         version: 8.0.302
       - task: DotNetCoreCLI@2
         displayName: 'Restore Projects'
         inputs:
