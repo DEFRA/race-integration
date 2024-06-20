@@ -65,6 +65,10 @@ stages:
            sonar.test.exclusions=**/obj/**,**/*.dll,**/Srabpi.Tests/**
             sonar.cs.vscoveragexml.reportsPaths=$(coverageReportPath)
             $(additionalSonarParams)
+      - task: UseDotNet@2
+        inputs:
+         packageType: sdk
+         version: 8.0.302
 
       - task: DotNetCoreCLI@2
         displayName: 'Build Projects'
