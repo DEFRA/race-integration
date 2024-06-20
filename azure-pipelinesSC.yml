@@ -1,0 +1,68 @@
+# ASP.NET
+# Build and test ASP.NET projects.
+# Add steps that publish symbols, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
+
+trigger:
+- none
+pr:
+- none
+
+resources:
+- repo: self
+
+
+variables:
+  projects: '**/*.csproj'
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+  subscription: 'AZR-RAC-POC1'
+  artifactName: 'defrarace2'
+
+stages:
+- stage: build_projects
+  jobs:
+    - job: build
+      steps:
+      - checkout: self  # self represents the repo where this pipeline resides.  added by Mikey
+        fetchDepth: 0   # Indicates a full clone. added by Mikey
+            
+      - task: JavaToolInstaller@0
+        displayName: "Install JAVA for SonarCloud"
+        inputs:
+          versionSpec: '17'
+          jdkArchitectureOption: 'x64'
+          jdkSourceOption: AzureStorage
+          azureResourceManagerEndpoint: AZR-RAC-POC1
+          azureStorageAccountName: pocacinfst1401
+          azureContainerName: java
+          azureCommonVirtualFile: 'microsoft-jdk-17.0.9-windows-x64.zip'
+          jdkDestinationDirectory: '$(agent.toolsDirectory)/jdk17'
+          cleanDestinationDirectory: false
+
+      - task: DotNetCoreCLI@2
+        displayName: 'Restore Projects'
+        inputs:
+          command: restore
+          projects: '$(projects)'
+
+      - task: SonarCloudPrepare@1
+        displayName: "Sonar Cloud Prepare"
+        inputs:
+          SonarCloud: 'defra-sonarcloud'
+          organization: 'defra'
+          scannerMode: 'MSBuild'
+          projectKey: 'DEFRA_race-integration'
+          projectName: 'RACE2'
+          extraProperties: |
+           sonar.test.exclusions=**/obj/**,**/*.dll,**/Srabpi.Tests/**
+            sonar.cs.vscoveragexml.reportsPaths=$(coverageReportPath)
+            $(additionalSonarParams)
+
+      - task: DotNetCoreCLI@2
+        displayName: 'Build Projects'
+        inputs:
+          projects: '$(projects)'
+          arguments: '--configuration $(buildConfiguration)'
+          
