@@ -141,7 +141,7 @@
                                     @if (String.IsNullOrEmpty(EmailAddresses[0]))
                                     {
                                         <p id="email-error" class="govuk-error-message">
-                                            <span class="govuk-visually-hidden">Error:</span> Enter an email address in the correct format, like name@example.com
+                                            <span class="govuk-visually-hidden">Error:</span> Enter an email address
                                         </p>
                                         <InputText class="govuk-input" style="border-color:#d4351c;" id="email1" name="email1" autocomplete="email1" @bind-Value="@EmailAddresses[0]">
                                         </InputText>
@@ -297,7 +297,7 @@
         ValidationErrors.Clear();
         if (String.IsNullOrEmpty(EmailAddresses[0]))
         {
-            ValidationErrors.Add("email1", "Enter an email address in the correct format, like name@example.com");
+            ValidationErrors.Add("email1", "Enter an email address");
         }
         if (!String.IsNullOrEmpty(EmailAddresses[0]) && !IsValid(EmailAddresses[0]))
         {
