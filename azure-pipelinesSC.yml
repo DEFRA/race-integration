@@ -14,7 +14,7 @@ resources:
 
 
 variables:
-  projects: '**/RACE2.FrontEndWebServer.csproj'
+  projects: '**/RACE2.BackendAPIIntegration.csproj'
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
