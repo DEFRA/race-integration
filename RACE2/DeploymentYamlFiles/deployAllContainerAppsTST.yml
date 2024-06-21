@@ -49,15 +49,7 @@ stages:
         repository: ${{ variables.repository_webapi }}
         dockerfile: ${{ variables.dockerfile_webapi }}
         containerRegistry: ${{ variables.containerRegistry }}
-        tags: ${{ variables.tag }}   
-    - task: Docker@2
-      displayName: Build and push an image - WebApiExternal
-      inputs:
-        command: buildAndPush
-        repository: ${{ variables.repository_webapiexternal }}
-        dockerfile: ${{ variables.dockerfile_webapiexternal }}
-        containerRegistry: ${{ variables.containerRegistry }}
-        tags: ${{ variables.tag }}       
+        tags: ${{ variables.tag }}  
     - task: Docker@2
       displayName: Build and push an image - FrontEndWebServer
       inputs:
