@@ -63,7 +63,7 @@ namespace RACE2.Dto
         public string? nextInspectionDate { get; set; }
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string? expectedNextStatementDate { get; set; }
-        public string[] notificationEmailAddresses { get; set; }
+        public string[] notificationEmailAddresses { get; set; } = new string[0];
     }
 
     public class reservoir
