@@ -53,7 +53,7 @@ stages:
           command: restore
           projects: '$(projects)'          
 
-      - task: SonarCloudPrepare@1
+      - task: SonarCloudPrepare@2
         displayName: "Sonar Cloud Prepare"
         inputs:
           SonarCloud: 'AZR-RAC-POC-SonarCloud'
@@ -75,4 +75,10 @@ stages:
         inputs:
           projects: '$(projects)'
           arguments: '--configuration $(buildConfiguration)'
+      - task: SonarCloudAnalyze@2
+
+# Publish Quality Gate Result task
+      - task: SonarCloudPublish@2
+        inputs:
+         pollingTimeoutSec: '300'
           
