@@ -33,7 +33,7 @@ namespace RACE2.DataAccess.Repository
         }
        
 
-        public async Task<IntegrationResponseModel> SubmitDocumentToBackend(AnnualSubmissionDocumentDetails submitS12Statement)
+        public async Task<IntegrationResponseModel> SubmitDocumentToBackend(AnnualSubmissionDocumentDetails submitStatement)
         {
 
             IntegrationResponseModel integrationResponseModel = new IntegrationResponseModel();
@@ -47,7 +47,7 @@ namespace RACE2.DataAccess.Repository
                 //};
 
                 string uploadPayloadJson =
-                    System.Text.Json.JsonSerializer.Serialize(submitS12Statement,new JsonSerializerOptions
+                    System.Text.Json.JsonSerializer.Serialize(submitStatement, new JsonSerializerOptions
                     {
                         DefaultIgnoreCondition =JsonIgnoreCondition.WhenWritingNull
                     });

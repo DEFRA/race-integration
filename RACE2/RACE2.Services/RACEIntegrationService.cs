@@ -16,10 +16,10 @@ namespace RACE2.Services
         {
             _IntegrationRepository = integrationRepository;
         }
-        public async Task<IntegrationResponseModel> GetEngineerReservoirByUUID(string uuid)
-        {
-            return await _IntegrationRepository.GetEngineerReservoirByUUID(uuid);
-        }
+        //public async Task<IntegrationResponseModel> GetEngineerReservoirByUUID(string uuid)
+        //{
+        //    return await _IntegrationRepository.GetEngineerReservoirByUUID(uuid);
+        //}
 
         public async Task<IntegrationResponseModel> SubmitDocumentToBackend(AnnualSubmissionDocumentDetails submitS12Statement)
         {
