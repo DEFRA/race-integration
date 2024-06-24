@@ -11,18 +11,14 @@
     "azureTenanatId": {
       "value": "770a2450-0227-4c62-90c7-4e38537f1102"
     },
-    "managedidentity": {
-      "value": "POCRACINFMI1401"
-    },
+
     "race2appenvName": {
       "value": "POCRACINFAE1402"
     },
     "aspnetCoreEnv": {
       "value": "Production"
     },
-    "appConfigURL": {
-      "value": "https://pocracinfac1401.azconfig.io/"
-    },
+  
     "registryName": {
       "value": "POCRACINFCR1403"
     },

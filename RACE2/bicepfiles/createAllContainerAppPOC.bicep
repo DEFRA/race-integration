@@ -3,8 +3,6 @@ param location string
 param resourcegroup string
 param managedidentity string
 param race2appenvName string
-param webApiContainerAppName string
-param webapicontainerImage string
 param backendapiintegrationContainerAppName string
 param backendapiintegrationcontainerImage string
 param frontEndWebServerContainerAppName string
