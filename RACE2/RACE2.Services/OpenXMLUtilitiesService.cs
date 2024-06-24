@@ -52,7 +52,8 @@ namespace RACE2.Services
                 var tagList = new S12ReportTemplateTags().Tags;
                 foreach (var tag in tagList)
                 {
-                    Regex tagVal = new Regex(tag);
+                    Regex tagVal = new Regex(tag, RegexOptions.NonBacktracking);
+                    AppDomain.CurrentDomain.SetData("REGEX_DEFAULT_MATCH_TIMEOUT", TimeSpan.FromMilliseconds(100));
                     switch (tag)
                     {
                         case "{Reservoir name}":                            
@@ -116,7 +117,7 @@ namespace RACE2.Services
                 //docText = regexText.Replace(docText, reservoirName);
                 //Regex regexText1 = new Regex("Supervising Engineer Name");
                 //docText = regexText1.Replace(docText, userName);
-                Regex regexText = new Regex("Statement Date");
+                Regex regexText = new Regex("Statement Date", RegexOptions.NonBacktracking);
                 docText = regexText.Replace(docText, DateTime.Now.ToShortDateString());
 
                 using (StreamWriter sw = new StreamWriter(wordDoc.MainDocumentPart.GetStream(FileMode.Create)))

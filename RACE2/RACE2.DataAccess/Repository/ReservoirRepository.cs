@@ -330,7 +330,7 @@ namespace RACE2.DataAccess.Repository
         }
 
 
-        public async Task<SubmissionStatus> UpdateReservoirStatus(int reservoirid, int userid, string reportStatus, bool isRevision, string revisionSummary)
+        public async Task<SubmissionStatus> UpdateReservoirStatus(int reservoirid, int userid, string reportStatus, bool IsRevision, string revisionSummary)
         {
             _logger.LogInformation("Updating reservoir status for the reservoir  {reservoirid} by the {userid}  ", reservoirid, userid);
             try
@@ -342,7 +342,7 @@ namespace RACE2.DataAccess.Repository
                     parameters.Add("reservoirid", reservoirid, DbType.Int64);
                     parameters.Add("userid", userid, DbType.Int64);
                     parameters.Add("reportStatus", reportStatus, DbType.String);
-                    parameters.Add("isRevision", isRevision, DbType.Boolean);
+                    parameters.Add("isRevision", IsRevision, DbType.Boolean);
                     parameters.Add("revisionSummary", revisionSummary, DbType.String);
                     if (reservoirid != 0)
                     {
@@ -414,9 +414,9 @@ namespace RACE2.DataAccess.Repository
         }
 
 
-        public async Task<int> UpdateScannedDocumentResult(DateTime scanneddatetime, bool isClean, string uploadblobpath, string blobStorageFileName)
+        public async Task<int> UpdateScannedDocumentResult(DateTime scanneddatetime, bool isClean, string uploadblobpath, string documentName)
         {
-            _logger.LogInformation("Updating scan result for the reservoir  {documentName}  ", blobStorageFileName);
+            _logger.LogInformation("Updating scan result for the reservoir  {documentName}  ", documentName);
             try
             {
 
@@ -426,8 +426,8 @@ namespace RACE2.DataAccess.Repository
                     parameters.Add("scannedtime", scanneddatetime, DbType.DateTime);
                     parameters.Add("isClean", isClean, DbType.Boolean);
                     parameters.Add("uploadBlobpath", uploadblobpath, DbType.String);
-                    parameters.Add("documentName", blobStorageFileName, DbType.String);
-                    if (blobStorageFileName != null)
+                    parameters.Add("documentName", documentName, DbType.String);
+                    if (documentName != null)
                     {
 
                         await conn.ExecuteAsync("sp_UpdateScannedDocumentResult", parameters, commandType: CommandType.StoredProcedure);
@@ -436,7 +436,7 @@ namespace RACE2.DataAccess.Repository
                     }
                     else
                     {
-                        _logger.LogInformation("The input is not valid {documentName}", blobStorageFileName);
+                        _logger.LogInformation("The input is not valid {documentName}", documentName);
                         return 0;
                     }
 
@@ -776,7 +776,7 @@ namespace RACE2.DataAccess.Repository
             }
         }
 
-        public async Task<int> UpdateReservoirDetailsFromExtract(Reservoir updatedReservoir)
+        public async Task<int> UpdateReservoirDetailsFromExtract(Reservoir reservoir)
         {
             _logger.LogInformation("Updating Action channge History");
             try
@@ -785,13 +785,13 @@ namespace RACE2.DataAccess.Repository
                 using (var conn = Connection)
                 {
                     var parameters = new DynamicParameters();
-                    parameters.Add("@reservoirid", updatedReservoir.Id);
-                    parameters.Add("@reservoirName", updatedReservoir.RegisteredName);
-                    parameters.Add("@gridreference", updatedReservoir.GridReference);
-                    parameters.Add("@nearesttown", updatedReservoir.NearestTown);
-                    parameters.Add("@lastinspectiondate", updatedReservoir.LastInspectionDate);
-                    parameters.Add("@lastcertificationdate", updatedReservoir.LastCertificationDate);
-                    parameters.Add("@nextinspectiondate102", updatedReservoir.NextInspectionDate102);
+                    parameters.Add("@reservoirid", reservoir.Id);
+                    parameters.Add("@reservoirName", reservoir.RegisteredName);
+                    parameters.Add("@gridreference", reservoir.GridReference);
+                    parameters.Add("@nearesttown", reservoir.NearestTown);
+                    parameters.Add("@lastinspectiondate", reservoir.LastInspectionDate);
+                    parameters.Add("@lastcertificationdate", reservoir.LastCertificationDate);
+                    parameters.Add("@nextinspectiondate102", reservoir.NextInspectionDate102);
                     var result = await conn.ExecuteAsync("sp_UpdateReservoirDetailsFromExtract", parameters, commandType: CommandType.StoredProcedure);
                     return 1;
                 }
