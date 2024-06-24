@@ -61,10 +61,8 @@ stages:
           scannerMode: 'MSBuild'
           projectKey: 'DEFRA_race-integration'
           projectName: 'RACE2'
-          extraProperties: |
-           sonar.test.exclusions=**/obj/**,**/*.dll,**/Srabpi.Tests/**
-            sonar.cs.vscoveragexml.reportsPaths=$(coverageReportPath)
-            $(additionalSonarParams)
+          extraProperties: 'sonar.scm.exclusions.disabled=true'
+            
       - task: UseDotNet@2
         inputs:
          packageType: sdk
