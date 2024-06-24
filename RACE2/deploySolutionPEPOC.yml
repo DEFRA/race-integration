@@ -11,10 +11,7 @@ resources:
 - repo: self
 
 variables: 
-  - name: repository_webapi
-    value: 'race2webapi'
-  - name: dockerfile_webapi
-    value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_WebApi'  
+
   - name: repository_frontendwebserver
     value: 'race2frontendwebserver'
   - name: dockerfile_frontendwebserver
@@ -32,9 +29,9 @@ variables:
   - name: resourceGroupName
     value: 'POCRACINFRG1401'
   - name: templateFile
-    value: '$(Build.SourcesDirectory)/RACE2/bicepfiles/createAllContainerApps.bicep'
+    value: '$(Build.SourcesDirectory)/RACE2/bicepfiles/createAllContainerAppPOC.bicep'
   - name: parameterfile
-    value: '$(Build.SourcesDirectory)/RACE2/DeploymentYamlFiles/deployAllContainerAppsParametersPOC.json'
+    value: '$(Build.SourcesDirectory)/RACE2/DeploymentYamlFiles/deployContainerAppsPOCParameter.json'
 
 stages:
 - stage: BuildAndPush

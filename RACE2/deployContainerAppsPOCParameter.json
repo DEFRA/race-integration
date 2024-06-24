@@ -1,0 +1,61 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "resourcegroup": {
+      "value": "POCRACINFRG1402"
+    },
+    "location": {
+      "value": "uksouth"
+    },
+    "azureTenanatId": {
+      "value": "770a2450-0227-4c62-90c7-4e38537f1102"
+    },
+    "managedidentity": {
+      "value": "POCRACINFMI1401"
+    },
+    "race2appenvName": {
+      "value": "POCRACINFAE1402"
+    },
+    "aspnetCoreEnv": {
+      "value": "Production"
+    },
+    "appConfigURL": {
+      "value": "https://pocracinfac1401.azconfig.io/"
+    },
+    "registryName": {
+      "value": "POCRACINFCR1403"
+    },
+    "useExternalIngress": {
+      "value": true
+    },
+    "containerPort": {
+      "value": 8080
+    },
+    "minReplicas": {
+      "value": 1
+    },
+    "maxReplicas": {
+      "value": 1
+    },
+    "transport": {
+      "value": "http"
+    },
+    "allowInsecure": {
+      "value": false
+    },
+    "frontEndWebServerContainerAppName": {
+      "value": "race2frontendwebserver"
+    },
+  
+    "backendapiintegrationContainerAppName": {
+      "value": "race2backendapiintegration"
+    },
+    "frontendwebservercontainerImage": {
+      "value": "pocracinfcr1403.azurecr.io/race2frontendwebserver"
+    },
+     "backendapiintegrationcontainerImage": {
+      "value": "pocracinfcr1403.azurecr.io/race2backendapiintegration"
+    }
+  }
+}

@@ -516,8 +516,16 @@ namespace RACE2.DataAccess.Repository
                     var userresult = await conn.QueryAsync<UserSpecificDto>("sp_GetUserWithRoles", parameters, commandType: CommandType.StoredProcedure);
                     UserSpecificDto authorisedUser = new UserSpecificDto();
                     authorisedUser = userresult.FirstOrDefault();
-                    authorisedUser.IsValiduser = validuser;
-                    return authorisedUser;
+                    if (authorisedUser != null)
+                    {
+                        authorisedUser.IsValiduser = validuser;
+                        return authorisedUser;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                    
                     
                 }
             }
@@ -547,7 +555,7 @@ namespace RACE2.DataAccess.Repository
                         var result = await conn.ExecuteAsync("sp_InsertUndertakerEmails", parameters, commandType: CommandType.StoredProcedure);
                     }
 
-                    return 1;
+                    return 1;   
 
                 }
             }
