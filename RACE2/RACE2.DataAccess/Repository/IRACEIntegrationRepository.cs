@@ -10,7 +10,7 @@ namespace RACE2.DataAccess.Repository
 {
     public interface IRACEIntegrationRepository
     {
-        public Task<IntegrationResponseModel> GetEngineerReservoirByUUID(string uuid);
+       // public Task<IntegrationResponseModel> GetEngineerReservoirByUUID(string uuid);
 
         public Task<IntegrationResponseModel> SubmitDocumentToBackend(AnnualSubmissionDocumentDetails submitWrittenStatement);
 
