@@ -6,7 +6,6 @@ using Microsoft.Extensions.Configuration;
 using Azure.Identity;
 using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using Microsoft.EntityFrameworkCore;
-using RACE2.BackendAPIIntegration.Data;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.MSSqlServer;
@@ -92,7 +91,6 @@ builder.Services.AddTransient<IRACEIntegrationRepository, RACEIntegrationReposit
 builder.Services.AddTransient<IRACEIntegrationService, RACEIntegrationService>();
 
 var connectionString = builder.Configuration["SqlConnectionString"];
-builder.Services.AddDbContext<Pocracinfdb1402Context>(option => option.UseSqlServer(connectionString));
 
 var app = builder.Build();
 

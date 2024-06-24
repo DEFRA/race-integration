@@ -143,9 +143,17 @@ namespace RACE2.DataAccess.Repository
             string reservoirreferencenumber,Stream filestream,int documentid,string uploadfilename,string blobstoragefilename, int engineerid,string backendprimaryref,string backendsecondref)
         {
             try
-            {
-                _logger.LogInformation("Adding Submission Payload");
+             {
                 AnnualSubmissionDocumentDetails uploadPayload = new AnnualSubmissionDocumentDetails();
+                string[] emailarray;
+                if (!string.IsNullOrEmpty(notificationemailaddress))
+                {
+                    emailarray = notificationemailaddress.Split(';');
+                    uploadPayload.writtenStatement.notificationEmailAddresses = emailarray;
+                }
+
+                _logger.LogInformation("Adding Submission Payload");
+                
                 //submission detaile
                 uploadPayload.submission.statusId = 1;
                 uploadPayload.submission.reference = submissionreference;
@@ -165,7 +173,7 @@ namespace RACE2.DataAccess.Repository
                 uploadPayload.writtenStatement.recommendInspectionS10 = true;
                 uploadPayload.writtenStatement.nextInspectionDate = null;
                 uploadPayload.writtenStatement.expectedNextStatementDate = null;
-                uploadPayload.writtenStatement.notificationEmailAddresses = notificationemailaddress;
+                //uploadPayload.writtenStatement.notificationEmailAddresses = emailarray;
 
                 _logger.LogInformation("Adding Reservoir Details Payload");
                 //reservoir details

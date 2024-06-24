@@ -378,6 +378,7 @@
 
 
                             var _httpClient = ClientFactory.CreateClient("BackendAPI");
+                            Serilog.Log.Logger.ForContext("User", UserEmail).ForContext("Application", "FrontEndWebServer").ForContext("Method", "UploadS12Report OnUploadSubmit").Information("Httpclient ." + _httpClient);
                             var company = System.Text.Json.JsonSerializer.Serialize(uploadPayload, new System.Text.Json.JsonSerializerOptions
                                 {
                                     DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull

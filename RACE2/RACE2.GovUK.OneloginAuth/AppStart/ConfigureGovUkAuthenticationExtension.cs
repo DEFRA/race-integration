@@ -38,7 +38,7 @@ namespace RACE2.GovUK.OneloginAuth.AppStart
                 .AddOpenIdConnect(options =>
                 {
                     var govUkConfiguration = configuration.GetSection(nameof(GovUkOidcConfiguration));
-
+                    IdentityModelEventSource.ShowPII = true;
                     options.SignInScheme=CookieAuthenticationDefaults.AuthenticationScheme;
                     options.ClientId = govUkConfiguration["ClientId"];
                     options.MetadataAddress = $"{govUkConfiguration["BaseUrl"]}/.well-known/openid-configuration";

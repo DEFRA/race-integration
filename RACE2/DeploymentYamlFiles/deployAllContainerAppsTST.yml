@@ -50,7 +50,6 @@ stages:
         dockerfile: ${{ variables.dockerfile_webapi }}
         containerRegistry: ${{ variables.containerRegistry }}
         tags: ${{ variables.tag }}   
-       
     - task: Docker@2
       displayName: Build and push an image - FrontEndWebServer
       inputs:
