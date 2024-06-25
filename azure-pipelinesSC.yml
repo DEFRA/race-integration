@@ -14,8 +14,8 @@ resources:
 
 
 variables:
-  projects: '**/RACE2.BackendAPIIntegration.csproj'
-  solution: '**/*.sln'
+  projects: '**/RACE2.sln'
+  solution: '**/RACE2.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
   subscription: 'AZR-RAC-POC1'
@@ -62,9 +62,9 @@ stages:
           projectKey: 'DEFRA_race-integration'
           projectName: 'RACE2'
           extraProperties: |
-           'sonar.scm.exclusions.disabled=true' 
+           'sonar.scm.exclusions.disabled=true
            sonar.cs.xunit.reportsPaths=${Agent.TempDirectory}/**/XUnit.TestResults.xml 
-           sonar.cs.opencover.reportsPaths=${Agent.TempDirectory}/**/opencoverCoverage.xml
+           sonar.cs.opencover.reportsPaths=${Agent.TempDirectory}/**/opencoverCoverage.xml'
           
             
       - task: UseDotNet@2
