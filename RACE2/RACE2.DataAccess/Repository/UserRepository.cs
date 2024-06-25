@@ -523,7 +523,7 @@ namespace RACE2.DataAccess.Repository
                     }
                     else
                     {
-                        return null;
+                        return new UserSpecificDto();
                     }
                     
                     
