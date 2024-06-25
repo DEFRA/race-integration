@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>1848e2a0-0cdd-4cb3-84fe-111dc7d0427d</UserSecretsId>
+	  <ProjectGuid>{AF043A5F-EA29-46DD-B64D-78EAB808A4DD}</ProjectGuid>
   </PropertyGroup>
 
   <ItemGroup>
