@@ -14,8 +14,8 @@ resources:
 
 
 variables:
-  projects: '**/RACE2.FrontEndWebServer.csproj'
-  solution: '**/*.sln'
+  projects: '**/*.csproj'
+  solution: '**/RACE2.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
   subscription: 'AZR-RAC-POC1'
@@ -63,6 +63,7 @@ stages:
           projectName: 'RACE2'
           extraProperties: |
            'sonar.scm.exclusions.disabled=true
+           sonar.exclusions=**/obj/**,**/*.dll
            sonar.cs.xunit.reportsPaths=${Agent.TempDirectory}/**/XUnit.TestResults.xml 
            sonar.cs.opencover.reportsPaths=${Agent.TempDirectory}/**/opencoverCoverage.xml'
           
