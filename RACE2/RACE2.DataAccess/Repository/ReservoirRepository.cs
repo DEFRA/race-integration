@@ -390,18 +390,13 @@ namespace RACE2.DataAccess.Repository
                     //parameters.Add("documentName",document.DocumentName,DbType.String);
                     parameters.Add("blobStorageFileName", document.BlobStorageFileName, DbType.String);
                     parameters.Add("newid", dbType: DbType.Int32, direction: ParameterDirection.Output);
-                    if (document != null)
-                    {
+                   
                         result = await conn.ExecuteAsync("sp_InsertDocumentUpload", parameters, commandType: CommandType.StoredProcedure);
                         var id = parameters.Get<int>("newid");
                         return id;
 
-                    }
-                    else
-                    {
-                        _logger.LogInformation("The input is not valid ");
-                        return result;
-                    }
+                       
+                    
 
 
                 }
