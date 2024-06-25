@@ -15,7 +15,7 @@ resources:
 
 variables:
   projects: '**/RACE2.BackendAPIIntegration.sln'
-  solution: '**/RACE2.BackendAPIIntegration.sln'
+  solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
   subscription: 'AZR-RAC-POC1'
