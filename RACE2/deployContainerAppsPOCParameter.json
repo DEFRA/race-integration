@@ -22,9 +22,9 @@
     },
      "appConfigURL": {
     "value": "https://pocracinfac1403.azconfig.io"
-    },  
+    },
     "registryName": {
-      "value": "POCRACINFCR1403"
+      "value": "pocracinfcr1403"
     },
     "useExternalIngress": {
       "value": true
