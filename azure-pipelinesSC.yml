@@ -61,7 +61,8 @@ stages:
           scannerMode: 'MSBuild'
           projectKey: 'DEFRA_race-integration'
           projectName: 'RACE2'
-          extraProperties: 'sonar.scm.exclusions.disabled=true'
+          extraProperties: 'sonar.scm.exclusions.disabled=true' 
+          
             
       - task: UseDotNet@2
         inputs:
@@ -73,6 +74,11 @@ stages:
         inputs:
           projects: '$(projects)'
           arguments: '--configuration $(buildConfiguration)'
+      - task: DotNetCoreCLI@2
+        inputs:
+         command: 'test'
+         projects: 'tests/**/*.csproj'
+         arguments: '--collect "Code Coverage"'
       - task: SonarCloudAnalyze@2
 
 # Publish Quality Gate Result task
