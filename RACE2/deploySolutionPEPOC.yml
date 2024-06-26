@@ -21,13 +21,13 @@ variables:
   - name: dockerfile_backendapiintegration
     value: '$(Build.SourcesDirectory)/RACE2/Dockerfile_BackendAPIIntegration'  
   - name: containerRegistry
-    value: 'AZR-RAC-POC1-ACR'
+    value: 'AZR-RAC-POC1-ACR3'
   - name: tag
     value: '$(Build.BuildId)'
   - name: azureServiceConnection
     value: 'AZR-RAC-POC1'
   - name: resourceGroupName
-    value: 'POCRACINFRG1401'
+    value: 'POCRACINFRG1402'
   - name: templateFile
     value: '$(Build.SourcesDirectory)/RACE2/bicepfiles/createAllContainerAppPOC.bicep'
   - name: parameterfile
