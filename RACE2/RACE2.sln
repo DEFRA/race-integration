@@ -203,6 +203,26 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DeploymentYamlFiles", "Depl
 		DeploymentYamlFiles\manifest.json = DeploymentYamlFiles\manifest.json
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AddConfigFilesValues", "AddConfigFilesValues", "{C8B969A0-5808-41E1-868E-152B07AC9E01}"
+	ProjectSection(SolutionItems) = preProject
+		C:\Users\maalagar\Downloads\AddConfigValuesMaha\AddConfigValuesMaha\pipeline.yaml = C:\Users\maalagar\Downloads\AddConfigValuesMaha\AddConfigValuesMaha\pipeline.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "config", "config", "{86907009-BCD3-4468-BE82-9E8D623337C6}"
+	ProjectSection(SolutionItems) = preProject
+		C:\Users\maalagar\Downloads\AddConfigValuesMaha\AddConfigValuesMaha\config\Development-app-config.json = C:\Users\maalagar\Downloads\AddConfigValuesMaha\AddConfigValuesMaha\config\Development-app-config.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "featureflags", "featureflags", "{9898CA9F-1D23-489B-AD81-2AFA1B99AAA3}"
+	ProjectSection(SolutionItems) = preProject
+		C:\Users\maalagar\Downloads\AddConfigValuesMaha\AddConfigValuesMaha\featureflags\Development-featureflags.json = C:\Users\maalagar\Downloads\AddConfigValuesMaha\AddConfigValuesMaha\featureflags\Development-featureflags.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "secretrefs", "secretrefs", "{ADAD0F7C-3FEC-4730-B54F-087F0CBDF5B7}"
+	ProjectSection(SolutionItems) = preProject
+		C:\Users\maalagar\Downloads\AddConfigValuesMaha\AddConfigValuesMaha\secretrefs\Development-secretref.json = C:\Users\maalagar\Downloads\AddConfigValuesMaha\AddConfigValuesMaha\secretrefs\Development-secretref.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -272,6 +292,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{86907009-BCD3-4468-BE82-9E8D623337C6} = {C8B969A0-5808-41E1-868E-152B07AC9E01}
+		{9898CA9F-1D23-489B-AD81-2AFA1B99AAA3} = {C8B969A0-5808-41E1-868E-152B07AC9E01}
+		{ADAD0F7C-3FEC-4730-B54F-087F0CBDF5B7} = {C8B969A0-5808-41E1-868E-152B07AC9E01}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9D2F6A07-8D6F-4461-9B78-BB6FB03F99B8}
