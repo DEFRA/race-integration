@@ -11,8 +11,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="Package1"
   DTS:PackageType="5"
-  DTS:VersionBuild="20"
-  DTS:VersionGUID="{F9DB3D85-7439-4B61-BA26-F708DC694964}">
+  DTS:VersionBuild="23"
+  DTS:VersionGUID="{00F0E4F8-4C75-42D6-86C4-1CE9732C5BFE}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -37,7 +37,19 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="0"
           DTS:ConnectRetryInterval="0"
-          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\maalagar\Downloads\SG RACE FE DB Test Data - Test Env v0.2 (7).xlsx;Extended Properties=&quot;Excel 12.0 XML;HDR=YES&quot;;" />
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\maalagar\Downloads\SG RACE FE DB Test Data - Test Env v0.2 (7).xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Excel Connection Manager 11]"
+      DTS:CreationName="EXCEL"
+      DTS:DTSID="{21F46ADD-B0B3-43B5-9FFF-0A8B15F9E296}"
+      DTS:ObjectName="Excel Connection Manager 11">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="0"
+          DTS:ConnectRetryInterval="0"
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\maalagar\Documents\Copy of SG RACE FE DB Test Data - Test Env v0.2.xlsx;Extended Properties=&quot;Excel 12.0 XML;HDR=YES&quot;;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -421,7 +433,7 @@
           <DTS:Password
             DTS:Name="Password"
             Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAyiubK+/VFk6OMo9qYOLsywAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAADiPTSBrlbFaHBTb4YF+ouWAAAAAASAAACgAAAAEAAAAM4AjCRvVVSOvztEPdzJnvcoAAAAtyqR+R5p+sAJfyNdqnBTfDBMFupFGr/BnPoZQMBZarQorg5td3y7ShQAAACPjkqGijKMTfpiEeM8Nv6eLiCyhg</DTS:Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAUtFiTFQdnUifmsutpZu62wAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAADzhgiqqietJNQUZTpluOLqAAAAAASAAACgAAAAEAAAAK+6txZFAgK751ZMVMFHw7coAAAAUF7mUyHZZeOp2v0x463cnBZ28Wiz2Ms7LO/yGSssnlNKizRoqcp2XBQAAAD3nla9Mq3UcPjssiShe7BqP2iyzA</DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -547,7 +559,7 @@
                 <property
                   dataType="System.String"
                   description="Specifies the name of the database object used to open a rowset."
-                  name="OpenRowset">Reservoirs$C1:AB61</property>
+                  name="OpenRowset">Reservoirs$C1:AB71</property>
                 <property
                   dataType="System.String"
                   description="Specifies the variable that contains the name of the database object used to open a rowset."
@@ -574,8 +586,8 @@
               <connections>
                 <connection
                   refId="Package\Data Flow Task\Excel Source.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[Excel Connection Manager 10]"
-                  connectionManagerRefId="Package.ConnectionManagers[Excel Connection Manager 10]"
+                  connectionManagerID="Package.ConnectionManagers[Excel Connection Manager 11]"
+                  connectionManagerRefId="Package.ConnectionManagers[Excel Connection Manager 11]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -585,24 +597,14 @@
                   name="Excel Source Output">
                   <outputColumns>
                     <outputColumn
-                      refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[NearestTown]"
+                      refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[Action Status]"
                       dataType="wstr"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[NearestTown]"
+                      externalMetadataColumnId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[Action Status]"
                       length="255"
-                      lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[NearestTown]"
-                      name="NearestTown"
-                      truncationRowDisposition="FailComponent" />
-                    <outputColumn
-                      refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[OperatorType]"
-                      dataType="wstr"
-                      errorOrTruncationOperation="Conversion"
-                      errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[OperatorType]"
-                      length="255"
-                      lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[OperatorType]"
-                      name="OperatorType"
+                      lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[Action Status]"
+                      name="Action Status"
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
                       refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[Id]"
@@ -615,10 +617,11 @@
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
                       refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[RaceReservoirId]"
-                      dataType="r8"
+                      dataType="wstr"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[RaceReservoirId]"
+                      length="255"
                       lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[RaceReservoirId]"
                       name="RaceReservoirId"
                       truncationRowDisposition="FailComponent" />
@@ -644,10 +647,11 @@
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
                       refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[ReferenceNumber]"
-                      dataType="r8"
+                      dataType="wstr"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[ReferenceNumber]"
+                      length="255"
                       lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[ReferenceNumber]"
                       name="ReferenceNumber"
                       truncationRowDisposition="FailComponent" />
@@ -818,35 +822,41 @@
                       name="AddressId"
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
-                      refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[Action Status]"
+                      refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[NearestTown]"
                       dataType="wstr"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[Action Status]"
+                      externalMetadataColumnId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[NearestTown]"
                       length="255"
-                      lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[Action Status]"
-                      name="Action Status"
+                      lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[NearestTown]"
+                      name="NearestTown"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[OperatorType]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[OperatorType]"
+                      length="255"
+                      lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[OperatorType]"
+                      name="OperatorType"
                       truncationRowDisposition="FailComponent" />
                   </outputColumns>
                   <externalMetadataColumns
                     isUsed="True">
                     <externalMetadataColumn
-                      refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[NearestTown]"
+                      refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[Action Status]"
                       dataType="wstr"
                       length="255"
-                      name="NearestTown" />
-                    <externalMetadataColumn
-                      refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[OperatorType]"
-                      dataType="wstr"
-                      length="255"
-                      name="OperatorType" />
+                      name="Action Status" />
                     <externalMetadataColumn
                       refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[Id]"
                       dataType="r8"
                       name="Id" />
                     <externalMetadataColumn
                       refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[RaceReservoirId]"
-                      dataType="r8"
+                      dataType="wstr"
+                      length="255"
                       name="RaceReservoirId" />
                     <externalMetadataColumn
                       refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[PublicName]"
@@ -860,7 +870,8 @@
                       name="RegisteredName" />
                     <externalMetadataColumn
                       refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[ReferenceNumber]"
-                      dataType="r8"
+                      dataType="wstr"
+                      length="255"
                       name="ReferenceNumber" />
                     <externalMetadataColumn
                       refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[PublicCategory]"
@@ -928,108 +939,26 @@
                       name="LastCertificationDate" />
                     <externalMetadataColumn
                       refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[NextInspectionDate102]"
-                      dataType="wstr"
-                      length="255"
+                      dataType="date"
                       name="NextInspectionDate102" />
                     <externalMetadataColumn
                       refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[NextInspectionDate103]"
-                      dataType="wstr"
-                      length="255"
+                      dataType="date"
                       name="NextInspectionDate103" />
                     <externalMetadataColumn
                       refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[AddressId]"
                       dataType="r8"
                       name="AddressId" />
                     <externalMetadataColumn
-                      refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[Action Status]"
+                      refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[NearestTown]"
                       dataType="wstr"
                       length="255"
-                      name="Action Status" />
+                      name="NearestTown" />
                     <externalMetadataColumn
-                      refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[Test Data Owner]"
+                      refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[OperatorType]"
                       dataType="wstr"
                       length="255"
-                      name="Test Data Owner" />
-                    <externalMetadataColumn
-                      refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[Test Data Purpose]"
-                      dataType="wstr"
-                      length="255"
-                      name="Test Data Purpose" />
-                    <externalMetadataColumn
-                      refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[F29]"
-                      dataType="wstr"
-                      length="255"
-                      name="F29" />
-                    <externalMetadataColumn
-                      refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[F30]"
-                      dataType="wstr"
-                      length="255"
-                      name="F30" />
-                    <externalMetadataColumn
-                      refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[F31]"
-                      dataType="wstr"
-                      length="255"
-                      name="F31" />
-                    <externalMetadataColumn
-                      refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[F32]"
-                      dataType="wstr"
-                      length="255"
-                      name="F32" />
-                    <externalMetadataColumn
-                      refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[F33]"
-                      dataType="wstr"
-                      length="255"
-                      name="F33" />
-                    <externalMetadataColumn
-                      refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[F34]"
-                      dataType="wstr"
-                      length="255"
-                      name="F34" />
-                    <externalMetadataColumn
-                      refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[F35]"
-                      dataType="wstr"
-                      length="255"
-                      name="F35" />
-                    <externalMetadataColumn
-                      refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[F36]"
-                      dataType="wstr"
-                      length="255"
-                      name="F36" />
-                    <externalMetadataColumn
-                      refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[F37]"
-                      dataType="wstr"
-                      length="255"
-                      name="F37" />
-                    <externalMetadataColumn
-                      refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[F38]"
-                      dataType="wstr"
-                      length="255"
-                      name="F38" />
-                    <externalMetadataColumn
-                      refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[F39]"
-                      dataType="wstr"
-                      length="255"
-                      name="F39" />
-                    <externalMetadataColumn
-                      refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[F40]"
-                      dataType="wstr"
-                      length="255"
-                      name="F40" />
-                    <externalMetadataColumn
-                      refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[F41]"
-                      dataType="wstr"
-                      length="255"
-                      name="F41" />
-                    <externalMetadataColumn
-                      refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[F42]"
-                      dataType="wstr"
-                      length="255"
-                      name="F42" />
-                    <externalMetadataColumn
-                      refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].ExternalColumns[F43]"
-                      dataType="wstr"
-                      length="255"
-                      name="F43" />
+                      name="OperatorType" />
                   </externalMetadataColumns>
                 </output>
                 <output
@@ -1050,7 +979,8 @@
                       name="Id" />
                     <outputColumn
                       refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Error Output].Columns[RaceReservoirId]"
-                      dataType="r8"
+                      dataType="wstr"
+                      length="255"
                       lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Error Output].Columns[RaceReservoirId]"
                       name="RaceReservoirId" />
                     <outputColumn
@@ -1067,7 +997,8 @@
                       name="RegisteredName" />
                     <outputColumn
                       refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Error Output].Columns[ReferenceNumber]"
-                      dataType="r8"
+                      dataType="wstr"
+                      length="255"
                       lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Error Output].Columns[ReferenceNumber]"
                       name="ReferenceNumber" />
                     <outputColumn
@@ -1151,14 +1082,12 @@
                       name="LastCertificationDate" />
                     <outputColumn
                       refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Error Output].Columns[NextInspectionDate102]"
-                      dataType="wstr"
-                      length="255"
+                      dataType="date"
                       lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Error Output].Columns[NextInspectionDate102]"
                       name="NextInspectionDate102" />
                     <outputColumn
                       refId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Error Output].Columns[NextInspectionDate103]"
-                      dataType="wstr"
-                      length="255"
+                      dataType="date"
                       lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Error Output].Columns[NextInspectionDate103]"
                       name="NextInspectionDate103" />
                     <outputColumn
@@ -1253,7 +1182,8 @@
                       lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[Id]" />
                     <inputColumn
                       refId="Package\Data Flow Task\Flat File Destination.Inputs[Flat File Destination Input].Columns[RaceReservoirId]"
-                      cachedDataType="r8"
+                      cachedDataType="wstr"
+                      cachedLength="255"
                       cachedName="RaceReservoirId"
                       externalMetadataColumnId="Package\Data Flow Task\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[RaceReservoirId]"
                       lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[RaceReservoirId]" />
@@ -1273,7 +1203,8 @@
                       lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[RegisteredName]" />
                     <inputColumn
                       refId="Package\Data Flow Task\Flat File Destination.Inputs[Flat File Destination Input].Columns[ReferenceNumber]"
-                      cachedDataType="r8"
+                      cachedDataType="wstr"
+                      cachedLength="255"
                       cachedName="ReferenceNumber"
                       externalMetadataColumnId="Package\Data Flow Task\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ReferenceNumber]"
                       lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[ReferenceNumber]" />
@@ -1638,7 +1569,8 @@
                       lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[RegisteredName]" />
                     <inputColumn
                       refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ReferenceNumber]"
-                      cachedDataType="r8"
+                      cachedDataType="wstr"
+                      cachedLength="255"
                       cachedName="ReferenceNumber"
                       externalMetadataColumnId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ReferenceNumber]"
                       lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[ReferenceNumber]" />
@@ -1750,7 +1682,8 @@
                       lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[LastInspectionByUser]" />
                     <inputColumn
                       refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[RaceReservoirId]"
-                      cachedDataType="r8"
+                      cachedDataType="wstr"
+                      cachedLength="255"
                       cachedName="RaceReservoirId"
                       externalMetadataColumnId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[BackEndReservoirId]"
                       lineageId="Package\Data Flow Task\Excel Source.Outputs[Excel Source Output].Columns[RaceReservoirId]" />
@@ -1774,7 +1707,7 @@
                     <externalMetadataColumn
                       refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ReferenceNumber]"
                       dataType="wstr"
-                      length="8"
+                      length="16"
                       name="ReferenceNumber" />
                     <externalMetadataColumn
                       refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PublicCategory]"
@@ -1871,8 +1804,13 @@
                     <externalMetadataColumn
                       refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[BackEndReservoirId]"
                       dataType="wstr"
-                      length="64"
+                      length="16"
                       name="BackEndReservoirId" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PhysicalStatus]"
+                      dataType="wstr"
+                      length="64"
+                      name="PhysicalStatus" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -1995,7 +1933,7 @@
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-61.8340397587916,45.8833329235183,20.4680859375,9.3974609375"
+              BoundingBox="-84.5167350712917,45.8833329235183,65.8334765625,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -2030,7 +1968,9 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="6.58879548253335,27.6499997144938,36.2890625,9.568359375"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -2065,7 +2005,7 @@
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="18.9527550895015,51.1156009363865,141.2278125,11.658203125"
+              BoundingBox="-3.66259647299853,51.1156009363865,186.458515625,11.658203125"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
