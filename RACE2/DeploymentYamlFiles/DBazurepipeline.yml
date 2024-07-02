@@ -1,2 +1,100 @@
+# ASP.NET
+# Build and test ASP.NET projects.
+# Add steps that publish symbols, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
 
-dsffgsfdgsdfgsdfgsdfgdfg
+trigger:
+- none
+pr:
+- none
+pool:
+   vmImage: ubuntu-latest
+resources:
+- repo: self
+
+
+variables:
+  projects: '**/RACE2.sln'
+  solution: '**/RACE2.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+  subscription: 'AZR-RAC-POC1'
+  artifactName: 'defrarace2'
+
+stages:
+- stage: build_projects
+  jobs:
+    - job: build
+      steps:
+      - checkout: self  # self represents the repo where this pipeline resides.  added by Mikey
+        fetchDepth: 0   # Indicates a full clone. added by Mikey
+            
+      - task: JavaToolInstaller@0
+        displayName: "Install JAVA for SonarCloud"
+        inputs:
+          versionSpec: '21'
+          jdkArchitectureOption: 'x64'
+          jdkSourceOption: AzureStorage
+          azureResourceManagerEndpoint: AZR-RAC-POC1
+          azureStorageAccountName: pocacinfst1401
+          azureContainerName: java
+          azureCommonVirtualFile: 'openlogic-openjdk-21.0.3+9-windows-x64.zip'
+          jdkDestinationDirectory: '$(agent.toolsDirectory)/jdk21'
+          cleanDestinationDirectory: false
+
+      - task: UseDotNet@2
+        inputs:
+         packageType: sdk
+         version: 8.0.302
+
+      - task: DotNetCoreCLI@2
+        displayName: 'Restore Projects'
+        inputs:
+          command: restore
+          projects: '$(projects)'          
+
+      - task: SonarCloudPrepare@2
+        displayName: "Sonar Cloud Prepare"
+        inputs:
+          SonarCloud: 'AZR-RAC-POC-SonarCloud'
+          organization: 'defra'
+          scannerMode: 'MSBuild'
+          projectKey: 'DEFRA_race-integration'
+          projectName: 'RACE2'
+          extraProperties: |
+           'sonar.scm.exclusions.disabled=true
+           sonar.exclusions=**/obj/**,**/*.dll
+           sonar.cs.xunit.reportsPaths=${Agent.TempDirectory}/**/XUnit.TestResults.xml 
+           sonar.cs.opencover.reportsPaths=${Agent.TempDirectory}/**/opencoverCoverage.xml'
+          
+            
+      - task: UseDotNet@2
+        inputs:
+         packageType: sdk
+         version: 8.0.301
+
+      - task: DotNetCoreCLI@2
+        displayName: 'Build Projects'
+        inputs:
+          projects: '$(projects)'
+          arguments: '--configuration $(buildConfiguration)'
+      - task: DotNetCoreCLI@2
+        inputs:
+         command: 'test'
+         projects: 'tests/**/RACE2.UnitTest.csproj'
+         arguments: '--configuration $(BuildConfiguration) --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=$(Agent.TempDirectory)/coverage/ /p:MergeWith=$(Agent.TempDirectory)/coverage/ --collect "Code coverage"'
+
+      - task: PublishTestResults@2
+        displayName: "Publish Test Results"
+        inputs:
+         testResultsFormat: VSTest
+         testResultsFiles: "$(Agent.TempDirectory)/**.*trx"
+         mergeTestResults: true
+        condition: succeededOrFailed()
+      - task: SonarCloudAnalyze@2
+
+# Publish Quality Gate Result task
+      - task: SonarCloudPublish@2
+        inputs:
+         pollingTimeoutSec: '300'
+          
